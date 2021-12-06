@@ -1,0 +1,38 @@
+name: generate
+permissions:
+  contents: write
+on:
+  pull_request:
+    paths:
+      - 'spec.yml'
+      - 'Makefile'
+      - .github/workflows/generate.yml
+  workflow_dispatch:
+    inputs:
+jobs:
+  format:
+    # Check if the PR is not from a fork
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Run generate
+        shell: bash
+        run: |
+          make generate
+
+      - name: Check for modified files
+        id: git-check
+        run: echo ::set-output name=modified::$(if git diff-index --ignore-submodules --quiet HEAD --; then echo "false"; else echo "true"; fi)
+
+      - name: Commit changes, if any
+        if: steps.git-check.outputs.modified == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch origin
+          git commit -am "I have generated the latest API!"
+          git push origin ${{github.event.pull_request.head.ref }}
