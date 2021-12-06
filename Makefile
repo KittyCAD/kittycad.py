@@ -11,7 +11,9 @@ generate: docker-image
 		--name python-generator \
 		-v $(CURDIR):/usr/src \
 		--workdir /usr/src \
-		$(DOCKER_IMAGE_NAME) openapi-python-client generate --path ./spec.yml
+		$(DOCKER_IMAGE_NAME) openapi-python-client update \
+			--path ./spec.yml \
+			--config /usr/src/config.yml
 
 .PHONY: docker-image
 docker-image:
