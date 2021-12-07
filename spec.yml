@@ -17,11 +17,14 @@ tags:
       description: CAD file operations.
     - name: meta
       description: Meta information about servers and instances.
+    - name: beta
+      description: Beta API endpoints.
 paths:
     /file/conversion/{sourceFormat}/{outputFormat}:
         post:
             tags:
                 - file
+                - beta
             security:
                 - bearerAuth: []
             summary: Convert CAD file
@@ -34,7 +37,7 @@ paths:
                   required: true
                   schema:
                       $ref: '#/components/schemas/ValidFileTypes'
-                - name: ouputFormat
+                - name: outputFormat
                   in: path
                   description: The format the file should be converted to.
                   required: true
@@ -89,6 +92,7 @@ paths:
         get:
             tags:
                 - file
+                - beta
             security:
                 - bearerAuth: []
             summary: Get a file conversion
@@ -261,11 +265,11 @@ components:
                     type: string
                     description: The status of the file conversion.
                     enum:
-                      - 'Queued'
-                      - 'Uploaded'
-                      - 'In Progress'
-                      - 'Completed'
-                      - 'Failed'
+                        - 'Queued'
+                        - 'Uploaded'
+                        - 'In Progress'
+                        - 'Completed'
+                        - 'Failed'
                 src_format:
                     $ref: '#/components/schemas/ValidFileTypes'
                     description: The format of the original file uploaded to be converted.
@@ -289,9 +293,9 @@ components:
                     type: string
                     description: The type of environment.
                     enum:
-                      - 'DEVELOPMENT'
-                      - 'PREVIEW'
-                      - 'PRODUCTION'
+                        - 'DEVELOPMENT'
+                        - 'PREVIEW'
+                        - 'PRODUCTION'
                 name:
                     type: string
                     description: The name of the instance.
