@@ -4,9 +4,11 @@ on:
     branches: main
     paths:
       - '**.py'
+      - .github/workflows/build-test.yml
   pull_request:
     paths:
       - '**.py'
+      - .github/workflows/build-test.yml
 jobs:
   build:
 
