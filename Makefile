@@ -12,7 +12,7 @@ generate: docker-image
 		-v $(CURDIR):/usr/src \
 		--workdir /usr/src \
 		$(DOCKER_IMAGE_NAME) openapi-python-client update \
-			--path ./spec.yml \
+			--url https://api.kittycad.io \
 			--config /usr/src/config.yml
 
 .PHONY: docker-image
