@@ -37,6 +37,7 @@ jobs:
         shell: bash
         run: |
           source "${HOME}/.bashrc"
+          cat "${HOME}/.bashrc"
           ls -la /home/runner/.poetry/bin
           echo $PATH
           cd kittycad
