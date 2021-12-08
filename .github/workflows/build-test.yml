@@ -28,10 +28,7 @@ jobs:
       - name: Install poetry
         shell: bash
         run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-          echo "source ${HOME}/.poetry/env" >> "${HOME}/.bashrc"
-          cp ${HOME}/.poetry/bin/* /usr/local/bin/
-          source "${HOME}/.bashrc"
+          pip install poetry
 
       - name: Build
         shell: bash
