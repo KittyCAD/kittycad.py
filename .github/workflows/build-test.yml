@@ -36,7 +36,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          source "${HOME}/.bashrc"
+          cat "${HOME}/.bashrc"
           cd kittycad
           poetry build
 
