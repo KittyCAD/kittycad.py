@@ -25,12 +25,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       # Installation instructions are from: https://python-poetry.org/docs/
-      - name: Install poetry and other deps
+      - name: Install dependencies
         shell: bash
         run: |
           pip install \
+          flake8 \
           poetry \
-          flake8
+          pytest
 
       - name: Build
         shell: bash
