@@ -32,6 +32,7 @@ jobs:
           echo "export PATH=\"${HOME}/.poetry/bin;\${PATH}\"" >> "${HOME}/.bashrc"
           echo "source ${HOME}/.poetry/env" >> "${HOME}/.bashrc"
           source "${HOME}/.bashrc"
+          source $HOME/.poetry/env
 
       - name: Build
         run: |
