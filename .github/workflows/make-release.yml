@@ -1,0 +1,31 @@
+on:
+  push:
+    tags:
+      - v*
+name: make-release
+jobs:
+  makerelease:
+    name: make-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      # Installation instructions are from: https://python-poetry.org/docs/
+      - name: Install poetry
+        shell: bash
+        run: |
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+      - name: Do the release
+        shell: bash
+        run: |
+          cd kittycad
+          poetry publish --build \
+            --username ${{secrets.PYPI_USERNAME}} \
+            --password ${{secrets.PYPI_SECRET}}
+
+      # TODO: generate a nice little doc for the release text like we do for the
+      # cli repo.
+      - name: Create a Release
+        uses: softprops/action-gh-release@v1
