@@ -1,3 +1,4 @@
+import os
 import ssl
 from typing import Dict, Union
 
@@ -8,7 +9,7 @@ import attr
 class Client:
     """A class for keeping track of data related to the API"""
 
-    base_url: str
+    base_url: str = attr.ib(default="https://api.kittycad.io")
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(5.0, kw_only=True)
@@ -42,6 +43,16 @@ class AuthenticatedClient(Client):
     """A Client which has been authenticated for use on secured endpoints"""
 
     token: str
+
+    def get_headers(self) -> Dict[str, str]:
+        """Get headers to be used in authenticated endpoints"""
+        return {"Authorization": f"Bearer {self.token}", **self.headers}
+
+@attr.s(auto_attribs=True)
+class AuthenticatedClientFromEnv(Client):
+    """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token."""
+
+    token: str = attr.ib(default=os.getenv('KITTYCAD_API_TOKEN'))
 
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in authenticated endpoints"""
