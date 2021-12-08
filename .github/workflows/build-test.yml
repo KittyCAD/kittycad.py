@@ -38,6 +38,7 @@ jobs:
         run: |
           source "${HOME}/.bashrc"
           ls -la /home/runner/.poetry/bin
+          echo $PATH
           cd kittycad
           poetry build
 
