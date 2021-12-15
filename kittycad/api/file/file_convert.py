@@ -114,12 +114,14 @@ def sync(
 async def asyncio_detailed(
     source_format: ValidFileTypes,
     output_format: ValidFileTypes,
+    content: bytes,
     *,
     client: AuthenticatedClient,
 ) -> Response[Union[Any, FileConversion]]:
     kwargs = _get_kwargs(
         source_format=source_format,
         output_format=output_format,
+        content=content,
         client=client,
     )
 
@@ -132,6 +134,7 @@ async def asyncio_detailed(
 async def asyncio(
     source_format: ValidFileTypes,
     output_format: ValidFileTypes,
+    content: bytes,
     *,
     client: AuthenticatedClient,
 ) -> Optional[Union[Any, FileConversion]]:
@@ -141,6 +144,7 @@ async def asyncio(
         await asyncio_detailed(
             source_format=source_format,
             output_format=output_format,
+            content=content,
             client=client,
         )
     ).parsed
