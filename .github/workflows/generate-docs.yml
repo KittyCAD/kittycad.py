@@ -1,0 +1,45 @@
+name: generate docs
+permissions:
+  contents: write
+on:
+  push:
+    branches: main
+    paths:
+      - '**.py'
+      - .github/workflows/generate-docs.yml
+  pull_request:
+    paths:
+      - '**.py'
+      - .github/workflows/generate-docs.yml
+jobs:
+  generate-docs:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Installation instructions are from: https://python-poetry.org/docs/
+      - name: Install dependencies
+        shell: bash
+        run: |
+          pip install \
+          poetry
+
+      - name: Build
+        shell: bash
+        run: |
+          poetry build
+
+      - name: Generate the docs
+        shell: bash
+        run: |
+          pydoc -w kittycad
+
