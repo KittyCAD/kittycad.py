@@ -38,5 +38,5 @@ jobs:
       - name: Generate the docs
         shell: bash
         run: |
-          pydoc -w kittycad
+          pydoc3 -w kittycad
 
