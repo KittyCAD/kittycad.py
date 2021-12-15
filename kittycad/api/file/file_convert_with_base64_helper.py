@@ -1,5 +1,6 @@
 from typing import Any, Dict, Optional, Union
 
+import base64
 import httpx
 
 from ...client import AuthenticatedClient
