@@ -27,8 +27,11 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
+          sudo apt update && sudo apt install -y \
+            enchant-2 \
+            --no-install-recommends
           pip install \
-          poetry
+            poetry
 
       - name: Build
         shell: bash
@@ -40,10 +43,8 @@ jobs:
         run: |
           rm -rf docs/html
           poetry install
+          poetry run sphinx-build -b html docs/ docs/html/
           for f in `poetry run python -m pydoc -k kittycad | awk '{ print $1}'`; do poetry run python -m pydoc -w $f; done
-          mkdir -p docs/html
-          mv *.html docs/html/
-          mv docs/html/kittycad.html docs/html/index.html
 
       - name: Check for modified files
         id: git-check
