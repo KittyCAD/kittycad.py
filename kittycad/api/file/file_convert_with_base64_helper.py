@@ -27,7 +27,7 @@ def sync(
         client=client,
     )
 
-    if fc.output != "":
+    if fc != None and fc.output != "":
         fc.output = base64.b64decode(fc.output)
 
     return fc
@@ -51,7 +51,7 @@ async def asyncio(
             client=client,
         )
 
-    if fc.output != "":
+    if fc != None and fc.output != "":
         fc.output = base64.b64decode(fc.output)
 
     return fc
