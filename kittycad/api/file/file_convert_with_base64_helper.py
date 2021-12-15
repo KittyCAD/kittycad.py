@@ -44,7 +44,7 @@ async def asyncio(
 
     encoded = base64.b64encode(content)
 
-    fc = await fc_asyncio_detailed(
+    fc = await fc_asyncio(
             source_format=source_format,
             output_format=output_format,
             content=encoded,
