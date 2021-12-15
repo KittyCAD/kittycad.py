@@ -5,7 +5,7 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.file_conversion_status import FileConversionStatus
-from ..models.valid_file_types import ValidFileTypes
+from ..models.valid_file_type import ValidFileType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileConversion")
@@ -19,8 +19,8 @@ class FileConversion:
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
     output: Union[Unset, str] = UNSET
-    output_format: Union[Unset, ValidFileTypes] = UNSET
-    src_format: Union[Unset, ValidFileTypes] = UNSET
+    output_format: Union[Unset, ValidFileType] = UNSET
+    src_format: Union[Unset, ValidFileType] = UNSET
     status: Union[Unset, FileConversionStatus] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -89,18 +89,18 @@ class FileConversion:
         output = d.pop("output", UNSET)
 
         _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, ValidFileTypes]
+        output_format: Union[Unset, ValidFileType]
         if isinstance(_output_format, Unset):
             output_format = UNSET
         else:
-            output_format = ValidFileTypes(_output_format)
+            output_format = ValidFileType(_output_format)
 
         _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, ValidFileTypes]
+        src_format: Union[Unset, ValidFileType]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = ValidFileTypes(_src_format)
+            src_format = ValidFileType(_src_format)
 
         _status = d.pop("status", UNSET)
         status: Union[Unset, FileConversionStatus]

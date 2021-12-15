@@ -3,7 +3,7 @@ import pytest
 import asyncio
 
 from .client import AuthenticatedClientFromEnv
-from .models import FileConversion, ValidFileTypes, AuthSession, InstanceMetadata, Message
+from .models import FileConversion, ValidFileType, AuthSession, InstanceMetadata, Message
 from .api.file import file_convert_with_base64_helper
 from .api.meta import meta_debug_session, meta_debug_instance, ping
 
@@ -86,7 +86,7 @@ def test_file_convert_stl():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = file_convert_with_base64_helper.sync(client=client, content=content, source_format=ValidFileTypes.STL, output_format=ValidFileTypes.OBJ)
+    fc: FileConversion = file_convert_with_base64_helper.sync(client=client, content=content, source_format=ValidFileType.STL, output_format=ValidFileType.OBJ)
 
     assert fc != None
 
@@ -103,7 +103,7 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await file_convert_with_base64_helper.asyncio(client=client, content=content, source_format=ValidFileTypes.STL, output_format=ValidFileTypes.OBJ)
+    fc: FileConversion = await file_convert_with_base64_helper.asyncio(client=client, content=content, source_format=ValidFileType.STL, output_format=ValidFileType.OBJ)
 
     assert fc != None
 

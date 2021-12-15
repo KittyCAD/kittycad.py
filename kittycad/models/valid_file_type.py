@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ValidFileTypes(str, Enum):
+class ValidFileType(str, Enum):
     STEP = "step"
     OBJ = "obj"
     STL = "stl"
