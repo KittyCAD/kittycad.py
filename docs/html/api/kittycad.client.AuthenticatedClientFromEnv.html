@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AuthenticatedClient &mdash; kittycad v0.0.3 documentation</title>
+  <title>AuthenticatedClientFromEnv &mdash; kittycad v0.0.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="AuthenticatedClientFromEnv" href="kittycad.client.AuthenticatedClientFromEnv.html" />
-    <link rel="prev" title="kittycad.client Module" href="../kittycad.client.html" /> 
+    <link rel="next" title="Client" href="kittycad.client.Client.html" />
+    <link rel="prev" title="AuthenticatedClient" href="kittycad.client.AuthenticatedClient.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,8 +46,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../kittycad.api.html">kittycad.api Package</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../kittycad.client.html">kittycad.client Module</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../kittycad.client.html#classes">Classes</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">AuthenticatedClient</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kittycad.client.AuthenticatedClientFromEnv.html">AuthenticatedClientFromEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.client.AuthenticatedClient.html">AuthenticatedClient</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AuthenticatedClientFromEnv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.client.Client.html">Client</a></li>
 </ul>
 </li>
@@ -76,9 +76,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../kittycad.client.html">kittycad.client Module</a> &raquo;</li>
-      <li>AuthenticatedClient</li>
+      <li>AuthenticatedClientFromEnv</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/api/kittycad.client.AuthenticatedClient.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api/kittycad.client.AuthenticatedClientFromEnv.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -86,13 +86,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="authenticatedclient">
-<h1>AuthenticatedClient<a class="headerlink" href="#authenticatedclient" title="Permalink to this headline"></a></h1>
+  <section id="authenticatedclientfromenv">
+<h1>AuthenticatedClientFromEnv<a class="headerlink" href="#authenticatedclientfromenv" title="Permalink to this headline"></a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="kittycad.client.AuthenticatedClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.client.</span></span><span class="sig-name descname"><span class="pre">AuthenticatedClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.kittycad.io'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.AuthenticatedClient" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="kittycad.client.AuthenticatedClientFromEnv">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.client.</span></span><span class="sig-name descname"><span class="pre">AuthenticatedClientFromEnv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.kittycad.io'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.AuthenticatedClientFromEnv" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="kittycad.client.Client.html#kittycad.client.Client" title="kittycad.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">kittycad.client.Client</span></code></a></p>
-<p>A Client which has been authenticated for use on secured endpoints</p>
+<p>A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token.</p>
 <p class="rubric">Methods Summary</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -100,15 +100,15 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.AuthenticatedClient.get_headers" title="kittycad.client.AuthenticatedClient.get_headers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_headers</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.AuthenticatedClientFromEnv.get_headers" title="kittycad.client.AuthenticatedClientFromEnv.get_headers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_headers</span></code></a>()</p></td>
 <td><p>Get headers to be used in authenticated endpoints</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods Documentation</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="kittycad.client.AuthenticatedClient.get_headers">
-<span class="sig-name descname"><span class="pre">get_headers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.AuthenticatedClient.get_headers" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="kittycad.client.AuthenticatedClientFromEnv.get_headers">
+<span class="sig-name descname"><span class="pre">get_headers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.AuthenticatedClientFromEnv.get_headers" title="Permalink to this definition"></a></dt>
 <dd><p>Get headers to be used in authenticated endpoints</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -125,8 +125,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../kittycad.client.html" class="btn btn-neutral float-left" title="kittycad.client Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.client.AuthenticatedClientFromEnv.html" class="btn btn-neutral float-right" title="AuthenticatedClientFromEnv" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.client.AuthenticatedClient.html" class="btn btn-neutral float-left" title="AuthenticatedClient" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.client.Client.html" class="btn btn-neutral float-right" title="Client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
