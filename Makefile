@@ -7,7 +7,7 @@ endif
 
 # For this to work, you need to install toml-cli: https://github.com/gnprice/toml-cli
 # `cargo install toml-cli`
-VERSION := $(shell toml get $(CURDIR)/kittycad/pyproject.toml version)
+VERSION := $(shell toml get $(CURDIR)/kittycad/pyproject.toml tool.poetry.version | jq -r .)
 
 .PHONY: generate
 generate: docker-image
@@ -25,8 +25,8 @@ docker-image:
 
 .PHONY: tag
 tag: ## Create a new git tag to prepare to build a release.
-	git tag -sa $(VERSION) -m "$(VERSION)"
-	@echo "Run git push origin $(VERSION) to push your new tag to GitHub and trigger a release."
+	git tag -sa "v$(VERSION)" -m "v$(VERSION)"
+	@echo "Run git push origin v$(VERSION) to push your new tag to GitHub and trigger a release."
 
 .PHONY: help
 help:
