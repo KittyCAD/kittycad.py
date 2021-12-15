@@ -1,0 +1,1 @@
+.. automodapi:: kittycad.models.message
