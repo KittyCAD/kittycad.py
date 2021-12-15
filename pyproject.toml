@@ -25,6 +25,8 @@ sphinx-autodoc-typehints = "^1.12.0"
 pyenchant = "^3.2.2"
 sphinxcontrib-spelling = "^7.3.0"
 toml = "^0.10.2"
+sphinx-rtd-theme = "^1.0.0"
+sphinx-automodapi = "^0.13"
 
 [build-system]
 requires = ["poetry>=1.0"]

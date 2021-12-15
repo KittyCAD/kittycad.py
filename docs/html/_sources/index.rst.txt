@@ -7,9 +7,13 @@ Welcome to kittycad's documentation!
 ====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
+   kittycad.api
+   kittycad.client
+   kittycad.models
+   kittycad.types
 
 
 Indices and tables
@@ -18,3 +22,5 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. automodapi:: kittycad
