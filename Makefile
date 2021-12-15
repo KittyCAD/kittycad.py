@@ -5,6 +5,10 @@ ifeq ($(INTERACTIVE), 1)
 	DOCKER_FLAGS += -t
 endif
 
+# For this to work, you need to install toml-cli: https://github.com/gnprice/toml-cli
+# `cargo install toml-cli`
+VERSION := $(shell toml get $(CURDIR)/kittycad/pyproject.toml version)
+
 .PHONY: generate
 generate: docker-image
 	docker run --rm -i $(DOCKER_FLAGS) \
@@ -19,6 +23,10 @@ generate: docker-image
 docker-image:
 	docker build -t $(DOCKER_IMAGE_NAME) .
 
+.PHONY: tag
+tag: ## Create a new git tag to prepare to build a release.
+	git tag -sa $(VERSION) -m "$(VERSION)"
+	@echo "Run git push origin $(VERSION) to push your new tag to GitHub and trigger a release."
 
 .PHONY: help
 help:
