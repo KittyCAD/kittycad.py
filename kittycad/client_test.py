@@ -1,3 +1,4 @@
+import os
 import pytest
 import asyncio
 
@@ -74,3 +75,36 @@ async def test_ping_async():
     assert message != None
 
     print(f"Message: {message}")
+
+def test_file_convert_stl():
+    # Create our client.
+    client = AuthenticatedClientFromEnv()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the fc.
+    fc: FileConversion = file_convert_with_base64_helper.sync(client=client, content=content, source_format=ValidFileTypes.STL, output_format=ValidFileTypes.OBJ)
+
+    assert fc != None
+
+    print(f"FileConversion: {fc}")
+
+@pytest.mark.asyncio
+async def test_file_convert_stl_async():
+    # Create our client.
+    client = AuthenticatedClientFromEnv()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the fc.
+    fc: FileConversion = await file_convert_with_base64_helper.asyncio(client=client, content=content, source_format=ValidFileTypes.STL, output_format=ValidFileTypes.OBJ)
+
+    assert fc != None
+
+    print(f"FileConversion: {fc}")
