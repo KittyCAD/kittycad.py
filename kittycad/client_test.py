@@ -13,6 +13,8 @@ def test_get_session():
     # Get the session.
     session: AuthSession = meta_debug_session.sync(client=client)
 
+    assert session != None
+
     print(f"Session: {session}")
 
 @pytest.mark.asyncio
@@ -21,7 +23,9 @@ async def test_get_session_async():
     client = AuthenticatedClientFromEnv()
 
     # Get the session.
-    session: AuthSession = meta_debug_session.asyncio(client=client)
+    session: AuthSession = await meta_debug_session.asyncio(client=client)
+
+    assert session != None
 
     print(f"Session: {session}")
 
@@ -31,6 +35,9 @@ def test_get_instance():
 
     # Get the instance.
     instance: InstanceMetadata = meta_debug_instance.sync(client=client)
+
+    assert instance != None
+
     print(f"Instance: {instance}")
 
 @pytest.mark.asyncio
@@ -40,4 +47,7 @@ async def test_get_instance_async():
 
     # Get the instance.
     instance: InstanceMetadata = await meta_debug_instance.asyncio(client=client)
+
+    assert instance != None
+
     print(f"Instance: {instance}")
