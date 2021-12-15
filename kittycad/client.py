@@ -41,7 +41,7 @@ class Client:
 class AuthenticatedClient(Client):
     """A Client which has been authenticated for use on secured endpoints"""
 
-    token: str
+    token: str = attr.ib(kw_only=True)
 
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in authenticated endpoints"""
