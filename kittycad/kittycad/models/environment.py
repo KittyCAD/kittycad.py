@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class InstanceMetadataEnvironment(str, Enum):
+class Environment(str, Enum):
     DEVELOPMENT = "DEVELOPMENT"
     PREVIEW = "PREVIEW"
     PRODUCTION = "PRODUCTION"

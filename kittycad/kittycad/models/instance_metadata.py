@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.instance_metadata_environment import InstanceMetadataEnvironment
+from ..models.environment import Environment
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="InstanceMetadata")
@@ -14,7 +14,7 @@ class InstanceMetadata:
 
     cpu_platform: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
-    environment: Union[Unset, InstanceMetadataEnvironment] = UNSET
+    environment: Union[Unset, Environment] = UNSET
     git_hash: Union[Unset, str] = UNSET
     hostname: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
@@ -77,11 +77,11 @@ class InstanceMetadata:
         description = d.pop("description", UNSET)
 
         _environment = d.pop("environment", UNSET)
-        environment: Union[Unset, InstanceMetadataEnvironment]
+        environment: Union[Unset, Environment]
         if isinstance(_environment, Unset):
             environment = UNSET
         else:
-            environment = InstanceMetadataEnvironment(_environment)
+            environment = Environment(_environment)
 
         git_hash = d.pop("git_hash", UNSET)
 
