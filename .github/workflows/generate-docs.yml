@@ -28,8 +28,7 @@ jobs:
         shell: bash
         run: |
           pip install \
-          poetry \
-          pydoc
+          poetry
 
       - name: Build
         shell: bash
