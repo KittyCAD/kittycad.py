@@ -7,17 +7,17 @@ endif
 
 # For this to work, you need to install toml-cli: https://github.com/gnprice/toml-cli
 # `cargo install toml-cli`
-VERSION := $(shell toml get $(CURDIR)/kittycad/pyproject.toml tool.poetry.version | jq -r .)
+VERSION := $(shell toml get $(CURDIR)/pyproject.toml tool.poetry.version | jq -r .)
 
 .PHONY: generate
 generate: docker-image
 	docker run --rm -i $(DOCKER_FLAGS) \
 		--name python-generator \
-		-v $(CURDIR):/usr/src \
-		--workdir /usr/src \
+		-v $(CURDIR):/usr/kittycad \
+		--workdir /usr \
 		$(DOCKER_IMAGE_NAME) openapi-python-client update \
 			--url https://api.kittycad.io \
-			--config /usr/src/config.yml
+			--config /usr/kittycad/config.yml
 
 .PHONY: docker-image
 docker-image:
