@@ -40,11 +40,7 @@ jobs:
         run: |
           poetry install
           poetry run python -m pydoc -w \
-            kittycad \
-            kittycad.api \
-            kittycad.models \
-            kittycad.types \
-            kittycad.client
+           `find kittycad -name '*.py'`
           mkdir -p docs/html
           mv *.html docs/html/
           mv docs/html/kittycad.html docs/html/index.html
