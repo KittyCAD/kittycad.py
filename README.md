@@ -5,6 +5,9 @@ The Python API client for KittyCAD.
 This is generated from
 [openapi-generators/openapi-python-client](https://github.com/openapi-generators/openapi-python-client).
 
+- [PyPI](https://pypi.org/project/kittycad/)
+- [KittyCAD API Docs](https://docs.kittycad.io/?lang=python)
+
 ## Generating
 
 You can trigger a build with the GitHub action to generate the client. This will
