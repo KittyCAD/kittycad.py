@@ -19,8 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="kittycad.api.meta.ping Module" href="kittycad.api.meta.ping.html" />
-    <link rel="prev" title="kittycad.api.meta.meta_debug_instance Module" href="kittycad.api.meta.meta_debug_instance.html" /> 
+    <link rel="next" title="asyncio" href="api/kittycad.api.meta.meta_debug_session.asyncio.html" />
+    <link rel="prev" title="sync_detailed" href="api/kittycad.api.meta.meta_debug_instance.sync_detailed.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -57,6 +57,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.models.html">kittycad.models Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types Module</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/kittycad.AuthenticatedClient.html">AuthenticatedClient</a></li>
@@ -99,24 +100,24 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio</span></code>(*, client)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/kittycad.api.meta.meta_debug_session.asyncio.html#kittycad.api.meta.meta_debug_session.asyncio" title="kittycad.api.meta.meta_debug_session.asyncio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio</span></code></a>(*, client)</p></td>
 <td><p>Get information about your API request session.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio_detailed</span></code>(*, client)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/kittycad.api.meta.meta_debug_session.asyncio_detailed.html#kittycad.api.meta.meta_debug_session.asyncio_detailed" title="kittycad.api.meta.meta_debug_session.asyncio_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio_detailed</span></code></a>(*, client)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">AuthSession</span></code>]]</p>
+<dd class="field-odd"><p><a class="reference internal" href="api/kittycad.types.Response.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="api/kittycad.models.auth_session.AuthSession.html#kittycad.models.auth_session.AuthSession" title="kittycad.models.auth_session.AuthSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AuthSession</span></code></a>]]</p>
 </dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code>(*, client)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/kittycad.api.meta.meta_debug_session.sync.html#kittycad.api.meta.meta_debug_session.sync" title="kittycad.api.meta.meta_debug_session.sync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code></a>(*, client)</p></td>
 <td><p>Get information about your API request session.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_detailed</span></code>(*, client)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/kittycad.api.meta.meta_debug_session.sync_detailed.html#kittycad.api.meta.meta_debug_session.sync_detailed" title="kittycad.api.meta.meta_debug_session.sync_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_detailed</span></code></a>(*, client)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">AuthSession</span></code>]]</p>
+<dd class="field-odd"><p><a class="reference internal" href="api/kittycad.types.Response.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="api/kittycad.models.auth_session.AuthSession.html#kittycad.models.auth_session.AuthSession" title="kittycad.models.auth_session.AuthSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AuthSession</span></code></a>]]</p>
 </dd>
 </dl>
 </p></td>
@@ -130,8 +131,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kittycad.api.meta.meta_debug_instance.html" class="btn btn-neutral float-left" title="kittycad.api.meta.meta_debug_instance Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.api.meta.ping.html" class="btn btn-neutral float-right" title="kittycad.api.meta.ping Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api/kittycad.api.meta.meta_debug_instance.sync_detailed.html" class="btn btn-neutral float-left" title="sync_detailed" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/kittycad.api.meta.meta_debug_session.asyncio.html" class="btn btn-neutral float-right" title="asyncio" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
