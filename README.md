@@ -6,6 +6,7 @@ This is generated from
 [openapi-generators/openapi-python-client](https://github.com/openapi-generators/openapi-python-client).
 
 - [PyPI](https://pypi.org/project/kittycad/)
+- [Python docs](https://python.api.docs.kittycad.io/)
 - [KittyCAD API Docs](https://docs.kittycad.io/?lang=python)
 
 ## Generating
