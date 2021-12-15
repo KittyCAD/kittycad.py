@@ -36,7 +36,6 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          cd kittycad
           poetry build
 
       - name: Lint with flake8

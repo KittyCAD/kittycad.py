@@ -21,7 +21,6 @@ jobs:
       - name: Do the release
         shell: bash
         run: |
-          cd kittycad
           poetry publish --build \
             --username ${{secrets.PYPI_USERNAME}} \
             --password ${{secrets.PYPI_SECRET}}
