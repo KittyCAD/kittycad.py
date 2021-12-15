@@ -50,6 +50,10 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConv
         response_406 = None
 
         return response_406
+    if response.status_code == 500:
+        response_500 = None
+
+        return response_500
     return None
 
 

@@ -14,6 +14,7 @@ class AuthSession:
     """ """
 
     created_at: Union[Unset, datetime.datetime] = UNSET
+    email: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     ip_address: Union[Unset, str] = UNSET
     is_valid: Union[Unset, bool] = False
@@ -26,6 +27,7 @@ class AuthSession:
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
 
+        email = self.email
         id = self.id
         ip_address = self.ip_address
         is_valid = self.is_valid
@@ -37,6 +39,8 @@ class AuthSession:
         field_dict.update({})
         if created_at is not UNSET:
             field_dict["created_at"] = created_at
+        if email is not UNSET:
+            field_dict["email"] = email
         if id is not UNSET:
             field_dict["id"] = id
         if ip_address is not UNSET:
@@ -60,6 +64,8 @@ class AuthSession:
         else:
             created_at = isoparse(_created_at)
 
+        email = d.pop("email", UNSET)
+
         id = d.pop("id", UNSET)
 
         ip_address = d.pop("ip_address", UNSET)
@@ -72,6 +78,7 @@ class AuthSession:
 
         auth_session = cls(
             created_at=created_at,
+            email=email,
             id=id,
             ip_address=ip_address,
             is_valid=is_valid,

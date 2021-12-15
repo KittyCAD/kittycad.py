@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.ping_response_200 import PingResponse200
+from ...models.message import Message
 from ...types import Response
 
 
@@ -24,15 +24,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[PingResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[Message]:
     if response.status_code == 200:
-        response_200 = PingResponse200.from_dict(response.json())
+        response_200 = Message.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[PingResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[Message]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -44,7 +44,7 @@ def _build_response(*, response: httpx.Response) -> Response[PingResponse200]:
 def sync_detailed(
     *,
     client: Client,
-) -> Response[PingResponse200]:
+) -> Response[Message]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -60,7 +60,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[PingResponse200]:
+) -> Optional[Message]:
     """Simple ping to the server."""
 
     return sync_detailed(
@@ -71,7 +71,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[PingResponse200]:
+) -> Response[Message]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -85,7 +85,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[PingResponse200]:
+) -> Optional[Message]:
     """Simple ping to the server."""
 
     return (
