@@ -11,6 +11,7 @@ from ...types import Response
 def _get_kwargs(
     source_format: ValidFileTypes,
     output_format: ValidFileTypes,
+    content: bytes,
     *,
     client: AuthenticatedClient,
 ) -> Dict[str, Any]:
@@ -26,6 +27,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "content": content,
     }
 
 
@@ -73,12 +75,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 def sync_detailed(
     source_format: ValidFileTypes,
     output_format: ValidFileTypes,
+    content: bytes,
     *,
     client: AuthenticatedClient,
 ) -> Response[Union[Any, FileConversion]]:
     kwargs = _get_kwargs(
         source_format=source_format,
         output_format=output_format,
+        content=content,
         client=client,
     )
 
@@ -93,6 +97,7 @@ def sync_detailed(
 def sync(
     source_format: ValidFileTypes,
     output_format: ValidFileTypes,
+    content: bytes,
     *,
     client: AuthenticatedClient,
 ) -> Optional[Union[Any, FileConversion]]:
@@ -101,6 +106,7 @@ def sync(
     return sync_detailed(
         source_format=source_format,
         output_format=output_format,
+        content=content,
         client=client,
     ).parsed
 
