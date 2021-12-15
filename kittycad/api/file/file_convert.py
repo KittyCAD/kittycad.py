@@ -4,13 +4,13 @@ import httpx
 
 from ...client import AuthenticatedClient
 from ...models.file_conversion import FileConversion
-from ...models.valid_file_types import ValidFileTypes
+from ...models.valid_file_type import ValidFileType
 from ...types import Response
 
 
 def _get_kwargs(
-    source_format: ValidFileTypes,
-    output_format: ValidFileTypes,
+    source_format: ValidFileType,
+    output_format: ValidFileType,
     content: bytes,
     *,
     client: AuthenticatedClient,
@@ -73,8 +73,8 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 
 
 def sync_detailed(
-    source_format: ValidFileTypes,
-    output_format: ValidFileTypes,
+    source_format: ValidFileType,
+    output_format: ValidFileType,
     content: bytes,
     *,
     client: AuthenticatedClient,
@@ -95,8 +95,8 @@ def sync_detailed(
 
 
 def sync(
-    source_format: ValidFileTypes,
-    output_format: ValidFileTypes,
+    source_format: ValidFileType,
+    output_format: ValidFileType,
     content: bytes,
     *,
     client: AuthenticatedClient,
@@ -112,8 +112,8 @@ def sync(
 
 
 async def asyncio_detailed(
-    source_format: ValidFileTypes,
-    output_format: ValidFileTypes,
+    source_format: ValidFileType,
+    output_format: ValidFileType,
     content: bytes,
     *,
     client: AuthenticatedClient,
@@ -132,8 +132,8 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    source_format: ValidFileTypes,
-    output_format: ValidFileTypes,
+    source_format: ValidFileType,
+    output_format: ValidFileType,
     content: bytes,
     *,
     client: AuthenticatedClient,

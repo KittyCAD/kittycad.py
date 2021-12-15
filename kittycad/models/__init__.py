@@ -7,4 +7,4 @@ from .file_conversion import FileConversion
 from .file_conversion_status import FileConversionStatus
 from .instance_metadata import InstanceMetadata
 from .message import Message
-from .valid_file_types import ValidFileTypes
+from .valid_file_type import ValidFileType
