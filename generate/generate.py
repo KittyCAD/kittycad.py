@@ -100,7 +100,7 @@ def generatePath(
         data: dict) -> dict:
     # Generate the path.
     fn_name = camel_to_snake(endpoint['operationId'])
-    file_name =  fn_name + '.py'
+    file_name = fn_name + '.py'
     tag_name = ''
     # Add the tag to the path if it exists.
     if 'tags' in endpoint:
@@ -117,24 +117,51 @@ def generatePath(
     request_body_type = getRequestBodyType(endpoint)
 
     success_type = endoint_refs[0]
+
+    if fn_name == 'file_conversion_status' or fn_name == 'post_file_conversion':
+        fn_name = 'file_conversion_status_with_base64_helper'
+
+    # Iterate over the parameters.
+    params_str = ''
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            parameter_type = ''
+            if 'type' in parameter['schema']:
+                if 'format' in parameter['schema']:
+                    if parameter['schema']['format'] == 'uuid':
+                        parameter_type = "\"<uuid>\""
+                    else:
+                        parameter_type = "\"<string>\""
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            params_str += ', ' + \
+                camel_to_snake(parameter_name) + '=' + parameter_type
+
     example = """from kittycad.models import """ + success_type + """
-from kittycad.api."""+tag_name+""" import """+fn_name+"""
+from kittycad.api.""" + tag_name + """ import """ + fn_name + """
 from kittycad.types import Response
 
-fc: """ + success_type + """ = """+fn_name""".sync(client=client, id="<uuid_of_your_conversion>")
+fc: """ + success_type + """ = """ + fn_name + """.sync(client=client""" + params_str + """)
 
 # OR if you need more info (e.g. status_code)
-response: Response[""" + success_type + """] = """+fn_name""".sync_detailed(client=client, id="<uuid_of_your_conversion>")
+response: Response[""" + success_type + """] = """ + fn_name + """.sync_detailed(client=client""" + params_str + """)
 
 # OR run async
-fc: """ + success_type + """ = await """+fn_name""".asyncio(client=client, id="<uuid_of_your_conversion>")
+fc: """ + success_type + """ = await """ + fn_name + """.asyncio(client=client""" + params_str + """)
 
 # OR run async with more info
-response: Response[""" + success_type + """] = await """+fn_name""".asyncio_detailed(client=client, id="<uuid_of_your_conversion>")"""
+response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio_detailed(client=client""" + params_str + """)"""
 
     # Add our example to our json output.
     data['paths'][name][method]['x-python'] = {
         'example': example,
+        'libDocsLink': '',
     }
 
     # Add our imports.
