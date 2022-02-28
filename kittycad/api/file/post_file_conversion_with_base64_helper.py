@@ -13,18 +13,18 @@ from ...api.file.post_file_conversion import sync as fc_sync, asyncio as fc_asyn
 def sync(
     source_format: ValidSourceFileFormat,
     output_format: ValidOutputFileFormat,
-    content: bytes,
+    body: bytes,
     *,
     client: Client,
 ) -> Optional[Union[Any, FileConversion]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
-    encoded = base64.b64encode(content)
+    encoded = base64.b64encode(body)
 
     fc = fc_sync(
         source_format=source_format,
         output_format=output_format,
-        content=encoded,
+        body=encoded,
         client=client,
     )
 
@@ -37,18 +37,18 @@ def sync(
 async def asyncio(
     source_format: ValidSourceFileFormat,
     output_format: ValidOutputFileFormat,
-    content: bytes,
+    body: bytes,
     *,
     client: Client,
 ) -> Optional[Union[Any, FileConversion]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
-    encoded = base64.b64encode(content)
+    encoded = base64.b64encode(body)
 
     fc = await fc_asyncio(
             source_format=source_format,
             output_format=output_format,
-            content=encoded,
+            body=encoded,
             client=client,
         )
 
