@@ -35,10 +35,10 @@ class AuthSession:
     token = self.token
     user_id = self.user_id
 
-      field_dict: Dict[str, Any] = {}
-       field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if created_at is not UNSET:
+    field_dict: Dict[str, Any] = {}
+     field_dict.update(self.additional_properties)
+      field_dict.update({})
+       if created_at is not UNSET:
             field_dict['created_at'] = created_at
         if email is not UNSET:
             field_dict['email'] = email
@@ -67,38 +67,36 @@ class AuthSession:
         else:
             created_at = isoparse(_created_at)
 
-    email = d.pop("email", UNSET)
+        email = d.pop("email", UNSET)
 
-    id = d.pop("id", UNSET)
+        id = d.pop("id", UNSET)
 
-    image = d.pop("image", UNSET)
+        image = d.pop("image", UNSET)
 
-    ip_address = d.pop("ip_address", UNSET)
+        ip_address = d.pop("ip_address", UNSET)
 
-    is_valid = d.pop("is_valid", UNSET)
+        is_valid = d.pop("is_valid", UNSET)
 
-    token = d.pop("token", UNSET)
+        token = d.pop("token", UNSET)
 
-    user_id = d.pop("user_id", UNSET)
+        user_id = d.pop("user_id", UNSET)
 
-      auth_session = cls(
-           created_at=created_at,
-           email=email,
-           id=id,
-           image=image,
-           ip_address=ip_address,
-           is_valid=is_valid,
-           token=token,
-           user_id=user_id,
-           )
+        auth_session = cls(
+            created_at=created_at,
+            email=email,
+            id=id,
+            image=image,
+            ip_address=ip_address,
+            is_valid=is_valid,
+            token=token,
+            user_id=user_id,
+        )
 
-       auth_session.additional_properties = d
+        auth_session.additional_properties = d
+        return auth_session
 
-
-return auth_session
-
-  @property
-   def additional_keys(self) -> List[str]:
+    @property
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

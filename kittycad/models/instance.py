@@ -28,9 +28,9 @@ class Instance:
     def to_dict(self) -> Dict[str, Any]:
     cpu_platform = self.cpu_platform
     description = self.description
-      environment: Union[Unset, str] = UNSET
-       if not isinstance(self.environment, Unset):
-            environment = self.environment.value
+    environment: Union[Unset, str] = UNSET
+     if not isinstance(self.environment, Unset):
+          environment = self.environment.value
     git_hash = self.git_hash
     hostname = self.hostname
     id = self.id
@@ -40,10 +40,10 @@ class Instance:
     name = self.name
     zone = self.zone
 
-      field_dict: Dict[str, Any] = {}
-       field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if cpu_platform is not UNSET:
+    field_dict: Dict[str, Any] = {}
+     field_dict.update(self.additional_properties)
+      field_dict.update({})
+       if cpu_platform is not UNSET:
             field_dict['cpu_platform'] = cpu_platform
         if description is not UNSET:
             field_dict['description'] = description
@@ -71,54 +71,52 @@ class Instance:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-    cpu_platform = d.pop("cpu_platform", UNSET)
+        cpu_platform = d.pop("cpu_platform", UNSET)
 
-    description = d.pop("description", UNSET)
+        description = d.pop("description", UNSET)
 
-      _environment = d.pop("environment", UNSET)
-       environment: Union[Unset, ServerEnv]
+        _environment = d.pop("environment", UNSET)
+        environment: Union[Unset, ServerEnv]
         if not isinstance(_environment, Unset):
             environment = UNSET
         else:
             environment = ServerEnv(_environment)
 
-    git_hash = d.pop("git_hash", UNSET)
+        git_hash = d.pop("git_hash", UNSET)
 
-    hostname = d.pop("hostname", UNSET)
+        hostname = d.pop("hostname", UNSET)
 
-    id = d.pop("id", UNSET)
+        id = d.pop("id", UNSET)
 
-    image = d.pop("image", UNSET)
+        image = d.pop("image", UNSET)
 
-    ip_address = d.pop("ip_address", UNSET)
+        ip_address = d.pop("ip_address", UNSET)
 
-    machine_type = d.pop("machine_type", UNSET)
+        machine_type = d.pop("machine_type", UNSET)
 
-    name = d.pop("name", UNSET)
+        name = d.pop("name", UNSET)
 
-    zone = d.pop("zone", UNSET)
+        zone = d.pop("zone", UNSET)
 
-      instance = cls(
-           cpu_platform=cpu_platform,
-           description=description,
-           environment=environment,
-           git_hash=git_hash,
-           hostname=hostname,
-           id=id,
-           image=image,
-           ip_address=ip_address,
-           machine_type=machine_type,
-           name=name,
-           zone=zone,
-           )
+        instance = cls(
+            cpu_platform=cpu_platform,
+            description=description,
+            environment=environment,
+            git_hash=git_hash,
+            hostname=hostname,
+            id=id,
+            image=image,
+            ip_address=ip_address,
+            machine_type=machine_type,
+            name=name,
+            zone=zone,
+        )
 
-       instance.additional_properties = d
+        instance.additional_properties = d
+        return instance
 
-
-return instance
-
-  @property
-   def additional_keys(self) -> List[str]:
+    @property
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
