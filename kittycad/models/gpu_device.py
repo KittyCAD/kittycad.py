@@ -19,16 +19,16 @@ class GPUDevice:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-    id = self.id
-    memory_bus_width = self.memory_bus_width
-    memory_clock_rate = self.memory_clock_rate
-    name = self.name
-    peak_memory_bandwidth = self.peak_memory_bandwidth
+        id = self.id
+        memory_bus_width = self.memory_bus_width
+        memory_clock_rate = self.memory_clock_rate
+        name = self.name
+        peak_memory_bandwidth = self.peak_memory_bandwidth
 
-    field_dict: Dict[str, Any] = {}
-     field_dict.update(self.additional_properties)
-      field_dict.update({})
-       if id is not UNSET:
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if id is not UNSET:
             field_dict['id'] = id
         if memory_bus_width is not UNSET:
             field_dict['memory_bus_width'] = memory_bus_width

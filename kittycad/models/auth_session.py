@@ -27,18 +27,18 @@ class AuthSession:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-    email = self.email
-    id = self.id
-    image = self.image
-    ip_address = self.ip_address
-    is_valid = self.is_valid
-    token = self.token
-    user_id = self.user_id
+        email = self.email
+        id = self.id
+        image = self.image
+        ip_address = self.ip_address
+        is_valid = self.is_valid
+        token = self.token
+        user_id = self.user_id
 
-    field_dict: Dict[str, Any] = {}
-     field_dict.update(self.additional_properties)
-      field_dict.update({})
-       if created_at is not UNSET:
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if created_at is not UNSET:
             field_dict['created_at'] = created_at
         if email is not UNSET:
             field_dict['email'] = email

@@ -33,10 +33,10 @@ class FileConversion:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-    id = self.id
-    output = self.output
-      output_format: Union[Unset, str] = UNSET
-       if not isinstance(self.output_format, Unset):
+        id = self.id
+        output = self.output
+        output_format: Union[Unset, str] = UNSET
+        if not isinstance(self.output_format, Unset):
             output_format = self.output_format.value
         src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
