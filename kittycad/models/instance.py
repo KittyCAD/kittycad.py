@@ -26,24 +26,24 @@ class Instance:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-    cpu_platform = self.cpu_platform
-    description = self.description
-    environment: Union[Unset, str] = UNSET
-     if not isinstance(self.environment, Unset):
-          environment = self.environment.value
-    git_hash = self.git_hash
-    hostname = self.hostname
-    id = self.id
-    image = self.image
-    ip_address = self.ip_address
-    machine_type = self.machine_type
-    name = self.name
-    zone = self.zone
+        cpu_platform = self.cpu_platform
+        description = self.description
+        environment: Union[Unset, str] = UNSET
+        if not isinstance(self.environment, Unset):
+            environment = self.environment.value
+        git_hash = self.git_hash
+        hostname = self.hostname
+        id = self.id
+        image = self.image
+        ip_address = self.ip_address
+        machine_type = self.machine_type
+        name = self.name
+        zone = self.zone
 
-    field_dict: Dict[str, Any] = {}
-     field_dict.update(self.additional_properties)
-      field_dict.update({})
-       if cpu_platform is not UNSET:
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if cpu_platform is not UNSET:
             field_dict['cpu_platform'] = cpu_platform
         if description is not UNSET:
             field_dict['description'] = description

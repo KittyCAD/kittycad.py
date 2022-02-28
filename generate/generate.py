@@ -67,7 +67,12 @@ def generatePaths(cwd: str, parser: OpenApiParser):
             generatePath(path, p, method, endpoint, data)
 
 
-def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict):
+def generatePath(
+        path: str,
+        name: str,
+        method: str,
+        endpoint: dict,
+        data: dict):
     # Generate the path.
     file_name = camel_to_snake(endpoint['operationId']) + '.py'
     # Add the tag to the path if it exists.
@@ -199,7 +204,8 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict):
                             ref +
                             ".from_dict(response.json())\n")
         elif '$ref' in response:
-            schema_name = response['$ref'].replace('#/components/responses/', '')
+            schema_name = response['$ref'].replace(
+                '#/components/responses/', '')
             schema = data['components']['responses'][schema_name]
             if 'content' in schema:
                 content = schema['content']
@@ -207,7 +213,8 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict):
                     if content_type == 'application/json':
                         json = content[content_type]['schema']
                         if '$ref' in json:
-                            ref = json['$ref'].replace('#/components/schemas/', '')
+                            ref = json['$ref'].replace(
+                                '#/components/schemas/', '')
                             f.write(
                                 "\t\tresponse_" +
                                 response_code +
@@ -618,28 +625,28 @@ def generateType(path: str, name: str, schema: dict):
                             continue
 
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = self." +
                         property_name +
                         "\n")
                 elif property_type == 'integer':
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = self." +
                         property_name +
                         "\n")
                 elif property_type == 'number':
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = self." +
                         property_name +
                         "\n")
                 elif property_type == 'boolean':
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = self." +
                         property_name +
@@ -894,7 +901,8 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                         if ref not in refs:
                             refs.append(ref)
         elif '$ref' in response:
-            schema_name = response['$ref'].replace('#/components/responses/', '')
+            schema_name = response['$ref'].replace(
+                '#/components/responses/', '')
             schema = data['components']['responses'][schema_name]
             if 'content' in schema:
                 content = schema['content']
@@ -902,7 +910,8 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                     if content_type == 'application/json':
                         json = content[content_type]['schema']
                         if '$ref' in json:
-                            ref = json['$ref'].replace('#/components/schemas/', '')
+                            ref = json['$ref'].replace(
+                                '#/components/schemas/', '')
                             if ref not in refs:
                                 refs.append(ref)
 
