@@ -86,11 +86,13 @@ def generateType(path: str, name: str, schema: dict):
                     f.write("\t"+property_name+": Union[Unset, bool] = False\n")
                 else:
                     print("  unknown type: ", property_type)
+                    raise
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace('#/components/schemas/', '')
                 f.write("\t"+property_name+": Union[Unset, "+ref+"] = UNSET\n")
             else:
                 print("  unknown schema: ", property_schema)
+                raise
 
         # Finish writing the class.
         f.write("\n")
@@ -123,6 +125,7 @@ def generateType(path: str, name: str, schema: dict):
                     f.write("\t"+property_name+" = self."+property_name+"\n")
                 else:
                     print("  unknown type: ", property_type)
+                    raise
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace('#/components/schemas/', '')
                 f.write("\t\t"+property_name+": Union[Unset, str] = UNSET\n")
@@ -130,6 +133,7 @@ def generateType(path: str, name: str, schema: dict):
                 f.write("\t\t\t"+property_name+" = self."+property_name+".value\n")
             else:
                 print("  unknown schema: ", property_schema)
+                raise
 
         # Finish writing the to_dict method.
         f.write("\n")
@@ -185,6 +189,7 @@ def generateType(path: str, name: str, schema: dict):
                     f.write("\n")
                 else:
                     print("  unknown type: ", property_type)
+                    raise
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace('#/components/schemas/', '')
                 f.write("\t\t_"+property_name+" = d.pop(\"" +property_name+"\", UNSET)\n")
@@ -196,6 +201,7 @@ def generateType(path: str, name: str, schema: dict):
                 f.write("\n")
             else:
                 print("  unknown schema: ", property_schema)
+                raise
 
         # Finish writing the from_dict method.
         f.write("\n")
