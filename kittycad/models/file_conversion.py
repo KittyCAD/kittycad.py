@@ -4,136 +4,147 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.valid_output_file_format import ValidOutputFileFormat
+from ..models.valid_source_file_format import ValidSourceFileFormat
 from ..models.file_conversion_status import FileConversionStatus
-from ..models.valid_file_type import ValidFileType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileConversion")
 
-
 @attr.s(auto_attribs=True)
 class FileConversion:
-    """ """
+	""" """
+	completed_at: Union[Unset, datetime.datetime] = UNSET
+	created_at: Union[Unset, datetime.datetime] = UNSET
+	id: Union[Unset, str] = UNSET
+	output: Union[Unset, str] = UNSET
+	output_format: Union[Unset, ValidOutputFileFormat] = UNSET
+	src_format: Union[Unset, ValidSourceFileFormat] = UNSET
+	started_at: Union[Unset, datetime.datetime] = UNSET
+	status: Union[Unset, FileConversionStatus] = UNSET
 
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    id: Union[Unset, str] = UNSET
-    output: Union[Unset, str] = UNSET
-    output_format: Union[Unset, ValidFileType] = UNSET
-    src_format: Union[Unset, ValidFileType] = UNSET
-    status: Union[Unset, FileConversionStatus] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
+	def to_dict(self) -> Dict[str, Any]:
+		completed_at: Union[Unset, str] = UNSET
+		if not isinstance(self.completed_at, Unset):
+			completed_at = self.completed_at.isoformat()
+		created_at: Union[Unset, str] = UNSET
+		if not isinstance(self.created_at, Unset):
+			created_at = self.created_at.isoformat()
+	id = self.id
+	output = self.output
+		output_format: Union[Unset, str] = UNSET
+		if not isinstance(self.output_format, Unset):
+			output_format = self.output_format.value
+		src_format: Union[Unset, str] = UNSET
+		if not isinstance(self.src_format, Unset):
+			src_format = self.src_format.value
+		started_at: Union[Unset, str] = UNSET
+		if not isinstance(self.started_at, Unset):
+			started_at = self.started_at.isoformat()
+		status: Union[Unset, str] = UNSET
+		if not isinstance(self.status, Unset):
+			status = self.status.value
 
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		if completed_at is not UNSET:
+			field_dict['completed_at'] = completed_at
+		if created_at is not UNSET:
+			field_dict['created_at'] = created_at
+		if id is not UNSET:
+			field_dict['id'] = id
+		if output is not UNSET:
+			field_dict['output'] = output
+		if output_format is not UNSET:
+			field_dict['output_format'] = output_format
+		if src_format is not UNSET:
+			field_dict['src_format'] = src_format
+		if started_at is not UNSET:
+			field_dict['started_at'] = started_at
+		if status is not UNSET:
+			field_dict['status'] = status
 
-        id = self.id
-        output = self.output
-        output_format: Union[Unset, str] = UNSET
-        if not isinstance(self.output_format, Unset):
-            output_format = self.output_format.value
+		return field_dict
 
-        src_format: Union[Unset, str] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format.value
+	@classmethod
+	def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+		d = src_dict.copy()
+		_completed_at = d.pop("completed_at", UNSET)
+		completed_at: Union[Unset, datetime.datetime]
+		if not isinstance(_completed_at, Unset):
+			completed_at = UNSET
+		else:
+			completed_at = isoparse(_completed_at)
 
-        status: Union[Unset, str] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status.value
+		_created_at = d.pop("created_at", UNSET)
+		created_at: Union[Unset, datetime.datetime]
+		if not isinstance(_created_at, Unset):
+			created_at = UNSET
+		else:
+			created_at = isoparse(_created_at)
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if id is not UNSET:
-            field_dict["id"] = id
-        if output is not UNSET:
-            field_dict["output"] = output
-        if output_format is not UNSET:
-            field_dict["output_format"] = output_format
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
-        if status is not UNSET:
-            field_dict["status"] = status
+	id = d.pop("id", UNSET)
 
-        return field_dict
+	output = d.pop("output", UNSET)
 
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
+		_output_format = d.pop("output_format", UNSET)
+		output_format: Union[Unset, ValidOutputFileFormat]
+		if not isinstance(_output_format, Unset):
+			output_format = UNSET
+		else:
+			output_format = ValidOutputFileFormat(_output_format)
 
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
+		_src_format = d.pop("src_format", UNSET)
+		src_format: Union[Unset, ValidSourceFileFormat]
+		if not isinstance(_src_format, Unset):
+			src_format = UNSET
+		else:
+			src_format = ValidSourceFileFormat(_src_format)
 
-        id = d.pop("id", UNSET)
+		_started_at = d.pop("started_at", UNSET)
+		started_at: Union[Unset, datetime.datetime]
+		if not isinstance(_started_at, Unset):
+			started_at = UNSET
+		else:
+			started_at = isoparse(_started_at)
 
-        output = d.pop("output", UNSET)
+		_status = d.pop("status", UNSET)
+		status: Union[Unset, FileConversionStatus]
+		if not isinstance(_status, Unset):
+			status = UNSET
+		else:
+			status = FileConversionStatus(_status)
 
-        _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, ValidFileType]
-        if isinstance(_output_format, Unset):
-            output_format = UNSET
-        else:
-            output_format = ValidFileType(_output_format)
 
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, ValidFileType]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        else:
-            src_format = ValidFileType(_src_format)
+		file_conversion = cls(
+			completed_at= completed_at,
+			created_at= created_at,
+			id= id,
+			output= output,
+			output_format= output_format,
+			src_format= src_format,
+			started_at= started_at,
+			status= status,
+		)
 
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, FileConversionStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = FileConversionStatus(_status)
+		file_conversion.additional_properties = d
+return file_conversion
 
-        file_conversion = cls(
-            completed_at=completed_at,
-            created_at=created_at,
-            id=id,
-            output=output,
-            output_format=output_format,
-            src_format=src_format,
-            status=status,
-        )
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
 
-        file_conversion.additional_properties = d
-        return file_conversion
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
 
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
 
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
 
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties
