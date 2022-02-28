@@ -6,7 +6,7 @@ import httpx
 from ...client import AuthenticatedClient
 from ...models.file_conversion import FileConversion
 from ...types import Response
-from ...api.file.file_conversion_by_id import sync as fc_sync, asyncio as fc_asyncio
+from ...api.file.file_conversion_status import sync as fc_sync, asyncio as fc_asyncio
 
 
 def sync(

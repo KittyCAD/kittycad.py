@@ -12,6 +12,7 @@ from ...types import Response
 def _get_kwargs(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
+	body: bytes,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
@@ -65,12 +66,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 def sync_detailed(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
+	body: bytes,
 	*,
 	client: Client,
 ) -> Response[Union[Any, FileConversion, ErrorMessage]]:
 	kwargs = _get_kwargs(
 		source_format=source_format,
 		output_format=output_format,
+		body=body,
 		client=client,
 	)
 
@@ -85,6 +88,7 @@ def sync_detailed(
 def sync(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
+	body: bytes,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileConversion, ErrorMessage]]:
@@ -93,6 +97,7 @@ def sync(
 	return sync_detailed(
 		source_format=source_format,
 		output_format=output_format,
+		body=body,
 		client=client,
 	).parsed
 
@@ -100,12 +105,14 @@ def sync(
 async def asyncio_detailed(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
+	body: bytes,
 	*,
 	client: Client,
 ) -> Response[Union[Any, FileConversion, ErrorMessage]]:
 	kwargs = _get_kwargs(
 		source_format=source_format,
 		output_format=output_format,
+		body=body,
 		client=client,
 	)
 
@@ -118,6 +125,7 @@ async def asyncio_detailed(
 async def asyncio(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
+	body: bytes,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileConversion, ErrorMessage]]:
@@ -127,6 +135,7 @@ async def asyncio(
 		await asyncio_detailed(
 			source_format=source_format,
 			output_format=output_format,
+			body=body,
 			client=client,
 		)
 	).parsed

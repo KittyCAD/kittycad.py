@@ -87,6 +87,7 @@ def generatePath(
     endoint_refs = getEndpointRefs(endpoint, data)
     parameter_refs = getParameterRefs(endpoint)
     request_body_refs = getRequestBodyRefs(endpoint)
+    request_body_type = getRequestBodyType(endpoint)
 
     # Add our imports.
     f.write("from typing import Any, Dict, Optional, Union\n")
@@ -141,6 +142,11 @@ def generatePath(
                 ": " +
                 parameter_type +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\tbody: " +
+            request_body_type +
+            ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Dict[str, Any]:\n")
@@ -268,6 +274,11 @@ def generatePath(
                 ": " +
                 parameter_type +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\tbody: " +
+            request_body_type +
+            ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Response[Union[Any, " +
@@ -294,6 +305,9 @@ def generatePath(
                 "=" +
                 camel_to_snake(parameter_name) +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\t\tbody=body,\n")
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
@@ -329,6 +343,11 @@ def generatePath(
                 ": " +
                 parameter_type +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\tbody: " +
+            request_body_type +
+            ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Optional[Union[Any, " +
@@ -358,6 +377,9 @@ def generatePath(
                 "=" +
                 camel_to_snake(parameter_name) +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\t\tbody=body,\n")
     f.write("\t\tclient=client,\n")
     f.write("\t).parsed\n")
 
@@ -386,6 +408,11 @@ def generatePath(
                 ": " +
                 parameter_type +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\tbody: " +
+            request_body_type +
+            ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Response[Union[Any, " +
@@ -412,6 +439,9 @@ def generatePath(
                 "=" +
                 camel_to_snake(parameter_name) +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\t\tbody=body,\n")
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
@@ -445,6 +475,11 @@ def generatePath(
                 ": " +
                 parameter_type +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\tbody: " +
+            request_body_type +
+            ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Optional[Union[Any, " +
@@ -475,6 +510,9 @@ def generatePath(
                 "=" +
                 camel_to_snake(parameter_name) +
                 ",\n")
+    if request_body_type:
+        f.write(
+            "\t\t\tbody=body,\n")
     f.write("\t\t\tclient=client,\n")
     f.write("\t\t)\n")
     f.write("\t).parsed\n")
@@ -948,6 +986,27 @@ def getRequestBodyRefs(endpoint: dict) -> [str]:
                         refs.append(ref)
 
     return refs
+
+def getRequestBodyType(endpoint: dict) -> str:
+    type_name = None
+
+    if 'requestBody' in endpoint:
+        requestBody = endpoint['requestBody']
+        if 'content' in requestBody:
+            content = requestBody['content']
+            for content_type in content:
+                if content_type == 'application/json':
+                    json = content[content_type]['schema']
+                    if '$ref' in json:
+                        ref = json['$ref'].replace('#/components/schemas/', '')
+                        return ref
+                elif content_type == 'text/plain':
+                    return 'bytes'
+                else:
+                    print("  unsupported content type: ", content_type)
+                    raise Exception("unsupported content type")
+
+    return type_name
 
 
 def camel_to_snake(name: str):

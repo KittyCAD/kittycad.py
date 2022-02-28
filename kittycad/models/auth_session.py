@@ -8,105 +8,105 @@ from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="AuthSession")
 
-
 @attr.s(auto_attribs=True)
 class AuthSession:
-    """ """
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    email: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
-    image: Union[Unset, str] = UNSET
-    ip_address: Union[Unset, str] = UNSET
-    is_valid: Union[Unset, bool] = False
-    token: Union[Unset, str] = UNSET
-    user_id: Union[Unset, str] = UNSET
+	""" """
+	created_at: Union[Unset, datetime.datetime] = UNSET
+	email: Union[Unset, str] = UNSET
+	id: Union[Unset, str] = UNSET
+	image: Union[Unset, str] = UNSET
+	ip_address: Union[Unset, str] = UNSET
+	is_valid: Union[Unset, bool] = False
+	token: Union[Unset, str] = UNSET
+	user_id: Union[Unset, str] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        email = self.email
-        id = self.id
-        image = self.image
-        ip_address = self.ip_address
-        is_valid = self.is_valid
-        token = self.token
-        user_id = self.user_id
+	def to_dict(self) -> Dict[str, Any]:
+		created_at: Union[Unset, str] = UNSET
+		if not isinstance(self.created_at, Unset):
+			created_at = self.created_at.isoformat()
+		email = self.email
+		id = self.id
+		image = self.image
+		ip_address = self.ip_address
+		is_valid = self.is_valid
+		token = self.token
+		user_id = self.user_id
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if created_at is not UNSET:
-            field_dict['created_at'] = created_at
-        if email is not UNSET:
-            field_dict['email'] = email
-        if id is not UNSET:
-            field_dict['id'] = id
-        if image is not UNSET:
-            field_dict['image'] = image
-        if ip_address is not UNSET:
-            field_dict['ip_address'] = ip_address
-        if is_valid is not UNSET:
-            field_dict['is_valid'] = is_valid
-        if token is not UNSET:
-            field_dict['token'] = token
-        if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		if created_at is not UNSET:
+			field_dict['created_at'] = created_at
+		if email is not UNSET:
+			field_dict['email'] = email
+		if id is not UNSET:
+			field_dict['id'] = id
+		if image is not UNSET:
+			field_dict['image'] = image
+		if ip_address is not UNSET:
+			field_dict['ip_address'] = ip_address
+		if is_valid is not UNSET:
+			field_dict['is_valid'] = is_valid
+		if token is not UNSET:
+			field_dict['token'] = token
+		if user_id is not UNSET:
+			field_dict['user_id'] = user_id
 
-        return field_dict
+		return field_dict
 
-    @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if not isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
+	@classmethod
+	def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+		d = src_dict.copy()
+		_created_at = d.pop("created_at", UNSET)
+		created_at: Union[Unset, datetime.datetime]
+		if not isinstance(_created_at, Unset):
+			created_at = UNSET
+		else:
+			created_at = isoparse(_created_at)
 
-        email = d.pop("email", UNSET)
+		email = d.pop("email", UNSET)
 
-        id = d.pop("id", UNSET)
+		id = d.pop("id", UNSET)
 
-        image = d.pop("image", UNSET)
+		image = d.pop("image", UNSET)
 
-        ip_address = d.pop("ip_address", UNSET)
+		ip_address = d.pop("ip_address", UNSET)
 
-        is_valid = d.pop("is_valid", UNSET)
+		is_valid = d.pop("is_valid", UNSET)
 
-        token = d.pop("token", UNSET)
+		token = d.pop("token", UNSET)
 
-        user_id = d.pop("user_id", UNSET)
+		user_id = d.pop("user_id", UNSET)
 
-        auth_session = cls(
-            created_at=created_at,
-            email=email,
-            id=id,
-            image=image,
-            ip_address=ip_address,
-            is_valid=is_valid,
-            token=token,
-            user_id=user_id,
-        )
 
-        auth_session.additional_properties = d
-        return auth_session
+		auth_session = cls(
+			created_at= created_at,
+			email= email,
+			id= id,
+			image= image,
+			ip_address= ip_address,
+			is_valid= is_valid,
+			token= token,
+			user_id= user_id,
+		)
 
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
+		auth_session.additional_properties = d
+		return auth_session
 
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
 
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
 
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
 
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
+
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties

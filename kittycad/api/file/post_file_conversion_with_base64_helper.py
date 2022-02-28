@@ -7,7 +7,7 @@ from ...client import AuthenticatedClient
 from ...models.file_conversion import FileConversion
 from ...models.valid_file_type import ValidFileType
 from ...types import Response
-from ...api.file.file_convert import sync as fc_sync, asyncio as fc_asyncio
+from ...api.file.post_file_conversion import sync as fc_sync, asyncio as fc_asyncio
 
 def sync(
     source_format: ValidFileType,

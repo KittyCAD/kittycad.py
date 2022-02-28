@@ -1,10 +1,9 @@
 from enum import Enum
 
-
 class ServerEnv(str, Enum):
-    PRODUCTION = 'production'
-    DEVELOPMENT = 'development'
-    PREVIEW = 'preview'
+	PRODUCTION = 'production'
+	DEVELOPMENT = 'development'
+	PREVIEW = 'preview'
 
-    def __str__(self) -> str:
-        return str(self.value)
+	def __str__(self) -> str:
+		return str(self.value)

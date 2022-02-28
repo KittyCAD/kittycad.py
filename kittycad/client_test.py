@@ -3,16 +3,16 @@ import pytest
 import asyncio
 
 from .client import AuthenticatedClientFromEnv
-from .models import FileConversion, ValidFileType, AuthSession, InstanceMetadata, Message
-from .api.file import file_convert_with_base64_helper
-from .api.meta import meta_debug_session, meta_debug_instance, ping
+from .models import FileConversion, ValidOutputFileFormat, ValidSourceFileFormat, AuthSession, InstanceMetadata, Message
+from .api.file import post_file_conversion_with_base64_helper
+from .api.meta import auth_session, instance_metadata, ping
 
 def test_get_session():
     # Create our client.
     client = ClientFromEnv()
 
     # Get the session.
-    session: AuthSession = meta_debug_session.sync(client=client)
+    session: AuthSession = auth_session.sync(client=client)
 
     assert session != None
 
@@ -24,7 +24,7 @@ async def test_get_session_async():
     client = ClientFromEnv()
 
     # Get the session.
-    session: AuthSession = await meta_debug_session.asyncio(client=client)
+    session: AuthSession = await auth_session.asyncio(client=client)
 
     assert session != None
 
@@ -35,7 +35,7 @@ def test_get_instance():
     client = ClientFromEnv()
 
     # Get the instance.
-    instance: InstanceMetadata = meta_debug_instance.sync(client=client)
+    instance: InstanceMetadata = instance_metadata.sync(client=client)
 
     assert instance != None
 
@@ -47,7 +47,7 @@ async def test_get_instance_async():
     client = ClientFromEnv()
 
     # Get the instance.
-    instance: InstanceMetadata = await meta_debug_instance.asyncio(client=client)
+    instance: InstanceMetadata = await instance_metadata.asyncio(client=client)
 
     assert instance != None
 
@@ -86,7 +86,7 @@ def test_file_convert_stl():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = file_convert_with_base64_helper.sync(client=client, content=content, source_format=ValidFileType.STL, output_format=ValidFileType.OBJ)
+    fc: FileConversion = post_file_convertsion_with_base64_helper.sync(client=client, content=content, source_format=ValidSourceFileFormat.STL, output_format=ValidOutputFileFormat.OBJ)
 
     assert fc != None
 
@@ -103,7 +103,7 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await file_convert_with_base64_helper.asyncio(client=client, content=content, source_format=ValidFileType.STL, output_format=ValidFileType.OBJ)
+    fc: FileConversion = await post_file_convertsion_with_base64_helper.asyncio(client=client, content=content, source_format=ValidSourceFileFormat.STL, output_format=ValidOutputFileFormat.OBJ)
 
     assert fc != None
 
