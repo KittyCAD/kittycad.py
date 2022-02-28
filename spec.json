@@ -368,7 +368,7 @@
                 },
                 "x-python": {
                     "example": "from kittycad.models import FileConversion\nfrom kittycad.api.internal import stop_async_conversions\nfrom kittycad.types import Response\n\nfc: FileConversion = stop_async_conversions.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = stop_async_conversions.sync_detailed(client=client)\n\n# OR run async\nfc: FileConversion = await stop_async_conversions.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await stop_async_conversions.asyncio_detailed(client=client)",
-                    "libDocsLink": ""
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.internal.stop_async_conversions.html"
                 }
             }
         },
@@ -412,7 +412,7 @@
                 },
                 "x-python": {
                     "example": "from kittycad.models import ErrorMessage\nfrom kittycad.api.internal import gpu_devices\nfrom kittycad.types import Response\n\nfc: ErrorMessage = gpu_devices.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ErrorMessage] = gpu_devices.sync_detailed(client=client)\n\n# OR run async\nfc: ErrorMessage = await gpu_devices.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[ErrorMessage] = await gpu_devices.asyncio_detailed(client=client)",
-                    "libDocsLink": ""
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.internal.gpu_devices.html"
                 }
             }
         },
@@ -453,7 +453,7 @@
                 },
                 "x-python": {
                     "example": "from kittycad.models import Instance\nfrom kittycad.api.meta import instance_metadata\nfrom kittycad.types import Response\n\nfc: Instance = instance_metadata.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Instance] = instance_metadata.sync_detailed(client=client)\n\n# OR run async\nfc: Instance = await instance_metadata.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Instance] = await instance_metadata.asyncio_detailed(client=client)",
-                    "libDocsLink": ""
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.meta.instance_metadata.html"
                 }
             }
         },
@@ -494,7 +494,7 @@
                 },
                 "x-python": {
                     "example": "from kittycad.models import AuthSession\nfrom kittycad.api.meta import auth_session\nfrom kittycad.types import Response\n\nfc: AuthSession = auth_session.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[AuthSession] = auth_session.sync_detailed(client=client)\n\n# OR run async\nfc: AuthSession = await auth_session.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[AuthSession] = await auth_session.asyncio_detailed(client=client)",
-                    "libDocsLink": ""
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.meta.auth_session.html"
                 }
             }
         },
@@ -556,7 +556,7 @@
                 },
                 "x-python": {
                     "example": "from kittycad.models import FileConversion\nfrom kittycad.api.file import file_conversion_status_with_base64_helper\nfrom kittycad.types import Response\n\nfc: FileConversion = file_conversion_status_with_base64_helper.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = file_conversion_status_with_base64_helper.sync_detailed(client=client, id=)\n\n# OR run async\nfc: FileConversion = await file_conversion_status_with_base64_helper.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await file_conversion_status_with_base64_helper.asyncio_detailed(client=client, id=)",
-                    "libDocsLink": ""
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.file_conversion_status_with_base64_helper.html"
                 }
             }
         },
@@ -647,7 +647,7 @@
                 },
                 "x-python": {
                     "example": "from kittycad.models import FileConversion\nfrom kittycad.api.file import file_conversion_status_with_base64_helper\nfrom kittycad.types import Response\n\nfc: FileConversion = file_conversion_status_with_base64_helper.sync(client=client, source_format=ValidSourceFileFormat, output_format=ValidOutputFileFormat, body=bytes)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = file_conversion_status_with_base64_helper.sync_detailed(client=client, source_format=ValidSourceFileFormat, output_format=ValidOutputFileFormat, body=bytes)\n\n# OR run async\nfc: FileConversion = await file_conversion_status_with_base64_helper.asyncio(client=client, source_format=ValidSourceFileFormat, output_format=ValidOutputFileFormat, body=bytes)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await file_conversion_status_with_base64_helper.asyncio_detailed(client=client, source_format=ValidSourceFileFormat, output_format=ValidOutputFileFormat, body=bytes)",
-                    "libDocsLink": ""
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.file_conversion_status_with_base64_helper.html"
                 }
             }
         },
@@ -677,7 +677,7 @@
                 },
                 "x-python": {
                     "example": "from kittycad.models import PongMessage\nfrom kittycad.api.meta import ping\nfrom kittycad.types import Response\n\nfc: PongMessage = ping.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[PongMessage] = ping.sync_detailed(client=client)\n\n# OR run async\nfc: PongMessage = await ping.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[PongMessage] = await ping.asyncio_detailed(client=client)",
-                    "libDocsLink": ""
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.meta.ping.html"
                 }
             }
         }
