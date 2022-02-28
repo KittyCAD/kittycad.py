@@ -6,6 +6,7 @@ import re
 
 package_name = 'kittycad'
 
+
 def main():
     cwd = os.getcwd()
     path = os.path.join(cwd, 'spec.json')
@@ -20,6 +21,433 @@ def main():
     generateTypes(cwd, parser)
 
     # Generate the paths.
+    generatePaths(cwd, parser)
+
+
+def generatePaths(cwd: str, parser: OpenApiParser):
+    # Make sure we have the directory.
+    path = os.path.join(cwd, 'kittycad', 'api')
+    os.makedirs(path, exist_ok=True)
+
+    # Open the __init__.py file.
+    file_name = '__init__.py'
+    file_path = os.path.join(path, file_name)
+    f = open(file_path, 'w')
+    f.write("\"\"\" Contains methods for accessing the API \"\"\"\n")
+    # Close the file.
+    f.close()
+
+    # Generate the directory/__init__.py for each of the tags.
+    tags = parser.data['tags']
+    for tag in tags:
+        tag_name = tag['name']
+        tag_description = tag['description']
+        tag_path = os.path.join(path, tag_name)
+        # Esnure the directory exists.
+        os.makedirs(tag_path, exist_ok=True)
+        # Open the __init__.py file.
+        file_name = '__init__.py'
+        file_path = os.path.join(tag_path, file_name)
+        f = open(file_path, 'w')
+        f.write(
+            "\"\"\" Contains methods for accessing the " +
+            tag_name +
+            " API paths: " +
+            tag_description +
+            " \"\"\"\n")
+        # Close the file.
+        f.close()
+
+    # Generate the paths.
+    data = parser.data
+    paths = data['paths']
+    for p in paths:
+        for method in paths[p]:
+            endpoint = paths[p][method]
+            generatePath(path, p, method, endpoint)
+
+
+def generatePath(path: str, name: str, method: str, endpoint: dict):
+    # Generate the path.
+    file_name = camel_to_snake(endpoint['operationId']) + '.py'
+    # Add the tag to the path if it exists.
+    if 'tags' in endpoint:
+        tag_name = endpoint['tags'][0]
+        path = os.path.join(path, tag_name)
+    file_path = os.path.join(path, file_name)
+    print("generating type: ", name, " at: ", file_path)
+    print("  endpoint: ", [endpoint])
+    f = open(file_path, "w")
+
+    endoint_refs = getEndpointRefs(endpoint)
+    parameter_refs = getParameterRefs(endpoint)
+    request_body_refs = getRequestBodyRefs(endpoint)
+
+    # Add our imports.
+    f.write("from typing import Any, Dict, Optional, Union\n")
+    f.write("\n")
+    f.write("import httpx\n")
+    f.write("\n")
+    f.write("from ...client import Client\n")
+    # Import our references for responses.
+    for ref in endoint_refs:
+        f.write(
+            "from ...models." +
+            camel_to_snake(ref) +
+            " import " +
+            ref +
+            "\n")
+    for ref in parameter_refs:
+        f.write(
+            "from ...models." +
+            camel_to_snake(ref) +
+            " import " +
+            ref +
+            "\n")
+    for ref in request_body_refs:
+        f.write(
+            "from ...models." +
+            camel_to_snake(ref) +
+            " import " +
+            ref +
+            "\n")
+    f.write("from ...types import Response\n")
+    f.write("\n")
+
+    # Define the method.
+    f.write("def _get_kwargs(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                ": " +
+                parameter_type +
+                ",\n")
+    f.write("*, client: Client) -> Dict[str, Any]:\n")
+    f.write("\turl = \"{}" + name + "\".format(client.base_url,\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                parameter_name +
+                "=" +
+                camel_to_snake(parameter_name) +
+                ",\n")
+    f.write("\t)\n")
+    f.write("\n")
+    f.write("\theaders: Dict[str, Any] = client.get_headers()\n")
+    f.write("\tcookies: Dict[str, Any] = client.get_cookies()\n")
+    f.write("\n")
+
+    f.write("\treturn {\n")
+    f.write("\t\t\"url\": url,\n")
+    f.write("\t\t\"headers\": headers,\n")
+    f.write("\t\t\"cookies\": cookies,\n")
+    f.write("\t\t\"timeout\": client.get_timeout(),\n")
+    f.write("\t}\n")
+
+    # Define the parse reponse.
+    f.write("\n")
+    f.write("\n")
+
+    f.write(
+        "def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, " +
+        ", ".join(endoint_refs) +
+        "]]:\n")
+    # Iterate over the responses.
+    responses = endpoint['responses']
+    for response_code in responses:
+        response = responses[response_code]
+        f.write("\tif response.status_code == " + response_code + ":\n")
+        if 'content' in response:
+            content = response['content']
+            for content_type in content:
+                if content_type == 'application/json':
+                    json = content[content_type]['schema']
+                    if '$ref' in json:
+                        ref = json['$ref'].replace('#/components/schemas/', '')
+                        f.write(
+                            "\t\tresponse_" +
+                            response_code +
+                            " = " +
+                            ref +
+                            ".from_dict(response.json())\n")
+        else:
+            f.write("\t\tresponse_" + response_code + " = None\n")
+
+        f.write("\t\treturn response_" + response_code + "\n")
+
+    # End the method.
+    f.write("\treturn None\n")
+
+    # Define the build response method.
+    f.write("\n")
+    f.write("\n")
+    f.write(
+        "def _build_response(*, response: httpx.Response) -> Response[Union[Any, " +
+        ", ".join(endoint_refs) +
+        "]]:\n")
+    f.write("\treturn Response(\n")
+    f.write("\t\tstatus_code=response.status_code,\n")
+    f.write("\t\tcontent=response.content,\n")
+    f.write("\t\theaders=response.headers,\n")
+    f.write("\t\tparsed=_parse_response(response=response),\n")
+    f.write("\t)\n")
+
+    # Define the sync_detailed method.
+    f.write("\n")
+    f.write("\n")
+    f.write(
+        "def sync_detailed(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                ": " +
+                parameter_type +
+                ",\n")
+    f.write("*, client: Client) -> Response[Union[Any, " +
+            ", ".join(endoint_refs) +
+            "]]:\n")
+    f.write("\tkwargs = _get_kwargs(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                "=" +
+                camel_to_snake(parameter_name) +
+                ",\n")
+    f.write("\t\tclient=client,\n")
+    f.write("\t)\n")
+    f.write("\n")
+    f.write("\tresponse = httpx." + method + "(\n")
+    f.write("\t\tverify=client.verify_ssl,\n")
+    f.write("\t\t**kwargs,\n")
+    f.write("\t)\n")
+    f.write("\n")
+    f.write("\treturn _build_response(response=response)\n")
+
+    # Define the sync method.
+    f.write("\n")
+    f.write("\n")
+    f.write(
+        "def sync(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                ": " +
+                parameter_type +
+                ",\n")
+    f.write("*, client: Client) -> Optional[Union[Any, " +
+            ", ".join(endoint_refs) +
+            "]]:\n")
+    if 'description' in endpoint:
+        f.write("\t\"\"\" " + endpoint['description'] + " \"\"\"\n")
+    f.write("\n")
+    f.write("\treturn sync_detailed(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                "=" +
+                camel_to_snake(parameter_name) +
+                ",\n")
+    f.write("\t\tclient=client,\n")
+    f.write("\t).parsed\n")
+
+    # Define the asyncio_detailed method.
+    f.write("\n")
+    f.write("\n")
+    f.write(
+        "async def asyncio_detailed(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                ": " +
+                parameter_type +
+                ",\n")
+    f.write("*, client: Client) -> Response[Union[Any, " +
+            ", ".join(endoint_refs) +
+            "]]:\n")
+    f.write("\tkwargs = _get_kwargs(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                "=" +
+                camel_to_snake(parameter_name) +
+                ",\n")
+    f.write("\t\tclient=client,\n")
+    f.write("\t)\n")
+    f.write("\n")
+    f.write("\tasync with httpx.AsyncClient(verify=client.verify_ssl) as _client:\n")
+    f.write("\t\tresponse = await _client." + method + "(**kwargs)\n")
+    f.write("\n")
+    f.write("\treturn _build_response(response=response)\n")
+
+    # Define the asyncio method.
+    f.write("\n")
+    f.write("\n")
+    f.write(
+        "async def asyncio(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                ": " +
+                parameter_type +
+                ",\n")
+    f.write("*, client: Client) -> Optional[Union[Any, " +
+            ", ".join(endoint_refs) +
+            "]]:\n")
+    if 'description' in endpoint:
+        f.write("\t\"\"\" " + endpoint['description'] + " \"\"\"\n")
+    f.write("\n")
+    f.write("\treturn (await asyncio_detailed(\n")
+    # Iterate over the parameters.
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            f.write(
+                "\t" +
+                camel_to_snake(parameter_name) +
+                "=" +
+                camel_to_snake(parameter_name) +
+                ",\n")
+    f.write("\t\tclient=client,\n")
+    f.write("\t)).parsed\n")
+
+    # Close the file.
+    f.close()
+
 
 def generateTypes(cwd: str, parser: OpenApiParser):
     # Make sure we have the directory.
@@ -39,10 +467,11 @@ def generateTypes(cwd: str, parser: OpenApiParser):
     for key in schemas:
         schema = schemas[key]
         generateType(path, key, schema)
-        f.write("from ."+camel_to_snake(key)+" import " + key + "\n")
+        f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
 
     # Close the file.
     f.close()
+
 
 def generateType(path: str, name: str, schema: dict):
     # Generate the type.
@@ -65,14 +494,19 @@ def generateType(path: str, name: str, schema: dict):
 
         refs = getRefs(schema)
         for ref in refs:
-            f.write("from ..models."+camel_to_snake(ref)+" import "+ref+"\n")
+            f.write(
+                "from ..models." +
+                camel_to_snake(ref) +
+                " import " +
+                ref +
+                "\n")
 
         f.write("from ..types import UNSET, Unset\n")
         f.write("\n")
-        f.write("T = TypeVar(\"T\", bound=\""+name+"\")\n")
+        f.write("T = TypeVar(\"T\", bound=\"" + name + "\")\n")
         f.write("\n")
         f.write("@attr.s(auto_attribs=True)\n")
-        f.write("class "+name+":\n")
+        f.write("class " + name + ":\n")
         # Write the description.
         f.write("\t\"\"\" \"\"\"\n")
         # Iterate over the properties.
@@ -85,27 +519,49 @@ def generateType(path: str, name: str, schema: dict):
                 if property_type == 'string':
                     if 'format' in property_schema:
                         if property_schema['format'] == 'date-time':
-                            f.write("\t"+property_name+": Union[Unset, datetime.datetime] = UNSET\n")
+                            f.write(
+                                "\t" +
+                                property_name +
+                                ": Union[Unset, datetime.datetime] = UNSET\n")
                             continue
 
-                    f.write("\t"+property_name+": Union[Unset, str] = UNSET\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        ": Union[Unset, str] = UNSET\n")
                 elif property_type == 'integer':
-                    f.write("\t"+property_name+":  Union[Unset, int] = UNSET\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        ":  Union[Unset, int] = UNSET\n")
                 elif property_type == 'number':
-                    f.write("\t"+property_name+":  Union[Unset, float] = UNSET\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        ":  Union[Unset, float] = UNSET\n")
                 elif property_type == 'boolean':
-                    f.write("\t"+property_name+": Union[Unset, bool] = False\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        ": Union[Unset, bool] = False\n")
                 else:
                     raise ("  unknown type: ", property_type)
             elif '$ref' in property_schema:
-                ref = property_schema['$ref'].replace('#/components/schemas/', '')
-                f.write("\t"+property_name+": Union[Unset, "+ref+"] = UNSET\n")
+                ref = property_schema['$ref'].replace(
+                    '#/components/schemas/', '')
+                f.write(
+                    "\t" +
+                    property_name +
+                    ": Union[Unset, " +
+                    ref +
+                    "] = UNSET\n")
             else:
                 raise ("  unknown schema: ", property_schema)
 
         # Finish writing the class.
         f.write("\n")
-        f.write("\tadditional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)\n")
+        f.write(
+            "\tadditional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)\n")
 
         # Now let's write the to_dict method.
         f.write("\n")
@@ -120,25 +576,66 @@ def generateType(path: str, name: str, schema: dict):
                 if property_type == 'string':
                     if 'format' in property_schema:
                         if property_schema['format'] == 'date-time':
-                            f.write("\t\t"+property_name+": Union[Unset, str] = UNSET\n")
-                            f.write("\t\tif not isinstance(self."+property_name+", Unset):\n")
-                            f.write("\t\t\t"+property_name+" = self."+property_name+".isoformat()\n")
+                            f.write(
+                                "\t\t" +
+                                property_name +
+                                ": Union[Unset, str] = UNSET\n")
+                            f.write(
+                                "\t\tif not isinstance(self." + property_name + ", Unset):\n")
+                            f.write(
+                                "\t\t\t" +
+                                property_name +
+                                " = self." +
+                                property_name +
+                                ".isoformat()\n")
                             continue
 
-                    f.write("\t"+property_name+" = self."+property_name+"\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        "\n")
                 elif property_type == 'integer':
-                    f.write("\t"+property_name+" = self."+property_name+"\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        "\n")
                 elif property_type == 'number':
-                    f.write("\t"+property_name+" = self."+property_name+"\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        "\n")
                 elif property_type == 'boolean':
-                    f.write("\t"+property_name+" = self."+property_name+"\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        "\n")
                 else:
                     raise ("  unknown type: ", property_type)
             elif '$ref' in property_schema:
-                ref = property_schema['$ref'].replace('#/components/schemas/', '')
-                f.write("\t\t"+property_name+": Union[Unset, str] = UNSET\n")
-                f.write("\t\tif not isinstance(self."+property_name+", Unset):\n")
-                f.write("\t\t\t"+property_name+" = self."+property_name+".value\n")
+                ref = property_schema['$ref'].replace(
+                    '#/components/schemas/', '')
+                f.write(
+                    "\t\t" +
+                    property_name +
+                    ": Union[Unset, str] = UNSET\n")
+                f.write(
+                    "\t\tif not isinstance(self." +
+                    property_name +
+                    ", Unset):\n")
+                f.write(
+                    "\t\t\t" +
+                    property_name +
+                    " = self." +
+                    property_name +
+                    ".value\n")
             else:
                 raise ("  unknown schema: ", property_schema)
 
@@ -148,12 +645,16 @@ def generateType(path: str, name: str, schema: dict):
         f.write("\t\tfield_dict.update(self.additional_properties)\n")
         f.write("\t\tfield_dict.update({})\n")
 
-
         # Iternate over the properties.
         for property_name in schema['properties']:
             # Write the property.
-            f.write("\t\tif "+property_name+" is not UNSET:\n")
-            f.write("\t\t\tfield_dict['"+property_name+"'] = "+property_name+"\n")
+            f.write("\t\tif " + property_name + " is not UNSET:\n")
+            f.write(
+                "\t\t\tfield_dict['" +
+                property_name +
+                "'] = " +
+                property_name +
+                "\n")
 
         f.write("\n")
         f.write("\t\treturn field_dict\n")
@@ -161,7 +662,8 @@ def generateType(path: str, name: str, schema: dict):
         # Now let's write the from_dict method.
         f.write("\n")
         f.write("\t@classmethod\n")
-        f.write("\tdef from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:\n")
+        f.write(
+            "\tdef from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:\n")
         f.write("\t\td = src_dict.copy()\n")
 
         # Iternate over the properties.
@@ -174,37 +676,78 @@ def generateType(path: str, name: str, schema: dict):
                 if property_type == 'string':
                     if 'format' in property_schema:
                         if property_schema['format'] == 'date-time':
-                            f.write("\t\t_"+property_name+" = d.pop(\"" +property_name+"\", UNSET)\n")
-                            f.write("\t\t"+property_name+": Union[Unset, datetime.datetime]\n")
-                            f.write("\t\tif not isinstance(_"+property_name+", Unset):\n")
-                            f.write("\t\t\t"+property_name+" = UNSET\n")
+                            f.write(
+                                "\t\t_" +
+                                property_name +
+                                " = d.pop(\"" +
+                                property_name +
+                                "\", UNSET)\n")
+                            f.write(
+                                "\t\t" +
+                                property_name +
+                                ": Union[Unset, datetime.datetime]\n")
+                            f.write(
+                                "\t\tif not isinstance(_" + property_name + ", Unset):\n")
+                            f.write("\t\t\t" + property_name + " = UNSET\n")
                             f.write("\t\telse:\n")
-                            f.write("\t\t\t"+property_name+" = isoparse(_"+property_name+")\n")
+                            f.write("\t\t\t" + property_name +
+                                    " = isoparse(_" + property_name + ")\n")
                             f.write("\n")
                             continue
 
-                    f.write("\t"+property_name+" = d.pop(\"" +property_name+"\", UNSET)\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = d.pop(\"" +
+                        property_name +
+                        "\", UNSET)\n")
                     f.write("\n")
                 elif property_type == 'integer':
-                    f.write("\t"+property_name+" = d.pop(\"" +property_name+"\", UNSET)\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = d.pop(\"" +
+                        property_name +
+                        "\", UNSET)\n")
                     f.write("\n")
                 elif property_type == 'number':
-                    f.write("\t"+property_name+" = d.pop(\"" +property_name+"\", UNSET)\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = d.pop(\"" +
+                        property_name +
+                        "\", UNSET)\n")
                     f.write("\n")
                 elif property_type == 'boolean':
-                    f.write("\t"+property_name+" = d.pop(\"" +property_name+"\", UNSET)\n")
+                    f.write(
+                        "\t" +
+                        property_name +
+                        " = d.pop(\"" +
+                        property_name +
+                        "\", UNSET)\n")
                     f.write("\n")
                 else:
                     print("  unknown type: ", property_type)
                     raise
             elif '$ref' in property_schema:
-                ref = property_schema['$ref'].replace('#/components/schemas/', '')
-                f.write("\t\t_"+property_name+" = d.pop(\"" +property_name+"\", UNSET)\n")
-                f.write("\t\t"+property_name+": Union[Unset, "+ref+"]\n")
-                f.write("\t\tif not isinstance(_"+property_name+", Unset):\n")
-                f.write("\t\t\t"+property_name+" = UNSET\n")
+                ref = property_schema['$ref'].replace(
+                    '#/components/schemas/', '')
+                f.write(
+                    "\t\t_" +
+                    property_name +
+                    " = d.pop(\"" +
+                    property_name +
+                    "\", UNSET)\n")
+                f.write("\t\t" + property_name +
+                        ": Union[Unset, " + ref + "]\n")
+                f.write(
+                    "\t\tif not isinstance(_" +
+                    property_name +
+                    ", Unset):\n")
+                f.write("\t\t\t" + property_name + " = UNSET\n")
                 f.write("\t\telse:\n")
-                f.write("\t\t\t"+property_name+" = "+ref+"(_"+property_name+")\n")
+                f.write("\t\t\t" + property_name + " = " +
+                        ref + "(_" + property_name + ")\n")
                 f.write("\n")
             else:
                 print("  unknown schema: ", property_schema)
@@ -212,17 +755,17 @@ def generateType(path: str, name: str, schema: dict):
 
         # Finish writing the from_dict method.
         f.write("\n")
-        f.write("\t\t"+camel_to_snake(name)+" = cls(\n")
+        f.write("\t\t" + camel_to_snake(name) + " = cls(\n")
         # Iternate over the properties.
         for property_name in schema['properties']:
             # Write the property.
-            f.write("\t\t\t"+property_name+"= "+property_name+",\n")
+            f.write("\t\t\t" + property_name + "= " + property_name + ",\n")
 
         # Close the class.
         f.write("\t\t)\n")
         f.write("\n")
-        f.write("\t\t"+camel_to_snake(name)+".additional_properties = d\n")
-        f.write("return "+camel_to_snake(name)+"\n")
+        f.write("\t\t" + camel_to_snake(name) + ".additional_properties = d\n")
+        f.write("return " + camel_to_snake(name) + "\n")
 
         # write the rest of the class.
         f.write("\n")
@@ -248,10 +791,15 @@ def generateType(path: str, name: str, schema: dict):
     elif type_name == 'string' and 'enum' in schema:
         f.write("from enum import Enum\n")
         f.write("\n")
-        f.write("class "+name+"(str, Enum):\n")
+        f.write("class " + name + "(str, Enum):\n")
         # Iterate over the properties.
         for value in schema['enum']:
-            f.write("\t"+camel_to_screaming_snake(value)+" = '"+value+"'\n")
+            f.write(
+                "\t" +
+                camel_to_screaming_snake(value) +
+                " = '" +
+                value +
+                "'\n")
 
         # close the enum.
         f.write("\n")
@@ -263,6 +811,7 @@ def generateType(path: str, name: str, schema: dict):
 
     # Close the file.
     f.close()
+
 
 def hasDateTime(schema: dict) -> bool:
     # Generate the type.
@@ -280,6 +829,7 @@ def hasDateTime(schema: dict) -> bool:
                 return True
 
     return False
+
 
 def getRefs(schema: dict) -> [str]:
     refs = []
@@ -301,13 +851,65 @@ def getRefs(schema: dict) -> [str]:
     return refs
 
 
+def getEndpointRefs(endpoint: dict) -> [str]:
+    refs = []
+
+    responses = endpoint['responses']
+    for response_code in responses:
+        response = responses[response_code]
+        if 'content' in response:
+            content = response['content']
+            for content_type in content:
+                if content_type == 'application/json':
+                    json = content[content_type]['schema']
+                    if '$ref' in json:
+                        ref = json['$ref'].replace('#/components/schemas/', '')
+                        refs.append(ref)
+
+    return refs
+
+
+def getParameterRefs(endpoint: dict) -> [str]:
+    refs = []
+
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+                refs.append(parameter_type)
+
+    return refs
+
+
+def getRequestBodyRefs(endpoint: dict) -> [str]:
+    refs = []
+
+    if 'requestBody' in endpoint:
+        requestBody = endpoint['requestBody']
+        if 'content' in requestBody:
+            content = requestBody['content']
+            for content_type in content:
+                if content_type == 'application/json':
+                    json = content[content_type]['schema']
+                    if '$ref' in json:
+                        ref = json['$ref'].replace('#/components/schemas/', '')
+                        refs.append(ref)
+
+    return refs
+
+
 def camel_to_snake(name: str):
     name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
 
+
 def camel_to_screaming_snake(name: str):
     name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).upper()
+
 
 if (__name__ == '__main__'):
     exit_code = main()
