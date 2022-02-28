@@ -21,3 +21,14 @@
 
 
 
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   kittycad.api.beta
+   kittycad.api.file
+   kittycad.api.internal
+   kittycad.api.meta
+
