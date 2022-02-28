@@ -87,12 +87,12 @@ class FileConversion:
         else:
             created_at = isoparse(_created_at)
 
-    id = d.pop("id", UNSET)
+        id = d.pop("id", UNSET)
 
-    output = d.pop("output", UNSET)
+        output = d.pop("output", UNSET)
 
-      _output_format = d.pop("output_format", UNSET)
-       output_format: Union[Unset, ValidOutputFileFormat]
+        _output_format = d.pop("output_format", UNSET)
+        output_format: Union[Unset, ValidOutputFileFormat]
         if not isinstance(_output_format, Unset):
             output_format = UNSET
         else:
@@ -131,12 +131,10 @@ class FileConversion:
         )
 
         file_conversion.additional_properties = d
+        return file_conversion
 
-
-return file_conversion
-
-  @property
-   def additional_keys(self) -> List[str]:
+    @property
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

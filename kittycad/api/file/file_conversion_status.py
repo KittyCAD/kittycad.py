@@ -4,6 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.file_conversion import FileConversion
+from ...models.error_message import ErrorMessage
 from ...types import Response
 
 def _get_kwargs(
@@ -24,29 +25,29 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, ErrorMessage]]:
 	if response.status_code == 200:
 		response_200 = FileConversion.from_dict(response.json())
 		return response_200
 	if response.status_code == 401:
-		response_401 = None
+		response_401 = ErrorMessage.from_dict(response.json())
 		return response_401
 	if response.status_code == 403:
-		response_403 = None
+		response_403 = ErrorMessage.from_dict(response.json())
 		return response_403
 	if response.status_code == 404:
-		response_404 = None
+		response_404 = ErrorMessage.from_dict(response.json())
 		return response_404
 	if response.status_code == 406:
-		response_406 = None
+		response_406 = ErrorMessage.from_dict(response.json())
 		return response_406
 	if response.status_code == 500:
-		response_500 = None
+		response_500 = ErrorMessage.from_dict(response.json())
 		return response_500
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion, ErrorMessage]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -59,7 +60,7 @@ def sync_detailed(
 	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileConversion]]:
+) -> Response[Union[Any, FileConversion, ErrorMessage]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -77,7 +78,7 @@ def sync(
 	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileConversion]]:
+) -> Optional[Union[Any, FileConversion, ErrorMessage]]:
 	""" Get the status and output of an async file conversion. """
 
 	return sync_detailed(
@@ -90,7 +91,7 @@ async def asyncio_detailed(
 	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileConversion]]:
+) -> Response[Union[Any, FileConversion, ErrorMessage]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -106,7 +107,7 @@ async def asyncio(
 	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileConversion]]:
+) -> Optional[Union[Any, FileConversion, ErrorMessage]]:
 	""" Get the status and output of an async file conversion. """
 
 	return (

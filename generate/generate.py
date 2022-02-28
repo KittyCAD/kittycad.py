@@ -64,10 +64,10 @@ def generatePaths(cwd: str, parser: OpenApiParser):
     for p in paths:
         for method in paths[p]:
             endpoint = paths[p][method]
-            generatePath(path, p, method, endpoint)
+            generatePath(path, p, method, endpoint, data)
 
 
-def generatePath(path: str, name: str, method: str, endpoint: dict):
+def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict):
     # Generate the path.
     file_name = camel_to_snake(endpoint['operationId']) + '.py'
     # Add the tag to the path if it exists.
@@ -79,7 +79,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
     print("  endpoint: ", [endpoint])
     f = open(file_path, "w")
 
-    endoint_refs = getEndpointRefs(endpoint)
+    endoint_refs = getEndpointRefs(endpoint, data)
     parameter_refs = getParameterRefs(endpoint)
     request_body_refs = getRequestBodyRefs(endpoint)
 
@@ -198,6 +198,22 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                             " = " +
                             ref +
                             ".from_dict(response.json())\n")
+        elif '$ref' in response:
+            schema_name = response['$ref'].replace('#/components/responses/', '')
+            schema = data['components']['responses'][schema_name]
+            if 'content' in schema:
+                content = schema['content']
+                for content_type in content:
+                    if content_type == 'application/json':
+                        json = content[content_type]['schema']
+                        if '$ref' in json:
+                            ref = json['$ref'].replace('#/components/schemas/', '')
+                            f.write(
+                                "\t\tresponse_" +
+                                response_code +
+                                " = " +
+                                ref +
+                                ".from_dict(response.json())\n")
         else:
             f.write("\t\tresponse_" + response_code + " = None\n")
 
@@ -707,7 +723,7 @@ def generateType(path: str, name: str, schema: dict):
                             continue
 
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = d.pop(\"" +
                         property_name +
@@ -715,7 +731,7 @@ def generateType(path: str, name: str, schema: dict):
                     f.write("\n")
                 elif property_type == 'integer':
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = d.pop(\"" +
                         property_name +
@@ -723,7 +739,7 @@ def generateType(path: str, name: str, schema: dict):
                     f.write("\n")
                 elif property_type == 'number':
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = d.pop(\"" +
                         property_name +
@@ -731,7 +747,7 @@ def generateType(path: str, name: str, schema: dict):
                     f.write("\n")
                 elif property_type == 'boolean':
                     f.write(
-                        "\t" +
+                        "\t\t" +
                         property_name +
                         " = d.pop(\"" +
                         property_name +
@@ -776,7 +792,7 @@ def generateType(path: str, name: str, schema: dict):
         f.write("\t\t)\n")
         f.write("\n")
         f.write("\t\t" + camel_to_snake(name) + ".additional_properties = d\n")
-        f.write("return " + camel_to_snake(name) + "\n")
+        f.write("\t\treturn " + camel_to_snake(name) + "\n")
 
         # write the rest of the class.
         f.write("\n")
@@ -862,7 +878,7 @@ def getRefs(schema: dict) -> [str]:
     return refs
 
 
-def getEndpointRefs(endpoint: dict) -> [str]:
+def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
     refs = []
 
     responses = endpoint['responses']
@@ -877,6 +893,18 @@ def getEndpointRefs(endpoint: dict) -> [str]:
                         ref = json['$ref'].replace('#/components/schemas/', '')
                         if ref not in refs:
                             refs.append(ref)
+        elif '$ref' in response:
+            schema_name = response['$ref'].replace('#/components/responses/', '')
+            schema = data['components']['responses'][schema_name]
+            if 'content' in schema:
+                content = schema['content']
+                for content_type in content:
+                    if content_type == 'application/json':
+                        json = content[content_type]['schema']
+                        if '$ref' in json:
+                            ref = json['$ref'].replace('#/components/schemas/', '')
+                            if ref not in refs:
+                                refs.append(ref)
 
     return refs
 

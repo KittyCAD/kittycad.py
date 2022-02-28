@@ -21,10 +21,10 @@ class ErrorMessage:
     message = self.message
     status = self.status
 
-      field_dict: Dict[str, Any] = {}
-       field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if code is not UNSET:
+    field_dict: Dict[str, Any] = {}
+     field_dict.update(self.additional_properties)
+      field_dict.update({})
+       if code is not UNSET:
             field_dict['code'] = code
         if message is not UNSET:
             field_dict['message'] = message
@@ -36,25 +36,23 @@ class ErrorMessage:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-    code = d.pop("code", UNSET)
+        code = d.pop("code", UNSET)
 
-    message = d.pop("message", UNSET)
+        message = d.pop("message", UNSET)
 
-    status = d.pop("status", UNSET)
+        status = d.pop("status", UNSET)
 
-      error_message = cls(
-           code=code,
-           message=message,
-           status=status,
-           )
+        error_message = cls(
+            code=code,
+            message=message,
+            status=status,
+        )
 
-       error_message.additional_properties = d
+        error_message.additional_properties = d
+        return error_message
 
-
-return error_message
-
-  @property
-   def additional_keys(self) -> List[str]:
+    @property
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

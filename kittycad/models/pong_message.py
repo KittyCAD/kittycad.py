@@ -43,12 +43,10 @@ class PongMessage:
         )
 
         pong_message.additional_properties = d
+        return pong_message
 
-
-return pong_message
-
-  @property
-   def additional_keys(self) -> List[str]:
+    @property
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
