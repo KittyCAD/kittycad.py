@@ -7,9 +7,10 @@ from ...models.auth_session import AuthSession
 from ...types import Response
 
 def _get_kwargs(
-*, client: Client) -> Dict[str, Any]:
-	url = "{}/_meta/debug/session".format(client.base_url,
-	)
+	*,
+	client: Client,
+) -> Dict[str, Any]:
+	url = "{}/_meta/debug/session".format(client.base_url)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -45,7 +46,9 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, AuthSess
 
 
 def sync_detailed(
-*, client: Client) -> Response[Union[Any, AuthSession]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, AuthSession]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -59,7 +62,9 @@ def sync_detailed(
 
 
 def sync(
-*, client: Client) -> Optional[Union[Any, AuthSession]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, AuthSession]]:
 	""" Get information about your API request session. This is primarily used for debugging. """
 
 	return sync_detailed(
@@ -68,7 +73,9 @@ def sync(
 
 
 async def asyncio_detailed(
-*, client: Client) -> Response[Union[Any, AuthSession]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, AuthSession]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -80,9 +87,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-*, client: Client) -> Optional[Union[Any, AuthSession]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, AuthSession]]:
 	""" Get information about your API request session. This is primarily used for debugging. """
 
-	return (await asyncio_detailed(
-		client=client,
-	)).parsed
+	return (
+		await asyncio_detailed(
+			client=client,
+		)
+	).parsed

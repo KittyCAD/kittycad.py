@@ -6,9 +6,10 @@ from ...client import Client
 from ...types import Response
 
 def _get_kwargs(
-*, client: Client) -> Dict[str, Any]:
-	url = "{}/_internal/gpu/devices".format(client.base_url,
-	)
+	*,
+	client: Client,
+) -> Dict[str, Any]:
+	url = "{}/_internal/gpu/devices".format(client.base_url)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -43,7 +44,9 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ]]:
 
 
 def sync_detailed(
-*, client: Client) -> Response[Union[Any, ]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, ]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -57,7 +60,9 @@ def sync_detailed(
 
 
 def sync(
-*, client: Client) -> Optional[Union[Any, ]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, ]]:
 	""" Get information about GPU devices on this server. This is primarily used for debugging. This endpoint can only be used by specific KittyCAD employees. """
 
 	return sync_detailed(
@@ -66,7 +71,9 @@ def sync(
 
 
 async def asyncio_detailed(
-*, client: Client) -> Response[Union[Any, ]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, ]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -78,9 +85,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-*, client: Client) -> Optional[Union[Any, ]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, ]]:
 	""" Get information about GPU devices on this server. This is primarily used for debugging. This endpoint can only be used by specific KittyCAD employees. """
 
-	return (await asyncio_detailed(
-		client=client,
-	)).parsed
+	return (
+		await asyncio_detailed(
+			client=client,
+		)
+	).parsed

@@ -7,9 +7,10 @@ from ...models.instance import Instance
 from ...types import Response
 
 def _get_kwargs(
-*, client: Client) -> Dict[str, Any]:
-	url = "{}/_meta/debug/instance".format(client.base_url,
-	)
+	*,
+	client: Client,
+) -> Dict[str, Any]:
+	url = "{}/_meta/debug/instance".format(client.base_url)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -45,7 +46,9 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, Instance
 
 
 def sync_detailed(
-*, client: Client) -> Response[Union[Any, Instance]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, Instance]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -59,7 +62,9 @@ def sync_detailed(
 
 
 def sync(
-*, client: Client) -> Optional[Union[Any, Instance]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, Instance]]:
 	""" Get information about this specific API server instance. This is primarily used for debugging. """
 
 	return sync_detailed(
@@ -68,7 +73,9 @@ def sync(
 
 
 async def asyncio_detailed(
-*, client: Client) -> Response[Union[Any, Instance]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, Instance]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -80,9 +87,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-*, client: Client) -> Optional[Union[Any, Instance]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, Instance]]:
 	""" Get information about this specific API server instance. This is primarily used for debugging. """
 
-	return (await asyncio_detailed(
-		client=client,
-	)).parsed
+	return (
+		await asyncio_detailed(
+			client=client,
+		)
+	).parsed

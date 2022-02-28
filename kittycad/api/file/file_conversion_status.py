@@ -8,10 +8,10 @@ from ...types import Response
 
 def _get_kwargs(
 	id: str,
-*, client: Client) -> Dict[str, Any]:
-	url = "{}/file/conversion/{id}".format(client.base_url,
-	id=id,
-	)
+	*,
+	client: Client,
+) -> Dict[str, Any]:
+	url = "{}/file/conversion/{id}".format(client.base_url, id=id)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -57,7 +57,9 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 
 def sync_detailed(
 	id: str,
-*, client: Client) -> Response[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -73,18 +75,22 @@ def sync_detailed(
 
 def sync(
 	id: str,
-*, client: Client) -> Optional[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, FileConversion]]:
 	""" Get the status and output of an async file conversion. """
 
 	return sync_detailed(
-	id=id,
+		id=id,
 		client=client,
 	).parsed
 
 
 async def asyncio_detailed(
 	id: str,
-*, client: Client) -> Response[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -98,10 +104,14 @@ async def asyncio_detailed(
 
 async def asyncio(
 	id: str,
-*, client: Client) -> Optional[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, FileConversion]]:
 	""" Get the status and output of an async file conversion. """
 
-	return (await asyncio_detailed(
-		id=id,
-		client=client,
-	)).parsed
+	return (
+		await asyncio_detailed(
+			id=id,
+			client=client,
+		)
+	).parsed
