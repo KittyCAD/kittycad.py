@@ -15,7 +15,7 @@ generate: docker-image ## Generate the api client.
 		--name python-generator \
 		-v $(CURDIR):/usr/src \
 		--workdir /usr/src \
-		$(DOCKER_IMAGE_NAME) poetry run python generate/generate.py
+		$(DOCKER_IMAGE_NAME) poetry run python generate/generate.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/models/*.py && autopep8 --in-place --aggressive --aggressive kittycad/api/*.py
 
 .PHONY: shell
 shell: docker-image ## Pop into a shell in the docker image.
