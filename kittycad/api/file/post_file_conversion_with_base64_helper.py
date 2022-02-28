@@ -5,13 +5,14 @@ import httpx
 
 from ...client import Client
 from ...models.file_conversion import FileConversion
-from ...models.valid_file_type import ValidFileType
+from ...models.valid_source_file_format import ValidSourceFileFormat
+from ...models.valid_output_file_format import ValidOutputFileFormat
 from ...types import Response
 from ...api.file.post_file_conversion import sync as fc_sync, asyncio as fc_asyncio
 
 def sync(
-    source_format: ValidFileType,
-    output_format: ValidFileType,
+    source_format: ValidSourceFileFormat,
+    output_format: ValidOutputFileFormat,
     content: bytes,
     *,
     client: Client,
@@ -34,8 +35,8 @@ def sync(
 
 
 async def asyncio(
-    source_format: ValidFileType,
-    output_format: ValidFileType,
+    source_format: ValidSourceFileFormat,
+    output_format: ValidOutputFileFormat,
     content: bytes,
     *,
     client: Client,
