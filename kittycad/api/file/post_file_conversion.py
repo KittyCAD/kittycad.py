@@ -68,8 +68,8 @@ def sync_detailed(
 	output_format: ValidOutputFileFormat,
 *, client: Client) -> Response[Union[Any, FileConversion, FileConversion]]:
 	kwargs = _get_kwargs(
-	source_format=source_format,
-	output_format=output_format,
+		source_format=source_format,
+		output_format=output_format,
 		client=client,
 	)
 
@@ -99,8 +99,8 @@ async def asyncio_detailed(
 	output_format: ValidOutputFileFormat,
 *, client: Client) -> Response[Union[Any, FileConversion, FileConversion]]:
 	kwargs = _get_kwargs(
-	source_format=source_format,
-	output_format=output_format,
+		source_format=source_format,
+		output_format=output_format,
 		client=client,
 	)
 
@@ -117,7 +117,7 @@ async def asyncio(
 	""" Convert a CAD file from one format to another. If the file being converted is larger than 30MB, it will be performed asynchronously. """
 
 	return (await asyncio_detailed(
-	source_format=source_format,
-	output_format=output_format,
+		source_format=source_format,
+		output_format=output_format,
 		client=client,
 	)).parsed
