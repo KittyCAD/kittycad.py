@@ -987,6 +987,7 @@ def getRequestBodyRefs(endpoint: dict) -> [str]:
 
     return refs
 
+
 def getRequestBodyType(endpoint: dict) -> str:
     type_name = None
 
