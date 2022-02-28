@@ -642,7 +642,7 @@
                     "beta"
                 ],
                 "x-go": {
-                    "example": "// PostConversion: Convert CAD file\n//\n// Convert a CAD file from one format to another. If the file being converted is larger than 30MB, it will be performed asynchronously.\n//\n// Parameters:\n//\t- `outputFormat`: The format the file should be converted to.\n//\t- `sourceFormat`: The format of the file to convert.\nfileConversion, err := client.File.PostConversion(sourceFormat, outputFormat)",
+                    "example": "// PostConversion: Convert CAD file\n//\n// Convert a CAD file from one format to another. If the file being converted is larger than 30MB, it will be performed asynchronously.\n//\n// Parameters:\n//\t- `outputFormat`: The format the file should be converted to.\n//\t- `sourceFormat`: The format of the file to convert.\nfileConversion, err := client.File.PostConversion(sourceFormat, outputFormat, body)",
                     "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.PostConversion"
                 },
                 "x-python": {
