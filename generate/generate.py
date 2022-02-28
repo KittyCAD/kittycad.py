@@ -287,6 +287,29 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
                             " = " +
                             ref +
                             ".from_dict(response.json())\n")
+                    elif 'type' in json:
+                        if json['type'] == 'array':
+                            items = json['items']
+                            if '$ref' in items:
+                                ref = items['$ref'].replace(
+                                    '#/components/schemas/', '')
+                                f.write(
+                                    "\t\tresponse_" +
+                                    response_code +
+                                    " = [\n")
+                                f.write(
+                                    "\t\t\t" +
+                                    ref +
+                                    ".from_dict(item)\n")
+                                f.write(
+                                    "\t\t\tfor item in response.json()\n")
+                                f.write("\t\t]\n")
+                            else:
+                                raise Exception("Unknown array type")
+                        else:
+                            raise Exception("Unknown type")
+                    else:
+                        raise Exception("Unknown type")
         elif '$ref' in response:
             schema_name = response['$ref'].replace(
                 '#/components/responses/', '')
@@ -697,7 +720,7 @@ def generateType(path: str, name: str, schema: dict):
                         property_name +
                         ": Union[Unset, bool] = False\n")
                 else:
-                    raise ("  unknown type: ", property_type)
+                    raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace(
                     '#/components/schemas/', '')
@@ -708,7 +731,7 @@ def generateType(path: str, name: str, schema: dict):
                     ref +
                     "] = UNSET\n")
             else:
-                raise ("  unknown schema: ", property_schema)
+                raise Exception("  unknown schema: ", property_schema)
 
         # Finish writing the class.
         f.write("\n")
@@ -770,7 +793,7 @@ def generateType(path: str, name: str, schema: dict):
                         property_name +
                         "\n")
                 else:
-                    raise ("  unknown type: ", property_type)
+                    raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace(
                     '#/components/schemas/', '')
@@ -789,7 +812,7 @@ def generateType(path: str, name: str, schema: dict):
                     property_name +
                     ".value\n")
             else:
-                raise ("  unknown schema: ", property_schema)
+                raise Exception("  unknown schema: ", property_schema)
 
         # Finish writing the to_dict method.
         f.write("\n")
@@ -880,7 +903,7 @@ def generateType(path: str, name: str, schema: dict):
                     f.write("\n")
                 else:
                     print("  unknown type: ", property_type)
-                    raise
+                    raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace(
                     '#/components/schemas/', '')
@@ -903,7 +926,7 @@ def generateType(path: str, name: str, schema: dict):
                 f.write("\n")
             else:
                 print("  unknown schema: ", property_schema)
-                raise
+                raise Exception("  unknown schema: ", property_schema)
 
         # Finish writing the from_dict method.
         f.write("\n")
