@@ -85,14 +85,12 @@ def generateType(path: str, name: str, schema: dict):
                 elif property_type == 'boolean':
                     f.write("\t"+property_name+": Union[Unset, bool] = False\n")
                 else:
-                    print("  unknown type: ", property_type)
-                    raise
+                    raise ("  unknown type: ", property_type)
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace('#/components/schemas/', '')
                 f.write("\t"+property_name+": Union[Unset, "+ref+"] = UNSET\n")
             else:
-                print("  unknown schema: ", property_schema)
-                raise
+                raise ("  unknown schema: ", property_schema)
 
         # Finish writing the class.
         f.write("\n")
@@ -124,16 +122,14 @@ def generateType(path: str, name: str, schema: dict):
                 elif property_type == 'boolean':
                     f.write("\t"+property_name+" = self."+property_name+"\n")
                 else:
-                    print("  unknown type: ", property_type)
-                    raise
+                    raise ("  unknown type: ", property_type)
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace('#/components/schemas/', '')
                 f.write("\t\t"+property_name+": Union[Unset, str] = UNSET\n")
                 f.write("\t\tif not isinstance(self."+property_name+", Unset):\n")
                 f.write("\t\t\t"+property_name+" = self."+property_name+".value\n")
             else:
-                print("  unknown schema: ", property_schema)
-                raise
+                raise ("  unknown schema: ", property_schema)
 
         # Finish writing the to_dict method.
         f.write("\n")
