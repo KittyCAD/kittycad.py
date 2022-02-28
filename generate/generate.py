@@ -22,10 +22,9 @@ def main():
     generateTypes(cwd, parser)
 
     # Generate the paths.
-    generatePaths(cwd, parser)
+    data = generatePaths(cwd, parser)
 
     # Add the client information to the generation.
-    data = parser.data
     data['info']['x-python'] = {
         'client': """# Create a client with your token.
 from kittycad import Client
@@ -48,7 +47,7 @@ client = ClientFromEnv()""",
     f.close()
 
 
-def generatePaths(cwd: str, parser: OpenApiParser):
+def generatePaths(cwd: str, parser: OpenApiParser) -> dict:
     # Make sure we have the directory.
     path = os.path.join(cwd, 'kittycad', 'api')
     os.makedirs(path, exist_ok=True)
@@ -88,7 +87,9 @@ def generatePaths(cwd: str, parser: OpenApiParser):
     for p in paths:
         for method in paths[p]:
             endpoint = paths[p][method]
-            generatePath(path, p, method, endpoint, data)
+            data = generatePath(path, p, method, endpoint, data)
+
+    return data
 
 
 def generatePath(
@@ -96,9 +97,11 @@ def generatePath(
         name: str,
         method: str,
         endpoint: dict,
-        data: dict):
+        data: dict) -> dict:
     # Generate the path.
-    file_name = camel_to_snake(endpoint['operationId']) + '.py'
+    fn_name = camel_to_snake(endpoint['operationId'])
+    file_name =  fn_name + '.py'
+    tag_name = ''
     # Add the tag to the path if it exists.
     if 'tags' in endpoint:
         tag_name = endpoint['tags'][0]
@@ -112,6 +115,27 @@ def generatePath(
     parameter_refs = getParameterRefs(endpoint)
     request_body_refs = getRequestBodyRefs(endpoint)
     request_body_type = getRequestBodyType(endpoint)
+
+    success_type = endoint_refs[0]
+    example = """from kittycad.models import """ + success_type + """
+from kittycad.api."""+tag_name+""" import """+fn_name+"""
+from kittycad.types import Response
+
+fc: """ + success_type + """ = """+fn_name""".sync(client=client, id="<uuid_of_your_conversion>")
+
+# OR if you need more info (e.g. status_code)
+response: Response[""" + success_type + """] = """+fn_name""".sync_detailed(client=client, id="<uuid_of_your_conversion>")
+
+# OR run async
+fc: """ + success_type + """ = await """+fn_name""".asyncio(client=client, id="<uuid_of_your_conversion>")
+
+# OR run async with more info
+response: Response[""" + success_type + """] = await """+fn_name""".asyncio_detailed(client=client, id="<uuid_of_your_conversion>")"""
+
+    # Add our example to our json output.
+    data['paths'][name][method]['x-python'] = {
+        'example': example,
+    }
 
     # Add our imports.
     f.write("from typing import Any, Dict, Optional, Union\n")
@@ -543,6 +567,8 @@ def generatePath(
 
     # Close the file.
     f.close()
+
+    return data
 
 
 def generateTypes(cwd: str, parser: OpenApiParser):
