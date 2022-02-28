@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to kittycad’s documentation! &mdash; kittycad v0.0.5 documentation</title>
+  <title>Welcome to kittycad’s documentation! &mdash; kittycad v0.0.6 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="AuthenticatedClient" href="api/kittycad.AuthenticatedClient.html" /> 
+    <link rel="next" title="kittycad.api" href="modules/kittycad.api.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -30,7 +30,7 @@
             <a href="#" class="icon icon-home"> kittycad
           </a>
               <div class="version">
-                v0.0.5
+                v0.0.6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -41,8 +41,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/kittycad.AuthenticatedClient.html">AuthenticatedClient</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/kittycad.models.html">kittycad.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/kittycad.types.html">kittycad.types</a></li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="api/kittycad.Client.html">Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/kittycad.ClientFromEnv.html">ClientFromEnv</a></li>
 </ul>
 
         </div>
@@ -71,8 +77,26 @@
              
   <section id="welcome-to-kittycad-s-documentation">
 <h1>Welcome to kittycad’s documentation!<a class="headerlink" href="#welcome-to-kittycad-s-documentation" title="Permalink to this headline"></a></h1>
-<div class="toctree-wrapper compound">
-</div>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/kittycad.api.html#module-kittycad.api" title="kittycad.api"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api</span></code></a></p></td>
+<td><p>Contains methods for accessing the API</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/kittycad.client.html#module-kittycad.client" title="kittycad.client"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.client</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="modules/kittycad.models.html#module-kittycad.models" title="kittycad.models"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models</span></code></a></p></td>
+<td><p>Contains all the data models used in inputs/outputs</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="modules/kittycad.types.html#module-kittycad.types" title="kittycad.types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.types</span></code></a></p></td>
+<td><p>Contains some shared types for properties</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
@@ -92,11 +116,11 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/kittycad.AuthenticatedClient.html#kittycad.AuthenticatedClient" title="kittycad.AuthenticatedClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AuthenticatedClient</span></code></a>([base_url, cookies, ...])</p></td>
-<td><p>A Client which has been authenticated for use on secured endpoints</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/kittycad.Client.html#kittycad.Client" title="kittycad.Client"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Client</span></code></a>([base_url, cookies, headers, ...])</p></td>
+<td><p>A Client which has been authenticated for use on secured endpoints of the KittyCAD API.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/kittycad.Client.html#kittycad.Client" title="kittycad.Client"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Client</span></code></a>([base_url, cookies, headers, ...])</p></td>
-<td><p>A class for keeping track of data related to the API</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/kittycad.ClientFromEnv.html#kittycad.ClientFromEnv" title="kittycad.ClientFromEnv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClientFromEnv</span></code></a>([base_url, token, cookies, ...])</p></td>
+<td><p>A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token.</p></td>
 </tr>
 </tbody>
 </table>
@@ -108,7 +132,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api/kittycad.AuthenticatedClient.html" class="btn btn-neutral float-right" title="AuthenticatedClient" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules/kittycad.api.html" class="btn btn-neutral float-right" title="kittycad.api" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
