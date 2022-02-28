@@ -59,7 +59,7 @@ def sync_detailed(
 	id: str,
 *, client: Client) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
-	id=id,
+		id=id,
 		client=client,
 	)
 
@@ -86,7 +86,7 @@ async def asyncio_detailed(
 	id: str,
 *, client: Client) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
-	id=id,
+		id=id,
 		client=client,
 	)
 
@@ -102,6 +102,6 @@ async def asyncio(
 	""" Get the status and output of an async file conversion. """
 
 	return (await asyncio_detailed(
-	id=id,
+		id=id,
 		client=client,
 	)).parsed

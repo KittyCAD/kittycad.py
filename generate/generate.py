@@ -263,7 +263,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             f.write(
-                "\t" +
+                "\t\t" +
                 camel_to_snake(parameter_name) +
                 "=" +
                 camel_to_snake(parameter_name) +
@@ -377,7 +377,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             f.write(
-                "\t" +
+                "\t\t" +
                 camel_to_snake(parameter_name) +
                 "=" +
                 camel_to_snake(parameter_name) +
@@ -437,7 +437,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             f.write(
-                "\t" +
+                "\t\t" +
                 camel_to_snake(parameter_name) +
                 "=" +
                 camel_to_snake(parameter_name) +
