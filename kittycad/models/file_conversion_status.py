@@ -1,11 +1,12 @@
 from enum import Enum
 
-class FileConversionStatus(str, Enum):
-	QUEUED = 'Queued'
-	UPLOADED = 'Uploaded'
-	IN _PROGRESS = 'In Progress'
-	COMPLETED = 'Completed'
-	FAILED = 'Failed'
 
-	def __str__(self) -> str:
-		return str(self.value)
+class FileConversionStatus(str, Enum):
+    QUEUED = 'Queued'
+    UPLOADED = 'Uploaded'
+    IN _PROGRESS = 'In Progress'
+    COMPLETED = 'Completed'
+    FAILED = 'Failed'
+
+    def __str__(self) -> str:
+        return str(self.value)
