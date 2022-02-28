@@ -25,6 +25,10 @@ def _get_kwargs(
 
 def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ErrorMessage]]:
 	if response.status_code == 200:
+		response_200 = [
+			GPUDevice.from_dict(item)
+			for item in response.json()
+		]
 		return response_200
 	if response.status_code == 401:
 		response_401 = ErrorMessage.from_dict(response.json())
