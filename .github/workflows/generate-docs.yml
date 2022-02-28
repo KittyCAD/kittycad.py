@@ -9,12 +9,6 @@ on:
       - '**.rst'
       - '**.py'
       - .github/workflows/generate-docs.yml
-  pull_request:
-    paths:
-      - docs/conf.py
-      - '**.rst'
-      - '**.py'
-      - .github/workflows/generate-docs.yml
 jobs:
   generate-docs:
 
