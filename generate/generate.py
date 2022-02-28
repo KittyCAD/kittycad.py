@@ -1094,7 +1094,7 @@ def camel_to_snake(name: str):
 
 def camel_to_screaming_snake(name: str):
     name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).upper()
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).replace(' ', '').upper()
 
 
 if (__name__ == '__main__'):

@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 import base64
 import httpx
 
-from ...client import AuthenticatedClient
+from ...client import Client
 from ...models.file_conversion import FileConversion
 from ...models.valid_file_type import ValidFileType
 from ...types import Response
@@ -14,7 +14,7 @@ def sync(
     output_format: ValidFileType,
     content: bytes,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[Union[Any, FileConversion]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
@@ -38,7 +38,7 @@ async def asyncio(
     output_format: ValidFileType,
     content: bytes,
     *,
-    client: AuthenticatedClient,
+    client: Client,
 ) -> Optional[Union[Any, FileConversion]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
