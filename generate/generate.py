@@ -26,12 +26,23 @@ def generateTypes(cwd: str, parser: OpenApiParser):
     path = os.path.join(cwd, 'kittycad', 'models')
     os.makedirs(path, exist_ok=True)
 
+    # Open the __init__.py file.
+    file_name = '__init__.py'
+    file_path = os.path.join(path, file_name)
+    f = open(file_path, 'w')
+    f.write("\"\"\" Contains all the data models used in inputs/outputs \"\"\"\n")
+    f.write("\n")
+
     # Generate the types.
     data = parser.data
     schemas = data['components']['schemas']
     for key in schemas:
         schema = schemas[key]
         generateType(path, key, schema)
+        f.write("from ."+camel_to_snake(key)+" import " + key + "\n")
+
+    # Close the file.
+    f.close()
 
 def generateType(path: str, name: str, schema: dict):
     # Generate the type.
@@ -249,6 +260,9 @@ def generateType(path: str, name: str, schema: dict):
     else:
         print("  unsupported type: ", type_name)
         return
+
+    # Close the file.
+    f.close()
 
 def hasDateTime(schema: dict) -> bool:
     # Generate the type.
