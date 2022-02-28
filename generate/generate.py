@@ -143,6 +143,9 @@ def generatePath(
             params_str += ', ' + \
                 camel_to_snake(parameter_name) + '=' + parameter_type
 
+    if request_body_type:
+        params_str += ', body=' + request_body_type
+
     example = """from kittycad.models import """ + success_type + """
 from kittycad.api.""" + tag_name + """ import """ + fn_name + """
 from kittycad.types import Response
