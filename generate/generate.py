@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from openapi_parser.parser.loader import OpenApiParser
 
+import json
 import os
 import re
 
@@ -22,6 +23,29 @@ def main():
 
     # Generate the paths.
     generatePaths(cwd, parser)
+
+    # Add the client information to the generation.
+    data = parser.data
+    data['info']['x-python'] = {
+        'client': """# Create a client with your token.
+from kittycad import Client
+
+client = Client(token="$TOKEN")
+
+# - OR -
+
+# Create a new client with your token parsed from the environment variable:
+#   KITTYCAD_API_TOKEN.
+from kittycad import ClientFromEnv
+
+client = ClientFromEnv()""",
+        'install': 'pip install kittycad',
+    }
+
+    # Rewrite the spec back out.
+    f = open(path, 'w')
+    f.write(json.dumps(data, indent=4))
+    f.close()
 
 
 def generatePaths(cwd: str, parser: OpenApiParser):
