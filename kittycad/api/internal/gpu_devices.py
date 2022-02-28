@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
+from ...models.gpu_device import GPUDevice
 from ...models.error_message import ErrorMessage
 from ...types import Response
 
@@ -23,7 +24,7 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ErrorMessage]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [GPUDevice], ErrorMessage]]:
 	if response.status_code == 200:
 		response_200 = [
 			GPUDevice.from_dict(item)
@@ -39,7 +40,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ErrorMes
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ErrorMessage]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, [GPUDevice], ErrorMessage]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -51,7 +52,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ErrorMes
 def sync_detailed(
 	*,
 	client: Client,
-) -> Response[Union[Any, ErrorMessage]]:
+) -> Response[Union[Any, [GPUDevice], ErrorMessage]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -67,7 +68,7 @@ def sync_detailed(
 def sync(
 	*,
 	client: Client,
-) -> Optional[Union[Any, ErrorMessage]]:
+) -> Optional[Union[Any, [GPUDevice], ErrorMessage]]:
 	""" Get information about GPU devices on this server. This is primarily used for debugging. This endpoint can only be used by specific KittyCAD employees. """
 
 	return sync_detailed(
@@ -78,7 +79,7 @@ def sync(
 async def asyncio_detailed(
 	*,
 	client: Client,
-) -> Response[Union[Any, ErrorMessage]]:
+) -> Response[Union[Any, [GPUDevice], ErrorMessage]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -92,7 +93,7 @@ async def asyncio_detailed(
 async def asyncio(
 	*,
 	client: Client,
-) -> Optional[Union[Any, ErrorMessage]]:
+) -> Optional[Union[Any, [GPUDevice], ErrorMessage]]:
 	""" Get information about GPU devices on this server. This is primarily used for debugging. This endpoint can only be used by specific KittyCAD employees. """
 
 	return (

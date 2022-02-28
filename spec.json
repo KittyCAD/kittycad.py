@@ -411,7 +411,7 @@
                     "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#InternalService.GPUDevices"
                 },
                 "x-python": {
-                    "example": "from kittycad.models import ErrorMessage\nfrom kittycad.api.internal import gpu_devices\nfrom kittycad.types import Response\n\nfc: ErrorMessage = gpu_devices.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ErrorMessage] = gpu_devices.sync_detailed(client=client)\n\n# OR run async\nfc: ErrorMessage = await gpu_devices.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[ErrorMessage] = await gpu_devices.asyncio_detailed(client=client)",
+                    "example": "from kittycad.models import [GPUDevice]\nfrom kittycad.api.internal import gpu_devices\nfrom kittycad.types import Response\n\nfc: [GPUDevice] = gpu_devices.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[[GPUDevice]] = gpu_devices.sync_detailed(client=client)\n\n# OR run async\nfc: [GPUDevice] = await gpu_devices.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[[GPUDevice]] = await gpu_devices.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.internal.gpu_devices.html"
                 }
             }

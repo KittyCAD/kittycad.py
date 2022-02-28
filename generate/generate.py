@@ -175,6 +175,8 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("from ...client import Client\n")
     # Import our references for responses.
     for ref in endoint_refs:
+        if ref.startswith('[') and ref.endswith(']'):
+            ref = ref.replace('[', '').replace(']', '')
         f.write(
             "from ...models." +
             camel_to_snake(ref) +
@@ -1041,6 +1043,19 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                         ref = json['$ref'].replace('#/components/schemas/', '')
                         if ref not in refs:
                             refs.append(ref)
+                    elif 'type' in json:
+                        if json['type'] == 'array':
+                            items = json['items']
+                            if '$ref' in items:
+                                ref = items['$ref'].replace(
+                                    '#/components/schemas/', '')
+                                refs.append('[' + ref + ']')
+                            else:
+                                raise Exception("Unknown array type")
+                        else:
+                            raise Exception("Unknown type")
+                    else:
+                        raise Exception("Unknown type")
         elif '$ref' in response:
             schema_name = response['$ref'].replace(
                 '#/components/responses/', '')
