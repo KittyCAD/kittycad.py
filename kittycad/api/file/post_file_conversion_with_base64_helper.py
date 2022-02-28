@@ -4,6 +4,7 @@ import base64
 import httpx
 
 from ...client import Client
+from ...models.error_message import ErrorMessage
 from ...models.file_conversion import FileConversion
 from ...models.valid_source_file_format import ValidSourceFileFormat
 from ...models.valid_output_file_format import ValidOutputFileFormat
@@ -16,7 +17,7 @@ def sync(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversion]]:
+) -> Optional[Union[Any, FileConversion, ErrorMessage]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
     encoded = base64.b64encode(body)
@@ -28,7 +29,7 @@ def sync(
         client=client,
     )
 
-    if fc != None and fc.output != "":
+    if isinstance(fc, FileConversion) and fc.output != "":
         fc.output = base64.b64decode(fc.output)
 
     return fc
@@ -40,7 +41,7 @@ async def asyncio(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversion]]:
+) -> Optional[Union[Any, FileConversion, ErrorMessage]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
     encoded = base64.b64encode(body)
@@ -52,7 +53,7 @@ async def asyncio(
             client=client,
         )
 
-    if fc != None and fc.output != "":
+    if isinstance(fc, FileConversion) and fc.output != "":
         fc.output = base64.b64decode(fc.output)
 
     return fc
