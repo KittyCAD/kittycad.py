@@ -29,6 +29,7 @@ sphinx-rtd-theme = "^1.0.0"
 sphinx-automodapi = "^0.13"
 pytest-cov = "^3.0.0"
 pytest-asyncio = "^0.16.0"
+openapi-parser = "^0.2.6"
 
 [build-system]
 requires = ["poetry>=1.0"]

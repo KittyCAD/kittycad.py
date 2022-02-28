@@ -9,7 +9,7 @@ from .api.meta import meta_debug_session, meta_debug_instance, ping
 
 def test_get_session():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     # Get the session.
     session: AuthSession = meta_debug_session.sync(client=client)
@@ -21,7 +21,7 @@ def test_get_session():
 @pytest.mark.asyncio
 async def test_get_session_async():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     # Get the session.
     session: AuthSession = await meta_debug_session.asyncio(client=client)
@@ -32,7 +32,7 @@ async def test_get_session_async():
 
 def test_get_instance():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     # Get the instance.
     instance: InstanceMetadata = meta_debug_instance.sync(client=client)
@@ -44,7 +44,7 @@ def test_get_instance():
 @pytest.mark.asyncio
 async def test_get_instance_async():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     # Get the instance.
     instance: InstanceMetadata = await meta_debug_instance.asyncio(client=client)
@@ -55,7 +55,7 @@ async def test_get_instance_async():
 
 def test_ping():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     # Get the message.
     message: Message = ping.sync(client=client)
@@ -67,7 +67,7 @@ def test_ping():
 @pytest.mark.asyncio
 async def test_ping_async():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     # Get the message.
     message: Message = await ping.asyncio(client=client)
@@ -78,7 +78,7 @@ async def test_ping_async():
 
 def test_file_convert_stl():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
@@ -95,7 +95,7 @@ def test_file_convert_stl():
 @pytest.mark.asyncio
 async def test_file_convert_stl_async():
     # Create our client.
-    client = AuthenticatedClientFromEnv()
+    client = ClientFromEnv()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
