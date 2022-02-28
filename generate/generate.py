@@ -164,7 +164,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     # Add our example to our json output.
     data['paths'][name][method]['x-python'] = {
         'example': example,
-        'libDocsLink': '',
+        'libDocsLink': 'https://python.api.docs.kittycad.io/modules/kittycad.api.' + tag_name + '.' + fn_name + '.html',
     }
 
     # Add our imports.
