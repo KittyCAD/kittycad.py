@@ -4,7 +4,7 @@ from enum import Enum
 class FileConversionStatus(str, Enum):
     QUEUED = 'Queued'
     UPLOADED = 'Uploaded'
-    IN _PROGRESS = 'In Progress'
+    IN_PROGRESS = 'In Progress'
     COMPLETED = 'Completed'
     FAILED = 'Failed'
 

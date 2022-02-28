@@ -2,8 +2,8 @@ import os
 import pytest
 import asyncio
 
-from .client import AuthenticatedClientFromEnv
-from .models import FileConversion, ValidOutputFileFormat, ValidSourceFileFormat, AuthSession, InstanceMetadata, Message
+from .client import ClientFromEnv
+from .models import FileConversion, ValidOutputFileFormat, ValidSourceFileFormat, AuthSession, Instance, PongMessage
 from .api.file import post_file_conversion_with_base64_helper
 from .api.meta import auth_session, instance_metadata, ping
 
@@ -38,7 +38,7 @@ def test_get_instance():
     client = ClientFromEnv()
 
     # Get the instance.
-    instance: InstanceMetadata = instance_metadata.sync(client=client)
+    instance: Instance = instance_metadata.sync(client=client)
 
     assert instance is not None
 
@@ -51,7 +51,7 @@ async def test_get_instance_async():
     client = ClientFromEnv()
 
     # Get the instance.
-    instance: InstanceMetadata = await instance_metadata.asyncio(client=client)
+    instance: Instance = await instance_metadata.asyncio(client=client)
 
     assert instance is not None
 
@@ -63,7 +63,7 @@ def test_ping():
     client = ClientFromEnv()
 
     # Get the message.
-    message: Message = ping.sync(client=client)
+    message: PongMessage = ping.sync(client=client)
 
     assert message is not None
 
@@ -76,7 +76,7 @@ async def test_ping_async():
     client = ClientFromEnv()
 
     # Get the message.
-    message: Message = await ping.asyncio(client=client)
+    message: PongMessage = await ping.asyncio(client=client)
 
     assert message is not None
 
