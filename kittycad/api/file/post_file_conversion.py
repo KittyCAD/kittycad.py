@@ -4,7 +4,6 @@ import httpx
 
 from ...client import Client
 from ...models.file_conversion import FileConversion
-from ...models.file_conversion import FileConversion
 from ...models.valid_source_file_format import ValidSourceFileFormat
 from ...models.valid_output_file_format import ValidOutputFileFormat
 from ...types import Response
@@ -12,11 +11,10 @@ from ...types import Response
 def _get_kwargs(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
-*, client: Client) -> Dict[str, Any]:
-	url = "{}/file/conversion/{sourceFormat}/{outputFormat}".format(client.base_url,
-	sourceFormat=source_format,
-	outputFormat=output_format,
-	)
+	*,
+	client: Client,
+) -> Dict[str, Any]:
+	url = "{}/file/conversion/{sourceFormat}/{outputFormat}".format(client.base_url, sourceFormat=source_format, outputFormat=output_format)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -29,7 +27,7 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, FileConversion]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion]]:
 	if response.status_code == 200:
 		response_200 = FileConversion.from_dict(response.json())
 		return response_200
@@ -54,7 +52,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConv
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion, FileConversion]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -66,7 +64,9 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 def sync_detailed(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
-*, client: Client) -> Response[Union[Any, FileConversion, FileConversion]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
 		source_format=source_format,
 		output_format=output_format,
@@ -84,12 +84,14 @@ def sync_detailed(
 def sync(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
-*, client: Client) -> Optional[Union[Any, FileConversion, FileConversion]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, FileConversion]]:
 	""" Convert a CAD file from one format to another. If the file being converted is larger than 30MB, it will be performed asynchronously. """
 
 	return sync_detailed(
-	source_format=source_format,
-	output_format=output_format,
+		source_format=source_format,
+		output_format=output_format,
 		client=client,
 	).parsed
 
@@ -97,7 +99,9 @@ def sync(
 async def asyncio_detailed(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
-*, client: Client) -> Response[Union[Any, FileConversion, FileConversion]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
 		source_format=source_format,
 		output_format=output_format,
@@ -113,11 +117,15 @@ async def asyncio_detailed(
 async def asyncio(
 	source_format: ValidSourceFileFormat,
 	output_format: ValidOutputFileFormat,
-*, client: Client) -> Optional[Union[Any, FileConversion, FileConversion]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, FileConversion]]:
 	""" Convert a CAD file from one format to another. If the file being converted is larger than 30MB, it will be performed asynchronously. """
 
-	return (await asyncio_detailed(
-		source_format=source_format,
-		output_format=output_format,
-		client=client,
-	)).parsed
+	return (
+		await asyncio_detailed(
+			source_format=source_format,
+			output_format=output_format,
+			client=client,
+		)
+	).parsed

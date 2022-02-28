@@ -7,9 +7,10 @@ from ...models.file_conversion import FileConversion
 from ...types import Response
 
 def _get_kwargs(
-*, client: Client) -> Dict[str, Any]:
-	url = "{}/_internal/async/conversions/stop".format(client.base_url,
-	)
+	*,
+	client: Client,
+) -> Dict[str, Any]:
+	url = "{}/_internal/async/conversions/stop".format(client.base_url)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -48,7 +49,9 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 
 
 def sync_detailed(
-*, client: Client) -> Response[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -62,7 +65,9 @@ def sync_detailed(
 
 
 def sync(
-*, client: Client) -> Optional[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, FileConversion]]:
 	""" Stop all async conversions that are currently running. This endpoint can only be used by specific KittyCAD employees. """
 
 	return sync_detailed(
@@ -71,7 +76,9 @@ def sync(
 
 
 async def asyncio_detailed(
-*, client: Client) -> Response[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Response[Union[Any, FileConversion]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -83,9 +90,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-*, client: Client) -> Optional[Union[Any, FileConversion]]:
+	*,
+	client: Client,
+) -> Optional[Union[Any, FileConversion]]:
 	""" Stop all async conversions that are currently running. This endpoint can only be used by specific KittyCAD employees. """
 
-	return (await asyncio_detailed(
-		client=client,
-	)).parsed
+	return (
+		await asyncio_detailed(
+			client=client,
+		)
+	).parsed

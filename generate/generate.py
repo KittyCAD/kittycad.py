@@ -136,8 +136,10 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 ": " +
                 parameter_type +
                 ",\n")
-    f.write("*, client: Client) -> Dict[str, Any]:\n")
-    f.write("\turl = \"{}" + name + "\".format(client.base_url,\n")
+    f.write("\t*,\n")
+    f.write("\tclient: Client,\n")
+    f.write(") -> Dict[str, Any]:\n")
+    f.write("\turl = \"{}" + name + "\".format(client.base_url")
     # Iterate over the parameters.
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
@@ -153,12 +155,11 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             f.write(
-                "\t" +
+                ", " +
                 parameter_name +
                 "=" +
-                camel_to_snake(parameter_name) +
-                ",\n")
-    f.write("\t)\n")
+                camel_to_snake(parameter_name))
+    f.write(")\n")
     f.write("\n")
     f.write("\theaders: Dict[str, Any] = client.get_headers()\n")
     f.write("\tcookies: Dict[str, Any] = client.get_cookies()\n")
@@ -244,7 +245,9 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 ": " +
                 parameter_type +
                 ",\n")
-    f.write("*, client: Client) -> Response[Union[Any, " +
+    f.write("\t*,\n")
+    f.write("\tclient: Client,\n")
+    f.write(") -> Response[Union[Any, " +
             ", ".join(endoint_refs) +
             "]]:\n")
     f.write("\tkwargs = _get_kwargs(\n")
@@ -303,7 +306,9 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 ": " +
                 parameter_type +
                 ",\n")
-    f.write("*, client: Client) -> Optional[Union[Any, " +
+    f.write("\t*,\n")
+    f.write("\tclient: Client,\n")
+    f.write(") -> Optional[Union[Any, " +
             ", ".join(endoint_refs) +
             "]]:\n")
     if 'description' in endpoint:
@@ -325,7 +330,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             f.write(
-                "\t" +
+                "\t\t" +
                 camel_to_snake(parameter_name) +
                 "=" +
                 camel_to_snake(parameter_name) +
@@ -358,7 +363,9 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 ": " +
                 parameter_type +
                 ",\n")
-    f.write("*, client: Client) -> Response[Union[Any, " +
+    f.write("\t*,\n")
+    f.write("\tclient: Client,\n")
+    f.write(") -> Response[Union[Any, " +
             ", ".join(endoint_refs) +
             "]]:\n")
     f.write("\tkwargs = _get_kwargs(\n")
@@ -415,13 +422,16 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 ": " +
                 parameter_type +
                 ",\n")
-    f.write("*, client: Client) -> Optional[Union[Any, " +
+    f.write("\t*,\n")
+    f.write("\tclient: Client,\n")
+    f.write(") -> Optional[Union[Any, " +
             ", ".join(endoint_refs) +
             "]]:\n")
     if 'description' in endpoint:
         f.write("\t\"\"\" " + endpoint['description'] + " \"\"\"\n")
     f.write("\n")
-    f.write("\treturn (await asyncio_detailed(\n")
+    f.write("\treturn (\n")
+    f.write("\t\tawait asyncio_detailed(\n")
     # Iterate over the parameters.
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
@@ -437,13 +447,14 @@ def generatePath(path: str, name: str, method: str, endpoint: dict):
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             f.write(
-                "\t\t" +
+                "\t\t\t" +
                 camel_to_snake(parameter_name) +
                 "=" +
                 camel_to_snake(parameter_name) +
                 ",\n")
-    f.write("\t\tclient=client,\n")
-    f.write("\t)).parsed\n")
+    f.write("\t\t\tclient=client,\n")
+    f.write("\t\t)\n")
+    f.write("\t).parsed\n")
 
     # Close the file.
     f.close()
@@ -864,7 +875,8 @@ def getEndpointRefs(endpoint: dict) -> [str]:
                     json = content[content_type]['schema']
                     if '$ref' in json:
                         ref = json['$ref'].replace('#/components/schemas/', '')
-                        refs.append(ref)
+                        if ref not in refs:
+                            refs.append(ref)
 
     return refs
 
