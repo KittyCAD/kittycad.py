@@ -261,6 +261,8 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\t\t\"headers\": headers,\n")
     f.write("\t\t\"cookies\": cookies,\n")
     f.write("\t\t\"timeout\": client.get_timeout(),\n")
+    if request_body_type:
+        f.write("\t\t\"content\": body,\n")
     f.write("\t}\n")
 
     # Define the parse reponse.
@@ -864,7 +866,7 @@ def generateType(path: str, name: str, schema: dict):
                                 property_name +
                                 ": Union[Unset, datetime.datetime]\n")
                             f.write(
-                                "\t\tif not isinstance(_" + property_name + ", Unset):\n")
+                                "\t\tif isinstance(_" + property_name + ", Unset):\n")
                             f.write("\t\t\t" + property_name + " = UNSET\n")
                             f.write("\t\telse:\n")
                             f.write("\t\t\t" + property_name +
@@ -918,7 +920,7 @@ def generateType(path: str, name: str, schema: dict):
                 f.write("\t\t" + property_name +
                         ": Union[Unset, " + ref + "]\n")
                 f.write(
-                    "\t\tif not isinstance(_" +
+                    "\t\tif isinstance(_" +
                     property_name +
                     ", Unset):\n")
                 f.write("\t\t\t" + property_name + " = UNSET\n")

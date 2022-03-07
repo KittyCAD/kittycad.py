@@ -77,7 +77,7 @@ class Instance:
 
         _environment = d.pop("environment", UNSET)
         environment: Union[Unset, ServerEnv]
-        if not isinstance(_environment, Unset):
+        if isinstance(_environment, Unset):
             environment = UNSET
         else:
             environment = ServerEnv(_environment)

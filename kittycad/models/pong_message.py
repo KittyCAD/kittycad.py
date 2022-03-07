@@ -33,7 +33,7 @@ class PongMessage:
         d = src_dict.copy()
         _message = d.pop("message", UNSET)
         message: Union[Unset, PongEnum]
-        if not isinstance(_message, Unset):
+        if isinstance(_message, Unset):
             message = UNSET
         else:
             message = PongEnum(_message)
