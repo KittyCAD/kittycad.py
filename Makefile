@@ -10,14 +10,21 @@ endif
 VERSION := $(shell toml get $(CURDIR)/pyproject.toml tool.poetry.version | jq -r .)
 
 .PHONY: generate
-generate: docker-image
+generate: docker-image ## Generate the api client.
 	docker run --rm -i $(DOCKER_FLAGS) \
 		--name python-generator \
-		-v $(CURDIR):/usr/kittycad \
-		--workdir /usr \
-		$(DOCKER_IMAGE_NAME) openapi-python-client update \
-			--url https://api.kittycad.io \
-			--config /usr/kittycad/config.yml
+		-v $(CURDIR):/usr/src \
+		--workdir /usr/src \
+		$(DOCKER_IMAGE_NAME) sh -c 'poetry run python generate/generate.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/models/*.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/api/*.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/*.py && poetry run autopep8 --in-place --aggressive --aggressive generate/*.py'
+
+.PHONY: shell
+shell: docker-image ## Pop into a shell in the docker image.
+	docker run --rm -i $(DOCKER_FLAGS) \
+		--name python-generator-shell \
+		-v $(CURDIR):/usr/src \
+		--workdir /usr/src \
+		$(DOCKER_IMAGE_NAME) /bin/bash
+
 
 .PHONY: docker-image
 docker-image:

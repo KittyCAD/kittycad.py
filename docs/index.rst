@@ -6,9 +6,9 @@
 Welcome to kittycad's documentation!
 ====================================
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+.. autosummary::
+   :recursive:
+   :toctree: modules
 
    kittycad.api
    kittycad.client

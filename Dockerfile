@@ -1,7 +1,13 @@
 FROM python:latest
 
 RUN pip install \
-	openapi-python-client
+	poetry
+
+WORKDIR /usr/src/
+
+COPY . /usr/src/
+
+RUN poetry install
 
 # Set the default command to bash.
 CMD ["bash"]
