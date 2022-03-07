@@ -75,14 +75,14 @@ class FileConversion:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
-        if not isinstance(_completed_at, Unset):
+        if isinstance(_completed_at, Unset):
             completed_at = UNSET
         else:
             completed_at = isoparse(_completed_at)
 
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
-        if not isinstance(_created_at, Unset):
+        if isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
@@ -93,28 +93,28 @@ class FileConversion:
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, ValidOutputFileFormat]
-        if not isinstance(_output_format, Unset):
+        if isinstance(_output_format, Unset):
             output_format = UNSET
         else:
             output_format = ValidOutputFileFormat(_output_format)
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, ValidSourceFileFormat]
-        if not isinstance(_src_format, Unset):
+        if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
             src_format = ValidSourceFileFormat(_src_format)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
-        if not isinstance(_started_at, Unset):
+        if isinstance(_started_at, Unset):
             started_at = UNSET
         else:
             started_at = isoparse(_started_at)
 
         _status = d.pop("status", UNSET)
         status: Union[Unset, FileConversionStatus]
-        if not isinstance(_status, Unset):
+        if isinstance(_status, Unset):
             status = UNSET
         else:
             status = FileConversionStatus(_status)

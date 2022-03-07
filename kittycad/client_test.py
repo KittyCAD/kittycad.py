@@ -3,7 +3,7 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, ValidOutputFileFormat, ValidSourceFileFormat, AuthSession, Instance, PongMessage
+from .models import FileConversion, ValidOutputFileFormat, ValidSourceFileFormat, AuthSession, Instance, PongMessage, FileConversionStatus
 from .api.file import post_file_conversion_with_base64_helper
 from .api.meta import auth_session, instance_metadata, ping
 
@@ -103,6 +103,12 @@ def test_file_convert_stl():
 
     print(f"FileConversion: {fc}")
 
+    assert fc.id is not None
+
+    assert fc.status == FileConversionStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
 
 @pytest.mark.asyncio
 async def test_file_convert_stl_async():
@@ -118,5 +124,9 @@ async def test_file_convert_stl_async():
     fc: FileConversion = await post_file_conversion_with_base64_helper.asyncio(client=client, body=content, source_format=ValidSourceFileFormat.STL, output_format=ValidOutputFileFormat.OBJ)
 
     assert fc is not None
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
 
     print(f"FileConversion: {fc}")

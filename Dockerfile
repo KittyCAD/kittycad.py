@@ -7,7 +7,7 @@ WORKDIR /usr/src/
 
 COPY . /usr/src/
 
-RUN poetry install
+RUN poetry update && poetry install
 
 # Set the default command to bash.
 CMD ["bash"]
