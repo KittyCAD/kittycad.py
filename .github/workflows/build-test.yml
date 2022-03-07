@@ -5,10 +5,12 @@ on:
     paths:
       - '**.py'
       - .github/workflows/build-test.yml
+      - 'pyproject.toml'
   pull_request:
     paths:
       - '**.py'
       - .github/workflows/build-test.yml
+      - 'pyproject.toml'
 jobs:
   build-test:
 

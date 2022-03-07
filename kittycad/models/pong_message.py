@@ -2,54 +2,48 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
+from ..models.pong_enum import PongEnum
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ErrorMessage")
+T = TypeVar("T", bound="PongMessage")
 
 
 @attr.s(auto_attribs=True)
-class ErrorMessage:
+class PongMessage:
     """ """
-    code: Union[Unset, int] = UNSET
-    message: Union[Unset, str] = UNSET
-    status: Union[Unset, str] = UNSET
+    message: Union[Unset, PongEnum] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        code = self.code
-        message = self.message
-        status = self.status
+        message: Union[Unset, str] = UNSET
+        if not isinstance(self.message, Unset):
+            message = self.message.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if code is not UNSET:
-            field_dict['code'] = code
         if message is not UNSET:
             field_dict['message'] = message
-        if status is not UNSET:
-            field_dict['status'] = status
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        code = d.pop("code", UNSET)
+        _message = d.pop("message", UNSET)
+        message: Union[Unset, PongEnum]
+        if not isinstance(_message, Unset):
+            message = UNSET
+        else:
+            message = PongEnum(_message)
 
-        message = d.pop("message", UNSET)
-
-        status = d.pop("status", UNSET)
-
-        error_message = cls(
-            code=code,
+        pong_message = cls(
             message=message,
-            status=status,
         )
 
-        error_message.additional_properties = d
-        return error_message
+        pong_message.additional_properties = d
+        return pong_message
 
     @property
     def additional_keys(self) -> List[str]:

@@ -12,23 +12,24 @@ T = TypeVar("T", bound="AuthSession")
 @attr.s(auto_attribs=True)
 class AuthSession:
     """ """
-
     created_at: Union[Unset, datetime.datetime] = UNSET
     email: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
+    image: Union[Unset, str] = UNSET
     ip_address: Union[Unset, str] = UNSET
     is_valid: Union[Unset, bool] = False
     token: Union[Unset, str] = UNSET
     user_id: Union[Unset, str] = UNSET
+
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-
         email = self.email
         id = self.id
+        image = self.image
         ip_address = self.ip_address
         is_valid = self.is_valid
         token = self.token
@@ -38,19 +39,21 @@ class AuthSession:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if created_at is not UNSET:
-            field_dict["created_at"] = created_at
+            field_dict['created_at'] = created_at
         if email is not UNSET:
-            field_dict["email"] = email
+            field_dict['email'] = email
         if id is not UNSET:
-            field_dict["id"] = id
+            field_dict['id'] = id
+        if image is not UNSET:
+            field_dict['image'] = image
         if ip_address is not UNSET:
-            field_dict["ip_address"] = ip_address
+            field_dict['ip_address'] = ip_address
         if is_valid is not UNSET:
-            field_dict["is_valid"] = is_valid
+            field_dict['is_valid'] = is_valid
         if token is not UNSET:
-            field_dict["token"] = token
+            field_dict['token'] = token
         if user_id is not UNSET:
-            field_dict["user_id"] = user_id
+            field_dict['user_id'] = user_id
 
         return field_dict
 
@@ -59,7 +62,7 @@ class AuthSession:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
+        if not isinstance(_created_at, Unset):
             created_at = UNSET
         else:
             created_at = isoparse(_created_at)
@@ -67,6 +70,8 @@ class AuthSession:
         email = d.pop("email", UNSET)
 
         id = d.pop("id", UNSET)
+
+        image = d.pop("image", UNSET)
 
         ip_address = d.pop("ip_address", UNSET)
 
@@ -80,6 +85,7 @@ class AuthSession:
             created_at=created_at,
             email=email,
             id=id,
+            image=image,
             ip_address=ip_address,
             is_valid=is_valid,
             token=token,
