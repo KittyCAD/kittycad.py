@@ -15,7 +15,7 @@ jobs:
     name: update-spec
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-go@v2
         with:
           go-version: '1.x'
@@ -35,7 +35,7 @@ jobs:
             echo "No files changed, proceeding";
           fi
       # Checkout the docs repo since we will want to update the files there.
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: 'kittycad/docs'
           path: 'docs'
