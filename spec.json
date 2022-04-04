@@ -316,7 +316,7 @@
         },
         "termsOfService": "https://kittycad.io/terms-and-conditions",
         "title": "KittyCAD API",
-        "version": "0.0.2-6f1ca7e",
+        "version": "0.0.2-e722556",
         "x-go": {
             "client": "// Create a client with your token.\nclient, err := kittycad.NewClient(\"$TOKEN\", \"your apps user agent\")\nif err != nil {\n  panic(err)\n}\n\n// - OR -\n\n// Create a new client with your token parsed from the environment\n// variable: KITTYCAD_API_TOKEN.\nclient, err := kittycad.NewClientFromEnv(\"your apps user agent\")\nif err != nil {\n  panic(err)\n}",
             "install": "go get github.com/kittycad/kittycad.go"
