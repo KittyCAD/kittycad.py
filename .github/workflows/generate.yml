@@ -6,6 +6,7 @@ on:
     paths:
       - 'Makefile'
       - .github/workflows/generate.yml
+      - 'spec.json'
   workflow_dispatch:
     inputs:
 jobs:
