@@ -119,7 +119,7 @@ def generatePath(
     success_type = endoint_refs[0]
 
     if fn_name == 'file_conversion_status' or fn_name == 'post_file_conversion':
-        fn_name = 'file_conversion_status_with_base64_helper'
+        fn_name += '_with_base64_helper'
 
     # Iterate over the parameters.
     params_str = ''
