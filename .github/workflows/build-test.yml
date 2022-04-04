@@ -6,11 +6,13 @@ on:
       - '**.py'
       - .github/workflows/build-test.yml
       - 'pyproject.toml'
+      - 'spec.json'
   pull_request:
     paths:
       - '**.py'
       - .github/workflows/build-test.yml
       - 'pyproject.toml'
+      - 'spec.json'
 jobs:
   build-test:
 
