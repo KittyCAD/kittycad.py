@@ -10,12 +10,14 @@ T = TypeVar("T", bound="ApiTokenResultsPage")
 @attr.s(auto_attribs=True)
 class ApiTokenResultsPage:
     """ """
+    from ...models import ApiToken
     items: Union[Unset, List[ApiToken]] = UNSET
     next_page: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ...models import ApiToken
         items: Union[Unset, List[ApiToken]] = UNSET
         if not isinstance(self.items, Unset):
             items = self.items
@@ -34,6 +36,8 @@ class ApiTokenResultsPage:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        from ...models import ApiToken
+        items = cast(List[ApiToken], d.pop("items", UNSET))
         items = cast(List[ApiToken], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
