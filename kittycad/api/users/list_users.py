@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.user import User
+from ...models.user_results_page import UserResultsPage
 from ...models.error import Error
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...types import Response
@@ -28,12 +28,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [User], Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, UserResultsPage, Error]]:
 	if response.status_code == 200:
-		response_200 = [
-			User.from_dict(item)
-			for item in response.json()
-		]
+		response_200 = UserResultsPage.from_dict(response.json())
 		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -44,7 +41,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [User], 
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, [User], Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, UserResultsPage, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -59,7 +56,7 @@ def sync_detailed(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Response[Union[Any, [User], Error]]:
+) -> Response[Union[Any, UserResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
 		page_token=page_token,
@@ -81,7 +78,7 @@ def sync(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Optional[Union[Any, [User], Error]]:
+) -> Optional[Union[Any, UserResultsPage, Error]]:
 	""" This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first. """
 
 	return sync_detailed(
@@ -98,7 +95,7 @@ async def asyncio_detailed(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Response[Union[Any, [User], Error]]:
+) -> Response[Union[Any, UserResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
 		page_token=page_token,
@@ -118,7 +115,7 @@ async def asyncio(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Optional[Union[Any, [User], Error]]:
+) -> Optional[Union[Any, UserResultsPage, Error]]:
 	""" This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first. """
 
 	return (
