@@ -205,7 +205,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -273,7 +273,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     responses = endpoint['responses']
     for response_code in responses:
         response = responses[response_code]
-        f.write("\tif response.status_code == " + response_code + ":\n")
+        f.write("\tif response.status_code == " + response_code.replace("XX", "00") + ":\n")
         if 'content' in response:
             content = response['content']
             for content_type in content:
@@ -366,7 +366,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -397,7 +397,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -435,7 +435,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -469,7 +469,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -500,7 +500,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -531,7 +531,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -567,7 +567,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -602,7 +602,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str')
+                    'string', 'str').replace('integer', 'int')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -1201,12 +1201,12 @@ def getRequestBodyType(endpoint: dict) -> str:
 
 def camel_to_snake(name: str):
     name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower().replace('-', '_')
 
 
 def camel_to_screaming_snake(name: str):
     name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).replace(' ', '').upper()
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).replace(' ', '').upper().replace('-', '_')
 
 
 if (__name__ == '__main__'):
