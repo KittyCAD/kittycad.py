@@ -10,7 +10,7 @@ from ...types import Response
 
 def _get_kwargs(
 	id: str,
-	limit: integer,
+	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
@@ -36,10 +36,10 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [ApiCall
 			for item in response.json()
 		]
 		return response_200
-	if response.status_code == 4XX:
+	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
 		return response_4XX
-	if response.status_code == 5XX:
+	if response.status_code == 500:
 		response_5XX = Error.from_dict(response.json())
 		return response_5XX
 	return None
@@ -56,7 +56,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, [ApiCall
 
 def sync_detailed(
 	id: str,
-	limit: integer,
+	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
@@ -80,7 +80,7 @@ def sync_detailed(
 
 def sync(
 	id: str,
-	limit: integer,
+	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
@@ -102,7 +102,7 @@ The API calls are returned in order of creation, with the most recently created 
 
 async def asyncio_detailed(
 	id: str,
-	limit: integer,
+	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
@@ -124,7 +124,7 @@ async def asyncio_detailed(
 
 async def asyncio(
 	id: str,
-	limit: integer,
+	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,

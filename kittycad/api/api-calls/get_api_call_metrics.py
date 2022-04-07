@@ -33,10 +33,10 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [ApiCall
 			for item in response.json()
 		]
 		return response_200
-	if response.status_code == 4XX:
+	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
 		return response_4XX
-	if response.status_code == 5XX:
+	if response.status_code == 500:
 		response_5XX = Error.from_dict(response.json())
 		return response_5XX
 	return None
