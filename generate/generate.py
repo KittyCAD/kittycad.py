@@ -1011,12 +1011,6 @@ def generateType(path: str, name: str, schema: dict):
                                 " = cast(List[" + property_type + "], d.pop(\"" +
                                 property_name +
                                 "\", UNSET))\n")
-                            f.write(
-                                "\t\t" +
-                                property_name +
-                                " = cast(List[" + property_type + "], d.pop(\"" +
-                                property_name +
-                                "\", UNSET))\n")
                             f.write("\n")
                         else:
                             print("  array: ", [property_schema])
