@@ -164,7 +164,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     }
 
     # Add our imports.
-    f.write("from typing import Any, Dict, Optional, Union\n")
+    f.write("from typing import Any, Dict, Optional, Union, cast\n")
     f.write("\n")
     f.write("import httpx\n")
     f.write("\n")
@@ -669,7 +669,7 @@ def generateType(path: str, name: str, schema: dict):
         has_date_time = hasDateTime(schema)
         if has_date_time:
             f.write("import datetime\n")
-        f.write("from typing import Any, Dict, List, Type, TypeVar, Union\n")
+        f.write("from typing import Any, Dict, List, Type, TypeVar, Union, cast\n")
         f.write("\n")
         f.write("import attr\n")
         if has_date_time:
