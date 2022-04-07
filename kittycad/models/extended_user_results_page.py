@@ -10,14 +10,14 @@ T = TypeVar("T", bound="ExtendedUserResultsPage")
 @attr.s(auto_attribs=True)
 class ExtendedUserResultsPage:
     """ """
-    from ...models import ExtendedUser
+    from ..models import ExtendedUser
     items: Union[Unset, List[ExtendedUser]] = UNSET
     next_page: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        from ...models import ExtendedUser
+        from ..models import ExtendedUser
         items: Union[Unset, List[ExtendedUser]] = UNSET
         if not isinstance(self.items, Unset):
             items = self.items
@@ -36,7 +36,7 @@ class ExtendedUserResultsPage:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        from ...models import ExtendedUser
+        from ..models import ExtendedUser
         items = cast(List[ExtendedUser], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
