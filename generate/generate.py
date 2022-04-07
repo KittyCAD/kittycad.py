@@ -1076,7 +1076,7 @@ def getRefs(schema: dict) -> [str]:
 
     else:
         # Generate the type.
-        if not 'type' in schema:
+        if 'type' not in schema:
             if 'allOf' in schema:
                 for sub_schema in schema['allOf']:
                     refs.extend(getRefs(sub_schema))
