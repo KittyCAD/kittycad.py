@@ -38,7 +38,6 @@ class ApiTokenResultsPage:
         d = src_dict.copy()
         from ...models import ApiToken
         items = cast(List[ApiToken], d.pop("items", UNSET))
-        items = cast(List[ApiToken], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
 

@@ -38,7 +38,6 @@ class FileConversionResultsPage:
         d = src_dict.copy()
         from ...models import FileConversion
         items = cast(List[FileConversion], d.pop("items", UNSET))
-        items = cast(List[FileConversion], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
 

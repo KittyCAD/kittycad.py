@@ -38,7 +38,6 @@ class ExtendedUserResultsPage:
         d = src_dict.copy()
         from ...models import ExtendedUser
         items = cast(List[ExtendedUser], d.pop("items", UNSET))
-        items = cast(List[ExtendedUser], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
 

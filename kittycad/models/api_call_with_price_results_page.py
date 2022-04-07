@@ -38,7 +38,6 @@ class ApiCallWithPriceResultsPage:
         d = src_dict.copy()
         from ...models import ApiCallWithPrice
         items = cast(List[ApiCallWithPrice], d.pop("items", UNSET))
-        items = cast(List[ApiCallWithPrice], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
 
