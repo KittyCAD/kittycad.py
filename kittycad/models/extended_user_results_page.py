@@ -10,13 +10,15 @@ T = TypeVar("T", bound="ExtendedUserResultsPage")
 @attr.s(auto_attribs=True)
 class ExtendedUserResultsPage:
     """ """
-    items: Union[Unset, array] = []
+    items: Union[Unset, List[ExtendedUser]] = UNSET
     next_page: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        items = self.items
+        items: Union[Unset, List[ExtendedUser]] = UNSET
+        if not isinstance(self.items, Unset):
+            items = self.items
         next_page = self.next_page
 
         field_dict: Dict[str, Any] = {}
