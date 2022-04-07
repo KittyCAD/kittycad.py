@@ -34,7 +34,7 @@ class UserResultsPage:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        items = d.pop("items", UNSET)
+        items = cast(List[User], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
 

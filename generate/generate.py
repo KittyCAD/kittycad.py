@@ -996,7 +996,7 @@ def generateType(path: str, name: str, schema: dict):
                             f.write(
                                 "\t\t" +
                                 property_name +
-                                " = cast(List["+ property_type + "], d.pop(\"" +
+                                " = cast(List[" + property_type + "], d.pop(\"" +
                                 property_name +
                                 "\", UNSET))\n")
                             f.write("\n")
