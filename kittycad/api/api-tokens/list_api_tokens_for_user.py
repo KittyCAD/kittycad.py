@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.api_token import ApiToken
+from ...models.api_token_results_page import ApiTokenResultsPage
 from ...models.error import Error
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...types import Response
@@ -28,12 +28,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [ApiToken], Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
 	if response.status_code == 200:
-		response_200 = [
-			ApiToken.from_dict(item)
-			for item in response.json()
-		]
+		response_200 = ApiTokenResultsPage.from_dict(response.json())
 		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -44,7 +41,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [ApiToke
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, [ApiToken], Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -59,7 +56,7 @@ def sync_detailed(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Response[Union[Any, [ApiToken], Error]]:
+) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
 		page_token=page_token,
@@ -81,7 +78,7 @@ def sync(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Optional[Union[Any, [ApiToken], Error]]:
+) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
 	""" This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
 The API tokens are returned in order of creation, with the most recently created API tokens first. """
 
@@ -99,7 +96,7 @@ async def asyncio_detailed(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Response[Union[Any, [ApiToken], Error]]:
+) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
 		page_token=page_token,
@@ -119,7 +116,7 @@ async def asyncio(
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
-) -> Optional[Union[Any, [ApiToken], Error]]:
+) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
 	""" This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
 The API tokens are returned in order of creation, with the most recently created API tokens first. """
 

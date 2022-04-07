@@ -729,6 +729,11 @@ def generateType(path: str, name: str, schema: dict):
                         "\t" +
                         property_name +
                         ": Union[Unset, bool] = False\n")
+                elif property_type == 'array':
+                    f.write(
+                        "\t" +
+                        property_name +
+                        ": Union[Unset, array] = []\n")
                 else:
                     raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
@@ -809,6 +814,13 @@ def generateType(path: str, name: str, schema: dict):
                         property_name +
                         "\n")
                 elif property_type == 'boolean':
+                    f.write(
+                        "\t\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        "\n")
+                elif property_type == 'array':
                     f.write(
                         "\t\t" +
                         property_name +
@@ -938,6 +950,14 @@ def generateType(path: str, name: str, schema: dict):
                         "\", UNSET)\n")
                     f.write("\n")
                 elif property_type == 'boolean':
+                    f.write(
+                        "\t\t" +
+                        property_name +
+                        " = d.pop(\"" +
+                        property_name +
+                        "\", UNSET)\n")
+                    f.write("\n")
+                elif property_type == 'array':
                     f.write(
                         "\t\t" +
                         property_name +
