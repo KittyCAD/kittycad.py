@@ -3,7 +3,8 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.pong_message import PongMessage
+from ...models.pong import Pong
+from ...models.error import Error
 from ...types import Response
 
 def _get_kwargs(
@@ -23,14 +24,20 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, PongMessage]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Pong, Error]]:
 	if response.status_code == 200:
-		response_200 = PongMessage.from_dict(response.json())
+		response_200 = Pong.from_dict(response.json())
 		return response_200
+	if response.status_code == 4XX:
+		response_4XX = Error.from_dict(response.json())
+		return response_4XX
+	if response.status_code == 5XX:
+		response_5XX = Error.from_dict(response.json())
+		return response_5XX
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, PongMessage]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, Pong, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -42,7 +49,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, PongMess
 def sync_detailed(
 	*,
 	client: Client,
-) -> Response[Union[Any, PongMessage]]:
+) -> Response[Union[Any, Pong, Error]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -58,8 +65,7 @@ def sync_detailed(
 def sync(
 	*,
 	client: Client,
-) -> Optional[Union[Any, PongMessage]]:
-	""" Simple ping to the server. """
+) -> Optional[Union[Any, Pong, Error]]:
 
 	return sync_detailed(
 		client=client,
@@ -69,7 +75,7 @@ def sync(
 async def asyncio_detailed(
 	*,
 	client: Client,
-) -> Response[Union[Any, PongMessage]]:
+) -> Response[Union[Any, Pong, Error]]:
 	kwargs = _get_kwargs(
 		client=client,
 	)
@@ -83,8 +89,7 @@ async def asyncio_detailed(
 async def asyncio(
 	*,
 	client: Client,
-) -> Optional[Union[Any, PongMessage]]:
-	""" Simple ping to the server. """
+) -> Optional[Union[Any, Pong, Error]]:
 
 	return (
 		await asyncio_detailed(
