@@ -730,10 +730,23 @@ def generateType(path: str, name: str, schema: dict):
                         property_name +
                         ": Union[Unset, bool] = False\n")
                 elif property_type == 'array':
-                    f.write(
-                        "\t" +
-                        property_name +
-                        ": Union[Unset, array] = []\n")
+                    if 'items' in property_schema:
+                        if '$ref' in property_schema['items']:
+                            property_type = property_schema['items']['$ref']
+                            property_type = property_type.replace(
+                                '#/components/schemas/', '')
+                            f.write(
+                                "\t" +
+                                property_name +
+                                ": Union[Unset, List[" +
+                                property_type +
+                                "]] = UNSET\n")
+                        else:
+                            print("  array: ", [property_schema])
+                            print("  array: ", [property_schema['items']])
+                            raise Exception("Unknown array type")
+                    else:
+                        raise Exception("Unknown array type")
                 else:
                     raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
@@ -821,12 +834,29 @@ def generateType(path: str, name: str, schema: dict):
                         property_name +
                         "\n")
                 elif property_type == 'array':
-                    f.write(
-                        "\t\t" +
-                        property_name +
-                        " = self." +
-                        property_name +
-                        "\n")
+                    if 'items' in property_schema:
+                        if '$ref' in property_schema['items']:
+                            property_type = property_schema['items']['$ref']
+                            property_type = property_type.replace(
+                                '#/components/schemas/', '')
+                            f.write(
+                                "\t\t" +
+                                property_name +
+                                ": Union[Unset, List[" +
+                                property_type +
+                                "]] = UNSET\n")
+                            f.write(
+                                "\t\tif not isinstance(self." + property_name + ", Unset):\n")
+                            f.write(
+                                "\t\t\t" +
+                                property_name +
+                                " = self." +
+                                property_name +
+                                "\n")
+                        else:
+                            print("  array: ", [property_schema])
+                            print("  array: ", [property_schema['items']])
+                            raise Exception("Unknown array type")
                 else:
                     raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
@@ -958,13 +988,22 @@ def generateType(path: str, name: str, schema: dict):
                         "\", UNSET)\n")
                     f.write("\n")
                 elif property_type == 'array':
-                    f.write(
-                        "\t\t" +
-                        property_name +
-                        " = d.pop(\"" +
-                        property_name +
-                        "\", UNSET)\n")
-                    f.write("\n")
+                    if 'items' in property_schema:
+                        if '$ref' in property_schema['items']:
+                            property_type = property_schema['items']['$ref']
+                            property_type = property_type.replace(
+                                '#/components/schemas/', '')
+                            f.write(
+                                "\t\t" +
+                                property_name +
+                                " = cast(List["+ property_type + "], d.pop(\"" +
+                                property_name +
+                                "\", UNSET))\n")
+                            f.write("\n")
+                        else:
+                            print("  array: ", [property_schema])
+                            print("  array: ", [property_schema['items']])
+                            raise Exception("Unknown array type")
                 else:
                     print("  unknown type: ", property_type)
                     raise Exception("  unknown type: ", property_type)
