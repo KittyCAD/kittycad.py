@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from openapi_parser.parser.loader import OpenApiParser
+from prance import BaseParser
 
 import json
 import os
@@ -12,17 +12,13 @@ def main():
     cwd = os.getcwd()
     path = os.path.join(cwd, 'spec.json')
     print("opening spec file: ", path)
-    parser = OpenApiParser.open(path)
-    # Ignore the security definitions.
-    parser.load_metadata()
-    parser.load_schemas()
-    parser.load_path_items()
+    parser = BaseParser(path)
 
     # Generate the types.
-    generateTypes(cwd, parser)
+    generateTypes(cwd, parser.specification)
 
     # Generate the paths.
-    data = generatePaths(cwd, parser)
+    data = generatePaths(cwd, parser.specification)
 
     # Add the client information to the generation.
     data['info']['x-python'] = {
@@ -47,7 +43,7 @@ client = ClientFromEnv()""",
     f.close()
 
 
-def generatePaths(cwd: str, parser: OpenApiParser) -> dict:
+def generatePaths(cwd: str, parser: dict) -> dict:
     # Make sure we have the directory.
     path = os.path.join(cwd, 'kittycad', 'api')
     os.makedirs(path, exist_ok=True)
@@ -61,7 +57,7 @@ def generatePaths(cwd: str, parser: OpenApiParser) -> dict:
     f.close()
 
     # Generate the directory/__init__.py for each of the tags.
-    tags = parser.data['tags']
+    tags = parser['tags']
     for tag in tags:
         tag_name = tag['name']
         tag_description = tag['description']
@@ -82,7 +78,7 @@ def generatePaths(cwd: str, parser: OpenApiParser) -> dict:
         f.close()
 
     # Generate the paths.
-    data = parser.data
+    data = parser
     paths = data['paths']
     for p in paths:
         for method in paths[p]:
@@ -313,7 +309,11 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
                         else:
                             raise Exception("Unknown type")
                     else:
-                        raise Exception("Unknown type")
+                        f.write(
+                            "\t\tresponse_" +
+                            response_code +
+                            " = response.json()\n")
+
         elif '$ref' in response:
             schema_name = response['$ref'].replace(
                 '#/components/responses/', '')
@@ -628,7 +628,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     return data
 
 
-def generateTypes(cwd: str, parser: OpenApiParser):
+def generateTypes(cwd: str, parser: dict):
     # Make sure we have the directory.
     path = os.path.join(cwd, 'kittycad', 'models')
     os.makedirs(path, exist_ok=True)
@@ -641,7 +641,7 @@ def generateTypes(cwd: str, parser: OpenApiParser):
     f.write("\n")
 
     # Generate the types.
-    data = parser.data
+    data = parser
     schemas = data['components']['schemas']
     for key in schemas:
         schema = schemas[key]
@@ -673,6 +673,7 @@ def generateType(path: str, name: str, schema: dict):
 
         refs = getRefs(schema)
         for ref in refs:
+            print("  ref: ", ref, "schema: ", [schema])
             f.write(
                 "from ..models." +
                 camel_to_snake(ref) +
@@ -697,7 +698,7 @@ def generateType(path: str, name: str, schema: dict):
                 # Write the property.
                 if property_type == 'string':
                     if 'format' in property_schema:
-                        if property_schema['format'] == 'date-time':
+                        if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
                             f.write(
                                 "\t" +
                                 property_name +
@@ -734,6 +735,19 @@ def generateType(path: str, name: str, schema: dict):
                     ": Union[Unset, " +
                     ref +
                     "] = UNSET\n")
+            elif 'allOf' in property_schema:
+                thing = property_schema['allOf'][0]
+                if '$ref' in thing:
+                    ref = thing['$ref'].replace(
+                        '#/components/schemas/', '')
+                    f.write(
+                        "\t" +
+                        property_name +
+                        ": Union[Unset, " +
+                        ref +
+                        "] = UNSET\n")
+                else:
+                    raise Exception("  unknown allOf type: ", property_schema)
             else:
                 raise Exception("  unknown schema: ", property_schema)
 
@@ -754,7 +768,7 @@ def generateType(path: str, name: str, schema: dict):
                 # Write the property.
                 if property_type == 'string':
                     if 'format' in property_schema:
-                        if property_schema['format'] == 'date-time':
+                        if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
                             f.write(
                                 "\t\t" +
                                 property_name +
@@ -815,6 +829,27 @@ def generateType(path: str, name: str, schema: dict):
                     " = self." +
                     property_name +
                     ".value\n")
+            elif 'allOf' in property_schema:
+                thing = property_schema['allOf'][0]
+                if '$ref' in thing:
+                    ref = thing['$ref'].replace(
+                        '#/components/schemas/', '')
+                    f.write(
+                        "\t\t" +
+                        property_name +
+                        ": Union[Unset, str] = UNSET\n")
+                    f.write(
+                        "\t\tif not isinstance(self." +
+                        property_name +
+                        ", Unset):\n")
+                    f.write(
+                        "\t\t\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        ".value\n")
+                else:
+                    raise Exception("  unknown allOf type: ", property_schema)
             else:
                 raise Exception("  unknown schema: ", property_schema)
 
@@ -854,7 +889,7 @@ def generateType(path: str, name: str, schema: dict):
                 # Write the property.
                 if property_type == 'string':
                     if 'format' in property_schema:
-                        if property_schema['format'] == 'date-time':
+                        if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
                             f.write(
                                 "\t\t_" +
                                 property_name +
@@ -928,6 +963,30 @@ def generateType(path: str, name: str, schema: dict):
                 f.write("\t\t\t" + property_name + " = " +
                         ref + "(_" + property_name + ")\n")
                 f.write("\n")
+            elif 'allOf' in property_schema:
+                thing = property_schema['allOf'][0]
+                if '$ref' in thing:
+                    ref = thing['$ref'].replace(
+                        '#/components/schemas/', '')
+                    f.write(
+                        "\t\t_" +
+                        property_name +
+                        " = d.pop(\"" +
+                        property_name +
+                        "\", UNSET)\n")
+                    f.write("\t\t" + property_name +
+                            ": Union[Unset, " + ref + "]\n")
+                    f.write(
+                        "\t\tif isinstance(_" +
+                        property_name +
+                        ", Unset):\n")
+                    f.write("\t\t\t" + property_name + " = UNSET\n")
+                    f.write("\t\telse:\n")
+                    f.write("\t\t\t" + property_name + " = " +
+                            ref + "(_" + property_name + ")\n")
+                    f.write("\n")
+                else:
+                    raise Exception("  unknown allOf type: ", property_schema)
             else:
                 print("  unknown schema: ", property_schema)
                 raise Exception("  unknown schema: ", property_schema)
@@ -1004,7 +1063,7 @@ def hasDateTime(schema: dict) -> bool:
                 if has_date_time:
                     return True
         elif type_name == 'string' and 'format' in schema:
-            if schema['format'] == 'date-time':
+            if schema['format'] == 'date-time' or schema['format'] == 'partial-date-time':
                 return True
 
     return False
@@ -1017,15 +1076,23 @@ def getRefs(schema: dict) -> [str]:
 
     else:
         # Generate the type.
-        type_name = schema['type']
-        if type_name == 'object':
-            # Iternate over the properties.
-            for property_name in schema['properties']:
-                property_schema = schema['properties'][property_name]
-                schema_refs = getRefs(property_schema)
-                for ref in schema_refs:
-                    if ref not in refs:
-                        refs.append(ref)
+        if not 'type' in schema:
+            if 'allOf' in schema:
+                for sub_schema in schema['allOf']:
+                    refs.extend(getRefs(sub_schema))
+            else:
+                print("  unsupported type: ", schema)
+                raise Exception("  unsupported type: ", schema)
+        else:
+            type_name = schema['type']
+            if type_name == 'object':
+                # Iternate over the properties.
+                for property_name in schema['properties']:
+                    property_schema = schema['properties'][property_name]
+                    schema_refs = getRefs(property_schema)
+                    for ref in schema_refs:
+                        if ref not in refs:
+                            refs.append(ref)
 
     return refs
 
@@ -1055,9 +1122,9 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                             else:
                                 raise Exception("Unknown array type")
                         else:
-                            raise Exception("Unknown type")
+                            raise Exception("Unknown type ", json['type'])
                     else:
-                        raise Exception("Unknown type")
+                        refs.append('dict')
         elif '$ref' in response:
             schema_name = response['$ref'].replace(
                 '#/components/responses/', '')
@@ -1122,6 +1189,8 @@ def getRequestBodyType(endpoint: dict) -> str:
                         ref = json['$ref'].replace('#/components/schemas/', '')
                         return ref
                 elif content_type == 'text/plain':
+                    return 'bytes'
+                elif content_type == 'application/octet-stream':
                     return 'bytes'
                 else:
                     print("  unsupported content type: ", content_type)
