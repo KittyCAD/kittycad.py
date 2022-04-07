@@ -114,7 +114,7 @@ def generatePath(
 
     success_type = endoint_refs[0]
 
-    if fn_name == 'file_conversion_status' or fn_name == 'post_file_conversion':
+    if fn_name == 'get_file_conversion' or fn_name == 'create_file_conversion':
         fn_name += '_with_base64_helper'
 
     # Iterate over the parameters.
@@ -1048,9 +1048,19 @@ def generateType(path: str, name: str, schema: dict):
         f.write("\n")
         f.write("\tdef __str__(self) -> str:\n")
         f.write("\t\treturn str(self.value)\n")
+    elif type_name == 'integer':
+        f.write("class " + name + "(int):\n")
+        f.write("\n")
+        f.write("\tdef __int__(self) -> int:\n")
+        f.write("\t\treturn self\n")
+    elif type_name == 'string':
+        f.write("class " + name + "(str):\n")
+        f.write("\n")
+        f.write("\tdef __str__(self) -> str:\n")
+        f.write("\t\treturn self\n")
     else:
         print("  unsupported type: ", type_name)
-        return
+        raise Exception("  unsupported type: ", type_name)
 
     # Close the file.
     f.close()

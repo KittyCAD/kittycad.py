@@ -3,9 +3,10 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, ValidOutputFileFormat, ValidSourceFileFormat, AuthSession, Instance, PongMessage, FileConversionStatus
-from .api.file import post_file_conversion_with_base64_helper
-from .api.meta import auth_session, instance_metadata, ping
+from .models import FileConversion, FileConversionOutputFormat, FileConversionSourceFormat, User, Pong, FileConversionStatus
+from .api.file import create_file_conversion_with_base64_helper
+from .api.meta import ping
+from .api.users import get_user_self
 
 
 def test_get_session():
@@ -13,7 +14,7 @@ def test_get_session():
     client = ClientFromEnv()
 
     # Get the session.
-    session: AuthSession = auth_session.sync(client=client)
+    session: User = get_user_self.sync(client=client)
 
     assert session is not None
 
@@ -26,36 +27,11 @@ async def test_get_session_async():
     client = ClientFromEnv()
 
     # Get the session.
-    session: AuthSession = await auth_session.asyncio(client=client)
+    session: User = await get_user_self.asyncio(client=client)
 
     assert session is not None
 
     print(f"Session: {session}")
-
-
-def test_get_instance():
-    # Create our client.
-    client = ClientFromEnv()
-
-    # Get the instance.
-    instance: Instance = instance_metadata.sync(client=client)
-
-    assert instance is not None
-
-    print(f"Instance: {instance}")
-
-
-@pytest.mark.asyncio
-async def test_get_instance_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    # Get the instance.
-    instance: Instance = await instance_metadata.asyncio(client=client)
-
-    assert instance is not None
-
-    print(f"Instance: {instance}")
 
 
 def test_ping():
@@ -63,7 +39,7 @@ def test_ping():
     client = ClientFromEnv()
 
     # Get the message.
-    message: PongMessage = ping.sync(client=client)
+    message: Pong = ping.sync(client=client)
 
     assert message is not None
 
@@ -76,7 +52,7 @@ async def test_ping_async():
     client = ClientFromEnv()
 
     # Get the message.
-    message: PongMessage = await ping.asyncio(client=client)
+    message: Pong = await ping.asyncio(client=client)
 
     assert message is not None
 
@@ -93,11 +69,11 @@ def test_file_convert_stl():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = post_file_conversion_with_base64_helper.sync(
+    fc: FileConversion = create_file_conversion_with_base64_helper.sync(
         client=client,
         body=content,
-        source_format=ValidSourceFileFormat.STL,
-        output_format=ValidOutputFileFormat.OBJ)
+        src_format=FileConversionSourceFormat.STL,
+        output_format=FileConversionOutputFormat.OBJ)
 
     assert fc is not None
 
@@ -121,7 +97,7 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await post_file_conversion_with_base64_helper.asyncio(client=client, body=content, source_format=ValidSourceFileFormat.STL, output_format=ValidOutputFileFormat.OBJ)
+    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(client=client, body=content, src_format=FileConversionSourceFormat.STL, output_format=FileConversionOutputFormat.OBJ)
 
     assert fc is not None
 
