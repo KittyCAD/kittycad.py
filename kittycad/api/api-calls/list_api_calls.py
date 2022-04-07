@@ -1,0 +1,131 @@
+from typing import Any, Dict, Optional, Union
+
+import httpx
+
+from ...client import Client
+from ...models.api_call_with_price import ApiCallWithPrice
+from ...models.error import Error
+from ...models.created_at_sort_mode import CreatedAtSortMode
+from ...types import Response
+
+def _get_kwargs(
+	limit: integer,
+	page_token: str,
+	sort_by: CreatedAtSortMode,
+	*,
+	client: Client,
+) -> Dict[str, Any]:
+	url = "{}/api-calls".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by)
+
+	headers: Dict[str, Any] = client.get_headers()
+	cookies: Dict[str, Any] = client.get_cookies()
+
+	return {
+		"url": url,
+		"headers": headers,
+		"cookies": cookies,
+		"timeout": client.get_timeout(),
+	}
+
+
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [ApiCallWithPrice], Error]]:
+	if response.status_code == 200:
+		response_200 = [
+			ApiCallWithPrice.from_dict(item)
+			for item in response.json()
+		]
+		return response_200
+	if response.status_code == 4XX:
+		response_4XX = Error.from_dict(response.json())
+		return response_4XX
+	if response.status_code == 5XX:
+		response_5XX = Error.from_dict(response.json())
+		return response_5XX
+	return None
+
+
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, [ApiCallWithPrice], Error]]:
+	return Response(
+		status_code=response.status_code,
+		content=response.content,
+		headers=response.headers,
+		parsed=_parse_response(response=response),
+	)
+
+
+def sync_detailed(
+	limit: integer,
+	page_token: str,
+	sort_by: CreatedAtSortMode,
+	*,
+	client: Client,
+) -> Response[Union[Any, [ApiCallWithPrice], Error]]:
+	kwargs = _get_kwargs(
+		limit=limit,
+		page_token=page_token,
+		sort_by=sort_by,
+		client=client,
+	)
+
+	response = httpx.get(
+		verify=client.verify_ssl,
+		**kwargs,
+	)
+
+	return _build_response(response=response)
+
+
+def sync(
+	limit: integer,
+	page_token: str,
+	sort_by: CreatedAtSortMode,
+	*,
+	client: Client,
+) -> Optional[Union[Any, [ApiCallWithPrice], Error]]:
+	""" This endpoint requires authentication by a KittyCAD employee. The API calls are returned in order of creation, with the most recently created API calls first. """
+
+	return sync_detailed(
+		limit=limit,
+		page_token=page_token,
+		sort_by=sort_by,
+		client=client,
+	).parsed
+
+
+async def asyncio_detailed(
+	limit: integer,
+	page_token: str,
+	sort_by: CreatedAtSortMode,
+	*,
+	client: Client,
+) -> Response[Union[Any, [ApiCallWithPrice], Error]]:
+	kwargs = _get_kwargs(
+		limit=limit,
+		page_token=page_token,
+		sort_by=sort_by,
+		client=client,
+	)
+
+	async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+		response = await _client.get(**kwargs)
+
+	return _build_response(response=response)
+
+
+async def asyncio(
+	limit: integer,
+	page_token: str,
+	sort_by: CreatedAtSortMode,
+	*,
+	client: Client,
+) -> Optional[Union[Any, [ApiCallWithPrice], Error]]:
+	""" This endpoint requires authentication by a KittyCAD employee. The API calls are returned in order of creation, with the most recently created API calls first. """
+
+	return (
+		await asyncio_detailed(
+			limit=limit,
+			page_token=page_token,
+			sort_by=sort_by,
+			client=client,
+		)
+	).parsed
