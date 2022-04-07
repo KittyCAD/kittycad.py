@@ -38,7 +38,6 @@ class UserResultsPage:
         d = src_dict.copy()
         from ...models import User
         items = cast(List[User], d.pop("items", UNSET))
-        items = cast(List[User], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
 
