@@ -27,15 +27,21 @@
    :toctree:
    :recursive:
 
-   kittycad.models.auth_session
-   kittycad.models.error_message
+   kittycad.models.api_call_query_group
+   kittycad.models.api_call_query_group_by
+   kittycad.models.api_call_with_price
+   kittycad.models.api_token
+   kittycad.models.created_at_sort_mode
+   kittycad.models.error
+   kittycad.models.extended_user
    kittycad.models.file_conversion
+   kittycad.models.file_conversion_output_format
+   kittycad.models.file_conversion_source_format
    kittycad.models.file_conversion_status
-   kittycad.models.gpu_device
-   kittycad.models.instance
-   kittycad.models.pong_enum
-   kittycad.models.pong_message
-   kittycad.models.server_env
-   kittycad.models.valid_output_file_format
-   kittycad.models.valid_source_file_format
+   kittycad.models.file_conversion_with_output
+   kittycad.models.method
+   kittycad.models.pong
+   kittycad.models.status_code
+   kittycad.models.user
+   kittycad.models.uuid
 
