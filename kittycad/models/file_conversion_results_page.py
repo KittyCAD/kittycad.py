@@ -10,12 +10,14 @@ T = TypeVar("T", bound="FileConversionResultsPage")
 @attr.s(auto_attribs=True)
 class FileConversionResultsPage:
     """ """
+    from ...models import FileConversion
     items: Union[Unset, List[FileConversion]] = UNSET
     next_page: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ...models import FileConversion
         items: Union[Unset, List[FileConversion]] = UNSET
         if not isinstance(self.items, Unset):
             items = self.items
@@ -34,6 +36,8 @@ class FileConversionResultsPage:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        from ...models import FileConversion
+        items = cast(List[FileConversion], d.pop("items", UNSET))
         items = cast(List[FileConversion], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)

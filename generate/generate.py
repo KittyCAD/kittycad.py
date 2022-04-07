@@ -736,6 +736,10 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
                             f.write(
+                                "\tfrom ...models import " +
+                                property_type +
+                                "\n")
+                            f.write(
                                 "\t" +
                                 property_name +
                                 ": Union[Unset, List[" +
@@ -839,6 +843,10 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
+                            f.write(
+                                "\t\tfrom ...models import " +
+                                property_type +
+                                "\n")
                             f.write(
                                 "\t\t" +
                                 property_name +
@@ -993,6 +1001,16 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
+                            f.write(
+                                "\t\tfrom ...models import " +
+                                property_type +
+                                "\n")
+                            f.write(
+                                "\t\t" +
+                                property_name +
+                                " = cast(List[" + property_type + "], d.pop(\"" +
+                                property_name +
+                                "\", UNSET))\n")
                             f.write(
                                 "\t\t" +
                                 property_name +
