@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.users.get_user &mdash; kittycad v0.0.7 documentation</title>
+  <title>kittycad.api.users.get_user &mdash; kittycad v0.0.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -18,9 +18,7 @@
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.api.users.get_user_extended" href="kittycad.api.users.get_user_extended.html" />
-    <link rel="prev" title="kittycad.api.users" href="kittycad.api.users.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -31,7 +29,7 @@
             <a href="../index.html" class="icon icon-home"> kittycad
           </a>
               <div class="version">
-                v0.0.7
+                v0.0.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -41,21 +39,9 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="kittycad.api.html">kittycad.api</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="kittycad.api.file.html">kittycad.api.file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.api.meta.html">kittycad.api.meta</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="kittycad.api.users.html">kittycad.api.users</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.api.users.get_user</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_extended.html">kittycad.api.users.get_user_extended</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_self.html">kittycad.api.users.get_user_self</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_self_extended.html">kittycad.api.users.get_user_self_extended</a></li>
-</ul>
-</li>
-</ul>
-</li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.api.html">kittycad.api</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client</a></li>
-<li class="toctree-l1"><a class="reference internal" href="kittycad.models.html">kittycad.models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
 </ul>
 <ul>
@@ -77,8 +63,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="kittycad.api.html">kittycad.api</a> &raquo;</li>
-          <li><a href="kittycad.api.users.html">kittycad.api.users</a> &raquo;</li>
       <li>kittycad.api.users.get_user</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/modules/kittycad.api.users.get_user.rst.txt" rel="nofollow"> View page source</a>
@@ -89,48 +73,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-kittycad.api.users.get_user">
-<span id="kittycad-api-users-get-user"></span><h1>kittycad.api.users.get_user<a class="headerlink" href="#module-kittycad.api.users.get_user" title="Permalink to this headline"></a></h1>
-<p class="rubric">Functions</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio</span></code>(id, *, client)</p></td>
-<td><p>To get information about yourself, use <cite>/users/me</cite> as the endpoint.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio_detailed</span></code>(id, *, client)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code>]]</p>
-</dd>
-</dl>
-</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code>(id, *, client)</p></td>
-<td><p>To get information about yourself, use <cite>/users/me</cite> as the endpoint.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_detailed</span></code>(id, *, client)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code>]]</p>
-</dd>
-</dl>
-</p></td>
-</tr>
-</tbody>
-</table>
+  <section id="kittycad-api-users-get-user">
+<h1>kittycad.api.users.get_user<a class="headerlink" href="#kittycad-api-users-get-user" title="Permalink to this headline"></a></h1>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kittycad.api.users.html" class="btn btn-neutral float-left" title="kittycad.api.users" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.api.users.get_user_extended.html" class="btn btn-neutral float-right" title="kittycad.api.users.get_user_extended" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
