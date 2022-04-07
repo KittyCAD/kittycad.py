@@ -736,7 +736,7 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
                             f.write(
-                                "\tfrom ...models import " +
+                                "\tfrom ..models import " +
                                 property_type +
                                 "\n")
                             f.write(
@@ -844,7 +844,7 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
                             f.write(
-                                "\t\tfrom ...models import " +
+                                "\t\tfrom ..models import " +
                                 property_type +
                                 "\n")
                             f.write(
@@ -1002,7 +1002,7 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
                             f.write(
-                                "\t\tfrom ...models import " +
+                                "\t\tfrom ..models import " +
                                 property_type +
                                 "\n")
                             f.write(
