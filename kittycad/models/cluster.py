@@ -15,7 +15,6 @@ class Cluster:
     cluster_port: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
     tls_timeout: Union[Unset, int] = UNSET
-    from ..models import str
     urls: Union[Unset, List[str]] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -26,7 +25,6 @@ class Cluster:
         cluster_port = self.cluster_port
         name = self.name
         tls_timeout = self.tls_timeout
-        from ..models import str
         urls: Union[Unset, List[str]] = UNSET
         if not isinstance(self.urls, Unset):
             urls = self.urls
@@ -62,7 +60,6 @@ class Cluster:
 
         tls_timeout = d.pop("tls_timeout", UNSET)
 
-        from ..models import str
         urls = cast(List[str], d.pop("urls", UNSET))
 
         cluster = cls(

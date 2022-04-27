@@ -743,6 +743,10 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
+                            f.write(
+                                "\tfrom ..models import " +
+                                property_type +
+                                "\n")
                         elif 'type' in property_schema['items']:
                             if property_schema['items']['type'] == 'string':
                                 property_type = 'str'
@@ -754,10 +758,6 @@ def generateType(path: str, name: str, schema: dict):
                             print("  array: ", [property_schema['items']])
                             raise Exception("Unknown array type")
 
-                        f.write(
-                            "\tfrom ..models import " +
-                            property_type +
-                            "\n")
                         f.write(
                             "\t" +
                             property_name +
@@ -859,6 +859,10 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
+                            f.write(
+                                "\t\tfrom ..models import " +
+                                property_type +
+                                "\n")
                         elif 'type' in property_schema['items']:
                             if property_schema['items']['type'] == 'string':
                                 property_type = 'str'
@@ -870,10 +874,6 @@ def generateType(path: str, name: str, schema: dict):
                             print("  array: ", [property_schema['items']])
                             raise Exception("Unknown array type")
 
-                    f.write(
-                        "\t\tfrom ..models import " +
-                        property_type +
-                        "\n")
                     f.write(
                         "\t\t" +
                         property_name +
@@ -1026,6 +1026,10 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
+                            f.write(
+                                "\t\tfrom ..models import " +
+                                property_type +
+                                "\n")
                         elif 'type' in property_schema['items']:
                             if property_schema['items']['type'] == 'string':
                                 property_type = 'str'
@@ -1038,10 +1042,6 @@ def generateType(path: str, name: str, schema: dict):
                             print("  array: ", [property_schema['items']])
                             raise Exception("Unknown array type")
 
-                    f.write(
-                        "\t\tfrom ..models import " +
-                        property_type +
-                        "\n")
                     f.write(
                         "\t\t" +
                         property_name +
