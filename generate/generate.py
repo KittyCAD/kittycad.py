@@ -714,6 +714,14 @@ def generateType(path: str, name: str, schema: dict):
                         "\t" +
                         property_name +
                         ": Union[Unset, str] = UNSET\n")
+                elif property_type == 'object':
+                    if 'additionalProperties' in property_schema:
+                        return generateType(
+                            path, property_name, property_schema['additionalProperties'])
+                    else:
+                        print("  property type: ", property_type)
+                        print("  property schema: ", property_schema)
+                        raise Exception("  unknown type: ", property_type)
                 elif property_type == 'integer':
                     f.write(
                         "\t" +
@@ -735,23 +743,31 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
-                            f.write(
-                                "\tfrom ..models import " +
-                                property_type +
-                                "\n")
-                            f.write(
-                                "\t" +
-                                property_name +
-                                ": Union[Unset, List[" +
-                                property_type +
-                                "]] = UNSET\n")
+                        elif 'type' in property_schema['items']:
+                            if property_schema['items']['type'] == 'string':
+                                property_type = 'str'
+                            else:
+                                print("  property: ", property_schema)
+                                raise Exception("Unknown property type")
                         else:
                             print("  array: ", [property_schema])
                             print("  array: ", [property_schema['items']])
                             raise Exception("Unknown array type")
+
+                        f.write(
+                            "\tfrom ..models import " +
+                            property_type +
+                            "\n")
+                        f.write(
+                            "\t" +
+                            property_name +
+                            ": Union[Unset, List[" +
+                            property_type +
+                            "]] = UNSET\n")
                     else:
                         raise Exception("Unknown array type")
                 else:
+                    print("  property type: ", property_type)
                     raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
                 ref = property_schema['$ref'].replace(
@@ -843,28 +859,37 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
-                            f.write(
-                                "\t\tfrom ..models import " +
-                                property_type +
-                                "\n")
-                            f.write(
-                                "\t\t" +
-                                property_name +
-                                ": Union[Unset, List[" +
-                                property_type +
-                                "]] = UNSET\n")
-                            f.write(
-                                "\t\tif not isinstance(self." + property_name + ", Unset):\n")
-                            f.write(
-                                "\t\t\t" +
-                                property_name +
-                                " = self." +
-                                property_name +
-                                "\n")
+                        elif 'type' in property_schema['items']:
+                            if property_schema['items']['type'] == 'string':
+                                property_type = 'str'
+                            else:
+                                print("  property: ", property_schema)
+                                raise Exception("Unknown property type")
                         else:
                             print("  array: ", [property_schema])
                             print("  array: ", [property_schema['items']])
                             raise Exception("Unknown array type")
+
+                    f.write(
+                        "\t\tfrom ..models import " +
+                        property_type +
+                        "\n")
+                    f.write(
+                        "\t\t" +
+                        property_name +
+                        ": Union[Unset, List[" +
+                        property_type +
+                        "]] = UNSET\n")
+                    f.write(
+                        "\t\tif not isinstance(self." +
+                        property_name +
+                        ", Unset):\n")
+                    f.write(
+                        "\t\t\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        "\n")
                 else:
                     raise Exception("  unknown type: ", property_type)
             elif '$ref' in property_schema:
@@ -1001,21 +1026,29 @@ def generateType(path: str, name: str, schema: dict):
                             property_type = property_schema['items']['$ref']
                             property_type = property_type.replace(
                                 '#/components/schemas/', '')
-                            f.write(
-                                "\t\tfrom ..models import " +
-                                property_type +
-                                "\n")
-                            f.write(
-                                "\t\t" +
-                                property_name +
-                                " = cast(List[" + property_type + "], d.pop(\"" +
-                                property_name +
-                                "\", UNSET))\n")
-                            f.write("\n")
+                        elif 'type' in property_schema['items']:
+                            if property_schema['items']['type'] == 'string':
+                                property_type = 'str'
+                            else:
+                                raise Exception(
+                                    "  unknown array type: ",
+                                    property_schema['items']['type'])
                         else:
                             print("  array: ", [property_schema])
                             print("  array: ", [property_schema['items']])
                             raise Exception("Unknown array type")
+
+                    f.write(
+                        "\t\tfrom ..models import " +
+                        property_type +
+                        "\n")
+                    f.write(
+                        "\t\t" +
+                        property_name +
+                        " = cast(List[" + property_type + "], d.pop(\"" +
+                        property_name +
+                        "\", UNSET))\n")
+                    f.write("\n")
                 else:
                     print("  unknown type: ", property_type)
                     raise Exception("  unknown type: ", property_type)
@@ -1172,13 +1205,22 @@ def getRefs(schema: dict) -> [str]:
         else:
             type_name = schema['type']
             if type_name == 'object':
-                # Iternate over the properties.
-                for property_name in schema['properties']:
-                    property_schema = schema['properties'][property_name]
-                    schema_refs = getRefs(property_schema)
+                if 'properties' in schema:
+                    # Iternate over the properties.
+                    for property_name in schema['properties']:
+                        property_schema = schema['properties'][property_name]
+                        schema_refs = getRefs(property_schema)
+                        for ref in schema_refs:
+                            if ref not in refs:
+                                refs.append(ref)
+                elif 'additionalProperties' in schema:
+                    schema_refs = getRefs(schema['additionalProperties'])
                     for ref in schema_refs:
                         if ref not in refs:
                             refs.append(ref)
+                else:
+                    print("  unsupported type: ", schema)
+                    raise Exception("  unsupported type: ", schema)
 
     return refs
 
