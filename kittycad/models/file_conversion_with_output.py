@@ -24,6 +24,7 @@ class FileConversionWithOutput:
     src_format: Union[Unset, FileConversionSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, FileConversionStatus] = UNSET
+    updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -51,6 +52,9 @@ class FileConversionWithOutput:
         status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status.value
+        updated_at: Union[Unset, str] = UNSET
+        if not isinstance(self.updated_at, Unset):
+            updated_at = self.updated_at.isoformat()
         user_id = self.user_id
 
         field_dict: Dict[str, Any] = {}
@@ -72,6 +76,8 @@ class FileConversionWithOutput:
             field_dict['started_at'] = started_at
         if status is not UNSET:
             field_dict['status'] = status
+        if updated_at is not UNSET:
+            field_dict['updated_at'] = updated_at
         if user_id is not UNSET:
             field_dict['user_id'] = user_id
 
@@ -131,6 +137,13 @@ class FileConversionWithOutput:
         else:
             status = FileConversionStatus(_status)
 
+        _updated_at = d.pop("updated_at", UNSET)
+        updated_at: Union[Unset, datetime.datetime]
+        if isinstance(_updated_at, Unset):
+            updated_at = UNSET
+        else:
+            updated_at = isoparse(_updated_at)
+
         user_id = d.pop("user_id", UNSET)
 
         file_conversion_with_output = cls(
@@ -142,6 +155,7 @@ class FileConversionWithOutput:
             src_format=src_format,
             started_at=started_at,
             status=status,
+            updated_at=updated_at,
             user_id=user_id,
         )
 

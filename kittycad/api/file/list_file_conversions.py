@@ -6,16 +6,18 @@ from ...client import Client
 from ...models.file_conversion_results_page import FileConversionResultsPage
 from ...models.error import Error
 from ...models.created_at_sort_mode import CreatedAtSortMode
+from ...models.file_conversion_status import FileConversionStatus
 from ...types import Response
 
 def _get_kwargs(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
+	status: FileConversionStatus,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/file/conversions".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by)
+	url = "{}/file/conversions".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by, status=status)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -54,6 +56,7 @@ def sync_detailed(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
+	status: FileConversionStatus,
 	*,
 	client: Client,
 ) -> Response[Union[Any, FileConversionResultsPage, Error]]:
@@ -61,6 +64,7 @@ def sync_detailed(
 		limit=limit,
 		page_token=page_token,
 		sort_by=sort_by,
+		status=status,
 		client=client,
 	)
 
@@ -76,6 +80,7 @@ def sync(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
+	status: FileConversionStatus,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileConversionResultsPage, Error]]:
@@ -86,6 +91,7 @@ This endpoint requires authentication by a KittyCAD employee. """
 		limit=limit,
 		page_token=page_token,
 		sort_by=sort_by,
+		status=status,
 		client=client,
 	).parsed
 
@@ -94,6 +100,7 @@ async def asyncio_detailed(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
+	status: FileConversionStatus,
 	*,
 	client: Client,
 ) -> Response[Union[Any, FileConversionResultsPage, Error]]:
@@ -101,6 +108,7 @@ async def asyncio_detailed(
 		limit=limit,
 		page_token=page_token,
 		sort_by=sort_by,
+		status=status,
 		client=client,
 	)
 
@@ -114,6 +122,7 @@ async def asyncio(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
+	status: FileConversionStatus,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileConversionResultsPage, Error]]:
@@ -125,6 +134,7 @@ This endpoint requires authentication by a KittyCAD employee. """
 			limit=limit,
 			page_token=page_token,
 			sort_by=sort_by,
+			status=status,
 			client=client,
 		)
 	).parsed

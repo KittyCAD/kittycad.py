@@ -13,6 +13,7 @@ VERSION := $(shell toml get $(CURDIR)/pyproject.toml tool.poetry.version | jq -r
 generate: docker-image ## Generate the api client.
 	docker run --rm -i $(DOCKER_FLAGS) \
 		--name python-generator \
+		--disable-content-trust \
 		-v $(CURDIR):/usr/src \
 		--workdir /usr/src \
 		$(DOCKER_IMAGE_NAME) sh -c 'poetry run python generate/generate.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/models/*.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/api/*.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/*.py && poetry run autopep8 --in-place --aggressive --aggressive generate/*.py'
