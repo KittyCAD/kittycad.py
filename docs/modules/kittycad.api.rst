@@ -31,5 +31,6 @@
    kittycad.api.api-tokens
    kittycad.api.file
    kittycad.api.meta
+   kittycad.api.sessions
    kittycad.api.users
 

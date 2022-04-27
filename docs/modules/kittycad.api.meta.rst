@@ -27,6 +27,7 @@ kittycad.api.meta
    :toctree:
    :recursive:
 
+   kittycad.api.meta.get_metadata
    kittycad.api.meta.get_schema
    kittycad.api.meta.ping
 
