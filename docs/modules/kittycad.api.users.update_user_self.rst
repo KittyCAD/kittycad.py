@@ -1,7 +1,7 @@
-kittycad.api.users.list\_users\_extended
-========================================
+kittycad.api.users.update\_user\_self
+=====================================
 
-.. automodule:: kittycad.api.users.list_users_extended
+.. automodule:: kittycad.api.users.update_user_self
 
    
    

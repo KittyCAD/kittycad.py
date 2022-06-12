@@ -1,7 +1,7 @@
-kittycad.api.users.list\_users\_extended
-========================================
+kittycad.api.hidden.login
+=========================
 
-.. automodule:: kittycad.api.users.list_users_extended
+.. automodule:: kittycad.api.hidden.login
 
    
    
