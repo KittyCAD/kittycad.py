@@ -289,12 +289,33 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
                     json = content[content_type]['schema']
                     if '$ref' in json:
                         ref = json['$ref'].replace('#/components/schemas/', '')
-                        f.write(
-                            "\t\tresponse_" +
-                            response_code +
-                            " = " +
-                            ref +
-                            ".from_dict(response.json())\n")
+                        schema = data['components']['schemas'][ref]
+                        # Let's check if it is a oneOf.
+                        if 'oneOf' in schema:
+                            # We want to parse each of the possible types.
+                            for index, one_of in enumerate(schema['oneOf']):
+                                ref = one_of['$ref'].replace(
+                                    '#/components/schemas/', '')
+                                f.write("\t\ttry:\n")
+                                f.write(
+                                    "\t\t\tif not isinstance(data, dict):\n")
+                                f.write("\t\t\t\traise TypeError()\n")
+                                f.write(
+                                    "\t\t\toption = " + ref + ".from_dict(data)\n")
+                                f.write("\t\t\treturn option\n")
+                                f.write("\t\texcept:\n")
+                                if index == len(schema['oneOf']) - 1:
+                                    # On the last one raise the error.
+                                    f.write("\t\t\traise\n")
+                                else:
+                                    f.write("\t\t\tpass\n")
+                        else:
+                            f.write(
+                                "\t\tresponse_" +
+                                response_code +
+                                " = " +
+                                ref +
+                                ".from_dict(response.json())\n")
                     elif 'type' in json:
                         if json['type'] == 'array':
                             items = json['items']
