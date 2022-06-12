@@ -16,12 +16,13 @@ generate: docker-image ## Generate the api client.
 		--disable-content-trust \
 		-v $(CURDIR):/usr/src \
 		--workdir /usr/src \
-		$(DOCKER_IMAGE_NAME) sh -c 'poetry run python generate/generate.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/models/*.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/api/*.py && poetry run autopep8 --in-place --aggressive --aggressive kittycad/*.py && poetry run autopep8 --in-place --aggressive --aggressive generate/*.py'
+		$(DOCKER_IMAGE_NAME) ./generate/run.sh
 
 .PHONY: shell
 shell: docker-image ## Pop into a shell in the docker image.
 	docker run --rm -i $(DOCKER_FLAGS) \
 		--name python-generator-shell \
+		--disable-content-trust \
 		-v $(CURDIR):/usr/src \
 		--workdir /usr/src \
 		$(DOCKER_IMAGE_NAME) /bin/bash

@@ -10,14 +10,14 @@ T = TypeVar("T", bound="ApiCallWithPriceResultsPage")
 @attr.s(auto_attribs=True)
 class ApiCallWithPriceResultsPage:
     """ """
-    from ..models import ApiCallWithPrice
+    from ..models.api_call_with_price import ApiCallWithPrice
     items: Union[Unset, List[ApiCallWithPrice]] = UNSET
     next_page: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models import ApiCallWithPrice
+        from ..models.api_call_with_price import ApiCallWithPrice
         items: Union[Unset, List[ApiCallWithPrice]] = UNSET
         if not isinstance(self.items, Unset):
             items = self.items
@@ -36,7 +36,7 @@ class ApiCallWithPriceResultsPage:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        from ..models import ApiCallWithPrice
+        from ..models.api_call_with_price import ApiCallWithPrice
         items = cast(List[ApiCallWithPrice], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)
