@@ -863,7 +863,9 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str):
                         property_type = property_type.replace(
                             '#/components/schemas/', '')
                         f.write(
-                            "\tfrom ..models import " +
+                            "\tfrom ..models." +
+                            camel_to_snake(property_type) +
+                            " import " +
                             property_type +
                             "\n")
                     elif 'type' in property_schema['items']:
@@ -979,7 +981,9 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str):
                         property_type = property_type.replace(
                             '#/components/schemas/', '')
                         f.write(
-                            "\t\tfrom ..models import " +
+                            "\t\tfrom ..models." +
+                            camel_to_snake(property_type) +
+                            " import " +
                             property_type +
                             "\n")
                     elif 'type' in property_schema['items']:
@@ -1146,7 +1150,9 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str):
                         property_type = property_type.replace(
                             '#/components/schemas/', '')
                         f.write(
-                            "\t\tfrom ..models import " +
+                            "\t\tfrom ..models." +
+                            camel_to_snake(property_type) +
+                            " import " +
                             property_type +
                             "\n")
                     elif 'type' in property_schema['items']:
