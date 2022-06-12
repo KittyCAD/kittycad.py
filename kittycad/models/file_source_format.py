@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class FileConversionSourceFormat(str, Enum):
+class FileSourceFormat(str, Enum):
     STL = 'stl'
     OBJ = 'obj'
     DAE = 'dae'

@@ -5,22 +5,22 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.file_output_format import FileOutputFormat
 from ..models.file_source_format import FileSourceFormat
 from ..models.api_call_status import APICallStatus
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileConversion")
+T = TypeVar("T", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
-class FileConversion:
+class FileMass:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
+    error: Union[Unset, str] = UNSET
     id: Union[Unset, Uuid] = UNSET
-    output: Union[Unset, str] = UNSET
-    output_format: Union[Unset, FileOutputFormat] = UNSET
+    mass: Union[Unset, float] = UNSET
+    material_density: Union[Unset, float] = UNSET
     src_format: Union[Unset, FileSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, APICallStatus] = UNSET
@@ -36,13 +36,12 @@ class FileConversion:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
+        error = self.error
         id: Union[Unset, str] = UNSET
         if not isinstance(self.id, Unset):
             id = self.id.value
-        output = self.output
-        output_format: Union[Unset, str] = UNSET
-        if not isinstance(self.output_format, Unset):
-            output_format = self.output_format.value
+        mass = self.mass
+        material_density = self.material_density
         src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format.value
@@ -64,12 +63,14 @@ class FileConversion:
             field_dict['completed_at'] = completed_at
         if created_at is not UNSET:
             field_dict['created_at'] = created_at
+        if error is not UNSET:
+            field_dict['error'] = error
         if id is not UNSET:
             field_dict['id'] = id
-        if output is not UNSET:
-            field_dict['output'] = output
-        if output_format is not UNSET:
-            field_dict['output_format'] = output_format
+        if mass is not UNSET:
+            field_dict['mass'] = mass
+        if material_density is not UNSET:
+            field_dict['material_density'] = material_density
         if src_format is not UNSET:
             field_dict['src_format'] = src_format
         if started_at is not UNSET:
@@ -100,6 +101,8 @@ class FileConversion:
         else:
             created_at = isoparse(_created_at)
 
+        error = d.pop("error", UNSET)
+
         _id = d.pop("id", UNSET)
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
@@ -107,14 +110,9 @@ class FileConversion:
         else:
             id = Uuid(_id)
 
-        output = d.pop("output", UNSET)
+        mass = d.pop("mass", UNSET)
 
-        _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, FileOutputFormat]
-        if isinstance(_output_format, Unset):
-            output_format = UNSET
-        else:
-            output_format = FileOutputFormat(_output_format)
+        material_density = d.pop("material_density", UNSET)
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileSourceFormat]
@@ -146,12 +144,13 @@ class FileConversion:
 
         user_id = d.pop("user_id", UNSET)
 
-        file_conversion = cls(
+        file_mass = cls(
             completed_at=completed_at,
             created_at=created_at,
+            error=error,
             id=id,
-            output=output,
-            output_format=output_format,
+            mass=mass,
+            material_density=material_density,
             src_format=src_format,
             started_at=started_at,
             status=status,
@@ -159,8 +158,8 @@ class FileConversion:
             user_id=user_id,
         )
 
-        file_conversion.additional_properties = d
-        return file_conversion
+        file_mass.additional_properties = d
+        return file_mass
 
     @property
     def additional_keys(self) -> List[str]:
