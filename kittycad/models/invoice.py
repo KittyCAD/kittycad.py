@@ -25,5 +25,3 @@ class Invoice:
     id: Union[Unset, str] = UNSET
     invoice_pdf: Union[Unset, str] = UNSET
     invoice_url: Union[Unset, str] = UNSET
-    from ..models import InvoiceLineItem
-    lines: Union[Unset, List[InvoiceLineItem]] = UNSET

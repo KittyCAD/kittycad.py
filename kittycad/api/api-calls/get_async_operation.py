@@ -29,7 +29,27 @@ def _get_kwargs(
 
 def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	if response.status_code == 200:
-		response_200 = AsyncApiCallOutput.from_dict(response.json())
+		try:
+			if not isinstance(data, dict):
+				raise TypeError()
+			option = FileConversion.from_dict(data)
+			return option
+		except:
+			pass
+		try:
+			if not isinstance(data, dict):
+				raise TypeError()
+			option = FileMass.from_dict(data)
+			return option
+		except:
+			pass
+		try:
+			if not isinstance(data, dict):
+				raise TypeError()
+			option = FileVolume.from_dict(data)
+			return option
+		except:
+			raise
 		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
