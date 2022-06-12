@@ -5,9 +5,9 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.file_conversion_output_format import FileConversionOutputFormat
-from ..models.file_conversion_source_format import FileConversionSourceFormat
-from ..models.file_conversion_status import FileConversionStatus
+from ..models.file_output_format import FileOutputFormat
+from ..models.file_source_format import FileSourceFormat
+from ..models.api_call_status import APICallStatus
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileConversion")
@@ -19,15 +19,13 @@ class FileConversion:
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, Uuid] = UNSET
-    output_file_link: Union[Unset, str] = UNSET
-    output_format: Union[Unset, FileConversionOutputFormat] = UNSET
-    src_file_link: Union[Unset, str] = UNSET
-    src_format: Union[Unset, FileConversionSourceFormat] = UNSET
+    output: Union[Unset, str] = UNSET
+    output_format: Union[Unset, FileOutputFormat] = UNSET
+    src_format: Union[Unset, FileSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, FileConversionStatus] = UNSET
+    status: Union[Unset, APICallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
-    worker: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -41,11 +39,10 @@ class FileConversion:
         id: Union[Unset, str] = UNSET
         if not isinstance(self.id, Unset):
             id = self.id.value
-        output_file_link = self.output_file_link
+        output = self.output
         output_format: Union[Unset, str] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format.value
-        src_file_link = self.src_file_link
         src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format.value
@@ -59,7 +56,6 @@ class FileConversion:
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
         user_id = self.user_id
-        worker = self.worker
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -70,12 +66,10 @@ class FileConversion:
             field_dict['created_at'] = created_at
         if id is not UNSET:
             field_dict['id'] = id
-        if output_file_link is not UNSET:
-            field_dict['output_file_link'] = output_file_link
+        if output is not UNSET:
+            field_dict['output'] = output
         if output_format is not UNSET:
             field_dict['output_format'] = output_format
-        if src_file_link is not UNSET:
-            field_dict['src_file_link'] = src_file_link
         if src_format is not UNSET:
             field_dict['src_format'] = src_format
         if started_at is not UNSET:
@@ -86,8 +80,6 @@ class FileConversion:
             field_dict['updated_at'] = updated_at
         if user_id is not UNSET:
             field_dict['user_id'] = user_id
-        if worker is not UNSET:
-            field_dict['worker'] = worker
 
         return field_dict
 
@@ -115,23 +107,21 @@ class FileConversion:
         else:
             id = Uuid(_id)
 
-        output_file_link = d.pop("output_file_link", UNSET)
+        output = d.pop("output", UNSET)
 
         _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, FileConversionOutputFormat]
+        output_format: Union[Unset, FileOutputFormat]
         if isinstance(_output_format, Unset):
             output_format = UNSET
         else:
-            output_format = FileConversionOutputFormat(_output_format)
-
-        src_file_link = d.pop("src_file_link", UNSET)
+            output_format = FileOutputFormat(_output_format)
 
         _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileConversionSourceFormat]
+        src_format: Union[Unset, FileSourceFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = FileConversionSourceFormat(_src_format)
+            src_format = FileSourceFormat(_src_format)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -141,11 +131,11 @@ class FileConversion:
             started_at = isoparse(_started_at)
 
         _status = d.pop("status", UNSET)
-        status: Union[Unset, FileConversionStatus]
+        status: Union[Unset, APICallStatus]
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = FileConversionStatus(_status)
+            status = APICallStatus(_status)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -156,21 +146,17 @@ class FileConversion:
 
         user_id = d.pop("user_id", UNSET)
 
-        worker = d.pop("worker", UNSET)
-
         file_conversion = cls(
             completed_at=completed_at,
             created_at=created_at,
             id=id,
-            output_file_link=output_file_link,
+            output=output,
             output_format=output_format,
-            src_file_link=src_file_link,
             src_format=src_format,
             started_at=started_at,
             status=status,
             updated_at=updated_at,
             user_id=user_id,
-            worker=worker,
         )
 
         file_conversion.additional_properties = d

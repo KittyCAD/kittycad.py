@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 
 from ..models.file_system_metadata import FileSystemMetadata
-from ..models.nats_connection import NatsConnection
+from ..models.connection import Connection
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EngineMetadata")
@@ -15,7 +15,7 @@ class EngineMetadata:
     async_jobs_running: Union[Unset, bool] = False
     fs: Union[Unset, FileSystemMetadata] = UNSET
     git_hash: Union[Unset, str] = UNSET
-    nats: Union[Unset, NatsConnection] = UNSET
+    pubsub: Union[Unset, Connection] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -25,9 +25,9 @@ class EngineMetadata:
         if not isinstance(self.fs, Unset):
             fs = self.fs.value
         git_hash = self.git_hash
-        nats: Union[Unset, str] = UNSET
-        if not isinstance(self.nats, Unset):
-            nats = self.nats.value
+        pubsub: Union[Unset, str] = UNSET
+        if not isinstance(self.pubsub, Unset):
+            pubsub = self.pubsub.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -38,8 +38,8 @@ class EngineMetadata:
             field_dict['fs'] = fs
         if git_hash is not UNSET:
             field_dict['git_hash'] = git_hash
-        if nats is not UNSET:
-            field_dict['nats'] = nats
+        if pubsub is not UNSET:
+            field_dict['pubsub'] = pubsub
 
         return field_dict
 
@@ -57,18 +57,18 @@ class EngineMetadata:
 
         git_hash = d.pop("git_hash", UNSET)
 
-        _nats = d.pop("nats", UNSET)
-        nats: Union[Unset, NatsConnection]
-        if isinstance(_nats, Unset):
-            nats = UNSET
+        _pubsub = d.pop("pubsub", UNSET)
+        pubsub: Union[Unset, Connection]
+        if isinstance(_pubsub, Unset):
+            pubsub = UNSET
         else:
-            nats = NatsConnection(_nats)
+            pubsub = Connection(_pubsub)
 
         engine_metadata = cls(
             async_jobs_running=async_jobs_running,
             fs=fs,
             git_hash=git_hash,
-            nats=nats,
+            pubsub=pubsub,
         )
 
         engine_metadata.additional_properties = d

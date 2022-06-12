@@ -107,7 +107,7 @@ To get information about any KittyCAD user, you must be a KittyCAD employee. """
 
 	return (
 		await asyncio_detailed(
-			id=id,
+		id=id,
 			client=client,
 		)
 	).parsed

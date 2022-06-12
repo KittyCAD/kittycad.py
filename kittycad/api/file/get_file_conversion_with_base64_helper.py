@@ -5,7 +5,7 @@ import httpx
 
 from ...client import Client
 from ...models import Error
-from ...models.file_conversion import FileConversionWithOutput
+from ...models.file_conversion import FileConversion
 from ...types import Response
 from ...api.file.get_file_conversion import sync as fc_sync, asyncio as fc_asyncio
 
@@ -14,7 +14,7 @@ def sync(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversionWithOutput, Error]]:
+) -> Optional[Union[Any, FileConversion, Error]]:
     """Get the status of a file conversion. This function automatically base64 decodes the output response if there is one."""
 
     fc = fc_sync(
@@ -22,7 +22,7 @@ def sync(
         client=client,
     )
 
-    if isinstance(fc, FileConversionWithOutput) and fc.output != "":
+    if isinstance(fc, FileConversion) and fc.output != "":
         fc.output = base64.b64decode(fc.output)
 
     return fc
@@ -32,7 +32,7 @@ async def asyncio(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversionWithOutput, Error]]:
+) -> Optional[Union[Any, FileConversion, Error]]:
     """Get the status of a file conversion. This function automatically base64 decodes the output response if there is one."""
 
     fc = await fc_asyncio(
@@ -40,7 +40,7 @@ async def asyncio(
             client=client,
         )
 
-    if isinstance(fc, FileConversionWithOutput) and fc.output != "":
+    if isinstance(fc, FileConversion) and fc.output != "":
         fc.output = base64.b64decode(fc.output)
 
     return fc

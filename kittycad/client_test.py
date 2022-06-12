@@ -3,7 +3,7 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, FileConversionOutputFormat, FileConversionSourceFormat, User, Pong, FileConversionStatus
+from .models import FileConversion, FileOutputFormat, FileSourceFormat, User, Pong, APICallStatus
 from .api.file import create_file_conversion_with_base64_helper
 from .api.meta import ping
 from .api.users import get_user_self
@@ -72,8 +72,8 @@ def test_file_convert_stl():
     fc: FileConversion = create_file_conversion_with_base64_helper.sync(
         client=client,
         body=content,
-        src_format=FileConversionSourceFormat.STL,
-        output_format=FileConversionOutputFormat.OBJ)
+        src_format=FileSourceFormat.STL,
+        output_format=FileOutputFormat.OBJ)
 
     assert fc is not None
 
@@ -81,7 +81,7 @@ def test_file_convert_stl():
 
     assert fc.id is not None
 
-    assert fc.status == FileConversionStatus.COMPLETED
+    assert fc.status == APICallStatus.COMPLETED
 
     print(f"FileConversion: {fc}")
 
@@ -97,7 +97,7 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(client=client, body=content, src_format=FileConversionSourceFormat.STL, output_format=FileConversionOutputFormat.OBJ)
+    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(client=client, body=content, src_format=FileSourceFormat.STL, output_format=FileOutputFormat.OBJ)
 
     assert fc is not None
 
