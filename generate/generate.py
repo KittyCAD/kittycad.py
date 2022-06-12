@@ -110,12 +110,12 @@ def generatePath(
     print("  endpoint: ", [endpoint])
     f = open(file_path, "w")
 
-    endoint_refs = getEndpointRefs(endpoint, data)
+    endpoint_refs = getEndpointRefs(endpoint, data)
     parameter_refs = getParameterRefs(endpoint)
     request_body_refs = getRequestBodyRefs(endpoint)
     request_body_type = getRequestBodyType(endpoint)
 
-    success_type = endoint_refs[0]
+    success_type = endpoint_refs[0]
 
     if fn_name == 'get_file_conversion' or fn_name == 'create_file_conversion':
         fn_name += '_with_base64_helper'
@@ -173,7 +173,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\n")
     f.write("from ...client import Client\n")
     # Import our references for responses.
-    for ref in endoint_refs:
+    for ref in endpoint_refs:
         if ref.startswith('[') and ref.endswith(']'):
             ref = ref.replace('[', '').replace(']', '')
         f.write(
@@ -270,7 +270,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
 
     f.write(
         "def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, " +
-        ", ".join(endoint_refs) +
+        ", ".join(endpoint_refs) +
         "]]:\n")
     # Iterate over the responses.
     responses = endpoint['responses']
@@ -353,7 +353,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\n")
     f.write(
         "def _build_response(*, response: httpx.Response) -> Response[Union[Any, " +
-        ", ".join(endoint_refs) +
+        ", ".join(endpoint_refs) +
         "]]:\n")
     f.write("\treturn Response(\n")
     f.write("\t\tstatus_code=response.status_code,\n")
@@ -395,7 +395,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Response[Union[Any, " +
-            ", ".join(endoint_refs) +
+            ", ".join(endpoint_refs) +
             "]]:\n")
     f.write("\tkwargs = _get_kwargs(\n")
     # Iterate over the parameters.
@@ -464,7 +464,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Optional[Union[Any, " +
-            ", ".join(endoint_refs) +
+            ", ".join(endpoint_refs) +
             "]]:\n")
     if 'description' in endpoint:
         f.write("\t\"\"\" " + endpoint['description'] + " \"\"\"\n")
@@ -529,7 +529,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Response[Union[Any, " +
-            ", ".join(endoint_refs) +
+            ", ".join(endpoint_refs) +
             "]]:\n")
     f.write("\tkwargs = _get_kwargs(\n")
     # Iterate over the parameters.
@@ -596,7 +596,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Optional[Union[Any, " +
-            ", ".join(endoint_refs) +
+            ", ".join(endpoint_refs) +
             "]]:\n")
     if 'description' in endpoint:
         f.write("\t\"\"\" " + endpoint['description'] + " \"\"\"\n")
@@ -655,7 +655,8 @@ def generateTypes(cwd: str, parser: dict):
         schema = schemas[key]
         print("generating schema: ", key)
         generateType(path, key, schema)
-        f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
+        if 'oneOf' not in schema:
+            f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
 
     # Close the file.
     f.close()
@@ -693,10 +694,6 @@ def generateType(path: str, name: str, schema: dict):
 
 
 def generateOneOfType(path: str, name: str, schema: dict):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
-    f = open(path, "w")
-
     for t in schema['oneOf']:
         # Get the name for the reference.
         if '$ref' in t:
@@ -706,9 +703,6 @@ def generateOneOfType(path: str, name: str, schema: dict):
             print("  schema: ", [t])
             print("  oneOf must be a ref: ", name)
             raise Exception("  oneOf must be a ref ", name)
-
-    # Close the file.
-    f.close()
 
 
 def generateStringType(path: str, name: str, schema: dict, type_name: str):
@@ -1312,9 +1306,20 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                 if content_type == 'application/json':
                     json = content[content_type]['schema']
                     if '$ref' in json:
-                        ref = json['$ref'].replace('#/components/schemas/', '')
-                        if ref not in refs:
-                            refs.append(ref)
+                        # If the reference is to a oneOf type, we want to return
+                        # all the possible outcomes.
+                        ref = json['$ref'].replace(
+                            '#/components/schemas/', '')
+                        schema = data['components']['schemas'][ref]
+                        if 'oneOf' in schema:
+                            for t in schema['oneOf']:
+                                ref = t['$ref'].replace(
+                                    '#/components/schemas/', '')
+                                if ref not in refs:
+                                    refs.append(ref)
+                        else:
+                            if ref not in refs:
+                                refs.append(ref)
                     elif 'type' in json:
                         if json['type'] == 'array':
                             items = json['items']

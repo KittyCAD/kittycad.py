@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.async_api_call_output import AsyncApiCallOutput
+from ...models.file_conversion import FileConversion
+from ...models.file_mass import FileMass
+from ...models.file_volume import FileVolume
 from ...models.error import Error
 from ...types import Response
 
@@ -25,7 +27,7 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	if response.status_code == 200:
 		response_200 = AsyncApiCallOutput.from_dict(response.json())
 		return response_200
@@ -38,7 +40,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApi
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -51,7 +53,7 @@ def sync_detailed(
 	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Response[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -69,7 +71,7 @@ def sync(
 	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
 This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
 
@@ -83,7 +85,7 @@ async def asyncio_detailed(
 	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Response[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -99,7 +101,7 @@ async def asyncio(
 	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
 This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
 
