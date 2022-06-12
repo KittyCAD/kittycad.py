@@ -12,7 +12,7 @@ def _get_kwargs(
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/user/file/conversions/{id}".format(client.base_url, id=id)
+	url = "{}/async/operations/{id}".format(client.base_url, id=id)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -70,8 +70,10 @@ def sync(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
-	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
-This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
+	""" Get the status and output of an async operation.
+This endpoint requires authentication by any KittyCAD user. It returns details of the requested async operation for the user.
+If the user is not authenticated to view the specified async operation, then it is not returned.
+Only KittyCAD employees with the proper access can view async operations for other users. """
 
 	return sync_detailed(
 		id=id,
@@ -100,8 +102,10 @@ async def asyncio(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
-	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
-This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
+	""" Get the status and output of an async operation.
+This endpoint requires authentication by any KittyCAD user. It returns details of the requested async operation for the user.
+If the user is not authenticated to view the specified async operation, then it is not returned.
+Only KittyCAD employees with the proper access can view async operations for other users. """
 
 	return (
 		await asyncio_detailed(

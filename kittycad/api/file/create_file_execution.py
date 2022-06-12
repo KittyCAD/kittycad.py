@@ -3,16 +3,19 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.async_api_call_output import AsyncApiCallOutput
+from ...models.code_output import CodeOutput
 from ...models.error import Error
+from ...models.code_language import CodeLanguage
 from ...types import Response
 
 def _get_kwargs(
-	id: str,
+	lang: CodeLanguage,
+	output: str,
+	body: bytes,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/user/file/conversions/{id}".format(client.base_url, id=id)
+	url = "{}/file/execute/{lang}".format(client.base_url, lang=lang, output=output)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -22,12 +25,13 @@ def _get_kwargs(
 		"headers": headers,
 		"cookies": cookies,
 		"timeout": client.get_timeout(),
+		"content": body,
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, CodeOutput, Error]]:
 	if response.status_code == 200:
-		response_200 = AsyncApiCallOutput.from_dict(response.json())
+		response_200 = CodeOutput.from_dict(response.json())
 		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -38,7 +42,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApi
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, CodeOutput, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -48,16 +52,20 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApi
 
 
 def sync_detailed(
-	id: str,
+	lang: CodeLanguage,
+	output: str,
+	body: bytes,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Response[Union[Any, CodeOutput, Error]]:
 	kwargs = _get_kwargs(
-		id=id,
+		lang=lang,
+		output=output,
+		body=body,
 		client=client,
 	)
 
-	response = httpx.get(
+	response = httpx.post(
 		verify=client.verify_ssl,
 		**kwargs,
 	)
@@ -66,46 +74,54 @@ def sync_detailed(
 
 
 def sync(
-	id: str,
+	lang: CodeLanguage,
+	output: str,
+	body: bytes,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
-	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
-This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
+) -> Optional[Union[Any, CodeOutput, Error]]:
 
 	return sync_detailed(
-		id=id,
+		lang=lang,
+		output=output,
+		body=body,
 		client=client,
 	).parsed
 
 
 async def asyncio_detailed(
-	id: str,
+	lang: CodeLanguage,
+	output: str,
+	body: bytes,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Response[Union[Any, CodeOutput, Error]]:
 	kwargs = _get_kwargs(
-		id=id,
+		lang=lang,
+		output=output,
+		body=body,
 		client=client,
 	)
 
 	async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-		response = await _client.get(**kwargs)
+		response = await _client.post(**kwargs)
 
 	return _build_response(response=response)
 
 
 async def asyncio(
-	id: str,
+	lang: CodeLanguage,
+	output: str,
+	body: bytes,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
-	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
-This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
+) -> Optional[Union[Any, CodeOutput, Error]]:
 
 	return (
 		await asyncio_detailed(
-			id=id,
+			lang=lang,
+			output=output,
+			body=body,
 			client=client,
 		)
 	).parsed

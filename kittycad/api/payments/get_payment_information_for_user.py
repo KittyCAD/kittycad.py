@@ -3,16 +3,15 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.async_api_call_output import AsyncApiCallOutput
+from ...models.customer import Customer
 from ...models.error import Error
 from ...types import Response
 
 def _get_kwargs(
-	id: str,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/user/file/conversions/{id}".format(client.base_url, id=id)
+	url = "{}/user/payment".format(client.base_url)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -25,9 +24,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Customer, Error]]:
 	if response.status_code == 200:
-		response_200 = AsyncApiCallOutput.from_dict(response.json())
+		response_200 = Customer.from_dict(response.json())
 		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -38,7 +37,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApi
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, Customer, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -48,12 +47,10 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApi
 
 
 def sync_detailed(
-	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Response[Union[Any, Customer, Error]]:
 	kwargs = _get_kwargs(
-		id=id,
 		client=client,
 	)
 
@@ -66,26 +63,22 @@ def sync_detailed(
 
 
 def sync(
-	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
-	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
-This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
+) -> Optional[Union[Any, Customer, Error]]:
+	""" This includes billing address, phone, and name.
+This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user. """
 
 	return sync_detailed(
-		id=id,
 		client=client,
 	).parsed
 
 
 async def asyncio_detailed(
-	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallOutput, Error]]:
+) -> Response[Union[Any, Customer, Error]]:
 	kwargs = _get_kwargs(
-		id=id,
 		client=client,
 	)
 
@@ -96,16 +89,14 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallOutput, Error]]:
-	""" Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.
-This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user. """
+) -> Optional[Union[Any, Customer, Error]]:
+	""" This includes billing address, phone, and name.
+This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user. """
 
 	return (
 		await asyncio_detailed(
-			id=id,
 			client=client,
 		)
 	).parsed

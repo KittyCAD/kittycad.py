@@ -3,20 +3,19 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.file_conversion import FileConversion
+from ...models.file_mass import FileMass
 from ...models.error import Error
-from ...models.file_output_format import FileOutputFormat
 from ...models.file_source_format import FileSourceFormat
 from ...types import Response
 
 def _get_kwargs(
-	output_format: FileOutputFormat,
+	material_density: number,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/file/conversion/{src_format}/{output_format}".format(client.base_url, output_format=output_format, src_format=src_format)
+	url = "{}/file/mass".format(client.base_url, material_density=material_density, src_format=src_format)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -30,9 +29,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileMass, Error]]:
 	if response.status_code == 201:
-		response_201 = FileConversion.from_dict(response.json())
+		response_201 = FileMass.from_dict(response.json())
 		return response_201
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -43,7 +42,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConv
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileMass, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -53,14 +52,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 
 
 def sync_detailed(
-	output_format: FileOutputFormat,
+	material_density: number,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileConversion, Error]]:
+) -> Response[Union[Any, FileMass, Error]]:
 	kwargs = _get_kwargs(
-		output_format=output_format,
+		material_density=material_density,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -75,18 +74,17 @@ def sync_detailed(
 
 
 def sync(
-	output_format: FileOutputFormat,
+	material_density: number,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileConversion, Error]]:
-	""" Convert a CAD file from one format to another. If the file being converted is larger than 30MB, it will be performed asynchronously.
-If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
+) -> Optional[Union[Any, FileMass, Error]]:
+	""" Get the mass of an object in a CAD file. If the file is larger than 30MB, it will be performed asynchronously.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return sync_detailed(
-		output_format=output_format,
+		material_density=material_density,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -94,14 +92,14 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 
 async def asyncio_detailed(
-	output_format: FileOutputFormat,
+	material_density: number,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileConversion, Error]]:
+) -> Response[Union[Any, FileMass, Error]]:
 	kwargs = _get_kwargs(
-		output_format=output_format,
+		material_density=material_density,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -114,19 +112,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	output_format: FileOutputFormat,
+	material_density: number,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileConversion, Error]]:
-	""" Convert a CAD file from one format to another. If the file being converted is larger than 30MB, it will be performed asynchronously.
-If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
+) -> Optional[Union[Any, FileMass, Error]]:
+	""" Get the mass of an object in a CAD file. If the file is larger than 30MB, it will be performed asynchronously.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return (
 		await asyncio_detailed(
-			output_format=output_format,
+			material_density=material_density,
 			src_format=src_format,
 			body=body,
 			client=client,
