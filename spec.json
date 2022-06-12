@@ -3079,7 +3079,7 @@
                     "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.GetAsyncOperation"
                 },
                 "x-python": {
-                    "example": "from kittycad.models import AsyncApiCallOutput\nfrom kittycad.api.api-calls import get_async_operation\nfrom kittycad.types import Response\n\nfc: AsyncApiCallOutput = get_async_operation.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[AsyncApiCallOutput] = get_async_operation.sync_detailed(client=client, id=)\n\n# OR run async\nfc: AsyncApiCallOutput = await get_async_operation.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[AsyncApiCallOutput] = await get_async_operation.asyncio_detailed(client=client, id=)",
+                    "example": "from kittycad.models import FileConversion\nfrom kittycad.api.api-calls import get_async_operation\nfrom kittycad.types import Response\n\nfc: FileConversion = get_async_operation.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = get_async_operation.sync_detailed(client=client, id=)\n\n# OR run async\nfc: FileConversion = await get_async_operation.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await get_async_operation.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.get_async_operation.html"
                 }
             }
@@ -3288,7 +3288,7 @@
                     "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.GetConversion"
                 },
                 "x-python": {
-                    "example": "from kittycad.models import AsyncApiCallOutput\nfrom kittycad.api.file import get_file_conversion_with_base64_helper\nfrom kittycad.types import Response\n\nfc: AsyncApiCallOutput = get_file_conversion_with_base64_helper.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[AsyncApiCallOutput] = get_file_conversion_with_base64_helper.sync_detailed(client=client, id=)\n\n# OR run async\nfc: AsyncApiCallOutput = await get_file_conversion_with_base64_helper.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[AsyncApiCallOutput] = await get_file_conversion_with_base64_helper.asyncio_detailed(client=client, id=)",
+                    "example": "from kittycad.models import FileConversion\nfrom kittycad.api.file import get_file_conversion_with_base64_helper\nfrom kittycad.types import Response\n\nfc: FileConversion = get_file_conversion_with_base64_helper.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = get_file_conversion_with_base64_helper.sync_detailed(client=client, id=)\n\n# OR run async\nfc: FileConversion = await get_file_conversion_with_base64_helper.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await get_file_conversion_with_base64_helper.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.get_file_conversion_with_base64_helper.html"
                 }
             }
@@ -4854,7 +4854,7 @@
                     "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.GetConversionForUser"
                 },
                 "x-python": {
-                    "example": "from kittycad.models import AsyncApiCallOutput\nfrom kittycad.api.file import get_file_conversion_for_user\nfrom kittycad.types import Response\n\nfc: AsyncApiCallOutput = get_file_conversion_for_user.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[AsyncApiCallOutput] = get_file_conversion_for_user.sync_detailed(client=client, id=)\n\n# OR run async\nfc: AsyncApiCallOutput = await get_file_conversion_for_user.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[AsyncApiCallOutput] = await get_file_conversion_for_user.asyncio_detailed(client=client, id=)",
+                    "example": "from kittycad.models import FileConversion\nfrom kittycad.api.file import get_file_conversion_for_user\nfrom kittycad.types import Response\n\nfc: FileConversion = get_file_conversion_for_user.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = get_file_conversion_for_user.sync_detailed(client=client, id=)\n\n# OR run async\nfc: FileConversion = await get_file_conversion_for_user.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await get_file_conversion_for_user.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.get_file_conversion_for_user.html"
                 }
             }
