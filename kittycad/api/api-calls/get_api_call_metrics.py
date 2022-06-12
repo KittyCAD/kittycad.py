@@ -107,7 +107,7 @@ async def asyncio(
 
 	return (
 		await asyncio_detailed(
-			group_by=group_by,
+		group_by=group_by,
 			client=client,
 		)
 	).parsed

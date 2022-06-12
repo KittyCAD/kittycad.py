@@ -208,7 +208,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
+                    'string', 'str').replace(
+                    'integer', 'int').replace(
+                    'number', 'float')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -282,6 +284,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
                 "XX",
                 "00") +
             ":\n")
+        is_one_of = False
         if 'content' in response:
             content = response['content']
             for content_type in content:
@@ -292,7 +295,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
                         schema = data['components']['schemas'][ref]
                         # Let's check if it is a oneOf.
                         if 'oneOf' in schema:
+                            is_one_of = True
                             # We want to parse each of the possible types.
+                            f.write("\t\tdata = response.json()\n")
                             for index, one_of in enumerate(schema['oneOf']):
                                 ref = one_of['$ref'].replace(
                                     '#/components/schemas/', '')
@@ -364,7 +369,11 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
         else:
             f.write("\t\tresponse_" + response_code + " = None\n")
 
-        f.write("\t\treturn response_" + response_code + "\n")
+        if not is_one_of:
+            f.write(
+                "\t\treturn response_" +
+                response_code +
+                "\n")
 
     # End the method.
     f.write("\treturn None\n")
@@ -395,7 +404,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
+                    'string', 'str').replace(
+                    'integer', 'int').replace(
+                    'number', 'float')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -419,29 +430,10 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             ", ".join(endpoint_refs) +
             "]]:\n")
     f.write("\tkwargs = _get_kwargs(\n")
-    # Iterate over the parameters.
-    if 'parameters' in endpoint:
-        parameters = endpoint['parameters']
-        for parameter in parameters:
-            parameter_name = parameter['name']
-            if 'type' in parameter['schema']:
-                parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
-            elif '$ref' in parameter['schema']:
-                parameter_type = parameter['schema']['$ref'].replace(
-                    '#/components/schemas/', '')
-            else:
-                print("  parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            f.write(
-                "\t\t" +
-                camel_to_snake(parameter_name) +
-                "=" +
-                camel_to_snake(parameter_name) +
-                ",\n")
-    if request_body_type:
+    params = get_function_parameters(endpoint, request_body_type)
+    for param in params:
         f.write(
-            "\t\tbody=body,\n")
+            "\t\t" + param + "=" + param + ",\n")
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
@@ -464,7 +456,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
+                    'string', 'str').replace(
+                    'integer', 'int').replace(
+                    'number', 'float')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -491,29 +485,10 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
         f.write("\t\"\"\" " + endpoint['description'] + " \"\"\"\n")
     f.write("\n")
     f.write("\treturn sync_detailed(\n")
-    # Iterate over the parameters.
-    if 'parameters' in endpoint:
-        parameters = endpoint['parameters']
-        for parameter in parameters:
-            parameter_name = parameter['name']
-            if 'type' in parameter['schema']:
-                parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
-            elif '$ref' in parameter['schema']:
-                parameter_type = parameter['schema']['$ref'].replace(
-                    '#/components/schemas/', '')
-            else:
-                print("  parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            f.write(
-                "\t\t" +
-                camel_to_snake(parameter_name) +
-                "=" +
-                camel_to_snake(parameter_name) +
-                ",\n")
-    if request_body_type:
+    params = get_function_parameters(endpoint, request_body_type)
+    for param in params:
         f.write(
-            "\t\tbody=body,\n")
+            "\t\t" + param + "=" + param + ",\n")
     f.write("\t\tclient=client,\n")
     f.write("\t).parsed\n")
 
@@ -529,7 +504,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
+                    'string', 'str').replace(
+                    'integer', 'int').replace(
+                    'number', 'float')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -553,29 +530,10 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             ", ".join(endpoint_refs) +
             "]]:\n")
     f.write("\tkwargs = _get_kwargs(\n")
-    # Iterate over the parameters.
-    if 'parameters' in endpoint:
-        parameters = endpoint['parameters']
-        for parameter in parameters:
-            parameter_name = parameter['name']
-            if 'type' in parameter['schema']:
-                parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
-            elif '$ref' in parameter['schema']:
-                parameter_type = parameter['schema']['$ref'].replace(
-                    '#/components/schemas/', '')
-            else:
-                print("  parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            f.write(
-                "\t\t" +
-                camel_to_snake(parameter_name) +
-                "=" +
-                camel_to_snake(parameter_name) +
-                ",\n")
-    if request_body_type:
+    params = get_function_parameters(endpoint, request_body_type)
+    for param in params:
         f.write(
-            "\t\tbody=body,\n")
+            "\t\t" + param + "=" + param + ",\n")
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
@@ -596,7 +554,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             parameter_name = parameter['name']
             if 'type' in parameter['schema']:
                 parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
+                    'string', 'str').replace(
+                    'integer', 'int').replace(
+                    'number', 'float')
             elif '$ref' in parameter['schema']:
                 parameter_type = parameter['schema']['$ref'].replace(
                     '#/components/schemas/', '')
@@ -624,29 +584,10 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\n")
     f.write("\treturn (\n")
     f.write("\t\tawait asyncio_detailed(\n")
-    # Iterate over the parameters.
-    if 'parameters' in endpoint:
-        parameters = endpoint['parameters']
-        for parameter in parameters:
-            parameter_name = parameter['name']
-            if 'type' in parameter['schema']:
-                parameter_type = parameter['schema']['type'].replace(
-                    'string', 'str').replace('integer', 'int')
-            elif '$ref' in parameter['schema']:
-                parameter_type = parameter['schema']['$ref'].replace(
-                    '#/components/schemas/', '')
-            else:
-                print("  parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            f.write(
-                "\t\t\t" +
-                camel_to_snake(parameter_name) +
-                "=" +
-                camel_to_snake(parameter_name) +
-                ",\n")
-    if request_body_type:
+    params = get_function_parameters(endpoint, request_body_type)
+    for param in params:
         f.write(
-            "\t\t\tbody=body,\n")
+            "\t\t" + param + "=" + param + ",\n")
     f.write("\t\t\tclient=client,\n")
     f.write("\t\t)\n")
     f.write("\t).parsed\n")
@@ -698,6 +639,8 @@ def generateType(path: str, name: str, schema: dict):
             generateEnumType(file_path, name, schema, type_name)
         elif type_name == 'integer':
             generateIntegerType(file_path, name, schema, type_name)
+        elif type_name == 'number':
+            generateIntegerType(file_path, name, schema, type_name)
         elif type_name == 'string':
             generateStringType(file_path, name, schema, type_name)
         else:
@@ -748,6 +691,20 @@ def generateIntegerType(path: str, name: str, schema: dict, type_name: str):
     f.write("class " + name + "(int):\n")
     f.write("\n")
     f.write("\tdef __int__(self) -> int:\n")
+    f.write("\t\treturn self\n")
+
+    # Close the file.
+    f.close()
+
+
+def generateFloatType(path: str, name: str, schema: dict, type_name: str):
+    print("generating type: ", name, " at: ", path)
+    print("  schema: ", [schema])
+    f = open(path, "w")
+
+    f.write("class " + name + "(float):\n")
+    f.write("\n")
+    f.write("\tdef __float__(self) -> float:\n")
     f.write("\t\treturn self\n")
 
     # Close the file.
@@ -1454,6 +1411,29 @@ def camel_to_screaming_snake(name: str):
         '').upper().replace(
             '-',
         '_')
+
+
+def get_function_parameters(endpoint: dict, request_body_type: bool) -> [str]:
+    params = []
+    if 'parameters' in endpoint:
+        parameters = endpoint['parameters']
+        for parameter in parameters:
+            parameter_name = parameter['name']
+            if 'type' in parameter['schema']:
+                parameter_type = parameter['schema']['type'].replace(
+                    'string', 'str').replace(
+                    'integer', 'int').replace(
+                    'number', 'float')
+            elif '$ref' in parameter['schema']:
+                parameter_type = parameter['schema']['$ref'].replace(
+                    '#/components/schemas/', '')
+            else:
+                print("  parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            params.append(camel_to_snake(parameter_name))
+    if request_body_type:
+        params.append("body")
+    return params
 
 
 if (__name__ == '__main__'):

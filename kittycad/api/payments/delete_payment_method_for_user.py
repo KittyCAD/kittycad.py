@@ -102,7 +102,7 @@ async def asyncio(
 
 	return (
 		await asyncio_detailed(
-			id=id,
+		id=id,
 			client=client,
 		)
 	).parsed

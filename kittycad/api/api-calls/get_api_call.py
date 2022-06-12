@@ -107,7 +107,7 @@ Only KittyCAD employees can view API calls for other users. """
 
 	return (
 		await asyncio_detailed(
-			id=id,
+		id=id,
 			client=client,
 		)
 	).parsed

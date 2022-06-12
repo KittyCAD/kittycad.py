@@ -29,6 +29,7 @@ def _get_kwargs(
 
 def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, Error]]:
 	if response.status_code == 200:
+		data = response.json()
 		try:
 			if not isinstance(data, dict):
 				raise TypeError()
@@ -50,7 +51,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConv
 			return option
 		except:
 			raise
-		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
 		return response_4XX
@@ -131,7 +131,7 @@ Only KittyCAD employees with the proper access can view file conversions for oth
 
 	return (
 		await asyncio_detailed(
-			id=id,
+		id=id,
 			client=client,
 		)
 	).parsed
