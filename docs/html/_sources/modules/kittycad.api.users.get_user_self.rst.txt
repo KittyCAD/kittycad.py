@@ -1,4 +1,4 @@
-﻿kittycad.api.users.get\_user\_self
+kittycad.api.users.get\_user\_self
 ==================================
 
 .. automodule:: kittycad.api.users.get_user_self

@@ -29,9 +29,10 @@ kittycad.api.file
 
    kittycad.api.file.create_file_conversion
    kittycad.api.file.create_file_conversion_with_base64_helper
+   kittycad.api.file.create_file_execution
+   kittycad.api.file.create_file_mass
+   kittycad.api.file.create_file_volume
    kittycad.api.file.get_file_conversion
    kittycad.api.file.get_file_conversion_for_user
    kittycad.api.file.get_file_conversion_with_base64_helper
-   kittycad.api.file.list_file_conversions
-   kittycad.api.file.list_file_conversions_for_user
 

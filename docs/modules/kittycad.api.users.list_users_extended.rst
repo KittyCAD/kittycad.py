@@ -1,4 +1,4 @@
-﻿kittycad.api.users.list\_users\_extended
+kittycad.api.users.list\_users\_extended
 ========================================
 
 .. automodule:: kittycad.api.users.list_users_extended
