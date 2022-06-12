@@ -104,7 +104,7 @@ This endpoint does not actually delete the API token from the database. It merel
 
 	return (
 		await asyncio_detailed(
-			token=token,
+		token=token,
 			client=client,
 		)
 	).parsed

@@ -107,7 +107,7 @@ This endpoint requires authentication by any KittyCAD user. It creates the payme
 
 	return (
 		await asyncio_detailed(
-			body=body,
+		body=body,
 			client=client,
 		)
 	).parsed

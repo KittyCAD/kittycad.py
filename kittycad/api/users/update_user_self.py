@@ -105,7 +105,7 @@ async def asyncio(
 
 	return (
 		await asyncio_detailed(
-			body=body,
+		body=body,
 			client=client,
 		)
 	).parsed

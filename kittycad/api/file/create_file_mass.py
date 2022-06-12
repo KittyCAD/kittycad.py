@@ -9,7 +9,7 @@ from ...models.file_source_format import FileSourceFormat
 from ...types import Response
 
 def _get_kwargs(
-	material_density: number,
+	material_density: float,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
@@ -52,7 +52,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileMass
 
 
 def sync_detailed(
-	material_density: number,
+	material_density: float,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
@@ -74,7 +74,7 @@ def sync_detailed(
 
 
 def sync(
-	material_density: number,
+	material_density: float,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
@@ -92,7 +92,7 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 
 async def asyncio_detailed(
-	material_density: number,
+	material_density: float,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
@@ -112,7 +112,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	material_density: number,
+	material_density: float,
 	src_format: FileSourceFormat,
 	body: bytes,
 	*,
@@ -123,9 +123,9 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 	return (
 		await asyncio_detailed(
-			material_density=material_density,
-			src_format=src_format,
-			body=body,
+		material_density=material_density,
+		src_format=src_format,
+		body=body,
 			client=client,
 		)
 	).parsed

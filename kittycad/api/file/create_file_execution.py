@@ -119,9 +119,9 @@ async def asyncio(
 
 	return (
 		await asyncio_detailed(
-			lang=lang,
-			output=output,
-			body=body,
+		lang=lang,
+		output=output,
+		body=body,
 			client=client,
 		)
 	).parsed

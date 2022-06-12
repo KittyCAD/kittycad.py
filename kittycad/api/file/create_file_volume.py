@@ -115,8 +115,8 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 	return (
 		await asyncio_detailed(
-			src_format=src_format,
-			body=body,
+		src_format=src_format,
+		body=body,
 			client=client,
 		)
 	).parsed
