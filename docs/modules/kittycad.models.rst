@@ -74,6 +74,7 @@
    kittycad.models.payment_method
    kittycad.models.payment_method_card_checks
    kittycad.models.payment_method_type
+   kittycad.models.phone_number
    kittycad.models.pong
    kittycad.models.session
    kittycad.models.status_code
