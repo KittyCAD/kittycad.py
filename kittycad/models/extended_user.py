@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
+from ..models.phone_number import PhoneNumber
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ExtendedUser")
@@ -24,7 +25,7 @@ class ExtendedUser:
     last_name: Union[Unset, str] = UNSET
     mailchimp_id: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
-    phone: Union[Unset, str] = UNSET
+    phone: Union[Unset, PhoneNumber] = UNSET
     stripe_id: Union[Unset, str] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     zendesk_id: Union[Unset, str] = UNSET
@@ -48,7 +49,9 @@ class ExtendedUser:
         last_name = self.last_name
         mailchimp_id = self.mailchimp_id
         name = self.name
-        phone = self.phone
+        phone: Union[Unset, str] = UNSET
+        if not isinstance(self.phone, Unset):
+            phone = self.phone.value
         stripe_id = self.stripe_id
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
@@ -130,7 +133,12 @@ class ExtendedUser:
 
         name = d.pop("name", UNSET)
 
-        phone = d.pop("phone", UNSET)
+        _phone = d.pop("phone", UNSET)
+        phone: Union[Unset, PhoneNumber]
+        if isinstance(_phone, Unset):
+            phone = UNSET
+        else:
+            phone = PhoneNumber(_phone)
 
         stripe_id = d.pop("stripe_id", UNSET)
 

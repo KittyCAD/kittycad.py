@@ -47,6 +47,7 @@ from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
 from .payment_method_card_checks import PaymentMethodCardChecks
 from .payment_method_type import PaymentMethodType
+from .phone_number import PhoneNumber
 from .pong import Pong
 from .session import Session
 from .status_code import StatusCode

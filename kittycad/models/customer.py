@@ -6,6 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.address import Address
 from ..models.currency import Currency
+from ..models.phone_number import PhoneNumber
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Customer")

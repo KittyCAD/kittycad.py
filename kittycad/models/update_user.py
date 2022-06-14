@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.phone_number import PhoneNumber
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="UpdateUser")
@@ -15,7 +16,7 @@ class UpdateUser:
     first_name: Union[Unset, str] = UNSET
     github: Union[Unset, str] = UNSET
     last_name: Union[Unset, str] = UNSET
-    phone: Union[Unset, str] = UNSET
+    phone: Union[Unset, PhoneNumber] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -25,7 +26,9 @@ class UpdateUser:
         first_name = self.first_name
         github = self.github
         last_name = self.last_name
-        phone = self.phone
+        phone: Union[Unset, str] = UNSET
+        if not isinstance(self.phone, Unset):
+            phone = self.phone.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -58,7 +61,12 @@ class UpdateUser:
 
         last_name = d.pop("last_name", UNSET)
 
-        phone = d.pop("phone", UNSET)
+        _phone = d.pop("phone", UNSET)
+        phone: Union[Unset, PhoneNumber]
+        if isinstance(_phone, Unset):
+            phone = UNSET
+        else:
+            phone = PhoneNumber(_phone)
 
         update_user = cls(
             company=company,
