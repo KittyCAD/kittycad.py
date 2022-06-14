@@ -126,14 +126,12 @@ def test_file_mass():
 
     assert fm is not None
 
-    print(f"FileConversion: {fm}")
+    print(f"FileMass: {fm}")
 
     assert fm.id is not None
     assert fm.mass is not None
 
     assert fm.status == APICallStatus.COMPLETED
-
-    print(f"FileConversion: {fm}")
 
 
 def test_file_volume():
@@ -153,11 +151,9 @@ def test_file_volume():
 
     assert fv is not None
 
-    print(f"FileConversion: {fv}")
+    print(f"FileVolume: {fv}")
 
     assert fv.id is not None
     assert fv.volume is not None
 
     assert fv.status == APICallStatus.COMPLETED
-
-    print(f"FileConversion: {fv}")
