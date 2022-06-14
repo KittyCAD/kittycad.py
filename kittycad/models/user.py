@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
+from ..models.phone_number import PhoneNumber
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="User")
@@ -23,7 +24,7 @@ class User:
     image: Union[Unset, str] = UNSET
     last_name: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
-    phone: Union[Unset, str] = UNSET
+    phone: Union[Unset, PhoneNumber] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -44,7 +45,9 @@ class User:
         image = self.image
         last_name = self.last_name
         name = self.name
-        phone = self.phone
+        phone: Union[Unset, str] = UNSET
+        if not isinstance(self.phone, Unset):
+            phone = self.phone.value
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
@@ -116,7 +119,12 @@ class User:
 
         name = d.pop("name", UNSET)
 
-        phone = d.pop("phone", UNSET)
+        _phone = d.pop("phone", UNSET)
+        phone: Union[Unset, PhoneNumber]
+        if isinstance(_phone, Unset):
+            phone = UNSET
+        else:
+            phone = PhoneNumber(_phone)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
