@@ -113,7 +113,7 @@ def test_file_mass():
     client = ClientFromEnv()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
+    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
@@ -121,7 +121,7 @@ def test_file_mass():
     fm: FileMass = create_file_mass.sync(
         client=client,
         body=content,
-        src_format=FileSourceFormat.STL,
+        src_format=FileSourceFormat.OBJ,
         material_density=1.0)
 
     assert fm is not None
@@ -139,7 +139,7 @@ def test_file_volume():
     client = ClientFromEnv()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
+    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
@@ -147,7 +147,7 @@ def test_file_volume():
     fv: FileVolume = create_file_volume.sync(
         client=client,
         body=content,
-        src_format=FileSourceFormat.STL)
+        src_format=FileSourceFormat.OBJ)
 
     assert fv is not None
 
