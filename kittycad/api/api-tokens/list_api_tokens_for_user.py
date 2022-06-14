@@ -15,7 +15,7 @@ def _get_kwargs(
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/user/api-tokens".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by)
+	url = "{}/user/api-tokens?limit={limit}&page_token={page_token}&sort_by={sort_by}".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()

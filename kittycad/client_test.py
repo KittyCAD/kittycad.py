@@ -3,8 +3,8 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, FileOutputFormat, FileSourceFormat, User, Pong, APICallStatus
-from .api.file import create_file_conversion_with_base64_helper
+from .models import FileConversion, FileOutputFormat, FileSourceFormat, User, Pong, APICallStatus, FileMass, FileVolume
+from .api.file import create_file_conversion_with_base64_helper, create_file_mass, create_file_volume
 from .api.meta import ping
 from .api.users import get_user_self
 
@@ -106,3 +106,54 @@ async def test_file_convert_stl_async():
     assert fc.id is not None
 
     print(f"FileConversion: {fc}")
+
+
+def test_file_mass():
+    # Create our client.
+    client = ClientFromEnv()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the fc.
+    fm: FileMass = create_file_mass.sync(
+        client=client,
+        body=content,
+        src_format=FileSourceFormat.OBJ,
+        material_density=1.0)
+
+    assert fm is not None
+
+    print(f"FileMass: {fm}")
+
+    assert fm.id is not None
+    assert fm.mass is not None
+
+    assert fm.status == APICallStatus.COMPLETED
+
+
+def test_file_volume():
+    # Create our client.
+    client = ClientFromEnv()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the fc.
+    fv: FileVolume = create_file_volume.sync(
+        client=client,
+        body=content,
+        src_format=FileSourceFormat.OBJ)
+
+    assert fv is not None
+
+    print(f"FileVolume: {fv}")
+
+    assert fv.id is not None
+    assert fv.volume is not None
+
+    assert fv.status == APICallStatus.COMPLETED
