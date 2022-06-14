@@ -107,6 +107,7 @@ async def test_file_convert_stl_async():
 
     print(f"FileConversion: {fc}")
 
+
 def test_file_mass():
     # Create our client.
     client = ClientFromEnv()
@@ -133,6 +134,7 @@ def test_file_mass():
     assert fm.status == APICallStatus.COMPLETED
 
     print(f"FileConversion: {fm}")
+
 
 def test_file_volume():
     # Create our client.
