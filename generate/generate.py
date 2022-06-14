@@ -231,7 +231,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
     f.write(") -> Dict[str, Any]:\n")
-    f.write("\turl = \"{}" + name + "\".format(client.base_url")
+    templateUrl = "{}" + name
+    formatTemplate = ".format(client.base_url"
+    queryTemplate = ""
     # Iterate over the parameters.
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
@@ -246,12 +248,20 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
-            f.write(
-                ", " +
-                parameter_name +
-                "=" +
-                camel_to_snake(parameter_name))
-    f.write(")\n")
+            if parameter['in'] == 'path':
+                formatTemplate = formatTemplate + ", " + \
+                    parameter_name + "=" + camel_to_snake(parameter_name)
+            elif parameter['in'] == 'query':
+                formatTemplate = formatTemplate + ", " + \
+                    parameter_name + "=" + camel_to_snake(parameter_name)
+                queryTemplate = queryTemplate + "&" + \
+                    camel_to_snake(parameter_name) + "=" + "{" + camel_to_snake(parameter_name) + "}"
+    if queryTemplate[1:].__len__() > 0:
+        f.write("\turl = \"" + templateUrl + "?" +
+                queryTemplate[1:] + "\"" + formatTemplate + ")\n")
+    else:
+        f.write("\turl = \"" + templateUrl + "\"" + formatTemplate + ")\n")
+
     f.write("\n")
     f.write("\theaders: Dict[str, Any] = client.get_headers()\n")
     f.write("\tcookies: Dict[str, Any] = client.get_cookies()\n")
