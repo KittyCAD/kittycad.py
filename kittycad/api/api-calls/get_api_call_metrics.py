@@ -13,7 +13,7 @@ def _get_kwargs(
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/api-call-metrics".format(client.base_url, group_by=group_by)
+	url = "{}/api-call-metrics?group_by={group_by}".format(client.base_url, group_by=group_by)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
