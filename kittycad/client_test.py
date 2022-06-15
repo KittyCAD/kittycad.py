@@ -131,6 +131,8 @@ def test_file_mass():
     assert fm.id is not None
     assert fm.mass is not None
 
+    assert fm.to_dict() is not None
+
     assert fm.status == APICallStatus.COMPLETED
 
 
@@ -155,5 +157,7 @@ def test_file_volume():
 
     assert fv.id is not None
     assert fv.volume is not None
+
+    assert fv.to_dict() is not None
 
     assert fv.status == APICallStatus.COMPLETED
