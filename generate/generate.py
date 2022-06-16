@@ -626,7 +626,7 @@ def generateTypes(cwd: str, parser: dict):
     for key in schemas:
         schema = schemas[key]
         print("generating schema: ", key)
-        generateType(path, key, schema)
+        generateType(path, key, schema, data)
         if 'oneOf' not in schema:
             f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
 
@@ -634,7 +634,7 @@ def generateTypes(cwd: str, parser: dict):
     f.close()
 
 
-def generateType(path: str, name: str, schema: dict):
+def generateType(path: str, name: str, schema: dict, data: dict):
     file_path = path
     if path.endswith(".py") is False:
         # Generate the type.
@@ -644,7 +644,7 @@ def generateType(path: str, name: str, schema: dict):
     if 'type' in schema:
         type_name = schema['type']
         if type_name == 'object':
-            generateObjectType(file_path, name, schema, type_name)
+            generateObjectType(file_path, name, schema, type_name, data)
         elif type_name == 'string' and 'enum' in schema:
             generateEnumType(file_path, name, schema, type_name)
         elif type_name == 'integer':
@@ -660,19 +660,19 @@ def generateType(path: str, name: str, schema: dict):
         # Skip it since we will already have generated it.
         return
     elif 'oneOf' in schema:
-        generateOneOfType(file_path, name, schema)
+        generateOneOfType(file_path, name, schema, data)
     else:
         print("  schema: ", [schema])
         print("  unsupported type: ", name)
         raise Exception("  unsupported type: ", name)
 
 
-def generateOneOfType(path: str, name: str, schema: dict):
+def generateOneOfType(path: str, name: str, schema: dict, data):
     for t in schema['oneOf']:
         # Get the name for the reference.
         if '$ref' in t:
             name = t['$ref'].replace('#/components/schemas/', '')
-            generateType(path, name, t)
+            generateType(path, name, t, data)
         else:
             print("  schema: ", [t])
             print("  oneOf must be a ref: ", name)
@@ -747,7 +747,12 @@ def generateEnumType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
-def generateObjectType(path: str, name: str, schema: dict, type_name: str):
+def generateObjectType(
+        path: str,
+        name: str,
+        schema: dict,
+        type_name: str,
+        data: dict):
     print("generating type: ", name, " at: ", path)
     print("  schema: ", [schema])
     f = open(path, "w")
@@ -783,104 +788,7 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str):
     # Iterate over the properties.
     for property_name in schema['properties']:
         property_schema = schema['properties'][property_name]
-        if 'type' in property_schema:
-            property_type = property_schema['type']
-
-            # Write the property.
-            if property_type == 'string':
-                if 'format' in property_schema:
-                    if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
-                        f.write(
-                            "\t" +
-                            property_name +
-                            ": Union[Unset, datetime.datetime] = UNSET\n")
-                        continue
-
-                f.write(
-                    "\t" +
-                    property_name +
-                    ": Union[Unset, str] = UNSET\n")
-            elif property_type == 'object':
-                if 'additionalProperties' in property_schema:
-                    return generateType(
-                        path, property_name, property_schema['additionalProperties'])
-                else:
-                    print("  property type: ", property_type)
-                    print("  property schema: ", property_schema)
-                    raise Exception("  unknown type: ", property_type)
-            elif property_type == 'integer':
-                f.write(
-                    "\t" +
-                    property_name +
-                    ":  Union[Unset, int] = UNSET\n")
-            elif property_type == 'number':
-                f.write(
-                    "\t" +
-                    property_name +
-                    ":  Union[Unset, float] = UNSET\n")
-            elif property_type == 'boolean':
-                f.write(
-                    "\t" +
-                    property_name +
-                    ": Union[Unset, bool] = False\n")
-            elif property_type == 'array':
-                if 'items' in property_schema:
-                    if '$ref' in property_schema['items']:
-                        property_type = property_schema['items']['$ref']
-                        property_type = property_type.replace(
-                            '#/components/schemas/', '')
-                        f.write(
-                            "\tfrom ..models." +
-                            camel_to_snake(property_type) +
-                            " import " +
-                            property_type +
-                            "\n")
-                    elif 'type' in property_schema['items']:
-                        if property_schema['items']['type'] == 'string':
-                            property_type = 'str'
-                        else:
-                            print("  property: ", property_schema)
-                            raise Exception("Unknown property type")
-                    else:
-                        print("  array: ", [property_schema])
-                        print("  array: ", [property_schema['items']])
-                        raise Exception("Unknown array type")
-
-                    f.write(
-                        "\t" +
-                        property_name +
-                        ": Union[Unset, List[" +
-                        property_type +
-                        "]] = UNSET\n")
-                else:
-                    raise Exception("Unknown array type")
-            else:
-                print("  property type: ", property_type)
-                raise Exception("  unknown type: ", property_type)
-        elif '$ref' in property_schema:
-            ref = property_schema['$ref'].replace(
-                '#/components/schemas/', '')
-            f.write(
-                "\t" +
-                property_name +
-                ": Union[Unset, " +
-                ref +
-                "] = UNSET\n")
-        elif 'allOf' in property_schema:
-            thing = property_schema['allOf'][0]
-            if '$ref' in thing:
-                ref = thing['$ref'].replace(
-                    '#/components/schemas/', '')
-                f.write(
-                    "\t" +
-                    property_name +
-                    ": Union[Unset, " +
-                    ref +
-                    "] = UNSET\n")
-            else:
-                raise Exception("  unknown allOf type: ", property_schema)
-        else:
-            raise Exception("  unknown schema: ", property_schema)
+        renderTypeInit(f, path, property_name, property_schema, data)
 
     # Finish writing the class.
     f.write("\n")
@@ -893,135 +801,7 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str):
     # Iternate over the properties.
     for property_name in schema['properties']:
         property_schema = schema['properties'][property_name]
-        if 'type' in property_schema:
-            property_type = property_schema['type']
-
-            # Write the property.
-            if property_type == 'string':
-                if 'format' in property_schema:
-                    if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
-                        f.write(
-                            "\t\t" +
-                            property_name +
-                            ": Union[Unset, str] = UNSET\n")
-                        f.write(
-                            "\t\tif not isinstance(self." + property_name + ", Unset):\n")
-                        f.write(
-                            "\t\t\t" +
-                            property_name +
-                            " = self." +
-                            property_name +
-                            ".isoformat()\n")
-                        continue
-
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = self." +
-                    property_name +
-                    "\n")
-            elif property_type == 'integer':
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = self." +
-                    property_name +
-                    "\n")
-            elif property_type == 'number':
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = self." +
-                    property_name +
-                    "\n")
-            elif property_type == 'boolean':
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = self." +
-                    property_name +
-                    "\n")
-            elif property_type == 'array':
-                if 'items' in property_schema:
-                    if '$ref' in property_schema['items']:
-                        property_type = property_schema['items']['$ref']
-                        property_type = property_type.replace(
-                            '#/components/schemas/', '')
-                        f.write(
-                            "\t\tfrom ..models." +
-                            camel_to_snake(property_type) +
-                            " import " +
-                            property_type +
-                            "\n")
-                    elif 'type' in property_schema['items']:
-                        if property_schema['items']['type'] == 'string':
-                            property_type = 'str'
-                        else:
-                            print("  property: ", property_schema)
-                            raise Exception("Unknown property type")
-                    else:
-                        print("  array: ", [property_schema])
-                        print("  array: ", [property_schema['items']])
-                        raise Exception("Unknown array type")
-
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    ": Union[Unset, List[" +
-                    property_type +
-                    "]] = UNSET\n")
-                f.write(
-                    "\t\tif not isinstance(self." +
-                    property_name +
-                    ", Unset):\n")
-                f.write(
-                    "\t\t\t" +
-                    property_name +
-                    " = self." +
-                    property_name +
-                    "\n")
-            else:
-                raise Exception("  unknown type: ", property_type)
-        elif '$ref' in property_schema:
-            ref = property_schema['$ref'].replace(
-                '#/components/schemas/', '')
-            f.write(
-                "\t\t" +
-                property_name +
-                ": Union[Unset, str] = UNSET\n")
-            f.write(
-                "\t\tif not isinstance(self." +
-                property_name +
-                ", Unset):\n")
-            f.write(
-                "\t\t\t" +
-                property_name +
-                " = self." +
-                property_name +
-                ".value\n")
-        elif 'allOf' in property_schema:
-            thing = property_schema['allOf'][0]
-            if '$ref' in thing:
-                ref = thing['$ref'].replace(
-                    '#/components/schemas/', '')
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    ": Union[Unset, str] = UNSET\n")
-                f.write(
-                    "\t\tif not isinstance(self." +
-                    property_name +
-                    ", Unset):\n")
-                f.write(
-                    "\t\t\t" +
-                    property_name +
-                    " = self." +
-                    property_name +
-                    ".value\n")
-            else:
-                raise Exception("  unknown allOf type: ", property_schema)
-        else:
-            raise Exception("  unknown schema: ", property_schema)
+        renderTypeToDict(f, property_name, property_schema, data)
 
     # Finish writing the to_dict method.
     f.write("\n")
@@ -1053,144 +833,7 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str):
     # Iternate over the properties.
     for property_name in schema['properties']:
         property_schema = schema['properties'][property_name]
-        if 'type' in property_schema:
-            property_type = property_schema['type']
-
-            # Write the property.
-            if property_type == 'string':
-                if 'format' in property_schema:
-                    if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
-                        f.write(
-                            "\t\t_" +
-                            property_name +
-                            " = d.pop(\"" +
-                            property_name +
-                            "\", UNSET)\n")
-                        f.write(
-                            "\t\t" +
-                            property_name +
-                            ": Union[Unset, datetime.datetime]\n")
-                        f.write(
-                            "\t\tif isinstance(_" + property_name + ", Unset):\n")
-                        f.write("\t\t\t" + property_name + " = UNSET\n")
-                        f.write("\t\telse:\n")
-                        f.write("\t\t\t" + property_name +
-                                " = isoparse(_" + property_name + ")\n")
-                        f.write("\n")
-                        continue
-
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = d.pop(\"" +
-                    property_name +
-                    "\", UNSET)\n")
-                f.write("\n")
-            elif property_type == 'integer':
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = d.pop(\"" +
-                    property_name +
-                    "\", UNSET)\n")
-                f.write("\n")
-            elif property_type == 'number':
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = d.pop(\"" +
-                    property_name +
-                    "\", UNSET)\n")
-                f.write("\n")
-            elif property_type == 'boolean':
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = d.pop(\"" +
-                    property_name +
-                    "\", UNSET)\n")
-                f.write("\n")
-            elif property_type == 'array':
-                if 'items' in property_schema:
-                    if '$ref' in property_schema['items']:
-                        property_type = property_schema['items']['$ref']
-                        property_type = property_type.replace(
-                            '#/components/schemas/', '')
-                        f.write(
-                            "\t\tfrom ..models." +
-                            camel_to_snake(property_type) +
-                            " import " +
-                            property_type +
-                            "\n")
-                    elif 'type' in property_schema['items']:
-                        if property_schema['items']['type'] == 'string':
-                            property_type = 'str'
-                        else:
-                            raise Exception(
-                                "  unknown array type: ",
-                                property_schema['items']['type'])
-                    else:
-                        print("  array: ", [property_schema])
-                        print("  array: ", [property_schema['items']])
-                        raise Exception("Unknown array type")
-
-                f.write(
-                    "\t\t" +
-                    property_name +
-                    " = cast(List[" + property_type + "], d.pop(\"" +
-                    property_name +
-                    "\", UNSET))\n")
-                f.write("\n")
-            else:
-                print("  unknown type: ", property_type)
-                raise Exception("  unknown type: ", property_type)
-        elif '$ref' in property_schema:
-            ref = property_schema['$ref'].replace(
-                '#/components/schemas/', '')
-            f.write(
-                "\t\t_" +
-                property_name +
-                " = d.pop(\"" +
-                property_name +
-                "\", UNSET)\n")
-            f.write("\t\t" + property_name +
-                    ": Union[Unset, " + ref + "]\n")
-            f.write(
-                "\t\tif isinstance(_" +
-                property_name +
-                ", Unset):\n")
-            f.write("\t\t\t" + property_name + " = UNSET\n")
-            f.write("\t\telse:\n")
-            f.write("\t\t\t" + property_name + " = " +
-                    ref + "(_" + property_name + ")\n")
-            f.write("\n")
-        elif 'allOf' in property_schema:
-            thing = property_schema['allOf'][0]
-            if '$ref' in thing:
-                ref = thing['$ref'].replace(
-                    '#/components/schemas/', '')
-                f.write(
-                    "\t\t_" +
-                    property_name +
-                    " = d.pop(\"" +
-                    property_name +
-                    "\", UNSET)\n")
-                f.write("\t\t" + property_name +
-                        ": Union[Unset, " + ref + "]\n")
-                f.write(
-                    "\t\tif isinstance(_" +
-                    property_name +
-                    ", Unset):\n")
-                f.write("\t\t\t" + property_name + " = UNSET\n")
-                f.write("\t\telse:\n")
-                f.write("\t\t\t" + property_name + " = " +
-                        ref + "(_" + property_name + ")\n")
-                f.write("\n")
-            else:
-                raise Exception("  unknown allOf type: ", property_schema)
-        else:
-            print("  unknown schema: ", property_schema)
-            raise Exception("  unknown schema: ", property_schema)
+        renderTypeFromDict(f, property_name, property_schema, data)
 
     # Finish writing the from_dict method.
     f.write("\n")
@@ -1232,6 +875,429 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
+def renderTypeToDict(
+        f,
+        property_name: str,
+        property_schema: dict,
+        data: dict):
+    if 'type' in property_schema:
+        property_type = property_schema['type']
+
+        # Write the property.
+        if property_type == 'string':
+            if 'format' in property_schema:
+                if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
+                    f.write(
+                        "\t\t" +
+                        property_name +
+                        ": Union[Unset, str] = UNSET\n")
+                    f.write(
+                        "\t\tif not isinstance(self." +
+                        property_name +
+                        ", Unset):\n")
+                    f.write(
+                        "\t\t\t" +
+                        property_name +
+                        " = self." +
+                        property_name +
+                        ".isoformat()\n")
+                    # return early
+                    return
+
+            f.write(
+                "\t\t" +
+                property_name +
+                " = self." +
+                property_name +
+                "\n")
+        elif property_type == 'integer':
+            f.write(
+                "\t\t" +
+                property_name +
+                " = self." +
+                property_name +
+                "\n")
+        elif property_type == 'number':
+            f.write(
+                "\t\t" +
+                property_name +
+                " = self." +
+                property_name +
+                "\n")
+        elif property_type == 'boolean':
+            f.write(
+                "\t\t" +
+                property_name +
+                " = self." +
+                property_name +
+                "\n")
+        elif property_type == 'array':
+            if 'items' in property_schema:
+                if '$ref' in property_schema['items']:
+                    property_type = property_schema['items']['$ref']
+                    property_type = property_type.replace(
+                        '#/components/schemas/', '')
+                    f.write(
+                        "\t\tfrom ..models." +
+                        camel_to_snake(property_type) +
+                        " import " +
+                        property_type +
+                        "\n")
+                elif 'type' in property_schema['items']:
+                    if property_schema['items']['type'] == 'string':
+                        property_type = 'str'
+                    else:
+                        print("  property: ", property_schema)
+                        raise Exception("Unknown property type")
+                else:
+                    print("  array: ", [property_schema])
+                    print("  array: ", [property_schema['items']])
+                    raise Exception("Unknown array type")
+
+            f.write(
+                "\t\t" +
+                property_name +
+                ": Union[Unset, List[" +
+                property_type +
+                "]] = UNSET\n")
+            f.write(
+                "\t\tif not isinstance(self." +
+                property_name +
+                ", Unset):\n")
+            f.write(
+                "\t\t\t" +
+                property_name +
+                " = self." +
+                property_name +
+                "\n")
+        else:
+            f.write(
+                "\t\t" +
+                property_name +
+                " = self." +
+                property_name +
+                "\n")
+    elif '$ref' in property_schema:
+        ref = property_schema['$ref'].replace(
+            '#/components/schemas/', '')
+        f.write(
+            "\t\t" +
+            property_name +
+            ": Union[Unset, str] = UNSET\n")
+        f.write(
+            "\t\tif not isinstance(self." +
+            property_name +
+            ", Unset):\n")
+        f.write(
+            "\t\t\t" +
+            property_name +
+            " = self." +
+            property_name +
+            ".value\n")
+    elif 'allOf' in property_schema:
+        thing = property_schema['allOf'][0]
+        if '$ref' in thing:
+            ref = thing['$ref'].replace(
+                '#/components/schemas/', '')
+            if ref == "Uuid":
+                return renderTypeToDict(
+                    f, property_name, data['components']['schemas'][ref], data)
+            f.write(
+                "\t\t" +
+                property_name +
+                ": Union[Unset, str] = UNSET\n")
+            f.write(
+                "\t\tif not isinstance(self." +
+                property_name +
+                ", Unset):\n")
+            f.write(
+                "\t\t\t" +
+                property_name +
+                " = self." +
+                property_name +
+                ".value\n")
+        else:
+            raise Exception("  unknown allOf type: ", property_schema)
+    else:
+        f.write(
+            "\t\t" +
+            property_name +
+            " = self." +
+            property_name +
+            "\n")
+
+
+def renderTypeInit(
+        f,
+    path: str,
+        property_name: str,
+        property_schema: dict,
+        data: dict):
+    if 'type' in property_schema:
+        property_type = property_schema['type']
+
+        # Write the property.
+        if property_type == 'string':
+            if 'format' in property_schema:
+                if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
+                    f.write(
+                        "\t" +
+                        property_name +
+                        ": Union[Unset, datetime.datetime] = UNSET\n")
+                    # Return early.
+                    return
+
+            f.write(
+                "\t" +
+                property_name +
+                ": Union[Unset, str] = UNSET\n")
+        elif property_type == 'object':
+            f.write(
+                "\t" +
+                property_name +
+                ": Union[Unset, Any] = UNSET\n")
+        elif property_type == 'integer':
+            f.write(
+                "\t" +
+                property_name +
+                ":  Union[Unset, int] = UNSET\n")
+        elif property_type == 'number':
+            f.write(
+                "\t" +
+                property_name +
+                ":  Union[Unset, float] = UNSET\n")
+        elif property_type == 'boolean':
+            f.write(
+                "\t" +
+                property_name +
+                ": Union[Unset, bool] = False\n")
+        elif property_type == 'array':
+            if 'items' in property_schema:
+                if '$ref' in property_schema['items']:
+                    property_type = property_schema['items']['$ref']
+                    property_type = property_type.replace(
+                        '#/components/schemas/', '')
+                    f.write(
+                        "\tfrom ..models." +
+                        camel_to_snake(property_type) +
+                        " import " +
+                        property_type +
+                        "\n")
+                elif 'type' in property_schema['items']:
+                    if property_schema['items']['type'] == 'string':
+                        property_type = 'str'
+                    else:
+                        print("  property: ", property_schema)
+                        raise Exception("Unknown property type")
+                else:
+                    print("  array: ", [property_schema])
+                    print("  array: ", [property_schema['items']])
+                    raise Exception("Unknown array type")
+
+                f.write(
+                    "\t" +
+                    property_name +
+                    ": Union[Unset, List[" +
+                    property_type +
+                    "]] = UNSET\n")
+            else:
+                raise Exception("Unknown array type")
+        else:
+            print("  property type: ", property_type)
+            raise Exception("  unknown type: ", property_type)
+    elif '$ref' in property_schema:
+        ref = property_schema['$ref'].replace(
+            '#/components/schemas/', '')
+        f.write(
+            "\t" +
+            property_name +
+            ": Union[Unset, " +
+            ref +
+            "] = UNSET\n")
+    elif 'allOf' in property_schema:
+        thing = property_schema['allOf'][0]
+        if '$ref' in thing:
+            ref = thing['$ref'].replace(
+                '#/components/schemas/', '')
+            if ref == "Uuid":
+                return renderTypeInit(
+                    f,
+                    path,
+                    property_name,
+                    data['components']['schemas'][ref],
+                    data)
+            f.write(
+                "\t" +
+                property_name +
+                ": Union[Unset, " +
+                ref +
+                "] = UNSET\n")
+        else:
+            raise Exception("  unknown allOf type: ", property_schema)
+    else:
+        f.write(
+            "\t" +
+            property_name +
+            ": Union[Unset, Any] = UNSET\n")
+
+
+def renderTypeFromDict(
+        f,
+        property_name: str,
+        property_schema: dict,
+        data: dict):
+    if 'type' in property_schema:
+        property_type = property_schema['type']
+
+        # Write the property.
+        if property_type == 'string':
+            if 'format' in property_schema:
+                if property_schema['format'] == 'date-time' or property_schema['format'] == 'partial-date-time':
+                    f.write(
+                        "\t\t_" +
+                        property_name +
+                        " = d.pop(\"" +
+                        property_name +
+                        "\", UNSET)\n")
+                    f.write(
+                        "\t\t" +
+                        property_name +
+                        ": Union[Unset, datetime.datetime]\n")
+                    f.write(
+                        "\t\tif isinstance(_" + property_name + ", Unset):\n")
+                    f.write("\t\t\t" + property_name + " = UNSET\n")
+                    f.write("\t\telse:\n")
+                    f.write("\t\t\t" + property_name +
+                            " = isoparse(_" + property_name + ")\n")
+                    f.write("\n")
+                    # Return early.
+                    return
+
+            f.write(
+                "\t\t" +
+                property_name +
+                " = d.pop(\"" +
+                property_name +
+                "\", UNSET)\n")
+            f.write("\n")
+        elif property_type == 'integer':
+            f.write(
+                "\t\t" +
+                property_name +
+                " = d.pop(\"" +
+                property_name +
+                "\", UNSET)\n")
+            f.write("\n")
+        elif property_type == 'number':
+            f.write(
+                "\t\t" +
+                property_name +
+                " = d.pop(\"" +
+                property_name +
+                "\", UNSET)\n")
+            f.write("\n")
+        elif property_type == 'boolean':
+            f.write(
+                "\t\t" +
+                property_name +
+                " = d.pop(\"" +
+                property_name +
+                "\", UNSET)\n")
+            f.write("\n")
+        elif property_type == 'array':
+            if 'items' in property_schema:
+                if '$ref' in property_schema['items']:
+                    property_type = property_schema['items']['$ref']
+                    property_type = property_type.replace(
+                        '#/components/schemas/', '')
+                    f.write(
+                        "\t\tfrom ..models." +
+                        camel_to_snake(property_type) +
+                        " import " +
+                        property_type +
+                        "\n")
+                elif 'type' in property_schema['items']:
+                    if property_schema['items']['type'] == 'string':
+                        property_type = 'str'
+                    else:
+                        raise Exception(
+                            "  unknown array type: ",
+                            property_schema['items']['type'])
+                else:
+                    print("  array: ", [property_schema])
+                    print("  array: ", [property_schema['items']])
+                    raise Exception("Unknown array type")
+
+            f.write(
+                "\t\t" +
+                property_name +
+                " = cast(List[" + property_type + "], d.pop(\"" +
+                property_name +
+                "\", UNSET))\n")
+            f.write("\n")
+        else:
+            f.write(
+                "\t\t" +
+                property_name +
+                " = d.pop(\"" +
+                property_name +
+                "\", UNSET)\n")
+    elif '$ref' in property_schema:
+        ref = property_schema['$ref'].replace(
+            '#/components/schemas/', '')
+        f.write(
+            "\t\t_" +
+            property_name +
+            " = d.pop(\"" +
+            property_name +
+            "\", UNSET)\n")
+        f.write("\t\t" + property_name +
+                ": Union[Unset, " + ref + "]\n")
+        f.write(
+            "\t\tif isinstance(_" +
+            property_name +
+            ", Unset):\n")
+        f.write("\t\t\t" + property_name + " = UNSET\n")
+        f.write("\t\telse:\n")
+        f.write("\t\t\t" + property_name + " = " +
+                ref + "(_" + property_name + ")\n")
+        f.write("\n")
+    elif 'allOf' in property_schema:
+        thing = property_schema['allOf'][0]
+        if '$ref' in thing:
+            ref = thing['$ref'].replace(
+                '#/components/schemas/', '')
+            if ref == "Uuid":
+                return renderTypeFromDict(
+                    f, property_name, data['components']['schemas'][ref], data)
+            f.write(
+                "\t\t_" +
+                property_name +
+                " = d.pop(\"" +
+                property_name +
+                "\", UNSET)\n")
+            f.write("\t\t" + property_name +
+                    ": Union[Unset, " + ref + "]\n")
+            f.write(
+                "\t\tif isinstance(_" +
+                property_name +
+                ", Unset):\n")
+            f.write("\t\t\t" + property_name + " = UNSET\n")
+            f.write("\t\telse:\n")
+            f.write("\t\t\t" + property_name + " = " +
+                    ref + "(_" + property_name + ")\n")
+            f.write("\n")
+        else:
+            raise Exception("  unknown allOf type: ", property_schema)
+    else:
+        f.write(
+            "\t\t" +
+            property_name +
+            " = d.pop(\"" +
+            property_name +
+            "\", UNSET)\n")
+
+
 def hasDateTime(schema: dict) -> bool:
     # Generate the type.
     if 'type' in schema:
@@ -1262,9 +1328,6 @@ def getRefs(schema: dict) -> [str]:
             if 'allOf' in schema:
                 for sub_schema in schema['allOf']:
                     refs.extend(getRefs(sub_schema))
-            else:
-                print("  unsupported type: ", schema)
-                raise Exception("  unsupported type: ", schema)
         else:
             type_name = schema['type']
             if type_name == 'object':

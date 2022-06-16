@@ -20,7 +20,7 @@ class ApiCallWithPrice:
     duration: Union[Unset, int] = UNSET
     email: Union[Unset, str] = UNSET
     endpoint: Union[Unset, str] = UNSET
-    id: Union[Unset, Uuid] = UNSET
+    id: Union[Unset, str] = UNSET
     ip_address: Union[Unset, str] = UNSET
     method: Union[Unset, Method] = UNSET
     minutes: Union[Unset, int] = UNSET
@@ -32,7 +32,7 @@ class ApiCallWithPrice:
     started_at: Union[Unset, datetime.datetime] = UNSET
     status_code: Union[Unset, StatusCode] = UNSET
     stripe_invoice_item_id: Union[Unset, str] = UNSET
-    token: Union[Unset, Uuid] = UNSET
+    token: Union[Unset, str] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_agent: Union[Unset, str] = UNSET
     user_id: Union[Unset, str] = UNSET
@@ -49,9 +49,7 @@ class ApiCallWithPrice:
         duration = self.duration
         email = self.email
         endpoint = self.endpoint
-        id: Union[Unset, str] = UNSET
-        if not isinstance(self.id, Unset):
-            id = self.id.value
+        id = self.id
         ip_address = self.ip_address
         method: Union[Unset, str] = UNSET
         if not isinstance(self.method, Unset):
@@ -69,9 +67,7 @@ class ApiCallWithPrice:
         if not isinstance(self.status_code, Unset):
             status_code = self.status_code.value
         stripe_invoice_item_id = self.stripe_invoice_item_id
-        token: Union[Unset, str] = UNSET
-        if not isinstance(self.token, Unset):
-            token = self.token.value
+        token = self.token
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
@@ -149,12 +145,7 @@ class ApiCallWithPrice:
 
         endpoint = d.pop("endpoint", UNSET)
 
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        else:
-            id = Uuid(_id)
+        id = d.pop("id", UNSET)
 
         ip_address = d.pop("ip_address", UNSET)
 
@@ -193,12 +184,7 @@ class ApiCallWithPrice:
 
         stripe_invoice_item_id = d.pop("stripe_invoice_item_id", UNSET)
 
-        _token = d.pop("token", UNSET)
-        token: Union[Unset, Uuid]
-        if isinstance(_token, Unset):
-            token = UNSET
-        else:
-            token = Uuid(_token)
+        token = d.pop("token", UNSET)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

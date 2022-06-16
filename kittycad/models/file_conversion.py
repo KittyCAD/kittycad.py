@@ -18,7 +18,8 @@ class FileConversion:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
-    id: Union[Unset, Uuid] = UNSET
+    error: Union[Unset, str] = UNSET
+    id: Union[Unset, str] = UNSET
     output: Union[Unset, str] = UNSET
     output_format: Union[Unset, FileOutputFormat] = UNSET
     src_format: Union[Unset, FileSourceFormat] = UNSET
@@ -36,9 +37,8 @@ class FileConversion:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        id: Union[Unset, str] = UNSET
-        if not isinstance(self.id, Unset):
-            id = self.id.value
+        error = self.error
+        id = self.id
         output = self.output
         output_format: Union[Unset, str] = UNSET
         if not isinstance(self.output_format, Unset):
@@ -64,6 +64,8 @@ class FileConversion:
             field_dict['completed_at'] = completed_at
         if created_at is not UNSET:
             field_dict['created_at'] = created_at
+        if error is not UNSET:
+            field_dict['error'] = error
         if id is not UNSET:
             field_dict['id'] = id
         if output is not UNSET:
@@ -100,12 +102,9 @@ class FileConversion:
         else:
             created_at = isoparse(_created_at)
 
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        else:
-            id = Uuid(_id)
+        error = d.pop("error", UNSET)
+
+        id = d.pop("id", UNSET)
 
         output = d.pop("output", UNSET)
 
@@ -149,6 +148,7 @@ class FileConversion:
         file_conversion = cls(
             completed_at=completed_at,
             created_at=created_at,
+            error=error,
             id=id,
             output=output,
             output_format=output_format,

@@ -16,7 +16,7 @@ class Session:
     created_at: Union[Unset, datetime.datetime] = UNSET
     expires: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
-    session_token: Union[Unset, Uuid] = UNSET
+    session_token: Union[Unset, str] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -30,9 +30,7 @@ class Session:
         if not isinstance(self.expires, Unset):
             expires = self.expires.isoformat()
         id = self.id
-        session_token: Union[Unset, str] = UNSET
-        if not isinstance(self.session_token, Unset):
-            session_token = self.session_token.value
+        session_token = self.session_token
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
@@ -75,12 +73,7 @@ class Session:
 
         id = d.pop("id", UNSET)
 
-        _session_token = d.pop("session_token", UNSET)
-        session_token: Union[Unset, Uuid]
-        if isinstance(_session_token, Unset):
-            session_token = UNSET
-        else:
-            session_token = Uuid(_session_token)
+        session_token = d.pop("session_token", UNSET)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

@@ -80,7 +80,7 @@ def sync(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileMass, Error]]:
-	""" Get the mass of an object in a CAD file. If the file is larger than 30MB, it will be performed asynchronously.
+	""" Get the mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return sync_detailed(
@@ -118,7 +118,7 @@ async def asyncio(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileMass, Error]]:
-	""" Get the mass of an object in a CAD file. If the file is larger than 30MB, it will be performed asynchronously.
+	""" Get the mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return (
