@@ -2,6 +2,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.cache_metadata import CacheMetadata
+from ..models.environment import Environment
 from ..models.file_system_metadata import FileSystemMetadata
 from ..models.connection import Connection
 from ..types import UNSET, Unset
@@ -13,6 +15,8 @@ T = TypeVar("T", bound="EngineMetadata")
 class EngineMetadata:
     """ """
     async_jobs_running: Union[Unset, bool] = False
+    cache: Union[Unset, CacheMetadata] = UNSET
+    environment: Union[Unset, Environment] = UNSET
     fs: Union[Unset, FileSystemMetadata] = UNSET
     git_hash: Union[Unset, str] = UNSET
     pubsub: Union[Unset, Connection] = UNSET
@@ -21,6 +25,12 @@ class EngineMetadata:
 
     def to_dict(self) -> Dict[str, Any]:
         async_jobs_running = self.async_jobs_running
+        cache: Union[Unset, str] = UNSET
+        if not isinstance(self.cache, Unset):
+            cache = self.cache.value
+        environment: Union[Unset, str] = UNSET
+        if not isinstance(self.environment, Unset):
+            environment = self.environment.value
         fs: Union[Unset, str] = UNSET
         if not isinstance(self.fs, Unset):
             fs = self.fs.value
@@ -34,6 +44,10 @@ class EngineMetadata:
         field_dict.update({})
         if async_jobs_running is not UNSET:
             field_dict['async_jobs_running'] = async_jobs_running
+        if cache is not UNSET:
+            field_dict['cache'] = cache
+        if environment is not UNSET:
+            field_dict['environment'] = environment
         if fs is not UNSET:
             field_dict['fs'] = fs
         if git_hash is not UNSET:
@@ -47,6 +61,20 @@ class EngineMetadata:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         async_jobs_running = d.pop("async_jobs_running", UNSET)
+
+        _cache = d.pop("cache", UNSET)
+        cache: Union[Unset, CacheMetadata]
+        if isinstance(_cache, Unset):
+            cache = UNSET
+        else:
+            cache = CacheMetadata(_cache)
+
+        _environment = d.pop("environment", UNSET)
+        environment: Union[Unset, Environment]
+        if isinstance(_environment, Unset):
+            environment = UNSET
+        else:
+            environment = Environment(_environment)
 
         _fs = d.pop("fs", UNSET)
         fs: Union[Unset, FileSystemMetadata]
@@ -66,6 +94,8 @@ class EngineMetadata:
 
         engine_metadata = cls(
             async_jobs_running=async_jobs_running,
+            cache=cache,
+            environment=environment,
             fs=fs,
             git_hash=git_hash,
             pubsub=pubsub,

@@ -18,7 +18,7 @@ class FileVolume:
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
-    id: Union[Unset, Uuid] = UNSET
+    id: Union[Unset, str] = UNSET
     src_format: Union[Unset, FileSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, APICallStatus] = UNSET
@@ -36,9 +36,7 @@ class FileVolume:
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
         error = self.error
-        id: Union[Unset, str] = UNSET
-        if not isinstance(self.id, Unset):
-            id = self.id.value
+        id = self.id
         src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format.value
@@ -99,12 +97,7 @@ class FileVolume:
 
         error = d.pop("error", UNSET)
 
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        else:
-            id = Uuid(_id)
+        id = d.pop("id", UNSET)
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileSourceFormat]

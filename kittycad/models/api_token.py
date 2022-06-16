@@ -16,7 +16,7 @@ class ApiToken:
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
     is_valid: Union[Unset, bool] = False
-    token: Union[Unset, Uuid] = UNSET
+    token: Union[Unset, str] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -28,9 +28,7 @@ class ApiToken:
             created_at = self.created_at.isoformat()
         id = self.id
         is_valid = self.is_valid
-        token: Union[Unset, str] = UNSET
-        if not isinstance(self.token, Unset):
-            token = self.token.value
+        token = self.token
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
@@ -68,12 +66,7 @@ class ApiToken:
 
         is_valid = d.pop("is_valid", UNSET)
 
-        _token = d.pop("token", UNSET)
-        token: Union[Unset, Uuid]
-        if isinstance(_token, Unset):
-            token = UNSET
-        else:
-            token = Uuid(_token)
+        token = d.pop("token", UNSET)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

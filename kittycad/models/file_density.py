@@ -9,18 +9,18 @@ from ..models.file_source_format import FileSourceFormat
 from ..models.api_call_status import APICallStatus
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileMass")
+T = TypeVar("T", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
-class FileMass:
+class FileDensity:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
+    density: Union[Unset, float] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    mass: Union[Unset, float] = UNSET
-    material_density: Union[Unset, float] = UNSET
+    material_mass: Union[Unset, float] = UNSET
     src_format: Union[Unset, FileSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, APICallStatus] = UNSET
@@ -36,10 +36,10 @@ class FileMass:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
+        density = self.density
         error = self.error
         id = self.id
-        mass = self.mass
-        material_density = self.material_density
+        material_mass = self.material_mass
         src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format.value
@@ -61,14 +61,14 @@ class FileMass:
             field_dict['completed_at'] = completed_at
         if created_at is not UNSET:
             field_dict['created_at'] = created_at
+        if density is not UNSET:
+            field_dict['density'] = density
         if error is not UNSET:
             field_dict['error'] = error
         if id is not UNSET:
             field_dict['id'] = id
-        if mass is not UNSET:
-            field_dict['mass'] = mass
-        if material_density is not UNSET:
-            field_dict['material_density'] = material_density
+        if material_mass is not UNSET:
+            field_dict['material_mass'] = material_mass
         if src_format is not UNSET:
             field_dict['src_format'] = src_format
         if started_at is not UNSET:
@@ -99,13 +99,13 @@ class FileMass:
         else:
             created_at = isoparse(_created_at)
 
+        density = d.pop("density", UNSET)
+
         error = d.pop("error", UNSET)
 
         id = d.pop("id", UNSET)
 
-        mass = d.pop("mass", UNSET)
-
-        material_density = d.pop("material_density", UNSET)
+        material_mass = d.pop("material_mass", UNSET)
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileSourceFormat]
@@ -137,13 +137,13 @@ class FileMass:
 
         user_id = d.pop("user_id", UNSET)
 
-        file_mass = cls(
+        file_density = cls(
             completed_at=completed_at,
             created_at=created_at,
+            density=density,
             error=error,
             id=id,
-            mass=mass,
-            material_density=material_density,
+            material_mass=material_mass,
             src_format=src_format,
             started_at=started_at,
             status=status,
@@ -151,8 +151,8 @@ class FileMass:
             user_id=user_id,
         )
 
-        file_mass.additional_properties = d
-        return file_mass
+        file_density.additional_properties = d
+        return file_density
 
     @property
     def additional_keys(self) -> List[str]:

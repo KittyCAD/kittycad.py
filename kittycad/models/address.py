@@ -16,7 +16,7 @@ class Address:
     city: Union[Unset, str] = UNSET
     country: Union[Unset, str] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
-    id: Union[Unset, Uuid] = UNSET
+    id: Union[Unset, str] = UNSET
     state: Union[Unset, str] = UNSET
     street1: Union[Unset, str] = UNSET
     street2: Union[Unset, str] = UNSET
@@ -32,9 +32,7 @@ class Address:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        id: Union[Unset, str] = UNSET
-        if not isinstance(self.id, Unset):
-            id = self.id.value
+        id = self.id
         state = self.state
         street1 = self.street1
         street2 = self.street2
@@ -84,12 +82,7 @@ class Address:
         else:
             created_at = isoparse(_created_at)
 
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        else:
-            id = Uuid(_id)
+        id = d.pop("id", UNSET)
 
         state = d.pop("state", UNSET)
 

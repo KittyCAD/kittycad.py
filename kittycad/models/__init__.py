@@ -8,6 +8,9 @@ from .api_call_with_price import ApiCallWithPrice
 from .api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from .api_token import ApiToken
 from .api_token_results_page import ApiTokenResultsPage
+from .async_api_call_type import AsyncAPICallType
+from .async_api_call import AsyncApiCall
+from .async_api_call_results_page import AsyncApiCallResultsPage
 from .billing_info import BillingInfo
 from .cache_metadata import CacheMetadata
 from .card_details import CardDetails
@@ -25,6 +28,7 @@ from .error import Error
 from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
 from .file_conversion import FileConversion
+from .file_density import FileDensity
 from .file_mass import FileMass
 from .file_output_format import FileOutputFormat
 from .file_source_format import FileSourceFormat
@@ -43,6 +47,7 @@ from .login_params import LoginParams
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
 from .method import Method
+from .output_file import OutputFile
 from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
 from .payment_method_card_checks import PaymentMethodCardChecks

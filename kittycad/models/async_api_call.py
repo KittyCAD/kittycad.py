@@ -5,27 +5,28 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.file_source_format import FileSourceFormat
 from ..models.api_call_status import APICallStatus
+from ..models.async_api_call_type import AsyncAPICallType
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileMass")
+T = TypeVar("T", bound="AsyncApiCall")
 
 
 @attr.s(auto_attribs=True)
-class FileMass:
+class AsyncApiCall:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    mass: Union[Unset, float] = UNSET
-    material_density: Union[Unset, float] = UNSET
-    src_format: Union[Unset, FileSourceFormat] = UNSET
+    input: Union[Unset, Any] = UNSET
+    output: Union[Unset, Any] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, APICallStatus] = UNSET
+    type: Union[Unset, AsyncAPICallType] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
+    worker: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -38,21 +39,22 @@ class FileMass:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        mass = self.mass
-        material_density = self.material_density
-        src_format: Union[Unset, str] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format.value
+        input = self.input
+        output = self.output
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
         status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status.value
+        type: Union[Unset, str] = UNSET
+        if not isinstance(self.type, Unset):
+            type = self.type.value
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
         user_id = self.user_id
+        worker = self.worker
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -65,20 +67,22 @@ class FileMass:
             field_dict['error'] = error
         if id is not UNSET:
             field_dict['id'] = id
-        if mass is not UNSET:
-            field_dict['mass'] = mass
-        if material_density is not UNSET:
-            field_dict['material_density'] = material_density
-        if src_format is not UNSET:
-            field_dict['src_format'] = src_format
+        if input is not UNSET:
+            field_dict['input'] = input
+        if output is not UNSET:
+            field_dict['output'] = output
         if started_at is not UNSET:
             field_dict['started_at'] = started_at
         if status is not UNSET:
             field_dict['status'] = status
+        if type is not UNSET:
+            field_dict['type'] = type
         if updated_at is not UNSET:
             field_dict['updated_at'] = updated_at
         if user_id is not UNSET:
             field_dict['user_id'] = user_id
+        if worker is not UNSET:
+            field_dict['worker'] = worker
 
         return field_dict
 
@@ -103,17 +107,8 @@ class FileMass:
 
         id = d.pop("id", UNSET)
 
-        mass = d.pop("mass", UNSET)
-
-        material_density = d.pop("material_density", UNSET)
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileSourceFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        else:
-            src_format = FileSourceFormat(_src_format)
-
+        input = d.pop("input", UNSET)
+        output = d.pop("output", UNSET)
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
         if isinstance(_started_at, Unset):
@@ -128,6 +123,13 @@ class FileMass:
         else:
             status = APICallStatus(_status)
 
+        _type = d.pop("type", UNSET)
+        type: Union[Unset, AsyncAPICallType]
+        if isinstance(_type, Unset):
+            type = UNSET
+        else:
+            type = AsyncAPICallType(_type)
+
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
         if isinstance(_updated_at, Unset):
@@ -137,22 +139,25 @@ class FileMass:
 
         user_id = d.pop("user_id", UNSET)
 
-        file_mass = cls(
+        worker = d.pop("worker", UNSET)
+
+        async_api_call = cls(
             completed_at=completed_at,
             created_at=created_at,
             error=error,
             id=id,
-            mass=mass,
-            material_density=material_density,
-            src_format=src_format,
+            input=input,
+            output=output,
             started_at=started_at,
             status=status,
+            type=type,
             updated_at=updated_at,
             user_id=user_id,
+            worker=worker,
         )
 
-        file_mass.additional_properties = d
-        return file_mass
+        async_api_call.additional_properties = d
+        return async_api_call
 
     @property
     def additional_keys(self) -> List[str]:
