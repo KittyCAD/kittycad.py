@@ -56,6 +56,8 @@ from .phone_number import PhoneNumber
 from .pong import Pong
 from .session import Session
 from .status_code import StatusCode
+from .unit_conversion import UnitConversion
+from .unit_metric_format import UnitMetricFormat
 from .update_user import UpdateUser
 from .user import User
 from .user_results_page import UserResultsPage

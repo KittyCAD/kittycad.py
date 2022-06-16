@@ -10,7 +10,6 @@ T = TypeVar("T", bound="CodeOutput")
 @attr.s(auto_attribs=True)
 class CodeOutput:
     """ """
-    output: Union[Unset, str] = UNSET
     from ..models.output_file import OutputFile
     output_files: Union[Unset, List[OutputFile]] = UNSET
     stderr: Union[Unset, str] = UNSET
@@ -19,7 +18,6 @@ class CodeOutput:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        output = self.output
         from ..models.output_file import OutputFile
         output_files: Union[Unset, List[OutputFile]] = UNSET
         if not isinstance(self.output_files, Unset):
@@ -30,8 +28,6 @@ class CodeOutput:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if output is not UNSET:
-            field_dict['output'] = output
         if output_files is not UNSET:
             field_dict['output_files'] = output_files
         if stderr is not UNSET:
@@ -44,8 +40,6 @@ class CodeOutput:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        output = d.pop("output", UNSET)
-
         from ..models.output_file import OutputFile
         output_files = cast(List[OutputFile], d.pop("output_files", UNSET))
 
@@ -54,7 +48,6 @@ class CodeOutput:
         stdout = d.pop("stdout", UNSET)
 
         code_output = cls(
-            output=output,
             output_files=output_files,
             stderr=stderr,
             stdout=stdout,
