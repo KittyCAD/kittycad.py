@@ -35,6 +35,9 @@
    kittycad.models.api_call_with_price_results_page
    kittycad.models.api_token
    kittycad.models.api_token_results_page
+   kittycad.models.async_api_call
+   kittycad.models.async_api_call_results_page
+   kittycad.models.async_api_call_type
    kittycad.models.billing_info
    kittycad.models.cache_metadata
    kittycad.models.card_details
@@ -52,6 +55,7 @@
    kittycad.models.extended_user
    kittycad.models.extended_user_results_page
    kittycad.models.file_conversion
+   kittycad.models.file_density
    kittycad.models.file_mass
    kittycad.models.file_output_format
    kittycad.models.file_source_format
@@ -70,6 +74,7 @@
    kittycad.models.meta_cluster_info
    kittycad.models.metadata
    kittycad.models.method
+   kittycad.models.output_file
    kittycad.models.payment_intent
    kittycad.models.payment_method
    kittycad.models.payment_method_card_checks

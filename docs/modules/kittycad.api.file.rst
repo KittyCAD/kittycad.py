@@ -1,4 +1,4 @@
-kittycad.api.file
+﻿kittycad.api.file
 =================
 
 .. automodule:: kittycad.api.file
@@ -29,6 +29,7 @@ kittycad.api.file
 
    kittycad.api.file.create_file_conversion
    kittycad.api.file.create_file_conversion_with_base64_helper
+   kittycad.api.file.create_file_density
    kittycad.api.file.create_file_execution
    kittycad.api.file.create_file_mass
    kittycad.api.file.create_file_volume
