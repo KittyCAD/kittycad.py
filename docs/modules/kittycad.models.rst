@@ -83,6 +83,8 @@
    kittycad.models.pong
    kittycad.models.session
    kittycad.models.status_code
+   kittycad.models.unit_conversion
+   kittycad.models.unit_metric_format
    kittycad.models.update_user
    kittycad.models.user
    kittycad.models.user_results_page

@@ -35,5 +35,6 @@
    kittycad.api.meta
    kittycad.api.payments
    kittycad.api.sessions
+   kittycad.api.unit
    kittycad.api.users
 

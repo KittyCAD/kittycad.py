@@ -1,4 +1,4 @@
-﻿kittycad.api.file
+kittycad.api.file
 =================
 
 .. automodule:: kittycad.api.file
