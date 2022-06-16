@@ -473,32 +473,400 @@
                 "description": "The output from the async API call.",
                 "oneOf": [
                     {
-                        "$ref": "#/components/schemas/FileConversion",
-                        "x-scope": [
-                            "",
-                            "#/components/schemas/AsyncApiCallOutput"
-                        ]
+                        "description": "A file conversion.",
+                        "properties": {
+                            "completed_at": {
+                                "description": "The time and date the file conversion was completed.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "description": "The time and date the file conversion was created.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "error": {
+                                "description": "The error the function returned, if any.",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "id": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Uuid",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The unique identifier of the file conversion.\n\nThis is the same as the API call ID."
+                            },
+                            "output": {
+                                "description": "The converted file, if completed, base64 encoded.",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "output_format": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/FileOutputFormat",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The output format of the file conversion."
+                            },
+                            "src_format": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/FileSourceFormat",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The source format of the file conversion."
+                            },
+                            "started_at": {
+                                "description": "The time and date the file conversion was started.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "status": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/APICallStatus",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The status of the file conversion."
+                            },
+                            "type": {
+                                "enum": [
+                                    "FileConversion"
+                                ],
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "description": "The time and date the file conversion was last updated.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "description": "The user ID of the user who created the file conversion.",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "created_at",
+                            "id",
+                            "output_format",
+                            "src_format",
+                            "status",
+                            "type",
+                            "updated_at"
+                        ],
+                        "type": "object"
                     },
                     {
-                        "$ref": "#/components/schemas/FileMass",
-                        "x-scope": [
-                            "",
-                            "#/components/schemas/AsyncApiCallOutput"
-                        ]
+                        "description": "A file mass.",
+                        "properties": {
+                            "completed_at": {
+                                "description": "The time and date the mass was completed.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "description": "The time and date the mass was created.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "error": {
+                                "description": "The error the function returned, if any.",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "id": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Uuid",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The unique identifier of the mass request.\n\nThis is the same as the API call ID."
+                            },
+                            "mass": {
+                                "description": "The resulting mass.",
+                                "format": "double",
+                                "nullable": true,
+                                "type": "number"
+                            },
+                            "material_density": {
+                                "default": 0,
+                                "description": "The material density as denoted by the user.",
+                                "format": "float",
+                                "type": "number"
+                            },
+                            "src_format": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/FileSourceFormat",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The source format of the file."
+                            },
+                            "started_at": {
+                                "description": "The time and date the mass was started.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "status": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/APICallStatus",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The status of the mass."
+                            },
+                            "type": {
+                                "enum": [
+                                    "FileMass"
+                                ],
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "description": "The time and date the mass was last updated.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "description": "The user ID of the user who created the mass.",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "created_at",
+                            "id",
+                            "src_format",
+                            "status",
+                            "type",
+                            "updated_at"
+                        ],
+                        "type": "object"
                     },
                     {
-                        "$ref": "#/components/schemas/FileDensity",
-                        "x-scope": [
-                            "",
-                            "#/components/schemas/AsyncApiCallOutput"
-                        ]
+                        "description": "A file volume.",
+                        "properties": {
+                            "completed_at": {
+                                "description": "The time and date the volume was completed.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "description": "The time and date the volume was created.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "error": {
+                                "description": "The error the function returned, if any.",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "id": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Uuid",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The unique identifier of the volume request.\n\nThis is the same as the API call ID."
+                            },
+                            "src_format": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/FileSourceFormat",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The source format of the file."
+                            },
+                            "started_at": {
+                                "description": "The time and date the volume was started.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "status": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/APICallStatus",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The status of the volume."
+                            },
+                            "type": {
+                                "enum": [
+                                    "FileVolume"
+                                ],
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "description": "The time and date the volume was last updated.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "description": "The user ID of the user who created the volume.",
+                                "type": "string"
+                            },
+                            "volume": {
+                                "description": "The resulting volume.",
+                                "format": "double",
+                                "nullable": true,
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "created_at",
+                            "id",
+                            "src_format",
+                            "status",
+                            "type",
+                            "updated_at"
+                        ],
+                        "type": "object"
                     },
                     {
-                        "$ref": "#/components/schemas/FileVolume",
-                        "x-scope": [
-                            "",
-                            "#/components/schemas/AsyncApiCallOutput"
-                        ]
+                        "description": "A file density.",
+                        "properties": {
+                            "completed_at": {
+                                "description": "The time and date the density was completed.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "description": "The time and date the density was created.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "density": {
+                                "description": "The resulting density.",
+                                "format": "double",
+                                "nullable": true,
+                                "type": "number"
+                            },
+                            "error": {
+                                "description": "The error the function returned, if any.",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "id": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Uuid",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The unique identifier of the density request.\n\nThis is the same as the API call ID."
+                            },
+                            "material_mass": {
+                                "default": 0,
+                                "description": "The material mass as denoted by the user.",
+                                "format": "float",
+                                "type": "number"
+                            },
+                            "src_format": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/FileSourceFormat",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The source format of the file."
+                            },
+                            "started_at": {
+                                "description": "The time and date the density was started.",
+                                "format": "partial-date-time",
+                                "nullable": true,
+                                "type": "string"
+                            },
+                            "status": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/APICallStatus",
+                                        "x-scope": [
+                                            "",
+                                            "#/components/schemas/AsyncApiCallOutput"
+                                        ]
+                                    }
+                                ],
+                                "description": "The status of the density."
+                            },
+                            "type": {
+                                "enum": [
+                                    "FileDensity"
+                                ],
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "description": "The time and date the density was last updated.",
+                                "format": "partial-date-time",
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "description": "The user ID of the user who created the density.",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "created_at",
+                            "id",
+                            "src_format",
+                            "status",
+                            "type",
+                            "updated_at"
+                        ],
+                        "type": "object"
                     }
                 ]
             },
@@ -727,7 +1095,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -769,7 +1136,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -861,7 +1227,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -901,7 +1266,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -1010,7 +1374,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -1574,7 +1937,6 @@
                                 "$ref": "#/components/schemas/Uuid",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileConversion"
                                 ]
                             }
@@ -1592,7 +1954,6 @@
                                 "$ref": "#/components/schemas/FileOutputFormat",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileConversion"
                                 ]
                             }
@@ -1605,7 +1966,6 @@
                                 "$ref": "#/components/schemas/FileSourceFormat",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileConversion"
                                 ]
                             }
@@ -1624,7 +1984,6 @@
                                 "$ref": "#/components/schemas/APICallStatus",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileConversion"
                                 ]
                             }
@@ -1682,7 +2041,6 @@
                                 "$ref": "#/components/schemas/Uuid",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileDensity"
                                 ]
                             }
@@ -1701,7 +2059,6 @@
                                 "$ref": "#/components/schemas/FileSourceFormat",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileDensity"
                                 ]
                             }
@@ -1720,7 +2077,6 @@
                                 "$ref": "#/components/schemas/APICallStatus",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileDensity"
                                 ]
                             }
@@ -1771,7 +2127,6 @@
                                 "$ref": "#/components/schemas/Uuid",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileMass"
                                 ]
                             }
@@ -1796,7 +2151,6 @@
                                 "$ref": "#/components/schemas/FileSourceFormat",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileMass"
                                 ]
                             }
@@ -1815,7 +2169,6 @@
                                 "$ref": "#/components/schemas/APICallStatus",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileMass"
                                 ]
                             }
@@ -1902,7 +2255,6 @@
                                 "$ref": "#/components/schemas/Uuid",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileVolume"
                                 ]
                             }
@@ -1915,7 +2267,6 @@
                                 "$ref": "#/components/schemas/FileSourceFormat",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileVolume"
                                 ]
                             }
@@ -1934,7 +2285,6 @@
                                 "$ref": "#/components/schemas/APICallStatus",
                                 "x-scope": [
                                     "",
-                                    "#/components/schemas/AsyncApiCallOutput",
                                     "#/components/schemas/FileVolume"
                                 ]
                             }
@@ -2210,7 +2560,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -2231,7 +2580,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -2251,7 +2599,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -2343,7 +2690,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream",
                                     "#/components/schemas/JetstreamStats"

@@ -309,8 +309,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
                             # We want to parse each of the possible types.
                             f.write("\t\tdata = response.json()\n")
                             for index, one_of in enumerate(schema['oneOf']):
-                                ref = one_of['$ref'].replace(
-                                    '#/components/schemas/', '')
+                                ref = getOneOfRefType(one_of)
                                 f.write("\t\ttry:\n")
                                 f.write(
                                     "\t\t\tif not isinstance(data, dict):\n")
@@ -660,23 +659,12 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         # Skip it since we will already have generated it.
         return
     elif 'oneOf' in schema:
-        generateOneOfType(file_path, name, schema, data)
+        # Skip it since we will already have generated it.
+        return
     else:
         print("  schema: ", [schema])
         print("  unsupported type: ", name)
         raise Exception("  unsupported type: ", name)
-
-
-def generateOneOfType(path: str, name: str, schema: dict, data):
-    for t in schema['oneOf']:
-        # Get the name for the reference.
-        if '$ref' in t:
-            name = t['$ref'].replace('#/components/schemas/', '')
-            generateType(path, name, t, data)
-        else:
-            print("  schema: ", [t])
-            print("  oneOf must be a ref: ", name)
-            raise Exception("  oneOf must be a ref ", name)
 
 
 def generateStringType(path: str, name: str, schema: dict, type_name: str):
@@ -1370,8 +1358,7 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                         schema = data['components']['schemas'][ref]
                         if 'oneOf' in schema:
                             for t in schema['oneOf']:
-                                ref = t['$ref'].replace(
-                                    '#/components/schemas/', '')
+                                ref = getOneOfRefType(t)
                                 if ref not in refs:
                                     refs.append(ref)
                         else:
@@ -1507,6 +1494,14 @@ def get_function_parameters(endpoint: dict, request_body_type: bool) -> [str]:
     if request_body_type:
         params.append("body")
     return params
+
+
+def getOneOfRefType(schema: dict) -> str:
+    if 'type' in schema['properties']:
+        t = schema['properties']['type']['enum'][0]
+        return t
+
+    raise Exception("Cannot get oneOf ref type for schema: ", schema)
 
 
 if (__name__ == '__main__'):
