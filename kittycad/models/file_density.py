@@ -6,7 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
 from ..models.file_source_format import FileSourceFormat
-from ..models.api_call_status import APICallStatus
+from ..models.api_call_status import ApiCallStatus
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileDensity")
@@ -23,7 +23,7 @@ class FileDensity:
     material_mass: Union[Unset, float] = UNSET
     src_format: Union[Unset, FileSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, APICallStatus] = UNSET
+    status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -122,11 +122,11 @@ class FileDensity:
             started_at = isoparse(_started_at)
 
         _status = d.pop("status", UNSET)
-        status: Union[Unset, APICallStatus]
+        status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = APICallStatus(_status)
+            status = ApiCallStatus(_status)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

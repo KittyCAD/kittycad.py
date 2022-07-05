@@ -5,9 +5,10 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
+from ..models.base64_data import Base64Data
 from ..models.file_output_format import FileOutputFormat
 from ..models.file_source_format import FileSourceFormat
-from ..models.api_call_status import APICallStatus
+from ..models.api_call_status import ApiCallStatus
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileConversion")
@@ -20,11 +21,11 @@ class FileConversion:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    output: Union[Unset, str] = UNSET
+    output: Union[Unset, Base64Data] = UNSET
     output_format: Union[Unset, FileOutputFormat] = UNSET
     src_format: Union[Unset, FileSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, APICallStatus] = UNSET
+    status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -39,7 +40,9 @@ class FileConversion:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        output = self.output
+        output: Union[Unset, str] = UNSET
+        if not isinstance(self.output, Unset):
+            output = self.output.value
         output_format: Union[Unset, str] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format.value
@@ -106,7 +109,12 @@ class FileConversion:
 
         id = d.pop("id", UNSET)
 
-        output = d.pop("output", UNSET)
+        _output = d.pop("output", UNSET)
+        output: Union[Unset, Base64Data]
+        if isinstance(_output, Unset):
+            output = UNSET
+        else:
+            output = Base64Data(_output)
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileOutputFormat]
@@ -130,11 +138,11 @@ class FileConversion:
             started_at = isoparse(_started_at)
 
         _status = d.pop("status", UNSET)
-        status: Union[Unset, APICallStatus]
+        status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = APICallStatus(_status)
+            status = ApiCallStatus(_status)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
