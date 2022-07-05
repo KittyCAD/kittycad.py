@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models &mdash; kittycad v0.2.3 documentation</title>
+  <title>kittycad.models &mdash; kittycad v0.2.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.models.address" href="kittycad.models.address.html" />
+    <link rel="next" title="kittycad.models.account_provider" href="kittycad.models.account_provider.html" />
     <link rel="prev" title="kittycad.client" href="kittycad.client.html" /> 
 </head>
 
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> kittycad
           </a>
               <div class="version">
-                v0.2.3
+                v0.2.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -45,6 +45,7 @@
 <li class="toctree-l1"><a class="reference internal" href="kittycad.api.html">kittycad.api</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">kittycad.models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.account_provider.html">kittycad.models.account_provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.address.html">kittycad.models.address</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group.html">kittycad.models.api_call_query_group</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group_by.html">kittycad.models.api_call_query_group_by</a></li>
@@ -56,20 +57,29 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call.html">kittycad.models.async_api_call</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_results_page.html">kittycad.models.async_api_call_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_type.html">kittycad.models.async_api_call_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.base64_data.html">kittycad.models.base64_data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.billing_info.html">kittycad.models.billing_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cache_metadata.html">kittycad.models.cache_metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.card_details.html">kittycad.models.card_details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_language.html">kittycad.models.code_language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_output.html">kittycad.models.code_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.commit.html">kittycad.models.commit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.connection.html">kittycad.models.connection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.currency.html">kittycad.models.currency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer.html">kittycad.models.customer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_access_token_request_form.html">kittycad.models.device_access_token_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_request_form.html">kittycad.models.device_auth_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_verify_params.html">kittycad.models.device_auth_verify_params</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.docker_system_info.html">kittycad.models.docker_system_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.duration.html">kittycad.models.duration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.email_authentication_form.html">kittycad.models.email_authentication_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.empty.html">kittycad.models.empty</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.engine_metadata.html">kittycad.models.engine_metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.environment.html">kittycad.models.environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.error.html">kittycad.models.error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.executor_metadata.html">kittycad.models.executor_metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user.html">kittycad.models.extended_user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user_results_page.html">kittycad.models.extended_user_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_conversion.html">kittycad.models.file_conversion</a></li>
@@ -80,27 +90,37 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_system_metadata.html">kittycad.models.file_system_metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_volume.html">kittycad.models.file_volume</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.gateway.html">kittycad.models.gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.index_info.html">kittycad.models.index_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice.html">kittycad.models.invoice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_line_item.html">kittycad.models.invoice_line_item</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_status.html">kittycad.models.invoice_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ip_addr.html">kittycad.models.ip_addr</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream.html">kittycad.models.jetstream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_api_stats.html">kittycad.models.jetstream_api_stats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_config.html">kittycad.models.jetstream_config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_stats.html">kittycad.models.jetstream_stats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.leaf_node.html">kittycad.models.leaf_node</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.login_params.html">kittycad.models.login_params</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.meta_cluster_info.html">kittycad.models.meta_cluster_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.metadata.html">kittycad.models.metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.method.html">kittycad.models.method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_client_info.html">kittycad.models.o_auth2_client_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_grant_type.html">kittycad.models.o_auth2_grant_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_file.html">kittycad.models.output_file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_intent.html">kittycad.models.payment_intent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method.html">kittycad.models.payment_method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_card_checks.html">kittycad.models.payment_method_card_checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_type.html">kittycad.models.payment_method_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.phone_number.html">kittycad.models.phone_number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.plugins_info.html">kittycad.models.plugins_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.pong.html">kittycad.models.pong</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.registry_service_config.html">kittycad.models.registry_service_config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.runtime.html">kittycad.models.runtime</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.session.html">kittycad.models.session</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.status_code.html">kittycad.models.status_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_cgroup_driver_enum.html">kittycad.models.system_info_cgroup_driver_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_cgroup_version_enum.html">kittycad.models.system_info_cgroup_version_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_default_address_pools.html">kittycad.models.system_info_default_address_pools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_isolation_enum.html">kittycad.models.system_info_isolation_enum</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_conversion.html">kittycad.models.unit_conversion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_metric_format.html">kittycad.models.unit_metric_format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.update_user.html">kittycad.models.update_user</a></li>
@@ -150,37 +170,43 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.address.html#module-kittycad.models.address" title="kittycad.models.address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.address</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.account_provider.html#module-kittycad.models.account_provider" title="kittycad.models.account_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.account_provider</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.api_call_query_group.html#module-kittycad.models.api_call_query_group" title="kittycad.models.api_call_query_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_query_group</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.address.html#module-kittycad.models.address" title="kittycad.models.address"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.address</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_call_query_group_by.html#module-kittycad.models.api_call_query_group_by" title="kittycad.models.api_call_query_group_by"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_query_group_by</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_call_query_group.html#module-kittycad.models.api_call_query_group" title="kittycad.models.api_call_query_group"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_query_group</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.api_call_status.html#module-kittycad.models.api_call_status" title="kittycad.models.api_call_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_status</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.api_call_query_group_by.html#module-kittycad.models.api_call_query_group_by" title="kittycad.models.api_call_query_group_by"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_query_group_by</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_call_with_price.html#module-kittycad.models.api_call_with_price" title="kittycad.models.api_call_with_price"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_with_price</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_call_status.html#module-kittycad.models.api_call_status" title="kittycad.models.api_call_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_status</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.api_call_with_price_results_page.html#module-kittycad.models.api_call_with_price_results_page" title="kittycad.models.api_call_with_price_results_page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_with_price_results_page</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.api_call_with_price.html#module-kittycad.models.api_call_with_price" title="kittycad.models.api_call_with_price"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_with_price</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_token.html#module-kittycad.models.api_token" title="kittycad.models.api_token"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_token</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_call_with_price_results_page.html#module-kittycad.models.api_call_with_price_results_page" title="kittycad.models.api_call_with_price_results_page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_call_with_price_results_page</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.api_token_results_page.html#module-kittycad.models.api_token_results_page" title="kittycad.models.api_token_results_page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_token_results_page</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.api_token.html#module-kittycad.models.api_token" title="kittycad.models.api_token"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_token</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.async_api_call.html#module-kittycad.models.async_api_call" title="kittycad.models.async_api_call"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.async_api_call</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_token_results_page.html#module-kittycad.models.api_token_results_page" title="kittycad.models.api_token_results_page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.api_token_results_page</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.async_api_call_results_page.html#module-kittycad.models.async_api_call_results_page" title="kittycad.models.async_api_call_results_page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.async_api_call_results_page</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.async_api_call.html#module-kittycad.models.async_api_call" title="kittycad.models.async_api_call"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.async_api_call</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.async_api_call_type.html#module-kittycad.models.async_api_call_type" title="kittycad.models.async_api_call_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.async_api_call_type</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.async_api_call_results_page.html#module-kittycad.models.async_api_call_results_page" title="kittycad.models.async_api_call_results_page"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.async_api_call_results_page</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.async_api_call_type.html#module-kittycad.models.async_api_call_type" title="kittycad.models.async_api_call_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.async_api_call_type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.base64_data.html#module-kittycad.models.base64_data" title="kittycad.models.base64_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.base64_data</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.billing_info.html#module-kittycad.models.billing_info" title="kittycad.models.billing_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.billing_info</span></code></a></p></td>
@@ -201,28 +227,52 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.code_output.html#module-kittycad.models.code_output" title="kittycad.models.code_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.code_output</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.connection.html#module-kittycad.models.connection" title="kittycad.models.connection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.connection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.commit.html#module-kittycad.models.commit" title="kittycad.models.commit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.commit</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.created_at_sort_mode.html#module-kittycad.models.created_at_sort_mode" title="kittycad.models.created_at_sort_mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.created_at_sort_mode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.connection.html#module-kittycad.models.connection" title="kittycad.models.connection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.connection</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.currency.html#module-kittycad.models.currency" title="kittycad.models.currency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.currency</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.created_at_sort_mode.html#module-kittycad.models.created_at_sort_mode" title="kittycad.models.created_at_sort_mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.created_at_sort_mode</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.customer.html#module-kittycad.models.customer" title="kittycad.models.customer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.customer</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.currency.html#module-kittycad.models.currency" title="kittycad.models.currency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.currency</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.duration.html#module-kittycad.models.duration" title="kittycad.models.duration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.duration</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.customer.html#module-kittycad.models.customer" title="kittycad.models.customer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.customer</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.engine_metadata.html#module-kittycad.models.engine_metadata" title="kittycad.models.engine_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.engine_metadata</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.device_access_token_request_form.html#module-kittycad.models.device_access_token_request_form" title="kittycad.models.device_access_token_request_form"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.device_access_token_request_form</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.environment.html#module-kittycad.models.environment" title="kittycad.models.environment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.environment</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.device_auth_request_form.html#module-kittycad.models.device_auth_request_form" title="kittycad.models.device_auth_request_form"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.device_auth_request_form</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.error.html#module-kittycad.models.error" title="kittycad.models.error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.error</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.device_auth_verify_params.html#module-kittycad.models.device_auth_verify_params" title="kittycad.models.device_auth_verify_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.device_auth_verify_params</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.docker_system_info.html#module-kittycad.models.docker_system_info" title="kittycad.models.docker_system_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.docker_system_info</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.duration.html#module-kittycad.models.duration" title="kittycad.models.duration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.duration</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.email_authentication_form.html#module-kittycad.models.email_authentication_form" title="kittycad.models.email_authentication_form"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.email_authentication_form</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.empty.html#module-kittycad.models.empty" title="kittycad.models.empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.empty</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.engine_metadata.html#module-kittycad.models.engine_metadata" title="kittycad.models.engine_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.engine_metadata</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.environment.html#module-kittycad.models.environment" title="kittycad.models.environment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.environment</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.error.html#module-kittycad.models.error" title="kittycad.models.error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.error</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.executor_metadata.html#module-kittycad.models.executor_metadata" title="kittycad.models.executor_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.executor_metadata</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.extended_user.html#module-kittycad.models.extended_user" title="kittycad.models.extended_user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.extended_user</span></code></a></p></td>
@@ -255,13 +305,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.gateway.html#module-kittycad.models.gateway" title="kittycad.models.gateway"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.gateway</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.invoice.html#module-kittycad.models.invoice" title="kittycad.models.invoice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.invoice</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.index_info.html#module-kittycad.models.index_info" title="kittycad.models.index_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.index_info</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.invoice_line_item.html#module-kittycad.models.invoice_line_item" title="kittycad.models.invoice_line_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.invoice_line_item</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.invoice.html#module-kittycad.models.invoice" title="kittycad.models.invoice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.invoice</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.invoice_status.html#module-kittycad.models.invoice_status" title="kittycad.models.invoice_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.invoice_status</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.invoice_line_item.html#module-kittycad.models.invoice_line_item" title="kittycad.models.invoice_line_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.invoice_line_item</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.invoice_status.html#module-kittycad.models.invoice_status" title="kittycad.models.invoice_status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.invoice_status</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.ip_addr.html#module-kittycad.models.ip_addr" title="kittycad.models.ip_addr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.ip_addr</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.jetstream.html#module-kittycad.models.jetstream" title="kittycad.models.jetstream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.jetstream</span></code></a></p></td>
@@ -279,43 +335,67 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.leaf_node.html#module-kittycad.models.leaf_node" title="kittycad.models.leaf_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.leaf_node</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.login_params.html#module-kittycad.models.login_params" title="kittycad.models.login_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.login_params</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.meta_cluster_info.html#module-kittycad.models.meta_cluster_info" title="kittycad.models.meta_cluster_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.meta_cluster_info</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.meta_cluster_info.html#module-kittycad.models.meta_cluster_info" title="kittycad.models.meta_cluster_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.meta_cluster_info</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.metadata.html#module-kittycad.models.metadata" title="kittycad.models.metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.metadata</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.metadata.html#module-kittycad.models.metadata" title="kittycad.models.metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.metadata</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.method.html#module-kittycad.models.method" title="kittycad.models.method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.method</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.method.html#module-kittycad.models.method" title="kittycad.models.method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.method</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.o_auth2_client_info.html#module-kittycad.models.o_auth2_client_info" title="kittycad.models.o_auth2_client_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.o_auth2_client_info</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.output_file.html#module-kittycad.models.output_file" title="kittycad.models.output_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.output_file</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.o_auth2_grant_type.html#module-kittycad.models.o_auth2_grant_type" title="kittycad.models.o_auth2_grant_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.o_auth2_grant_type</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.payment_intent.html#module-kittycad.models.payment_intent" title="kittycad.models.payment_intent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_intent</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.output_file.html#module-kittycad.models.output_file" title="kittycad.models.output_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.output_file</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.payment_method.html#module-kittycad.models.payment_method" title="kittycad.models.payment_method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_method</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.payment_intent.html#module-kittycad.models.payment_intent" title="kittycad.models.payment_intent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_intent</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.payment_method_card_checks.html#module-kittycad.models.payment_method_card_checks" title="kittycad.models.payment_method_card_checks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_method_card_checks</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.payment_method.html#module-kittycad.models.payment_method" title="kittycad.models.payment_method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_method</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.payment_method_type.html#module-kittycad.models.payment_method_type" title="kittycad.models.payment_method_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_method_type</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.payment_method_card_checks.html#module-kittycad.models.payment_method_card_checks" title="kittycad.models.payment_method_card_checks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_method_card_checks</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.phone_number.html#module-kittycad.models.phone_number" title="kittycad.models.phone_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.phone_number</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.payment_method_type.html#module-kittycad.models.payment_method_type" title="kittycad.models.payment_method_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.payment_method_type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.phone_number.html#module-kittycad.models.phone_number" title="kittycad.models.phone_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.phone_number</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.plugins_info.html#module-kittycad.models.plugins_info" title="kittycad.models.plugins_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.plugins_info</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.pong.html#module-kittycad.models.pong" title="kittycad.models.pong"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.pong</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.registry_service_config.html#module-kittycad.models.registry_service_config" title="kittycad.models.registry_service_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.registry_service_config</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.runtime.html#module-kittycad.models.runtime" title="kittycad.models.runtime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.runtime</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.session.html#module-kittycad.models.session" title="kittycad.models.session"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.session</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.status_code.html#module-kittycad.models.status_code" title="kittycad.models.status_code"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.status_code</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.system_info_cgroup_driver_enum.html#module-kittycad.models.system_info_cgroup_driver_enum" title="kittycad.models.system_info_cgroup_driver_enum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.system_info_cgroup_driver_enum</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.system_info_cgroup_version_enum.html#module-kittycad.models.system_info_cgroup_version_enum" title="kittycad.models.system_info_cgroup_version_enum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.system_info_cgroup_version_enum</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.system_info_default_address_pools.html#module-kittycad.models.system_info_default_address_pools" title="kittycad.models.system_info_default_address_pools"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.system_info_default_address_pools</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.models.system_info_isolation_enum.html#module-kittycad.models.system_info_isolation_enum" title="kittycad.models.system_info_isolation_enum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.system_info_isolation_enum</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.unit_conversion.html#module-kittycad.models.unit_conversion" title="kittycad.models.unit_conversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.models.unit_conversion</span></code></a></p></td>
@@ -345,7 +425,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="kittycad.client.html" class="btn btn-neutral float-left" title="kittycad.client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.models.address.html" class="btn btn-neutral float-right" title="kittycad.models.address" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.models.account_provider.html" class="btn btn-neutral float-right" title="kittycad.models.account_provider" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

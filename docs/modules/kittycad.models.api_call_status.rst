@@ -17,7 +17,7 @@ kittycad.models.api\_call\_status
 
    .. autosummary::
    
-      APICallStatus
+      ApiCallStatus
    
    
 

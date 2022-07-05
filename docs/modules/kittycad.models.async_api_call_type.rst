@@ -17,7 +17,7 @@ kittycad.models.async\_api\_call\_type
 
    .. autosummary::
    
-      AsyncAPICallType
+      AsyncApiCallType
    
    
 
