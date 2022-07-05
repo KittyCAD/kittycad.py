@@ -5,8 +5,8 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.api_call_status import APICallStatus
-from ..models.async_api_call_type import AsyncAPICallType
+from ..models.api_call_status import ApiCallStatus
+from ..models.async_api_call_type import AsyncApiCallType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="AsyncApiCall")
@@ -22,8 +22,8 @@ class AsyncApiCall:
     input: Union[Unset, Any] = UNSET
     output: Union[Unset, Any] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, APICallStatus] = UNSET
-    type: Union[Unset, AsyncAPICallType] = UNSET
+    status: Union[Unset, ApiCallStatus] = UNSET
+    type: Union[Unset, AsyncApiCallType] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
     worker: Union[Unset, str] = UNSET
@@ -117,18 +117,18 @@ class AsyncApiCall:
             started_at = isoparse(_started_at)
 
         _status = d.pop("status", UNSET)
-        status: Union[Unset, APICallStatus]
+        status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = APICallStatus(_status)
+            status = ApiCallStatus(_status)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, AsyncAPICallType]
+        type: Union[Unset, AsyncApiCallType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = AsyncAPICallType(_type)
+            type = AsyncApiCallType(_type)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

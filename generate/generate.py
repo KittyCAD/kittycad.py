@@ -81,12 +81,17 @@ def generatePaths(cwd: str, parser: dict) -> dict:
     data = parser
     paths = data['paths']
     for p in paths:
-        for method in paths[p]:
-            print('METHOD: ', method.upper())
-            # Skip OPTIONS.
-            if method.upper() != 'OPTIONS':
-                endpoint = paths[p][method]
-                data = generatePath(path, p, method, endpoint, data)
+        # If p starts with /oauth2 we can skip it.
+        # We don't care about generating methods for those.
+        if p.startswith('/oauth2'):
+            continue
+        else:
+            for method in paths[p]:
+                print('METHOD: ', method.upper())
+                # Skip OPTIONS.
+                if method.upper() != 'OPTIONS':
+                    endpoint = paths[p][method]
+                    data = generatePath(path, p, method, endpoint, data)
 
     return data
 
@@ -115,7 +120,9 @@ def generatePath(
     request_body_refs = getRequestBodyRefs(endpoint)
     request_body_type = getRequestBodyType(endpoint)
 
-    success_type = endpoint_refs[0]
+    success_type = ""
+    if len(endpoint_refs) > 0:
+        success_type = endpoint_refs[0]
 
     if fn_name == 'get_file_conversion' or fn_name == 'create_file_conversion':
         fn_name += '_with_base64_helper'
@@ -349,8 +356,13 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
                                 f.write("\t\t]\n")
                             else:
                                 raise Exception("Unknown array type")
+                        elif json['type'] == 'string':
+                            f.write(
+                                "\t\tresponse_" +
+                                response_code +
+                                " = response.text\n")
                         else:
-                            raise Exception("Unknown type")
+                            raise Exception("Unknown type", json['type'])
                     else:
                         f.write(
                             "\t\tresponse_" +
@@ -644,7 +656,7 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         type_name = schema['type']
         if type_name == 'object':
             generateObjectType(file_path, name, schema, type_name, data)
-        elif type_name == 'string' and 'enum' in schema:
+        elif type_name == 'string' and 'enum' in schema and schema['enum'] != [None]:
             generateEnumType(file_path, name, schema, type_name)
         elif type_name == 'integer':
             generateIntegerType(file_path, name, schema, type_name)
@@ -719,9 +731,17 @@ def generateEnumType(path: str, name: str, schema: dict, type_name: str):
     f.write("class " + name + "(str, Enum):\n")
     # Iterate over the properties.
     for value in schema['enum']:
+        enum_name = camel_to_screaming_snake(value)
+        if enum_name == '':
+            enum_name = 'EMPTY'
+        elif enum_name == '1':
+            enum_name = 'ONE'
+        elif enum_name == '2':
+            enum_name = 'TWO'
+
         f.write(
             "\t" +
-            camel_to_screaming_snake(value) +
+            enum_name +
             " = '" +
             value +
             "'\n")
@@ -934,6 +954,16 @@ def renderTypeToDict(
                 elif 'type' in property_schema['items']:
                     if property_schema['items']['type'] == 'string':
                         property_type = 'str'
+                    elif property_schema['items']['type'] == 'array':
+                        if 'items' in property_schema['items']:
+                            if property_schema['items']['items']['type'] == 'string':
+                                property_type = 'List[str]'
+                            else:
+                                print("  property: ", property_schema)
+                                raise Exception("Unknown property type")
+                        else:
+                            print("  property: ", property_schema)
+                            raise Exception("Unknown property type")
                     else:
                         print("  property: ", property_schema)
                         raise Exception("Unknown property type")
@@ -1074,6 +1104,16 @@ def renderTypeInit(
                 elif 'type' in property_schema['items']:
                     if property_schema['items']['type'] == 'string':
                         property_type = 'str'
+                    elif property_schema['items']['type'] == 'array':
+                        if 'items' in property_schema['items']:
+                            if property_schema['items']['items']['type'] == 'string':
+                                property_type = 'List[str]'
+                            else:
+                                print("  property: ", property_schema)
+                                raise Exception("Unknown property type")
+                        else:
+                            print("  property: ", property_schema)
+                            raise Exception("Unknown property type")
                     else:
                         print("  property: ", property_schema)
                         raise Exception("Unknown property type")
@@ -1207,6 +1247,16 @@ def renderTypeFromDict(
                 elif 'type' in property_schema['items']:
                     if property_schema['items']['type'] == 'string':
                         property_type = 'str'
+                    elif property_schema['items']['type'] == 'array':
+                        if 'items' in property_schema['items']:
+                            if property_schema['items']['items']['type'] == 'string':
+                                property_type = 'List[str]'
+                            else:
+                                print("  property: ", property_schema)
+                                raise Exception("Unknown property type")
+                        else:
+                            print("  property: ", property_schema)
+                            raise Exception("Unknown property type")
                     else:
                         raise Exception(
                             "  unknown array type: ",
@@ -1373,10 +1423,26 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                                 refs.append('[' + ref + ']')
                             else:
                                 raise Exception("Unknown array type")
+                        elif json['type'] == 'string':
+                            refs.append('str')
                         else:
                             raise Exception("Unknown type ", json['type'])
                     else:
                         refs.append('dict')
+                elif content_type == '*/*':
+                    s = content[content_type]['schema']
+                    if s == {}:
+                        # We don't care it's an empty body.
+                        continue
+                    else:
+                        # Throw an error for an unsupported content type.
+                        print("content: ", content)
+                        raise Exception(
+                            "Unsupported content type: ", content_type)
+                else:
+                    # Throw an error for an unsupported content type.
+                    print("content: ", content)
+                    raise Exception("Unsupported content type: ", content_type)
         elif '$ref' in response:
             schema_name = response['$ref'].replace(
                 '#/components/responses/', '')
@@ -1423,6 +1489,18 @@ def getRequestBodyRefs(endpoint: dict) -> [str]:
                     if '$ref' in json:
                         ref = json['$ref'].replace('#/components/schemas/', '')
                         refs.append(ref)
+                elif content_type == 'application/octet-stream':
+                    # do nothing we dont't care
+                    continue
+                elif content_type == 'application/x-www-form-urlencoded':
+                    form = content[content_type]['schema']
+                    if '$ref' in form:
+                        ref = form['$ref'].replace('#/components/schemas/', '')
+                        refs.append(ref)
+                else:
+                    # Throw an error for an unsupported content type.
+                    print("content: ", content)
+                    raise Exception("Unsupported content type: ", content_type)
 
     return refs
 
@@ -1444,6 +1522,11 @@ def getRequestBodyType(endpoint: dict) -> str:
                     return 'bytes'
                 elif content_type == 'application/octet-stream':
                     return 'bytes'
+                elif content_type == 'application/x-www-form-urlencoded':
+                    json = content[content_type]['schema']
+                    if '$ref' in json:
+                        ref = json['$ref'].replace('#/components/schemas/', '')
+                        return ref
                 else:
                     print("  unsupported content type: ", content_type)
                     raise Exception("unsupported content type")
@@ -1470,6 +1553,8 @@ def camel_to_screaming_snake(name: str):
         ' ',
         '').upper().replace(
             '-',
+        '_').replace(
+            ':',
         '_')
 
 
