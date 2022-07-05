@@ -6,14 +6,14 @@ from ...client import Client
 from ...models.async_api_call_results_page import AsyncApiCallResultsPage
 from ...models.error import Error
 from ...models.created_at_sort_mode import CreatedAtSortMode
-from ...models.api_call_status import APICallStatus
+from ...models.api_call_status import ApiCallStatus
 from ...types import Response
 
 def _get_kwargs(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: APICallStatus,
+	status: ApiCallStatus,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
@@ -56,7 +56,7 @@ def sync_detailed(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: APICallStatus,
+	status: ApiCallStatus,
 	*,
 	client: Client,
 ) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
@@ -80,7 +80,7 @@ def sync(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: APICallStatus,
+	status: ApiCallStatus,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
@@ -100,7 +100,7 @@ async def asyncio_detailed(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: APICallStatus,
+	status: ApiCallStatus,
 	*,
 	client: Client,
 ) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
@@ -122,7 +122,7 @@ async def asyncio(
 	limit: int,
 	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: APICallStatus,
+	status: ApiCallStatus,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
