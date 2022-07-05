@@ -5,6 +5,7 @@ import attr
 from ..models.cache_metadata import CacheMetadata
 from ..models.engine_metadata import EngineMetadata
 from ..models.environment import Environment
+from ..models.executor_metadata import ExecutorMetadata
 from ..models.file_system_metadata import FileSystemMetadata
 from ..models.connection import Connection
 from ..types import UNSET, Unset
@@ -18,6 +19,7 @@ class Metadata:
     cache: Union[Unset, CacheMetadata] = UNSET
     engine: Union[Unset, EngineMetadata] = UNSET
     environment: Union[Unset, Environment] = UNSET
+    executor: Union[Unset, ExecutorMetadata] = UNSET
     fs: Union[Unset, FileSystemMetadata] = UNSET
     git_hash: Union[Unset, str] = UNSET
     pubsub: Union[Unset, Connection] = UNSET
@@ -34,6 +36,9 @@ class Metadata:
         environment: Union[Unset, str] = UNSET
         if not isinstance(self.environment, Unset):
             environment = self.environment.value
+        executor: Union[Unset, str] = UNSET
+        if not isinstance(self.executor, Unset):
+            executor = self.executor.value
         fs: Union[Unset, str] = UNSET
         if not isinstance(self.fs, Unset):
             fs = self.fs.value
@@ -51,6 +56,8 @@ class Metadata:
             field_dict['engine'] = engine
         if environment is not UNSET:
             field_dict['environment'] = environment
+        if executor is not UNSET:
+            field_dict['executor'] = executor
         if fs is not UNSET:
             field_dict['fs'] = fs
         if git_hash is not UNSET:
@@ -84,6 +91,13 @@ class Metadata:
         else:
             environment = Environment(_environment)
 
+        _executor = d.pop("executor", UNSET)
+        executor: Union[Unset, ExecutorMetadata]
+        if isinstance(_executor, Unset):
+            executor = UNSET
+        else:
+            executor = ExecutorMetadata(_executor)
+
         _fs = d.pop("fs", UNSET)
         fs: Union[Unset, FileSystemMetadata]
         if isinstance(_fs, Unset):
@@ -104,6 +118,7 @@ class Metadata:
             cache=cache,
             engine=engine,
             environment=environment,
+            executor=executor,
             fs=fs,
             git_hash=git_hash,
             pubsub=pubsub,

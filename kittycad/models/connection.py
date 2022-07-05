@@ -8,7 +8,6 @@ from ..models.cluster import Cluster
 from ..models.gateway import Gateway
 from ..models.jetstream import Jetstream
 from ..models.leaf_node import LeafNode
-from ..models.duration import Duration
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Connection")
@@ -33,10 +32,8 @@ class Connection:
     http_port: Union[Unset, int] = UNSET
     http_req_stats: Union[Unset, Any] = UNSET
     https_port: Union[Unset, int] = UNSET
-    id: Union[Unset, int] = UNSET
     in_bytes: Union[Unset, int] = UNSET
     in_msgs: Union[Unset, int] = UNSET
-    ip: Union[Unset, str] = UNSET
     jetstream: Union[Unset, Jetstream] = UNSET
     leaf: Union[Unset, LeafNode] = UNSET
     leafnodes: Union[Unset, int] = UNSET
@@ -54,7 +51,6 @@ class Connection:
     proto: Union[Unset, int] = UNSET
     remotes: Union[Unset, int] = UNSET
     routes: Union[Unset, int] = UNSET
-    rtt: Union[Unset, Duration] = UNSET
     server_id: Union[Unset, str] = UNSET
     server_name: Union[Unset, str] = UNSET
     slow_consumers: Union[Unset, int] = UNSET
@@ -92,10 +88,8 @@ class Connection:
         http_port = self.http_port
         http_req_stats = self.http_req_stats
         https_port = self.https_port
-        id = self.id
         in_bytes = self.in_bytes
         in_msgs = self.in_msgs
-        ip = self.ip
         jetstream: Union[Unset, str] = UNSET
         if not isinstance(self.jetstream, Unset):
             jetstream = self.jetstream.value
@@ -119,9 +113,6 @@ class Connection:
         proto = self.proto
         remotes = self.remotes
         routes = self.routes
-        rtt: Union[Unset, str] = UNSET
-        if not isinstance(self.rtt, Unset):
-            rtt = self.rtt.value
         server_id = self.server_id
         server_name = self.server_name
         slow_consumers = self.slow_consumers
@@ -171,14 +162,10 @@ class Connection:
             field_dict['http_req_stats'] = http_req_stats
         if https_port is not UNSET:
             field_dict['https_port'] = https_port
-        if id is not UNSET:
-            field_dict['id'] = id
         if in_bytes is not UNSET:
             field_dict['in_bytes'] = in_bytes
         if in_msgs is not UNSET:
             field_dict['in_msgs'] = in_msgs
-        if ip is not UNSET:
-            field_dict['ip'] = ip
         if jetstream is not UNSET:
             field_dict['jetstream'] = jetstream
         if leaf is not UNSET:
@@ -213,8 +200,6 @@ class Connection:
             field_dict['remotes'] = remotes
         if routes is not UNSET:
             field_dict['routes'] = routes
-        if rtt is not UNSET:
-            field_dict['rtt'] = rtt
         if server_id is not UNSET:
             field_dict['server_id'] = server_id
         if server_name is not UNSET:
@@ -289,13 +274,9 @@ class Connection:
         http_req_stats = d.pop("http_req_stats", UNSET)
         https_port = d.pop("https_port", UNSET)
 
-        id = d.pop("id", UNSET)
-
         in_bytes = d.pop("in_bytes", UNSET)
 
         in_msgs = d.pop("in_msgs", UNSET)
-
-        ip = d.pop("ip", UNSET)
 
         _jetstream = d.pop("jetstream", UNSET)
         jetstream: Union[Unset, Jetstream]
@@ -346,13 +327,6 @@ class Connection:
 
         routes = d.pop("routes", UNSET)
 
-        _rtt = d.pop("rtt", UNSET)
-        rtt: Union[Unset, Duration]
-        if isinstance(_rtt, Unset):
-            rtt = UNSET
-        else:
-            rtt = Duration(_rtt)
-
         server_id = d.pop("server_id", UNSET)
 
         server_name = d.pop("server_name", UNSET)
@@ -397,10 +371,8 @@ class Connection:
             http_port=http_port,
             http_req_stats=http_req_stats,
             https_port=https_port,
-            id=id,
             in_bytes=in_bytes,
             in_msgs=in_msgs,
-            ip=ip,
             jetstream=jetstream,
             leaf=leaf,
             leafnodes=leafnodes,
@@ -418,7 +390,6 @@ class Connection:
             proto=proto,
             remotes=remotes,
             routes=routes,
-            rtt=rtt,
             server_id=server_id,
             server_name=server_name,
             slow_consumers=slow_consumers,

@@ -4,7 +4,9 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
+from ..models.duration import Duration
 from ..models.uuid import Uuid
+from ..models.ip_addr import IpAddr
 from ..models.method import Method
 from ..models.status_code import StatusCode
 from ..types import UNSET, Unset
@@ -17,11 +19,11 @@ class ApiCallWithPrice:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
-    duration: Union[Unset, int] = UNSET
+    duration: Union[Unset, Duration] = UNSET
     email: Union[Unset, str] = UNSET
     endpoint: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    ip_address: Union[Unset, str] = UNSET
+    ip_address: Union[Unset, IpAddr] = UNSET
     method: Union[Unset, Method] = UNSET
     minutes: Union[Unset, int] = UNSET
     origin: Union[Unset, str] = UNSET
@@ -46,11 +48,15 @@ class ApiCallWithPrice:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        duration = self.duration
+        duration: Union[Unset, str] = UNSET
+        if not isinstance(self.duration, Unset):
+            duration = self.duration.value
         email = self.email
         endpoint = self.endpoint
         id = self.id
-        ip_address = self.ip_address
+        ip_address: Union[Unset, str] = UNSET
+        if not isinstance(self.ip_address, Unset):
+            ip_address = self.ip_address.value
         method: Union[Unset, str] = UNSET
         if not isinstance(self.method, Unset):
             method = self.method.value
@@ -139,7 +145,12 @@ class ApiCallWithPrice:
         else:
             created_at = isoparse(_created_at)
 
-        duration = d.pop("duration", UNSET)
+        _duration = d.pop("duration", UNSET)
+        duration: Union[Unset, Duration]
+        if isinstance(_duration, Unset):
+            duration = UNSET
+        else:
+            duration = Duration(_duration)
 
         email = d.pop("email", UNSET)
 
@@ -147,7 +158,12 @@ class ApiCallWithPrice:
 
         id = d.pop("id", UNSET)
 
-        ip_address = d.pop("ip_address", UNSET)
+        _ip_address = d.pop("ip_address", UNSET)
+        ip_address: Union[Unset, IpAddr]
+        if isinstance(_ip_address, Unset):
+            ip_address = UNSET
+        else:
+            ip_address = IpAddr(_ip_address)
 
         _method = d.pop("method", UNSET)
         method: Union[Unset, Method]

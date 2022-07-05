@@ -4,15 +4,15 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...models.login_params import LoginParams
+from ...models.email_authentication_form import EmailAuthenticationForm
 from ...types import Response
 
 def _get_kwargs(
-	body: LoginParams,
+	body: EmailAuthenticationForm,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/login".format(client.base_url)
+	url = "{}/auth/email".format(client.base_url)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -49,7 +49,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, Error]]:
 
 
 def sync_detailed(
-	body: LoginParams,
+	body: EmailAuthenticationForm,
 	*,
 	client: Client,
 ) -> Response[Union[Any, Error]]:
@@ -67,7 +67,7 @@ def sync_detailed(
 
 
 def sync(
-	body: LoginParams,
+	body: EmailAuthenticationForm,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, Error]]:
@@ -79,7 +79,7 @@ def sync(
 
 
 async def asyncio_detailed(
-	body: LoginParams,
+	body: EmailAuthenticationForm,
 	*,
 	client: Client,
 ) -> Response[Union[Any, Error]]:
@@ -95,7 +95,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	body: LoginParams,
+	body: EmailAuthenticationForm,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, Error]]:

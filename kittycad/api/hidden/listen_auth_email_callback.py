@@ -3,15 +3,18 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.extended_user import ExtendedUser
+from ...models.empty import Empty
 from ...models.error import Error
 from ...types import Response
 
 def _get_kwargs(
+	callback_url: str,
+	email: str,
+	token: str,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/user/extended".format(client.base_url)
+	url = "{}/auth/email/callback?callback_url={callback_url}&email={email}&token={token}".format(client.base_url, callback_url=callback_url, email=email, token=token)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -24,10 +27,10 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ExtendedUser, Error]]:
-	if response.status_code == 200:
-		response_200 = ExtendedUser.from_dict(response.json())
-		return response_200
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Empty, Error]]:
+	if response.status_code == 302:
+		response_302 = Empty.from_dict(response.json())
+		return response_302
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
 		return response_4XX
@@ -37,7 +40,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Extended
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ExtendedUser, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, Empty, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -47,10 +50,16 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, Extended
 
 
 def sync_detailed(
+	callback_url: str,
+	email: str,
+	token: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, ExtendedUser, Error]]:
+) -> Response[Union[Any, Empty, Error]]:
 	kwargs = _get_kwargs(
+		callback_url=callback_url,
+		email=email,
+		token=token,
 		client=client,
 	)
 
@@ -63,22 +72,32 @@ def sync_detailed(
 
 
 def sync(
+	callback_url: str,
+	email: str,
+	token: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, ExtendedUser, Error]]:
-	""" Get the user information for the authenticated user.
-Alternatively, you can also use the `/users-extended/me` endpoint. """
+) -> Optional[Union[Any, Empty, Error]]:
 
 	return sync_detailed(
+		callback_url=callback_url,
+		email=email,
+		token=token,
 		client=client,
 	).parsed
 
 
 async def asyncio_detailed(
+	callback_url: str,
+	email: str,
+	token: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, ExtendedUser, Error]]:
+) -> Response[Union[Any, Empty, Error]]:
 	kwargs = _get_kwargs(
+		callback_url=callback_url,
+		email=email,
+		token=token,
 		client=client,
 	)
 
@@ -89,14 +108,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+	callback_url: str,
+	email: str,
+	token: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, ExtendedUser, Error]]:
-	""" Get the user information for the authenticated user.
-Alternatively, you can also use the `/users-extended/me` endpoint. """
+) -> Optional[Union[Any, Empty, Error]]:
 
 	return (
 		await asyncio_detailed(
+		callback_url=callback_url,
+		email=email,
+		token=token,
 			client=client,
 		)
 	).parsed
