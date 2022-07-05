@@ -57,7 +57,6 @@
    kittycad.models.docker_system_info
    kittycad.models.duration
    kittycad.models.email_authentication_form
-   kittycad.models.empty
    kittycad.models.engine_metadata
    kittycad.models.environment
    kittycad.models.error
