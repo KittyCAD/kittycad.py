@@ -1,7 +1,7 @@
-kittycad.models.async\_api\_call\_type
+kittycad.models.o\_auth2\_client\_info
 ======================================
 
-.. automodule:: kittycad.models.async_api_call_type
+.. automodule:: kittycad.models.o_auth2_client_info
 
    
    
@@ -17,7 +17,7 @@ kittycad.models.async\_api\_call\_type
 
    .. autosummary::
    
-      AsyncApiCallType
+      OAuth2ClientInfo
    
    
 

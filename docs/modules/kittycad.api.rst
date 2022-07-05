@@ -33,6 +33,7 @@
    kittycad.api.file
    kittycad.api.hidden
    kittycad.api.meta
+   kittycad.api.oauth2
    kittycad.api.payments
    kittycad.api.sessions
    kittycad.api.unit

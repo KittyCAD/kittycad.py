@@ -1,7 +1,7 @@
-kittycad.models.api\_call\_status
+kittycad.models.account\_provider
 =================================
 
-.. automodule:: kittycad.models.api_call_status
+.. automodule:: kittycad.models.account_provider
 
    
    
@@ -17,7 +17,7 @@ kittycad.models.api\_call\_status
 
    .. autosummary::
    
-      ApiCallStatus
+      AccountProvider
    
    
 
