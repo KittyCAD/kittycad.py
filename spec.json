@@ -14,7 +14,7 @@
         },
         "x-rust": {
             "client": "use kittycad::Client;\n\n// Authenticate via an API token.\nlet client = Client::new(\"$TOKEN\");\n\n// - OR -\n\n// Authenticate with your token and host parsed from the environment variables:\n// KITTYCAD_API_TOKEN.\nlet client = Client::new_from_env();",
-            "install": "[dependencies]\nkittycad = \"0.1.3\""
+            "install": "[dependencies]\nkittycad = \"0.1.4\""
         },
         "x-python": {
             "client": "# Create a client with your token.\nfrom kittycad import Client\n\nclient = Client(token=\"$TOKEN\")\n\n# - OR -\n\n# Create a new client with your token parsed from the environment variable:\n#   KITTYCAD_API_TOKEN.\nfrom kittycad import ClientFromEnv\n\nclient = ClientFromEnv()",
@@ -969,16 +969,6 @@
                                     "type": "string"
                                 }
                             }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Empty",
-                                    "x-scope": [
-                                        ""
-                                    ]
-                                }
-                            }
                         }
                     },
                     "4XX": {
@@ -999,11 +989,11 @@
                     "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#HiddenService.ListenAuthEmailCallback"
                 },
                 "x-rust": {
-                    "example": "/**\n* Listen for callbacks for email verification for users.\n*\n* This function performs a `GET` to the `/auth/email/callback` endpoint.\n*\n* **Parameters:**\n*\n* * `callback_url: &url::Url` -- The URL to redirect back to after we have authenticated.\n* * `email: &str` -- The user's email.\n* * `token: &str` -- The verification token.\n*/\nlet string = client.hidden().listen_auth_email_callback(callback_url, email, token).await?;",
+                    "example": "/**\n* Listen for callbacks for email verification for users.\n*\n* This function performs a `GET` to the `/auth/email/callback` endpoint.\n*\n* **Parameters:**\n*\n* * `callback_url: &url::Url` -- The URL to redirect back to after we have authenticated.\n* * `email: &str` -- The user's email.\n* * `token: &str` -- The verification token.\n*/\nclient.hidden().listen_auth_email_callback(callback_url, email, token).await?;",
                     "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/hidden/struct.Hidden.html#method.listen_auth_email_callback"
                 },
                 "x-python": {
-                    "example": "from kittycad.models import Empty\nfrom kittycad.api.hidden import listen_auth_email_callback\nfrom kittycad.types import Response\n\nfc: Empty = listen_auth_email_callback.sync(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Empty] = listen_auth_email_callback.sync_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async\nfc: Empty = await listen_auth_email_callback.asyncio(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async with more info\nresponse: Response[Empty] = await listen_auth_email_callback.asyncio_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)",
+                    "example": "from kittycad.models import Error\nfrom kittycad.api.hidden import listen_auth_email_callback\nfrom kittycad.types import Response\n\nfc: Error = listen_auth_email_callback.sync(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = listen_auth_email_callback.sync_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async\nfc: Error = await listen_auth_email_callback.asyncio(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async with more info\nresponse: Response[Error] = await listen_auth_email_callback.asyncio_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.hidden.listen_auth_email_callback.html"
                 }
             }
@@ -1812,10 +1802,6 @@
                 "x-rust": {
                     "example": "/**\n* Start an OAuth 2.0 Device Authorization Grant.\n*\n* This function performs a `POST` to the `/oauth2/device/auth` endpoint.\n*\n* This endpoint is designed to be accessed from an *unauthenticated* API client. It generates and records a `device_code` and `user_code` which must be verified and confirmed prior to a token being granted.\n*/\nclient.oauth_2().device_auth_request().await?;",
                     "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/oauth_2/struct.Oauth2.html#method.device_auth_request"
-                },
-                "x-python": {
-                    "example": "from kittycad.models import \nfrom kittycad.api.oauth2 import device_auth_request\nfrom kittycad.types import Response\n\nfc:  = device_auth_request.sync(client=client, body=DeviceAuthRequestForm)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[] = device_auth_request.sync_detailed(client=client, body=DeviceAuthRequestForm)\n\n# OR run async\nfc:  = await device_auth_request.asyncio(client=client, body=DeviceAuthRequestForm)\n\n# OR run async with more info\nresponse: Response[] = await device_auth_request.asyncio_detailed(client=client, body=DeviceAuthRequestForm)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.oauth2.device_auth_request.html"
                 }
             }
         },
@@ -1841,6 +1827,69 @@
                     },
                     "required": true
                 },
+                "responses": {
+                    "204": {
+                        "description": "successful operation, no content",
+                        "headers": {
+                            "Access-Control-Allow-Credentials": {
+                                "description": "Access-Control-Allow-Credentials header.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "description": "Access-Control-Allow-Methods header.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "description": "Access-Control-Allow-Origin header.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "4XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    }
+                },
+                "x-rust": {
+                    "example": "/**\n* Confirm an OAuth 2.0 Device Authorization Grant.\n*\n* This function performs a `POST` to the `/oauth2/device/confirm` endpoint.\n*\n* This endpoint is designed to be accessed by the user agent (browser), not the client requesting the token. So we do not actually return the token here; it will be returned in response to the poll on `/oauth2/device/token`.\n*/\nclient.oauth_2().device_auth_confirm(body).await?;",
+                    "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/oauth_2/struct.Oauth2.html#method.device_auth_confirm"
+                }
+            },
+            "options": {
+                "tags": [
+                    "hidden"
+                ],
+                "summary": "OPTIONS endpoint `/oauth2/device/confirm`.",
+                "description": "This is necessary for some preflight requests, specifically DELETE, PUT, and POST since it has a request body.",
+                "operationId": "options_device_auth_confirm",
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -1902,14 +1951,6 @@
                             ""
                         ]
                     }
-                },
-                "x-rust": {
-                    "example": "/**\n* Confirm an OAuth 2.0 Device Authorization Grant.\n*\n* This function performs a `POST` to the `/oauth2/device/confirm` endpoint.\n*\n* This endpoint is designed to be accessed by the user agent (browser), not the client requesting the token. So we do not actually return the token here; it will be returned in response to the poll on `/oauth2/device/token`.\n*/\nlet string = client.oauth_2().device_auth_confirm(body).await?;",
-                    "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/oauth_2/struct.Oauth2.html#method.device_auth_confirm"
-                },
-                "x-python": {
-                    "example": "from kittycad.models import str\nfrom kittycad.api.oauth2 import device_auth_confirm\nfrom kittycad.types import Response\n\nfc: str = device_auth_confirm.sync(client=client, body=DeviceAuthVerifyParams)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[str] = device_auth_confirm.sync_detailed(client=client, body=DeviceAuthVerifyParams)\n\n# OR run async\nfc: str = await device_auth_confirm.asyncio(client=client, body=DeviceAuthVerifyParams)\n\n# OR run async with more info\nresponse: Response[str] = await device_auth_confirm.asyncio_detailed(client=client, body=DeviceAuthVerifyParams)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.oauth2.device_auth_confirm.html"
                 }
             }
         },
@@ -1948,10 +1989,6 @@
                 "x-rust": {
                     "example": "/**\n* Request a device access token.\n*\n* This function performs a `POST` to the `/oauth2/device/token` endpoint.\n*\n* This endpoint should be polled by the client until the user code is verified and the grant is confirmed.\n*/\nclient.oauth_2().device_access_token().await?;",
                     "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/oauth_2/struct.Oauth2.html#method.device_access_token"
-                },
-                "x-python": {
-                    "example": "from kittycad.models import \nfrom kittycad.api.oauth2 import device_access_token\nfrom kittycad.types import Response\n\nfc:  = device_access_token.sync(client=client, body=DeviceAccessTokenRequestForm)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[] = device_access_token.sync_detailed(client=client, body=DeviceAccessTokenRequestForm)\n\n# OR run async\nfc:  = await device_access_token.asyncio(client=client, body=DeviceAccessTokenRequestForm)\n\n# OR run async with more info\nresponse: Response[] = await device_access_token.asyncio_detailed(client=client, body=DeviceAccessTokenRequestForm)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.oauth2.device_access_token.html"
                 }
             }
         },
@@ -1962,7 +1999,7 @@
                     "hidden"
                 ],
                 "summary": "Verify an OAuth 2.0 Device Authorization Grant.",
-                "description": "This endpoint should be accessed in a full user agent (e.g., a browser). If the user is not logged in, we redirect them to the login page and use the `state` parameter to get them back here on completion. If they are logged in, serve up the console verification page so they can verify the user code.",
+                "description": "This endpoint should be accessed in a full user agent (e.g., a browser). If the user is not logged in, we redirect them to the login page and use the `callback_url` parameter to get them to the UI verification form upon logging in. If they are logged in, we redirect them to the UI verification form on the website.",
                 "operationId": "device_auth_verify",
                 "parameters": [
                     {
@@ -2012,16 +2049,6 @@
                                     "type": "string"
                                 }
                             }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Empty",
-                                    "x-scope": [
-                                        ""
-                                    ]
-                                }
-                            }
                         }
                     },
                     "4XX": {
@@ -2038,12 +2065,8 @@
                     }
                 },
                 "x-rust": {
-                    "example": "/**\n* Verify an OAuth 2.0 Device Authorization Grant.\n*\n* This function performs a `GET` to the `/oauth2/device/verify` endpoint.\n*\n* This endpoint should be accessed in a full user agent (e.g., a browser). If the user is not logged in, we redirect them to the login page and use the `state` parameter to get them back here on completion. If they are logged in, serve up the console verification page so they can verify the user code.\n*\n* **Parameters:**\n*\n* * `user_code: &str` -- The user code.\n*/\nlet string = client.oauth_2().device_auth_verify(user_code).await?;",
+                    "example": "/**\n* Verify an OAuth 2.0 Device Authorization Grant.\n*\n* This function performs a `GET` to the `/oauth2/device/verify` endpoint.\n*\n* This endpoint should be accessed in a full user agent (e.g., a browser). If the user is not logged in, we redirect them to the login page and use the `callback_url` parameter to get them to the UI verification form upon logging in. If they are logged in, we redirect them to the UI verification form on the website.\n*\n* **Parameters:**\n*\n* * `user_code: &str` -- The user code.\n*/\nclient.oauth_2().device_auth_verify(user_code).await?;",
                     "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/oauth_2/struct.Oauth2.html#method.device_auth_verify"
-                },
-                "x-python": {
-                    "example": "from kittycad.models import Empty\nfrom kittycad.api.oauth2 import device_auth_verify\nfrom kittycad.types import Response\n\nfc: Empty = device_auth_verify.sync(client=client, user_code=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Empty] = device_auth_verify.sync_detailed(client=client, user_code=)\n\n# OR run async\nfc: Empty = await device_auth_verify.asyncio(client=client, user_code=)\n\n# OR run async with more info\nresponse: Response[Empty] = await device_auth_verify.asyncio_detailed(client=client, user_code=)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.oauth2.device_auth_verify.html"
                 }
             }
         },
@@ -2132,16 +2155,6 @@
                                     "type": "string"
                                 }
                             }
-                        },
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Empty",
-                                    "x-scope": [
-                                        ""
-                                    ]
-                                }
-                            }
                         }
                     },
                     "4XX": {
@@ -2158,12 +2171,8 @@
                     }
                 },
                 "x-rust": {
-                    "example": "/**\n* Listen for callbacks for the OAuth 2.0 provider.\n*\n* This function performs a `GET` to the `/oauth2/provider/{provider}/callback` endpoint.\n*\n* **Parameters:**\n*\n* * `provider: crate::types::AccountProvider` -- An account provider.\n* * `code: &str` -- The authorization code.\n* * `state: &str` -- The state that we had passed in through the user consent URL.\n*/\nlet string = client.oauth_2().listen_oauth2_provider_callback(code, provider, state).await?;",
+                    "example": "/**\n* Listen for callbacks for the OAuth 2.0 provider.\n*\n* This function performs a `GET` to the `/oauth2/provider/{provider}/callback` endpoint.\n*\n* **Parameters:**\n*\n* * `provider: crate::types::AccountProvider` -- An account provider.\n* * `code: &str` -- The authorization code.\n* * `state: &str` -- The state that we had passed in through the user consent URL.\n*/\nclient.oauth_2().listen_oauth2_provider_callback(code, provider, state).await?;",
                     "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/oauth_2/struct.Oauth2.html#method.listen_oauth2_provider_callback"
-                },
-                "x-python": {
-                    "example": "from kittycad.models import Empty\nfrom kittycad.api.oauth2 import listen_oauth2_provider_callback\nfrom kittycad.types import Response\n\nfc: Empty = listen_oauth2_provider_callback.sync(client=client, provider=AccountProvider, code=, state=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Empty] = listen_oauth2_provider_callback.sync_detailed(client=client, provider=AccountProvider, code=, state=)\n\n# OR run async\nfc: Empty = await listen_oauth2_provider_callback.asyncio(client=client, provider=AccountProvider, code=, state=)\n\n# OR run async with more info\nresponse: Response[Empty] = await listen_oauth2_provider_callback.asyncio_detailed(client=client, provider=AccountProvider, code=, state=)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.oauth2.listen_oauth2_provider_callback.html"
                 }
             }
         },
@@ -2264,10 +2273,6 @@
                 "x-rust": {
                     "example": "/**\n* Get the consent URL and other information for the OAuth 2.0 provider.\n*\n* This function performs a `GET` to the `/oauth2/provider/{provider}/consent` endpoint.\n*\n* **Parameters:**\n*\n* * `provider: crate::types::AccountProvider` -- An account provider.\n* * `callback_url: &str` -- The URL to redirect back to after we have authenticated.\n*/\nlet o_auth_2_client_info = client.oauth_2().listen_oauth2_provider_consent(callback_url, provider).await?;",
                     "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/oauth_2/struct.Oauth2.html#method.listen_oauth2_provider_consent"
-                },
-                "x-python": {
-                    "example": "from kittycad.models import OAuth2ClientInfo\nfrom kittycad.api.oauth2 import listen_oauth2_provider_consent\nfrom kittycad.types import Response\n\nfc: OAuth2ClientInfo = listen_oauth2_provider_consent.sync(client=client, provider=AccountProvider, callback_url=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[OAuth2ClientInfo] = listen_oauth2_provider_consent.sync_detailed(client=client, provider=AccountProvider, callback_url=)\n\n# OR run async\nfc: OAuth2ClientInfo = await listen_oauth2_provider_consent.asyncio(client=client, provider=AccountProvider, callback_url=)\n\n# OR run async with more info\nresponse: Response[OAuth2ClientInfo] = await listen_oauth2_provider_consent.asyncio_detailed(client=client, provider=AccountProvider, callback_url=)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.oauth2.listen_oauth2_provider_consent.html"
                 }
             }
         },
@@ -6228,6 +6233,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -6270,6 +6276,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -6370,6 +6377,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -6389,6 +6397,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -7289,13 +7298,6 @@
                 },
                 "required": [
                     "email"
-                ]
-            },
-            "Empty": {
-                "description": "An \"empty\" type used to represent responses that have no associated data payload. This isn't intended for general use, but must be pub since it's used as the Body type for certain responses.",
-                "type": "string",
-                "enum": [
-                    null
                 ]
             },
             "EngineMetadata": {
@@ -8271,6 +8273,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -8290,6 +8293,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -8317,6 +8321,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -8400,6 +8405,7 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
+                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream",
                                     "#/components/schemas/JetstreamStats"
