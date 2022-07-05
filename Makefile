@@ -22,6 +22,7 @@ generate: docker-image ## Generate the api client.
 shell: docker-image ## Pop into a shell in the docker image.
 	docker run --rm -i $(DOCKER_FLAGS) \
 		--name python-generator-shell \
+		-e KITTYCAD_API_TOKEN \
 		--disable-content-trust \
 		-v $(CURDIR):/usr/src \
 		--workdir /usr/src \

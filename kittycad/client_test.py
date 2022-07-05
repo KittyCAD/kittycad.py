@@ -3,7 +3,7 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, FileOutputFormat, FileSourceFormat, User, Pong, APICallStatus, FileMass, FileVolume
+from .models import FileConversion, FileOutputFormat, FileSourceFormat, User, Pong, ApiCallStatus, FileMass, FileVolume
 from .api.file import create_file_conversion_with_base64_helper, create_file_mass, create_file_volume
 from .api.meta import ping
 from .api.users import get_user_self
@@ -81,7 +81,7 @@ def test_file_convert_stl():
 
     assert fc.id is not None
 
-    assert fc.status == APICallStatus.COMPLETED
+    assert fc.status == ApiCallStatus.COMPLETED
 
     print(f"FileConversion: {fc}")
 
@@ -133,7 +133,7 @@ def test_file_mass():
 
     assert fm.to_dict() is not None
 
-    assert fm.status == APICallStatus.COMPLETED
+    assert fm.status == ApiCallStatus.COMPLETED
 
 
 def test_file_volume():
@@ -160,4 +160,4 @@ def test_file_volume():
 
     assert fv.to_dict() is not None
 
-    assert fv.status == APICallStatus.COMPLETED
+    assert fv.status == ApiCallStatus.COMPLETED
