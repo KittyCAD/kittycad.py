@@ -3,7 +3,6 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.empty import Empty
 from ...models.error import Error
 from ...types import Response
 
@@ -27,9 +26,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Empty, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Error]]:
 	if response.status_code == 302:
-		response_302 = Empty.from_dict(response.json())
+		response_302 = None
 		return response_302
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -40,7 +39,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Empty, E
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, Empty, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -55,7 +54,7 @@ def sync_detailed(
 	token: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, Empty, Error]]:
+) -> Response[Union[Any, Error]]:
 	kwargs = _get_kwargs(
 		callback_url=callback_url,
 		email=email,
@@ -77,7 +76,7 @@ def sync(
 	token: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, Empty, Error]]:
+) -> Optional[Union[Any, Error]]:
 
 	return sync_detailed(
 		callback_url=callback_url,
@@ -93,7 +92,7 @@ async def asyncio_detailed(
 	token: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, Empty, Error]]:
+) -> Response[Union[Any, Error]]:
 	kwargs = _get_kwargs(
 		callback_url=callback_url,
 		email=email,
@@ -113,7 +112,7 @@ async def asyncio(
 	token: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, Empty, Error]]:
+) -> Optional[Union[Any, Error]]:
 
 	return (
 		await asyncio_detailed(
