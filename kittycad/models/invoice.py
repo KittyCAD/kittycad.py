@@ -14,9 +14,9 @@ T = TypeVar("T", bound="Invoice")
 @attr.s(auto_attribs=True)
 class Invoice:
     """ """
-    amount_due: Union[Unset, int] = UNSET
-    amount_paid: Union[Unset, int] = UNSET
-    amount_remaining: Union[Unset, int] = UNSET
+    amount_due: Union[Unset, float] = UNSET
+    amount_paid: Union[Unset, float] = UNSET
+    amount_remaining: Union[Unset, float] = UNSET
     attempt_count: Union[Unset, int] = UNSET
     attempted: Union[Unset, bool] = False
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -35,9 +35,9 @@ class Invoice:
     receipt_number: Union[Unset, str] = UNSET
     statement_descriptor: Union[Unset, str] = UNSET
     status: Union[Unset, InvoiceStatus] = UNSET
-    subtotal: Union[Unset, int] = UNSET
-    tax: Union[Unset, int] = UNSET
-    total: Union[Unset, int] = UNSET
+    subtotal: Union[Unset, float] = UNSET
+    tax: Union[Unset, float] = UNSET
+    total: Union[Unset, float] = UNSET
     url: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

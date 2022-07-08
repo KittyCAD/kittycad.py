@@ -3,17 +3,14 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.verification_token import VerificationToken
 from ...models.error import Error
-from ...models.email_authentication_form import EmailAuthenticationForm
 from ...types import Response
 
 def _get_kwargs(
-	body: EmailAuthenticationForm,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/auth/email".format(client.base_url)
+	url = "{}/user".format(client.base_url)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -23,14 +20,13 @@ def _get_kwargs(
 		"headers": headers,
 		"cookies": cookies,
 		"timeout": client.get_timeout(),
-		"content": body,
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, VerificationToken, Error]]:
-	if response.status_code == 201:
-		response_201 = VerificationToken.from_dict(response.json())
-		return response_201
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Error]]:
+	if response.status_code == 204:
+		response_204 = None
+		return response_204
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
 		return response_4XX
@@ -40,7 +36,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Verifica
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, VerificationToken, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -50,16 +46,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, Verifica
 
 
 def sync_detailed(
-	body: EmailAuthenticationForm,
 	*,
 	client: Client,
-) -> Response[Union[Any, VerificationToken, Error]]:
+) -> Response[Union[Any, Error]]:
 	kwargs = _get_kwargs(
-		body=body,
 		client=client,
 	)
 
-	response = httpx.post(
+	response = httpx.delete(
 		verify=client.verify_ssl,
 		**kwargs,
 	)
@@ -68,42 +62,40 @@ def sync_detailed(
 
 
 def sync(
-	body: EmailAuthenticationForm,
 	*,
 	client: Client,
-) -> Optional[Union[Any, VerificationToken, Error]]:
+) -> Optional[Union[Any, Error]]:
+	""" This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.
+This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance. """
 
 	return sync_detailed(
-		body=body,
 		client=client,
 	).parsed
 
 
 async def asyncio_detailed(
-	body: EmailAuthenticationForm,
 	*,
 	client: Client,
-) -> Response[Union[Any, VerificationToken, Error]]:
+) -> Response[Union[Any, Error]]:
 	kwargs = _get_kwargs(
-		body=body,
 		client=client,
 	)
 
 	async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-		response = await _client.post(**kwargs)
+		response = await _client.delete(**kwargs)
 
 	return _build_response(response=response)
 
 
 async def asyncio(
-	body: EmailAuthenticationForm,
 	*,
 	client: Client,
-) -> Optional[Union[Any, VerificationToken, Error]]:
+) -> Optional[Union[Any, Error]]:
+	""" This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.
+This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance. """
 
 	return (
 		await asyncio_detailed(
-		body=body,
 			client=client,
 		)
 	).parsed

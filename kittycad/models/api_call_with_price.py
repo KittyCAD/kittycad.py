@@ -4,11 +4,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
-from ..models.duration import Duration
 from ..models.uuid import Uuid
-from ..models.ip_addr import IpAddr
 from ..models.method import Method
-from ..models.status_code import StatusCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="ApiCallWithPrice")
@@ -19,11 +16,11 @@ class ApiCallWithPrice:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
-    duration: Union[Unset, Duration] = UNSET
+    duration: Union[Unset, int] = UNSET
     email: Union[Unset, str] = UNSET
     endpoint: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    ip_address: Union[Unset, IpAddr] = UNSET
+    ip_address: Union[Unset, str] = UNSET
     method: Union[Unset, Method] = UNSET
     minutes: Union[Unset, int] = UNSET
     origin: Union[Unset, str] = UNSET
@@ -32,7 +29,7 @@ class ApiCallWithPrice:
     request_query_params: Union[Unset, str] = UNSET
     response_body: Union[Unset, str] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
-    status_code: Union[Unset, StatusCode] = UNSET
+    status_code: Union[Unset, int] = UNSET
     stripe_invoice_item_id: Union[Unset, str] = UNSET
     token: Union[Unset, str] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -48,15 +45,11 @@ class ApiCallWithPrice:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        duration: Union[Unset, str] = UNSET
-        if not isinstance(self.duration, Unset):
-            duration = self.duration.value
+        duration = self.duration
         email = self.email
         endpoint = self.endpoint
         id = self.id
-        ip_address: Union[Unset, str] = UNSET
-        if not isinstance(self.ip_address, Unset):
-            ip_address = self.ip_address.value
+        ip_address = self.ip_address
         method: Union[Unset, str] = UNSET
         if not isinstance(self.method, Unset):
             method = self.method.value
@@ -69,9 +62,7 @@ class ApiCallWithPrice:
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
-        status_code: Union[Unset, str] = UNSET
-        if not isinstance(self.status_code, Unset):
-            status_code = self.status_code.value
+        status_code = self.status_code
         stripe_invoice_item_id = self.stripe_invoice_item_id
         token = self.token
         updated_at: Union[Unset, str] = UNSET
@@ -145,12 +136,7 @@ class ApiCallWithPrice:
         else:
             created_at = isoparse(_created_at)
 
-        _duration = d.pop("duration", UNSET)
-        duration: Union[Unset, Duration]
-        if isinstance(_duration, Unset):
-            duration = UNSET
-        else:
-            duration = Duration(_duration)
+        duration = d.pop("duration", UNSET)
 
         email = d.pop("email", UNSET)
 
@@ -158,12 +144,7 @@ class ApiCallWithPrice:
 
         id = d.pop("id", UNSET)
 
-        _ip_address = d.pop("ip_address", UNSET)
-        ip_address: Union[Unset, IpAddr]
-        if isinstance(_ip_address, Unset):
-            ip_address = UNSET
-        else:
-            ip_address = IpAddr(_ip_address)
+        ip_address = d.pop("ip_address", UNSET)
 
         _method = d.pop("method", UNSET)
         method: Union[Unset, Method]
@@ -191,12 +172,7 @@ class ApiCallWithPrice:
         else:
             started_at = isoparse(_started_at)
 
-        _status_code = d.pop("status_code", UNSET)
-        status_code: Union[Unset, StatusCode]
-        if isinstance(_status_code, Unset):
-            status_code = UNSET
-        else:
-            status_code = StatusCode(_status_code)
+        status_code = d.pop("status_code", UNSET)
 
         stripe_invoice_item_id = d.pop("stripe_invoice_item_id", UNSET)
 

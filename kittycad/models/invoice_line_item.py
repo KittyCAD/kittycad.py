@@ -11,7 +11,7 @@ T = TypeVar("T", bound="InvoiceLineItem")
 @attr.s(auto_attribs=True)
 class InvoiceLineItem:
     """ """
-    amount: Union[Unset, int] = UNSET
+    amount: Union[Unset, float] = UNSET
     currency: Union[Unset, Currency] = UNSET
     description: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
