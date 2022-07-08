@@ -6,7 +6,6 @@ from dateutil.parser import isoparse
 
 from ..models.address import Address
 from ..models.currency import Currency
-from ..models.phone_number import PhoneNumber
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Customer")
@@ -16,7 +15,7 @@ T = TypeVar("T", bound="Customer")
 class Customer:
     """ """
     address: Union[Unset, Address] = UNSET
-    balance: Union[Unset, int] = UNSET
+    balance: Union[Unset, float] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     currency: Union[Unset, Currency] = UNSET
     delinquent: Union[Unset, bool] = False
@@ -24,7 +23,7 @@ class Customer:
     id: Union[Unset, str] = UNSET
     metadata: Union[Unset, Any] = UNSET
     name: Union[Unset, str] = UNSET
-    phone: Union[Unset, PhoneNumber] = UNSET
+    phone: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -44,9 +43,7 @@ class Customer:
         id = self.id
         metadata = self.metadata
         name = self.name
-        phone: Union[Unset, str] = UNSET
-        if not isinstance(self.phone, Unset):
-            phone = self.phone.value
+        phone = self.phone
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -109,12 +106,7 @@ class Customer:
         metadata = d.pop("metadata", UNSET)
         name = d.pop("name", UNSET)
 
-        _phone = d.pop("phone", UNSET)
-        phone: Union[Unset, PhoneNumber]
-        if isinstance(_phone, Unset):
-            phone = UNSET
-        else:
-            phone = PhoneNumber(_phone)
+        phone = d.pop("phone", UNSET)
 
         customer = cls(
             address=address,
