@@ -39,7 +39,6 @@
    kittycad.models.async_api_call
    kittycad.models.async_api_call_results_page
    kittycad.models.async_api_call_type
-   kittycad.models.base64_data
    kittycad.models.billing_info
    kittycad.models.cache_metadata
    kittycad.models.card_details
@@ -55,7 +54,6 @@
    kittycad.models.device_auth_request_form
    kittycad.models.device_auth_verify_params
    kittycad.models.docker_system_info
-   kittycad.models.duration
    kittycad.models.email_authentication_form
    kittycad.models.engine_metadata
    kittycad.models.environment
@@ -75,7 +73,6 @@
    kittycad.models.invoice
    kittycad.models.invoice_line_item
    kittycad.models.invoice_status
-   kittycad.models.ip_addr
    kittycad.models.jetstream
    kittycad.models.jetstream_api_stats
    kittycad.models.jetstream_config
@@ -91,13 +88,11 @@
    kittycad.models.payment_method
    kittycad.models.payment_method_card_checks
    kittycad.models.payment_method_type
-   kittycad.models.phone_number
    kittycad.models.plugins_info
    kittycad.models.pong
    kittycad.models.registry_service_config
    kittycad.models.runtime
    kittycad.models.session
-   kittycad.models.status_code
    kittycad.models.system_info_cgroup_driver_enum
    kittycad.models.system_info_cgroup_version_enum
    kittycad.models.system_info_default_address_pools
@@ -108,4 +103,5 @@
    kittycad.models.user
    kittycad.models.user_results_page
    kittycad.models.uuid
+   kittycad.models.verification_token
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.code_output &mdash; kittycad v0.2.4 documentation</title>
+  <title>kittycad.models.verification_token &mdash; kittycad v0.2.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.models.commit" href="kittycad.models.commit.html" />
-    <link rel="prev" title="kittycad.models.code_language" href="kittycad.models.code_language.html" /> 
+    <link rel="next" title="kittycad.types" href="kittycad.types.html" />
+    <link rel="prev" title="kittycad.models.uuid" href="kittycad.models.uuid.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -62,7 +62,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.card_details.html">kittycad.models.card_details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_language.html">kittycad.models.code_language</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.code_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_output.html">kittycad.models.code_output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.commit.html">kittycad.models.commit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.connection.html">kittycad.models.connection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
@@ -121,7 +121,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.user.html">kittycad.models.user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.user_results_page.html">kittycad.models.user_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.uuid.html">kittycad.models.uuid</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.verification_token.html">kittycad.models.verification_token</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.verification_token</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
@@ -146,9 +146,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="kittycad.models.html">kittycad.models</a> &raquo;</li>
-      <li>kittycad.models.code_output</li>
+      <li>kittycad.models.verification_token</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/modules/kittycad.models.code_output.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/modules/kittycad.models.verification_token.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -156,8 +156,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-kittycad.models.code_output">
-<span id="kittycad-models-code-output"></span><h1>kittycad.models.code_output<a class="headerlink" href="#module-kittycad.models.code_output" title="Permalink to this headline"></a></h1>
+  <section id="module-kittycad.models.verification_token">
+<span id="kittycad-models-verification-token"></span><h1>kittycad.models.verification_token<a class="headerlink" href="#module-kittycad.models.verification_token" title="Permalink to this headline"></a></h1>
 <p class="rubric">Classes</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -165,7 +165,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">CodeOutput</span></code>([output_files, stderr, stdout])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">VerificationToken</span></code>([created_at, expires, id, ...])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -176,8 +176,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kittycad.models.code_language.html" class="btn btn-neutral float-left" title="kittycad.models.code_language" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.models.commit.html" class="btn btn-neutral float-right" title="kittycad.models.commit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.models.uuid.html" class="btn btn-neutral float-left" title="kittycad.models.uuid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.types.html" class="btn btn-neutral float-right" title="kittycad.types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
