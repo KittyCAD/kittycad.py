@@ -14,7 +14,7 @@
         },
         "x-rust": {
             "client": "use kittycad::Client;\n\n// Authenticate via an API token.\nlet client = Client::new(\"$TOKEN\");\n\n// - OR -\n\n// Authenticate with your token and host parsed from the environment variables:\n// KITTYCAD_API_TOKEN.\nlet client = Client::new_from_env();",
-            "install": "[dependencies]\nkittycad = \"0.1.4\""
+            "install": "[dependencies]\nkittycad = \"0.1.5\""
         },
         "x-python": {
             "client": "# Create a client with your token.\nfrom kittycad import Client\n\nclient = Client(token=\"$TOKEN\")\n\n# - OR -\n\n# Create a new client with your token parsed from the environment variable:\n#   KITTYCAD_API_TOKEN.\nfrom kittycad import ClientFromEnv\n\nclient = ClientFromEnv()",
@@ -750,8 +750,8 @@
                     "required": true
                 },
                 "responses": {
-                    "204": {
-                        "description": "resource updated",
+                    "201": {
+                        "description": "successful creation",
                         "headers": {
                             "Access-Control-Allow-Credentials": {
                                 "description": "Access-Control-Allow-Credentials header.",
@@ -785,6 +785,16 @@
                                     "type": "string"
                                 }
                             }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerificationToken",
+                                    "x-scope": [
+                                        ""
+                                    ]
+                                }
+                            }
                         }
                     },
                     "4XX": {
@@ -801,15 +811,15 @@
                     }
                 },
                 "x-go": {
-                    "example": "// ListenAuthEmail: Create an email verification request for a user.\nif err := client.Hidden.ListenAuthEmail(body); err != nil {\n\tpanic(err)\n}",
+                    "example": "// ListenAuthEmail: Create an email verification request for a user.\nverificationToken, err := client.Hidden.ListenAuthEmail(body)",
                     "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#HiddenService.ListenAuthEmail"
                 },
                 "x-rust": {
-                    "example": "/**\n* Create an email verification request for a user.\n*\n* This function performs a `POST` to the `/auth/email` endpoint.\n*/\nclient.hidden().listen_auth_email(body).await?;",
+                    "example": "/**\n* Create an email verification request for a user.\n*\n* This function performs a `POST` to the `/auth/email` endpoint.\n*/\nlet verification_token = client.hidden().listen_auth_email(body).await?;",
                     "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/hidden/struct.Hidden.html#method.listen_auth_email"
                 },
                 "x-python": {
-                    "example": "from kittycad.models import Error\nfrom kittycad.api.hidden import listen_auth_email\nfrom kittycad.types import Response\n\nfc: Error = listen_auth_email.sync(client=client, body=EmailAuthenticationForm)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = listen_auth_email.sync_detailed(client=client, body=EmailAuthenticationForm)\n\n# OR run async\nfc: Error = await listen_auth_email.asyncio(client=client, body=EmailAuthenticationForm)\n\n# OR run async with more info\nresponse: Response[Error] = await listen_auth_email.asyncio_detailed(client=client, body=EmailAuthenticationForm)",
+                    "example": "from kittycad.models import VerificationToken\nfrom kittycad.api.hidden import listen_auth_email\nfrom kittycad.types import Response\n\nfc: VerificationToken = listen_auth_email.sync(client=client, body=EmailAuthenticationForm)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[VerificationToken] = listen_auth_email.sync_detailed(client=client, body=EmailAuthenticationForm)\n\n# OR run async\nfc: VerificationToken = await listen_auth_email.asyncio(client=client, body=EmailAuthenticationForm)\n\n# OR run async with more info\nresponse: Response[VerificationToken] = await listen_auth_email.asyncio_detailed(client=client, body=EmailAuthenticationForm)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.hidden.listen_auth_email.html"
                 }
             },
@@ -2655,6 +2665,77 @@
                 "x-python": {
                     "example": "from kittycad.models import User\nfrom kittycad.api.users import update_user_self\nfrom kittycad.types import Response\n\nfc: User = update_user_self.sync(client=client, body=UpdateUser)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[User] = update_user_self.sync_detailed(client=client, body=UpdateUser)\n\n# OR run async\nfc: User = await update_user_self.asyncio(client=client, body=UpdateUser)\n\n# OR run async with more info\nresponse: Response[User] = await update_user_self.asyncio_detailed(client=client, body=UpdateUser)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.update_user_self.html"
+                }
+            },
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete your user.",
+                "description": "This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.\nThis call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance.",
+                "operationId": "delete_user_self",
+                "responses": {
+                    "204": {
+                        "description": "successful deletion",
+                        "headers": {
+                            "Access-Control-Allow-Credentials": {
+                                "description": "Access-Control-Allow-Credentials header.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "description": "Access-Control-Allow-Methods header.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "description": "Access-Control-Allow-Origin header.",
+                                "style": "simple",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "4XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    }
+                },
+                "x-go": {
+                    "example": "// DeleteSelf: Delete your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.\n// This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance.\nif err := client.User.DeleteSelf(); err != nil {\n\tpanic(err)\n}",
+                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.DeleteSelf"
+                },
+                "x-rust": {
+                    "example": "/**\n* Delete your user.\n*\n* This function performs a `DELETE` to the `/user` endpoint.\n*\n* This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.\n* This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance.\n*/\nclient.users().delete_self().await?;",
+                    "libDocsLink": "https://docs.rs/kittycad/latest/kittycad/users/struct.Users.html#method.delete_self"
+                },
+                "x-python": {
+                    "example": "from kittycad.models import Error\nfrom kittycad.api.users import delete_user_self\nfrom kittycad.types import Response\n\nfc: Error = delete_user_self.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = delete_user_self.sync_detailed(client=client)\n\n# OR run async\nfc: Error = await delete_user_self.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Error] = await delete_user_self.asyncio_detailed(client=client)",
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.delete_user_self.html"
                 }
             },
             "options": {
@@ -5225,17 +5306,10 @@
                     },
                     "duration": {
                         "nullable": true,
+                        "title": "int64",
                         "description": "The duration of the API call.",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/Duration",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/ApiCallWithPriceResultsPage",
-                                    "#/components/schemas/ApiCallWithPrice"
-                                ]
-                            }
-                        ]
+                        "type": "integer",
+                        "format": "duration"
                     },
                     "email": {
                         "description": "The user's email address.",
@@ -5260,18 +5334,11 @@
                         ]
                     },
                     "ip_address": {
+                        "title": "String",
                         "description": "The ip address of the origin.",
                         "default": "",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/IpAddr",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/ApiCallWithPriceResultsPage",
-                                    "#/components/schemas/ApiCallWithPrice"
-                                ]
-                            }
-                        ]
+                        "type": "string",
+                        "format": "ip"
                     },
                     "method": {
                         "description": "The HTTP method requsted by the API call.",
@@ -5298,8 +5365,10 @@
                     },
                     "price": {
                         "nullable": true,
+                        "title": "Number",
                         "description": "The price of the API call.",
-                        "type": "number"
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "request_body": {
                         "nullable": true,
@@ -5323,17 +5392,10 @@
                     },
                     "status_code": {
                         "nullable": true,
+                        "title": "int32",
                         "description": "The status code returned by the API call.",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/StatusCode",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/ApiCallWithPriceResultsPage",
-                                    "#/components/schemas/ApiCallWithPrice"
-                                ]
-                            }
-                        ]
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "stripe_invoice_item_id": {
                         "description": "The Stripe invoice item ID of the API call if it is billable.",
@@ -5603,16 +5665,10 @@
                             },
                             "output": {
                                 "nullable": true,
+                                "title": "String",
                                 "description": "The converted file, if completed, base64 encoded.",
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/Base64Data",
-                                        "x-scope": [
-                                            "",
-                                            "#/components/schemas/AsyncApiCallOutput"
-                                        ]
-                                    }
-                                ]
+                                "type": "string",
+                                "format": "byte"
                             },
                             "output_format": {
                                 "description": "The output format of the file conversion.",
@@ -6010,11 +6066,6 @@
                     "FileDensity"
                 ]
             },
-            "Base64Data": {
-                "title": "String",
-                "type": "string",
-                "format": "byte"
-            },
             "BillingInfo": {
                 "description": "The billing information for payments.",
                 "type": "object",
@@ -6037,17 +6088,11 @@
                         "type": "string"
                     },
                     "phone": {
+                        "title": "String",
                         "description": "The phone for the customer.",
                         "default": "",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/PhoneNumber",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/BillingInfo"
-                                ]
-                            }
-                        ]
+                        "type": "string",
+                        "format": "phone"
                     }
                 }
             },
@@ -6123,7 +6168,8 @@
                     "addr": {
                         "nullable": true,
                         "description": "The IP address of the cluster.",
-                        "type": "string"
+                        "type": "string",
+                        "format": "ip"
                     },
                     "auth_timeout": {
                         "description": "The auth timeout of the cluster.",
@@ -6300,7 +6346,8 @@
                     },
                     "host": {
                         "description": "The host of the server.",
-                        "type": "string"
+                        "type": "string",
+                        "format": "ip"
                     },
                     "http_base_path": {
                         "description": "The http base path of the server.",
@@ -6732,10 +6779,11 @@
                         ]
                     },
                     "balance": {
+                        "title": "Number",
                         "description": "Current balance, if any, being stored on the customer.\n\nIf negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "created_at": {
                         "description": "Time at which the object was created.",
@@ -6781,17 +6829,11 @@
                         "type": "string"
                     },
                     "phone": {
+                        "title": "String",
                         "description": "The customer's phone number.",
                         "default": "",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/PhoneNumber",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/Customer"
-                                ]
-                            }
-                        ]
+                        "type": "string",
+                        "format": "phone"
                     }
                 },
                 "required": [
@@ -7275,11 +7317,6 @@
                     }
                 }
             },
-            "Duration": {
-                "title": "int64",
-                "type": "integer",
-                "format": "duration"
-            },
             "EmailAuthenticationForm": {
                 "description": "The body of the form for email authentication.",
                 "type": "object",
@@ -7484,8 +7521,10 @@
                         "type": "string"
                     },
                     "image": {
+                        "title": "String",
                         "description": "The image avatar for the user. This is a URL.",
-                        "type": "string"
+                        "type": "string",
+                        "format": "uri"
                     },
                     "last_name": {
                         "description": "The user's last name.",
@@ -7501,17 +7540,11 @@
                         "type": "string"
                     },
                     "phone": {
+                        "title": "String",
                         "description": "The user's phone number.",
                         "default": "",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/PhoneNumber",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/ExtendedUser"
-                                ]
-                            }
-                        ]
+                        "type": "string",
+                        "format": "phone"
                     },
                     "stripe_id": {
                         "nullable": true,
@@ -7531,6 +7564,7 @@
                 },
                 "required": [
                     "created_at",
+                    "image",
                     "updated_at"
                 ]
             },
@@ -7593,16 +7627,10 @@
                     },
                     "output": {
                         "nullable": true,
+                        "title": "String",
                         "description": "The converted file, if completed, base64 encoded.",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/Base64Data",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/FileConversion"
-                                ]
-                            }
-                        ]
+                        "type": "string",
+                        "format": "byte"
                     },
                     "output_format": {
                         "description": "The output format of the file conversion.",
@@ -8038,22 +8066,25 @@
                 "type": "object",
                 "properties": {
                     "amount_due": {
+                        "title": "Number",
                         "description": "Final amount due at this time for this invoice.\n\nIf the invoice's total is smaller than the minimum charge amount, for example, or if there is account credit that can be applied to the invoice, the `amount_due` may be 0. If there is a positive `starting_balance` for the invoice (the customer owes money), the `amount_due` will also take that into account. The charge that gets generated for the invoice will be for the amount specified in `amount_due`.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "amount_paid": {
-                        "description": "The amount, in %s, that was paid.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "title": "Number",
+                        "description": "The amount, in USD, that was paid.",
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "amount_remaining": {
-                        "description": "The amount remaining, in %s, that is due.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "title": "Number",
+                        "description": "The amount remaining, in USD, that is due.",
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "attempt_count": {
                         "description": "Number of payment attempts made for this invoice, from the perspective of the payment retry schedule.\n\nAny payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.",
@@ -8161,22 +8192,25 @@
                         ]
                     },
                     "subtotal": {
+                        "title": "Number",
                         "description": "Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or tax is applied.\n\nItem discounts are already incorporated.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "tax": {
+                        "title": "Number",
                         "description": "The amount of tax on this invoice.\n\nThis is the sum of all the tax amounts on this invoice.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "total": {
+                        "title": "Number",
                         "description": "Total after discounts and taxes.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "url": {
                         "nullable": true,
@@ -8195,10 +8229,11 @@
                 "type": "object",
                 "properties": {
                     "amount": {
-                        "description": "The amount, in %s.",
-                        "default": 0,
-                        "type": "integer",
-                        "format": "int64"
+                        "title": "Number",
+                        "description": "The amount, in USD.",
+                        "default": "0",
+                        "type": "number",
+                        "format": "money-usd"
                     },
                     "currency": {
                         "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.",
@@ -8249,11 +8284,6 @@
                     "uncollectible",
                     "void"
                 ]
-            },
-            "IpAddr": {
-                "title": "String",
-                "type": "string",
-                "format": "ip"
             },
             "Jetstream": {
                 "description": "Jetstream information.",
@@ -8748,11 +8778,6 @@
                     "card"
                 ]
             },
-            "PhoneNumber": {
-                "title": "String",
-                "type": "string",
-                "format": "phone"
-            },
             "PluginsInfo": {
                 "description": "Available plugins per type.\n\n**Note**: Only unmanaged (V1) plugins are included in this list. V1 plugins are \\\"lazily\\\" loaded, and are not returned in this list if there is no resource using the plugin.",
                 "type": "object",
@@ -8911,11 +8936,6 @@
                     "session_token",
                     "updated_at"
                 ]
-            },
-            "StatusCode": {
-                "title": "int32",
-                "type": "integer",
-                "format": "int32"
             },
             "SystemInfoCgroupDriverEnum": {
                 "type": "string",
@@ -9112,17 +9132,11 @@
                         "type": "string"
                     },
                     "phone": {
+                        "title": "String",
                         "description": "The user's phone number.",
                         "default": "",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/PhoneNumber",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/UpdateUser"
-                                ]
-                            }
-                        ]
+                        "type": "string",
+                        "format": "phone"
                     }
                 }
             },
@@ -9167,8 +9181,10 @@
                         "type": "string"
                     },
                     "image": {
+                        "title": "String",
                         "description": "The image avatar for the user. This is a URL.",
-                        "type": "string"
+                        "type": "string",
+                        "format": "uri"
                     },
                     "last_name": {
                         "description": "The user's last name.",
@@ -9179,17 +9195,11 @@
                         "type": "string"
                     },
                     "phone": {
+                        "title": "String",
                         "description": "The user's phone number.",
                         "default": "",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/PhoneNumber",
-                                "x-scope": [
-                                    "",
-                                    "#/components/schemas/User"
-                                ]
-                            }
-                        ]
+                        "type": "string",
+                        "format": "phone"
                     },
                     "updated_at": {
                         "description": "The date and time the user was last updated.",
@@ -9199,6 +9209,7 @@
                 },
                 "required": [
                     "created_at",
+                    "image",
                     "updated_at"
                 ]
             },
@@ -9231,6 +9242,40 @@
                 "description": "A uuid.\n\nA Version 4 UUID is a universally unique identifier that is generated using random numbers.",
                 "type": "string",
                 "format": "uuid"
+            },
+            "VerificationToken": {
+                "description": "A verification token for a user.\n\nThis is typically used to verify a user's email address.",
+                "type": "object",
+                "properties": {
+                    "created_at": {
+                        "description": "The date and time the verification token was created.",
+                        "type": "string",
+                        "format": "partial-date-time"
+                    },
+                    "expires": {
+                        "description": "The date and time the verification token expires.",
+                        "type": "string",
+                        "format": "partial-date-time"
+                    },
+                    "id": {
+                        "description": "The token used for verification. This is used as the id for the table since it is unique per record.",
+                        "type": "string"
+                    },
+                    "identifier": {
+                        "description": "The identifier for the user. This is typically the user's email address since that is what we are verifying.",
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "description": "The date and time the verification token was last updated.",
+                        "type": "string",
+                        "format": "partial-date-time"
+                    }
+                },
+                "required": [
+                    "created_at",
+                    "expires",
+                    "updated_at"
+                ]
             }
         }
     },

@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 
 from ..models.address import Address
-from ..models.phone_number import PhoneNumber
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="BillingInfo")
@@ -14,7 +13,7 @@ class BillingInfo:
     """ """
     address: Union[Unset, Address] = UNSET
     name: Union[Unset, str] = UNSET
-    phone: Union[Unset, PhoneNumber] = UNSET
+    phone: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -23,9 +22,7 @@ class BillingInfo:
         if not isinstance(self.address, Unset):
             address = self.address.value
         name = self.name
-        phone: Union[Unset, str] = UNSET
-        if not isinstance(self.phone, Unset):
-            phone = self.phone.value
+        phone = self.phone
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -51,12 +48,7 @@ class BillingInfo:
 
         name = d.pop("name", UNSET)
 
-        _phone = d.pop("phone", UNSET)
-        phone: Union[Unset, PhoneNumber]
-        if isinstance(_phone, Unset):
-            phone = UNSET
-        else:
-            phone = PhoneNumber(_phone)
+        phone = d.pop("phone", UNSET)
 
         billing_info = cls(
             address=address,
