@@ -5,7 +5,6 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.base64_data import Base64Data
 from ..models.file_output_format import FileOutputFormat
 from ..models.file_source_format import FileSourceFormat
 from ..models.api_call_status import ApiCallStatus
@@ -21,7 +20,7 @@ class FileConversion:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    output: Union[Unset, Base64Data] = UNSET
+    output: Union[Unset, str] = UNSET
     output_format: Union[Unset, FileOutputFormat] = UNSET
     src_format: Union[Unset, FileSourceFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
@@ -40,9 +39,7 @@ class FileConversion:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        output: Union[Unset, str] = UNSET
-        if not isinstance(self.output, Unset):
-            output = self.output.value
+        output = self.output
         output_format: Union[Unset, str] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format.value
@@ -109,12 +106,7 @@ class FileConversion:
 
         id = d.pop("id", UNSET)
 
-        _output = d.pop("output", UNSET)
-        output: Union[Unset, Base64Data]
-        if isinstance(_output, Unset):
-            output = UNSET
-        else:
-            output = Base64Data(_output)
+        output = d.pop("output", UNSET)
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileOutputFormat]
