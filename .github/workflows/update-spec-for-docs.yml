@@ -34,7 +34,7 @@ jobs:
       # Checkout the docs repo since we will want to update the files there.
       - uses: actions/checkout@v3
         with:
-          repository: 'kittycad/docs'
+          repository: 'kittycad/website'
           path: 'docs'
           token: ${{secrets.PAT_GITHUB}}
       - name: move spec to docs
