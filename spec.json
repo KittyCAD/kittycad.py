@@ -14,7 +14,7 @@
         },
         "x-rust": {
             "client": "use kittycad::Client;\n\n// Authenticate via an API token.\nlet client = Client::new(\"$TOKEN\");\n\n// - OR -\n\n// Authenticate with your token and host parsed from the environment variables:\n// KITTYCAD_API_TOKEN.\nlet client = Client::new_from_env();",
-            "install": "[dependencies]\nkittycad = \"0.1.5\""
+            "install": "[dependencies]\nkittycad = \"0.1.6\""
         },
         "x-python": {
             "client": "# Create a client with your token.\nfrom kittycad import Client\n\nclient = Client(token=\"$TOKEN\")\n\n# - OR -\n\n# Create a new client with your token parsed from the environment variable:\n#   KITTYCAD_API_TOKEN.\nfrom kittycad import ClientFromEnv\n\nclient = ClientFromEnv()",
@@ -6279,7 +6279,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -6322,7 +6321,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -6424,7 +6422,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -6444,7 +6441,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -8303,7 +8299,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -8323,7 +8318,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -8351,7 +8345,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -8435,7 +8428,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream",
                                     "#/components/schemas/JetstreamStats"
