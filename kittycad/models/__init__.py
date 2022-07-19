@@ -23,6 +23,7 @@ from .connection import Connection
 from .created_at_sort_mode import CreatedAtSortMode
 from .currency import Currency
 from .customer import Customer
+from .customer_balance import CustomerBalance
 from .device_access_token_request_form import DeviceAccessTokenRequestForm
 from .device_auth_request_form import DeviceAuthRequestForm
 from .device_auth_verify_params import DeviceAuthVerifyParams
