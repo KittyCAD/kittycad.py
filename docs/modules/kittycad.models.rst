@@ -50,6 +50,7 @@
    kittycad.models.created_at_sort_mode
    kittycad.models.currency
    kittycad.models.customer
+   kittycad.models.customer_balance
    kittycad.models.device_access_token_request_form
    kittycad.models.device_auth_request_form
    kittycad.models.device_auth_verify_params
