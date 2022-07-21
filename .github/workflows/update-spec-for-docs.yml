@@ -40,8 +40,8 @@ jobs:
       - name: move spec to docs
         shell: bash
         run: |
-          rm docs/spec.json || true
-          cp spec.json docs/spec.json
+          rm docs/kittycad.py.patch.json || true
+          cp kittycad.py.patch.json docs/kittycad.py.patch.json
       - name: commit the changes in the docs repo
         shell: bash
         run: |
@@ -53,7 +53,7 @@ jobs:
           git commit -am "YOYO NEW SPEC DOCS ${VERSION}!" || exit 0
           git fetch origin
           git rebase origin/main || exit 0
-          export NEW_BRANCH="update-spec-${VERSION}"
+          export NEW_BRANCH="update-spec-python"
           git checkout -b "$NEW_BRANCH"
           git push -f origin "$NEW_BRANCH"
           gh pr create --title "Update lang spec docs for ${VERSION}" \

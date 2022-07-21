@@ -1,0 +1,1 @@
+[{"op": "replace", "path": "/info/x-python/client", "value": "# Create a client with your token.\nfrom kittycad import Client\n\nclient = Client(token=\"$TOKEN\")\n\n# - OR -\n\n# Create a new client with your token parsed from the environment variable:\n#   `KITTYCAD_API_TOKEN`.\nfrom kittycad import ClientFromEnv\n\nclient = ClientFromEnv()"}]

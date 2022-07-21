@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from prance import BaseParser
+import jsonpatch
 
 import json
 import os
@@ -10,9 +11,9 @@ package_name = 'kittycad'
 
 def main():
     cwd = os.getcwd()
-    path = os.path.join(cwd, 'spec.json')
-    print("opening spec file: ", path)
-    parser = BaseParser(path)
+    spec_path = os.path.join(cwd, 'spec.json')
+    print("opening spec file: ", spec_path)
+    parser = BaseParser(spec_path)
 
     # Generate the types.
     generateTypes(cwd, parser.specification)
@@ -30,16 +31,23 @@ client = Client(token="$TOKEN")
 # - OR -
 
 # Create a new client with your token parsed from the environment variable:
-#   KITTYCAD_API_TOKEN.
+#   `KITTYCAD_API_TOKEN`.
 from kittycad import ClientFromEnv
 
 client = ClientFromEnv()""",
         'install': 'pip install kittycad',
     }
 
+    # Read the original spec file as a dict.
+    spec = open(spec_path, 'r')
+    original = json.load(spec)
+    # Create the json patch document.
+    patch = jsonpatch.make_patch(original, data)
+
     # Rewrite the spec back out.
-    f = open(path, 'w')
-    f.write(json.dumps(data, indent=4))
+    patch_file = os.path.join(cwd, 'kittycad.py.patch.json')
+    f = open(patch_file, 'w')
+    f.write(patch.to_string())
     f.close()
 
 
