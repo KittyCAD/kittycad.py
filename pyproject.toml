@@ -33,6 +33,7 @@ openapi-parser = "^0.2.6"
 autopep8 = "^1.6.0"
 prance = "^0.21.8"
 openapi-spec-validator = "^0.4.0"
+jsonpatch = "^1.32"
 
 [build-system]
 requires = ["poetry>=1.0"]
