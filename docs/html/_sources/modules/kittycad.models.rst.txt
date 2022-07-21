@@ -36,6 +36,7 @@
    kittycad.models.api_call_with_price_results_page
    kittycad.models.api_token
    kittycad.models.api_token_results_page
+   kittycad.models.app_client_info
    kittycad.models.async_api_call
    kittycad.models.async_api_call_results_page
    kittycad.models.async_api_call_type

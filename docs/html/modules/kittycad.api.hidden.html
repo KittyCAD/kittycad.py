@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.hidden &mdash; kittycad v0.2.5 documentation</title>
+  <title>kittycad.api.hidden &mdash; kittycad v0.2.6 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.api.hidden.listen_auth_email" href="kittycad.api.hidden.listen_auth_email.html" />
+    <link rel="next" title="kittycad.api.hidden.auth_email" href="kittycad.api.hidden.auth_email.html" />
     <link rel="prev" title="kittycad.api.file.get_file_conversion_with_base64_helper" href="kittycad.api.file.get_file_conversion_with_base64_helper.html" /> 
 </head>
 
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> kittycad
           </a>
               <div class="version">
-                v0.2.5
+                v0.2.6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -43,11 +43,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="kittycad.api.html">kittycad.api</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.apps.html">kittycad.api.apps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.beta.html">kittycad.api.beta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.file.html">kittycad.api.file</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.api.hidden</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kittycad.api.hidden.listen_auth_email.html">kittycad.api.hidden.listen_auth_email</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kittycad.api.hidden.listen_auth_email_callback.html">kittycad.api.hidden.listen_auth_email_callback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.hidden.auth_email.html">kittycad.api.hidden.auth_email</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.hidden.auth_email_callback.html">kittycad.api.hidden.auth_email_callback</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.hidden.logout.html">kittycad.api.hidden.logout</a></li>
 </ul>
 </li>
@@ -103,10 +104,10 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.hidden.listen_auth_email.html#module-kittycad.api.hidden.listen_auth_email" title="kittycad.api.hidden.listen_auth_email"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.hidden.listen_auth_email</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.hidden.auth_email.html#module-kittycad.api.hidden.auth_email" title="kittycad.api.hidden.auth_email"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.hidden.auth_email</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.hidden.listen_auth_email_callback.html#module-kittycad.api.hidden.listen_auth_email_callback" title="kittycad.api.hidden.listen_auth_email_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.hidden.listen_auth_email_callback</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.hidden.auth_email_callback.html#module-kittycad.api.hidden.auth_email_callback" title="kittycad.api.hidden.auth_email_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.hidden.auth_email_callback</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.hidden.logout.html#module-kittycad.api.hidden.logout" title="kittycad.api.hidden.logout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.hidden.logout</span></code></a></p></td>
@@ -121,7 +122,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="kittycad.api.file.get_file_conversion_with_base64_helper.html" class="btn btn-neutral float-left" title="kittycad.api.file.get_file_conversion_with_base64_helper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.api.hidden.listen_auth_email.html" class="btn btn-neutral float-right" title="kittycad.api.hidden.listen_auth_email" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.api.hidden.auth_email.html" class="btn btn-neutral float-right" title="kittycad.api.hidden.auth_email" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
