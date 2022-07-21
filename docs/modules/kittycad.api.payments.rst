@@ -1,4 +1,4 @@
-﻿kittycad.api.payments
+kittycad.api.payments
 =====================
 
 .. automodule:: kittycad.api.payments

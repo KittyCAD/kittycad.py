@@ -29,6 +29,7 @@
 
    kittycad.api.api-calls
    kittycad.api.api-tokens
+   kittycad.api.apps
    kittycad.api.beta
    kittycad.api.file
    kittycad.api.hidden
