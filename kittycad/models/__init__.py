@@ -9,6 +9,7 @@ from .api_call_with_price import ApiCallWithPrice
 from .api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from .api_token import ApiToken
 from .api_token_results_page import ApiTokenResultsPage
+from .app_client_info import AppClientInfo
 from .async_api_call import AsyncApiCall
 from .async_api_call_results_page import AsyncApiCallResultsPage
 from .async_api_call_type import AsyncApiCallType

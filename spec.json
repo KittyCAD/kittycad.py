@@ -380,6 +380,16 @@
                 ],
                 "type": "object"
             },
+            "AppClientInfo": {
+                "description": "Information about a third party app client.",
+                "properties": {
+                    "url": {
+                        "description": "The URL for consent.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "AsyncApiCall": {
                 "description": "An async API call.",
                 "properties": {
@@ -415,6 +425,7 @@
                         "description": "The unique identifier of the async API call.\n\nThis is the same as the API call ID."
                     },
                     "input": {
+                        "default": null,
                         "description": "The JSON input for the API call. These are determined by the endpoint that is run."
                     },
                     "output": {
@@ -632,7 +643,7 @@
                                 "type": "number"
                             },
                             "material_density": {
-                                "default": 0,
+                                "default": 0.0,
                                 "description": "The material density as denoted by the user.",
                                 "format": "float",
                                 "type": "number"
@@ -832,7 +843,7 @@
                                 "description": "The unique identifier of the density request.\n\nThis is the same as the API call ID."
                             },
                             "material_mass": {
-                                "default": 0,
+                                "default": 0.0,
                                 "description": "The material mass as denoted by the user.",
                                 "format": "float",
                                 "type": "number"
@@ -1137,7 +1148,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -1179,7 +1189,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -1262,7 +1271,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -1302,7 +1310,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection"
                                 ]
                             }
@@ -1644,7 +1651,7 @@
                         "nullable": true
                     },
                     "balance": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "Current balance, if any, being stored on the customer in the payments service.\n\nIf negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized.",
                         "format": "money-usd",
                         "title": "Number",
@@ -2673,7 +2680,7 @@
                         "description": "The unique identifier of the density request.\n\nThis is the same as the API call ID."
                     },
                     "material_mass": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "The material mass as denoted by the user.",
                         "format": "float",
                         "type": "number"
@@ -2769,7 +2776,7 @@
                         "type": "number"
                     },
                     "material_density": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "The material density as denoted by the user.",
                         "format": "float",
                         "type": "number"
@@ -3017,21 +3024,21 @@
                 "description": "An invoice.",
                 "properties": {
                     "amount_due": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "Final amount due at this time for this invoice.\n\nIf the invoice's total is smaller than the minimum charge amount, for example, or if there is account credit that can be applied to the invoice, the `amount_due` may be 0. If there is a positive `starting_balance` for the invoice (the customer owes money), the `amount_due` will also take that into account. The charge that gets generated for the invoice will be for the amount specified in `amount_due`.",
                         "format": "money-usd",
                         "title": "Number",
                         "type": "number"
                     },
                     "amount_paid": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "The amount, in USD, that was paid.",
                         "format": "money-usd",
                         "title": "Number",
                         "type": "number"
                     },
                     "amount_remaining": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "The amount remaining, in USD, that is due.",
                         "format": "money-usd",
                         "title": "Number",
@@ -3143,21 +3150,21 @@
                         "nullable": true
                     },
                     "subtotal": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or tax is applied.\n\nItem discounts are already incorporated.",
                         "format": "money-usd",
                         "title": "Number",
                         "type": "number"
                     },
                     "tax": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "The amount of tax on this invoice.\n\nThis is the sum of all the tax amounts on this invoice.",
                         "format": "money-usd",
                         "title": "Number",
                         "type": "number"
                     },
                     "total": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "Total after discounts and taxes.",
                         "format": "money-usd",
                         "title": "Number",
@@ -3180,7 +3187,7 @@
                 "description": "An invoice line item.",
                 "properties": {
                     "amount": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "The amount, in USD.",
                         "format": "money-usd",
                         "title": "Number",
@@ -3247,7 +3254,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -3268,7 +3274,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -3288,7 +3293,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream"
                                 ]
@@ -3380,7 +3384,6 @@
                                 "x-scope": [
                                     "",
                                     "#/components/schemas/Metadata",
-                                    "#/components/schemas/EngineMetadata",
                                     "#/components/schemas/Connection",
                                     "#/components/schemas/Jetstream",
                                     "#/components/schemas/JetstreamStats"
@@ -3968,7 +3971,7 @@
                         "description": "The unique identifier of the unit conversion.\n\nThis is the same as the API call ID."
                     },
                     "input": {
-                        "default": 0,
+                        "default": 0.0,
                         "description": "The input value.",
                         "format": "float",
                         "type": "number"
@@ -4252,10 +4255,6 @@
         "description": "API server for KittyCAD",
         "title": "KittyCAD API",
         "version": "0.1.0",
-        "x-go": {
-            "client": "// Create a client with your token.\nclient, err := kittycad.NewClient(\"$TOKEN\", \"your apps user agent\")\nif err != nil {\n  panic(err)\n}\n\n// - OR -\n\n// Create a new client with your token parsed from the environment\n// variable: KITTYCAD_API_TOKEN.\nclient, err := kittycad.NewClientFromEnv(\"your apps user agent\")\nif err != nil {\n  panic(err)\n}",
-            "install": "go get github.com/kittycad/kittycad.go"
-        },
         "x-python": {
             "client": "# Create a client with your token.\nfrom kittycad import Client\n\nclient = Client(token=\"$TOKEN\")\n\n# - OR -\n\n# Create a new client with your token parsed from the environment variable:\n#   KITTYCAD_API_TOKEN.\nfrom kittycad import ClientFromEnv\n\nclient = ClientFromEnv()",
             "install": "pip install kittycad"
@@ -4326,10 +4325,6 @@
                 "tags": [
                     "meta"
                 ],
-                "x-go": {
-                    "example": "// GetSchema: Get OpenAPI schema.\nresponseGetSchema, err := client.Meta.GetSchema()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#MetaService.GetSchema"
-                },
                 "x-python": {
                     "example": "from kittycad.models import dict\nfrom kittycad.api.meta import get_schema\nfrom kittycad.types import Response\n\nfc: dict = get_schema.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[dict] = get_schema.sync_detailed(client=client)\n\n# OR run async\nfc: dict = await get_schema.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[dict] = await get_schema.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.meta.get_schema.html"
@@ -4406,10 +4401,6 @@
                     "meta",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// Getdata: Get the metadata about our currently running server.\n//\n// This includes information on any of our other distributed systems it is connected to.\n// You must be a KittyCAD employee to perform this request.\nmetadata, err := client.Meta.Getdata()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#MetaService.Getdata"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Metadata\nfrom kittycad.api.meta import get_metadata\nfrom kittycad.types import Response\n\nfc: Metadata = get_metadata.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Metadata] = get_metadata.sync_detailed(client=client)\n\n# OR run async\nfc: Metadata = await get_metadata.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Metadata] = await get_metadata.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.meta.get_metadata.html"
@@ -4505,10 +4496,6 @@
                     "api-calls",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// GetMetrics: Get API call metrics.\n//\n// This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed.\n//\n// Parameters:\n//\t- `groupBy`: What field to group the metrics by.\nAPICallQueryGroup, err := client.APICall.GetMetrics(groupBy)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.GetMetrics"
-                },
                 "x-python": {
                     "example": "from kittycad.models import [ApiCallQueryGroup]\nfrom kittycad.api.api-calls import get_api_call_metrics\nfrom kittycad.types import Response\n\nfc: [ApiCallQueryGroup] = get_api_call_metrics.sync(client=client, group_by=ApiCallQueryGroupBy)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[[ApiCallQueryGroup]] = get_api_call_metrics.sync_detailed(client=client, group_by=ApiCallQueryGroupBy)\n\n# OR run async\nfc: [ApiCallQueryGroup] = await get_api_call_metrics.asyncio(client=client, group_by=ApiCallQueryGroupBy)\n\n# OR run async with more info\nresponse: Response[[ApiCallQueryGroup]] = await get_api_call_metrics.asyncio_detailed(client=client, group_by=ApiCallQueryGroupBy)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.get_api_call_metrics.html"
@@ -4621,10 +4608,6 @@
                     "hidden"
                 ],
                 "x-dropshot-pagination": true,
-                "x-go": {
-                    "example": "// List: List API calls.\n//\n// This endpoint requires authentication by a KittyCAD employee. The API calls are returned in order of creation, with the most recently created API calls first.\n//\n// To iterate over all pages, use the `ListAllPages` method, instead.\n//\n// Parameters:\n//\t- `limit`: Maximum number of items returned by a single call\n//\t- `pageToken`: Token returned by previous call to retrieve the subsequent page\n//\t- `sortBy`\naPICallWithPriceResultsPage, err := client.APICall.List(limit, pageToken, sortBy)\n\n// - OR -\n\n// ListAllPages: List API calls.\n//\n// This endpoint requires authentication by a KittyCAD employee. The API calls are returned in order of creation, with the most recently created API calls first.\n//\n// This method is a wrapper around the `List` method.\n// This method returns all the pages at once.\n//\n// Parameters:\n//\t- `sortBy`\nAPICallWithPrice, err := client.APICall.ListAllPages(sortBy)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.List"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiCallWithPriceResultsPage\nfrom kittycad.api.api-calls import list_api_calls\nfrom kittycad.types import Response\n\nfc: ApiCallWithPriceResultsPage = list_api_calls.sync(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiCallWithPriceResultsPage] = list_api_calls.sync_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async\nfc: ApiCallWithPriceResultsPage = await list_api_calls.asyncio(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async with more info\nresponse: Response[ApiCallWithPriceResultsPage] = await list_api_calls.asyncio_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.list_api_calls.html"
@@ -4713,13 +4696,159 @@
                     "api-calls",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// Get: Get details of an API call.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user.\n// If the user is not authenticated to view the specified API call, then it is not returned.\n// Only KittyCAD employees can view API calls for other users.\n//\n// Parameters:\n//\t- `id`: The ID of the API call.\naPICallWithPrice, err := client.APICall.Get(id)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.Get"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiCallWithPrice\nfrom kittycad.api.api-calls import get_api_call\nfrom kittycad.types import Response\n\nfc: ApiCallWithPrice = get_api_call.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiCallWithPrice] = get_api_call.sync_detailed(client=client, id=)\n\n# OR run async\nfc: ApiCallWithPrice = await get_api_call.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[ApiCallWithPrice] = await get_api_call.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.get_api_call.html"
+                }
+            }
+        },
+        "/apps/github/callback": {
+            "get": {
+                "description": "This is different than OAuth 2.0 authentication for users. This endpoint grants access for KittyCAD to access user's repos.\nThe user doesn't need KittyCAD OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos.",
+                "operationId": "apps_github_callback",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "successful operation, no content",
+                        "headers": {
+                            "Access-Control-Allow-Credentials": {
+                                "description": "Access-Control-Allow-Credentials header.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "description": "Access-Control-Allow-Methods header.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "description": "Access-Control-Allow-Origin header.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            }
+                        }
+                    },
+                    "4XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    }
+                },
+                "summary": "Listen for callbacks to GitHub app authentication.",
+                "tags": [
+                    "apps",
+                    "hidden"
+                ],
+                "x-python": {
+                    "example": "from kittycad.models import Error\nfrom kittycad.api.apps import apps_github_callback\nfrom kittycad.types import Response\n\nfc: Error = apps_github_callback.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = apps_github_callback.sync_detailed(client=client)\n\n# OR run async\nfc: Error = await apps_github_callback.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Error] = await apps_github_callback.asyncio_detailed(client=client)",
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.apps.apps_github_callback.html"
+                }
+            }
+        },
+        "/apps/github/consent": {
+            "get": {
+                "description": "This is different than OAuth 2.0 authentication for users. This endpoint grants access for KittyCAD to access user's repos.\nThe user doesn't need KittyCAD OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos.",
+                "operationId": "apps_github_consent",
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AppClientInfo",
+                                    "x-scope": [
+                                        ""
+                                    ]
+                                }
+                            }
+                        },
+                        "description": "successful operation",
+                        "headers": {
+                            "Access-Control-Allow-Credentials": {
+                                "description": "Access-Control-Allow-Credentials header.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            },
+                            "Access-Control-Allow-Headers": {
+                                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            },
+                            "Access-Control-Allow-Methods": {
+                                "description": "Access-Control-Allow-Methods header.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            },
+                            "Access-Control-Allow-Origin": {
+                                "description": "Access-Control-Allow-Origin header.",
+                                "required": true,
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "style": "simple"
+                            }
+                        }
+                    },
+                    "4XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/Error",
+                        "x-scope": [
+                            ""
+                        ]
+                    }
+                },
+                "summary": "Get the consent URL for GitHub app authentication.",
+                "tags": [
+                    "apps",
+                    "hidden"
+                ],
+                "x-python": {
+                    "example": "from kittycad.models import AppClientInfo\nfrom kittycad.api.apps import apps_github_consent\nfrom kittycad.types import Response\n\nfc: AppClientInfo = apps_github_consent.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[AppClientInfo] = apps_github_consent.sync_detailed(client=client)\n\n# OR run async\nfc: AppClientInfo = await apps_github_consent.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[AppClientInfo] = await apps_github_consent.asyncio_detailed(client=client)",
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.apps.apps_github_consent.html"
                 }
             }
         },
@@ -4841,10 +4970,6 @@
                     "hidden"
                 ],
                 "x-dropshot-pagination": true,
-                "x-go": {
-                    "example": "// ListAsyncOperations: List async operations.\n//\n// For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.\n// This endpoint requires authentication by a KittyCAD employee.\n//\n// To iterate over all pages, use the `ListAsyncOperationsAllPages` method, instead.\n//\n// Parameters:\n//\t- `limit`: Maximum number of items returned by a single call\n//\t- `pageToken`: Token returned by previous call to retrieve the subsequent page\n//\t- `sortBy`\n//\t- `status`: The status to filter by.\nasyncAPICallResultsPage, err := client.APICall.ListAsyncOperations(limit, pageToken, sortBy, status)\n\n// - OR -\n\n// ListAsyncOperationsAllPages: List async operations.\n//\n// For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.\n// This endpoint requires authentication by a KittyCAD employee.\n//\n// This method is a wrapper around the `ListAsyncOperations` method.\n// This method returns all the pages at once.\n//\n// Parameters:\n//\t- `sortBy`\n//\t- `status`: The status to filter by.\nAsyncAPICall, err := client.APICall.ListAsyncOperationsAllPages(sortBy, status)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.ListAsyncOperations"
-                },
                 "x-python": {
                     "example": "from kittycad.models import AsyncApiCallResultsPage\nfrom kittycad.api.api-calls import list_async_operations\nfrom kittycad.types import Response\n\nfc: AsyncApiCallResultsPage = list_async_operations.sync(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode, status=ApiCallStatus)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[AsyncApiCallResultsPage] = list_async_operations.sync_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode, status=ApiCallStatus)\n\n# OR run async\nfc: AsyncApiCallResultsPage = await list_async_operations.asyncio(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode, status=ApiCallStatus)\n\n# OR run async with more info\nresponse: Response[AsyncApiCallResultsPage] = await list_async_operations.asyncio_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode, status=ApiCallStatus)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.list_async_operations.html"
@@ -4932,10 +5057,6 @@
                 "tags": [
                     "api-calls"
                 ],
-                "x-go": {
-                    "example": "// GetAsyncOperation: Get an async operation.\n//\n// Get the status and output of an async operation.\n// This endpoint requires authentication by any KittyCAD user. It returns details of the requested async operation for the user.\n// If the user is not authenticated to view the specified async operation, then it is not returned.\n// Only KittyCAD employees with the proper access can view async operations for other users.\n//\n// Parameters:\n//\t- `id`: The ID of the async operation.\nasyncAPICallOutput, err := client.APICall.GetAsyncOperation(id)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.GetAsyncOperation"
-                },
                 "x-python": {
                     "example": "from kittycad.models import FileConversion\nfrom kittycad.api.api-calls import get_async_operation\nfrom kittycad.types import Response\n\nfc: FileConversion = get_async_operation.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = get_async_operation.sync_detailed(client=client, id=)\n\n# OR run async\nfc: FileConversion = await get_async_operation.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await get_async_operation.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.get_async_operation.html"
@@ -5003,7 +5124,7 @@
                 ]
             },
             "post": {
-                "operationId": "listen_auth_email",
+                "operationId": "auth_email",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -5082,19 +5203,15 @@
                 "tags": [
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// ListenAuthEmail: Create an email verification request for a user.\nverificationToken, err := client.Hidden.ListenAuthEmail(body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#HiddenService.ListenAuthEmail"
-                },
                 "x-python": {
-                    "example": "from kittycad.models import VerificationToken\nfrom kittycad.api.hidden import listen_auth_email\nfrom kittycad.types import Response\n\nfc: VerificationToken = listen_auth_email.sync(client=client, body=EmailAuthenticationForm)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[VerificationToken] = listen_auth_email.sync_detailed(client=client, body=EmailAuthenticationForm)\n\n# OR run async\nfc: VerificationToken = await listen_auth_email.asyncio(client=client, body=EmailAuthenticationForm)\n\n# OR run async with more info\nresponse: Response[VerificationToken] = await listen_auth_email.asyncio_detailed(client=client, body=EmailAuthenticationForm)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.hidden.listen_auth_email.html"
+                    "example": "from kittycad.models import VerificationToken\nfrom kittycad.api.hidden import auth_email\nfrom kittycad.types import Response\n\nfc: VerificationToken = auth_email.sync(client=client, body=EmailAuthenticationForm)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[VerificationToken] = auth_email.sync_detailed(client=client, body=EmailAuthenticationForm)\n\n# OR run async\nfc: VerificationToken = await auth_email.asyncio(client=client, body=EmailAuthenticationForm)\n\n# OR run async with more info\nresponse: Response[VerificationToken] = await auth_email.asyncio_detailed(client=client, body=EmailAuthenticationForm)",
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.hidden.auth_email.html"
                 }
             }
         },
         "/auth/email/callback": {
             "get": {
-                "operationId": "listen_auth_email_callback",
+                "operationId": "auth_email_callback",
                 "parameters": [
                     {
                         "description": "The URL to redirect back to after we have authenticated.",
@@ -5192,13 +5309,9 @@
                 "tags": [
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// ListenAuthEmailCallback: Listen for callbacks for email verification for users.\n//\n// Parameters:\n//\t- `callbackUrl`: The URL to redirect back to after we have authenticated.\n//\t- `email`: The user's email.\n//\t- `token`: The verification token.\nif err := client.Hidden.ListenAuthEmailCallback(callbackUrl, email, token); err != nil {\n\tpanic(err)\n}",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#HiddenService.ListenAuthEmailCallback"
-                },
                 "x-python": {
-                    "example": "from kittycad.models import Error\nfrom kittycad.api.hidden import listen_auth_email_callback\nfrom kittycad.types import Response\n\nfc: Error = listen_auth_email_callback.sync(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = listen_auth_email_callback.sync_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async\nfc: Error = await listen_auth_email_callback.asyncio(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async with more info\nresponse: Response[Error] = await listen_auth_email_callback.asyncio_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)",
-                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.hidden.listen_auth_email_callback.html"
+                    "example": "from kittycad.models import Error\nfrom kittycad.api.hidden import auth_email_callback\nfrom kittycad.types import Response\n\nfc: Error = auth_email_callback.sync(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = auth_email_callback.sync_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async\nfc: Error = await auth_email_callback.asyncio(client=client, callback_url=\"<string>\", email=\"<string>\", token=)\n\n# OR run async with more info\nresponse: Response[Error] = await auth_email_callback.asyncio_detailed(client=client, callback_url=\"<string>\", email=\"<string>\", token=)",
+                    "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.hidden.auth_email_callback.html"
                 }
             }
         },
@@ -5310,10 +5423,6 @@
                 "tags": [
                     "file"
                 ],
-                "x-go": {
-                    "example": "// CreateConversion: Convert CAD file.\n//\n// Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.\n// If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.\n// If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n//\n// Parameters:\n//\t- `outputFormat`: The format the file should be converted to.\n//\t- `srcFormat`: The format of the file to convert.\nfileConversion, err := client.File.CreateConversion(outputFormat, srcFormat, body)\n\n// - OR -\n\n// CreateConversionWithBase64Helper will automatically base64 encode and decode the contents\n// of the file body.\n//\n// This function is a wrapper around the CreateConversion function.\nfileConversion, err := client.File.CreateConversionWithBase64Helper(outputFormat, srcFormat, body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.CreateConversion"
-                },
                 "x-python": {
                     "example": "from kittycad.models import FileConversion\nfrom kittycad.api.file import create_file_conversion_with_base64_helper\nfrom kittycad.types import Response\n\nfc: FileConversion = create_file_conversion_with_base64_helper.sync(client=client, output_format=FileOutputFormat, src_format=FileSourceFormat, body=bytes)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = create_file_conversion_with_base64_helper.sync_detailed(client=client, output_format=FileOutputFormat, src_format=FileSourceFormat, body=bytes)\n\n# OR run async\nfc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(client=client, output_format=FileOutputFormat, src_format=FileSourceFormat, body=bytes)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await create_file_conversion_with_base64_helper.asyncio_detailed(client=client, output_format=FileOutputFormat, src_format=FileSourceFormat, body=bytes)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.create_file_conversion_with_base64_helper.html"
@@ -5401,10 +5510,6 @@
                 "tags": [
                     "file"
                 ],
-                "x-go": {
-                    "example": "// GetConversion: Get a file conversion.\n//\n// Get the status and output of an async file conversion.\n// This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user.\n// If the user is not authenticated to view the specified file conversion, then it is not returned.\n// Only KittyCAD employees with the proper access can view file conversions for other users.\n//\n// Parameters:\n//\t- `id`: The ID of the async operation.\nasyncAPICallOutput, err := client.File.GetConversion(id)\n\n// - OR -\n\n// GetConversionWithBase64Helper will automatically base64 encode and decode the contents\n// of the file body.\n//\n// This function is a wrapper around the GetConversion function.\nasyncAPICallOutput, err := client.File.GetConversionWithBase64Helper(id)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.GetConversion"
-                },
                 "x-python": {
                     "example": "from kittycad.models import FileConversion\nfrom kittycad.api.file import get_file_conversion_with_base64_helper\nfrom kittycad.types import Response\n\nfc: FileConversion = get_file_conversion_with_base64_helper.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = get_file_conversion_with_base64_helper.sync_detailed(client=client, id=)\n\n# OR run async\nfc: FileConversion = await get_file_conversion_with_base64_helper.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await get_file_conversion_with_base64_helper.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.get_file_conversion_with_base64_helper.html"
@@ -5518,10 +5623,6 @@
                     "file",
                     "beta"
                 ],
-                "x-go": {
-                    "example": "// CreateDensity: Get CAD file density.\n//\n// Get the density of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.\n// If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n//\n// Parameters:\n//\t- `materialMass`: The material mass.\n//\t- `srcFormat`: The format of the file.\nfileDensity, err := client.File.CreateDensity(materialMass, srcFormat, body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.CreateDensity"
-                },
                 "x-python": {
                     "example": "from kittycad.models import FileDensity\nfrom kittycad.api.file import create_file_density\nfrom kittycad.types import Response\n\nfc: FileDensity = create_file_density.sync(client=client, material_mass=\"<string>\", src_format=FileSourceFormat, body=bytes)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileDensity] = create_file_density.sync_detailed(client=client, material_mass=\"<string>\", src_format=FileSourceFormat, body=bytes)\n\n# OR run async\nfc: FileDensity = await create_file_density.asyncio(client=client, material_mass=\"<string>\", src_format=FileSourceFormat, body=bytes)\n\n# OR run async with more info\nresponse: Response[FileDensity] = await create_file_density.asyncio_detailed(client=client, material_mass=\"<string>\", src_format=FileSourceFormat, body=bytes)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.create_file_density.html"
@@ -5633,10 +5734,6 @@
                     "file",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// CreateExecution: Execute a KittyCAD program in a specific language.\n//\n// Parameters:\n//\t- `lang`: The language of the code.\n//\t- `output`: The output file we want to get the contents for (the paths are relative to where in litterbox it is being run). You can denote more than one file with a comma separated list of string paths.\ncodeOutput, err := client.File.CreateExecution(lang, output, body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.CreateExecution"
-                },
                 "x-python": {
                     "example": "from kittycad.models import CodeOutput\nfrom kittycad.api.file import create_file_execution\nfrom kittycad.types import Response\n\nfc: CodeOutput = create_file_execution.sync(client=client, lang=CodeLanguage, output=, body=bytes)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[CodeOutput] = create_file_execution.sync_detailed(client=client, lang=CodeLanguage, output=, body=bytes)\n\n# OR run async\nfc: CodeOutput = await create_file_execution.asyncio(client=client, lang=CodeLanguage, output=, body=bytes)\n\n# OR run async with more info\nresponse: Response[CodeOutput] = await create_file_execution.asyncio_detailed(client=client, lang=CodeLanguage, output=, body=bytes)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.create_file_execution.html"
@@ -5750,10 +5847,6 @@
                     "file",
                     "beta"
                 ],
-                "x-go": {
-                    "example": "// CreateMass: Get CAD file mass.\n//\n// Get the mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.\n// If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n//\n// Parameters:\n//\t- `materialDensity`: The material density.\n//\t- `srcFormat`: The format of the file.\nfileMass, err := client.File.CreateMass(materialDensity, srcFormat, body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.CreateMass"
-                },
                 "x-python": {
                     "example": "from kittycad.models import FileMass\nfrom kittycad.api.file import create_file_mass\nfrom kittycad.types import Response\n\nfc: FileMass = create_file_mass.sync(client=client, material_density=\"<string>\", src_format=FileSourceFormat, body=bytes)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileMass] = create_file_mass.sync_detailed(client=client, material_density=\"<string>\", src_format=FileSourceFormat, body=bytes)\n\n# OR run async\nfc: FileMass = await create_file_mass.asyncio(client=client, material_density=\"<string>\", src_format=FileSourceFormat, body=bytes)\n\n# OR run async with more info\nresponse: Response[FileMass] = await create_file_mass.asyncio_detailed(client=client, material_density=\"<string>\", src_format=FileSourceFormat, body=bytes)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.create_file_mass.html"
@@ -5856,10 +5949,6 @@
                     "file",
                     "beta"
                 ],
-                "x-go": {
-                    "example": "// CreateVolume: Get CAD file volume.\n//\n// Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.\n// If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n//\n// Parameters:\n//\t- `srcFormat`: The format of the file.\nfileVolume, err := client.File.CreateVolume(srcFormat, body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.CreateVolume"
-                },
                 "x-python": {
                     "example": "from kittycad.models import FileVolume\nfrom kittycad.api.file import create_file_volume\nfrom kittycad.types import Response\n\nfc: FileVolume = create_file_volume.sync(client=client, src_format=FileSourceFormat, body=bytes)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileVolume] = create_file_volume.sync_detailed(client=client, src_format=FileSourceFormat, body=bytes)\n\n# OR run async\nfc: FileVolume = await create_file_volume.asyncio(client=client, src_format=FileSourceFormat, body=bytes)\n\n# OR run async with more info\nresponse: Response[FileVolume] = await create_file_volume.asyncio_detailed(client=client, src_format=FileSourceFormat, body=bytes)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.create_file_volume.html"
@@ -5933,10 +6022,6 @@
                 "tags": [
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// Logout: This endpoint removes the session cookie for a user.\n//\n// This is used in logout scenarios.\nif err := client.Hidden.Logout(); err != nil {\n\tpanic(err)\n}",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#HiddenService.Logout"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Error\nfrom kittycad.api.hidden import logout\nfrom kittycad.types import Response\n\nfc: Error = logout.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = logout.sync_detailed(client=client)\n\n# OR run async\nfc: Error = await logout.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Error] = await logout.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.hidden.logout.html"
@@ -6221,7 +6306,7 @@
         },
         "/oauth2/provider/{provider}/callback": {
             "get": {
-                "operationId": "listen_oauth2_provider_callback",
+                "operationId": "oauth2_provider_callback",
                 "parameters": [
                     {
                         "description": "The provider.",
@@ -6323,7 +6408,7 @@
         },
         "/oauth2/provider/{provider}/consent": {
             "get": {
-                "operationId": "listen_oauth2_provider_consent",
+                "operationId": "oauth2_provider_consent",
                 "parameters": [
                     {
                         "description": "The provider.",
@@ -6485,10 +6570,6 @@
                 "tags": [
                     "meta"
                 ],
-                "x-go": {
-                    "example": "// Ping: Return pong.\npong, err := client.Meta.Ping()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#MetaService.Ping"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Pong\nfrom kittycad.api.meta import ping\nfrom kittycad.types import Response\n\nfc: Pong = ping.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Pong] = ping.sync_detailed(client=client)\n\n# OR run async\nfc: Pong = await ping.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Pong] = await ping.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.meta.ping.html"
@@ -6604,10 +6685,6 @@
                     "unit",
                     "beta"
                 ],
-                "x-go": {
-                    "example": "// CreateConversion: Convert units.\n//\n// Convert a metric unit value to another metric unit value. This is a nice endpoint to use for helper functions.\n//\n// Parameters:\n//\t- `outputFormat`: The output format of the unit.\n//\t- `srcFormat`: The source format of the unit.\n//\t- `value`: The initial value.\nunitConversion, err := client.Unit.CreateConversion(outputFormat, srcFormat, value)\n\n// - OR -\n\n// CreateConversionWithBase64Helper will automatically base64 encode and decode the contents\n// of the file body.\n//\n// This function is a wrapper around the CreateConversion function.\nunitConversion, err := client.Unit.CreateConversionWithBase64Helper(outputFormat, srcFormat, value)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UnitService.CreateConversion"
-                },
                 "x-python": {
                     "example": "from kittycad.models import UnitConversion\nfrom kittycad.api.unit import create_unit_conversion\nfrom kittycad.types import Response\n\nfc: UnitConversion = create_unit_conversion.sync(client=client, output_format=UnitMetricFormat, src_format=UnitMetricFormat, value=\"<string>\")\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[UnitConversion] = create_unit_conversion.sync_detailed(client=client, output_format=UnitMetricFormat, src_format=UnitMetricFormat, value=\"<string>\")\n\n# OR run async\nfc: UnitConversion = await create_unit_conversion.asyncio(client=client, output_format=UnitMetricFormat, src_format=UnitMetricFormat, value=\"<string>\")\n\n# OR run async with more info\nresponse: Response[UnitConversion] = await create_unit_conversion.asyncio_detailed(client=client, output_format=UnitMetricFormat, src_format=UnitMetricFormat, value=\"<string>\")",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.unit.create_unit_conversion.html"
@@ -6673,10 +6750,6 @@
                 "tags": [
                     "users"
                 ],
-                "x-go": {
-                    "example": "// DeleteSelf: Delete your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.\n// This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance.\nif err := client.User.DeleteSelf(); err != nil {\n\tpanic(err)\n}",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.DeleteSelf"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Error\nfrom kittycad.api.users import delete_user_self\nfrom kittycad.types import Response\n\nfc: Error = delete_user_self.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = delete_user_self.sync_detailed(client=client)\n\n# OR run async\nfc: Error = await delete_user_self.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Error] = await delete_user_self.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.delete_user_self.html"
@@ -6750,10 +6823,6 @@
                 "tags": [
                     "users"
                 ],
-                "x-go": {
-                    "example": "// GetSelf: Get your user.\n//\n// Get the user information for the authenticated user.\n// Alternatively, you can also use the `/users/me` endpoint.\nuser, err := client.User.GetSelf()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.GetSelf"
-                },
                 "x-python": {
                     "example": "from kittycad.models import User\nfrom kittycad.api.users import get_user_self\nfrom kittycad.types import Response\n\nfc: User = get_user_self.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[User] = get_user_self.sync_detailed(client=client)\n\n# OR run async\nfc: User = await get_user_self.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[User] = await get_user_self.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.get_user_self.html"
@@ -6899,10 +6968,6 @@
                 "tags": [
                     "users"
                 ],
-                "x-go": {
-                    "example": "// UpdateSelf: Update your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It updates information about the authenticated user.\nuser, err := client.User.UpdateSelf(body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.UpdateSelf"
-                },
                 "x-python": {
                     "example": "from kittycad.models import User\nfrom kittycad.api.users import update_user_self\nfrom kittycad.types import Response\n\nfc: User = update_user_self.sync(client=client, body=UpdateUser)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[User] = update_user_self.sync_detailed(client=client, body=UpdateUser)\n\n# OR run async\nfc: User = await update_user_self.asyncio(client=client, body=UpdateUser)\n\n# OR run async with more info\nresponse: Response[User] = await update_user_self.asyncio_detailed(client=client, body=UpdateUser)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.update_user_self.html"
@@ -7014,10 +7079,6 @@
                     "api-calls"
                 ],
                 "x-dropshot-pagination": true,
-                "x-go": {
-                    "example": "// UserList: List API calls for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.\n// The API calls are returned in order of creation, with the most recently created API calls first.\n//\n// To iterate over all pages, use the `UserListAllPages` method, instead.\n//\n// Parameters:\n//\t- `limit`: Maximum number of items returned by a single call\n//\t- `pageToken`: Token returned by previous call to retrieve the subsequent page\n//\t- `sortBy`\naPICallWithPriceResultsPage, err := client.APICall.UserList(limit, pageToken, sortBy)\n\n// - OR -\n\n// UserListAllPages: List API calls for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.\n// The API calls are returned in order of creation, with the most recently created API calls first.\n//\n// This method is a wrapper around the `UserList` method.\n// This method returns all the pages at once.\n//\n// Parameters:\n//\t- `sortBy`\nAPICallWithPrice, err := client.APICall.UserListAllPages(sortBy)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.UserList"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiCallWithPriceResultsPage\nfrom kittycad.api.api-calls import user_list_api_calls\nfrom kittycad.types import Response\n\nfc: ApiCallWithPriceResultsPage = user_list_api_calls.sync(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiCallWithPriceResultsPage] = user_list_api_calls.sync_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async\nfc: ApiCallWithPriceResultsPage = await user_list_api_calls.asyncio(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async with more info\nresponse: Response[ApiCallWithPriceResultsPage] = await user_list_api_calls.asyncio_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.user_list_api_calls.html"
@@ -7105,10 +7166,6 @@
                 "tags": [
                     "api-calls"
                 ],
-                "x-go": {
-                    "example": "// GetForUser: Get an API call for a user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user.\n//\n// Parameters:\n//\t- `id`: The ID of the API call.\naPICallWithPrice, err := client.APICall.GetForUser(id)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.GetForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiCallWithPrice\nfrom kittycad.api.api-calls import get_api_call_for_user\nfrom kittycad.types import Response\n\nfc: ApiCallWithPrice = get_api_call_for_user.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiCallWithPrice] = get_api_call_for_user.sync_detailed(client=client, id=)\n\n# OR run async\nfc: ApiCallWithPrice = await get_api_call_for_user.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[ApiCallWithPrice] = await get_api_call_for_user.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.get_api_call_for_user.html"
@@ -7220,10 +7277,6 @@
                     "api-tokens"
                 ],
                 "x-dropshot-pagination": true,
-                "x-go": {
-                    "example": "// ListForUser: List API tokens for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.\n// The API tokens are returned in order of creation, with the most recently created API tokens first.\n//\n// To iterate over all pages, use the `ListForUserAllPages` method, instead.\n//\n// Parameters:\n//\t- `limit`: Maximum number of items returned by a single call\n//\t- `pageToken`: Token returned by previous call to retrieve the subsequent page\n//\t- `sortBy`\naPITokenResultsPage, err := client.APIToken.ListForUser(limit, pageToken, sortBy)\n\n// - OR -\n\n// ListForUserAllPages: List API tokens for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.\n// The API tokens are returned in order of creation, with the most recently created API tokens first.\n//\n// This method is a wrapper around the `ListForUser` method.\n// This method returns all the pages at once.\n//\n// Parameters:\n//\t- `sortBy`\nAPIToken, err := client.APIToken.ListForUserAllPages(sortBy)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APITokenService.ListForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiTokenResultsPage\nfrom kittycad.api.api-tokens import list_api_tokens_for_user\nfrom kittycad.types import Response\n\nfc: ApiTokenResultsPage = list_api_tokens_for_user.sync(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiTokenResultsPage] = list_api_tokens_for_user.sync_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async\nfc: ApiTokenResultsPage = await list_api_tokens_for_user.asyncio(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async with more info\nresponse: Response[ApiTokenResultsPage] = await list_api_tokens_for_user.asyncio_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-tokens.list_api_tokens_for_user.html"
@@ -7297,10 +7350,6 @@
                 "tags": [
                     "api-tokens"
                 ],
-                "x-go": {
-                    "example": "// CreateForUser: Create a new API token for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It creates a new API token for the authenticated user.\naPIToken, err := client.APIToken.CreateForUser()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APITokenService.CreateForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiToken\nfrom kittycad.api.api-tokens import create_api_token_for_user\nfrom kittycad.types import Response\n\nfc: ApiToken = create_api_token_for_user.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiToken] = create_api_token_for_user.sync_detailed(client=client)\n\n# OR run async\nfc: ApiToken = await create_api_token_for_user.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[ApiToken] = await create_api_token_for_user.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-tokens.create_api_token_for_user.html"
@@ -7379,10 +7428,6 @@
                 "tags": [
                     "api-tokens"
                 ],
-                "x-go": {
-                    "example": "// DeleteForUser: Delete an API token for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It deletes the requested API token for the user.\n// This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes.\n//\n// Parameters:\n//\t- `token`: The API token.\nif err := client.APIToken.DeleteForUser(token); err != nil {\n\tpanic(err)\n}",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APITokenService.DeleteForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Error\nfrom kittycad.api.api-tokens import delete_api_token_for_user\nfrom kittycad.types import Response\n\nfc: Error = delete_api_token_for_user.sync(client=client, token=\"<uuid>\")\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = delete_api_token_for_user.sync_detailed(client=client, token=\"<uuid>\")\n\n# OR run async\nfc: Error = await delete_api_token_for_user.asyncio(client=client, token=\"<uuid>\")\n\n# OR run async with more info\nresponse: Response[Error] = await delete_api_token_for_user.asyncio_detailed(client=client, token=\"<uuid>\")",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-tokens.delete_api_token_for_user.html"
@@ -7469,10 +7514,6 @@
                 "tags": [
                     "api-tokens"
                 ],
-                "x-go": {
-                    "example": "// GetForUser: Get an API token for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns details of the requested API token for the user.\n//\n// Parameters:\n//\t- `token`: The API token.\naPIToken, err := client.APIToken.GetForUser(token)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APITokenService.GetForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiToken\nfrom kittycad.api.api-tokens import get_api_token_for_user\nfrom kittycad.types import Response\n\nfc: ApiToken = get_api_token_for_user.sync(client=client, token=\"<uuid>\")\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiToken] = get_api_token_for_user.sync_detailed(client=client, token=\"<uuid>\")\n\n# OR run async\nfc: ApiToken = await get_api_token_for_user.asyncio(client=client, token=\"<uuid>\")\n\n# OR run async with more info\nresponse: Response[ApiToken] = await get_api_token_for_user.asyncio_detailed(client=client, token=\"<uuid>\")",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-tokens.get_api_token_for_user.html"
@@ -7620,10 +7661,6 @@
                 "tags": [
                     "users"
                 ],
-                "x-go": {
-                    "example": "// GetSelfExtended: Get extended information about your user.\n//\n// Get the user information for the authenticated user.\n// Alternatively, you can also use the `/users-extended/me` endpoint.\nextendedUser, err := client.User.GetSelfExtended()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.GetSelfExtended"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ExtendedUser\nfrom kittycad.api.users import get_user_self_extended\nfrom kittycad.types import Response\n\nfc: ExtendedUser = get_user_self_extended.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ExtendedUser] = get_user_self_extended.sync_detailed(client=client)\n\n# OR run async\nfc: ExtendedUser = await get_user_self_extended.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[ExtendedUser] = await get_user_self_extended.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.get_user_self_extended.html"
@@ -7711,10 +7748,6 @@
                 "tags": [
                     "file"
                 ],
-                "x-go": {
-                    "example": "// GetConversionForUser: Get a file conversion for your user.\n//\n// Get the status and output of an async file conversion. If completed, the contents of the converted file (`output`) will be returned as a base64 encoded string.\n// This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user.\n//\n// Parameters:\n//\t- `id`: The ID of the async operation.\nasyncAPICallOutput, err := client.File.GetConversionForUser(id)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#FileService.GetConversionForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import FileConversion\nfrom kittycad.api.file import get_file_conversion_for_user\nfrom kittycad.types import Response\n\nfc: FileConversion = get_file_conversion_for_user.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[FileConversion] = get_file_conversion_for_user.sync_detailed(client=client, id=)\n\n# OR run async\nfc: FileConversion = await get_file_conversion_for_user.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[FileConversion] = await get_file_conversion_for_user.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.file.get_file_conversion_for_user.html"
@@ -7780,10 +7813,6 @@
                 "tags": [
                     "payments"
                 ],
-                "x-go": {
-                    "example": "// DeleteInformationForUser: Delete payment info for your user.\n//\n// This includes billing address, phone, and name.\n// This endpoint requires authentication by any KittyCAD user. It deletes the payment information for the authenticated user.\nif err := client.Payment.DeleteInformationForUser(); err != nil {\n\tpanic(err)\n}",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.DeleteInformationForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Error\nfrom kittycad.api.payments import delete_payment_information_for_user\nfrom kittycad.types import Response\n\nfc: Error = delete_payment_information_for_user.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = delete_payment_information_for_user.sync_detailed(client=client)\n\n# OR run async\nfc: Error = await delete_payment_information_for_user.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Error] = await delete_payment_information_for_user.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.delete_payment_information_for_user.html"
@@ -7857,10 +7886,6 @@
                 "tags": [
                     "payments"
                 ],
-                "x-go": {
-                    "example": "// GetInformationForUser: Get payment info about your user.\n//\n// This includes billing address, phone, and name.\n// This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user.\ncustomer, err := client.Payment.GetInformationForUser()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.GetInformationForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Customer\nfrom kittycad.api.payments import get_payment_information_for_user\nfrom kittycad.types import Response\n\nfc: Customer = get_payment_information_for_user.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Customer] = get_payment_information_for_user.sync_detailed(client=client)\n\n# OR run async\nfc: Customer = await get_payment_information_for_user.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[Customer] = await get_payment_information_for_user.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.get_payment_information_for_user.html"
@@ -8006,10 +8031,6 @@
                 "tags": [
                     "payments"
                 ],
-                "x-go": {
-                    "example": "// CreateInformationForUser: Create payment info for your user.\n//\n// This includes billing address, phone, and name.\n// This endpoint requires authentication by any KittyCAD user. It creates the payment information for the authenticated user.\ncustomer, err := client.Payment.CreateInformationForUser(body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.CreateInformationForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Customer\nfrom kittycad.api.payments import create_payment_information_for_user\nfrom kittycad.types import Response\n\nfc: Customer = create_payment_information_for_user.sync(client=client, body=BillingInfo)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Customer] = create_payment_information_for_user.sync_detailed(client=client, body=BillingInfo)\n\n# OR run async\nfc: Customer = await create_payment_information_for_user.asyncio(client=client, body=BillingInfo)\n\n# OR run async with more info\nresponse: Response[Customer] = await create_payment_information_for_user.asyncio_detailed(client=client, body=BillingInfo)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.create_payment_information_for_user.html"
@@ -8096,10 +8117,6 @@
                 "tags": [
                     "payments"
                 ],
-                "x-go": {
-                    "example": "// UpdateInformationForUser: Update payment info for your user.\n//\n// This includes billing address, phone, and name.\n// This endpoint requires authentication by any KittyCAD user. It updates the payment information for the authenticated user.\ncustomer, err := client.Payment.UpdateInformationForUser(body)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.UpdateInformationForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Customer\nfrom kittycad.api.payments import update_payment_information_for_user\nfrom kittycad.types import Response\n\nfc: Customer = update_payment_information_for_user.sync(client=client, body=BillingInfo)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Customer] = update_payment_information_for_user.sync_detailed(client=client, body=BillingInfo)\n\n# OR run async\nfc: Customer = await update_payment_information_for_user.asyncio(client=client, body=BillingInfo)\n\n# OR run async with more info\nresponse: Response[Customer] = await update_payment_information_for_user.asyncio_detailed(client=client, body=BillingInfo)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.update_payment_information_for_user.html"
@@ -8175,10 +8192,6 @@
                 "tags": [
                     "payments"
                 ],
-                "x-go": {
-                    "example": "// GetBalanceForUser: Get balance for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It gets the balance information for the authenticated user.\ncustomerBalance, err := client.Payment.GetBalanceForUser()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.GetBalanceForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import CustomerBalance\nfrom kittycad.api.payments import get_payment_balance_for_user\nfrom kittycad.types import Response\n\nfc: CustomerBalance = get_payment_balance_for_user.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[CustomerBalance] = get_payment_balance_for_user.sync_detailed(client=client)\n\n# OR run async\nfc: CustomerBalance = await get_payment_balance_for_user.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[CustomerBalance] = await get_payment_balance_for_user.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.get_payment_balance_for_user.html"
@@ -8255,10 +8268,6 @@
                     "payments",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// CreateIntentForUser: Create a payment intent for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It creates a new payment intent for the authenticated user.\npaymentIntent, err := client.Payment.CreateIntentForUser()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.CreateIntentForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import PaymentIntent\nfrom kittycad.api.payments import create_payment_intent_for_user\nfrom kittycad.types import Response\n\nfc: PaymentIntent = create_payment_intent_for_user.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[PaymentIntent] = create_payment_intent_for_user.sync_detailed(client=client)\n\n# OR run async\nfc: PaymentIntent = await create_payment_intent_for_user.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[PaymentIntent] = await create_payment_intent_for_user.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.create_payment_intent_for_user.html"
@@ -8338,10 +8347,6 @@
                 "tags": [
                     "payments"
                 ],
-                "x-go": {
-                    "example": "// ListInvoicesForUser: List invoices for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It lists invoices for the authenticated user.\nInvoice, err := client.Payment.ListInvoicesForUser()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.ListInvoicesForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import [Invoice]\nfrom kittycad.api.payments import list_invoices_for_user\nfrom kittycad.types import Response\n\nfc: [Invoice] = list_invoices_for_user.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[[Invoice]] = list_invoices_for_user.sync_detailed(client=client)\n\n# OR run async\nfc: [Invoice] = await list_invoices_for_user.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[[Invoice]] = await list_invoices_for_user.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.list_invoices_for_user.html"
@@ -8421,10 +8426,6 @@
                 "tags": [
                     "payments"
                 ],
-                "x-go": {
-                    "example": "// ListMethodsForUser: List payment methods for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user.\nPaymentMethod, err := client.Payment.ListMethodsForUser()",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.ListMethodsForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import [PaymentMethod]\nfrom kittycad.api.payments import list_payment_methods_for_user\nfrom kittycad.types import Response\n\nfc: [PaymentMethod] = list_payment_methods_for_user.sync(client=client)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[[PaymentMethod]] = list_payment_methods_for_user.sync_detailed(client=client)\n\n# OR run async\nfc: [PaymentMethod] = await list_payment_methods_for_user.asyncio(client=client)\n\n# OR run async with more info\nresponse: Response[[PaymentMethod]] = await list_payment_methods_for_user.asyncio_detailed(client=client)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.list_payment_methods_for_user.html"
@@ -8503,10 +8504,6 @@
                     "payments",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// DeleteMethodForUser: Delete a payment method for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It deletes the specified payment method for the authenticated user.\n//\n// Parameters:\n//\t- `id`: The ID of the payment method.\nif err := client.Payment.DeleteMethodForUser(id); err != nil {\n\tpanic(err)\n}",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#PaymentService.DeleteMethodForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Error\nfrom kittycad.api.payments import delete_payment_method_for_user\nfrom kittycad.types import Response\n\nfc: Error = delete_payment_method_for_user.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Error] = delete_payment_method_for_user.sync_detailed(client=client, id=)\n\n# OR run async\nfc: Error = await delete_payment_method_for_user.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[Error] = await delete_payment_method_for_user.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.payments.delete_payment_method_for_user.html"
@@ -8666,10 +8663,6 @@
                 "tags": [
                     "sessions"
                 ],
-                "x-go": {
-                    "example": "// GetForUser: Get a session for your user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns details of the requested API token for the user.\n//\n// Parameters:\n//\t- `token`: The API token.\nsession, err := client.Session.GetForUser(token)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#SessionService.GetForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import Session\nfrom kittycad.api.sessions import get_session_for_user\nfrom kittycad.types import Response\n\nfc: Session = get_session_for_user.sync(client=client, token=\"<uuid>\")\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[Session] = get_session_for_user.sync_detailed(client=client, token=\"<uuid>\")\n\n# OR run async\nfc: Session = await get_session_for_user.asyncio(client=client, token=\"<uuid>\")\n\n# OR run async with more info\nresponse: Response[Session] = await get_session_for_user.asyncio_detailed(client=client, token=\"<uuid>\")",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.sessions.get_session_for_user.html"
@@ -8782,10 +8775,6 @@
                     "hidden"
                 ],
                 "x-dropshot-pagination": true,
-                "x-go": {
-                    "example": "// List: List users.\n//\n// This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first.\n//\n// To iterate over all pages, use the `ListAllPages` method, instead.\n//\n// Parameters:\n//\t- `limit`: Maximum number of items returned by a single call\n//\t- `pageToken`: Token returned by previous call to retrieve the subsequent page\n//\t- `sortBy`\nuserResultsPage, err := client.User.List(limit, pageToken, sortBy)\n\n// - OR -\n\n// ListAllPages: List users.\n//\n// This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first.\n//\n// This method is a wrapper around the `List` method.\n// This method returns all the pages at once.\n//\n// Parameters:\n//\t- `sortBy`\nUser, err := client.User.ListAllPages(sortBy)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.List"
-                },
                 "x-python": {
                     "example": "from kittycad.models import UserResultsPage\nfrom kittycad.api.users import list_users\nfrom kittycad.types import Response\n\nfc: UserResultsPage = list_users.sync(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[UserResultsPage] = list_users.sync_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async\nfc: UserResultsPage = await list_users.asyncio(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async with more info\nresponse: Response[UserResultsPage] = await list_users.asyncio_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.list_users.html"
@@ -8898,10 +8887,6 @@
                     "hidden"
                 ],
                 "x-dropshot-pagination": true,
-                "x-go": {
-                    "example": "// ListExtended: List users with extended information.\n//\n// This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first.\n//\n// To iterate over all pages, use the `ListExtendedAllPages` method, instead.\n//\n// Parameters:\n//\t- `limit`: Maximum number of items returned by a single call\n//\t- `pageToken`: Token returned by previous call to retrieve the subsequent page\n//\t- `sortBy`\nextendedUserResultsPage, err := client.User.ListExtended(limit, pageToken, sortBy)\n\n// - OR -\n\n// ListExtendedAllPages: List users with extended information.\n//\n// This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first.\n//\n// This method is a wrapper around the `ListExtended` method.\n// This method returns all the pages at once.\n//\n// Parameters:\n//\t- `sortBy`\nExtendedUser, err := client.User.ListExtendedAllPages(sortBy)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.ListExtended"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ExtendedUserResultsPage\nfrom kittycad.api.users import list_users_extended\nfrom kittycad.types import Response\n\nfc: ExtendedUserResultsPage = list_users_extended.sync(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ExtendedUserResultsPage] = list_users_extended.sync_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async\nfc: ExtendedUserResultsPage = await list_users_extended.asyncio(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async with more info\nresponse: Response[ExtendedUserResultsPage] = await list_users_extended.asyncio_detailed(client=client, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.list_users_extended.html"
@@ -8990,10 +8975,6 @@
                     "users",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// GetExtended: Get extended information about a user.\n//\n// To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.\n// Alternatively, to get information about the authenticated user, use `/user/extended` endpoint.\n// To get information about any KittyCAD user, you must be a KittyCAD employee.\n//\n// Parameters:\n//\t- `id`: The user ID.\nextendedUser, err := client.User.GetExtended(id)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.GetExtended"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ExtendedUser\nfrom kittycad.api.users import get_user_extended\nfrom kittycad.types import Response\n\nfc: ExtendedUser = get_user_extended.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ExtendedUser] = get_user_extended.sync_detailed(client=client, id=)\n\n# OR run async\nfc: ExtendedUser = await get_user_extended.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[ExtendedUser] = await get_user_extended.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.get_user_extended.html"
@@ -9082,10 +9063,6 @@
                     "users",
                     "hidden"
                 ],
-                "x-go": {
-                    "example": "// Get: Get a user.\n//\n// To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.\n// Alternatively, to get information about the authenticated user, use `/user` endpoint.\n// To get information about any KittyCAD user, you must be a KittyCAD employee.\n//\n// Parameters:\n//\t- `id`: The user ID.\nuser, err := client.User.Get(id)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#UserService.Get"
-                },
                 "x-python": {
                     "example": "from kittycad.models import User\nfrom kittycad.api.users import get_user\nfrom kittycad.types import Response\n\nfc: User = get_user.sync(client=client, id=)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[User] = get_user.sync_detailed(client=client, id=)\n\n# OR run async\nfc: User = await get_user.asyncio(client=client, id=)\n\n# OR run async with more info\nresponse: Response[User] = await get_user.asyncio_detailed(client=client, id=)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.users.get_user.html"
@@ -9208,10 +9185,6 @@
                     "hidden"
                 ],
                 "x-dropshot-pagination": true,
-                "x-go": {
-                    "example": "// ListForUser: List API calls for a user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if \"me\" is passed as the user id.\n// Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.\n// If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.\n// The API calls are returned in order of creation, with the most recently created API calls first.\n//\n// To iterate over all pages, use the `ListForUserAllPages` method, instead.\n//\n// Parameters:\n//\t- `id`: The user ID.\n//\t- `limit`: Maximum number of items returned by a single call\n//\t- `pageToken`: Token returned by previous call to retrieve the subsequent page\n//\t- `sortBy`\naPICallWithPriceResultsPage, err := client.APICall.ListForUser(id, limit, pageToken, sortBy)\n\n// - OR -\n\n// ListForUserAllPages: List API calls for a user.\n//\n// This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if \"me\" is passed as the user id.\n// Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.\n// If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.\n// The API calls are returned in order of creation, with the most recently created API calls first.\n//\n// This method is a wrapper around the `ListForUser` method.\n// This method returns all the pages at once.\n//\n// Parameters:\n//\t- `id`: The user ID.\n//\t- `sortBy`\nAPICallWithPrice, err := client.APICall.ListForUserAllPages(id , sortBy)",
-                    "libDocsLink": "https://pkg.go.dev/github.com/kittycad/kittycad.go/#APICallService.ListForUser"
-                },
                 "x-python": {
                     "example": "from kittycad.models import ApiCallWithPriceResultsPage\nfrom kittycad.api.api-calls import list_api_calls_for_user\nfrom kittycad.types import Response\n\nfc: ApiCallWithPriceResultsPage = list_api_calls_for_user.sync(client=client, id=, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR if you need more info (e.g. status_code)\nresponse: Response[ApiCallWithPriceResultsPage] = list_api_calls_for_user.sync_detailed(client=client, id=, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async\nfc: ApiCallWithPriceResultsPage = await list_api_calls_for_user.asyncio(client=client, id=, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)\n\n# OR run async with more info\nresponse: Response[ApiCallWithPriceResultsPage] = await list_api_calls_for_user.asyncio_detailed(client=client, id=, limit=\"<string>\", page_token=, sort_by=CreatedAtSortMode)",
                     "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api.api-calls.list_api_calls_for_user.html"
@@ -9233,6 +9206,13 @@
                 "url": "https://docs.kittycad.io/api/api-tokens"
             },
             "name": "api-tokens"
+        },
+        {
+            "description": "Endpoints for third party app grant flows.",
+            "externalDocs": {
+                "url": "https://docs.kittycad.io/api/apps"
+            },
+            "name": "apps"
         },
         {
             "description": "Beta API endpoints. We will not charge for these endpoints while they are in beta.",
