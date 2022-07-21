@@ -45,19 +45,18 @@ jobs:
       - name: commit the changes in the docs repo
         shell: bash
         run: |
-          export VERSION=$(cat VERSION.txt);
           cd docs
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .
-          git commit -am "YOYO NEW SPEC DOCS ${VERSION}!" || exit 0
+          git commit -am "YOYO NEW SPEC PYTHON DOCS!" || exit 0
           git fetch origin
           git rebase origin/main || exit 0
           export NEW_BRANCH="update-spec-python"
           git checkout -b "$NEW_BRANCH"
           git push -f origin "$NEW_BRANCH"
-          gh pr create --title "Update lang spec docs for ${VERSION}" \
-              --body "Updating the generated docs for go lang" \
+          gh pr create --title "Update lang spec docs for python" \
+              --body "Updating the generated docs for python" \
               --head "$NEW_BRANCH" \
               --base main || true
         env:
