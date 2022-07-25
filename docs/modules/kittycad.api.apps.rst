@@ -1,4 +1,4 @@
-kittycad.api.apps
+﻿kittycad.api.apps
 =================
 
 .. automodule:: kittycad.api.apps
@@ -29,4 +29,5 @@ kittycad.api.apps
 
    kittycad.api.apps.apps_github_callback
    kittycad.api.apps.apps_github_consent
+   kittycad.api.apps.apps_github_webhook
 

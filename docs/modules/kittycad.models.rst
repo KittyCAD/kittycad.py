@@ -99,8 +99,58 @@
    kittycad.models.system_info_cgroup_version_enum
    kittycad.models.system_info_default_address_pools
    kittycad.models.system_info_isolation_enum
-   kittycad.models.unit_conversion
+   kittycad.models.unit_acceleration_conversion
+   kittycad.models.unit_acceleration_format
+   kittycad.models.unit_angle_conversion
+   kittycad.models.unit_angle_format
+   kittycad.models.unit_angular_velocity_conversion
+   kittycad.models.unit_angular_velocity_format
+   kittycad.models.unit_area_conversion
+   kittycad.models.unit_area_format
+   kittycad.models.unit_charge_conversion
+   kittycad.models.unit_charge_format
+   kittycad.models.unit_concentration_conversion
+   kittycad.models.unit_concentration_format
+   kittycad.models.unit_data_conversion
+   kittycad.models.unit_data_format
+   kittycad.models.unit_data_transfer_rate_conversion
+   kittycad.models.unit_data_transfer_rate_format
+   kittycad.models.unit_density_conversion
+   kittycad.models.unit_density_format
+   kittycad.models.unit_energy_conversion
+   kittycad.models.unit_energy_format
+   kittycad.models.unit_force_conversion
+   kittycad.models.unit_force_format
+   kittycad.models.unit_illuminance_conversion
+   kittycad.models.unit_illuminance_format
+   kittycad.models.unit_length_conversion
+   kittycad.models.unit_length_format
+   kittycad.models.unit_magnetic_field_strength_conversion
+   kittycad.models.unit_magnetic_field_strength_format
+   kittycad.models.unit_magnetic_flux_conversion
+   kittycad.models.unit_magnetic_flux_format
+   kittycad.models.unit_mass_conversion
+   kittycad.models.unit_mass_format
+   kittycad.models.unit_metric_conversion
    kittycad.models.unit_metric_format
+   kittycad.models.unit_power_conversion
+   kittycad.models.unit_power_format
+   kittycad.models.unit_pressure_conversion
+   kittycad.models.unit_pressure_format
+   kittycad.models.unit_radiation_conversion
+   kittycad.models.unit_radiation_format
+   kittycad.models.unit_solid_angle_conversion
+   kittycad.models.unit_solid_angle_format
+   kittycad.models.unit_temperature_conversion
+   kittycad.models.unit_temperature_format
+   kittycad.models.unit_time_conversion
+   kittycad.models.unit_time_format
+   kittycad.models.unit_velocity_conversion
+   kittycad.models.unit_velocity_format
+   kittycad.models.unit_voltage_conversion
+   kittycad.models.unit_voltage_format
+   kittycad.models.unit_volume_conversion
+   kittycad.models.unit_volume_format
    kittycad.models.update_user
    kittycad.models.user
    kittycad.models.user_results_page
