@@ -5,15 +5,15 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.unit_metric_format import UnitMetricFormat
+from ..models.unit_area_format import UnitAreaFormat
 from ..models.api_call_status import ApiCallStatus
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnitConversion")
+T = TypeVar("T", bound="UnitAreaConversion")
 
 
 @attr.s(auto_attribs=True)
-class UnitConversion:
+class UnitAreaConversion:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -21,8 +21,8 @@ class UnitConversion:
     id: Union[Unset, str] = UNSET
     input: Union[Unset, float] = UNSET
     output: Union[Unset, float] = UNSET
-    output_format: Union[Unset, UnitMetricFormat] = UNSET
-    src_format: Union[Unset, UnitMetricFormat] = UNSET
+    output_format: Union[Unset, UnitAreaFormat] = UNSET
+    src_format: Union[Unset, UnitAreaFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -114,18 +114,18 @@ class UnitConversion:
         output = d.pop("output", UNSET)
 
         _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, UnitMetricFormat]
+        output_format: Union[Unset, UnitAreaFormat]
         if isinstance(_output_format, Unset):
             output_format = UNSET
         else:
-            output_format = UnitMetricFormat(_output_format)
+            output_format = UnitAreaFormat(_output_format)
 
         _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, UnitMetricFormat]
+        src_format: Union[Unset, UnitAreaFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = UnitMetricFormat(_src_format)
+            src_format = UnitAreaFormat(_src_format)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -150,7 +150,7 @@ class UnitConversion:
 
         user_id = d.pop("user_id", UNSET)
 
-        unit_conversion = cls(
+        unit_area_conversion = cls(
             completed_at=completed_at,
             created_at=created_at,
             error=error,
@@ -165,8 +165,8 @@ class UnitConversion:
             user_id=user_id,
         )
 
-        unit_conversion.additional_properties = d
-        return unit_conversion
+        unit_area_conversion.additional_properties = d
+        return unit_area_conversion
 
     @property
     def additional_keys(self) -> List[str]:
