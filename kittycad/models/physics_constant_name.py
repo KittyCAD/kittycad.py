@@ -1,0 +1,40 @@
+from enum import Enum
+
+
+class PhysicsConstantName(str, Enum):
+    PI = 'pi'
+    C = 'c'
+    SPEED_OF_LIGHT = 'speed_of_light'
+    G = 'G'
+    NEWTONIAN_GRAVIATION = 'newtonian_graviation'
+    H = 'h'
+    PLANK_CONST = 'plank_const'
+    MU_0 = 'mu_0'
+    VACUUM_PERMEABILITY = 'vacuum_permeability'
+    E_0 = 'E_0'
+    VACUUM_PERMITIVITY = 'vacuum_permitivity'
+    Z_0 = 'Z_0'
+    VACUUM_IMPEDANCE = 'vacuum_impedance'
+    K_E = 'k_e'
+    COULOMB_CONST = 'coulomb_const'
+    E = 'e'
+    ELEMENTARY_CHARGE = 'elementary_charge'
+    M_E = 'm_e'
+    ELECTRON_MASS = 'electron_mass'
+    M_P = 'm_p'
+    PROTON_MASS = 'proton_mass'
+    MU_B = 'mu_B'
+    BOHR_MAGNETON = 'bohr_magneton'
+    NA = 'NA'
+    AVOGADRO_NUM = 'avogadro_num'
+    R = 'R'
+    MOLAR_GAS_CONST = 'molar_gas_const'
+    K_B = 'K_B'
+    BOLTZMANN_CONST = 'boltzmann_const'
+    F = 'F'
+    FARADAY_CONST = 'faraday_const'
+    SIGMA = 'sigma'
+    STEFAN_BOLTZMANN_CONST = 'stefan_boltzmann_const'
+
+    def __str__(self) -> str:
+        return str(self.value)
