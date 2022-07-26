@@ -80,7 +80,7 @@ def sync(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, UnitRadiationConversion, Error]]:
-	""" Convert a unit value to another metric unit value. This is a nice endpoint to use for helper functions. """
+	""" Convert a radiation unit value to another radiation unit value. This is a nice endpoint to use for helper functions. """
 
 	return sync_detailed(
 		output_format=output_format,
@@ -117,7 +117,7 @@ async def asyncio(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, UnitRadiationConversion, Error]]:
-	""" Convert a unit value to another metric unit value. This is a nice endpoint to use for helper functions. """
+	""" Convert a radiation unit value to another radiation unit value. This is a nice endpoint to use for helper functions. """
 
 	return (
 		await asyncio_detailed(
