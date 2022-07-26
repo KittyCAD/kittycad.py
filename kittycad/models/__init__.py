@@ -63,6 +63,8 @@ from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
 from .payment_method_card_checks import PaymentMethodCardChecks
 from .payment_method_type import PaymentMethodType
+from .physics_constant import PhysicsConstant
+from .physics_constant_name import PhysicsConstantName
 from .plugins_info import PluginsInfo
 from .pong import Pong
 from .registry_service_config import RegistryServiceConfig
