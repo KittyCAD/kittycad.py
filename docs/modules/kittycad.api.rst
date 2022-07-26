@@ -31,6 +31,7 @@
    kittycad.api.api-tokens
    kittycad.api.apps
    kittycad.api.beta
+   kittycad.api.constant
    kittycad.api.file
    kittycad.api.hidden
    kittycad.api.meta

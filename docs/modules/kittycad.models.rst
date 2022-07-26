@@ -90,6 +90,8 @@
    kittycad.models.payment_method
    kittycad.models.payment_method_card_checks
    kittycad.models.payment_method_type
+   kittycad.models.physics_constant
+   kittycad.models.physics_constant_name
    kittycad.models.plugins_info
    kittycad.models.pong
    kittycad.models.registry_service_config
