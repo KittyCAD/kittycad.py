@@ -1,7 +1,6 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .account_provider import AccountProvider
-from .address import Address
 from .api_call_query_group import ApiCallQueryGroup
 from .api_call_query_group_by import ApiCallQueryGroupBy
 from .api_call_status import ApiCallStatus
@@ -56,6 +55,7 @@ from .leaf_node import LeafNode
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
 from .method import Method
+from .new_address import NewAddress
 from .o_auth2_client_info import OAuth2ClientInfo
 from .o_auth2_grant_type import OAuth2GrantType
 from .output_file import OutputFile
