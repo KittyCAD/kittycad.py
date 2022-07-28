@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.address import Address
+from ..models.new_address import NewAddress
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="BillingInfo")
@@ -11,7 +11,7 @@ T = TypeVar("T", bound="BillingInfo")
 @attr.s(auto_attribs=True)
 class BillingInfo:
     """ """
-    address: Union[Unset, Address] = UNSET
+    address: Union[Unset, NewAddress] = UNSET
     name: Union[Unset, str] = UNSET
     phone: Union[Unset, str] = UNSET
 
@@ -40,11 +40,11 @@ class BillingInfo:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _address = d.pop("address", UNSET)
-        address: Union[Unset, Address]
+        address: Union[Unset, NewAddress]
         if isinstance(_address, Unset):
             address = UNSET
         else:
-            address = Address(_address)
+            address = NewAddress(_address)
 
         name = d.pop("name", UNSET)
 

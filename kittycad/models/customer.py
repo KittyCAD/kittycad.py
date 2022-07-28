@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
-from ..models.address import Address
+from ..models.new_address import NewAddress
 from ..models.currency import Currency
 from ..types import UNSET, Unset
 
@@ -14,7 +14,7 @@ T = TypeVar("T", bound="Customer")
 @attr.s(auto_attribs=True)
 class Customer:
     """ """
-    address: Union[Unset, Address] = UNSET
+    address: Union[Unset, NewAddress] = UNSET
     balance: Union[Unset, float] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     currency: Union[Unset, Currency] = UNSET
@@ -75,11 +75,11 @@ class Customer:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _address = d.pop("address", UNSET)
-        address: Union[Unset, Address]
+        address: Union[Unset, NewAddress]
         if isinstance(_address, Unset):
             address = UNSET
         else:
-            address = Address(_address)
+            address = NewAddress(_address)
 
         balance = d.pop("balance", UNSET)
 
