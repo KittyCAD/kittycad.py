@@ -28,7 +28,6 @@
    :recursive:
 
    kittycad.models.account_provider
-   kittycad.models.address
    kittycad.models.api_call_query_group
    kittycad.models.api_call_query_group_by
    kittycad.models.api_call_status
@@ -83,6 +82,7 @@
    kittycad.models.meta_cluster_info
    kittycad.models.metadata
    kittycad.models.method
+   kittycad.models.new_address
    kittycad.models.o_auth2_client_info
    kittycad.models.o_auth2_grant_type
    kittycad.models.output_file
