@@ -2,8 +2,9 @@ from enum import Enum
 
 
 class UnitVolumeFormat(str, Enum):
-    CUBIC_METER = 'cubic_meter'
     CUBIC_MILLIMETER = 'cubic_millimeter'
+    CUBIC_CENTIMETER = 'cubic_centimeter'
+    CUBIC_METER = 'cubic_meter'
     CUBIC_KILOMETER = 'cubic_kilometer'
     LITER = 'liter'
     CUBIC_FOOT = 'cubic_foot'

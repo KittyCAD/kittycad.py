@@ -106,8 +106,10 @@ from .unit_magnetic_flux_conversion import UnitMagneticFluxConversion
 from .unit_magnetic_flux_format import UnitMagneticFluxFormat
 from .unit_mass_conversion import UnitMassConversion
 from .unit_mass_format import UnitMassFormat
-from .unit_metric_conversion import UnitMetricConversion
-from .unit_metric_format import UnitMetricFormat
+from .unit_metric_power import UnitMetricPower
+from .unit_metric_power_conversion import UnitMetricPowerConversion
+from .unit_metric_power_cubed_conversion import UnitMetricPowerCubedConversion
+from .unit_metric_power_squared_conversion import UnitMetricPowerSquaredConversion
 from .unit_power_conversion import UnitPowerConversion
 from .unit_power_format import UnitPowerFormat
 from .unit_pressure_conversion import UnitPressureConversion

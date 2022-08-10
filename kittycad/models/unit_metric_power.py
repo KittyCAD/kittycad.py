@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class UnitMetricFormat(str, Enum):
+class UnitMetricPower(str, Enum):
     ATTO = 'atto'
     FEMTO = 'femto'
     PICO = 'pico'
