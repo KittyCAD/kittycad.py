@@ -133,8 +133,10 @@
    kittycad.models.unit_magnetic_flux_format
    kittycad.models.unit_mass_conversion
    kittycad.models.unit_mass_format
-   kittycad.models.unit_metric_conversion
-   kittycad.models.unit_metric_format
+   kittycad.models.unit_metric_power
+   kittycad.models.unit_metric_power_conversion
+   kittycad.models.unit_metric_power_cubed_conversion
+   kittycad.models.unit_metric_power_squared_conversion
    kittycad.models.unit_power_conversion
    kittycad.models.unit_power_format
    kittycad.models.unit_pressure_conversion
