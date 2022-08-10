@@ -1,4 +1,4 @@
-kittycad.api.unit
+﻿kittycad.api.unit
 =================
 
 .. automodule:: kittycad.api.unit
@@ -43,7 +43,9 @@ kittycad.api.unit
    kittycad.api.unit.get_magnetic_field_strength_unit_conversion
    kittycad.api.unit.get_magnetic_flux_unit_conversion
    kittycad.api.unit.get_mass_unit_conversion
-   kittycad.api.unit.get_metric_unit_conversion
+   kittycad.api.unit.get_metric_power_cubed_unit_conversion
+   kittycad.api.unit.get_metric_power_squared_unit_conversion
+   kittycad.api.unit.get_metric_power_unit_conversion
    kittycad.api.unit.get_power_unit_conversion
    kittycad.api.unit.get_pressure_unit_conversion
    kittycad.api.unit.get_radiation_unit_conversion
