@@ -2,7 +2,10 @@ from enum import Enum
 
 
 class UnitLengthFormat(str, Enum):
+    MILLIMETER = 'millimeter'
+    CENTIMETER = 'centimeter'
     METER = 'meter'
+    KILOMTER = 'kilomter'
     FOOT = 'foot'
     INCH = 'inch'
     MILE = 'mile'

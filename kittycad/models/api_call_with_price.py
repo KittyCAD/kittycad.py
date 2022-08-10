@@ -21,6 +21,7 @@ class ApiCallWithPrice:
     endpoint: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     ip_address: Union[Unset, str] = UNSET
+    litterbox: Union[Unset, bool] = False
     method: Union[Unset, Method] = UNSET
     minutes: Union[Unset, int] = UNSET
     origin: Union[Unset, str] = UNSET
@@ -50,6 +51,7 @@ class ApiCallWithPrice:
         endpoint = self.endpoint
         id = self.id
         ip_address = self.ip_address
+        litterbox = self.litterbox
         method: Union[Unset, str] = UNSET
         if not isinstance(self.method, Unset):
             method = self.method.value
@@ -88,6 +90,8 @@ class ApiCallWithPrice:
             field_dict['id'] = id
         if ip_address is not UNSET:
             field_dict['ip_address'] = ip_address
+        if litterbox is not UNSET:
+            field_dict['litterbox'] = litterbox
         if method is not UNSET:
             field_dict['method'] = method
         if minutes is not UNSET:
@@ -146,6 +150,8 @@ class ApiCallWithPrice:
 
         ip_address = d.pop("ip_address", UNSET)
 
+        litterbox = d.pop("litterbox", UNSET)
+
         _method = d.pop("method", UNSET)
         method: Union[Unset, Method]
         if isinstance(_method, Unset):
@@ -197,6 +203,7 @@ class ApiCallWithPrice:
             endpoint=endpoint,
             id=id,
             ip_address=ip_address,
+            litterbox=litterbox,
             method=method,
             minutes=minutes,
             origin=origin,
