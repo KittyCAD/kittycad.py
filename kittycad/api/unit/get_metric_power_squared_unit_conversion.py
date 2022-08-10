@@ -3,20 +3,20 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.unit_metric_conversion import UnitMetricConversion
+from ...models.unit_metric_power_squared_conversion import UnitMetricPowerSquaredConversion
 from ...models.error import Error
-from ...models.unit_metric_format import UnitMetricFormat
-from ...models.unit_metric_format import UnitMetricFormat
+from ...models.unit_metric_power import UnitMetricPower
+from ...models.unit_metric_power import UnitMetricPower
 from ...types import Response
 
 def _get_kwargs(
-	output_format: UnitMetricFormat,
-	src_format: UnitMetricFormat,
+	output_format: UnitMetricPower,
+	src_format: UnitMetricPower,
 	value: float,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/unit/conversion/metric/{src_format}/{output_format}?value={value}".format(client.base_url, output_format=output_format, src_format=src_format, value=value)
+	url = "{}/unit/conversion/metric/squared/{src_format}/{output_format}?value={value}".format(client.base_url, output_format=output_format, src_format=src_format, value=value)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -29,9 +29,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, UnitMetricConversion, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
 	if response.status_code == 200:
-		response_200 = UnitMetricConversion.from_dict(response.json())
+		response_200 = UnitMetricPowerSquaredConversion.from_dict(response.json())
 		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -42,7 +42,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, UnitMetr
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, UnitMetricConversion, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -52,12 +52,12 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, UnitMetr
 
 
 def sync_detailed(
-	output_format: UnitMetricFormat,
-	src_format: UnitMetricFormat,
+	output_format: UnitMetricPower,
+	src_format: UnitMetricPower,
 	value: float,
 	*,
 	client: Client,
-) -> Response[Union[Any, UnitMetricConversion, Error]]:
+) -> Response[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
 	kwargs = _get_kwargs(
 		output_format=output_format,
 		src_format=src_format,
@@ -74,13 +74,13 @@ def sync_detailed(
 
 
 def sync(
-	output_format: UnitMetricFormat,
-	src_format: UnitMetricFormat,
+	output_format: UnitMetricPower,
+	src_format: UnitMetricPower,
 	value: float,
 	*,
 	client: Client,
-) -> Optional[Union[Any, UnitMetricConversion, Error]]:
-	""" Convert a metric unit value to another metric unit value. This is a nice endpoint to use for helper functions. """
+) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+	""" Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions. """
 
 	return sync_detailed(
 		output_format=output_format,
@@ -91,12 +91,12 @@ def sync(
 
 
 async def asyncio_detailed(
-	output_format: UnitMetricFormat,
-	src_format: UnitMetricFormat,
+	output_format: UnitMetricPower,
+	src_format: UnitMetricPower,
 	value: float,
 	*,
 	client: Client,
-) -> Response[Union[Any, UnitMetricConversion, Error]]:
+) -> Response[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
 	kwargs = _get_kwargs(
 		output_format=output_format,
 		src_format=src_format,
@@ -111,13 +111,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	output_format: UnitMetricFormat,
-	src_format: UnitMetricFormat,
+	output_format: UnitMetricPower,
+	src_format: UnitMetricPower,
 	value: float,
 	*,
 	client: Client,
-) -> Optional[Union[Any, UnitMetricConversion, Error]]:
-	""" Convert a metric unit value to another metric unit value. This is a nice endpoint to use for helper functions. """
+) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+	""" Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions. """
 
 	return (
 		await asyncio_detailed(

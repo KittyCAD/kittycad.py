@@ -5,15 +5,15 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.unit_metric_format import UnitMetricFormat
+from ..models.unit_metric_power import UnitMetricPower
 from ..models.api_call_status import ApiCallStatus
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnitMetricConversion")
+T = TypeVar("T", bound="UnitMetricPowerCubedConversion")
 
 
 @attr.s(auto_attribs=True)
-class UnitMetricConversion:
+class UnitMetricPowerCubedConversion:
     """ """
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -21,8 +21,8 @@ class UnitMetricConversion:
     id: Union[Unset, str] = UNSET
     input: Union[Unset, float] = UNSET
     output: Union[Unset, float] = UNSET
-    output_format: Union[Unset, UnitMetricFormat] = UNSET
-    src_format: Union[Unset, UnitMetricFormat] = UNSET
+    output_format: Union[Unset, UnitMetricPower] = UNSET
+    src_format: Union[Unset, UnitMetricPower] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -114,18 +114,18 @@ class UnitMetricConversion:
         output = d.pop("output", UNSET)
 
         _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, UnitMetricFormat]
+        output_format: Union[Unset, UnitMetricPower]
         if isinstance(_output_format, Unset):
             output_format = UNSET
         else:
-            output_format = UnitMetricFormat(_output_format)
+            output_format = UnitMetricPower(_output_format)
 
         _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, UnitMetricFormat]
+        src_format: Union[Unset, UnitMetricPower]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = UnitMetricFormat(_src_format)
+            src_format = UnitMetricPower(_src_format)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -150,7 +150,7 @@ class UnitMetricConversion:
 
         user_id = d.pop("user_id", UNSET)
 
-        unit_metric_conversion = cls(
+        unit_metric_power_cubed_conversion = cls(
             completed_at=completed_at,
             created_at=created_at,
             error=error,
@@ -165,8 +165,8 @@ class UnitMetricConversion:
             user_id=user_id,
         )
 
-        unit_metric_conversion.additional_properties = d
-        return unit_metric_conversion
+        unit_metric_power_cubed_conversion.additional_properties = d
+        return unit_metric_power_cubed_conversion
 
     @property
     def additional_keys(self) -> List[str]:
