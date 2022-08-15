@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.file &mdash; kittycad v0.3.0 documentation</title>
+  <title>kittycad.api.file &mdash; kittycad v0.3.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.api.file.create_file_conversion" href="kittycad.api.file.create_file_conversion.html" />
+    <link rel="next" title="kittycad.api.file.create_file_center_of_mass" href="kittycad.api.file.create_file_center_of_mass.html" />
     <link rel="prev" title="kittycad.api.constant.get_physics_constant" href="kittycad.api.constant.get_physics_constant.html" /> 
 </head>
 
@@ -31,7 +31,7 @@
             <a href="../index.html" class="icon icon-home"> kittycad
           </a>
               <div class="version">
-                v0.3.0
+                v0.3.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -47,11 +47,13 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.beta.html">kittycad.api.beta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.constant.html">kittycad.api.constant</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.api.file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_center_of_mass.html">kittycad.api.file.create_file_center_of_mass</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_conversion.html">kittycad.api.file.create_file_conversion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_conversion_with_base64_helper.html">kittycad.api.file.create_file_conversion_with_base64_helper</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_density.html">kittycad.api.file.create_file_density</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_execution.html">kittycad.api.file.create_file_execution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_mass.html">kittycad.api.file.create_file_mass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_surface_area.html">kittycad.api.file.create_file_surface_area</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.create_file_volume.html">kittycad.api.file.create_file_volume</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.get_file_conversion.html">kittycad.api.file.get_file_conversion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.get_file_conversion_for_user.html">kittycad.api.file.get_file_conversion_for_user</a></li>
@@ -111,19 +113,25 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.create_file_conversion.html#module-kittycad.api.file.create_file_conversion" title="kittycad.api.file.create_file_conversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_conversion</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.create_file_center_of_mass.html#module-kittycad.api.file.create_file_center_of_mass" title="kittycad.api.file.create_file_center_of_mass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_center_of_mass</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.file.create_file_conversion_with_base64_helper.html#module-kittycad.api.file.create_file_conversion_with_base64_helper" title="kittycad.api.file.create_file_conversion_with_base64_helper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_conversion_with_base64_helper</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.file.create_file_conversion.html#module-kittycad.api.file.create_file_conversion" title="kittycad.api.file.create_file_conversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_conversion</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.create_file_density.html#module-kittycad.api.file.create_file_density" title="kittycad.api.file.create_file_density"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_density</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.create_file_conversion_with_base64_helper.html#module-kittycad.api.file.create_file_conversion_with_base64_helper" title="kittycad.api.file.create_file_conversion_with_base64_helper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_conversion_with_base64_helper</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.file.create_file_execution.html#module-kittycad.api.file.create_file_execution" title="kittycad.api.file.create_file_execution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_execution</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.file.create_file_density.html#module-kittycad.api.file.create_file_density" title="kittycad.api.file.create_file_density"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_density</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.create_file_mass.html#module-kittycad.api.file.create_file_mass" title="kittycad.api.file.create_file_mass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_mass</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.create_file_execution.html#module-kittycad.api.file.create_file_execution" title="kittycad.api.file.create_file_execution"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_execution</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.file.create_file_mass.html#module-kittycad.api.file.create_file_mass" title="kittycad.api.file.create_file_mass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_mass</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.create_file_surface_area.html#module-kittycad.api.file.create_file_surface_area" title="kittycad.api.file.create_file_surface_area"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_surface_area</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.file.create_file_volume.html#module-kittycad.api.file.create_file_volume" title="kittycad.api.file.create_file_volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file.create_file_volume</span></code></a></p></td>
@@ -147,7 +155,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="kittycad.api.constant.get_physics_constant.html" class="btn btn-neutral float-left" title="kittycad.api.constant.get_physics_constant" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.api.file.create_file_conversion.html" class="btn btn-neutral float-right" title="kittycad.api.file.create_file_conversion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.api.file.create_file_center_of_mass.html" class="btn btn-neutral float-right" title="kittycad.api.file.create_file_center_of_mass" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

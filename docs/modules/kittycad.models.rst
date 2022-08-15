@@ -62,11 +62,13 @@
    kittycad.models.executor_metadata
    kittycad.models.extended_user
    kittycad.models.extended_user_results_page
+   kittycad.models.file_center_of_mass
    kittycad.models.file_conversion
    kittycad.models.file_density
    kittycad.models.file_mass
    kittycad.models.file_output_format
    kittycad.models.file_source_format
+   kittycad.models.file_surface_area
    kittycad.models.file_system_metadata
    kittycad.models.file_volume
    kittycad.models.gateway
