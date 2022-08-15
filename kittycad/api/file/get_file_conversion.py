@@ -4,9 +4,11 @@ import httpx
 
 from ...client import Client
 from ...models.file_conversion import FileConversion
+from ...models.file_center_of_mass import FileCenterOfMass
 from ...models.file_mass import FileMass
 from ...models.file_volume import FileVolume
 from ...models.file_density import FileDensity
+from ...models.file_surface_area import FileSurfaceArea
 from ...models.error import Error
 from ...types import Response
 
@@ -28,13 +30,20 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, FileDensity, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConversion, FileCenterOfMass, FileMass, FileVolume, FileDensity, FileSurfaceArea, Error]]:
 	if response.status_code == 200:
 		data = response.json()
 		try:
 			if not isinstance(data, dict):
 				raise TypeError()
 			option = FileConversion.from_dict(data)
+			return option
+		except:
+			pass
+		try:
+			if not isinstance(data, dict):
+				raise TypeError()
+			option = FileCenterOfMass.from_dict(data)
 			return option
 		except:
 			pass
@@ -58,6 +67,13 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConv
 			option = FileDensity.from_dict(data)
 			return option
 		except:
+			pass
+		try:
+			if not isinstance(data, dict):
+				raise TypeError()
+			option = FileSurfaceArea.from_dict(data)
+			return option
+		except:
 			raise
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -68,7 +84,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileConv
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion, FileMass, FileVolume, FileDensity, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConversion, FileCenterOfMass, FileMass, FileVolume, FileDensity, FileSurfaceArea, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -81,7 +97,7 @@ def sync_detailed(
 	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileConversion, FileMass, FileVolume, FileDensity, Error]]:
+) -> Response[Union[Any, FileConversion, FileCenterOfMass, FileMass, FileVolume, FileDensity, FileSurfaceArea, Error]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -99,7 +115,7 @@ def sync(
 	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, FileDensity, Error]]:
+) -> Optional[Union[Any, FileConversion, FileCenterOfMass, FileMass, FileVolume, FileDensity, FileSurfaceArea, Error]]:
 	""" Get the status and output of an async file conversion.
 This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user.
 If the user is not authenticated to view the specified file conversion, then it is not returned.
@@ -115,7 +131,7 @@ async def asyncio_detailed(
 	id: str,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileConversion, FileMass, FileVolume, FileDensity, Error]]:
+) -> Response[Union[Any, FileConversion, FileCenterOfMass, FileMass, FileVolume, FileDensity, FileSurfaceArea, Error]]:
 	kwargs = _get_kwargs(
 		id=id,
 		client=client,
@@ -131,7 +147,7 @@ async def asyncio(
 	id: str,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileConversion, FileMass, FileVolume, FileDensity, Error]]:
+) -> Optional[Union[Any, FileConversion, FileCenterOfMass, FileMass, FileVolume, FileDensity, FileSurfaceArea, Error]]:
 	""" Get the status and output of an async file conversion.
 This endpoint requires authentication by any KittyCAD user. It returns details of the requested file conversion for the user.
 If the user is not authenticated to view the specified file conversion, then it is not returned.
