@@ -962,10 +962,14 @@ def renderTypeToDict(
                 elif 'type' in property_schema['items']:
                     if property_schema['items']['type'] == 'string':
                         property_type = 'str'
+                    elif property_schema['items']['type'] == 'number':
+                        property_type = 'float'
                     elif property_schema['items']['type'] == 'array':
                         if 'items' in property_schema['items']:
                             if property_schema['items']['items']['type'] == 'string':
                                 property_type = 'List[str]'
+                            elif property_schema['items']['items']['type'] == 'number':
+                                property_type = 'List[float]'
                             else:
                                 print("  property: ", property_schema)
                                 raise Exception("Unknown property type")
@@ -1112,10 +1116,14 @@ def renderTypeInit(
                 elif 'type' in property_schema['items']:
                     if property_schema['items']['type'] == 'string':
                         property_type = 'str'
+                    elif property_schema['items']['type'] == 'number':
+                        property_type = 'float'
                     elif property_schema['items']['type'] == 'array':
                         if 'items' in property_schema['items']:
                             if property_schema['items']['items']['type'] == 'string':
                                 property_type = 'List[str]'
+                            elif property_schema['items']['items']['type'] == 'number':
+                                property_type = 'List[float]'
                             else:
                                 print("  property: ", property_schema)
                                 raise Exception("Unknown property type")
@@ -1255,10 +1263,14 @@ def renderTypeFromDict(
                 elif 'type' in property_schema['items']:
                     if property_schema['items']['type'] == 'string':
                         property_type = 'str'
+                    elif property_schema['items']['type'] == 'number':
+                        property_type = 'float'
                     elif property_schema['items']['type'] == 'array':
                         if 'items' in property_schema['items']:
                             if property_schema['items']['items']['type'] == 'string':
                                 property_type = 'List[str]'
+                            elif property_schema['items']['items']['type'] == 'number':
+                                property_type = 'List[float]'
                             else:
                                 print("  property: ", property_schema)
                                 raise Exception("Unknown property type")

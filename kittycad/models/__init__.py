@@ -35,11 +35,13 @@ from .error import Error
 from .executor_metadata import ExecutorMetadata
 from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
+from .file_center_of_mass import FileCenterOfMass
 from .file_conversion import FileConversion
 from .file_density import FileDensity
 from .file_mass import FileMass
 from .file_output_format import FileOutputFormat
 from .file_source_format import FileSourceFormat
+from .file_surface_area import FileSurfaceArea
 from .file_system_metadata import FileSystemMetadata
 from .file_volume import FileVolume
 from .gateway import Gateway
