@@ -5,11 +5,11 @@ import httpx
 from ...client import Client
 from ...models.file_volume import FileVolume
 from ...models.error import Error
-from ...models.file_source_format import FileSourceFormat
+from ...models.file3_d_import_format import File3DImportFormat
 from ...types import Response
 
 def _get_kwargs(
-	src_format: FileSourceFormat,
+	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -51,7 +51,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileVolu
 
 
 def sync_detailed(
-	src_format: FileSourceFormat,
+	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -71,7 +71,7 @@ def sync_detailed(
 
 
 def sync(
-	src_format: FileSourceFormat,
+	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -87,7 +87,7 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 
 async def asyncio_detailed(
-	src_format: FileSourceFormat,
+	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -105,7 +105,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	src_format: FileSourceFormat,
+	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,

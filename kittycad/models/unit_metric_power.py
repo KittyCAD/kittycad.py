@@ -10,7 +10,7 @@ class UnitMetricPower(str, Enum):
     MILLI = 'milli'
     CENTI = 'centi'
     DECI = 'deci'
-    METRIC_UNIT = 'metric_unit'
+    UNIT = 'unit'
     DECA = 'deca'
     HECTO = 'hecto'
     KILO = 'kilo'

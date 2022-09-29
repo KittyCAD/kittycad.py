@@ -1,12 +1,13 @@
 from enum import Enum
 
 
-class FileSourceFormat(str, Enum):
-    STL = 'stl'
-    OBJ = 'obj'
+class File3DImportFormat(str, Enum):
     DAE = 'dae'
-    STEP = 'step'
     FBX = 'fbx'
+    OBJ = 'obj'
+    OBJ_NOMTL = 'obj_nomtl'
+    STEP = 'step'
+    STL = 'stl'
 
     def __str__(self) -> str:
         return str(self.value)
