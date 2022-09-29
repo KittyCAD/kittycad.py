@@ -35,12 +35,16 @@ from .error import Error
 from .executor_metadata import ExecutorMetadata
 from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
+from .file2_d_vector_export_format import File2DVectorExportFormat
+from .file2_d_vector_import_format import File2DVectorImportFormat
+from .file3_d_export_format import File3DExportFormat
+from .file3_d_import_format import File3DImportFormat
 from .file_center_of_mass import FileCenterOfMass
 from .file_conversion import FileConversion
 from .file_density import FileDensity
+from .file_export_format import FileExportFormat
+from .file_import_format import FileImportFormat
 from .file_mass import FileMass
-from .file_output_format import FileOutputFormat
-from .file_source_format import FileSourceFormat
 from .file_surface_area import FileSurfaceArea
 from .file_system_metadata import FileSystemMetadata
 from .file_volume import FileVolume
@@ -60,6 +64,7 @@ from .method import Method
 from .new_address import NewAddress
 from .o_auth2_client_info import OAuth2ClientInfo
 from .o_auth2_grant_type import OAuth2GrantType
+from .onboarding import Onboarding
 from .output_file import OutputFile
 from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
