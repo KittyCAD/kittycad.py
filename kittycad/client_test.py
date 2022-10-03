@@ -3,7 +3,7 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, FileOutputFormat, FileSourceFormat, User, Pong, ApiCallStatus, FileMass, FileVolume
+from .models import FileConversion, FileExportFormat, FileImportFormat, User, Pong, ApiCallStatus, FileMass, FileVolume
 from .api.file import create_file_conversion_with_base64_helper, create_file_mass, create_file_volume
 from .api.meta import ping
 from .api.users import get_user_self
@@ -72,8 +72,8 @@ def test_file_convert_stl():
     fc: FileConversion = create_file_conversion_with_base64_helper.sync(
         client=client,
         body=content,
-        src_format=FileSourceFormat.STL,
-        output_format=FileOutputFormat.OBJ)
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ)
 
     assert fc is not None
 
@@ -97,7 +97,7 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(client=client, body=content, src_format=FileSourceFormat.STL, output_format=FileOutputFormat.OBJ)
+    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(client=client, body=content, src_format=FileImportFormat.STL, output_format=FileExportFormat.OBJ)
 
     assert fc is not None
 
@@ -121,7 +121,7 @@ def test_file_mass():
     fm: FileMass = create_file_mass.sync(
         client=client,
         body=content,
-        src_format=FileSourceFormat.OBJ,
+        src_format=FileImportFormat.OBJ,
         material_density=1.0)
 
     assert fm is not None
@@ -149,7 +149,7 @@ def test_file_volume():
     fv: FileVolume = create_file_volume.sync(
         client=client,
         body=content,
-        src_format=FileSourceFormat.OBJ)
+        src_format=FileImportFormat.OBJ)
 
     assert fv is not None
 
