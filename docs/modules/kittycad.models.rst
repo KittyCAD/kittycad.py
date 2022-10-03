@@ -62,12 +62,16 @@
    kittycad.models.executor_metadata
    kittycad.models.extended_user
    kittycad.models.extended_user_results_page
+   kittycad.models.file2_d_vector_export_format
+   kittycad.models.file2_d_vector_import_format
+   kittycad.models.file3_d_export_format
+   kittycad.models.file3_d_import_format
    kittycad.models.file_center_of_mass
    kittycad.models.file_conversion
    kittycad.models.file_density
+   kittycad.models.file_export_format
+   kittycad.models.file_import_format
    kittycad.models.file_mass
-   kittycad.models.file_output_format
-   kittycad.models.file_source_format
    kittycad.models.file_surface_area
    kittycad.models.file_system_metadata
    kittycad.models.file_volume
@@ -87,6 +91,7 @@
    kittycad.models.new_address
    kittycad.models.o_auth2_client_info
    kittycad.models.o_auth2_grant_type
+   kittycad.models.onboarding
    kittycad.models.output_file
    kittycad.models.payment_intent
    kittycad.models.payment_method
