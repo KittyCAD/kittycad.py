@@ -5,13 +5,13 @@ import httpx
 from ...client import Client
 from ...models.file_conversion import FileConversion
 from ...models.error import Error
-from ...models.file_output_format import FileOutputFormat
-from ...models.file_source_format import FileSourceFormat
+from ...models.file_export_format import FileExportFormat
+from ...models.file_import_format import FileImportFormat
 from ...types import Response
 
 def _get_kwargs(
-	output_format: FileOutputFormat,
-	src_format: FileSourceFormat,
+	output_format: FileExportFormat,
+	src_format: FileImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -53,8 +53,8 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileConv
 
 
 def sync_detailed(
-	output_format: FileOutputFormat,
-	src_format: FileSourceFormat,
+	output_format: FileExportFormat,
+	src_format: FileImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -75,8 +75,8 @@ def sync_detailed(
 
 
 def sync(
-	output_format: FileOutputFormat,
-	src_format: FileSourceFormat,
+	output_format: FileExportFormat,
+	src_format: FileImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -94,8 +94,8 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 
 async def asyncio_detailed(
-	output_format: FileOutputFormat,
-	src_format: FileSourceFormat,
+	output_format: FileExportFormat,
+	src_format: FileImportFormat,
 	body: bytes,
 	*,
 	client: Client,
@@ -114,8 +114,8 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	output_format: FileOutputFormat,
-	src_format: FileSourceFormat,
+	output_format: FileExportFormat,
+	src_format: FileImportFormat,
 	body: bytes,
 	*,
 	client: Client,

@@ -2,11 +2,9 @@ from enum import Enum
 
 
 class UnitLengthFormat(str, Enum):
-    MILLIMETER = 'millimeter'
-    CENTIMETER = 'centimeter'
     METER = 'meter'
-    KILOMTER = 'kilomter'
     FOOT = 'foot'
+    MIL = 'mil'
     INCH = 'inch'
     MILE = 'mile'
     NAUTICAL_MILE = 'nautical_mile'
@@ -19,6 +17,9 @@ class UnitLengthFormat(str, Enum):
     LEAGUE = 'league'
     NAUTICAL_LEAGUE = 'nautical_league'
     YARD = 'yard'
+    MILLIMETER = 'millimeter'
+    CENTIMETER = 'centimeter'
+    KILOMETER = 'kilometer'
 
     def __str__(self) -> str:
         return str(self.value)

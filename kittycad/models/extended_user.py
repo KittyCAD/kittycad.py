@@ -18,6 +18,7 @@ class ExtendedUser:
     email: Union[Unset, str] = UNSET
     email_verified: Union[Unset, datetime.datetime] = UNSET
     first_name: Union[Unset, str] = UNSET
+    front_id: Union[Unset, str] = UNSET
     github: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     image: Union[Unset, str] = UNSET
@@ -42,6 +43,7 @@ class ExtendedUser:
         if not isinstance(self.email_verified, Unset):
             email_verified = self.email_verified.isoformat()
         first_name = self.first_name
+        front_id = self.front_id
         github = self.github
         id = self.id
         image = self.image
@@ -70,6 +72,8 @@ class ExtendedUser:
             field_dict['email_verified'] = email_verified
         if first_name is not UNSET:
             field_dict['first_name'] = first_name
+        if front_id is not UNSET:
+            field_dict['front_id'] = front_id
         if github is not UNSET:
             field_dict['github'] = github
         if id is not UNSET:
@@ -118,6 +122,8 @@ class ExtendedUser:
 
         first_name = d.pop("first_name", UNSET)
 
+        front_id = d.pop("front_id", UNSET)
+
         github = d.pop("github", UNSET)
 
         id = d.pop("id", UNSET)
@@ -150,6 +156,7 @@ class ExtendedUser:
             email=email,
             email_verified=email_verified,
             first_name=first_name,
+            front_id=front_id,
             github=github,
             id=id,
             image=image,
