@@ -5,8 +5,8 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.file_output_format import FileOutputFormat
-from ..models.file_source_format import FileSourceFormat
+from ..models.file_export_format import FileExportFormat
+from ..models.file_import_format import FileImportFormat
 from ..models.api_call_status import ApiCallStatus
 from ..types import UNSET, Unset
 
@@ -21,8 +21,8 @@ class FileConversion:
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     output: Union[Unset, str] = UNSET
-    output_format: Union[Unset, FileOutputFormat] = UNSET
-    src_format: Union[Unset, FileSourceFormat] = UNSET
+    output_format: Union[Unset, FileExportFormat] = UNSET
+    src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -109,18 +109,18 @@ class FileConversion:
         output = d.pop("output", UNSET)
 
         _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, FileOutputFormat]
+        output_format: Union[Unset, FileExportFormat]
         if isinstance(_output_format, Unset):
             output_format = UNSET
         else:
-            output_format = FileOutputFormat(_output_format)
+            output_format = FileExportFormat(_output_format)
 
         _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileSourceFormat]
+        src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = FileSourceFormat(_src_format)
+            src_format = FileImportFormat(_src_format)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
