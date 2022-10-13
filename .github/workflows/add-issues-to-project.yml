@@ -7,7 +7,7 @@ jobs:
   createCard:
     runs-on: ubuntu-latest
     steps:
-      - uses: KittyCAD/ts-actions/add-issues-to-project@v0.3.0
+      - uses: KittyCAD/ts-actions/add-issues-to-project@v0.4.1
         with:
           token: ${{ secrets.GLOBAL_PAT }}
           issue-node: ${{ github.event.issue.node_id }}"
