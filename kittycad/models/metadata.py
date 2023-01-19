@@ -7,6 +7,7 @@ from ..models.engine_metadata import EngineMetadata
 from ..models.environment import Environment
 from ..models.executor_metadata import ExecutorMetadata
 from ..models.file_system_metadata import FileSystemMetadata
+from ..models.point_e_metadata import PointEMetadata
 from ..models.connection import Connection
 from ..types import UNSET, Unset
 
@@ -22,6 +23,7 @@ class Metadata:
     executor: Union[Unset, ExecutorMetadata] = UNSET
     fs: Union[Unset, FileSystemMetadata] = UNSET
     git_hash: Union[Unset, str] = UNSET
+    point_e: Union[Unset, PointEMetadata] = UNSET
     pubsub: Union[Unset, Connection] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -43,6 +45,9 @@ class Metadata:
         if not isinstance(self.fs, Unset):
             fs = self.fs.value
         git_hash = self.git_hash
+        point_e: Union[Unset, str] = UNSET
+        if not isinstance(self.point_e, Unset):
+            point_e = self.point_e.value
         pubsub: Union[Unset, str] = UNSET
         if not isinstance(self.pubsub, Unset):
             pubsub = self.pubsub.value
@@ -62,6 +67,8 @@ class Metadata:
             field_dict['fs'] = fs
         if git_hash is not UNSET:
             field_dict['git_hash'] = git_hash
+        if point_e is not UNSET:
+            field_dict['point_e'] = point_e
         if pubsub is not UNSET:
             field_dict['pubsub'] = pubsub
 
@@ -107,6 +114,13 @@ class Metadata:
 
         git_hash = d.pop("git_hash", UNSET)
 
+        _point_e = d.pop("point_e", UNSET)
+        point_e: Union[Unset, PointEMetadata]
+        if isinstance(_point_e, Unset):
+            point_e = UNSET
+        else:
+            point_e = PointEMetadata(_point_e)
+
         _pubsub = d.pop("pubsub", UNSET)
         pubsub: Union[Unset, Connection]
         if isinstance(_pubsub, Unset):
@@ -121,6 +135,7 @@ class Metadata:
             executor=executor,
             fs=fs,
             git_hash=git_hash,
+            point_e=point_e,
             pubsub=pubsub,
         )
 

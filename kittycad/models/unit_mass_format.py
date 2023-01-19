@@ -3,6 +3,7 @@ from enum import Enum
 
 class UnitMassFormat(str, Enum):
     GRAM = 'gram'
+    KILOGRAM = 'kilogram'
     METRIC_TON = 'metric_ton'
     POUND = 'pound'
     LONG_TON = 'long_ton'
@@ -11,7 +12,6 @@ class UnitMassFormat(str, Enum):
     OUNCE = 'ounce'
     CARAT = 'carat'
     SLUG = 'slug'
-    KILOGRAM = 'kilogram'
 
     def __str__(self) -> str:
         return str(self.value)

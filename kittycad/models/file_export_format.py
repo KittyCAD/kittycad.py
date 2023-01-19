@@ -9,6 +9,7 @@ class FileExportFormat(str, Enum):
     JSON = 'json'
     OBJ = 'obj'
     OBJ_NOMTL = 'obj_nomtl'
+    PLY = 'ply'
     STEP = 'step'
     STL = 'stl'
     SVG = 'svg'

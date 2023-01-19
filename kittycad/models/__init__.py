@@ -35,11 +35,14 @@ from .error import Error
 from .executor_metadata import ExecutorMetadata
 from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
+from .file2_d_vector_conversion import File2DVectorConversion
 from .file2_d_vector_export_format import File2DVectorExportFormat
 from .file2_d_vector_import_format import File2DVectorImportFormat
+from .file3_d_conversion import File3DConversion
 from .file3_d_export_format import File3DExportFormat
 from .file3_d_import_format import File3DImportFormat
 from .file_center_of_mass import FileCenterOfMass
+from .file_center_of_mass_with_uniform_density import FileCenterOfMassWithUniformDensity
 from .file_conversion import FileConversion
 from .file_density import FileDensity
 from .file_export_format import FileExportFormat
@@ -49,6 +52,7 @@ from .file_surface_area import FileSurfaceArea
 from .file_system_metadata import FileSystemMetadata
 from .file_volume import FileVolume
 from .gateway import Gateway
+from .image_type import ImageType
 from .index_info import IndexInfo
 from .invoice import Invoice
 from .invoice_line_item import InvoiceLineItem
@@ -58,6 +62,7 @@ from .jetstream_api_stats import JetstreamApiStats
 from .jetstream_config import JetstreamConfig
 from .jetstream_stats import JetstreamStats
 from .leaf_node import LeafNode
+from .mesh import Mesh
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
 from .method import Method
@@ -73,6 +78,7 @@ from .payment_method_type import PaymentMethodType
 from .physics_constant import PhysicsConstant
 from .physics_constant_name import PhysicsConstantName
 from .plugins_info import PluginsInfo
+from .point_e_metadata import PointEMetadata
 from .pong import Pong
 from .registry_service_config import RegistryServiceConfig
 from .runtime import Runtime
@@ -123,6 +129,8 @@ from .unit_pressure_conversion import UnitPressureConversion
 from .unit_pressure_format import UnitPressureFormat
 from .unit_radiation_conversion import UnitRadiationConversion
 from .unit_radiation_format import UnitRadiationFormat
+from .unit_radioactivity_conversion import UnitRadioactivityConversion
+from .unit_radioactivity_format import UnitRadioactivityFormat
 from .unit_solid_angle_conversion import UnitSolidAngleConversion
 from .unit_solid_angle_format import UnitSolidAngleFormat
 from .unit_temperature_conversion import UnitTemperatureConversion

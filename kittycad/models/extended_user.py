@@ -28,7 +28,6 @@ class ExtendedUser:
     phone: Union[Unset, str] = UNSET
     stripe_id: Union[Unset, str] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
-    zendesk_id: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -55,7 +54,6 @@ class ExtendedUser:
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
-        zendesk_id = self.zendesk_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -92,8 +90,6 @@ class ExtendedUser:
             field_dict['stripe_id'] = stripe_id
         if updated_at is not UNSET:
             field_dict['updated_at'] = updated_at
-        if zendesk_id is not UNSET:
-            field_dict['zendesk_id'] = zendesk_id
 
         return field_dict
 
@@ -147,8 +143,6 @@ class ExtendedUser:
         else:
             updated_at = isoparse(_updated_at)
 
-        zendesk_id = d.pop("zendesk_id", UNSET)
-
         extended_user = cls(
             company=company,
             created_at=created_at,
@@ -166,7 +160,6 @@ class ExtendedUser:
             phone=phone,
             stripe_id=stripe_id,
             updated_at=updated_at,
-            zendesk_id=zendesk_id,
         )
 
         extended_user.additional_properties = d
