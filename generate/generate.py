@@ -67,7 +67,7 @@ def generatePaths(cwd: str, parser: dict) -> dict:
     # Generate the directory/__init__.py for each of the tags.
     tags = parser['tags']
     for tag in tags:
-        tag_name = tag['name']
+        tag_name = tag['name'].replace('-', '_')
         tag_description = tag['description']
         tag_path = os.path.join(path, tag_name)
         # Esnure the directory exists.
@@ -116,7 +116,7 @@ def generatePath(
     tag_name = ''
     # Add the tag to the path if it exists.
     if 'tags' in endpoint:
-        tag_name = endpoint['tags'][0]
+        tag_name = endpoint['tags'][0].replace('-', '_')
         path = os.path.join(path, tag_name)
     file_path = os.path.join(path, file_name)
     print("generating type: ", name, " at: ", file_path)
