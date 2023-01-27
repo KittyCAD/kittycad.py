@@ -10,11 +10,11 @@ from ...types import Response
 
 def _get_kwargs(
 	id: str,
-	limit: Optional[int] = None,
-	page_token: Optional[str] = None,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
 	url = "{}/users/{id}/api-calls?limit={limit}&page_token={page_token}&sort_by={sort_by}".format(client.base_url, id=id, limit=limit, page_token=page_token, sort_by=sort_by)
 

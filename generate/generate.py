@@ -139,6 +139,7 @@ def generatePath(
     params_str = ''
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
+        optional_args = []
         for parameter in parameters:
             parameter_name = parameter['name']
             parameter_type = ''
@@ -157,8 +158,17 @@ def generatePath(
             if 'nullable' in parameter['schema']:
                 if parameter['schema']['nullable']:
                     parameter_type = 'Optional[' + parameter_type + ']'
-            params_str += ', ' + \
-                camel_to_snake(parameter_name) + '=' + parameter_type
+                    optional_args.append(
+                        ', ' + camel_to_snake(parameter_name) + '=' + parameter_type)
+                else:
+                    params_str += ', ' + \
+                        camel_to_snake(parameter_name) + '=' + parameter_type
+            else:
+                params_str += ', ' + \
+                    camel_to_snake(parameter_name) + '=' + parameter_type
+
+        for optional_arg in optional_args:
+            params_str += optional_arg
 
     if request_body_type:
         params_str += ', body=' + request_body_type
@@ -220,6 +230,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     # Define the method.
     f.write("def _get_kwargs(\n")
     # Iterate over the parameters.
+    optional_args = []
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
         for parameter in parameters:
@@ -238,12 +249,25 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             if 'nullable' in parameter['schema']:
                 if parameter['schema']['nullable']:
                     parameter_type = 'Optional[' + parameter_type + '] = None'
-            f.write(
-                "\t" +
-                camel_to_snake(parameter_name) +
-                ": " +
-                parameter_type +
-                ",\n")
+                    optional_args.append("\t" +
+                                         camel_to_snake(parameter_name) +
+                                         ": " +
+                                         parameter_type +
+                                         ",\n")
+                else:
+                    f.write(
+                        "\t" +
+                        camel_to_snake(parameter_name) +
+                        ": " +
+                        parameter_type +
+                        ",\n")
+            else:
+                f.write(
+                    "\t" +
+                    camel_to_snake(parameter_name) +
+                    ": " +
+                    parameter_type +
+                    ",\n")
     if request_body_type:
         f.write(
             "\tbody: " +
@@ -251,6 +275,8 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
+    for optional_arg in optional_args:
+        f.write(optional_arg)
     f.write(") -> Dict[str, Any]:\n")
     templateUrl = "{}" + name
     formatTemplate = ".format(client.base_url"

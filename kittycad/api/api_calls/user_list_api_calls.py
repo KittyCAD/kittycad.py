@@ -9,11 +9,11 @@ from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...types import Response
 
 def _get_kwargs(
-	limit: Optional[int] = None,
-	page_token: Optional[str] = None,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
 	url = "{}/user/api-calls?limit={limit}&page_token={page_token}&sort_by={sort_by}".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by)
 

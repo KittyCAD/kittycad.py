@@ -10,12 +10,12 @@ from ...models.api_call_status import ApiCallStatus
 from ...types import Response
 
 def _get_kwargs(
-	limit: Optional[int] = None,
-	page_token: Optional[str] = None,
 	sort_by: CreatedAtSortMode,
 	status: ApiCallStatus,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
 	url = "{}/async/operations?limit={limit}&page_token={page_token}&sort_by={sort_by}&status={status}".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by, status=status)
 

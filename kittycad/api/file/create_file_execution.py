@@ -10,10 +10,10 @@ from ...types import Response
 
 def _get_kwargs(
 	lang: CodeLanguage,
-	output: Optional[str] = None,
 	body: bytes,
 	*,
 	client: Client,
+	output: Optional[str] = None,
 ) -> Dict[str, Any]:
 	url = "{}/file/execute/{lang}?output={output}".format(client.base_url, lang=lang, output=output)
 

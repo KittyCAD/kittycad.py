@@ -21,6 +21,7 @@ def test_get_session():
 
     print(f"Session: {session}")
 
+
 @pytest.mark.asyncio
 async def test_get_api_tokens_async():
     # Create our client.

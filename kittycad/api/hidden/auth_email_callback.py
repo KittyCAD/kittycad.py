@@ -7,11 +7,11 @@ from ...models.error import Error
 from ...types import Response
 
 def _get_kwargs(
-	callback_url: Optional[str] = None,
 	email: str,
 	token: str,
 	*,
 	client: Client,
+	callback_url: Optional[str] = None,
 ) -> Dict[str, Any]:
 	url = "{}/auth/email/callback?callback_url={callback_url}&email={email}&token={token}".format(client.base_url, callback_url=callback_url, email=email, token=token)
 
