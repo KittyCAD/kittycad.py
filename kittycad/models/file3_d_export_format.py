@@ -7,6 +7,7 @@ class File3DExportFormat(str, Enum):
     FBXB = 'fbxb'
     OBJ = 'obj'
     OBJ_NOMTL = 'obj_nomtl'
+    PLY = 'ply'
     STEP = 'step'
     STL = 'stl'
 
