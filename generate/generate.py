@@ -154,6 +154,9 @@ def generatePath(
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
+            if 'nullable' in parameter['schema']:
+                if parameter['schema']['nullable']:
+                    parameter_type = 'Optional[' + parameter_type + ']'
             params_str += ', ' + \
                 camel_to_snake(parameter_name) + '=' + parameter_type
 
@@ -232,6 +235,9 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
+            if 'nullable' in parameter['schema']:
+                if parameter['schema']['nullable']:
+                    parameter_type = 'Optional[' + parameter_type + '] = None'
             f.write(
                 "\t" +
                 camel_to_snake(parameter_name) +

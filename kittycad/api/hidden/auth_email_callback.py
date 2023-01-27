@@ -7,7 +7,7 @@ from ...models.error import Error
 from ...types import Response
 
 def _get_kwargs(
-	callback_url: str,
+	callback_url: Optional[str] = None,
 	email: str,
 	token: str,
 	*,

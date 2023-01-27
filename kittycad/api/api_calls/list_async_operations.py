@@ -10,8 +10,8 @@ from ...models.api_call_status import ApiCallStatus
 from ...types import Response
 
 def _get_kwargs(
-	limit: int,
-	page_token: str,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 	sort_by: CreatedAtSortMode,
 	status: ApiCallStatus,
 	*,

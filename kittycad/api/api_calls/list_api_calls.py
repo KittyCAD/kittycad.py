@@ -9,8 +9,8 @@ from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...types import Response
 
 def _get_kwargs(
-	limit: int,
-	page_token: str,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,

@@ -10,7 +10,7 @@ from ...types import Response
 
 def _get_kwargs(
 	lang: CodeLanguage,
-	output: str,
+	output: Optional[str] = None,
 	body: bytes,
 	*,
 	client: Client,
