@@ -3,19 +3,20 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.file_center_of_mass import FileCenterOfMass
+from ...models.file3_d_conversion import File3DConversion
 from ...models.error import Error
+from ...models.file3_d_export_format import File3DExportFormat
 from ...models.file3_d_import_format import File3DImportFormat
 from ...types import Response
 
 def _get_kwargs(
-	material_density: float,
+	output_format: File3DExportFormat,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/file/center-of-mass?material_density={material_density}&src_format={src_format}".format(client.base_url, material_density=material_density, src_format=src_format)
+	url = "{}/file/3d/conversion/{src_format}/{output_format}".format(client.base_url, output_format=output_format, src_format=src_format)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -29,9 +30,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileCenterOfMass, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, File3DConversion, Error]]:
 	if response.status_code == 201:
-		response_201 = FileCenterOfMass.from_dict(response.json())
+		response_201 = File3DConversion.from_dict(response.json())
 		return response_201
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -42,7 +43,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileCent
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileCenterOfMass, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, File3DConversion, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -52,14 +53,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileCent
 
 
 def sync_detailed(
-	material_density: float,
+	output_format: File3DExportFormat,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileCenterOfMass, Error]]:
+) -> Response[Union[Any, File3DConversion, Error]]:
 	kwargs = _get_kwargs(
-		material_density=material_density,
+		output_format=output_format,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -74,18 +75,18 @@ def sync_detailed(
 
 
 def sync(
-	material_density: float,
+	output_format: File3DExportFormat,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileCenterOfMass, Error]]:
-	""" Get the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-Does the same as the `center_of_mass_with_uniform_density` endpoint; except, this has a redundant `material_density value`. Kept for legacy in this version.
+) -> Optional[Union[Any, File3DConversion, Error]]:
+	""" Convert a 3D file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
+If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return sync_detailed(
-		material_density=material_density,
+		output_format=output_format,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -93,14 +94,14 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 
 async def asyncio_detailed(
-	material_density: float,
+	output_format: File3DExportFormat,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Response[Union[Any, FileCenterOfMass, Error]]:
+) -> Response[Union[Any, File3DConversion, Error]]:
 	kwargs = _get_kwargs(
-		material_density=material_density,
+		output_format=output_format,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -113,19 +114,19 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	material_density: float,
+	output_format: File3DExportFormat,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
-) -> Optional[Union[Any, FileCenterOfMass, Error]]:
-	""" Get the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-Does the same as the `center_of_mass_with_uniform_density` endpoint; except, this has a redundant `material_density value`. Kept for legacy in this version.
+) -> Optional[Union[Any, File3DConversion, Error]]:
+	""" Convert a 3D file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
+If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return (
 		await asyncio_detailed(
-		material_density=material_density,
+		output_format=output_format,
 		src_format=src_format,
 		body=body,
 			client=client,
