@@ -53,12 +53,12 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApi
 
 
 def sync_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	status: ApiCallStatus,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
@@ -77,12 +77,12 @@ def sync_detailed(
 
 
 def sync(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	status: ApiCallStatus,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
 	""" For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 This endpoint requires authentication by a KittyCAD employee. """
@@ -97,12 +97,12 @@ This endpoint requires authentication by a KittyCAD employee. """
 
 
 async def asyncio_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	status: ApiCallStatus,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
@@ -119,12 +119,12 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	status: ApiCallStatus,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
 	""" For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 This endpoint requires authentication by a KittyCAD employee. """

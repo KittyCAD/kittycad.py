@@ -3,7 +3,7 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, FileExportFormat, FileImportFormat, User, Pong, ApiCallStatus, FileMass, FileVolume, ApiTokenResultsPage
+from .models import FileConversion, FileExportFormat, FileImportFormat, User, Pong, ApiCallStatus, FileMass, FileVolume, ApiTokenResultsPage, CreatedAtSortMode
 from .api.file import create_file_conversion_with_base64_helper, create_file_mass, create_file_volume
 from .api.meta import ping
 from .api.users import get_user_self
@@ -28,7 +28,8 @@ async def test_get_api_tokens_async():
     client = ClientFromEnv()
 
     # List API tokens.
-    fc: ApiTokenResultsPage = list_api_tokens_for_user.sync(client=client)
+    fc: ApiTokenResultsPage = list_api_tokens_for_user.sync(
+        client=client, sort_by=CreatedAtSortMode)
 
     assert fc is not None
 

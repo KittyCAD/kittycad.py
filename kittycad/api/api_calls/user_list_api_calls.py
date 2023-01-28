@@ -51,11 +51,11 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiCallW
 
 
 def sync_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
@@ -73,11 +73,11 @@ def sync_detailed(
 
 
 def sync(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
 	""" This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.
 The API calls are returned in order of creation, with the most recently created API calls first. """
@@ -91,11 +91,11 @@ The API calls are returned in order of creation, with the most recently created 
 
 
 async def asyncio_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
@@ -111,11 +111,11 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
 	""" This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.
 The API calls are returned in order of creation, with the most recently created API calls first. """

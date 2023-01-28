@@ -458,6 +458,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\n")
     f.write(
         "def sync_detailed(\n")
+    optional_args = []
     # Iterate over the parameters.
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
@@ -474,12 +475,28 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
-            f.write(
-                "\t" +
-                camel_to_snake(parameter_name) +
-                ": " +
-                parameter_type +
-                ",\n")
+            if 'nullable' in parameter['schema']:
+                if parameter['schema']['nullable']:
+                    parameter_type = 'Optional[' + parameter_type + '] = None'
+                    optional_args.append("\t" +
+                                         camel_to_snake(parameter_name) +
+                                         ": " +
+                                         parameter_type +
+                                         ",\n")
+                else:
+                    f.write(
+                        "\t" +
+                        camel_to_snake(parameter_name) +
+                        ": " +
+                        parameter_type +
+                        ",\n")
+            else:
+                f.write(
+                    "\t" +
+                    camel_to_snake(parameter_name) +
+                    ": " +
+                    parameter_type +
+                    ",\n")
     if request_body_type:
         f.write(
             "\tbody: " +
@@ -487,6 +504,8 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
+    for optional_arg in optional_args:
+        f.write(optional_arg)
     f.write(") -> Response[Union[Any, " +
             ", ".join(endpoint_refs) +
             "]]:\n")
@@ -510,6 +529,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\n")
     f.write(
         "def sync(\n")
+    optional_args = []
     # Iterate over the parameters.
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
@@ -526,12 +546,28 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
-            f.write(
-                "\t" +
-                camel_to_snake(parameter_name) +
-                ": " +
-                parameter_type +
-                ",\n")
+            if 'nullable' in parameter['schema']:
+                if parameter['schema']['nullable']:
+                    parameter_type = 'Optional[' + parameter_type + '] = None'
+                    optional_args.append("\t" +
+                                         camel_to_snake(parameter_name) +
+                                         ": " +
+                                         parameter_type +
+                                         ",\n")
+                else:
+                    f.write(
+                        "\t" +
+                        camel_to_snake(parameter_name) +
+                        ": " +
+                        parameter_type +
+                        ",\n")
+            else:
+                f.write(
+                    "\t" +
+                    camel_to_snake(parameter_name) +
+                    ": " +
+                    parameter_type +
+                    ",\n")
     if request_body_type:
         f.write(
             "\tbody: " +
@@ -539,6 +575,8 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
+    for optional_arg in optional_args:
+        f.write(optional_arg)
     f.write(") -> Optional[Union[Any, " +
             ", ".join(endpoint_refs) +
             "]]:\n")
@@ -558,6 +596,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\n")
     f.write(
         "async def asyncio_detailed(\n")
+    optional_args = []
     # Iterate over the parameters.
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
@@ -574,12 +613,28 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
-            f.write(
-                "\t" +
-                camel_to_snake(parameter_name) +
-                ": " +
-                parameter_type +
-                ",\n")
+            if 'nullable' in parameter['schema']:
+                if parameter['schema']['nullable']:
+                    parameter_type = 'Optional[' + parameter_type + '] = None'
+                    optional_args.append("\t" +
+                                         camel_to_snake(parameter_name) +
+                                         ": " +
+                                         parameter_type +
+                                         ",\n")
+                else:
+                    f.write(
+                        "\t" +
+                        camel_to_snake(parameter_name) +
+                        ": " +
+                        parameter_type +
+                        ",\n")
+            else:
+                f.write(
+                    "\t" +
+                    camel_to_snake(parameter_name) +
+                    ": " +
+                    parameter_type +
+                    ",\n")
     if request_body_type:
         f.write(
             "\tbody: " +
@@ -587,6 +642,8 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
+    for optional_arg in optional_args:
+        f.write(optional_arg)
     f.write(") -> Response[Union[Any, " +
             ", ".join(endpoint_refs) +
             "]]:\n")
@@ -608,6 +665,7 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
     f.write("\n")
     f.write(
         "async def asyncio(\n")
+    optional_args = []
     # Iterate over the parameters.
     if 'parameters' in endpoint:
         parameters = endpoint['parameters']
@@ -624,12 +682,28 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
-            f.write(
-                "\t" +
-                camel_to_snake(parameter_name) +
-                ": " +
-                parameter_type +
-                ",\n")
+            if 'nullable' in parameter['schema']:
+                if parameter['schema']['nullable']:
+                    parameter_type = 'Optional[' + parameter_type + '] = None'
+                    optional_args.append("\t" +
+                                         camel_to_snake(parameter_name) +
+                                         ": " +
+                                         parameter_type +
+                                         ",\n")
+                else:
+                    f.write(
+                        "\t" +
+                        camel_to_snake(parameter_name) +
+                        ": " +
+                        parameter_type +
+                        ",\n")
+            else:
+                f.write(
+                    "\t" +
+                    camel_to_snake(parameter_name) +
+                    ": " +
+                    parameter_type +
+                    ",\n")
     if request_body_type:
         f.write(
             "\tbody: " +
@@ -637,6 +711,8 @@ response: Response[""" + success_type + """] = await """ + fn_name + """.asyncio
             ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
+    for optional_arg in optional_args:
+        f.write(optional_arg)
     f.write(") -> Optional[Union[Any, " +
             ", ".join(endpoint_refs) +
             "]]:\n")

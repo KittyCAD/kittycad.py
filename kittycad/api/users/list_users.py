@@ -51,11 +51,11 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, UserResu
 
 
 def sync_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Response[Union[Any, UserResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
@@ -73,11 +73,11 @@ def sync_detailed(
 
 
 def sync(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Optional[Union[Any, UserResultsPage, Error]]:
 	""" This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first. """
 
@@ -90,11 +90,11 @@ def sync(
 
 
 async def asyncio_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Response[Union[Any, UserResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
@@ -110,11 +110,11 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Optional[Union[Any, UserResultsPage, Error]]:
 	""" This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first. """
 
