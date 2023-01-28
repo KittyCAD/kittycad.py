@@ -7,11 +7,11 @@ from ...models.error import Error
 from ...types import Response
 
 def _get_kwargs(
-	callback_url: str,
 	email: str,
 	token: str,
 	*,
 	client: Client,
+	callback_url: Optional[str] = None,
 ) -> Dict[str, Any]:
 	url = "{}/auth/email/callback?callback_url={callback_url}&email={email}&token={token}".format(client.base_url, callback_url=callback_url, email=email, token=token)
 
@@ -49,11 +49,11 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, Error]]:
 
 
 def sync_detailed(
-	callback_url: str,
 	email: str,
 	token: str,
 	*,
 	client: Client,
+	callback_url: Optional[str] = None,
 ) -> Response[Union[Any, Error]]:
 	kwargs = _get_kwargs(
 		callback_url=callback_url,
@@ -71,11 +71,11 @@ def sync_detailed(
 
 
 def sync(
-	callback_url: str,
 	email: str,
 	token: str,
 	*,
 	client: Client,
+	callback_url: Optional[str] = None,
 ) -> Optional[Union[Any, Error]]:
 
 	return sync_detailed(
@@ -87,11 +87,11 @@ def sync(
 
 
 async def asyncio_detailed(
-	callback_url: str,
 	email: str,
 	token: str,
 	*,
 	client: Client,
+	callback_url: Optional[str] = None,
 ) -> Response[Union[Any, Error]]:
 	kwargs = _get_kwargs(
 		callback_url=callback_url,
@@ -107,11 +107,11 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	callback_url: str,
 	email: str,
 	token: str,
 	*,
 	client: Client,
+	callback_url: Optional[str] = None,
 ) -> Optional[Union[Any, Error]]:
 
 	return (
