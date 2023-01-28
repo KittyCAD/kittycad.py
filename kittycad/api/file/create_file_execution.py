@@ -10,10 +10,10 @@ from ...types import Response
 
 def _get_kwargs(
 	lang: CodeLanguage,
-	output: str,
 	body: bytes,
 	*,
 	client: Client,
+	output: Optional[str] = None,
 ) -> Dict[str, Any]:
 	url = "{}/file/execute/{lang}?output={output}".format(client.base_url, lang=lang, output=output)
 
@@ -53,10 +53,10 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, CodeOutp
 
 def sync_detailed(
 	lang: CodeLanguage,
-	output: str,
 	body: bytes,
 	*,
 	client: Client,
+	output: Optional[str] = None,
 ) -> Response[Union[Any, CodeOutput, Error]]:
 	kwargs = _get_kwargs(
 		lang=lang,
@@ -75,10 +75,10 @@ def sync_detailed(
 
 def sync(
 	lang: CodeLanguage,
-	output: str,
 	body: bytes,
 	*,
 	client: Client,
+	output: Optional[str] = None,
 ) -> Optional[Union[Any, CodeOutput, Error]]:
 
 	return sync_detailed(
@@ -91,10 +91,10 @@ def sync(
 
 async def asyncio_detailed(
 	lang: CodeLanguage,
-	output: str,
 	body: bytes,
 	*,
 	client: Client,
+	output: Optional[str] = None,
 ) -> Response[Union[Any, CodeOutput, Error]]:
 	kwargs = _get_kwargs(
 		lang=lang,
@@ -111,10 +111,10 @@ async def asyncio_detailed(
 
 async def asyncio(
 	lang: CodeLanguage,
-	output: str,
 	body: bytes,
 	*,
 	client: Client,
+	output: Optional[str] = None,
 ) -> Optional[Union[Any, CodeOutput, Error]]:
 
 	return (

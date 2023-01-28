@@ -3,21 +3,19 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.async_api_call_results_page import AsyncApiCallResultsPage
+from ...models.api_token_results_page import ApiTokenResultsPage
 from ...models.error import Error
 from ...models.created_at_sort_mode import CreatedAtSortMode
-from ...models.api_call_status import ApiCallStatus
 from ...types import Response
 
 def _get_kwargs(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: ApiCallStatus,
 	*,
 	client: Client,
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
-	url = "{}/async/operations?limit={limit}&page_token={page_token}&sort_by={sort_by}&status={status}".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by, status=status)
+	url = "{}/user/api-tokens?limit={limit}&page_token={page_token}&sort_by={sort_by}".format(client.base_url, limit=limit, page_token=page_token, sort_by=sort_by)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -30,9 +28,9 @@ def _get_kwargs(
 	}
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
 	if response.status_code == 200:
-		response_200 = AsyncApiCallResultsPage.from_dict(response.json())
+		response_200 = ApiTokenResultsPage.from_dict(response.json())
 		return response_200
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
@@ -43,7 +41,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApi
 	return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
 	return Response(
 		status_code=response.status_code,
 		content=response.content,
@@ -53,18 +51,16 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApi
 
 
 def sync_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: ApiCallStatus,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
+) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
 		page_token=page_token,
 		sort_by=sort_by,
-		status=status,
 		client=client,
 	)
 
@@ -77,38 +73,34 @@ def sync_detailed(
 
 
 def sync(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: ApiCallStatus,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
-	""" For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
-This endpoint requires authentication by a KittyCAD employee. """
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
+) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
+	""" This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
+The API tokens are returned in order of creation, with the most recently created API tokens first. """
 
 	return sync_detailed(
 		limit=limit,
 		page_token=page_token,
 		sort_by=sort_by,
-		status=status,
 		client=client,
 	).parsed
 
 
 async def asyncio_detailed(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: ApiCallStatus,
 	*,
 	client: Client,
-) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
+) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
 	kwargs = _get_kwargs(
 		limit=limit,
 		page_token=page_token,
 		sort_by=sort_by,
-		status=status,
 		client=client,
 	)
 
@@ -119,22 +111,20 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	limit: int,
-	page_token: str,
 	sort_by: CreatedAtSortMode,
-	status: ApiCallStatus,
 	*,
 	client: Client,
-) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
-	""" For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
-This endpoint requires authentication by a KittyCAD employee. """
+	limit: Optional[int] = None,
+	page_token: Optional[str] = None,
+) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
+	""" This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
+The API tokens are returned in order of creation, with the most recently created API tokens first. """
 
 	return (
 		await asyncio_detailed(
 		limit=limit,
 		page_token=page_token,
 		sort_by=sort_by,
-		status=status,
 			client=client,
 		)
 	).parsed

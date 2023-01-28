@@ -3,10 +3,11 @@ import pytest
 import asyncio
 
 from .client import ClientFromEnv
-from .models import FileConversion, FileExportFormat, FileImportFormat, User, Pong, ApiCallStatus, FileMass, FileVolume
+from .models import FileConversion, FileExportFormat, FileImportFormat, User, Pong, ApiCallStatus, FileMass, FileVolume, ApiTokenResultsPage, CreatedAtSortMode
 from .api.file import create_file_conversion_with_base64_helper, create_file_mass, create_file_volume
 from .api.meta import ping
 from .api.users import get_user_self
+from .api.api_tokens import list_api_tokens_for_user
 
 
 def test_get_session():
@@ -19,6 +20,20 @@ def test_get_session():
     assert session is not None
 
     print(f"Session: {session}")
+
+
+@pytest.mark.asyncio
+async def test_get_api_tokens_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # List API tokens.
+    fc: ApiTokenResultsPage = list_api_tokens_for_user.sync(
+        client=client, sort_by=CreatedAtSortMode)
+
+    assert fc is not None
+
+    print(f"fc: {fc}")
 
 
 @pytest.mark.asyncio
