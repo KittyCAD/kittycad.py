@@ -9,13 +9,12 @@ from ...models.file3_d_import_format import File3DImportFormat
 from ...types import Response
 
 def _get_kwargs(
-	material_density: float,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
 ) -> Dict[str, Any]:
-	url = "{}/file/center-of-mass?material_density={material_density}&src_format={src_format}".format(client.base_url, material_density=material_density, src_format=src_format)
+	url = "{}/file/center-of-mass?src_format={src_format}".format(client.base_url, src_format=src_format)
 
 	headers: Dict[str, Any] = client.get_headers()
 	cookies: Dict[str, Any] = client.get_cookies()
@@ -52,14 +51,12 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileCent
 
 
 def sync_detailed(
-	material_density: float,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
 ) -> Response[Union[Any, FileCenterOfMass, Error]]:
 	kwargs = _get_kwargs(
-		material_density=material_density,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -74,18 +71,15 @@ def sync_detailed(
 
 
 def sync(
-	material_density: float,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileCenterOfMass, Error]]:
 	""" Get the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-Does the same as the `center_of_mass_with_uniform_density` endpoint; except, this has a redundant `material_density value`. Kept for legacy in this version.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return sync_detailed(
-		material_density=material_density,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -93,14 +87,12 @@ If the operation is performed asynchronously, the `id` of the operation will be 
 
 
 async def asyncio_detailed(
-	material_density: float,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
 ) -> Response[Union[Any, FileCenterOfMass, Error]]:
 	kwargs = _get_kwargs(
-		material_density=material_density,
 		src_format=src_format,
 		body=body,
 		client=client,
@@ -113,19 +105,16 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-	material_density: float,
 	src_format: File3DImportFormat,
 	body: bytes,
 	*,
 	client: Client,
 ) -> Optional[Union[Any, FileCenterOfMass, Error]]:
 	""" Get the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-Does the same as the `center_of_mass_with_uniform_density` endpoint; except, this has a redundant `material_density value`. Kept for legacy in this version.
 If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint. """
 
 	return (
 		await asyncio_detailed(
-		material_density=material_density,
 		src_format=src_format,
 		body=body,
 			client=client,
