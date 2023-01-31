@@ -20,7 +20,6 @@ class FileCenterOfMass:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    material_density: Union[Unset, float] = UNSET
     src_format: Union[Unset, File3DImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
@@ -41,7 +40,6 @@ class FileCenterOfMass:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        material_density = self.material_density
         src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format.value
@@ -69,8 +67,6 @@ class FileCenterOfMass:
             field_dict['error'] = error
         if id is not UNSET:
             field_dict['id'] = id
-        if material_density is not UNSET:
-            field_dict['material_density'] = material_density
         if src_format is not UNSET:
             field_dict['src_format'] = src_format
         if started_at is not UNSET:
@@ -106,8 +102,6 @@ class FileCenterOfMass:
         error = d.pop("error", UNSET)
 
         id = d.pop("id", UNSET)
-
-        material_density = d.pop("material_density", UNSET)
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, File3DImportFormat]
@@ -145,7 +139,6 @@ class FileCenterOfMass:
             created_at=created_at,
             error=error,
             id=id,
-            material_density=material_density,
             src_format=src_format,
             started_at=started_at,
             status=status,

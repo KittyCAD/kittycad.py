@@ -42,7 +42,6 @@ from .file3_d_conversion import File3DConversion
 from .file3_d_export_format import File3DExportFormat
 from .file3_d_import_format import File3DImportFormat
 from .file_center_of_mass import FileCenterOfMass
-from .file_center_of_mass_with_uniform_density import FileCenterOfMassWithUniformDensity
 from .file_conversion import FileConversion
 from .file_density import FileDensity
 from .file_export_format import FileExportFormat
