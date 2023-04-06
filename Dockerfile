@@ -3,9 +3,9 @@ FROM python:3.9
 RUN pip install \
 	poetry
 
-WORKDIR /usr/src/
+WORKDIR /home/user/src/
 
-COPY . /usr/src/
+COPY . /home/user/src/
 
 RUN poetry update && poetry install
 
