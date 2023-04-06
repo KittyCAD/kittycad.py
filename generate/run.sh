@@ -2,6 +2,9 @@
 set -e
 set -o pipefail
 
+# Fix for ci.
+git config --global --add safe.directory /home/user/src
+
 # Cleanup old stuff.
 rm -rf kittycad/models
 rm -rf kittycad/api

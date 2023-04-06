@@ -19,7 +19,6 @@ jobs:
       - name: make generate
         shell: bash
         run: |
-          git config --global --add safe.directory /home/user/src
           make generate
       # Ensure no files changed.
       - name: Ensure no files changed
