@@ -19,6 +19,7 @@ jobs:
       - name: make generate
         shell: bash
         run: |
+          git config --global --add safe.directory $(pwd)
           make generate
       # Ensure no files changed.
       - name: Ensure no files changed

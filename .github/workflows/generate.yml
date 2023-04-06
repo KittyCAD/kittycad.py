@@ -22,6 +22,7 @@ jobs:
       - name: Run generate
         shell: bash
         run: |
+          git config --global --add safe.directory $(pwd)
           make generate
 
       - name: Check for modified files

@@ -2,9 +2,6 @@
 set -e
 set -o pipefail
 
-# This should fix CI.
-git config --add safe.directory $(pwd)
-
 # Cleanup old stuff.
 rm -rf kittycad/models
 rm -rf kittycad/api
