@@ -1,6 +1,12 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .account_provider import AccountProvider
+from .ai_plugin_api import AiPluginApi
+from .ai_plugin_api_type import AiPluginApiType
+from .ai_plugin_auth import AiPluginAuth
+from .ai_plugin_auth_type import AiPluginAuthType
+from .ai_plugin_http_auth_type import AiPluginHttpAuthType
+from .ai_plugin_manifest import AiPluginManifest
 from .api_call_query_group import ApiCallQueryGroup
 from .api_call_query_group_by import ApiCallQueryGroupBy
 from .api_call_status import ApiCallStatus
@@ -20,6 +26,7 @@ from .code_language import CodeLanguage
 from .code_output import CodeOutput
 from .commit import Commit
 from .connection import Connection
+from .country_code import CountryCode
 from .created_at_sort_mode import CreatedAtSortMode
 from .currency import Currency
 from .customer import Customer
