@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.country_code import CountryCode
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="NewAddress")
@@ -11,7 +12,7 @@ T = TypeVar("T", bound="NewAddress")
 class NewAddress:
     """ """
     city: Union[Unset, str] = UNSET
-    country: Union[Unset, str] = UNSET
+    country: Union[Unset, CountryCode] = UNSET
     state: Union[Unset, str] = UNSET
     street1: Union[Unset, str] = UNSET
     street2: Union[Unset, str] = UNSET
@@ -22,7 +23,9 @@ class NewAddress:
 
     def to_dict(self) -> Dict[str, Any]:
         city = self.city
-        country = self.country
+        country: Union[Unset, str] = UNSET
+        if not isinstance(self.country, Unset):
+            country = self.country.value
         state = self.state
         street1 = self.street1
         street2 = self.street2
@@ -54,7 +57,12 @@ class NewAddress:
         d = src_dict.copy()
         city = d.pop("city", UNSET)
 
-        country = d.pop("country", UNSET)
+        _country = d.pop("country", UNSET)
+        country: Union[Unset, CountryCode]
+        if isinstance(_country, Unset):
+            country = UNSET
+        else:
+            country = CountryCode(_country)
 
         state = d.pop("state", UNSET)
 
