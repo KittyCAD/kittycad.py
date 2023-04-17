@@ -81,6 +81,7 @@ def sync(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, Mesh, Error]]:
+	""" This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better. """
 
 	return sync_detailed(
 		input_format=input_format,
@@ -117,6 +118,7 @@ async def asyncio(
 	*,
 	client: Client,
 ) -> Optional[Union[Any, Mesh, Error]]:
+	""" This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better. """
 
 	return (
 		await asyncio_detailed(
