@@ -45,8 +45,6 @@ from .extended_user_results_page import ExtendedUserResultsPage
 from .file2_d_vector_conversion import File2DVectorConversion
 from .file2_d_vector_export_format import File2DVectorExportFormat
 from .file2_d_vector_import_format import File2DVectorImportFormat
-from .file3_d_conversion import File3DConversion
-from .file3_d_export_format import File3DExportFormat
 from .file3_d_import_format import File3DImportFormat
 from .file_center_of_mass import FileCenterOfMass
 from .file_conversion import FileConversion
