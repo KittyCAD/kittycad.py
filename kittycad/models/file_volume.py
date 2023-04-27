@@ -5,7 +5,7 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.uuid import Uuid
-from ..models.file3_d_import_format import File3DImportFormat
+from ..models.file_import_format import FileImportFormat
 from ..models.api_call_status import ApiCallStatus
 from ..types import UNSET, Unset
 
@@ -19,7 +19,7 @@ class FileVolume:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    src_format: Union[Unset, File3DImportFormat] = UNSET
+    src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -100,11 +100,11 @@ class FileVolume:
         id = d.pop("id", UNSET)
 
         _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, File3DImportFormat]
+        src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = File3DImportFormat(_src_format)
+            src_format = FileImportFormat(_src_format)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]

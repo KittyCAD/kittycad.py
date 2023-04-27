@@ -10,7 +10,6 @@ class FileImportFormat(str, Enum):
     PLY = 'ply'
     STEP = 'step'
     STL = 'stl'
-    SVG = 'svg'
 
     def __str__(self) -> str:
         return str(self.value)
