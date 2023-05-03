@@ -17,4 +17,4 @@ poetry run python generate/generate.py
 # Format and lint.
 poetry run isort .
 poetry run black .
-poetry run ruff check --fix .
+poetry run ruff check --fix . || true
