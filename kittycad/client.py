@@ -43,12 +43,14 @@ class Client:
 class ClientFromEnv(Client):
     """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token."""  # noqa: E501
 
-    token: Optional[str] = attr.ib(default=os.getenv("KITTYCAD_API_TOKEN"))
+    token: str = attr.ib(default=None)
 
-    if token is None:
-        raise ValueError(
-            "KITTYCAD_API_TOKEN environment variable must be set to use ClientFromEnv"
-        )
+    def __init__(self, name):
+        maybe_token: Optional[str] = os.getenv("KITTYCAD_API_TOKEN")
+        if maybe_token is None:
+            raise ValueError(
+                "KITTYCAD_API_TOKEN environment variable must be set to use ClientFromEnv"
+            )
 
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in authenticated endpoints"""

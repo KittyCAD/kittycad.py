@@ -4,7 +4,6 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...models.str import str
 from ...types import Response
 
 

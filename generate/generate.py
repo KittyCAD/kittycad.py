@@ -177,16 +177,26 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
     if request_body_type:
         params_str += ", body=" + request_body_type
 
-    example = (
-        """from kittycad.models import """
-        + success_type
-        + """
+    example_imports = (
+        """
 from kittycad.api."""
         + tag_name
         + """ import """
         + fn_name
         + """
 from kittycad.types import Response
+
+        """
+    )
+
+    if success_type != "str":
+        example_imports = example_imports + (
+            """from kittycad.models import """ + success_type
+        )
+
+    example = (
+        example_imports
+        + """
 
 fc: """
         + success_type
@@ -244,7 +254,8 @@ response: Response["""
     for ref in endpoint_refs:
         if ref.startswith("List[") and ref.endswith("]"):
             ref = ref.replace("List[", "").replace("]", "")
-        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
+        if ref != "str":
+            f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
     for ref in parameter_refs:
         f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
     for ref in request_body_refs:
@@ -700,7 +711,7 @@ response: Response["""
                     + parameter_type
                     + ",\n"
                 )
-    if request_body_type:
+    if request_body_type is not None:
         f.write("\tbody: " + request_body_type + ",\n")
     f.write("\t*,\n")
     f.write("\tclient: Client,\n")
@@ -1762,7 +1773,9 @@ def camel_to_screaming_snake(name: str):
     )
 
 
-def get_function_parameters(endpoint: dict, request_body_type: str) -> List[str]:
+def get_function_parameters(
+    endpoint: dict, request_body_type: Optional[str]
+) -> List[str]:
     params = []
     if "parameters" in endpoint:
         parameters = endpoint["parameters"]
