@@ -16,11 +16,13 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/unit/conversion/voltage/{src_format}/{output_format}?value={value}".format(
-        client.base_url,
-        output_format=output_format,
-        src_format=src_format,
-        value=value,
+    url = (
+        "{}/unit/conversion/voltage/{src_format}/{output_format}?value={value}".format(
+            client.base_url,
+            output_format=output_format,
+            src_format=src_format,
+            value=value,
+        )
     )
 
     headers: Dict[str, Any] = client.get_headers()

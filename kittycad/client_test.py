@@ -129,13 +129,11 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = (
-        await create_file_conversion_with_base64_helper.asyncio(
-            client=client,
-            body=content,
-            src_format=FileImportFormat.STL,
-            output_format=FileExportFormat.OBJ,
-        )
+    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ,
     )
 
     assert fc is not None

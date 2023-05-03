@@ -21,10 +21,7 @@ def _get_kwargs(
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/unit/conversion/magnetic-field-strength/{src_format}/{output_format}?value={value}".format(
-        client.base_url,
-        output_format=output_format,
-        src_format=src_format,
-        value=value,
+        client.base_url, output_format=output_format, src_format=src_format, value=value
     )
 
     headers: Dict[str, Any] = client.get_headers()
@@ -42,9 +39,7 @@ def _parse_response(
     *, response: httpx.Response
 ) -> Optional[Union[Any, UnitMagneticFieldStrengthConversion, Error]]:
     if response.status_code == 200:
-        response_200 = UnitMagneticFieldStrengthConversion.from_dict(
-            response.json()
-        )
+        response_200 = UnitMagneticFieldStrengthConversion.from_dict(response.json())
         return response_200
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())

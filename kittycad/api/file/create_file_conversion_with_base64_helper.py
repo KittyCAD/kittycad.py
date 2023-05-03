@@ -1,7 +1,6 @@
 import base64
 from typing import Any, Optional, Union
 
-
 from ...api.file.create_file_conversion import asyncio as fc_asyncio
 from ...api.file.create_file_conversion import sync as fc_sync
 from ...client import Client

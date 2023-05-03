@@ -25,12 +25,8 @@ class RegistryServiceConfig:
             allow_nondistributable_artifacts_cid_rs = (
                 self.allow_nondistributable_artifacts_cid_rs
             )
-        allow_nondistributable_artifacts_hostnames: Union[
-            Unset, List[str]
-        ] = UNSET
-        if not isinstance(
-            self.allow_nondistributable_artifacts_hostnames, Unset
-        ):
+        allow_nondistributable_artifacts_hostnames: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.allow_nondistributable_artifacts_hostnames, Unset):
             allow_nondistributable_artifacts_hostnames = (
                 self.allow_nondistributable_artifacts_hostnames
             )
@@ -70,8 +66,7 @@ class RegistryServiceConfig:
         )
 
         allow_nondistributable_artifacts_hostnames = cast(
-            List[str],
-            d.pop("allow_nondistributable_artifacts_hostnames", UNSET),
+            List[str], d.pop("allow_nondistributable_artifacts_hostnames", UNSET)
         )
 
         index_configs = d.pop("index_configs", UNSET)

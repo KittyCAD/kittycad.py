@@ -41,7 +41,7 @@ requires = ["poetry>=1.0"]
 build-backend = "poetry.masonry.api"
 
 [tool.black]
-line-length = 80
+line-length = 88
 target_version = ['py36', 'py37', 'py38']
 exclude = '''
 (
@@ -64,6 +64,14 @@ include = '''
 '''
 
 [tool.isort]
-line_length = 80
+line_length = 88
 profile = "black"
 src_paths = ["generate", "kittycad", "docs"]
+
+[tool.ruff]
+line-length = 88
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+unfixable = []
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"

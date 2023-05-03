@@ -17,9 +17,7 @@ def _get_kwargs(
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/file/mass?material_density={material_density}&src_format={src_format}".format(
-        client.base_url,
-        material_density=material_density,
-        src_format=src_format,
+        client.base_url, material_density=material_density, src_format=src_format
     )
 
     headers: Dict[str, Any] = client.get_headers()

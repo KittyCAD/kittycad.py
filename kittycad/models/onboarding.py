@@ -18,9 +18,7 @@ class Onboarding:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        first_call_from_their_machine_date = (
-            self.first_call_from_their_machine_date
-        )
+        first_call_from_their_machine_date = self.first_call_from_their_machine_date
         first_litterbox_execute_date = self.first_litterbox_execute_date
         first_token_date = self.first_token_date
 
@@ -32,9 +30,7 @@ class Onboarding:
                 "first_call_from_their_machine_date"
             ] = first_call_from_their_machine_date
         if first_litterbox_execute_date is not UNSET:
-            field_dict[
-                "first_litterbox_execute_date"
-            ] = first_litterbox_execute_date
+            field_dict["first_litterbox_execute_date"] = first_litterbox_execute_date
         if first_token_date is not UNSET:
             field_dict["first_token_date"] = first_token_date
 
@@ -47,9 +43,7 @@ class Onboarding:
             "first_call_from_their_machine_date", UNSET
         )
 
-        first_litterbox_execute_date = d.pop(
-            "first_litterbox_execute_date", UNSET
-        )
+        first_litterbox_execute_date = d.pop("first_litterbox_execute_date", UNSET)
 
         first_token_date = d.pop("first_token_date", UNSET)
 

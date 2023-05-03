@@ -4,9 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...models.unit_data_transfer_rate_conversion import (
-    UnitDataTransferRateConversion,
-)
+from ...models.unit_data_transfer_rate_conversion import UnitDataTransferRateConversion
 from ...models.unit_data_transfer_rate_format import UnitDataTransferRateFormat
 from ...types import Response
 
@@ -19,10 +17,7 @@ def _get_kwargs(
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/unit/conversion/data-transfer-rate/{src_format}/{output_format}?value={value}".format(
-        client.base_url,
-        output_format=output_format,
-        src_format=src_format,
-        value=value,
+        client.base_url, output_format=output_format, src_format=src_format, value=value
     )
 
     headers: Dict[str, Any] = client.get_headers()

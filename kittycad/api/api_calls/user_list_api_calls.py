@@ -3,9 +3,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.api_call_with_price_results_page import (
-    ApiCallWithPriceResultsPage,
-)
+from ...models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...models.error import Error
 from ...types import Response
