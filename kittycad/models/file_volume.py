@@ -13,7 +13,7 @@ T = TypeVar("T", bound="FileVolume")
 
 @attr.s(auto_attribs=True)
 class FileVolume:
-    """ """
+    """A file volume result."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET

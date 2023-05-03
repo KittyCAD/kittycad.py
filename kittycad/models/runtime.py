@@ -9,7 +9,7 @@ T = TypeVar("T", bound="Runtime")
 
 @attr.s(auto_attribs=True)
 class Runtime:
-    """ """
+    """Runtime describes an [OCI compliant](https://github.com/opencontainers/runtime-spec) runtime.  The runtime is invoked by the daemon via the `containerd` daemon. OCI runtimes act as an interface to the Linux kernel namespaces, cgroups, and SELinux."""  # noqa: E501
 
     path: Union[Unset, str] = UNSET
     runtime_args: Union[Unset, List[str]] = UNSET

@@ -9,7 +9,9 @@ T = TypeVar("T", bound="CacheMetadata")
 
 @attr.s(auto_attribs=True)
 class CacheMetadata:
-    """ """
+    """Metadata about our cache.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     ok: Union[Unset, bool] = False
 

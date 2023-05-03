@@ -62,7 +62,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any,]]:
-    """You must be a KittyCAD employee to perform this request."""
+    """You must be a KittyCAD employee to perform this request."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -87,7 +87,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any,]]:
-    """You must be a KittyCAD employee to perform this request."""
+    """You must be a KittyCAD employee to perform this request."""  # noqa: E501
 
     return (
         await asyncio_detailed(

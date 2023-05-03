@@ -9,7 +9,7 @@ T = TypeVar("T", bound="Onboarding")
 
 @attr.s(auto_attribs=True)
 class Onboarding:
-    """ """
+    """Onboarding details"""  # noqa: E501
 
     first_call_from_their_machine_date: Union[Unset, str] = UNSET
     first_litterbox_execute_date: Union[Unset, str] = UNSET

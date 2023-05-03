@@ -72,7 +72,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[Any, Customer, Error]]:
     """This includes billing address, phone, and name.
-    This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user."""
+    This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -98,7 +98,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[Any, Customer, Error]]:
     """This includes billing address, phone, and name.
-    This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user."""
+    This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user."""  # noqa: E501
 
     return (
         await asyncio_detailed(

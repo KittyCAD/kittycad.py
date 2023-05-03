@@ -11,7 +11,7 @@ T = TypeVar("T", bound="User")
 
 @attr.s(auto_attribs=True)
 class User:
-    """ """
+    """A user."""  # noqa: E501
 
     company: Union[Unset, str] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET

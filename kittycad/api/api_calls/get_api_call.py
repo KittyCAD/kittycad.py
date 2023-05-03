@@ -77,7 +77,7 @@ def sync(
 ) -> Optional[Union[Any, ApiCallWithPrice, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user.
     If the user is not authenticated to view the specified API call, then it is not returned.
-    Only KittyCAD employees can view API calls for other users."""
+    Only KittyCAD employees can view API calls for other users."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -108,7 +108,7 @@ async def asyncio(
 ) -> Optional[Union[Any, ApiCallWithPrice, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user.
     If the user is not authenticated to view the specified API call, then it is not returned.
-    Only KittyCAD employees can view API calls for other users."""
+    Only KittyCAD employees can view API calls for other users."""  # noqa: E501
 
     return (
         await asyncio_detailed(

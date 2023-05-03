@@ -10,7 +10,7 @@ T = TypeVar("T", bound="NewAddress")
 
 @attr.s(auto_attribs=True)
 class NewAddress:
-    """ """
+    """The struct that is used to create a new record. This is automatically generated and has all the same fields as the main struct only it is missing the `id`."""  # noqa: E501
 
     city: Union[Unset, str] = UNSET
     country: Union[Unset, CountryCode] = UNSET

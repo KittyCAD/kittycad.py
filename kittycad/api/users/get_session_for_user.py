@@ -75,7 +75,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, Session, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API token for the user."""
+    """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API token for the user."""  # noqa: E501
 
     return sync_detailed(
         token=token,
@@ -104,7 +104,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, Session, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API token for the user."""
+    """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API token for the user."""  # noqa: E501
 
     return (
         await asyncio_detailed(

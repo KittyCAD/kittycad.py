@@ -14,7 +14,7 @@ T = TypeVar("T", bound="FileConversion")
 
 @attr.s(auto_attribs=True)
 class FileConversion:
-    """ """
+    """A file conversion."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET

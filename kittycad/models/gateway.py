@@ -9,7 +9,7 @@ T = TypeVar("T", bound="Gateway")
 
 @attr.s(auto_attribs=True)
 class Gateway:
-    """ """
+    """Gateway information."""  # noqa: E501
 
     auth_timeout: Union[Unset, int] = UNSET
     host: Union[Unset, str] = UNSET

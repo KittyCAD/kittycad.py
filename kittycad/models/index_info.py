@@ -9,7 +9,7 @@ T = TypeVar("T", bound="IndexInfo")
 
 @attr.s(auto_attribs=True)
 class IndexInfo:
-    """ """
+    """IndexInfo contains information about a registry."""  # noqa: E501
 
     mirrors: Union[Unset, List[str]] = UNSET
     name: Union[Unset, str] = UNSET

@@ -73,7 +73,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, dict, Error]]:
-    """Response depends on which command was submitted, so unfortunately the OpenAPI schema can't generate the right response type."""
+    """Response depends on which command was submitted, so unfortunately the OpenAPI schema can't generate the right response type."""  # noqa: E501
 
     return sync_detailed(
         body=body,
@@ -102,7 +102,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, dict, Error]]:
-    """Response depends on which command was submitted, so unfortunately the OpenAPI schema can't generate the right response type."""
+    """Response depends on which command was submitted, so unfortunately the OpenAPI schema can't generate the right response type."""  # noqa: E501
 
     return (
         await asyncio_detailed(

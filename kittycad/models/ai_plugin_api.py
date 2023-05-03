@@ -10,7 +10,7 @@ T = TypeVar("T", bound="AiPluginApi")
 
 @attr.s(auto_attribs=True)
 class AiPluginApi:
-    """ """
+    """AI plugin api information."""  # noqa: E501
 
     is_user_authenticated: Union[Unset, bool] = False
     type: Union[Unset, AiPluginApiType] = UNSET

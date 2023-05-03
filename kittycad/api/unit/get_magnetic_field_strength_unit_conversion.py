@@ -90,7 +90,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitMagneticFieldStrengthConversion, Error]]:
-    """Convert a magnetic field strength unit value to another magnetic field strength unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a magnetic field strength unit value to another magnetic field strength unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
         output_format=output_format,
@@ -127,7 +127,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitMagneticFieldStrengthConversion, Error]]:
-    """Convert a magnetic field strength unit value to another magnetic field strength unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a magnetic field strength unit value to another magnetic field strength unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (
         await asyncio_detailed(

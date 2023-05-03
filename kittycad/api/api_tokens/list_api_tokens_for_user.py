@@ -87,7 +87,7 @@ def sync(
     page_token: Optional[str] = None,
 ) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
-    The API tokens are returned in order of creation, with the most recently created API tokens first."""
+    The API tokens are returned in order of creation, with the most recently created API tokens first."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
@@ -125,7 +125,7 @@ async def asyncio(
     page_token: Optional[str] = None,
 ) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
-    The API tokens are returned in order of creation, with the most recently created API tokens first."""
+    The API tokens are returned in order of creation, with the most recently created API tokens first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

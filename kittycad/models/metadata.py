@@ -16,7 +16,9 @@ T = TypeVar("T", bound="Metadata")
 
 @attr.s(auto_attribs=True)
 class Metadata:
-    """ """
+    """Metadata about our currently running server.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     cache: Union[Unset, CacheMetadata] = UNSET
     engine: Union[Unset, EngineMetadata] = UNSET

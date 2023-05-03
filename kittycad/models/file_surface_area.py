@@ -13,7 +13,7 @@ T = TypeVar("T", bound="FileSurfaceArea")
 
 @attr.s(auto_attribs=True)
 class FileSurfaceArea:
-    """ """
+    """A file surface area result."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET

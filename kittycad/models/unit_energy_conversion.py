@@ -13,7 +13,7 @@ T = TypeVar("T", bound="UnitEnergyConversion")
 
 @attr.s(auto_attribs=True)
 class UnitEnergyConversion:
-    """ """
+    """A unit conversion."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET

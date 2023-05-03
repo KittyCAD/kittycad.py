@@ -91,7 +91,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitDensityConversion, Error]]:
-    """Convert a density unit value to another density unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a density unit value to another density unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
         output_format=output_format,
@@ -128,7 +128,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitDensityConversion, Error]]:
-    """Convert a density unit value to another density unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a density unit value to another density unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (
         await asyncio_detailed(

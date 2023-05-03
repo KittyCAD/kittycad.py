@@ -9,7 +9,7 @@ T = TypeVar("T", bound="Cluster")
 
 @attr.s(auto_attribs=True)
 class Cluster:
-    """ """
+    """Cluster information."""  # noqa: E501
 
     addr: Union[Unset, str] = UNSET
     auth_timeout: Union[Unset, int] = UNSET

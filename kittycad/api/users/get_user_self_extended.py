@@ -72,7 +72,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[Any, ExtendedUser, Error]]:
     """Get the user information for the authenticated user.
-    Alternatively, you can also use the `/users-extended/me` endpoint."""
+    Alternatively, you can also use the `/users-extended/me` endpoint."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -98,7 +98,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[Any, ExtendedUser, Error]]:
     """Get the user information for the authenticated user.
-    Alternatively, you can also use the `/users-extended/me` endpoint."""
+    Alternatively, you can also use the `/users-extended/me` endpoint."""  # noqa: E501
 
     return (
         await asyncio_detailed(

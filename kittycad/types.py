@@ -32,7 +32,7 @@ class File:
     mime_type: Optional[str] = None
 
     def to_tuple(self) -> FileJsonType:
-        """Return a tuple representation that httpx will accept for multipart/form-data"""
+        """Return a tuple representation that httpx will accept for multipart/form-data"""  # noqa: E501
         return self.file_name, self.payload, self.mime_type
 
 
@@ -41,7 +41,7 @@ T = TypeVar("T")
 
 @attr.s(auto_attribs=True)
 class Response(Generic[T]):
-    """A response from an endpoint"""
+    """A response from an endpoint"""  # noqa: E501
 
     status_code: int
     content: bytes

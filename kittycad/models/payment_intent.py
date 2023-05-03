@@ -9,7 +9,7 @@ T = TypeVar("T", bound="PaymentIntent")
 
 @attr.s(auto_attribs=True)
 class PaymentIntent:
-    """ """
+    """A payment intent response."""  # noqa: E501
 
     client_secret: Union[Unset, str] = UNSET
 

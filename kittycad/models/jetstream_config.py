@@ -9,7 +9,7 @@ T = TypeVar("T", bound="JetstreamConfig")
 
 @attr.s(auto_attribs=True)
 class JetstreamConfig:
-    """ """
+    """Jetstream configuration."""  # noqa: E501
 
     domain: Union[Unset, str] = UNSET
     max_memory: Union[Unset, int] = UNSET

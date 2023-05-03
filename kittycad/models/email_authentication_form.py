@@ -9,7 +9,7 @@ T = TypeVar("T", bound="EmailAuthenticationForm")
 
 @attr.s(auto_attribs=True)
 class EmailAuthenticationForm:
-    """ """
+    """The body of the form for email authentication."""  # noqa: E501
 
     callback_url: Union[Unset, str] = UNSET
     email: Union[Unset, str] = UNSET

@@ -9,7 +9,7 @@ T = TypeVar("T", bound="CodeOutput")
 
 @attr.s(auto_attribs=True)
 class CodeOutput:
-    """ """
+    """Output of the code being executed."""  # noqa: E501
 
     from ..models.output_file import OutputFile
 

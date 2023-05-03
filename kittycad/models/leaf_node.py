@@ -9,7 +9,7 @@ T = TypeVar("T", bound="LeafNode")
 
 @attr.s(auto_attribs=True)
 class LeafNode:
-    """ """
+    """Leaf node information."""  # noqa: E501
 
     auth_timeout: Union[Unset, int] = UNSET
     host: Union[Unset, str] = UNSET

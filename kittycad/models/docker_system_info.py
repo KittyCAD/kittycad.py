@@ -15,7 +15,7 @@ T = TypeVar("T", bound="DockerSystemInfo")
 
 @attr.s(auto_attribs=True)
 class DockerSystemInfo:
-    """ """
+    """Docker system info."""  # noqa: E501
 
     architecture: Union[Unset, str] = UNSET
     bridge_nf_ip6tables: Union[Unset, bool] = False

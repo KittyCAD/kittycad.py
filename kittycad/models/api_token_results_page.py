@@ -9,7 +9,7 @@ T = TypeVar("T", bound="ApiTokenResultsPage")
 
 @attr.s(auto_attribs=True)
 class ApiTokenResultsPage:
-    """ """
+    """A single page of results"""  # noqa: E501
 
     from ..models.api_token import ApiToken
 

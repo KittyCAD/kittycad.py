@@ -9,7 +9,7 @@ T = TypeVar("T", bound="RegistryServiceConfig")
 
 @attr.s(auto_attribs=True)
 class RegistryServiceConfig:
-    """ """
+    """RegistryServiceConfig stores daemon registry services configuration."""  # noqa: E501
 
     allow_nondistributable_artifacts_cid_rs: Union[Unset, List[str]] = UNSET
     allow_nondistributable_artifacts_hostnames: Union[Unset, List[str]] = UNSET

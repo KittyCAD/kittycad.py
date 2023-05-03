@@ -10,7 +10,7 @@ T = TypeVar("T", bound="DeviceAccessTokenRequestForm")
 
 @attr.s(auto_attribs=True)
 class DeviceAccessTokenRequestForm:
-    """ """
+    """The form for a device access token request."""  # noqa: E501
 
     client_id: Union[Unset, str] = UNSET
     device_code: Union[Unset, str] = UNSET

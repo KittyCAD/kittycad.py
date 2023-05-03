@@ -11,7 +11,9 @@ T = TypeVar("T", bound="Session")
 
 @attr.s(auto_attribs=True)
 class Session:
-    """ """
+    """An authentication session.
+
+    For our UIs, these are automatically created by Next.js."""  # noqa: E501
 
     created_at: Union[Unset, datetime.datetime] = UNSET
     expires: Union[Unset, datetime.datetime] = UNSET

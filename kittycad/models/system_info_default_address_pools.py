@@ -9,8 +9,6 @@ T = TypeVar("T", bound="SystemInfoDefaultAddressPools")
 
 @attr.s(auto_attribs=True)
 class SystemInfoDefaultAddressPools:
-    """ """
-
     base: Union[Unset, str] = UNSET
     size: Union[Unset, int] = UNSET
 

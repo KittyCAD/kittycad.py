@@ -12,7 +12,7 @@ T = TypeVar("T", bound="Jetstream")
 
 @attr.s(auto_attribs=True)
 class Jetstream:
-    """ """
+    """Jetstream information."""  # noqa: E501
 
     config: Union[Unset, JetstreamConfig] = UNSET
     meta: Union[Unset, MetaClusterInfo] = UNSET

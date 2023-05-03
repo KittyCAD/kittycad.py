@@ -13,7 +13,7 @@ T = TypeVar("T", bound="FileCenterOfMass")
 
 @attr.s(auto_attribs=True)
 class FileCenterOfMass:
-    """ """
+    """A file center of mass result."""  # noqa: E501
 
     center_of_mass: Union[Unset, List[float]] = UNSET
     completed_at: Union[Unset, datetime.datetime] = UNSET

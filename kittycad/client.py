@@ -7,7 +7,7 @@ import attr
 
 @attr.s(auto_attribs=True)
 class Client:
-    """A Client which has been authenticated for use on secured endpoints of the KittyCAD API."""
+    """A Client which has been authenticated for use on secured endpoints of the KittyCAD API.""" # noqa: E501
 
     token: str = attr.ib(kw_only=True)
     base_url: str = attr.ib(default="https://api.kittycad.io")
@@ -41,7 +41,7 @@ class Client:
 
 @attr.s(auto_attribs=True)
 class ClientFromEnv(Client):
-    """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token."""
+    """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token.""" # noqa: E501
 
     token: str = attr.ib(default=os.getenv("KITTYCAD_API_TOKEN"))
 

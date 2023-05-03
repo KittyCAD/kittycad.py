@@ -11,7 +11,9 @@ T = TypeVar("T", bound="ApiToken")
 
 @attr.s(auto_attribs=True)
 class ApiToken:
-    """ """
+    """An API token.
+
+    These are used to authenticate users with Bearer authentication."""  # noqa: E501
 
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET

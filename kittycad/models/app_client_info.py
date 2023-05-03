@@ -9,7 +9,7 @@ T = TypeVar("T", bound="AppClientInfo")
 
 @attr.s(auto_attribs=True)
 class AppClientInfo:
-    """ """
+    """Information about a third party app client."""  # noqa: E501
 
     url: Union[Unset, str] = UNSET
 

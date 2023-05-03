@@ -9,7 +9,7 @@ T = TypeVar("T", bound="Commit")
 
 @attr.s(auto_attribs=True)
 class Commit:
-    """ """
+    """Commit holds the Git-commit (SHA1) that a binary was built from, as reported in the version-string of external tools, such as `containerd`, or `runC`."""  # noqa: E501
 
     expected: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET

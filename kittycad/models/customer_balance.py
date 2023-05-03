@@ -11,7 +11,9 @@ T = TypeVar("T", bound="CustomerBalance")
 
 @attr.s(auto_attribs=True)
 class CustomerBalance:
-    """ """
+    """A balance for a user.
+
+    This holds information about the financial balance for the user."""  # noqa: E501
 
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET

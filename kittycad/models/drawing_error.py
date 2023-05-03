@@ -9,7 +9,7 @@ T = TypeVar("T", bound="DrawingError")
 
 @attr.s(auto_attribs=True)
 class DrawingError:
-    """ """
+    """Why a command submitted to the Drawing API failed."""  # noqa: E501
 
     error_code: Union[Unset, str] = UNSET
     external_message: Union[Unset, str] = UNSET

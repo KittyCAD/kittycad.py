@@ -17,8 +17,6 @@ T = TypeVar("T", bound="Cancelled")
 
 @attr.s(auto_attribs=True)
 class Cancelled:
-    """ """
-
     what_failed: Union[Unset, DrawingCmdId] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

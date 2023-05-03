@@ -9,7 +9,7 @@ T = TypeVar("T", bound="PaymentMethodCardChecks")
 
 @attr.s(auto_attribs=True)
 class PaymentMethodCardChecks:
-    """ """
+    """Card checks."""  # noqa: E501
 
     address_line1_check: Union[Unset, str] = UNSET
     address_postal_code_check: Union[Unset, str] = UNSET

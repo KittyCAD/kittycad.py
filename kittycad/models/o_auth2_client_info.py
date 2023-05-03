@@ -9,7 +9,7 @@ T = TypeVar("T", bound="OAuth2ClientInfo")
 
 @attr.s(auto_attribs=True)
 class OAuth2ClientInfo:
-    """ """
+    """Information about an OAuth 2.0 client."""  # noqa: E501
 
     csrf_token: Union[Unset, str] = UNSET
     pkce_code_verifier: Union[Unset, str] = UNSET

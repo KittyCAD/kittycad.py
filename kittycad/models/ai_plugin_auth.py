@@ -11,7 +11,7 @@ T = TypeVar("T", bound="AiPluginAuth")
 
 @attr.s(auto_attribs=True)
 class AiPluginAuth:
-    """ """
+    """AI plugin auth information."""  # noqa: E501
 
     authorization_type: Union[Unset, AiPluginHttpAuthType] = UNSET
     type: Union[Unset, AiPluginAuthType] = UNSET

@@ -10,8 +10,6 @@ T = TypeVar("T", bound="DrawCircle")
 
 @attr.s(auto_attribs=True)
 class DrawCircle:
-    """ """
-
     center: Union[Unset, List[float]] = UNSET
     radius: Union[Unset, float] = UNSET
 
@@ -70,8 +68,6 @@ T = TypeVar("T", bound="Extrude")
 
 @attr.s(auto_attribs=True)
 class Extrude:
-    """ """
-
     distance: Union[Unset, float] = UNSET
     sketch: Union[Unset, DrawingCmdId] = UNSET
 

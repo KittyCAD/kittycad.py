@@ -9,7 +9,7 @@ T = TypeVar("T", bound="UserResultsPage")
 
 @attr.s(auto_attribs=True)
 class UserResultsPage:
-    """ """
+    """A single page of results"""  # noqa: E501
 
     from ..models.user import User
 

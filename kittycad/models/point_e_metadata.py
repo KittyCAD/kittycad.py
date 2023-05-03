@@ -9,7 +9,9 @@ T = TypeVar("T", bound="PointEMetadata")
 
 @attr.s(auto_attribs=True)
 class PointEMetadata:
-    """ """
+    """Metadata about our point-e instance.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     ok: Union[Unset, bool] = False
 

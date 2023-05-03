@@ -9,8 +9,6 @@ T = TypeVar("T", bound="Mesh")
 
 @attr.s(auto_attribs=True)
 class Mesh:
-    """ """
-
     mesh: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

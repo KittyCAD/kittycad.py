@@ -67,7 +67,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, dict, Error]]:
-    """This is the same as the OpenAPI schema, BUT it has some modifications to make it compatible with OpenAI. For example, descriptions must be < 300 chars."""
+    """This is the same as the OpenAPI schema, BUT it has some modifications to make it compatible with OpenAI. For example, descriptions must be < 300 chars."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -92,7 +92,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, dict, Error]]:
-    """This is the same as the OpenAPI schema, BUT it has some modifications to make it compatible with OpenAI. For example, descriptions must be < 300 chars."""
+    """This is the same as the OpenAPI schema, BUT it has some modifications to make it compatible with OpenAI. For example, descriptions must be < 300 chars."""  # noqa: E501
 
     return (
         await asyncio_detailed(

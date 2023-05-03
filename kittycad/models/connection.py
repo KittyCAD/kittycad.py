@@ -15,7 +15,9 @@ T = TypeVar("T", bound="Connection")
 
 @attr.s(auto_attribs=True)
 class Connection:
-    """ """
+    """Metadata about a pub-sub connection.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     auth_timeout: Union[Unset, int] = UNSET
     cluster: Union[Unset, Cluster] = UNSET

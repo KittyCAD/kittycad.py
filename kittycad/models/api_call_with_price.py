@@ -12,7 +12,9 @@ T = TypeVar("T", bound="ApiCallWithPrice")
 
 @attr.s(auto_attribs=True)
 class ApiCallWithPrice:
-    """ """
+    """An API call with the price.
+
+    This is a join of the `ApiCall` and `ApiCallPrice` tables."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET

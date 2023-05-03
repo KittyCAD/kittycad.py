@@ -9,7 +9,7 @@ T = TypeVar("T", bound="OutputFile")
 
 @attr.s(auto_attribs=True)
 class OutputFile:
-    """ """
+    """Output file contents."""  # noqa: E501
 
     contents: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET

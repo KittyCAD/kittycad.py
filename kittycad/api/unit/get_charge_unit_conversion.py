@@ -86,7 +86,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitChargeConversion, Error]]:
-    """Convert a charge unit value to another charge unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a charge unit value to another charge unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
         output_format=output_format,
@@ -123,7 +123,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitChargeConversion, Error]]:
-    """Convert a charge unit value to another charge unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a charge unit value to another charge unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (
         await asyncio_detailed(

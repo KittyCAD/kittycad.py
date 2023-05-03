@@ -71,7 +71,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[PaymentMethod], Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""
+    """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -96,7 +96,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[PaymentMethod], Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""
+    """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""  # noqa: E501
 
     return (
         await asyncio_detailed(

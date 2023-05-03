@@ -11,7 +11,9 @@ T = TypeVar("T", bound="ExecutorMetadata")
 
 @attr.s(auto_attribs=True)
 class ExecutorMetadata:
-    """ """
+    """Metadata about our currently running server.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     docker_info: Union[Unset, DockerSystemInfo] = UNSET
     environment: Union[Unset, Environment] = UNSET

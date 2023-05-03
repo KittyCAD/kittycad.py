@@ -9,7 +9,7 @@ T = TypeVar("T", bound="DeviceAuthVerifyParams")
 
 @attr.s(auto_attribs=True)
 class DeviceAuthVerifyParams:
-    """ """
+    """The request parameters to verify the `user_code` for the OAuth 2.0 Device Authorization Grant."""  # noqa: E501
 
     user_code: Union[Unset, str] = UNSET
 

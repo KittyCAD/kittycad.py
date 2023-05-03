@@ -13,7 +13,7 @@ T = TypeVar("T", bound="Customer")
 
 @attr.s(auto_attribs=True)
 class Customer:
-    """ """
+    """The resource representing a payment "Customer"."""  # noqa: E501
 
     address: Union[Unset, NewAddress] = UNSET
     balance: Union[Unset, float] = UNSET

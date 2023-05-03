@@ -78,7 +78,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
-    """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""
+    """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""  # noqa: E501
 
     return sync_detailed(
         group_by=group_by,
@@ -107,7 +107,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
-    """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""
+    """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""  # noqa: E501
 
     return (
         await asyncio_detailed(

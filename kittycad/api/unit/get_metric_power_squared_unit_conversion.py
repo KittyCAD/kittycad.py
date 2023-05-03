@@ -88,7 +88,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
-    """Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
         output_format=output_format,
@@ -125,7 +125,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
-    """Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (
         await asyncio_detailed(

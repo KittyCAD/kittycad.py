@@ -13,7 +13,7 @@ T = TypeVar("T", bound="Invoice")
 
 @attr.s(auto_attribs=True)
 class Invoice:
-    """ """
+    """An invoice."""  # noqa: E501
 
     amount_due: Union[Unset, float] = UNSET
     amount_paid: Union[Unset, float] = UNSET

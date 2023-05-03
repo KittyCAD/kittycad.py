@@ -83,7 +83,7 @@ def generatePaths(cwd: str, parser: dict) -> dict:
             + tag_name
             + " API paths: "
             + tag_description
-            + ' """\n'
+            + ' """ # noqa: E501\n'
         )
         # Close the file.
         f.close()
@@ -655,7 +655,7 @@ response: Response["""
         f.write(optional_arg)
     f.write(") -> Optional[Union[Any, " + ", ".join(endpoint_refs) + "]]:\n")
     if "description" in endpoint:
-        f.write('\t""" ' + endpoint["description"] + ' """\n')
+        f.write('\t""" ' + endpoint["description"] + ' """ # noqa: E501\n')
     f.write("\n")
     f.write("\treturn sync_detailed(\n")
     params = get_function_parameters(endpoint, request_body_type)
@@ -793,7 +793,7 @@ response: Response["""
         f.write(optional_arg)
     f.write(") -> Optional[Union[Any, " + ", ".join(endpoint_refs) + "]]:\n")
     if "description" in endpoint:
-        f.write('\t""" ' + endpoint["description"] + ' """\n')
+        f.write('\t""" ' + endpoint["description"] + ' """ # noqa: E501\n')
     f.write("\n")
     f.write("\treturn (\n")
     f.write("\t\tawait asyncio_detailed(\n")
@@ -928,6 +928,8 @@ def generateEnumType(
     f.write("from enum import Enum\n")
     f.write("\n")
     f.write("class " + name + "(str, Enum):\n")
+    if 'description' in schema:
+        f.write('\t""" ' + schema["description"] + ' """ # noqa: E501\n')
     # Iterate over the properties.
     for num, value in enumerate(schema["enum"], start=0):
         enum_name = camel_to_screaming_snake(value)
@@ -939,8 +941,10 @@ def generateEnumType(
             enum_name = "TWO"
 
         # Write the description if there is one.
-        if num in additional_docs:
-            f.write('\t"""# ' + additional_docs[num] + ' """\n')
+        if len(additional_docs) > 0:
+            additional_doc = additional_docs[num]
+            if additional_doc != "":
+                f.write('\t"""# ' + additional_docs[num] + ' """ # noqa: E501\n')
         f.write("\t" + enum_name + " = '" + value + "'\n")
 
     # close the enum.
@@ -1138,7 +1142,8 @@ def generateObjectTypeCode(
     f.write("@attr.s(auto_attribs=True)\n")
     f.write("class " + name + ":\n")
     # Write the description.
-    f.write('\t""" """\n')
+    if 'description' in schema:
+        f.write('\t""" ' + schema["description"] + ' """ # noqa: E501\n')
     # Iterate over the properties.
     for property_name in schema["properties"]:
         property_schema = schema["properties"][property_name]

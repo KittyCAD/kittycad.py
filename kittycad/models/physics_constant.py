@@ -13,7 +13,7 @@ T = TypeVar("T", bound="PhysicsConstant")
 
 @attr.s(auto_attribs=True)
 class PhysicsConstant:
-    """ """
+    """A physics constant."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     constant: Union[Unset, PhysicsConstantName] = UNSET

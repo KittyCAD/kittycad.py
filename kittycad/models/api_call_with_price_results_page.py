@@ -9,7 +9,7 @@ T = TypeVar("T", bound="ApiCallWithPriceResultsPage")
 
 @attr.s(auto_attribs=True)
 class ApiCallWithPriceResultsPage:
-    """ """
+    """A single page of results"""  # noqa: E501
 
     from ..models.api_call_with_price import ApiCallWithPrice
 

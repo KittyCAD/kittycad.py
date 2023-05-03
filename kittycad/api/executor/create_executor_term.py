@@ -62,7 +62,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any,]]:
-    """Attach to a docker container to create an interactive terminal."""
+    """Attach to a docker container to create an interactive terminal."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -87,7 +87,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any,]]:
-    """Attach to a docker container to create an interactive terminal."""
+    """Attach to a docker container to create an interactive terminal."""  # noqa: E501
 
     return (
         await asyncio_detailed(

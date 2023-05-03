@@ -10,7 +10,7 @@ T = TypeVar("T", bound="BillingInfo")
 
 @attr.s(auto_attribs=True)
 class BillingInfo:
-    """ """
+    """The billing information for payments."""  # noqa: E501
 
     address: Union[Unset, NewAddress] = UNSET
     name: Union[Unset, str] = UNSET

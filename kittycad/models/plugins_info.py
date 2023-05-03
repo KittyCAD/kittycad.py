@@ -9,7 +9,9 @@ T = TypeVar("T", bound="PluginsInfo")
 
 @attr.s(auto_attribs=True)
 class PluginsInfo:
-    """ """
+    """Available plugins per type.
+
+    **Note**: Only unmanaged (V1) plugins are included in this list. V1 plugins are \"lazily\" loaded, and are not returned in this list if there is no resource using the plugin."""  # noqa: E501
 
     authorization: Union[Unset, List[str]] = UNSET
     log: Union[Unset, List[str]] = UNSET

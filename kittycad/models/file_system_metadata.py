@@ -9,7 +9,9 @@ T = TypeVar("T", bound="FileSystemMetadata")
 
 @attr.s(auto_attribs=True)
 class FileSystemMetadata:
-    """ """
+    """Metadata about our file system.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     ok: Union[Unset, bool] = False
 

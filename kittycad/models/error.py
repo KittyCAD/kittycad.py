@@ -9,7 +9,7 @@ T = TypeVar("T", bound="Error")
 
 @attr.s(auto_attribs=True)
 class Error:
-    """ """
+    """Error information from a response."""  # noqa: E501
 
     error_code: Union[Unset, str] = UNSET
     message: Union[Unset, str] = UNSET

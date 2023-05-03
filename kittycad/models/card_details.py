@@ -10,7 +10,7 @@ T = TypeVar("T", bound="CardDetails")
 
 @attr.s(auto_attribs=True)
 class CardDetails:
-    """ """
+    """The card details of a payment method."""  # noqa: E501
 
     brand: Union[Unset, str] = UNSET
     checks: Union[Unset, PaymentMethodCardChecks] = UNSET

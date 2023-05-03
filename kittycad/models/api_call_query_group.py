@@ -9,7 +9,7 @@ T = TypeVar("T", bound="ApiCallQueryGroup")
 
 @attr.s(auto_attribs=True)
 class ApiCallQueryGroup:
-    """ """
+    """A response for a query on the API call table that is grouped by something."""  # noqa: E501
 
     count: Union[Unset, int] = UNSET
     query: Union[Unset, str] = UNSET

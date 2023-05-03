@@ -71,7 +71,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, Error]]:
-    """These come from the GitHub app."""
+    """These come from the GitHub app."""  # noqa: E501
 
     return sync_detailed(
         body=body,
@@ -100,7 +100,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, Error]]:
-    """These come from the GitHub app."""
+    """These come from the GitHub app."""  # noqa: E501
 
     return (
         await asyncio_detailed(

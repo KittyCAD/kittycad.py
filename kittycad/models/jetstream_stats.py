@@ -10,7 +10,7 @@ T = TypeVar("T", bound="JetstreamStats")
 
 @attr.s(auto_attribs=True)
 class JetstreamStats:
-    """ """
+    """Jetstream statistics."""  # noqa: E501
 
     accounts: Union[Unset, int] = UNSET
     api: Union[Unset, JetstreamApiStats] = UNSET

@@ -86,7 +86,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitVolumeConversion, Error]]:
-    """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
         output_format=output_format,
@@ -123,7 +123,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, UnitVolumeConversion, Error]]:
-    """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""
+    """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (
         await asyncio_detailed(

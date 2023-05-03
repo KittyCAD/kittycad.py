@@ -93,7 +93,7 @@ def sync(
     """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
     If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.
-    The API calls are returned in order of creation, with the most recently created API calls first."""
+    The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -137,7 +137,7 @@ async def asyncio(
     """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
     If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.
-    The API calls are returned in order of creation, with the most recently created API calls first."""
+    The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

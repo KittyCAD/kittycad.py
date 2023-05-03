@@ -14,7 +14,7 @@ T = TypeVar("T", bound="FileConversion")
 
 @attr.s(auto_attribs=True)
 class FileConversion:
-    """ """
+    """A file conversion."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -191,7 +191,7 @@ T = TypeVar("T", bound="FileCenterOfMass")
 
 @attr.s(auto_attribs=True)
 class FileCenterOfMass:
-    """ """
+    """File center of mass."""  # noqa: E501
 
     center_of_mass: Union[Unset, List[float]] = UNSET
     completed_at: Union[Unset, datetime.datetime] = UNSET
@@ -356,7 +356,7 @@ T = TypeVar("T", bound="FileMass")
 
 @attr.s(auto_attribs=True)
 class FileMass:
-    """ """
+    """A file mass."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -526,7 +526,7 @@ T = TypeVar("T", bound="FileVolume")
 
 @attr.s(auto_attribs=True)
 class FileVolume:
-    """ """
+    """A file volume."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -689,7 +689,7 @@ T = TypeVar("T", bound="FileDensity")
 
 @attr.s(auto_attribs=True)
 class FileDensity:
-    """ """
+    """A file density."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -859,7 +859,7 @@ T = TypeVar("T", bound="FileSurfaceArea")
 
 @attr.s(auto_attribs=True)
 class FileSurfaceArea:
-    """ """
+    """A file surface area."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET

@@ -2,6 +2,8 @@ from enum import Enum
 
 
 class ImageType(str, Enum):
+    """An enumeration."""  # noqa: E501
+
     PNG = "png"
     JPG = "jpg"
 

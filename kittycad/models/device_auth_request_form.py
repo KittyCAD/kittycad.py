@@ -9,7 +9,7 @@ T = TypeVar("T", bound="DeviceAuthRequestForm")
 
 @attr.s(auto_attribs=True)
 class DeviceAuthRequestForm:
-    """ """
+    """The request parameters for the OAuth 2.0 Device Authorization Grant flow."""  # noqa: E501
 
     client_id: Union[Unset, str] = UNSET
 

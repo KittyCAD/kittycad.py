@@ -14,7 +14,7 @@ T = TypeVar("T", bound="PaymentMethod")
 
 @attr.s(auto_attribs=True)
 class PaymentMethod:
-    """ """
+    """A payment method."""  # noqa: E501
 
     billing_info: Union[Unset, BillingInfo] = UNSET
     card: Union[Unset, CardDetails] = UNSET

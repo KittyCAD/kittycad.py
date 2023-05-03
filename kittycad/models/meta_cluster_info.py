@@ -9,7 +9,7 @@ T = TypeVar("T", bound="MetaClusterInfo")
 
 @attr.s(auto_attribs=True)
 class MetaClusterInfo:
-    """ """
+    """Jetstream statistics."""  # noqa: E501
 
     cluster_size: Union[Unset, int] = UNSET
     leader: Union[Unset, str] = UNSET

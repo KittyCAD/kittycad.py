@@ -11,7 +11,7 @@ T = TypeVar("T", bound="DrawingCmdReq")
 
 @attr.s(auto_attribs=True)
 class DrawingCmdReq:
-    """ """
+    """A graphics command submitted to the KittyCAD engine via the Drawing API."""  # noqa: E501
 
     cmd: Union[Unset, DrawingCmd] = UNSET
     cmd_id: Union[Unset, DrawingCmdId] = UNSET

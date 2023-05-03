@@ -9,7 +9,7 @@ T = TypeVar("T", bound="UpdateUser")
 
 @attr.s(auto_attribs=True)
 class UpdateUser:
-    """ """
+    """The user-modifiable parts of a User."""  # noqa: E501
 
     company: Union[Unset, str] = UNSET
     discord: Union[Unset, str] = UNSET

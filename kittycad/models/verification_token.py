@@ -11,7 +11,9 @@ T = TypeVar("T", bound="VerificationToken")
 
 @attr.s(auto_attribs=True)
 class VerificationToken:
-    """ """
+    """A verification token for a user.
+
+    This is typically used to verify a user's email address."""  # noqa: E501
 
     created_at: Union[Unset, datetime.datetime] = UNSET
     expires: Union[Unset, datetime.datetime] = UNSET

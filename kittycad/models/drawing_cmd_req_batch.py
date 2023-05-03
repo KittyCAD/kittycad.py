@@ -9,7 +9,7 @@ T = TypeVar("T", bound="DrawingCmdReqBatch")
 
 @attr.s(auto_attribs=True)
 class DrawingCmdReqBatch:
-    """ """
+    """A batch set of graphics commands submitted to the KittyCAD engine via the Drawing API."""  # noqa: E501
 
     cmds: Union[Unset, Any] = UNSET
     file_id: Union[Unset, str] = UNSET

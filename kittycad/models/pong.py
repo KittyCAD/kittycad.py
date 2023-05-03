@@ -9,7 +9,7 @@ T = TypeVar("T", bound="Pong")
 
 @attr.s(auto_attribs=True)
 class Pong:
-    """ """
+    """The response from the `/ping` endpoint."""  # noqa: E501
 
     message: Union[Unset, str] = UNSET
 

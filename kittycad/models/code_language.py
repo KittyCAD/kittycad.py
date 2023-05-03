@@ -2,6 +2,8 @@ from enum import Enum
 
 
 class CodeLanguage(str, Enum):
+    """The language code is written in."""  # noqa: E501
+
     GO = "go"
     PYTHON = "python"
     NODE = "node"

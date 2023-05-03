@@ -13,7 +13,9 @@ T = TypeVar("T", bound="EngineMetadata")
 
 @attr.s(auto_attribs=True)
 class EngineMetadata:
-    """ """
+    """Metadata about our currently running server.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     async_jobs_running: Union[Unset, bool] = False
     cache: Union[Unset, CacheMetadata] = UNSET

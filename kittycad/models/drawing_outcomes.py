@@ -9,7 +9,7 @@ T = TypeVar("T", bound="DrawingOutcomes")
 
 @attr.s(auto_attribs=True)
 class DrawingOutcomes:
-    """ """
+    """The result from a batch of drawing commands."""  # noqa: E501
 
     outcomes: Union[Unset, Any] = UNSET
 

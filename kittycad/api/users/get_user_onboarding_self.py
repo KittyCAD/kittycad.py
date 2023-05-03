@@ -71,7 +71,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, Onboarding, Error]]:
-    """Checks key part of their api usage to determine their onboarding progress"""
+    """Checks key part of their api usage to determine their onboarding progress"""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -96,7 +96,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, Onboarding, Error]]:
-    """Checks key part of their api usage to determine their onboarding progress"""
+    """Checks key part of their api usage to determine their onboarding progress"""  # noqa: E501
 
     return (
         await asyncio_detailed(

@@ -67,7 +67,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, str, Error]]:
-    """This info is sent to front when initialing the front chat, it prevents impersonations using js hacks in the browser"""
+    """This info is sent to front when initialing the front chat, it prevents impersonations using js hacks in the browser"""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -92,7 +92,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, str, Error]]:
-    """This info is sent to front when initialing the front chat, it prevents impersonations using js hacks in the browser"""
+    """This info is sent to front when initialing the front chat, it prevents impersonations using js hacks in the browser"""  # noqa: E501
 
     return (
         await asyncio_detailed(

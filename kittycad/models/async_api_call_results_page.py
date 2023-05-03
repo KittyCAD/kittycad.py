@@ -9,7 +9,7 @@ T = TypeVar("T", bound="AsyncApiCallResultsPage")
 
 @attr.s(auto_attribs=True)
 class AsyncApiCallResultsPage:
-    """ """
+    """A single page of results"""  # noqa: E501
 
     from ..models.async_api_call import AsyncApiCall
 

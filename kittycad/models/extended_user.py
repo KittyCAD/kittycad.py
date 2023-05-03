@@ -11,7 +11,9 @@ T = TypeVar("T", bound="ExtendedUser")
 
 @attr.s(auto_attribs=True)
 class ExtendedUser:
-    """ """
+    """Extended user information.
+
+    This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: MailChimp, Stripe, and Front"""  # noqa: E501
 
     company: Union[Unset, str] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
