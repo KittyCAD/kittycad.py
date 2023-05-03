@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.client &mdash; kittycad v0.3.2 documentation</title>
+  <title>kittycad.client &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -28,14 +28,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> kittycad
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            kittycad
           </a>
               <div class="version">
-                v0.3.2
+                v0.3.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -46,10 +50,6 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">kittycad.client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.models.html">kittycad.models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../api/kittycad.Client.html">Client</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/kittycad.ClientFromEnv.html">ClientFromEnv</a></li>
 </ul>
 
         </div>
@@ -65,8 +65,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>kittycad.client</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">kittycad.client</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/modules/kittycad.client.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -79,16 +79,16 @@
   <section id="module-kittycad.client">
 <span id="kittycad-client"></span><h1>kittycad.client<a class="headerlink" href="#module-kittycad.client" title="Permalink to this headline"></a></h1>
 <p class="rubric">Classes</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../api/kittycad.Client.html#kittycad.Client" title="kittycad.client.Client"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Client</span></code></a>([base_url, cookies, headers, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Client</span></code>([base_url, cookies, headers, ...])</p></td>
 <td><p>A Client which has been authenticated for use on secured endpoints of the KittyCAD API.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../api/kittycad.ClientFromEnv.html#kittycad.ClientFromEnv" title="kittycad.client.ClientFromEnv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClientFromEnv</span></code></a>([base_url, token, cookies, ...])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClientFromEnv</span></code>([base_url, token, cookies, ...])</p></td>
 <td><p>A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token.</p></td>
 </tr>
 </tbody>

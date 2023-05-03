@@ -1,4 +1,4 @@
-﻿kittycad.api.unit
+kittycad.api.unit
 =================
 
 .. automodule:: kittycad.api.unit
@@ -49,6 +49,7 @@
    kittycad.api.unit.get_power_unit_conversion
    kittycad.api.unit.get_pressure_unit_conversion
    kittycad.api.unit.get_radiation_unit_conversion
+   kittycad.api.unit.get_radioactivity_unit_conversion
    kittycad.api.unit.get_solid_angle_unit_conversion
    kittycad.api.unit.get_temperature_unit_conversion
    kittycad.api.unit.get_time_unit_conversion

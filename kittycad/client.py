@@ -1,6 +1,6 @@
 import os
 import ssl
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 import attr
 
@@ -43,7 +43,12 @@ class Client:
 class ClientFromEnv(Client):
     """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token."""  # noqa: E501
 
-    token: str = attr.ib(default=os.getenv("KITTYCAD_API_TOKEN"))
+    token: Optional[str] = attr.ib(default=os.getenv("KITTYCAD_API_TOKEN"))
+
+    if token is None:
+        raise ValueError(
+            "KITTYCAD_API_TOKEN environment variable must be set to use ClientFromEnv"
+        )
 
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in authenticated endpoints"""

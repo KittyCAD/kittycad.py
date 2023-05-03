@@ -1,4 +1,4 @@
-﻿kittycad.api.meta.get\_metadata
+kittycad.api.meta.get\_metadata
 ===============================
 
 .. automodule:: kittycad.api.meta.get_metadata

@@ -1,4 +1,4 @@
-﻿kittycad.api.users
+kittycad.api.users
 ==================
 
 .. automodule:: kittycad.api.users
@@ -28,6 +28,7 @@
    :recursive:
 
    kittycad.api.users.delete_user_self
+   kittycad.api.users.get_session_for_user
    kittycad.api.users.get_user
    kittycad.api.users.get_user_extended
    kittycad.api.users.get_user_front_hash_self

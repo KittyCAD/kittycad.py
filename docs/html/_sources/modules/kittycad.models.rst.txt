@@ -28,6 +28,12 @@
    :recursive:
 
    kittycad.models.account_provider
+   kittycad.models.ai_plugin_api
+   kittycad.models.ai_plugin_api_type
+   kittycad.models.ai_plugin_auth
+   kittycad.models.ai_plugin_auth_type
+   kittycad.models.ai_plugin_http_auth_type
+   kittycad.models.ai_plugin_manifest
    kittycad.models.api_call_query_group
    kittycad.models.api_call_query_group_by
    kittycad.models.api_call_status
@@ -37,6 +43,7 @@
    kittycad.models.api_token_results_page
    kittycad.models.app_client_info
    kittycad.models.async_api_call
+   kittycad.models.async_api_call_output
    kittycad.models.async_api_call_results_page
    kittycad.models.async_api_call_type
    kittycad.models.billing_info
@@ -47,6 +54,7 @@
    kittycad.models.code_output
    kittycad.models.commit
    kittycad.models.connection
+   kittycad.models.country_code
    kittycad.models.created_at_sort_mode
    kittycad.models.currency
    kittycad.models.customer
@@ -55,6 +63,13 @@
    kittycad.models.device_auth_request_form
    kittycad.models.device_auth_verify_params
    kittycad.models.docker_system_info
+   kittycad.models.drawing_cmd
+   kittycad.models.drawing_cmd_id
+   kittycad.models.drawing_cmd_req
+   kittycad.models.drawing_cmd_req_batch
+   kittycad.models.drawing_error
+   kittycad.models.drawing_outcome
+   kittycad.models.drawing_outcomes
    kittycad.models.email_authentication_form
    kittycad.models.engine_metadata
    kittycad.models.environment
@@ -62,10 +77,6 @@
    kittycad.models.executor_metadata
    kittycad.models.extended_user
    kittycad.models.extended_user_results_page
-   kittycad.models.file2_d_vector_export_format
-   kittycad.models.file2_d_vector_import_format
-   kittycad.models.file3_d_export_format
-   kittycad.models.file3_d_import_format
    kittycad.models.file_center_of_mass
    kittycad.models.file_conversion
    kittycad.models.file_density
@@ -76,6 +87,7 @@
    kittycad.models.file_system_metadata
    kittycad.models.file_volume
    kittycad.models.gateway
+   kittycad.models.image_type
    kittycad.models.index_info
    kittycad.models.invoice
    kittycad.models.invoice_line_item
@@ -85,6 +97,7 @@
    kittycad.models.jetstream_config
    kittycad.models.jetstream_stats
    kittycad.models.leaf_node
+   kittycad.models.mesh
    kittycad.models.meta_cluster_info
    kittycad.models.metadata
    kittycad.models.method
@@ -100,6 +113,7 @@
    kittycad.models.physics_constant
    kittycad.models.physics_constant_name
    kittycad.models.plugins_info
+   kittycad.models.point_e_metadata
    kittycad.models.pong
    kittycad.models.registry_service_config
    kittycad.models.runtime
@@ -150,6 +164,8 @@
    kittycad.models.unit_pressure_format
    kittycad.models.unit_radiation_conversion
    kittycad.models.unit_radiation_format
+   kittycad.models.unit_radioactivity_conversion
+   kittycad.models.unit_radioactivity_format
    kittycad.models.unit_solid_angle_conversion
    kittycad.models.unit_solid_angle_format
    kittycad.models.unit_temperature_conversion

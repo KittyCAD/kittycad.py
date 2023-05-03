@@ -3,7 +3,7 @@ import io
 import json
 import os
 import re
-from typing import List
+from typing import List, Optional
 
 import jsonpatch
 from prance import BaseParser
@@ -1566,7 +1566,7 @@ def hasDateTime(schema: dict) -> bool:
     return False
 
 
-def getRefs(schema: dict) -> [str]:
+def getRefs(schema: dict) -> List[str]:
     refs = []
     if "$ref" in schema:
         refs.append(schema["$ref"].replace("#/components/schemas/", ""))
@@ -1600,7 +1600,7 @@ def getRefs(schema: dict) -> [str]:
     return refs
 
 
-def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
+def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
     refs = []
 
     responses = endpoint["responses"]
@@ -1667,7 +1667,7 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
     return refs
 
 
-def getParameterRefs(endpoint: dict) -> [str]:
+def getParameterRefs(endpoint: dict) -> List[str]:
     refs = []
 
     if "parameters" in endpoint:
@@ -1683,7 +1683,7 @@ def getParameterRefs(endpoint: dict) -> [str]:
     return refs
 
 
-def getRequestBodyRefs(endpoint: dict) -> [str]:
+def getRequestBodyRefs(endpoint: dict) -> List[str]:
     refs = []
 
     if "requestBody" in endpoint:
@@ -1712,7 +1712,7 @@ def getRequestBodyRefs(endpoint: dict) -> [str]:
     return refs
 
 
-def getRequestBodyType(endpoint: dict) -> str:
+def getRequestBodyType(endpoint: dict) -> Optional[str]:
     type_name = None
 
     if "requestBody" in endpoint:
@@ -1762,7 +1762,7 @@ def camel_to_screaming_snake(name: str):
     )
 
 
-def get_function_parameters(endpoint: dict, request_body_type: bool) -> [str]:
+def get_function_parameters(endpoint: dict, request_body_type: str) -> List[str]:
     params = []
     if "parameters" in endpoint:
         parameters = endpoint["parameters"]

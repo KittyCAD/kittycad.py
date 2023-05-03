@@ -36,4 +36,5 @@ kittycad.api.payments
    kittycad.api.payments.list_invoices_for_user
    kittycad.api.payments.list_payment_methods_for_user
    kittycad.api.payments.update_payment_information_for_user
+   kittycad.api.payments.validate_customer_tax_information_for_user
 

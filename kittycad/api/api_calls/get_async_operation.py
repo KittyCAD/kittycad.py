@@ -54,12 +54,16 @@ def _parse_response(
             return option_file_conversion
         except ValueError:
             pass
+        except TypeError:
+            pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
             option_file_center_of_mass = FileCenterOfMass.from_dict(data)
             return option_file_center_of_mass
         except ValueError:
+            pass
+        except TypeError:
             pass
         try:
             if not isinstance(data, dict):
@@ -68,12 +72,16 @@ def _parse_response(
             return option_file_mass
         except ValueError:
             pass
+        except TypeError:
+            pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
             option_file_volume = FileVolume.from_dict(data)
             return option_file_volume
         except ValueError:
+            pass
+        except TypeError:
             pass
         try:
             if not isinstance(data, dict):
@@ -82,12 +90,16 @@ def _parse_response(
             return option_file_density
         except ValueError:
             pass
+        except TypeError:
+            pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
             option_file_surface_area = FileSurfaceArea.from_dict(data)
             return option_file_surface_area
         except ValueError:
+            raise
+        except TypeError:
             raise
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())
