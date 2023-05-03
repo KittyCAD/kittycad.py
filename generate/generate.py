@@ -2,9 +2,11 @@
 from prance import BaseParser
 import jsonpatch
 
+import io
 import json
 import os
 import re
+from typing import List
 
 package_name = 'kittycad'
 
@@ -773,7 +775,7 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         if type_name == 'object':
             generateObjectType(file_path, name, schema, type_name, data)
         elif type_name == 'string' and 'enum' in schema and schema['enum'] != [None]:
-            generateEnumType(file_path, name, schema, type_name)
+            generateEnumType(file_path, name, schema, type_name, [])
         elif type_name == 'integer':
             generateIntegerType(file_path, name, schema, type_name)
         elif type_name == 'number':
@@ -787,8 +789,7 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         # Skip it since we will already have generated it.
         return
     elif 'oneOf' in schema:
-        # Skip it since we will already have generated it.
-        return
+        generateOneOfType(file_path, name, schema, data)
     else:
         print("  schema: ", [schema])
         print("  unsupported type: ", name)
@@ -837,7 +838,7 @@ def generateFloatType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
-def generateEnumType(path: str, name: str, schema: dict, type_name: str):
+def generateEnumType(path: str, name: str, schema: dict, type_name: str, additional_docs: List[str]):
     print("generating type: ", name, " at: ", path)
     print("  schema: ", [schema])
     f = open(path, "w")
@@ -846,7 +847,7 @@ def generateEnumType(path: str, name: str, schema: dict, type_name: str):
     f.write("\n")
     f.write("class " + name + "(str, Enum):\n")
     # Iterate over the properties.
-    for value in schema['enum']:
+    for num, value in enumerate(schema['enum'], start=0):
         enum_name = camel_to_screaming_snake(value)
         if enum_name == '':
             enum_name = 'EMPTY'
@@ -855,6 +856,9 @@ def generateEnumType(path: str, name: str, schema: dict, type_name: str):
         elif enum_name == '2':
             enum_name = 'TWO'
 
+        # Write the description if there is one.
+        if num in additional_docs:
+            f.write("\t\"\"\"# " + additional_docs[num] + " \"\"\"\n")
         f.write(
             "\t" +
             enum_name +
@@ -871,15 +875,119 @@ def generateEnumType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
-def generateObjectType(
-        path: str,
+def generateOneOfType(path: str, name: str, schema: dict, data: dict):
+    print("generating type: ", name, " at: ", path)
+    print("  schema: ", [schema])
+
+    is_enum_with_docs = False
+    for one_of in schema['oneOf']:
+        if one_of['type'] == 'string' and 'enum' in one_of and len(one_of['enum']) == 1:
+            is_enum_with_docs = True
+        else:
+            is_enum_with_docs = False
+            break
+
+    if is_enum_with_docs:
+        additional_docs = []
+        enum = []
+        # We want to treat this as an enum with additional docs.
+        for one_of in schema['oneOf']:
+            enum.append(one_of['enum'][0])
+            if 'description' in one_of:
+                additional_docs.append(one_of['description'])
+            else:
+                additional_docs.append('')
+        # Write the enum.
+        schema['enum'] = enum
+        schema['type'] = 'string'
+        generateEnumType(path, name, schema, 'string', additional_docs)
+        # return early.
+        return
+
+    # Open our file.
+    f = open(path, "w")
+
+    # Import the refs if there are any.
+    all_options = []
+    for one_of in schema['oneOf']:
+        if '$ref' in one_of:
+            ref = one_of['$ref']
+            ref_name = ref[ref.rfind('/') + 1:]
+            f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
+            all_options.append(ref_name)
+
+    is_nested_object = False
+    for one_of in schema['oneOf']:
+        # Check if each are an object w 1 property in it.
+        if one_of['type'] == 'object' and 'properties' in one_of and len(one_of['properties']) == 1:
+            for prop_name in one_of['properties']:
+                nested_object = one_of['properties'][prop_name]
+                if 'type' in nested_object and nested_object['type'] == 'object':
+                    is_nested_object = True
+                else:
+                    is_nested_object = False
+                    break
+        else:
+            is_nested_object = False
+            break
+
+    if is_nested_object:
+        # We want to write each of the nested objects.
+        for one_of in schema['oneOf']:
+            # Get the nested object.
+            for prop_name in one_of['properties']:
+                nested_object = one_of['properties'][prop_name]
+                print("  nested_object: ", [nested_object])
+                object_code = generateObjectTypeCode(prop_name, nested_object, 'object', data)
+                f.write(object_code)
+                all_options.append(prop_name)
+
+    # Check if each one_of has the same enum of one.
+    tag = None
+    for one_of in schema['oneOf']:
+        has_tag = False
+        # Check if each are an object w 1 property in it.
+        if one_of['type'] == 'object' and 'properties' in one_of:
+            for prop_name in one_of['properties']:
+                prop = one_of['properties'][prop_name]
+                if 'type' in prop and prop['type'] == 'string' and 'enum' in prop and len(prop['enum']) == 1:
+                    if tag != None and tag != prop_name:
+                        has_tag = False
+                        break
+                    else:
+                        has_tag = True
+                        tag = prop_name
+
+        if has_tag == False:
+            tag = None
+            break
+
+    if tag != None:
+        # Generate each of the options from the tag.
+        for one_of in schema['oneOf']:
+            # Get the value of the tag.
+            object_name = one_of['properties'][tag]['enum'][0]
+            object_code = generateObjectTypeCode(object_name, one_of, 'object', data)
+            f.write(object_code)
+            all_options.append(object_name)
+
+    # Write the sum type.
+    f.write(name + " = \n")
+    for num, option in enumerate(all_options, start=0):
+        if num == 0:
+            f.write(" " + option + "")
+        else:
+            f.write(" | " + option + "")
+
+    # Close the file.
+    f.close()
+
+def generateObjectTypeCode(
         name: str,
         schema: dict,
         type_name: str,
-        data: dict):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
-    f = open(path, "w")
+        data: dict) -> str:
+    f = io.StringIO()
 
     has_date_time = hasDateTime(schema)
     if has_date_time:
@@ -912,7 +1020,7 @@ def generateObjectType(
     # Iterate over the properties.
     for property_name in schema['properties']:
         property_schema = schema['properties'][property_name]
-        renderTypeInit(f, path, property_name, property_schema, data)
+        renderTypeInit(f, property_name, property_schema, data)
 
     # Finish writing the class.
     f.write("\n")
@@ -994,6 +1102,27 @@ def generateObjectType(
     f.write("\n")
     f.write("\tdef __contains__(self, key: str) -> bool:\n")
     f.write("\t\treturn key in self.additional_properties\n")
+
+    value = f.getvalue()
+
+    # Close the file.
+    f.close()
+
+    return value
+
+
+def generateObjectType(
+        path: str,
+        name: str,
+        schema: dict,
+        type_name: str,
+        data: dict):
+    print("generating type: ", name, " at: ", path)
+    print("  schema: ", [schema])
+    f = open(path, "w")
+
+    code = generateObjectTypeCode(name, schema, type_name, data)
+    f.write(code)
 
     # Close the file.
     f.close()
@@ -1167,7 +1296,6 @@ def renderTypeToDict(
 
 def renderTypeInit(
         f,
-    path: str,
         property_name: str,
         property_schema: dict,
         data: dict):
@@ -1274,7 +1402,6 @@ def renderTypeInit(
             if ref == "Uuid":
                 return renderTypeInit(
                     f,
-                    path,
                     property_name,
                     data['components']['schemas'][ref],
                     data)

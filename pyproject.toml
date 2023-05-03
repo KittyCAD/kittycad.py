@@ -12,28 +12,29 @@ packages = [
 include = ["CHANGELOG.md", "kittycad/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-httpx = ">=0.15.4,<0.25.0"
 attrs = ">=20.1.0,<24.0.0"
+httpx = ">=0.15.4,<0.25.0"
+python = "^3.8"
 python-dateutil = "^2.8.0"
 
 [tool.poetry.dev-dependencies]
-Sphinx = "^4.3.1"
-flake8 = "^5.0.4"
-pytest = "^7.0.1"
-sphinx-autodoc-typehints = "^1.12.0"
-pyenchant = "^3.2.2"
-sphinxcontrib-spelling = "^8.0.0"
-toml = "^0.10.2"
-sphinx-rtd-theme = "^1.0.0"
-sphinx-automodapi = "^0.15"
-pytest-cov = "^4.0.0"
-pytest-asyncio = "^0.21.0"
-openapi-parser = "^0.2.6"
-autopep8 = "^2.0.0"
-prance = "^0.22.11"
-openapi-spec-validator = "^0.4.0"
+black = "^22.0.0"
+isort = "^5.12.0"
 jsonpatch = "^1.32"
+openapi-parser = "^0.2.6"
+openapi-spec-validator = "^0.4.0"
+prance = "^0.22.11"
+pyenchant = "^3.2.2"
+pytest = "^7.0.1"
+pytest-asyncio = "^0.21.0"
+pytest-cov = "^4.0.0"
+ruff = "^0.0.264"
+Sphinx = "^4.3.1"
+sphinx-autodoc-typehints = "^1.12.0"
+sphinx-automodapi = "^0.15"
+sphinxcontrib-spelling = "^8.0.0"
+sphinx-rtd-theme = "^1.0.0"
+toml = "^0.10.2"
 
 [build-system]
 requires = ["poetry>=1.0"]

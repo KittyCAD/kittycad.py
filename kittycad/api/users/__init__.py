@@ -1,1 +1,0 @@
-""" Contains methods for accessing the users API paths: A user is someone who uses the KittyCAD API. Here, we can create, delete, and list users. We can also get information about a user. Operations will only be authorized if the user is requesting information about themselves. """
