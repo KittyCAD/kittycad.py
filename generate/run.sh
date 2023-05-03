@@ -18,3 +18,6 @@ poetry run python generate/generate.py
 poetry run isort .
 poetry run black .
 poetry run ruff check --fix . || true
+
+# Run the tests.
+poetry run pytest kittycad
