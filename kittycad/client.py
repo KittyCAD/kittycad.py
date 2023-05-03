@@ -1,6 +1,6 @@
 import os
 import ssl
-from typing import Dict, Union, Optional
+from typing import Dict, Optional, Union
 
 import attr
 
