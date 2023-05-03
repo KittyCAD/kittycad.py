@@ -13,7 +13,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/session/{token}".format(client.base_url, token=token)
+    url = "{}/user/session/{token}".format(client.base_url, token=token)  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

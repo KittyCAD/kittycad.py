@@ -16,7 +16,7 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     url = "{}/api-call-metrics?group_by={group_by}".format(
         client.base_url, group_by=group_by
-    )
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

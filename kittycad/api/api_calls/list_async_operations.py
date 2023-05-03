@@ -24,7 +24,7 @@ def _get_kwargs(
         page_token=page_token,
         sort_by=sort_by,
         status=status,
-    )
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

@@ -373,10 +373,10 @@ response: Response["""
             + queryTemplate[1:]
             + '"'
             + formatTemplate
-            + ")\n"
+            + ") # noqa: E501\n"
         )
     else:
-        f.write('\turl = "' + templateUrl + '"' + formatTemplate + ")\n")
+        f.write('\turl = "' + templateUrl + '"' + formatTemplate + ") # noqa: E501\n")
 
     f.write("\n")
     f.write("\theaders: Dict[str, Any] = client.get_headers()\n")
@@ -405,108 +405,111 @@ response: Response["""
     responses = endpoint["responses"]
     for response_code in responses:
         response = responses[response_code]
-        f.write(
-            "\tif response.status_code == "
-            + response_code.replace("XX", "00")
-            + ":\n"
-        )
-        is_one_of = False
-        if "content" in response:
-            content = response["content"]
-            for content_type in content:
-                if content_type == "application/json":
-                    json = content[content_type]["schema"]
-                    if "$ref" in json:
-                        ref = json["$ref"].replace("#/components/schemas/", "")
-                        schema = data["components"]["schemas"][ref]
-                        # Let's check if it is a oneOf.
-                        if "oneOf" in schema:
-                            is_one_of = True
-                            # We want to parse each of the possible types.
-                            f.write("\t\tdata = response.json()\n")
-                            for index, one_of in enumerate(schema["oneOf"]):
-                                ref = getOneOfRefType(one_of)
-                                f.write("\t\ttry:\n")
-                                f.write(
-                                    "\t\t\tif not isinstance(data, dict):\n"
-                                )
-                                f.write("\t\t\t\traise TypeError()\n")
-                                f.write(
-                                    "\t\t\toption = "
-                                    + ref
-                                    + ".from_dict(data)\n"
-                                )
-                                f.write("\t\t\treturn option\n")
-                                f.write("\t\texcept:\n")
-                                if index == len(schema["oneOf"]) - 1:
-                                    # On the last one raise the error.
-                                    f.write("\t\t\traise\n")
-                                else:
-                                    f.write("\t\t\tpass\n")
-                        else:
-                            f.write(
-                                "\t\tresponse_"
-                                + response_code
-                                + " = "
-                                + ref
-                                + ".from_dict(response.json())\n"
-                            )
-                    elif "type" in json:
-                        if json["type"] == "array":
-                            items = json["items"]
-                            if "$ref" in items:
-                                ref = items["$ref"].replace(
-                                    "#/components/schemas/", ""
-                                )
-                                f.write(
-                                    "\t\tresponse_" + response_code + " = [\n"
-                                )
-                                f.write("\t\t\t" + ref + ".from_dict(item)\n")
-                                f.write("\t\t\tfor item in response.json()\n")
-                                f.write("\t\t]\n")
-                            else:
-                                raise Exception("Unknown array type")
-                        elif json["type"] == "string":
-                            f.write(
-                                "\t\tresponse_"
-                                + response_code
-                                + " = response.text\n"
-                            )
-                        else:
-                            raise Exception("Unknown type", json["type"])
-                    else:
-                        f.write(
-                            "\t\tresponse_"
-                            + response_code
-                            + " = response.json()\n"
-                        )
-
-        elif "$ref" in response:
-            schema_name = response["$ref"].replace(
-                "#/components/responses/", ""
+        if response_code == "default":
+            f.write("\treturn None\n")
+        else:
+            f.write(
+                "\tif response.status_code == "
+                + response_code.replace("XX", "00")
+                + ":\n"
             )
-            schema = data["components"]["responses"][schema_name]
-            if "content" in schema:
-                content = schema["content"]
+            is_one_of = False
+            if "content" in response:
+                content = response["content"]
                 for content_type in content:
                     if content_type == "application/json":
                         json = content[content_type]["schema"]
                         if "$ref" in json:
-                            ref = json["$ref"].replace(
-                                "#/components/schemas/", ""
-                            )
+                            ref = json["$ref"].replace("#/components/schemas/", "")
+                            schema = data["components"]["schemas"][ref]
+                            # Let's check if it is a oneOf.
+                            if "oneOf" in schema:
+                                is_one_of = True
+                                # We want to parse each of the possible types.
+                                f.write("\t\tdata = response.json()\n")
+                                for index, one_of in enumerate(schema["oneOf"]):
+                                    ref = getOneOfRefType(one_of)
+                                    f.write("\t\ttry:\n")
+                                    f.write(
+                                        "\t\t\tif not isinstance(data, dict):\n"
+                                    )
+                                    f.write("\t\t\t\traise TypeError()\n")
+                                    f.write(
+                                        "\t\t\toption = "
+                                        + ref
+                                        + ".from_dict(data)\n"
+                                    )
+                                    f.write("\t\t\treturn option\n")
+                                    f.write("\t\texcept:\n")
+                                    if index == len(schema["oneOf"]) - 1:
+                                        # On the last one raise the error.
+                                        f.write("\t\t\traise\n")
+                                    else:
+                                        f.write("\t\t\tpass\n")
+                            else:
+                                f.write(
+                                    "\t\tresponse_"
+                                    + response_code
+                                    + " = "
+                                    + ref
+                                    + ".from_dict(response.json())\n"
+                                )
+                        elif "type" in json:
+                            if json["type"] == "array":
+                                items = json["items"]
+                                if "$ref" in items:
+                                    ref = items["$ref"].replace(
+                                        "#/components/schemas/", ""
+                                    )
+                                    f.write(
+                                        "\t\tresponse_" + response_code + " = [\n"
+                                    )
+                                    f.write("\t\t\t" + ref + ".from_dict(item)\n")
+                                    f.write("\t\t\tfor item in response.json()\n")
+                                    f.write("\t\t]\n")
+                                else:
+                                    raise Exception("Unknown array type")
+                            elif json["type"] == "string":
+                                f.write(
+                                    "\t\tresponse_"
+                                    + response_code
+                                    + " = response.text\n"
+                                )
+                            else:
+                                raise Exception("Unknown type", json["type"])
+                        else:
                             f.write(
                                 "\t\tresponse_"
                                 + response_code
-                                + " = "
-                                + ref
-                                + ".from_dict(response.json())\n"
+                                + " = response.json()\n"
                             )
-        else:
-            f.write("\t\tresponse_" + response_code + " = None\n")
 
-        if not is_one_of:
-            f.write("\t\treturn response_" + response_code + "\n")
+            elif "$ref" in response:
+                schema_name = response["$ref"].replace(
+                    "#/components/responses/", ""
+                )
+                schema = data["components"]["responses"][schema_name]
+                if "content" in schema:
+                    content = schema["content"]
+                    for content_type in content:
+                        if content_type == "application/json":
+                            json = content[content_type]["schema"]
+                            if "$ref" in json:
+                                ref = json["$ref"].replace(
+                                    "#/components/schemas/", ""
+                                )
+                                f.write(
+                                    "\t\tresponse_"
+                                    + response_code
+                                    + " = "
+                                    + ref
+                                    + ".from_dict(response.json())\n"
+                                )
+            else:
+                f.write("\t\tresponse_" + response_code + " = None\n")
+
+            if not is_one_of:
+                f.write("\t\treturn response_" + response_code + "\n")
 
     # End the method.
     f.write("\treturn None\n")

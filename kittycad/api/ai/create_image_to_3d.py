@@ -19,7 +19,7 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     url = "{}/ai/image-to-3d/{input_format}/{output_format}".format(
         client.base_url, input_format=input_format, output_format=output_format
-    )
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

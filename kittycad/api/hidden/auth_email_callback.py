@@ -16,7 +16,7 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     url = "{}/auth/email/callback?callback_url={callback_url}&email={email}&token={token}".format(
         client.base_url, callback_url=callback_url, email=email, token=token
-    )
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

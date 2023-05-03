@@ -10,7 +10,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/ws/executor/term".format(client.base_url)
+    url = "{}/ws/executor/term".format(client.base_url)  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -26,8 +26,7 @@ def _get_kwargs(
 def _parse_response(
     *, response: httpx.Response
 ) -> Optional[Union[Any,]]:
-    if response.status_code == default:
-        return response_default
+    return None
     return None
 
 

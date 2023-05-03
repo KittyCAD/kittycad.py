@@ -18,7 +18,7 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     url = "{}/unit/conversion/charge/{src_format}/{output_format}?value={value}".format(
         client.base_url, output_format=output_format, src_format=src_format, value=value
-    )
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

@@ -19,7 +19,7 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     url = "{}/users/{id}/api-calls?limit={limit}&page_token={page_token}&sort_by={sort_by}".format(
         client.base_url, id=id, limit=limit, page_token=page_token, sort_by=sort_by
-    )
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

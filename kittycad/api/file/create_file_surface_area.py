@@ -17,7 +17,7 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     url = "{}/file/surface-area?src_format={src_format}".format(
         client.base_url, src_format=src_format
-    )
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

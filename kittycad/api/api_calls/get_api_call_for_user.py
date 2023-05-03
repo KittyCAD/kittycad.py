@@ -13,7 +13,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/api-calls/{id}".format(client.base_url, id=id)
+    url = "{}/user/api-calls/{id}".format(client.base_url, id=id)  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
