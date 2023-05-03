@@ -123,6 +123,8 @@ def generatePath(
     print("  endpoint: ", [endpoint])
     f = open(file_path, "w")
 
+    f.write("from typing import List\n\n")
+
     endpoint_refs = getEndpointRefs(endpoint, data)
     parameter_refs = getParameterRefs(endpoint)
     request_body_refs = getRequestBodyRefs(endpoint)
@@ -248,8 +250,8 @@ response: Response["""
     f.write("from ...client import Client\n")
     # Import our references for responses.
     for ref in endpoint_refs:
-        if ref.startswith("[") and ref.endswith("]"):
-            ref = ref.replace("[", "").replace("]", "")
+        if ref.startswith("List[") and ref.endswith("]"):
+            ref = ref.replace("List[", "").replace("]", "")
         f.write(
             "from ...models." + camel_to_snake(ref) + " import " + ref + "\n"
         )
@@ -1771,7 +1773,7 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                                 ref = items["$ref"].replace(
                                     "#/components/schemas/", ""
                                 )
-                                refs.append("[" + ref + "]")
+                                refs.append("List[" + ref + "]")
                             else:
                                 raise Exception("Unknown array type")
                         elif json["type"] == "string":

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -27,7 +27,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, [PaymentMethod], Error]]:
+) -> Optional[Union[Any, List[PaymentMethod], Error]]:
     if response.status_code == 200:
         response_200 = [PaymentMethod.from_dict(item) for item in response.json()]
         return response_200
@@ -42,7 +42,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, [PaymentMethod], Error]]:
+) -> Response[Union[Any, List[PaymentMethod], Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -54,7 +54,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, [PaymentMethod], Error]]:
+) -> Response[Union[Any, List[PaymentMethod], Error]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[Any, [PaymentMethod], Error]]:
+) -> Optional[Union[Any, List[PaymentMethod], Error]]:
     """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""
 
     return sync_detailed(
@@ -81,7 +81,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, [PaymentMethod], Error]]:
+) -> Response[Union[Any, List[PaymentMethod], Error]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -95,7 +95,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[Any, [PaymentMethod], Error]]:
+) -> Optional[Union[Any, List[PaymentMethod], Error]]:
     """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""
 
     return (

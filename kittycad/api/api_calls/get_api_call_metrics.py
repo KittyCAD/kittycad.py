@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -31,7 +31,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, [ApiCallQueryGroup], Error]]:
+) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
     if response.status_code == 200:
         response_200 = [ApiCallQueryGroup.from_dict(item) for item in response.json()]
         return response_200
@@ -46,7 +46,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, [ApiCallQueryGroup], Error]]:
+) -> Response[Union[Any, List[ApiCallQueryGroup], Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -59,7 +59,7 @@ def sync_detailed(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Response[Union[Any, [ApiCallQueryGroup], Error]]:
+) -> Response[Union[Any, List[ApiCallQueryGroup], Error]]:
     kwargs = _get_kwargs(
         group_by=group_by,
         client=client,
@@ -77,7 +77,7 @@ def sync(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Optional[Union[Any, [ApiCallQueryGroup], Error]]:
+) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
     """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""
 
     return sync_detailed(
@@ -90,7 +90,7 @@ async def asyncio_detailed(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Response[Union[Any, [ApiCallQueryGroup], Error]]:
+) -> Response[Union[Any, List[ApiCallQueryGroup], Error]]:
     kwargs = _get_kwargs(
         group_by=group_by,
         client=client,
@@ -106,7 +106,7 @@ async def asyncio(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Optional[Union[Any, [ApiCallQueryGroup], Error]]:
+) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
     """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""
 
     return (
