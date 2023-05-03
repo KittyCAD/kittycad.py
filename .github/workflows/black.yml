@@ -1,7 +1,16 @@
 name: Black
-
-on: [push, pull_request]
-
+on:
+  push:
+    branches: main
+    paths:
+      - '**.py'
+      - .github/workflows/black.yml
+      - 'pyproject.toml'
+  pull_request:
+    paths:
+      - '**.py'
+      - .github/workflows/black.yml
+      - 'pyproject.toml'
 jobs:
   black:
     runs-on: ubuntu-latest
