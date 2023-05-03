@@ -827,8 +827,7 @@ def generateTypes(cwd: str, parser: dict):
         schema = schemas[key]
         print("generating schema: ", key)
         generateType(path, key, schema, data)
-        if "oneOf" not in schema:
-            f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
+        f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
 
     # Close the file.
     f.close()
@@ -1031,7 +1030,8 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             for prop_name in one_of["properties"]:
                 nested_object = one_of["properties"][prop_name]
                 if nested_object == {}:
-                    f.write(prop_name + " = {}\n")
+                    f.write("from typing import Any\n")
+                    f.write(prop_name + " = Any\n")
                     f.write("\n")
                     all_options.append(prop_name)
                 elif "$ref" in nested_object:
@@ -1095,13 +1095,13 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             all_options.append(object_name)
 
     # Write the sum type.
-    f.write(name + " = ")
+    f.write(name + " = Union[")
     for num, option in enumerate(all_options, start=0):
         if num == 0:
-            f.write(" " + option + "")
+            f.write(option)
         else:
-            f.write(" | " + option + "")
-    f.write("\n")
+            f.write(", " + option + "")
+    f.write("]\n")
 
     # Close the file.
     f.close()

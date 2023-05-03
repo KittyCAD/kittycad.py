@@ -136,4 +136,4 @@ class Extrude:
         return key in self.additional_properties
 
 
-DrawingCmd = DrawCircle | Extrude
+DrawingCmd = Union[DrawCircle, Extrude]

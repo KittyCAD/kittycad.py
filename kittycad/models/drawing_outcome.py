@@ -1,4 +1,6 @@
-Success = {}
+from typing import Any
+
+Success = Any
 
 from .drawing_error import DrawingError
 
@@ -69,4 +71,4 @@ class Cancelled:
         return key in self.additional_properties
 
 
-DrawingOutcome = Success | Error | Cancelled
+DrawingOutcome = Union[Success, Error, Cancelled]
