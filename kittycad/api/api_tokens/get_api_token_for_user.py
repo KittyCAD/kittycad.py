@@ -26,7 +26,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiToken, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, ApiToken, Error]]:
     if response.status_code == 200:
         response_200 = ApiToken.from_dict(response.json())
         return response_200
@@ -39,7 +41,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiToken
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiToken, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, ApiToken, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

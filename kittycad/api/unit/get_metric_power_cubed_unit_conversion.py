@@ -5,7 +5,9 @@ import httpx
 from ...client import Client
 from ...models.error import Error
 from ...models.unit_metric_power import UnitMetricPower
-from ...models.unit_metric_power_cubed_conversion import UnitMetricPowerCubedConversion
+from ...models.unit_metric_power_cubed_conversion import (
+    UnitMetricPowerCubedConversion,
+)
 from ...types import Response
 
 
@@ -17,7 +19,10 @@ def _get_kwargs(
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/unit/conversion/metric/cubed/{src_format}/{output_format}?value={value}".format(
-        client.base_url, output_format=output_format, src_format=src_format, value=value
+        client.base_url,
+        output_format=output_format,
+        src_format=src_format,
+        value=value,
     )
 
     headers: Dict[str, Any] = client.get_headers()
@@ -31,7 +36,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, UnitMetricPowerCubedConversion, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, UnitMetricPowerCubedConversion, Error]]:
     if response.status_code == 200:
         response_200 = UnitMetricPowerCubedConversion.from_dict(response.json())
         return response_200
@@ -44,7 +51,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, UnitMetr
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, UnitMetricPowerCubedConversion, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, UnitMetricPowerCubedConversion, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

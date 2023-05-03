@@ -1,10 +1,13 @@
-import asyncio
 import os
 
 import pytest
 
 from .api.api_tokens import list_api_tokens_for_user
-from .api.file import create_file_conversion_with_base64_helper, create_file_mass, create_file_volume
+from .api.file import (
+    create_file_conversion_with_base64_helper,
+    create_file_mass,
+    create_file_volume,
+)
 from .api.meta import ping
 from .api.users import get_user_self
 from .client import ClientFromEnv
@@ -40,7 +43,9 @@ async def test_get_api_tokens_async():
     client = ClientFromEnv()
 
     # List API tokens.
-    fc: ApiTokenResultsPage = list_api_tokens_for_user.sync(client=client, sort_by=CreatedAtSortMode)
+    fc: ApiTokenResultsPage = list_api_tokens_for_user.sync(
+        client=client, sort_by=CreatedAtSortMode
+    )
 
     assert fc is not None
 
@@ -96,7 +101,10 @@ def test_file_convert_stl():
 
     # Get the fc.
     fc: FileConversion = create_file_conversion_with_base64_helper.sync(
-        client=client, body=content, src_format=FileImportFormat.STL, output_format=FileExportFormat.OBJ
+        client=client,
+        body=content,
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ,
     )
 
     assert fc is not None
@@ -121,8 +129,13 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(
-        client=client, body=content, src_format=FileImportFormat.STL, output_format=FileExportFormat.OBJ
+    fc: FileConversion = (
+        await create_file_conversion_with_base64_helper.asyncio(
+            client=client,
+            body=content,
+            src_format=FileImportFormat.STL,
+            output_format=FileExportFormat.OBJ,
+        )
     )
 
     assert fc is not None
@@ -145,7 +158,10 @@ def test_file_mass():
 
     # Get the fc.
     fm: FileMass = create_file_mass.sync(
-        client=client, body=content, src_format=FileImportFormat.OBJ, material_density=1.0
+        client=client,
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        material_density=1.0,
     )
 
     assert fm is not None
@@ -170,7 +186,9 @@ def test_file_volume():
     file.close()
 
     # Get the fc.
-    fv: FileVolume = create_file_volume.sync(client=client, body=content, src_format=FileImportFormat.OBJ)
+    fv: FileVolume = create_file_volume.sync(
+        client=client, body=content, src_format=FileImportFormat.OBJ
+    )
 
     assert fv is not None
 

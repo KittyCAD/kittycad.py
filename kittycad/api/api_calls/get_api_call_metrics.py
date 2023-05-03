@@ -14,7 +14,9 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/api-call-metrics?group_by={group_by}".format(client.base_url, group_by=group_by)
+    url = "{}/api-call-metrics?group_by={group_by}".format(
+        client.base_url, group_by=group_by
+    )
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -27,9 +29,13 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [ApiCallQueryGroup], Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, [ApiCallQueryGroup], Error]]:
     if response.status_code == 200:
-        response_200 = [ApiCallQueryGroup.from_dict(item) for item in response.json()]
+        response_200 = [
+            ApiCallQueryGroup.from_dict(item) for item in response.json()
+        ]
         return response_200
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())
@@ -40,7 +46,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [ApiCall
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, [ApiCallQueryGroup], Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, [ApiCallQueryGroup], Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

@@ -19,7 +19,11 @@ def _get_kwargs(
     page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
     url = "{}/async/operations?limit={limit}&page_token={page_token}&sort_by={sort_by}&status={status}".format(
-        client.base_url, limit=limit, page_token=page_token, sort_by=sort_by, status=status
+        client.base_url,
+        limit=limit,
+        page_token=page_token,
+        sort_by=sort_by,
+        status=status,
     )
 
     headers: Dict[str, Any] = client.get_headers()
@@ -33,7 +37,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
     if response.status_code == 200:
         response_200 = AsyncApiCallResultsPage.from_dict(response.json())
         return response_200
@@ -46,7 +52,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, AsyncApi
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

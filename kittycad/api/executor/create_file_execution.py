@@ -16,7 +16,9 @@ def _get_kwargs(
     client: Client,
     output: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/file/execute/{lang}?output={output}".format(client.base_url, lang=lang, output=output)
+    url = "{}/file/execute/{lang}?output={output}".format(
+        client.base_url, lang=lang, output=output
+    )
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -30,7 +32,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, CodeOutput, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, CodeOutput, Error]]:
     if response.status_code == 200:
         response_200 = CodeOutput.from_dict(response.json())
         return response_200
@@ -43,7 +47,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, CodeOutp
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, CodeOutput, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, CodeOutput, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

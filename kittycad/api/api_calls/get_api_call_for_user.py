@@ -26,7 +26,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiCallWithPrice, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, ApiCallWithPrice, Error]]:
     if response.status_code == 200:
         response_200 = ApiCallWithPrice.from_dict(response.json())
         return response_200
@@ -39,7 +41,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiCallW
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiCallWithPrice, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, ApiCallWithPrice, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

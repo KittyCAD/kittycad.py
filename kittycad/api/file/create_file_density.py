@@ -32,7 +32,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileDensity, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, FileDensity, Error]]:
     if response.status_code == 201:
         response_201 = FileDensity.from_dict(response.json())
         return response_201
@@ -45,7 +47,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileDens
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileDensity, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, FileDensity, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

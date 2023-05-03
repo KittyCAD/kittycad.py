@@ -14,7 +14,9 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/constant/physics/{constant}".format(client.base_url, constant=constant)
+    url = "{}/constant/physics/{constant}".format(
+        client.base_url, constant=constant
+    )
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -27,7 +29,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, PhysicsConstant, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, PhysicsConstant, Error]]:
     if response.status_code == 200:
         response_200 = PhysicsConstant.from_dict(response.json())
         return response_200
@@ -40,7 +44,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, PhysicsC
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, PhysicsConstant, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, PhysicsConstant, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

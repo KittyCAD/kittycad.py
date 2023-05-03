@@ -35,9 +35,13 @@ class DockerSystemInfo:
     cpu_set: Union[Unset, bool] = False
     cpu_shares: Union[Unset, bool] = False
     debug: Union[Unset, bool] = False
-    from ..models.system_info_default_address_pools import SystemInfoDefaultAddressPools
+    from ..models.system_info_default_address_pools import (
+        SystemInfoDefaultAddressPools,
+    )
 
-    default_address_pools: Union[Unset, List[SystemInfoDefaultAddressPools]] = UNSET
+    default_address_pools: Union[
+        Unset, List[SystemInfoDefaultAddressPools]
+    ] = UNSET
     default_runtime: Union[Unset, str] = UNSET
     docker_root_dir: Union[Unset, str] = UNSET
     driver: Union[Unset, str] = UNSET
@@ -107,9 +111,13 @@ class DockerSystemInfo:
         cpu_set = self.cpu_set
         cpu_shares = self.cpu_shares
         debug = self.debug
-        from ..models.system_info_default_address_pools import SystemInfoDefaultAddressPools
+        from ..models.system_info_default_address_pools import (
+            SystemInfoDefaultAddressPools,
+        )
 
-        default_address_pools: Union[Unset, List[SystemInfoDefaultAddressPools]] = UNSET
+        default_address_pools: Union[
+            Unset, List[SystemInfoDefaultAddressPools]
+        ] = UNSET
         if not isinstance(self.default_address_pools, Unset):
             default_address_pools = self.default_address_pools
         default_runtime = self.default_runtime
@@ -351,9 +359,14 @@ class DockerSystemInfo:
 
         debug = d.pop("debug", UNSET)
 
-        from ..models.system_info_default_address_pools import SystemInfoDefaultAddressPools
+        from ..models.system_info_default_address_pools import (
+            SystemInfoDefaultAddressPools,
+        )
 
-        default_address_pools = cast(List[SystemInfoDefaultAddressPools], d.pop("default_address_pools", UNSET))
+        default_address_pools = cast(
+            List[SystemInfoDefaultAddressPools],
+            d.pop("default_address_pools", UNSET),
+        )
 
         default_runtime = d.pop("default_runtime", UNSET)
 

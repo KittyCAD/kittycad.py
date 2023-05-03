@@ -88,12 +88,16 @@ from .unit_energy_conversion import UnitEnergyConversion
 from .unit_force_conversion import UnitForceConversion
 from .unit_illuminance_conversion import UnitIlluminanceConversion
 from .unit_length_conversion import UnitLengthConversion
-from .unit_magnetic_field_strength_conversion import UnitMagneticFieldStrengthConversion
+from .unit_magnetic_field_strength_conversion import (
+    UnitMagneticFieldStrengthConversion,
+)
 from .unit_magnetic_flux_conversion import UnitMagneticFluxConversion
 from .unit_mass_conversion import UnitMassConversion
 from .unit_metric_power_conversion import UnitMetricPowerConversion
 from .unit_metric_power_cubed_conversion import UnitMetricPowerCubedConversion
-from .unit_metric_power_squared_conversion import UnitMetricPowerSquaredConversion
+from .unit_metric_power_squared_conversion import (
+    UnitMetricPowerSquaredConversion,
+)
 from .unit_power_conversion import UnitPowerConversion
 from .unit_pressure_conversion import UnitPressureConversion
 from .unit_radiation_conversion import UnitRadiationConversion

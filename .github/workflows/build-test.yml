@@ -44,7 +44,7 @@ jobs:
       - name: Lint with ruff
         shell: bash
         run: |
-          poetry run ruff
+          poetry run ruff check .
 
       - name: Run pytest
         shell: bash

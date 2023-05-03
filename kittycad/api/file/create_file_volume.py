@@ -15,7 +15,9 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/file/volume?src_format={src_format}".format(client.base_url, src_format=src_format)
+    url = "{}/file/volume?src_format={src_format}".format(
+        client.base_url, src_format=src_format
+    )
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -29,7 +31,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileVolume, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, FileVolume, Error]]:
     if response.status_code == 201:
         response_201 = FileVolume.from_dict(response.json())
         return response_201
@@ -42,7 +46,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileVolu
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileVolume, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, FileVolume, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

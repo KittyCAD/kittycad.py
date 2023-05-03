@@ -15,7 +15,9 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/file/surface-area?src_format={src_format}".format(client.base_url, src_format=src_format)
+    url = "{}/file/surface-area?src_format={src_format}".format(
+        client.base_url, src_format=src_format
+    )
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -29,7 +31,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileSurfaceArea, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, FileSurfaceArea, Error]]:
     if response.status_code == 201:
         response_201 = FileSurfaceArea.from_dict(response.json())
         return response_201
@@ -42,7 +46,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, FileSurf
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, FileSurfaceArea, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, FileSurfaceArea, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

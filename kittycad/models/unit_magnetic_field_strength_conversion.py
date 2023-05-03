@@ -5,7 +5,9 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
-from ..models.unit_magnetic_field_strength_format import UnitMagneticFieldStrengthFormat
+from ..models.unit_magnetic_field_strength_format import (
+    UnitMagneticFieldStrengthFormat,
+)
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 

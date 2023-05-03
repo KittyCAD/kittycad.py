@@ -1073,4 +1073,11 @@ class FileSurfaceArea:
         return key in self.additional_properties
 
 
-AsyncApiCallOutput = FileConversion | FileCenterOfMass | FileMass | FileVolume | FileDensity | FileSurfaceArea
+AsyncApiCallOutput = (
+    FileConversion
+    | FileCenterOfMass
+    | FileMass
+    | FileVolume
+    | FileDensity
+    | FileSurfaceArea
+)

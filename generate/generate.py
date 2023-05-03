@@ -78,7 +78,13 @@ def generatePaths(cwd: str, parser: dict) -> dict:
         file_name = "__init__.py"
         file_path = os.path.join(tag_path, file_name)
         f = open(file_path, "w")
-        f.write('""" Contains methods for accessing the ' + tag_name + " API paths: " + tag_description + ' """\n')
+        f.write(
+            '""" Contains methods for accessing the '
+            + tag_name
+            + " API paths: "
+            + tag_description
+            + ' """\n'
+        )
         # Close the file.
         f.close()
 
@@ -101,7 +107,9 @@ def generatePaths(cwd: str, parser: dict) -> dict:
     return data
 
 
-def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) -> dict:
+def generatePath(
+    path: str, name: str, method: str, endpoint: dict, data: dict
+) -> dict:
     # Generate the path.
     fn_name = camel_to_snake(endpoint["operationId"])
     file_name = fn_name + ".py"
@@ -142,18 +150,32 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
                     else:
                         parameter_type = '"<string>"'
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
                     parameter_type = "Optional[" + parameter_type + "]"
-                    optional_args.append(", " + camel_to_snake(parameter_name) + "=" + parameter_type)
+                    optional_args.append(
+                        ", "
+                        + camel_to_snake(parameter_name)
+                        + "="
+                        + parameter_type
+                    )
                 else:
-                    params_str += ", " + camel_to_snake(parameter_name) + "=" + parameter_type
+                    params_str += (
+                        ", "
+                        + camel_to_snake(parameter_name)
+                        + "="
+                        + parameter_type
+                    )
             else:
-                params_str += ", " + camel_to_snake(parameter_name) + "=" + parameter_type
+                params_str += (
+                    ", " + camel_to_snake(parameter_name) + "=" + parameter_type
+                )
 
         for optional_arg in optional_args:
             params_str += optional_arg
@@ -211,7 +233,11 @@ response: Response["""
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
         "example": example,
-        "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api." + tag_name + "." + fn_name + ".html",
+        "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api."
+        + tag_name
+        + "."
+        + fn_name
+        + ".html",
     }
 
     # Add our imports.
@@ -224,11 +250,17 @@ response: Response["""
     for ref in endpoint_refs:
         if ref.startswith("[") and ref.endswith("]"):
             ref = ref.replace("[", "").replace("]", "")
-        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
+        f.write(
+            "from ...models." + camel_to_snake(ref) + " import " + ref + "\n"
+        )
     for ref in parameter_refs:
-        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
+        f.write(
+            "from ...models." + camel_to_snake(ref) + " import " + ref + "\n"
+        )
     for ref in request_body_refs:
-        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
+        f.write(
+            "from ...models." + camel_to_snake(ref) + " import " + ref + "\n"
+        )
     f.write("from ...types import Response\n")
     f.write("\n")
 
@@ -248,18 +280,38 @@ response: Response["""
                     .replace("number", "float")
                 )
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
                     parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    optional_args.append(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
                 else:
-                    f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    f.write(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
             else:
-                f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                f.write(
+                    "\t"
+                    + camel_to_snake(parameter_name)
+                    + ": "
+                    + parameter_type
+                    + ",\n"
+                )
     if request_body_type:
         f.write("\tbody: " + request_body_type + ",\n")
     f.write("\t*,\n")
@@ -276,16 +328,32 @@ response: Response["""
         for parameter in parameters:
             parameter_name = parameter["name"]
             if "type" in parameter["schema"]:
-                parameter_type = parameter["schema"]["type"].replace("string", "str")
+                parameter_type = parameter["schema"]["type"].replace(
+                    "string", "str"
+                )
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if parameter["in"] == "path":
-                formatTemplate = formatTemplate + ", " + parameter_name + "=" + camel_to_snake(parameter_name)
+                formatTemplate = (
+                    formatTemplate
+                    + ", "
+                    + parameter_name
+                    + "="
+                    + camel_to_snake(parameter_name)
+                )
             elif parameter["in"] == "query":
-                formatTemplate = formatTemplate + ", " + parameter_name + "=" + camel_to_snake(parameter_name)
+                formatTemplate = (
+                    formatTemplate
+                    + ", "
+                    + parameter_name
+                    + "="
+                    + camel_to_snake(parameter_name)
+                )
                 queryTemplate = (
                     queryTemplate
                     + "&"
@@ -296,7 +364,15 @@ response: Response["""
                     + "}"
                 )
     if queryTemplate[1:].__len__() > 0:
-        f.write('\turl = "' + templateUrl + "?" + queryTemplate[1:] + '"' + formatTemplate + ")\n")
+        f.write(
+            '\turl = "'
+            + templateUrl
+            + "?"
+            + queryTemplate[1:]
+            + '"'
+            + formatTemplate
+            + ")\n"
+        )
     else:
         f.write('\turl = "' + templateUrl + '"' + formatTemplate + ")\n")
 
@@ -319,13 +395,19 @@ response: Response["""
     f.write("\n")
 
     f.write(
-        "def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, " + ", ".join(endpoint_refs) + "]]:\n"
+        "def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, "
+        + ", ".join(endpoint_refs)
+        + "]]:\n"
     )
     # Iterate over the responses.
     responses = endpoint["responses"]
     for response_code in responses:
         response = responses[response_code]
-        f.write("\tif response.status_code == " + response_code.replace("XX", "00") + ":\n")
+        f.write(
+            "\tif response.status_code == "
+            + response_code.replace("XX", "00")
+            + ":\n"
+        )
         is_one_of = False
         if "content" in response:
             content = response["content"]
@@ -343,9 +425,15 @@ response: Response["""
                             for index, one_of in enumerate(schema["oneOf"]):
                                 ref = getOneOfRefType(one_of)
                                 f.write("\t\ttry:\n")
-                                f.write("\t\t\tif not isinstance(data, dict):\n")
+                                f.write(
+                                    "\t\t\tif not isinstance(data, dict):\n"
+                                )
                                 f.write("\t\t\t\traise TypeError()\n")
-                                f.write("\t\t\toption = " + ref + ".from_dict(data)\n")
+                                f.write(
+                                    "\t\t\toption = "
+                                    + ref
+                                    + ".from_dict(data)\n"
+                                )
                                 f.write("\t\t\treturn option\n")
                                 f.write("\t\texcept:\n")
                                 if index == len(schema["oneOf"]) - 1:
@@ -354,27 +442,47 @@ response: Response["""
                                 else:
                                     f.write("\t\t\tpass\n")
                         else:
-                            f.write("\t\tresponse_" + response_code + " = " + ref + ".from_dict(response.json())\n")
+                            f.write(
+                                "\t\tresponse_"
+                                + response_code
+                                + " = "
+                                + ref
+                                + ".from_dict(response.json())\n"
+                            )
                     elif "type" in json:
                         if json["type"] == "array":
                             items = json["items"]
                             if "$ref" in items:
-                                ref = items["$ref"].replace("#/components/schemas/", "")
-                                f.write("\t\tresponse_" + response_code + " = [\n")
+                                ref = items["$ref"].replace(
+                                    "#/components/schemas/", ""
+                                )
+                                f.write(
+                                    "\t\tresponse_" + response_code + " = [\n"
+                                )
                                 f.write("\t\t\t" + ref + ".from_dict(item)\n")
                                 f.write("\t\t\tfor item in response.json()\n")
                                 f.write("\t\t]\n")
                             else:
                                 raise Exception("Unknown array type")
                         elif json["type"] == "string":
-                            f.write("\t\tresponse_" + response_code + " = response.text\n")
+                            f.write(
+                                "\t\tresponse_"
+                                + response_code
+                                + " = response.text\n"
+                            )
                         else:
                             raise Exception("Unknown type", json["type"])
                     else:
-                        f.write("\t\tresponse_" + response_code + " = response.json()\n")
+                        f.write(
+                            "\t\tresponse_"
+                            + response_code
+                            + " = response.json()\n"
+                        )
 
         elif "$ref" in response:
-            schema_name = response["$ref"].replace("#/components/responses/", "")
+            schema_name = response["$ref"].replace(
+                "#/components/responses/", ""
+            )
             schema = data["components"]["responses"][schema_name]
             if "content" in schema:
                 content = schema["content"]
@@ -382,8 +490,16 @@ response: Response["""
                     if content_type == "application/json":
                         json = content[content_type]["schema"]
                         if "$ref" in json:
-                            ref = json["$ref"].replace("#/components/schemas/", "")
-                            f.write("\t\tresponse_" + response_code + " = " + ref + ".from_dict(response.json())\n")
+                            ref = json["$ref"].replace(
+                                "#/components/schemas/", ""
+                            )
+                            f.write(
+                                "\t\tresponse_"
+                                + response_code
+                                + " = "
+                                + ref
+                                + ".from_dict(response.json())\n"
+                            )
         else:
             f.write("\t\tresponse_" + response_code + " = None\n")
 
@@ -397,7 +513,9 @@ response: Response["""
     f.write("\n")
     f.write("\n")
     f.write(
-        "def _build_response(*, response: httpx.Response) -> Response[Union[Any, " + ", ".join(endpoint_refs) + "]]:\n"
+        "def _build_response(*, response: httpx.Response) -> Response[Union[Any, "
+        + ", ".join(endpoint_refs)
+        + "]]:\n"
     )
     f.write("\treturn Response(\n")
     f.write("\t\tstatus_code=response.status_code,\n")
@@ -424,18 +542,38 @@ response: Response["""
                     .replace("number", "float")
                 )
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
                     parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    optional_args.append(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
                 else:
-                    f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    f.write(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
             else:
-                f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                f.write(
+                    "\t"
+                    + camel_to_snake(parameter_name)
+                    + ": "
+                    + parameter_type
+                    + ",\n"
+                )
     if request_body_type:
         f.write("\tbody: " + request_body_type + ",\n")
     f.write("\t*,\n")
@@ -475,18 +613,38 @@ response: Response["""
                     .replace("number", "float")
                 )
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
                     parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    optional_args.append(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
                 else:
-                    f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    f.write(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
             else:
-                f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                f.write(
+                    "\t"
+                    + camel_to_snake(parameter_name)
+                    + ": "
+                    + parameter_type
+                    + ",\n"
+                )
     if request_body_type:
         f.write("\tbody: " + request_body_type + ",\n")
     f.write("\t*,\n")
@@ -522,18 +680,38 @@ response: Response["""
                     .replace("number", "float")
                 )
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
                     parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    optional_args.append(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
                 else:
-                    f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    f.write(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
             else:
-                f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                f.write(
+                    "\t"
+                    + camel_to_snake(parameter_name)
+                    + ": "
+                    + parameter_type
+                    + ",\n"
+                )
     if request_body_type:
         f.write("\tbody: " + request_body_type + ",\n")
     f.write("\t*,\n")
@@ -548,7 +726,9 @@ response: Response["""
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
-    f.write("\tasync with httpx.AsyncClient(verify=client.verify_ssl) as _client:\n")
+    f.write(
+        "\tasync with httpx.AsyncClient(verify=client.verify_ssl) as _client:\n"
+    )
     f.write("\t\tresponse = await _client." + method + "(**kwargs)\n")
     f.write("\n")
     f.write("\treturn _build_response(response=response)\n")
@@ -571,18 +751,38 @@ response: Response["""
                     .replace("number", "float")
                 )
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
                     parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    optional_args.append(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
                 else:
-                    f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                    f.write(
+                        "\t"
+                        + camel_to_snake(parameter_name)
+                        + ": "
+                        + parameter_type
+                        + ",\n"
+                    )
             else:
-                f.write("\t" + camel_to_snake(parameter_name) + ": " + parameter_type + ",\n")
+                f.write(
+                    "\t"
+                    + camel_to_snake(parameter_name)
+                    + ": "
+                    + parameter_type
+                    + ",\n"
+                )
     if request_body_type:
         f.write("\tbody: " + request_body_type + ",\n")
     f.write("\t*,\n")
@@ -645,7 +845,11 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         type_name = schema["type"]
         if type_name == "object":
             generateObjectType(file_path, name, schema, type_name, data)
-        elif type_name == "string" and "enum" in schema and schema["enum"] != [None]:
+        elif (
+            type_name == "string"
+            and "enum" in schema
+            and schema["enum"] != [None]
+        ):
             generateEnumType(file_path, name, schema, type_name, [])
         elif type_name == "integer":
             generateIntegerType(file_path, name, schema, type_name)
@@ -709,7 +913,13 @@ def generateFloatType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
-def generateEnumType(path: str, name: str, schema: dict, type_name: str, additional_docs: List[str]):
+def generateEnumType(
+    path: str,
+    name: str,
+    schema: dict,
+    type_name: str,
+    additional_docs: List[str],
+):
     print("generating type: ", name, " at: ", path)
     print("  schema: ", [schema])
     f = open(path, "w")
@@ -747,7 +957,11 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
 
     is_enum_with_docs = False
     for one_of in schema["oneOf"]:
-        if one_of["type"] == "string" and "enum" in one_of and len(one_of["enum"]) == 1:
+        if (
+            one_of["type"] == "string"
+            and "enum" in one_of
+            and len(one_of["enum"]) == 1
+        ):
             is_enum_with_docs = True
         else:
             is_enum_with_docs = False
@@ -779,16 +993,29 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         if "$ref" in one_of:
             ref = one_of["$ref"]
             ref_name = ref[ref.rfind("/") + 1 :]
-            f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
+            f.write(
+                "from ."
+                + camel_to_snake(ref_name)
+                + " import "
+                + ref_name
+                + "\n"
+            )
             all_options.append(ref_name)
 
     is_nested_object = False
     for one_of in schema["oneOf"]:
         # Check if each are an object w 1 property in it.
-        if one_of["type"] == "object" and "properties" in one_of and len(one_of["properties"]) == 1:
+        if (
+            one_of["type"] == "object"
+            and "properties" in one_of
+            and len(one_of["properties"]) == 1
+        ):
             for prop_name in one_of["properties"]:
                 nested_object = one_of["properties"][prop_name]
-                if "type" in nested_object and nested_object["type"] == "object":
+                if (
+                    "type" in nested_object
+                    and nested_object["type"] == "object"
+                ):
                     is_nested_object = True
                 else:
                     is_nested_object = False
@@ -810,14 +1037,22 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                 elif "$ref" in nested_object:
                     ref = nested_object["$ref"]
                     ref_name = ref[ref.rfind("/") + 1 :]
-                    f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
+                    f.write(
+                        "from ."
+                        + camel_to_snake(ref_name)
+                        + " import "
+                        + ref_name
+                        + "\n"
+                    )
                     f.write("\n")
                     if prop_name != ref_name:
                         f.write(prop_name + " = " + ref_name + "\n")
                         f.write("\n")
                     all_options.append(prop_name)
                 else:
-                    object_code = generateObjectTypeCode(prop_name, nested_object, "object", data)
+                    object_code = generateObjectTypeCode(
+                        prop_name, nested_object, "object", data
+                    )
                     f.write(object_code)
                     f.write("\n")
                     all_options.append(prop_name)
@@ -830,24 +1065,31 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         if one_of["type"] == "object" and "properties" in one_of:
             for prop_name in one_of["properties"]:
                 prop = one_of["properties"][prop_name]
-                if "type" in prop and prop["type"] == "string" and "enum" in prop and len(prop["enum"]) == 1:
-                    if tag != None and tag != prop_name:
+                if (
+                    "type" in prop
+                    and prop["type"] == "string"
+                    and "enum" in prop
+                    and len(prop["enum"]) == 1
+                ):
+                    if tag is not None and tag != prop_name:
                         has_tag = False
                         break
                     else:
                         has_tag = True
                         tag = prop_name
 
-        if has_tag == False:
+        if has_tag is False:
             tag = None
             break
 
-    if tag != None:
+    if tag is not None:
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
             object_name = one_of["properties"][tag]["enum"][0]
-            object_code = generateObjectTypeCode(object_name, one_of, "object", data)
+            object_code = generateObjectTypeCode(
+                object_name, one_of, "object", data
+            )
             f.write(object_code)
             f.write("\n")
             all_options.append(object_name)
@@ -865,7 +1107,9 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
     f.close()
 
 
-def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) -> str:
+def generateObjectTypeCode(
+    name: str, schema: dict, type_name: str, data: dict
+) -> str:
     f = io.StringIO()
 
     has_date_time = hasDateTime(schema)
@@ -881,7 +1125,9 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     refs = getRefs(schema)
     for ref in refs:
         print("  ref: ", ref, "schema: ", [schema])
-        f.write("from ..models." + camel_to_snake(ref) + " import " + ref + "\n")
+        f.write(
+            "from ..models." + camel_to_snake(ref) + " import " + ref + "\n"
+        )
 
     f.write("from ..types import UNSET, Unset\n")
     f.write("\n")
@@ -898,7 +1144,9 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
 
     # Finish writing the class.
     f.write("\n")
-    f.write("\tadditional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)\n")
+    f.write(
+        "\tadditional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)\n"
+    )
 
     # Now let's write the to_dict method.
     f.write("\n")
@@ -918,7 +1166,13 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     for property_name in schema["properties"]:
         # Write the property.
         f.write("\t\tif " + property_name + " is not UNSET:\n")
-        f.write("\t\t\tfield_dict['" + property_name + "'] = " + property_name + "\n")
+        f.write(
+            "\t\t\tfield_dict['"
+            + property_name
+            + "'] = "
+            + property_name
+            + "\n"
+        )
 
     f.write("\n")
     f.write("\t\treturn field_dict\n")
@@ -978,7 +1232,9 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     return value
 
 
-def generateObjectType(path: str, name: str, schema: dict, type_name: str, data: dict):
+def generateObjectType(
+    path: str, name: str, schema: dict, type_name: str, data: dict
+):
     print("generating type: ", name, " at: ", path)
     print("  schema: ", [schema])
     f = open(path, "w")
@@ -997,10 +1253,25 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
         # Write the property.
         if property_type == "string":
             if "format" in property_schema:
-                if property_schema["format"] == "date-time" or property_schema["format"] == "partial-date-time":
-                    f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
-                    f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-                    f.write("\t\t\t" + property_name + " = self." + property_name + ".isoformat()\n")
+                if (
+                    property_schema["format"] == "date-time"
+                    or property_schema["format"] == "partial-date-time"
+                ):
+                    f.write(
+                        "\t\t" + property_name + ": Union[Unset, str] = UNSET\n"
+                    )
+                    f.write(
+                        "\t\tif not isinstance(self."
+                        + property_name
+                        + ", Unset):\n"
+                    )
+                    f.write(
+                        "\t\t\t"
+                        + property_name
+                        + " = self."
+                        + property_name
+                        + ".isoformat()\n"
+                    )
                     # return early
                     return
 
@@ -1015,8 +1286,16 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
                     property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace("#/components/schemas/", "")
-                    f.write("\t\tfrom ..models." + camel_to_snake(property_type) + " import " + property_type + "\n")
+                    property_type = property_type.replace(
+                        "#/components/schemas/", ""
+                    )
+                    f.write(
+                        "\t\tfrom ..models."
+                        + camel_to_snake(property_type)
+                        + " import "
+                        + property_type
+                        + "\n"
+                    )
                 elif "type" in property_schema["items"]:
                     if property_schema["items"]["type"] == "string":
                         property_type = "str"
@@ -1024,9 +1303,15 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
-                            if property_schema["items"]["items"]["type"] == "string":
+                            if (
+                                property_schema["items"]["items"]["type"]
+                                == "string"
+                            ):
                                 property_type = "List[str]"
-                            elif property_schema["items"]["items"]["type"] == "number":
+                            elif (
+                                property_schema["items"]["items"]["type"]
+                                == "number"
+                            ):
                                 property_type = "List[float]"
                             else:
                                 print("  property: ", property_schema)
@@ -1042,25 +1327,47 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                     print("  array: ", [property_schema["items"]])
                     raise Exception("Unknown array type")
 
-            f.write("\t\t" + property_name + ": Union[Unset, List[" + property_type + "]] = UNSET\n")
-            f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-            f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\t"
+                + property_name
+                + ": Union[Unset, List["
+                + property_type
+                + "]] = UNSET\n"
+            )
+            f.write(
+                "\t\tif not isinstance(self." + property_name + ", Unset):\n"
+            )
+            f.write(
+                "\t\t\t" + property_name + " = self." + property_name + "\n"
+            )
         else:
             f.write("\t\t" + property_name + " = self." + property_name + "\n")
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
         f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
         f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-        f.write("\t\t\t" + property_name + " = self." + property_name + ".value\n")
+        f.write(
+            "\t\t\t" + property_name + " = self." + property_name + ".value\n"
+        )
     elif "allOf" in property_schema:
         thing = property_schema["allOf"][0]
         if "$ref" in thing:
             ref = thing["$ref"].replace("#/components/schemas/", "")
             if ref == "Uuid":
-                return renderTypeToDict(f, property_name, data["components"]["schemas"][ref], data)
+                return renderTypeToDict(
+                    f, property_name, data["components"]["schemas"][ref], data
+                )
             f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
-            f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-            f.write("\t\t\t" + property_name + " = self." + property_name + ".value\n")
+            f.write(
+                "\t\tif not isinstance(self." + property_name + ", Unset):\n"
+            )
+            f.write(
+                "\t\t\t"
+                + property_name
+                + " = self."
+                + property_name
+                + ".value\n"
+            )
         else:
             raise Exception("  unknown allOf type: ", property_schema)
     else:
@@ -1074,8 +1381,15 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
         # Write the property.
         if property_type == "string":
             if "format" in property_schema:
-                if property_schema["format"] == "date-time" or property_schema["format"] == "partial-date-time":
-                    f.write("\t" + property_name + ": Union[Unset, datetime.datetime] = UNSET\n")
+                if (
+                    property_schema["format"] == "date-time"
+                    or property_schema["format"] == "partial-date-time"
+                ):
+                    f.write(
+                        "\t"
+                        + property_name
+                        + ": Union[Unset, datetime.datetime] = UNSET\n"
+                    )
                     # Return early.
                     return
 
@@ -1092,8 +1406,16 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
                     property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace("#/components/schemas/", "")
-                    f.write("\tfrom ..models." + camel_to_snake(property_type) + " import " + property_type + "\n")
+                    property_type = property_type.replace(
+                        "#/components/schemas/", ""
+                    )
+                    f.write(
+                        "\tfrom ..models."
+                        + camel_to_snake(property_type)
+                        + " import "
+                        + property_type
+                        + "\n"
+                    )
                 elif "type" in property_schema["items"]:
                     if property_schema["items"]["type"] == "string":
                         property_type = "str"
@@ -1101,9 +1423,15 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
-                            if property_schema["items"]["items"]["type"] == "string":
+                            if (
+                                property_schema["items"]["items"]["type"]
+                                == "string"
+                            ):
                                 property_type = "List[str]"
-                            elif property_schema["items"]["items"]["type"] == "number":
+                            elif (
+                                property_schema["items"]["items"]["type"]
+                                == "number"
+                            ):
                                 property_type = "List[float]"
                             else:
                                 print("  property: ", property_schema)
@@ -1119,7 +1447,13 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                     print("  array: ", [property_schema["items"]])
                     raise Exception("Unknown array type")
 
-                f.write("\t" + property_name + ": Union[Unset, List[" + property_type + "]] = UNSET\n")
+                f.write(
+                    "\t"
+                    + property_name
+                    + ": Union[Unset, List["
+                    + property_type
+                    + "]] = UNSET\n"
+                )
             else:
                 raise Exception("Unknown array type")
         else:
@@ -1133,49 +1467,108 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
         if "$ref" in thing:
             ref = thing["$ref"].replace("#/components/schemas/", "")
             if ref == "Uuid":
-                return renderTypeInit(f, property_name, data["components"]["schemas"][ref], data)
-            f.write("\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
+                return renderTypeInit(
+                    f, property_name, data["components"]["schemas"][ref], data
+                )
+            f.write(
+                "\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n"
+            )
         else:
             raise Exception("  unknown allOf type: ", property_schema)
     else:
         f.write("\t" + property_name + ": Union[Unset, Any] = UNSET\n")
 
 
-def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict):
+def renderTypeFromDict(
+    f, property_name: str, property_schema: dict, data: dict
+):
     if "type" in property_schema:
         property_type = property_schema["type"]
 
         # Write the property.
         if property_type == "string":
             if "format" in property_schema:
-                if property_schema["format"] == "date-time" or property_schema["format"] == "partial-date-time":
-                    f.write("\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
-                    f.write("\t\t" + property_name + ": Union[Unset, datetime.datetime]\n")
-                    f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
+                if (
+                    property_schema["format"] == "date-time"
+                    or property_schema["format"] == "partial-date-time"
+                ):
+                    f.write(
+                        "\t\t_"
+                        + property_name
+                        + ' = d.pop("'
+                        + property_name
+                        + '", UNSET)\n'
+                    )
+                    f.write(
+                        "\t\t"
+                        + property_name
+                        + ": Union[Unset, datetime.datetime]\n"
+                    )
+                    f.write(
+                        "\t\tif isinstance(_" + property_name + ", Unset):\n"
+                    )
                     f.write("\t\t\t" + property_name + " = UNSET\n")
                     f.write("\t\telse:\n")
-                    f.write("\t\t\t" + property_name + " = isoparse(_" + property_name + ")\n")
+                    f.write(
+                        "\t\t\t"
+                        + property_name
+                        + " = isoparse(_"
+                        + property_name
+                        + ")\n"
+                    )
                     f.write("\n")
                     # Return early.
                     return
 
-            f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+            f.write(
+                "\t\t"
+                + property_name
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
+            )
             f.write("\n")
         elif property_type == "integer":
-            f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+            f.write(
+                "\t\t"
+                + property_name
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
+            )
             f.write("\n")
         elif property_type == "number":
-            f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+            f.write(
+                "\t\t"
+                + property_name
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
+            )
             f.write("\n")
         elif property_type == "boolean":
-            f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+            f.write(
+                "\t\t"
+                + property_name
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
+            )
             f.write("\n")
         elif property_type == "array":
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
                     property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace("#/components/schemas/", "")
-                    f.write("\t\tfrom ..models." + camel_to_snake(property_type) + " import " + property_type + "\n")
+                    property_type = property_type.replace(
+                        "#/components/schemas/", ""
+                    )
+                    f.write(
+                        "\t\tfrom ..models."
+                        + camel_to_snake(property_type)
+                        + " import "
+                        + property_type
+                        + "\n"
+                    )
                 elif "type" in property_schema["items"]:
                     if property_schema["items"]["type"] == "string":
                         property_type = "str"
@@ -1183,9 +1576,15 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
-                            if property_schema["items"]["items"]["type"] == "string":
+                            if (
+                                property_schema["items"]["items"]["type"]
+                                == "string"
+                            ):
                                 property_type = "List[str]"
-                            elif property_schema["items"]["items"]["type"] == "number":
+                            elif (
+                                property_schema["items"]["items"]["type"]
+                                == "number"
+                            ):
                                 property_type = "List[float]"
                             else:
                                 print("  property: ", property_schema)
@@ -1194,44 +1593,95 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                             print("  property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
-                        raise Exception("  unknown array type: ", property_schema["items"]["type"])
+                        raise Exception(
+                            "  unknown array type: ",
+                            property_schema["items"]["type"],
+                        )
                 else:
                     print("  array: ", [property_schema])
                     print("  array: ", [property_schema["items"]])
                     raise Exception("Unknown array type")
 
             f.write(
-                "\t\t" + property_name + " = cast(List[" + property_type + '], d.pop("' + property_name + '", UNSET))\n'
+                "\t\t"
+                + property_name
+                + " = cast(List["
+                + property_type
+                + '], d.pop("'
+                + property_name
+                + '", UNSET))\n'
             )
             f.write("\n")
         else:
-            f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+            f.write(
+                "\t\t"
+                + property_name
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
+            )
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
-        f.write("\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+        f.write(
+            "\t\t_"
+            + property_name
+            + ' = d.pop("'
+            + property_name
+            + '", UNSET)\n'
+        )
         f.write("\t\t" + property_name + ": Union[Unset, " + ref + "]\n")
         f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
         f.write("\t\t\t" + property_name + " = UNSET\n")
         f.write("\t\telse:\n")
-        f.write("\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n")
+        f.write(
+            "\t\t\t"
+            + property_name
+            + " = "
+            + ref
+            + "(_"
+            + property_name
+            + ")\n"
+        )
         f.write("\n")
     elif "allOf" in property_schema:
         thing = property_schema["allOf"][0]
         if "$ref" in thing:
             ref = thing["$ref"].replace("#/components/schemas/", "")
             if ref == "Uuid":
-                return renderTypeFromDict(f, property_name, data["components"]["schemas"][ref], data)
-            f.write("\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+                return renderTypeFromDict(
+                    f, property_name, data["components"]["schemas"][ref], data
+                )
+            f.write(
+                "\t\t_"
+                + property_name
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
+            )
             f.write("\t\t" + property_name + ": Union[Unset, " + ref + "]\n")
             f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
             f.write("\t\t\t" + property_name + " = UNSET\n")
             f.write("\t\telse:\n")
-            f.write("\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n")
+            f.write(
+                "\t\t\t"
+                + property_name
+                + " = "
+                + ref
+                + "(_"
+                + property_name
+                + ")\n"
+            )
             f.write("\n")
         else:
             raise Exception("  unknown allOf type: ", property_schema)
     else:
-        f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+        f.write(
+            "\t\t"
+            + property_name
+            + ' = d.pop("'
+            + property_name
+            + '", UNSET)\n'
+        )
 
 
 def hasDateTime(schema: dict) -> bool:
@@ -1247,7 +1697,10 @@ def hasDateTime(schema: dict) -> bool:
                     if has_date_time:
                         return True
         elif type_name == "string" and "format" in schema:
-            if schema["format"] == "date-time" or schema["format"] == "partial-date-time":
+            if (
+                schema["format"] == "date-time"
+                or schema["format"] == "partial-date-time"
+            ):
                 return True
 
     return False
@@ -1315,7 +1768,9 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                         if json["type"] == "array":
                             items = json["items"]
                             if "$ref" in items:
-                                ref = items["$ref"].replace("#/components/schemas/", "")
+                                ref = items["$ref"].replace(
+                                    "#/components/schemas/", ""
+                                )
                                 refs.append("[" + ref + "]")
                             else:
                                 raise Exception("Unknown array type")
@@ -1333,13 +1788,17 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                     else:
                         # Throw an error for an unsupported content type.
                         print("content: ", content)
-                        raise Exception("Unsupported content type: ", content_type)
+                        raise Exception(
+                            "Unsupported content type: ", content_type
+                        )
                 else:
                     # Throw an error for an unsupported content type.
                     print("content: ", content)
                     raise Exception("Unsupported content type: ", content_type)
         elif "$ref" in response:
-            schema_name = response["$ref"].replace("#/components/responses/", "")
+            schema_name = response["$ref"].replace(
+                "#/components/responses/", ""
+            )
             schema = data["components"]["responses"][schema_name]
             if "content" in schema:
                 content = schema["content"]
@@ -1347,7 +1806,9 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                     if content_type == "application/json":
                         json = content[content_type]["schema"]
                         if "$ref" in json:
-                            ref = json["$ref"].replace("#/components/schemas/", "")
+                            ref = json["$ref"].replace(
+                                "#/components/schemas/", ""
+                            )
                             if ref not in refs:
                                 refs.append(ref)
 
@@ -1360,9 +1821,11 @@ def getParameterRefs(endpoint: dict) -> [str]:
     if "parameters" in endpoint:
         parameters = endpoint["parameters"]
         for parameter in parameters:
-            parameter_name = parameter["name"]
+            parameter["name"]
             if "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
                 refs.append(parameter_type)
 
     return refs
@@ -1433,7 +1896,13 @@ def camel_to_snake(name: str):
 
 def camel_to_screaming_snake(name: str):
     name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", name).replace(" ", "").upper().replace("-", "_").replace(":", "_")
+    return (
+        re.sub("([a-z0-9])([A-Z])", r"\1_\2", name)
+        .replace(" ", "")
+        .upper()
+        .replace("-", "_")
+        .replace(":", "_")
+    )
 
 
 def get_function_parameters(endpoint: dict, request_body_type: bool) -> [str]:
@@ -1443,14 +1912,14 @@ def get_function_parameters(endpoint: dict, request_body_type: bool) -> [str]:
         for parameter in parameters:
             parameter_name = parameter["name"]
             if "type" in parameter["schema"]:
-                parameter_type = (
+                (
                     parameter["schema"]["type"]
                     .replace("string", "str")
                     .replace("integer", "int")
                     .replace("number", "float")
                 )
             elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace("#/components/schemas/", "")
+                parameter["schema"]["$ref"].replace("#/components/schemas/", "")
             else:
                 print("  parameter: ", parameter)
                 raise Exception("Unknown parameter type")

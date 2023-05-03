@@ -28,7 +28,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, VerificationToken, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, VerificationToken, Error]]:
     if response.status_code == 201:
         response_201 = VerificationToken.from_dict(response.json())
         return response_201
@@ -41,7 +43,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Verifica
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, VerificationToken, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, VerificationToken, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

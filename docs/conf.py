@@ -102,7 +102,12 @@ def linkcode_resolve(domain, info):
 try:
     import enchant  # noqa # pylint: disable=unused-import
 except ImportError as ex:
-    print("enchant module import failed:\n" "{0}\n" "Spell checking disabled.".format(ex), file=sys.stderr)
+    print(
+        "enchant module import failed:\n"
+        "{0}\n"
+        "Spell checking disabled.".format(ex),
+        file=sys.stderr,
+    )
 else:
     extensions.append("sphinxcontrib.spelling")
     spelling_show_suggestions = True

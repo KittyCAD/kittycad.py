@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional, Union, cast
 import httpx
 
 from ...client import Client
-from ...models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
+from ...models.api_call_with_price_results_page import (
+    ApiCallWithPriceResultsPage,
+)
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...models.error import Error
 from ...types import Response
@@ -31,7 +33,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
     if response.status_code == 200:
         response_200 = ApiCallWithPriceResultsPage.from_dict(response.json())
         return response_200
@@ -44,7 +48,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiCallW
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,

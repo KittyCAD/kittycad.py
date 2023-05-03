@@ -25,9 +25,13 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [PaymentMethod], Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, [PaymentMethod], Error]]:
     if response.status_code == 200:
-        response_200 = [PaymentMethod.from_dict(item) for item in response.json()]
+        response_200 = [
+            PaymentMethod.from_dict(item) for item in response.json()
+        ]
         return response_200
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())
@@ -38,7 +42,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, [Payment
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, [PaymentMethod], Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, [PaymentMethod], Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
