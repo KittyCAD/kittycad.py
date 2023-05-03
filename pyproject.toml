@@ -49,14 +49,16 @@ exclude = '''
     | \.git
     | \.venv
     | \.mypy_cache
+	| kittycad/__pycache__
   )/
 )
 '''
 include = '''
 (
   /(
-    | generate
+    | generate/generate.py
     | kittycad
+    | docs/*.py
   )/
 )
 '''
@@ -64,4 +66,4 @@ include = '''
 [tool.isort]
 line_length = 80
 profile = "black"
-src_paths = ["generate", "kittycad"]
+src_paths = ["generate", "kittycad", "docs"]

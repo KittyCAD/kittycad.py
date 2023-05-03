@@ -5,7 +5,6 @@ import attr
 from ..models.commit import Commit
 from ..models.plugins_info import PluginsInfo
 from ..models.registry_service_config import RegistryServiceConfig
-from ..models.runtime import Runtime
 from ..models.system_info_cgroup_driver_enum import SystemInfoCgroupDriverEnum
 from ..models.system_info_cgroup_version_enum import SystemInfoCgroupVersionEnum
 from ..models.system_info_isolation_enum import SystemInfoIsolationEnum

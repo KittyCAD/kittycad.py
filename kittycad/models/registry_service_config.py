@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.index_info import IndexInfo
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="RegistryServiceConfig")

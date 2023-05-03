@@ -7,7 +7,6 @@ from dateutil.parser import isoparse
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileConversion")
@@ -195,7 +194,6 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileCenterOfMass")
@@ -371,7 +369,6 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileMass")
@@ -552,7 +549,6 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileVolume")
@@ -726,7 +722,6 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileDensity")
@@ -907,7 +902,6 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileSurfaceArea")

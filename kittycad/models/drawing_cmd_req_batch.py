@@ -1,8 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.drawing_cmd_req import DrawingCmdReq
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="DrawingCmdReqBatch")

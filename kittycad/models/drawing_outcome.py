@@ -4,7 +4,7 @@ from .drawing_error import DrawingError
 
 Error = DrawingError
 
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
