@@ -1347,7 +1347,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
         f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
         f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
         f.write(
-            "\t\t\t" + property_name + " = self." + property_name + ".value\n"
+            "\t\t\t" + property_name + " = self." + property_name + "\n"
         )
     elif "allOf" in property_schema:
         thing = property_schema["allOf"][0]
@@ -1366,7 +1366,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 + property_name
                 + " = self."
                 + property_name
-                + ".value\n"
+                + "\n"
             )
         else:
             raise Exception("  unknown allOf type: ", property_schema)

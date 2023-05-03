@@ -70,7 +70,7 @@ class Connection:
         auth_timeout = self.auth_timeout
         cluster: Union[Unset, str] = UNSET
         if not isinstance(self.cluster, Unset):
-            cluster = self.cluster.value
+            cluster = self.cluster
         config_load_time: Union[Unset, str] = UNSET
         if not isinstance(self.config_load_time, Unset):
             config_load_time = self.config_load_time.isoformat()
@@ -79,7 +79,7 @@ class Connection:
         cpu = self.cpu
         gateway: Union[Unset, str] = UNSET
         if not isinstance(self.gateway, Unset):
-            gateway = self.gateway.value
+            gateway = self.gateway
         git_commit = self.git_commit
         go = self.go
         gomaxprocs = self.gomaxprocs
@@ -93,10 +93,10 @@ class Connection:
         in_msgs = self.in_msgs
         jetstream: Union[Unset, str] = UNSET
         if not isinstance(self.jetstream, Unset):
-            jetstream = self.jetstream.value
+            jetstream = self.jetstream
         leaf: Union[Unset, str] = UNSET
         if not isinstance(self.leaf, Unset):
-            leaf = self.leaf.value
+            leaf = self.leaf
         leafnodes = self.leafnodes
         max_connections = self.max_connections
         max_control_line = self.max_control_line

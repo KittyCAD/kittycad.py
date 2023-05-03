@@ -28,10 +28,10 @@ class PaymentMethod:
     def to_dict(self) -> Dict[str, Any]:
         billing_info: Union[Unset, str] = UNSET
         if not isinstance(self.billing_info, Unset):
-            billing_info = self.billing_info.value
+            billing_info = self.billing_info
         card: Union[Unset, str] = UNSET
         if not isinstance(self.card, Unset):
-            card = self.card.value
+            card = self.card
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
@@ -39,7 +39,7 @@ class PaymentMethod:
         metadata = self.metadata
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
-            type = self.type.value
+            type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

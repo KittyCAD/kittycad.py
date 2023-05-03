@@ -28,17 +28,17 @@ class EngineMetadata:
         async_jobs_running = self.async_jobs_running
         cache: Union[Unset, str] = UNSET
         if not isinstance(self.cache, Unset):
-            cache = self.cache.value
+            cache = self.cache
         environment: Union[Unset, str] = UNSET
         if not isinstance(self.environment, Unset):
-            environment = self.environment.value
+            environment = self.environment
         fs: Union[Unset, str] = UNSET
         if not isinstance(self.fs, Unset):
-            fs = self.fs.value
+            fs = self.fs
         git_hash = self.git_hash
         pubsub: Union[Unset, str] = UNSET
         if not isinstance(self.pubsub, Unset):
-            pubsub = self.pubsub.value
+            pubsub = self.pubsub
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

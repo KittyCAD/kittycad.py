@@ -29,10 +29,10 @@ class AiPluginManifest:
     def to_dict(self) -> Dict[str, Any]:
         api: Union[Unset, str] = UNSET
         if not isinstance(self.api, Unset):
-            api = self.api.value
+            api = self.api
         auth: Union[Unset, str] = UNSET
         if not isinstance(self.auth, Unset):
-            auth = self.auth.value
+            auth = self.auth
         contact_email = self.contact_email
         description_for_human = self.description_for_human
         description_for_model = self.description_for_model

@@ -87,7 +87,7 @@ class Extrude:
         distance = self.distance
         sketch: Union[Unset, str] = UNSET
         if not isinstance(self.sketch, Unset):
-            sketch = self.sketch.value
+            sketch = self.sketch
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

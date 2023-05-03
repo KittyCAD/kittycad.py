@@ -21,7 +21,7 @@ class BillingInfo:
     def to_dict(self) -> Dict[str, Any]:
         address: Union[Unset, str] = UNSET
         if not isinstance(self.address, Unset):
-            address = self.address.value
+            address = self.address
         name = self.name
         phone = self.phone
 

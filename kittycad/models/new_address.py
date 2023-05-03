@@ -26,7 +26,7 @@ class NewAddress:
         city = self.city
         country: Union[Unset, str] = UNSET
         if not isinstance(self.country, Unset):
-            country = self.country.value
+            country = self.country
         state = self.state
         street1 = self.street1
         street2 = self.street2

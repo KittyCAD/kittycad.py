@@ -27,7 +27,7 @@ class CardDetails:
         brand = self.brand
         checks: Union[Unset, str] = UNSET
         if not isinstance(self.checks, Unset):
-            checks = self.checks.value
+            checks = self.checks
         country = self.country
         exp_month = self.exp_month
         exp_year = self.exp_year

@@ -23,13 +23,13 @@ class Jetstream:
     def to_dict(self) -> Dict[str, Any]:
         config: Union[Unset, str] = UNSET
         if not isinstance(self.config, Unset):
-            config = self.config.value
+            config = self.config
         meta: Union[Unset, str] = UNSET
         if not isinstance(self.meta, Unset):
-            meta = self.meta.value
+            meta = self.meta
         stats: Union[Unset, str] = UNSET
         if not isinstance(self.stats, Unset):
-            stats = self.stats.value
+            stats = self.stats
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

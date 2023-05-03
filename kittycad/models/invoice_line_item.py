@@ -25,7 +25,7 @@ class InvoiceLineItem:
         amount = self.amount
         currency: Union[Unset, str] = UNSET
         if not isinstance(self.currency, Unset):
-            currency = self.currency.value
+            currency = self.currency
         description = self.description
         id = self.id
         invoice_item = self.invoice_item

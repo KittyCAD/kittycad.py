@@ -55,7 +55,7 @@ class Invoice:
             created_at = self.created_at.isoformat()
         currency: Union[Unset, str] = UNSET
         if not isinstance(self.currency, Unset):
-            currency = self.currency.value
+            currency = self.currency
         customer_email = self.customer_email
         customer_id = self.customer_id
         default_payment_method = self.default_payment_method
@@ -74,7 +74,7 @@ class Invoice:
         statement_descriptor = self.statement_descriptor
         status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
         subtotal = self.subtotal
         tax = self.tax
         total = self.total

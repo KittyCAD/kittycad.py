@@ -88,15 +88,15 @@ class DockerSystemInfo:
         bridge_nf_iptables = self.bridge_nf_iptables
         cgroup_driver: Union[Unset, str] = UNSET
         if not isinstance(self.cgroup_driver, Unset):
-            cgroup_driver = self.cgroup_driver.value
+            cgroup_driver = self.cgroup_driver
         cgroup_version: Union[Unset, str] = UNSET
         if not isinstance(self.cgroup_version, Unset):
-            cgroup_version = self.cgroup_version.value
+            cgroup_version = self.cgroup_version
         cluster_advertise = self.cluster_advertise
         cluster_store = self.cluster_store
         containerd_commit: Union[Unset, str] = UNSET
         if not isinstance(self.containerd_commit, Unset):
-            containerd_commit = self.containerd_commit.value
+            containerd_commit = self.containerd_commit
         containers = self.containers
         containers_paused = self.containers_paused
         containers_running = self.containers_running
@@ -128,11 +128,11 @@ class DockerSystemInfo:
         init_binary = self.init_binary
         init_commit: Union[Unset, str] = UNSET
         if not isinstance(self.init_commit, Unset):
-            init_commit = self.init_commit.value
+            init_commit = self.init_commit
         ipv4_forwarding = self.ipv4_forwarding
         isolation: Union[Unset, str] = UNSET
         if not isinstance(self.isolation, Unset):
-            isolation = self.isolation.value
+            isolation = self.isolation
         kernel_memory = self.kernel_memory
         kernel_memory_tcp = self.kernel_memory_tcp
         kernel_version = self.kernel_version
@@ -155,14 +155,14 @@ class DockerSystemInfo:
         pids_limit = self.pids_limit
         plugins: Union[Unset, str] = UNSET
         if not isinstance(self.plugins, Unset):
-            plugins = self.plugins.value
+            plugins = self.plugins
         product_license = self.product_license
         registry_config: Union[Unset, str] = UNSET
         if not isinstance(self.registry_config, Unset):
-            registry_config = self.registry_config.value
+            registry_config = self.registry_config
         runc_commit: Union[Unset, str] = UNSET
         if not isinstance(self.runc_commit, Unset):
-            runc_commit = self.runc_commit.value
+            runc_commit = self.runc_commit
         runtimes = self.runtimes
         security_options: Union[Unset, List[str]] = UNSET
         if not isinstance(self.security_options, Unset):

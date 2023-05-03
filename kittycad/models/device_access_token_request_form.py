@@ -23,7 +23,7 @@ class DeviceAccessTokenRequestForm:
         device_code = self.device_code
         grant_type: Union[Unset, str] = UNSET
         if not isinstance(self.grant_type, Unset):
-            grant_type = self.grant_type.value
+            grant_type = self.grant_type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

@@ -22,10 +22,10 @@ class ExecutorMetadata:
     def to_dict(self) -> Dict[str, Any]:
         docker_info: Union[Unset, str] = UNSET
         if not isinstance(self.docker_info, Unset):
-            docker_info = self.docker_info.value
+            docker_info = self.docker_info
         environment: Union[Unset, str] = UNSET
         if not isinstance(self.environment, Unset):
-            environment = self.environment.value
+            environment = self.environment
         git_hash = self.git_hash
 
         field_dict: Dict[str, Any] = {}

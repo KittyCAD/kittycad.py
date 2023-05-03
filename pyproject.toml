@@ -78,5 +78,7 @@ fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN
 unfixable = []
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.per-file-ignores]
 # We exclude init files since otherwise ruff will delete all the unused imports.
-exclude = ["__init__.py"]
+"__init__.py" = ["E401"]

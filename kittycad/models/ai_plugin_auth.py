@@ -21,10 +21,10 @@ class AiPluginAuth:
     def to_dict(self) -> Dict[str, Any]:
         authorization_type: Union[Unset, str] = UNSET
         if not isinstance(self.authorization_type, Unset):
-            authorization_type = self.authorization_type.value
+            authorization_type = self.authorization_type
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
-            type = self.type.value
+            type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

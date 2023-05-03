@@ -54,7 +54,7 @@ class ApiCallWithPrice:
         litterbox = self.litterbox
         method: Union[Unset, str] = UNSET
         if not isinstance(self.method, Unset):
-            method = self.method.value
+            method = self.method
         minutes = self.minutes
         origin = self.origin
         price = self.price

@@ -26,7 +26,7 @@ class JetstreamStats:
         accounts = self.accounts
         api: Union[Unset, str] = UNSET
         if not isinstance(self.api, Unset):
-            api = self.api.value
+            api = self.api
         ha_assets = self.ha_assets
         memory = self.memory
         reserved_memory = self.reserved_memory

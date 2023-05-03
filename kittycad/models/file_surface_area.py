@@ -39,13 +39,13 @@ class FileSurfaceArea:
         id = self.id
         src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
-            src_format = self.src_format.value
+            src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
         status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
         surface_area = self.surface_area
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):

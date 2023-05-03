@@ -27,7 +27,7 @@ class Cancelled:
     def to_dict(self) -> Dict[str, Any]:
         what_failed: Union[Unset, str] = UNSET
         if not isinstance(self.what_failed, Unset):
-            what_failed = self.what_failed.value
+            what_failed = self.what_failed
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
