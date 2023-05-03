@@ -13,6 +13,10 @@
 import os
 import sys
 
+# The full version, including alpha/beta/rc tags
+# Get the version from the poetry file.
+import toml
+
 sys.path.insert(1, os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.abspath("../kittycad"))
 
@@ -23,9 +27,6 @@ project = "kittycad"
 author = "KittyCAD Team Members"
 copyright = author
 
-# The full version, including alpha/beta/rc tags
-# Get the version from the poetry file.
-import toml
 
 with open(os.path.abspath("../pyproject.toml"), "r") as f:
     parsed_toml = toml.load(f)

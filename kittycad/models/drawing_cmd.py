@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.drawing_cmd_id import DrawingCmdId
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="DrawCircle")
@@ -63,13 +64,6 @@ class DrawCircle:
     def __contains__(self, key: str) -> bool:
         return key in self.additional_properties
 
-
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
-
-import attr
-
-from ..models.drawing_cmd_id import DrawingCmdId
-from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Extrude")
 

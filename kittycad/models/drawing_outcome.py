@@ -1,17 +1,16 @@
-from typing import Any
-
-Success = Any
-
-from .drawing_error import DrawingError
-
-Error = DrawingError
-
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.drawing_cmd_id import DrawingCmdId
 from ..types import UNSET, Unset
+from .drawing_error import DrawingError
+
+Success = Any
+
+
+Error = DrawingError
+
 
 T = TypeVar("T", bound="Cancelled")
 

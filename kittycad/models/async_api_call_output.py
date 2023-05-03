@@ -186,16 +186,6 @@ class FileConversion:
         return key in self.additional_properties
 
 
-import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
-
-import attr
-from dateutil.parser import isoparse
-
-from ..models.api_call_status import ApiCallStatus
-from ..models.file_import_format import FileImportFormat
-from ..types import UNSET, Unset
-
 T = TypeVar("T", bound="FileCenterOfMass")
 
 
@@ -360,16 +350,6 @@ class FileCenterOfMass:
     def __contains__(self, key: str) -> bool:
         return key in self.additional_properties
 
-
-import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
-
-import attr
-from dateutil.parser import isoparse
-
-from ..models.api_call_status import ApiCallStatus
-from ..models.file_import_format import FileImportFormat
-from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileMass")
 
@@ -541,16 +521,6 @@ class FileMass:
         return key in self.additional_properties
 
 
-import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
-
-import attr
-from dateutil.parser import isoparse
-
-from ..models.api_call_status import ApiCallStatus
-from ..models.file_import_format import FileImportFormat
-from ..types import UNSET, Unset
-
 T = TypeVar("T", bound="FileVolume")
 
 
@@ -713,16 +683,6 @@ class FileVolume:
     def __contains__(self, key: str) -> bool:
         return key in self.additional_properties
 
-
-import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
-
-import attr
-from dateutil.parser import isoparse
-
-from ..models.api_call_status import ApiCallStatus
-from ..models.file_import_format import FileImportFormat
-from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileDensity")
 
@@ -893,16 +853,6 @@ class FileDensity:
     def __contains__(self, key: str) -> bool:
         return key in self.additional_properties
 
-
-import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
-
-import attr
-from dateutil.parser import isoparse
-
-from ..models.api_call_status import ApiCallStatus
-from ..models.file_import_format import FileImportFormat
-from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="FileSurfaceArea")
 
