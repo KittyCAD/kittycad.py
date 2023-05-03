@@ -43,7 +43,7 @@ class Client:
 class ClientFromEnv(Client):
     """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token."""
 
-    token: str = attr.ib(default=os.getenv('KITTYCAD_API_TOKEN'))
+    token: str = attr.ib(default=os.getenv("KITTYCAD_API_TOKEN"))
 
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in authenticated endpoints"""

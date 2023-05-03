@@ -1,13 +1,14 @@
+import base64
 from typing import Any, Dict, Optional, Union
 
-import base64
 import httpx
 
+from ...api.file.get_file_conversion import asyncio as fc_asyncio
+from ...api.file.get_file_conversion import sync as fc_sync
 from ...client import Client
 from ...models import Error
 from ...models.file_conversion import FileConversion
 from ...types import Response
-from ...api.file.get_file_conversion import sync as fc_sync, asyncio as fc_asyncio
 
 
 def sync(
@@ -36,9 +37,9 @@ async def asyncio(
     """Get the status of a file conversion. This function automatically base64 decodes the output response if there is one."""
 
     fc = await fc_asyncio(
-            id=id,
-            client=client,
-        )
+        id=id,
+        client=client,
+    )
 
     if isinstance(fc, FileConversion) and fc.output != "":
         fc.output = base64.b64decode(fc.output)

@@ -15,6 +15,8 @@ git checkout kittycad/api/file/get_file_conversion_with_base64_helper.py
 poetry run python generate/generate.py
 
 # Format and lint.
-poetry run isort
-poetry run black
+poetry run isort --recursive .
+poetry run isort generate/generate.py
+poetry run black .
+poetry run black generate/generate.py
 poetry run ruff
