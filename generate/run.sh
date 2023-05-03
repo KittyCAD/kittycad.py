@@ -16,8 +16,8 @@ poetry run python generate/generate.py
 
 # Format and lint.
 poetry run isort .
-poetry run black .
-poetry run ruff check --fix
+poetry run black . generate/generate.py docs/conf.py kittycad/client_test.py
+poetry run ruff check --fix .
 # We ignore errors here but we should eventually fix them.
 poetry run mypy . || true
 

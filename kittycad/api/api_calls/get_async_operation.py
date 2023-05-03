@@ -50,44 +50,44 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option = FileConversion.from_dict(data)
-            return option
-        except:
+            option_file_conversion = FileConversion.from_dict(data)
+            return option_file_conversion
+        except ValueError:
             pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option = FileCenterOfMass.from_dict(data)
-            return option
-        except:
+            option_file_center_of_mass = FileCenterOfMass.from_dict(data)
+            return option_file_center_of_mass
+        except ValueError:
             pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option = FileMass.from_dict(data)
-            return option
-        except:
+            option_file_mass = FileMass.from_dict(data)
+            return option_file_mass
+        except ValueError:
             pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option = FileVolume.from_dict(data)
-            return option
-        except:
+            option_file_volume = FileVolume.from_dict(data)
+            return option_file_volume
+        except ValueError:
             pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option = FileDensity.from_dict(data)
-            return option
-        except:
+            option_file_density = FileDensity.from_dict(data)
+            return option_file_density
+        except ValueError:
             pass
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option = FileSurfaceArea.from_dict(data)
-            return option
-        except:
+            option_file_surface_area = FileSurfaceArea.from_dict(data)
+            return option_file_surface_area
+        except ValueError:
             raise
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())

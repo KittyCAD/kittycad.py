@@ -104,9 +104,7 @@ try:
     import enchant  # noqa # pylint: disable=unused-import
 except ImportError as ex:
     print(
-        "enchant module import failed:\n"
-        "{0}\n"
-        "Spell checking disabled.".format(ex),
+        "enchant module import failed:\n" "{0}\n" "Spell checking disabled.".format(ex),
         file=sys.stderr,
     )
 else:

@@ -107,9 +107,7 @@ def generatePaths(cwd: str, parser: dict) -> dict:
     return data
 
 
-def generatePath(
-    path: str, name: str, method: str, endpoint: dict, data: dict
-) -> dict:
+def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) -> dict:
     # Generate the path.
     fn_name = camel_to_snake(endpoint["operationId"])
     file_name = fn_name + ".py"
@@ -162,17 +160,11 @@ def generatePath(
                 if parameter["schema"]["nullable"]:
                     parameter_type = "Optional[" + parameter_type + "]"
                     optional_args.append(
-                        ", "
-                        + camel_to_snake(parameter_name)
-                        + "="
-                        + parameter_type
+                        ", " + camel_to_snake(parameter_name) + "=" + parameter_type
                     )
                 else:
                     params_str += (
-                        ", "
-                        + camel_to_snake(parameter_name)
-                        + "="
-                        + parameter_type
+                        ", " + camel_to_snake(parameter_name) + "=" + parameter_type
                     )
             else:
                 params_str += (
@@ -252,17 +244,11 @@ response: Response["""
     for ref in endpoint_refs:
         if ref.startswith("List[") and ref.endswith("]"):
             ref = ref.replace("List[", "").replace("]", "")
-        f.write(
-            "from ...models." + camel_to_snake(ref) + " import " + ref + "\n"
-        )
+        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
     for ref in parameter_refs:
-        f.write(
-            "from ...models." + camel_to_snake(ref) + " import " + ref + "\n"
-        )
+        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
     for ref in request_body_refs:
-        f.write(
-            "from ...models." + camel_to_snake(ref) + " import " + ref + "\n"
-        )
+        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
     f.write("from ...types import Response\n")
     f.write("\n")
 
@@ -330,9 +316,7 @@ response: Response["""
         for parameter in parameters:
             parameter_name = parameter["name"]
             if "type" in parameter["schema"]:
-                parameter_type = parameter["schema"]["type"].replace(
-                    "string", "str"
-                )
+                parameter_type = parameter["schema"]["type"].replace("string", "str")
             elif "$ref" in parameter["schema"]:
                 parameter_type = parameter["schema"]["$ref"].replace(
                     "#/components/schemas/", ""
@@ -430,17 +414,24 @@ response: Response["""
                                 for index, one_of in enumerate(schema["oneOf"]):
                                     ref = getOneOfRefType(one_of)
                                     f.write("\t\ttry:\n")
-                                    f.write(
-                                        "\t\t\tif not isinstance(data, dict):\n"
-                                    )
+                                    f.write("\t\t\tif not isinstance(data, dict):\n")
                                     f.write("\t\t\t\traise TypeError()\n")
+                                    option_name = "option_" + camel_to_snake(ref)
                                     f.write(
-                                        "\t\t\toption = "
+                                        "\t\t\t"
+                                        + option_name
+                                        + " = "
                                         + ref
                                         + ".from_dict(data)\n"
                                     )
-                                    f.write("\t\t\treturn option\n")
-                                    f.write("\t\texcept:\n")
+                                    f.write("\t\t\treturn " + option_name + "\n")
+                                    f.write("\t\texcept ValueError:\n")
+                                    if index == len(schema["oneOf"]) - 1:
+                                        # On the last one raise the error.
+                                        f.write("\t\t\traise\n")
+                                    else:
+                                        f.write("\t\t\tpass\n")
+                                    f.write("\t\texcept TypeError:\n")
                                     if index == len(schema["oneOf"]) - 1:
                                         # On the last one raise the error.
                                         f.write("\t\t\traise\n")
@@ -461,9 +452,7 @@ response: Response["""
                                     ref = items["$ref"].replace(
                                         "#/components/schemas/", ""
                                     )
-                                    f.write(
-                                        "\t\tresponse_" + response_code + " = [\n"
-                                    )
+                                    f.write("\t\tresponse_" + response_code + " = [\n")
                                     f.write("\t\t\t" + ref + ".from_dict(item)\n")
                                     f.write("\t\t\tfor item in response.json()\n")
                                     f.write("\t\t]\n")
@@ -479,15 +468,11 @@ response: Response["""
                                 raise Exception("Unknown type", json["type"])
                         else:
                             f.write(
-                                "\t\tresponse_"
-                                + response_code
-                                + " = response.json()\n"
+                                "\t\tresponse_" + response_code + " = response.json()\n"
                             )
 
             elif "$ref" in response:
-                schema_name = response["$ref"].replace(
-                    "#/components/responses/", ""
-                )
+                schema_name = response["$ref"].replace("#/components/responses/", "")
                 schema = data["components"]["responses"][schema_name]
                 if "content" in schema:
                     content = schema["content"]
@@ -495,9 +480,7 @@ response: Response["""
                         if content_type == "application/json":
                             json = content[content_type]["schema"]
                             if "$ref" in json:
-                                ref = json["$ref"].replace(
-                                    "#/components/schemas/", ""
-                                )
+                                ref = json["$ref"].replace("#/components/schemas/", "")
                                 f.write(
                                     "\t\tresponse_"
                                     + response_code
@@ -731,9 +714,7 @@ response: Response["""
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
-    f.write(
-        "\tasync with httpx.AsyncClient(verify=client.verify_ssl) as _client:\n"
-    )
+    f.write("\tasync with httpx.AsyncClient(verify=client.verify_ssl) as _client:\n")
     f.write("\t\tresponse = await _client." + method + "(**kwargs)\n")
     f.write("\n")
     f.write("\treturn _build_response(response=response)\n")
@@ -849,11 +830,7 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         type_name = schema["type"]
         if type_name == "object":
             generateObjectType(file_path, name, schema, type_name, data)
-        elif (
-            type_name == "string"
-            and "enum" in schema
-            and schema["enum"] != [None]
-        ):
+        elif type_name == "string" and "enum" in schema and schema["enum"] != [None]:
             generateEnumType(file_path, name, schema, type_name, [])
         elif type_name == "integer":
             generateIntegerType(file_path, name, schema, type_name)
@@ -931,7 +908,7 @@ def generateEnumType(
     f.write("from enum import Enum\n")
     f.write("\n")
     f.write("class " + name + "(str, Enum):\n")
-    if 'description' in schema:
+    if "description" in schema:
         f.write('\t""" ' + schema["description"] + ' """ # noqa: E501\n')
     # Iterate over the properties.
     for num, value in enumerate(schema["enum"], start=0):
@@ -965,11 +942,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
 
     is_enum_with_docs = False
     for one_of in schema["oneOf"]:
-        if (
-            one_of["type"] == "string"
-            and "enum" in one_of
-            and len(one_of["enum"]) == 1
-        ):
+        if one_of["type"] == "string" and "enum" in one_of and len(one_of["enum"]) == 1:
             is_enum_with_docs = True
         else:
             is_enum_with_docs = False
@@ -1001,13 +974,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         if "$ref" in one_of:
             ref = one_of["$ref"]
             ref_name = ref[ref.rfind("/") + 1 :]
-            f.write(
-                "from ."
-                + camel_to_snake(ref_name)
-                + " import "
-                + ref_name
-                + "\n"
-            )
+            f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
             all_options.append(ref_name)
 
     is_nested_object = False
@@ -1020,10 +987,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         ):
             for prop_name in one_of["properties"]:
                 nested_object = one_of["properties"][prop_name]
-                if (
-                    "type" in nested_object
-                    and nested_object["type"] == "object"
-                ):
+                if "type" in nested_object and nested_object["type"] == "object":
                     is_nested_object = True
                 else:
                     is_nested_object = False
@@ -1096,9 +1060,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
             object_name = one_of["properties"][tag]["enum"][0]
-            object_code = generateObjectTypeCode(
-                object_name, one_of, "object", data
-            )
+            object_code = generateObjectTypeCode(object_name, one_of, "object", data)
             f.write(object_code)
             f.write("\n")
             all_options.append(object_name)
@@ -1116,9 +1078,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
     f.close()
 
 
-def generateObjectTypeCode(
-    name: str, schema: dict, type_name: str, data: dict
-) -> str:
+def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) -> str:
     f = io.StringIO()
 
     has_date_time = hasDateTime(schema)
@@ -1134,9 +1094,7 @@ def generateObjectTypeCode(
     refs = getRefs(schema)
     for ref in refs:
         print("  ref: ", ref, "schema: ", [schema])
-        f.write(
-            "from ..models." + camel_to_snake(ref) + " import " + ref + "\n"
-        )
+        f.write("from ..models." + camel_to_snake(ref) + " import " + ref + "\n")
 
     f.write("from ..types import UNSET, Unset\n")
     f.write("\n")
@@ -1145,7 +1103,7 @@ def generateObjectTypeCode(
     f.write("@attr.s(auto_attribs=True)\n")
     f.write("class " + name + ":\n")
     # Write the description.
-    if 'description' in schema:
+    if "description" in schema:
         f.write('\t""" ' + schema["description"] + ' """ # noqa: E501\n')
     # Iterate over the properties.
     for property_name in schema["properties"]:
@@ -1176,13 +1134,7 @@ def generateObjectTypeCode(
     for property_name in schema["properties"]:
         # Write the property.
         f.write("\t\tif " + property_name + " is not UNSET:\n")
-        f.write(
-            "\t\t\tfield_dict['"
-            + property_name
-            + "'] = "
-            + property_name
-            + "\n"
-        )
+        f.write("\t\t\tfield_dict['" + property_name + "'] = " + property_name + "\n")
 
     f.write("\n")
     f.write("\t\treturn field_dict\n")
@@ -1242,9 +1194,7 @@ def generateObjectTypeCode(
     return value
 
 
-def generateObjectType(
-    path: str, name: str, schema: dict, type_name: str, data: dict
-):
+def generateObjectType(path: str, name: str, schema: dict, type_name: str, data: dict):
     print("generating type: ", name, " at: ", path)
     print("  schema: ", [schema])
     f = open(path, "w")
@@ -1267,13 +1217,9 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                     property_schema["format"] == "date-time"
                     or property_schema["format"] == "partial-date-time"
                 ):
+                    f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
                     f.write(
-                        "\t\t" + property_name + ": Union[Unset, str] = UNSET\n"
-                    )
-                    f.write(
-                        "\t\tif not isinstance(self."
-                        + property_name
-                        + ", Unset):\n"
+                        "\t\tif not isinstance(self." + property_name + ", Unset):\n"
                     )
                     f.write(
                         "\t\t\t"
@@ -1296,9 +1242,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
                     property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace(
-                        "#/components/schemas/", ""
-                    )
+                    property_type = property_type.replace("#/components/schemas/", "")
                     f.write(
                         "\t\tfrom ..models."
                         + camel_to_snake(property_type)
@@ -1313,15 +1257,9 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
-                            if (
-                                property_schema["items"]["items"]["type"]
-                                == "string"
-                            ):
+                            if property_schema["items"]["items"]["type"] == "string":
                                 property_type = "List[str]"
-                            elif (
-                                property_schema["items"]["items"]["type"]
-                                == "number"
-                            ):
+                            elif property_schema["items"]["items"]["type"] == "number":
                                 property_type = "List[float]"
                             else:
                                 print("  property: ", property_schema)
@@ -1344,21 +1282,15 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 + property_type
                 + "]] = UNSET\n"
             )
-            f.write(
-                "\t\tif not isinstance(self." + property_name + ", Unset):\n"
-            )
-            f.write(
-                "\t\t\t" + property_name + " = self." + property_name + "\n"
-            )
+            f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
+            f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
         else:
             f.write("\t\t" + property_name + " = self." + property_name + "\n")
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
         f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
         f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-        f.write(
-            "\t\t\t" + property_name + " = self." + property_name + "\n"
-        )
+        f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
     elif "allOf" in property_schema:
         thing = property_schema["allOf"][0]
         if "$ref" in thing:
@@ -1368,16 +1300,8 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                     f, property_name, data["components"]["schemas"][ref], data
                 )
             f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
-            f.write(
-                "\t\tif not isinstance(self." + property_name + ", Unset):\n"
-            )
-            f.write(
-                "\t\t\t"
-                + property_name
-                + " = self."
-                + property_name
-                + "\n"
-            )
+            f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
+            f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
         else:
             raise Exception("  unknown allOf type: ", property_schema)
     else:
@@ -1416,9 +1340,7 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
                     property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace(
-                        "#/components/schemas/", ""
-                    )
+                    property_type = property_type.replace("#/components/schemas/", "")
                     f.write(
                         "\tfrom ..models."
                         + camel_to_snake(property_type)
@@ -1433,15 +1355,9 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
-                            if (
-                                property_schema["items"]["items"]["type"]
-                                == "string"
-                            ):
+                            if property_schema["items"]["items"]["type"] == "string":
                                 property_type = "List[str]"
-                            elif (
-                                property_schema["items"]["items"]["type"]
-                                == "number"
-                            ):
+                            elif property_schema["items"]["items"]["type"] == "number":
                                 property_type = "List[float]"
                             else:
                                 print("  property: ", property_schema)
@@ -1480,18 +1396,14 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                 return renderTypeInit(
                     f, property_name, data["components"]["schemas"][ref], data
                 )
-            f.write(
-                "\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n"
-            )
+            f.write("\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
         else:
             raise Exception("  unknown allOf type: ", property_schema)
     else:
         f.write("\t" + property_name + ": Union[Unset, Any] = UNSET\n")
 
 
-def renderTypeFromDict(
-    f, property_name: str, property_schema: dict, data: dict
-):
+def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict):
     if "type" in property_schema:
         property_type = property_schema["type"]
 
@@ -1510,13 +1422,9 @@ def renderTypeFromDict(
                         + '", UNSET)\n'
                     )
                     f.write(
-                        "\t\t"
-                        + property_name
-                        + ": Union[Unset, datetime.datetime]\n"
+                        "\t\t" + property_name + ": Union[Unset, datetime.datetime]\n"
                     )
-                    f.write(
-                        "\t\tif isinstance(_" + property_name + ", Unset):\n"
-                    )
+                    f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
                     f.write("\t\t\t" + property_name + " = UNSET\n")
                     f.write("\t\telse:\n")
                     f.write(
@@ -1531,47 +1439,29 @@ def renderTypeFromDict(
                     return
 
             f.write(
-                "\t\t"
-                + property_name
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
+                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "integer":
             f.write(
-                "\t\t"
-                + property_name
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
+                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "number":
             f.write(
-                "\t\t"
-                + property_name
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
+                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "boolean":
             f.write(
-                "\t\t"
-                + property_name
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
+                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "array":
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
                     property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace(
-                        "#/components/schemas/", ""
-                    )
+                    property_type = property_type.replace("#/components/schemas/", "")
                     f.write(
                         "\t\tfrom ..models."
                         + camel_to_snake(property_type)
@@ -1586,15 +1476,9 @@ def renderTypeFromDict(
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
-                            if (
-                                property_schema["items"]["items"]["type"]
-                                == "string"
-                            ):
+                            if property_schema["items"]["items"]["type"] == "string":
                                 property_type = "List[str]"
-                            elif (
-                                property_schema["items"]["items"]["type"]
-                                == "number"
-                            ):
+                            elif property_schema["items"]["items"]["type"] == "number":
                                 property_type = "List[float]"
                             else:
                                 print("  property: ", property_schema)
@@ -1624,34 +1508,16 @@ def renderTypeFromDict(
             f.write("\n")
         else:
             f.write(
-                "\t\t"
-                + property_name
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
+                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
             )
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
-        f.write(
-            "\t\t_"
-            + property_name
-            + ' = d.pop("'
-            + property_name
-            + '", UNSET)\n'
-        )
+        f.write("\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
         f.write("\t\t" + property_name + ": Union[Unset, " + ref + "]\n")
         f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
         f.write("\t\t\t" + property_name + " = UNSET\n")
         f.write("\t\telse:\n")
-        f.write(
-            "\t\t\t"
-            + property_name
-            + " = "
-            + ref
-            + "(_"
-            + property_name
-            + ")\n"
-        )
+        f.write("\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n")
         f.write("\n")
     elif "allOf" in property_schema:
         thing = property_schema["allOf"][0]
@@ -1662,36 +1528,20 @@ def renderTypeFromDict(
                     f, property_name, data["components"]["schemas"][ref], data
                 )
             f.write(
-                "\t\t_"
-                + property_name
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
+                "\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
             )
             f.write("\t\t" + property_name + ": Union[Unset, " + ref + "]\n")
             f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
             f.write("\t\t\t" + property_name + " = UNSET\n")
             f.write("\t\telse:\n")
             f.write(
-                "\t\t\t"
-                + property_name
-                + " = "
-                + ref
-                + "(_"
-                + property_name
-                + ")\n"
+                "\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n"
             )
             f.write("\n")
         else:
             raise Exception("  unknown allOf type: ", property_schema)
     else:
-        f.write(
-            "\t\t"
-            + property_name
-            + ' = d.pop("'
-            + property_name
-            + '", UNSET)\n'
-        )
+        f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
 
 
 def hasDateTime(schema: dict) -> bool:
@@ -1778,9 +1628,7 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                         if json["type"] == "array":
                             items = json["items"]
                             if "$ref" in items:
-                                ref = items["$ref"].replace(
-                                    "#/components/schemas/", ""
-                                )
+                                ref = items["$ref"].replace("#/components/schemas/", "")
                                 refs.append("List[" + ref + "]")
                             else:
                                 raise Exception("Unknown array type")
@@ -1798,17 +1646,13 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                     else:
                         # Throw an error for an unsupported content type.
                         print("content: ", content)
-                        raise Exception(
-                            "Unsupported content type: ", content_type
-                        )
+                        raise Exception("Unsupported content type: ", content_type)
                 else:
                     # Throw an error for an unsupported content type.
                     print("content: ", content)
                     raise Exception("Unsupported content type: ", content_type)
         elif "$ref" in response:
-            schema_name = response["$ref"].replace(
-                "#/components/responses/", ""
-            )
+            schema_name = response["$ref"].replace("#/components/responses/", "")
             schema = data["components"]["responses"][schema_name]
             if "content" in schema:
                 content = schema["content"]
@@ -1816,9 +1660,7 @@ def getEndpointRefs(endpoint: dict, data: dict) -> [str]:
                     if content_type == "application/json":
                         json = content[content_type]["schema"]
                         if "$ref" in json:
-                            ref = json["$ref"].replace(
-                                "#/components/schemas/", ""
-                            )
+                            ref = json["$ref"].replace("#/components/schemas/", "")
                             if ref not in refs:
                                 refs.append(ref)
 
@@ -1897,6 +1739,11 @@ def getRequestBodyType(endpoint: dict) -> str:
                     raise Exception("unsupported content type")
 
     return type_name
+
+
+def to_camel_case(s: str):
+    s = re.sub(r"(_|-)+", " ", s).title().replace(" ", "")
+    return "".join([s[0].lower(), s[1:]])
 
 
 def camel_to_snake(name: str):
