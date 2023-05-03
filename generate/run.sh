@@ -17,7 +17,11 @@ poetry run python generate/generate.py
 # Format and lint.
 poetry run isort .
 poetry run black .
+# We ignore errors here but we should eventually fix them.
 poetry run ruff check --fix . || true
+# We ignore errors here but we should eventually fix them.
+poetry run mypy . || true
+
 
 # Run the tests.
 poetry run pytest kittycad
