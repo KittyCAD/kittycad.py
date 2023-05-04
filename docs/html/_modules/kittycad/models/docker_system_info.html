@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.models.docker_system_info &mdash; kittycad v0.3.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.3.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/kittycad.models.html">kittycad.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">kittycad.models.docker_system_info</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for kittycad.models.docker_system_info</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">import</span> <span class="nn">attr</span>
+
+<span class="kn">from</span> <span class="nn">..models.commit</span> <span class="kn">import</span> <span class="n">Commit</span>
+<span class="kn">from</span> <span class="nn">..models.plugins_info</span> <span class="kn">import</span> <span class="n">PluginsInfo</span>
+<span class="kn">from</span> <span class="nn">..models.registry_service_config</span> <span class="kn">import</span> <span class="n">RegistryServiceConfig</span>
+<span class="kn">from</span> <span class="nn">..models.system_info_cgroup_driver_enum</span> <span class="kn">import</span> <span class="n">SystemInfoCgroupDriverEnum</span>
+<span class="kn">from</span> <span class="nn">..models.system_info_cgroup_version_enum</span> <span class="kn">import</span> <span class="n">SystemInfoCgroupVersionEnum</span>
+<span class="kn">from</span> <span class="nn">..models.system_info_isolation_enum</span> <span class="kn">import</span> <span class="n">SystemInfoIsolationEnum</span>
+<span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
+
+<span class="n">V</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;DockerSystemInfo&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DockerSystemInfo"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DockerSystemInfo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Docker system info.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="n">architecture</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">bridge_nf_ip6tables</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">bridge_nf_iptables</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">cgroup_driver</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">SystemInfoCgroupDriverEnum</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">cgroup_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">SystemInfoCgroupVersionEnum</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">cluster_advertise</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">cluster_store</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">containerd_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">containers</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">containers_paused</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">containers_running</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">containers_stopped</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">cpu_cfs_period</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">cpu_cfs_quota</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">cpu_set</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">cpu_shares</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="kn">from</span> <span class="nn">..models.system_info_default_address_pools</span> <span class="kn">import</span> <span class="n">SystemInfoDefaultAddressPools</span>
+
+    <span class="n">default_address_pools</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">SystemInfoDefaultAddressPools</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">default_runtime</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">docker_root_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">driver</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">driver_status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">experimental_build</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">http_proxy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">https_proxy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">images</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">index_server_address</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">init_binary</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">init_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">ipv4_forwarding</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">isolation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">SystemInfoIsolationEnum</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">kernel_memory</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">kernel_memory_tcp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">kernel_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">live_restore_enabled</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">logging_driver</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">mem_total</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">memory_limit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">n_events_listener</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">n_fd</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">ncpu</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">no_proxy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">oom_kill_disable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">operating_system</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">os_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">os_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">pids_limit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">plugins</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">PluginsInfo</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">product_license</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">registry_config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">RegistryServiceConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">runc_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Commit</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">runtimes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">security_options</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">server_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">swap_limit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">system_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">warnings</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+
+    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DockerSystemInfo.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">architecture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">architecture</span>
+        <span class="n">bridge_nf_ip6tables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge_nf_ip6tables</span>
+        <span class="n">bridge_nf_iptables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge_nf_iptables</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cgroup_driver</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">cgroup_driver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cgroup_driver</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cgroup_version</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">cgroup_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cgroup_version</span>
+        <span class="n">cluster_advertise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_advertise</span>
+        <span class="n">cluster_store</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cluster_store</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">containerd_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">containerd_commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">containerd_commit</span>
+        <span class="n">containers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers</span>
+        <span class="n">containers_paused</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers_paused</span>
+        <span class="n">containers_running</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers_running</span>
+        <span class="n">containers_stopped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers_stopped</span>
+        <span class="n">cpu_cfs_period</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpu_cfs_period</span>
+        <span class="n">cpu_cfs_quota</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpu_cfs_quota</span>
+        <span class="n">cpu_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpu_set</span>
+        <span class="n">cpu_shares</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpu_shares</span>
+        <span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span>
+        <span class="kn">from</span> <span class="nn">..models.system_info_default_address_pools</span> <span class="kn">import</span> <span class="p">(</span>
+            <span class="n">SystemInfoDefaultAddressPools</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">default_address_pools</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">SystemInfoDefaultAddressPools</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_address_pools</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">default_address_pools</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_address_pools</span>
+        <span class="n">default_runtime</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_runtime</span>
+        <span class="n">docker_root_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">docker_root_dir</span>
+        <span class="n">driver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span>
+        <span class="n">driver_status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">driver_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver_status</span>
+        <span class="n">experimental_build</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">experimental_build</span>
+        <span class="n">http_proxy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_proxy</span>
+        <span class="n">https_proxy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">https_proxy</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">images</span>
+        <span class="n">index_server_address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_server_address</span>
+        <span class="n">init_binary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_binary</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">init_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">init_commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_commit</span>
+        <span class="n">ipv4_forwarding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ipv4_forwarding</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isolation</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">isolation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">isolation</span>
+        <span class="n">kernel_memory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_memory</span>
+        <span class="n">kernel_memory_tcp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_memory_tcp</span>
+        <span class="n">kernel_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_version</span>
+        <span class="n">labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span>
+        <span class="n">live_restore_enabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">live_restore_enabled</span>
+        <span class="n">logging_driver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logging_driver</span>
+        <span class="n">mem_total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem_total</span>
+        <span class="n">memory_limit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory_limit</span>
+        <span class="n">n_events_listener</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_events_listener</span>
+        <span class="n">n_fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_fd</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">ncpu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncpu</span>
+        <span class="n">no_proxy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_proxy</span>
+        <span class="n">oom_kill_disable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oom_kill_disable</span>
+        <span class="n">operating_system</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">operating_system</span>
+        <span class="n">os_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">os_type</span>
+        <span class="n">os_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">os_version</span>
+        <span class="n">pids_limit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pids_limit</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plugins</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">plugins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugins</span>
+        <span class="n">product_license</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">product_license</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">registry_config</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">registry_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry_config</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runc_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">runc_commit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runc_commit</span>
+        <span class="n">runtimes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtimes</span>
+        <span class="n">security_options</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">security_options</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">security_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">security_options</span>
+        <span class="n">server_version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_version</span>
+        <span class="n">swap_limit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">swap_limit</span>
+        <span class="n">system_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_time</span>
+        <span class="n">warnings</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">warnings</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">warnings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">warnings</span>
+
+        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
+        <span class="k">if</span> <span class="n">architecture</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;architecture&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">architecture</span>
+        <span class="k">if</span> <span class="n">bridge_nf_ip6tables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;bridge_nf_ip6tables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bridge_nf_ip6tables</span>
+        <span class="k">if</span> <span class="n">bridge_nf_iptables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;bridge_nf_iptables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bridge_nf_iptables</span>
+        <span class="k">if</span> <span class="n">cgroup_driver</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cgroup_driver&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cgroup_driver</span>
+        <span class="k">if</span> <span class="n">cgroup_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cgroup_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cgroup_version</span>
+        <span class="k">if</span> <span class="n">cluster_advertise</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cluster_advertise&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_advertise</span>
+        <span class="k">if</span> <span class="n">cluster_store</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cluster_store&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_store</span>
+        <span class="k">if</span> <span class="n">containerd_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;containerd_commit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">containerd_commit</span>
+        <span class="k">if</span> <span class="n">containers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;containers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">containers</span>
+        <span class="k">if</span> <span class="n">containers_paused</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;containers_paused&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">containers_paused</span>
+        <span class="k">if</span> <span class="n">containers_running</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;containers_running&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">containers_running</span>
+        <span class="k">if</span> <span class="n">containers_stopped</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;containers_stopped&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">containers_stopped</span>
+        <span class="k">if</span> <span class="n">cpu_cfs_period</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cpu_cfs_period&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cpu_cfs_period</span>
+        <span class="k">if</span> <span class="n">cpu_cfs_quota</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cpu_cfs_quota&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cpu_cfs_quota</span>
+        <span class="k">if</span> <span class="n">cpu_set</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cpu_set&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cpu_set</span>
+        <span class="k">if</span> <span class="n">cpu_shares</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;cpu_shares&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cpu_shares</span>
+        <span class="k">if</span> <span class="n">debug</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">debug</span>
+        <span class="k">if</span> <span class="n">default_address_pools</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;default_address_pools&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_address_pools</span>
+        <span class="k">if</span> <span class="n">default_runtime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;default_runtime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_runtime</span>
+        <span class="k">if</span> <span class="n">docker_root_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;docker_root_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">docker_root_dir</span>
+        <span class="k">if</span> <span class="n">driver</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;driver&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">driver</span>
+        <span class="k">if</span> <span class="n">driver_status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;driver_status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">driver_status</span>
+        <span class="k">if</span> <span class="n">experimental_build</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;experimental_build&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">experimental_build</span>
+        <span class="k">if</span> <span class="n">http_proxy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;http_proxy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">http_proxy</span>
+        <span class="k">if</span> <span class="n">https_proxy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;https_proxy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">https_proxy</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="k">if</span> <span class="n">images</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">images</span>
+        <span class="k">if</span> <span class="n">index_server_address</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;index_server_address&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_server_address</span>
+        <span class="k">if</span> <span class="n">init_binary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;init_binary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">init_binary</span>
+        <span class="k">if</span> <span class="n">init_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;init_commit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">init_commit</span>
+        <span class="k">if</span> <span class="n">ipv4_forwarding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;ipv4_forwarding&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ipv4_forwarding</span>
+        <span class="k">if</span> <span class="n">isolation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;isolation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">isolation</span>
+        <span class="k">if</span> <span class="n">kernel_memory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;kernel_memory&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel_memory</span>
+        <span class="k">if</span> <span class="n">kernel_memory_tcp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;kernel_memory_tcp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel_memory_tcp</span>
+        <span class="k">if</span> <span class="n">kernel_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;kernel_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kernel_version</span>
+        <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="k">if</span> <span class="n">live_restore_enabled</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;live_restore_enabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">live_restore_enabled</span>
+        <span class="k">if</span> <span class="n">logging_driver</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;logging_driver&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logging_driver</span>
+        <span class="k">if</span> <span class="n">mem_total</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;mem_total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mem_total</span>
+        <span class="k">if</span> <span class="n">memory_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;memory_limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">memory_limit</span>
+        <span class="k">if</span> <span class="n">n_events_listener</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;n_events_listener&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_events_listener</span>
+        <span class="k">if</span> <span class="n">n_fd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;n_fd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_fd</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">ncpu</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;ncpu&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ncpu</span>
+        <span class="k">if</span> <span class="n">no_proxy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;no_proxy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">no_proxy</span>
+        <span class="k">if</span> <span class="n">oom_kill_disable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;oom_kill_disable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">oom_kill_disable</span>
+        <span class="k">if</span> <span class="n">operating_system</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;operating_system&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">operating_system</span>
+        <span class="k">if</span> <span class="n">os_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;os_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os_type</span>
+        <span class="k">if</span> <span class="n">os_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;os_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os_version</span>
+        <span class="k">if</span> <span class="n">pids_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;pids_limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pids_limit</span>
+        <span class="k">if</span> <span class="n">plugins</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;plugins&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plugins</span>
+        <span class="k">if</span> <span class="n">product_license</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;product_license&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">product_license</span>
+        <span class="k">if</span> <span class="n">registry_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;registry_config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">registry_config</span>
+        <span class="k">if</span> <span class="n">runc_commit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;runc_commit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">runc_commit</span>
+        <span class="k">if</span> <span class="n">runtimes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;runtimes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">runtimes</span>
+        <span class="k">if</span> <span class="n">security_options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;security_options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">security_options</span>
+        <span class="k">if</span> <span class="n">server_version</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;server_version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">server_version</span>
+        <span class="k">if</span> <span class="n">swap_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;swap_limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">swap_limit</span>
+        <span class="k">if</span> <span class="n">system_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;system_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">system_time</span>
+        <span class="k">if</span> <span class="n">warnings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;warnings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">warnings</span>
+
+        <span class="k">return</span> <span class="n">field_dict</span></div>
+
+<div class="viewcode-block" id="DockerSystemInfo.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">V</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">V</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">architecture</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;architecture&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">bridge_nf_ip6tables</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;bridge_nf_ip6tables&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">bridge_nf_iptables</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;bridge_nf_iptables&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_cgroup_driver</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cgroup_driver&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">cgroup_driver</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">SystemInfoCgroupDriverEnum</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_cgroup_driver</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">cgroup_driver</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cgroup_driver</span> <span class="o">=</span> <span class="n">SystemInfoCgroupDriverEnum</span><span class="p">(</span><span class="n">_cgroup_driver</span><span class="p">)</span>
+
+        <span class="n">_cgroup_version</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cgroup_version&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">cgroup_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">SystemInfoCgroupVersionEnum</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_cgroup_version</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">cgroup_version</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cgroup_version</span> <span class="o">=</span> <span class="n">SystemInfoCgroupVersionEnum</span><span class="p">(</span><span class="n">_cgroup_version</span><span class="p">)</span>
+
+        <span class="n">cluster_advertise</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cluster_advertise&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">cluster_store</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cluster_store&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_containerd_commit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;containerd_commit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">containerd_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Commit</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_containerd_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">containerd_commit</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">containerd_commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">_containerd_commit</span><span class="p">)</span>
+
+        <span class="n">containers</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;containers&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">containers_paused</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;containers_paused&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">containers_running</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;containers_running&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">containers_stopped</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;containers_stopped&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">cpu_cfs_period</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cpu_cfs_period&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">cpu_cfs_quota</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cpu_cfs_quota&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">cpu_set</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cpu_set&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">cpu_shares</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cpu_shares&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">debug</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;debug&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="kn">from</span> <span class="nn">..models.system_info_default_address_pools</span> <span class="kn">import</span> <span class="p">(</span>
+            <span class="n">SystemInfoDefaultAddressPools</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">default_address_pools</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="n">List</span><span class="p">[</span><span class="n">SystemInfoDefaultAddressPools</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;default_address_pools&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">default_runtime</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;default_runtime&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">docker_root_dir</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;docker_root_dir&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">driver</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;driver&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">driver_status</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;driver_status&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">))</span>
+
+        <span class="n">experimental_build</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;experimental_build&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">http_proxy</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;http_proxy&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">https_proxy</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;https_proxy&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">images</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">index_server_address</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;index_server_address&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">init_binary</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;init_binary&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_init_commit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;init_commit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">init_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Commit</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_init_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">init_commit</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">init_commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">_init_commit</span><span class="p">)</span>
+
+        <span class="n">ipv4_forwarding</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ipv4_forwarding&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_isolation</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;isolation&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">isolation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">SystemInfoIsolationEnum</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_isolation</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">isolation</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">isolation</span> <span class="o">=</span> <span class="n">SystemInfoIsolationEnum</span><span class="p">(</span><span class="n">_isolation</span><span class="p">)</span>
+
+        <span class="n">kernel_memory</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;kernel_memory&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">kernel_memory_tcp</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;kernel_memory_tcp&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">kernel_version</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;kernel_version&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">))</span>
+
+        <span class="n">live_restore_enabled</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;live_restore_enabled&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">logging_driver</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;logging_driver&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">mem_total</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mem_total&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">memory_limit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;memory_limit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">n_events_listener</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_events_listener&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">n_fd</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;n_fd&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">ncpu</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ncpu&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">no_proxy</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;no_proxy&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">oom_kill_disable</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;oom_kill_disable&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">operating_system</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;operating_system&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">os_type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;os_type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">os_version</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;os_version&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">pids_limit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;pids_limit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_plugins</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;plugins&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">plugins</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">PluginsInfo</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_plugins</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">plugins</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plugins</span> <span class="o">=</span> <span class="n">PluginsInfo</span><span class="p">(</span><span class="n">_plugins</span><span class="p">)</span>
+
+        <span class="n">product_license</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;product_license&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_registry_config</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;registry_config&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">registry_config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">RegistryServiceConfig</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_registry_config</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">registry_config</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">registry_config</span> <span class="o">=</span> <span class="n">RegistryServiceConfig</span><span class="p">(</span><span class="n">_registry_config</span><span class="p">)</span>
+
+        <span class="n">_runc_commit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;runc_commit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">runc_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Commit</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_runc_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">runc_commit</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">runc_commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">_runc_commit</span><span class="p">)</span>
+
+        <span class="n">runtimes</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;runtimes&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">security_options</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;security_options&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">))</span>
+
+        <span class="n">server_version</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;server_version&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">swap_limit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;swap_limit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">system_time</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;system_time&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">warnings</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;warnings&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">))</span>
+
+        <span class="n">docker_system_info</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">architecture</span><span class="o">=</span><span class="n">architecture</span><span class="p">,</span>
+            <span class="n">bridge_nf_ip6tables</span><span class="o">=</span><span class="n">bridge_nf_ip6tables</span><span class="p">,</span>
+            <span class="n">bridge_nf_iptables</span><span class="o">=</span><span class="n">bridge_nf_iptables</span><span class="p">,</span>
+            <span class="n">cgroup_driver</span><span class="o">=</span><span class="n">cgroup_driver</span><span class="p">,</span>
+            <span class="n">cgroup_version</span><span class="o">=</span><span class="n">cgroup_version</span><span class="p">,</span>
+            <span class="n">cluster_advertise</span><span class="o">=</span><span class="n">cluster_advertise</span><span class="p">,</span>
+            <span class="n">cluster_store</span><span class="o">=</span><span class="n">cluster_store</span><span class="p">,</span>
+            <span class="n">containerd_commit</span><span class="o">=</span><span class="n">containerd_commit</span><span class="p">,</span>
+            <span class="n">containers</span><span class="o">=</span><span class="n">containers</span><span class="p">,</span>
+            <span class="n">containers_paused</span><span class="o">=</span><span class="n">containers_paused</span><span class="p">,</span>
+            <span class="n">containers_running</span><span class="o">=</span><span class="n">containers_running</span><span class="p">,</span>
+            <span class="n">containers_stopped</span><span class="o">=</span><span class="n">containers_stopped</span><span class="p">,</span>
+            <span class="n">cpu_cfs_period</span><span class="o">=</span><span class="n">cpu_cfs_period</span><span class="p">,</span>
+            <span class="n">cpu_cfs_quota</span><span class="o">=</span><span class="n">cpu_cfs_quota</span><span class="p">,</span>
+            <span class="n">cpu_set</span><span class="o">=</span><span class="n">cpu_set</span><span class="p">,</span>
+            <span class="n">cpu_shares</span><span class="o">=</span><span class="n">cpu_shares</span><span class="p">,</span>
+            <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
+            <span class="n">default_address_pools</span><span class="o">=</span><span class="n">default_address_pools</span><span class="p">,</span>
+            <span class="n">default_runtime</span><span class="o">=</span><span class="n">default_runtime</span><span class="p">,</span>
+            <span class="n">docker_root_dir</span><span class="o">=</span><span class="n">docker_root_dir</span><span class="p">,</span>
+            <span class="n">driver</span><span class="o">=</span><span class="n">driver</span><span class="p">,</span>
+            <span class="n">driver_status</span><span class="o">=</span><span class="n">driver_status</span><span class="p">,</span>
+            <span class="n">experimental_build</span><span class="o">=</span><span class="n">experimental_build</span><span class="p">,</span>
+            <span class="n">http_proxy</span><span class="o">=</span><span class="n">http_proxy</span><span class="p">,</span>
+            <span class="n">https_proxy</span><span class="o">=</span><span class="n">https_proxy</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+            <span class="n">images</span><span class="o">=</span><span class="n">images</span><span class="p">,</span>
+            <span class="n">index_server_address</span><span class="o">=</span><span class="n">index_server_address</span><span class="p">,</span>
+            <span class="n">init_binary</span><span class="o">=</span><span class="n">init_binary</span><span class="p">,</span>
+            <span class="n">init_commit</span><span class="o">=</span><span class="n">init_commit</span><span class="p">,</span>
+            <span class="n">ipv4_forwarding</span><span class="o">=</span><span class="n">ipv4_forwarding</span><span class="p">,</span>
+            <span class="n">isolation</span><span class="o">=</span><span class="n">isolation</span><span class="p">,</span>
+            <span class="n">kernel_memory</span><span class="o">=</span><span class="n">kernel_memory</span><span class="p">,</span>
+            <span class="n">kernel_memory_tcp</span><span class="o">=</span><span class="n">kernel_memory_tcp</span><span class="p">,</span>
+            <span class="n">kernel_version</span><span class="o">=</span><span class="n">kernel_version</span><span class="p">,</span>
+            <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">live_restore_enabled</span><span class="o">=</span><span class="n">live_restore_enabled</span><span class="p">,</span>
+            <span class="n">logging_driver</span><span class="o">=</span><span class="n">logging_driver</span><span class="p">,</span>
+            <span class="n">mem_total</span><span class="o">=</span><span class="n">mem_total</span><span class="p">,</span>
+            <span class="n">memory_limit</span><span class="o">=</span><span class="n">memory_limit</span><span class="p">,</span>
+            <span class="n">n_events_listener</span><span class="o">=</span><span class="n">n_events_listener</span><span class="p">,</span>
+            <span class="n">n_fd</span><span class="o">=</span><span class="n">n_fd</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ncpu</span><span class="o">=</span><span class="n">ncpu</span><span class="p">,</span>
+            <span class="n">no_proxy</span><span class="o">=</span><span class="n">no_proxy</span><span class="p">,</span>
+            <span class="n">oom_kill_disable</span><span class="o">=</span><span class="n">oom_kill_disable</span><span class="p">,</span>
+            <span class="n">operating_system</span><span class="o">=</span><span class="n">operating_system</span><span class="p">,</span>
+            <span class="n">os_type</span><span class="o">=</span><span class="n">os_type</span><span class="p">,</span>
+            <span class="n">os_version</span><span class="o">=</span><span class="n">os_version</span><span class="p">,</span>
+            <span class="n">pids_limit</span><span class="o">=</span><span class="n">pids_limit</span><span class="p">,</span>
+            <span class="n">plugins</span><span class="o">=</span><span class="n">plugins</span><span class="p">,</span>
+            <span class="n">product_license</span><span class="o">=</span><span class="n">product_license</span><span class="p">,</span>
+            <span class="n">registry_config</span><span class="o">=</span><span class="n">registry_config</span><span class="p">,</span>
+            <span class="n">runc_commit</span><span class="o">=</span><span class="n">runc_commit</span><span class="p">,</span>
+            <span class="n">runtimes</span><span class="o">=</span><span class="n">runtimes</span><span class="p">,</span>
+            <span class="n">security_options</span><span class="o">=</span><span class="n">security_options</span><span class="p">,</span>
+            <span class="n">server_version</span><span class="o">=</span><span class="n">server_version</span><span class="p">,</span>
+            <span class="n">swap_limit</span><span class="o">=</span><span class="n">swap_limit</span><span class="p">,</span>
+            <span class="n">system_time</span><span class="o">=</span><span class="n">system_time</span><span class="p">,</span>
+            <span class="n">warnings</span><span class="o">=</span><span class="n">warnings</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">docker_system_info</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">docker_system_info</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="DockerSystemInfo.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DockerSystemInfo.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DockerSystemInfo.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DockerSystemInfo.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

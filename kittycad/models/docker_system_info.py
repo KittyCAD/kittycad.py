@@ -2,21 +2,21 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.system_info_cgroup_driver_enum import SystemInfoCgroupDriverEnum
-from ..models.system_info_cgroup_version_enum import SystemInfoCgroupVersionEnum
 from ..models.commit import Commit
-from ..models.system_info_isolation_enum import SystemInfoIsolationEnum
 from ..models.plugins_info import PluginsInfo
 from ..models.registry_service_config import RegistryServiceConfig
-from ..models.runtime import Runtime
+from ..models.system_info_cgroup_driver_enum import SystemInfoCgroupDriverEnum
+from ..models.system_info_cgroup_version_enum import SystemInfoCgroupVersionEnum
+from ..models.system_info_isolation_enum import SystemInfoIsolationEnum
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DockerSystemInfo")
+V = TypeVar("V", bound="DockerSystemInfo")
 
 
 @attr.s(auto_attribs=True)
 class DockerSystemInfo:
-    """ """
+    """Docker system info."""  # noqa: E501
+
     architecture: Union[Unset, str] = UNSET
     bridge_nf_ip6tables: Union[Unset, bool] = False
     bridge_nf_iptables: Union[Unset, bool] = False
@@ -35,8 +35,8 @@ class DockerSystemInfo:
     cpu_shares: Union[Unset, bool] = False
     debug: Union[Unset, bool] = False
     from ..models.system_info_default_address_pools import SystemInfoDefaultAddressPools
-    default_address_pools: Union[Unset,
-                                 List[SystemInfoDefaultAddressPools]] = UNSET
+
+    default_address_pools: Union[Unset, List[SystemInfoDefaultAddressPools]] = UNSET
     default_runtime: Union[Unset, str] = UNSET
     docker_root_dir: Union[Unset, str] = UNSET
     driver: Union[Unset, str] = UNSET
@@ -86,17 +86,14 @@ class DockerSystemInfo:
         architecture = self.architecture
         bridge_nf_ip6tables = self.bridge_nf_ip6tables
         bridge_nf_iptables = self.bridge_nf_iptables
-        cgroup_driver: Union[Unset, str] = UNSET
         if not isinstance(self.cgroup_driver, Unset):
-            cgroup_driver = self.cgroup_driver.value
-        cgroup_version: Union[Unset, str] = UNSET
+            cgroup_driver = self.cgroup_driver
         if not isinstance(self.cgroup_version, Unset):
-            cgroup_version = self.cgroup_version.value
+            cgroup_version = self.cgroup_version
         cluster_advertise = self.cluster_advertise
         cluster_store = self.cluster_store
-        containerd_commit: Union[Unset, str] = UNSET
         if not isinstance(self.containerd_commit, Unset):
-            containerd_commit = self.containerd_commit.value
+            containerd_commit = self.containerd_commit
         containers = self.containers
         containers_paused = self.containers_paused
         containers_running = self.containers_running
@@ -106,9 +103,11 @@ class DockerSystemInfo:
         cpu_set = self.cpu_set
         cpu_shares = self.cpu_shares
         debug = self.debug
-        from ..models.system_info_default_address_pools import SystemInfoDefaultAddressPools
-        default_address_pools: Union[Unset,
-                                     List[SystemInfoDefaultAddressPools]] = UNSET
+        from ..models.system_info_default_address_pools import (
+            SystemInfoDefaultAddressPools,
+        )
+
+        default_address_pools: Union[Unset, List[SystemInfoDefaultAddressPools]] = UNSET
         if not isinstance(self.default_address_pools, Unset):
             default_address_pools = self.default_address_pools
         default_runtime = self.default_runtime
@@ -124,13 +123,11 @@ class DockerSystemInfo:
         images = self.images
         index_server_address = self.index_server_address
         init_binary = self.init_binary
-        init_commit: Union[Unset, str] = UNSET
         if not isinstance(self.init_commit, Unset):
-            init_commit = self.init_commit.value
+            init_commit = self.init_commit
         ipv4_forwarding = self.ipv4_forwarding
-        isolation: Union[Unset, str] = UNSET
         if not isinstance(self.isolation, Unset):
-            isolation = self.isolation.value
+            isolation = self.isolation
         kernel_memory = self.kernel_memory
         kernel_memory_tcp = self.kernel_memory_tcp
         kernel_version = self.kernel_version
@@ -151,16 +148,13 @@ class DockerSystemInfo:
         os_type = self.os_type
         os_version = self.os_version
         pids_limit = self.pids_limit
-        plugins: Union[Unset, str] = UNSET
         if not isinstance(self.plugins, Unset):
-            plugins = self.plugins.value
+            plugins = self.plugins
         product_license = self.product_license
-        registry_config: Union[Unset, str] = UNSET
         if not isinstance(self.registry_config, Unset):
-            registry_config = self.registry_config.value
-        runc_commit: Union[Unset, str] = UNSET
+            registry_config = self.registry_config
         if not isinstance(self.runc_commit, Unset):
-            runc_commit = self.runc_commit.value
+            runc_commit = self.runc_commit
         runtimes = self.runtimes
         security_options: Union[Unset, List[str]] = UNSET
         if not isinstance(self.security_options, Unset):
@@ -176,130 +170,130 @@ class DockerSystemInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if architecture is not UNSET:
-            field_dict['architecture'] = architecture
+            field_dict["architecture"] = architecture
         if bridge_nf_ip6tables is not UNSET:
-            field_dict['bridge_nf_ip6tables'] = bridge_nf_ip6tables
+            field_dict["bridge_nf_ip6tables"] = bridge_nf_ip6tables
         if bridge_nf_iptables is not UNSET:
-            field_dict['bridge_nf_iptables'] = bridge_nf_iptables
+            field_dict["bridge_nf_iptables"] = bridge_nf_iptables
         if cgroup_driver is not UNSET:
-            field_dict['cgroup_driver'] = cgroup_driver
+            field_dict["cgroup_driver"] = cgroup_driver
         if cgroup_version is not UNSET:
-            field_dict['cgroup_version'] = cgroup_version
+            field_dict["cgroup_version"] = cgroup_version
         if cluster_advertise is not UNSET:
-            field_dict['cluster_advertise'] = cluster_advertise
+            field_dict["cluster_advertise"] = cluster_advertise
         if cluster_store is not UNSET:
-            field_dict['cluster_store'] = cluster_store
+            field_dict["cluster_store"] = cluster_store
         if containerd_commit is not UNSET:
-            field_dict['containerd_commit'] = containerd_commit
+            field_dict["containerd_commit"] = containerd_commit
         if containers is not UNSET:
-            field_dict['containers'] = containers
+            field_dict["containers"] = containers
         if containers_paused is not UNSET:
-            field_dict['containers_paused'] = containers_paused
+            field_dict["containers_paused"] = containers_paused
         if containers_running is not UNSET:
-            field_dict['containers_running'] = containers_running
+            field_dict["containers_running"] = containers_running
         if containers_stopped is not UNSET:
-            field_dict['containers_stopped'] = containers_stopped
+            field_dict["containers_stopped"] = containers_stopped
         if cpu_cfs_period is not UNSET:
-            field_dict['cpu_cfs_period'] = cpu_cfs_period
+            field_dict["cpu_cfs_period"] = cpu_cfs_period
         if cpu_cfs_quota is not UNSET:
-            field_dict['cpu_cfs_quota'] = cpu_cfs_quota
+            field_dict["cpu_cfs_quota"] = cpu_cfs_quota
         if cpu_set is not UNSET:
-            field_dict['cpu_set'] = cpu_set
+            field_dict["cpu_set"] = cpu_set
         if cpu_shares is not UNSET:
-            field_dict['cpu_shares'] = cpu_shares
+            field_dict["cpu_shares"] = cpu_shares
         if debug is not UNSET:
-            field_dict['debug'] = debug
+            field_dict["debug"] = debug
         if default_address_pools is not UNSET:
-            field_dict['default_address_pools'] = default_address_pools
+            field_dict["default_address_pools"] = default_address_pools
         if default_runtime is not UNSET:
-            field_dict['default_runtime'] = default_runtime
+            field_dict["default_runtime"] = default_runtime
         if docker_root_dir is not UNSET:
-            field_dict['docker_root_dir'] = docker_root_dir
+            field_dict["docker_root_dir"] = docker_root_dir
         if driver is not UNSET:
-            field_dict['driver'] = driver
+            field_dict["driver"] = driver
         if driver_status is not UNSET:
-            field_dict['driver_status'] = driver_status
+            field_dict["driver_status"] = driver_status
         if experimental_build is not UNSET:
-            field_dict['experimental_build'] = experimental_build
+            field_dict["experimental_build"] = experimental_build
         if http_proxy is not UNSET:
-            field_dict['http_proxy'] = http_proxy
+            field_dict["http_proxy"] = http_proxy
         if https_proxy is not UNSET:
-            field_dict['https_proxy'] = https_proxy
+            field_dict["https_proxy"] = https_proxy
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if images is not UNSET:
-            field_dict['images'] = images
+            field_dict["images"] = images
         if index_server_address is not UNSET:
-            field_dict['index_server_address'] = index_server_address
+            field_dict["index_server_address"] = index_server_address
         if init_binary is not UNSET:
-            field_dict['init_binary'] = init_binary
+            field_dict["init_binary"] = init_binary
         if init_commit is not UNSET:
-            field_dict['init_commit'] = init_commit
+            field_dict["init_commit"] = init_commit
         if ipv4_forwarding is not UNSET:
-            field_dict['ipv4_forwarding'] = ipv4_forwarding
+            field_dict["ipv4_forwarding"] = ipv4_forwarding
         if isolation is not UNSET:
-            field_dict['isolation'] = isolation
+            field_dict["isolation"] = isolation
         if kernel_memory is not UNSET:
-            field_dict['kernel_memory'] = kernel_memory
+            field_dict["kernel_memory"] = kernel_memory
         if kernel_memory_tcp is not UNSET:
-            field_dict['kernel_memory_tcp'] = kernel_memory_tcp
+            field_dict["kernel_memory_tcp"] = kernel_memory_tcp
         if kernel_version is not UNSET:
-            field_dict['kernel_version'] = kernel_version
+            field_dict["kernel_version"] = kernel_version
         if labels is not UNSET:
-            field_dict['labels'] = labels
+            field_dict["labels"] = labels
         if live_restore_enabled is not UNSET:
-            field_dict['live_restore_enabled'] = live_restore_enabled
+            field_dict["live_restore_enabled"] = live_restore_enabled
         if logging_driver is not UNSET:
-            field_dict['logging_driver'] = logging_driver
+            field_dict["logging_driver"] = logging_driver
         if mem_total is not UNSET:
-            field_dict['mem_total'] = mem_total
+            field_dict["mem_total"] = mem_total
         if memory_limit is not UNSET:
-            field_dict['memory_limit'] = memory_limit
+            field_dict["memory_limit"] = memory_limit
         if n_events_listener is not UNSET:
-            field_dict['n_events_listener'] = n_events_listener
+            field_dict["n_events_listener"] = n_events_listener
         if n_fd is not UNSET:
-            field_dict['n_fd'] = n_fd
+            field_dict["n_fd"] = n_fd
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
         if ncpu is not UNSET:
-            field_dict['ncpu'] = ncpu
+            field_dict["ncpu"] = ncpu
         if no_proxy is not UNSET:
-            field_dict['no_proxy'] = no_proxy
+            field_dict["no_proxy"] = no_proxy
         if oom_kill_disable is not UNSET:
-            field_dict['oom_kill_disable'] = oom_kill_disable
+            field_dict["oom_kill_disable"] = oom_kill_disable
         if operating_system is not UNSET:
-            field_dict['operating_system'] = operating_system
+            field_dict["operating_system"] = operating_system
         if os_type is not UNSET:
-            field_dict['os_type'] = os_type
+            field_dict["os_type"] = os_type
         if os_version is not UNSET:
-            field_dict['os_version'] = os_version
+            field_dict["os_version"] = os_version
         if pids_limit is not UNSET:
-            field_dict['pids_limit'] = pids_limit
+            field_dict["pids_limit"] = pids_limit
         if plugins is not UNSET:
-            field_dict['plugins'] = plugins
+            field_dict["plugins"] = plugins
         if product_license is not UNSET:
-            field_dict['product_license'] = product_license
+            field_dict["product_license"] = product_license
         if registry_config is not UNSET:
-            field_dict['registry_config'] = registry_config
+            field_dict["registry_config"] = registry_config
         if runc_commit is not UNSET:
-            field_dict['runc_commit'] = runc_commit
+            field_dict["runc_commit"] = runc_commit
         if runtimes is not UNSET:
-            field_dict['runtimes'] = runtimes
+            field_dict["runtimes"] = runtimes
         if security_options is not UNSET:
-            field_dict['security_options'] = security_options
+            field_dict["security_options"] = security_options
         if server_version is not UNSET:
-            field_dict['server_version'] = server_version
+            field_dict["server_version"] = server_version
         if swap_limit is not UNSET:
-            field_dict['swap_limit'] = swap_limit
+            field_dict["swap_limit"] = swap_limit
         if system_time is not UNSET:
-            field_dict['system_time'] = system_time
+            field_dict["system_time"] = system_time
         if warnings is not UNSET:
-            field_dict['warnings'] = warnings
+            field_dict["warnings"] = warnings
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         architecture = d.pop("architecture", UNSET)
 
@@ -350,10 +344,13 @@ class DockerSystemInfo:
 
         debug = d.pop("debug", UNSET)
 
-        from ..models.system_info_default_address_pools import SystemInfoDefaultAddressPools
+        from ..models.system_info_default_address_pools import (
+            SystemInfoDefaultAddressPools,
+        )
+
         default_address_pools = cast(
-            List[SystemInfoDefaultAddressPools], d.pop(
-                "default_address_pools", UNSET))
+            List[SystemInfoDefaultAddressPools], d.pop("default_address_pools", UNSET)
+        )
 
         default_runtime = d.pop("default_runtime", UNSET)
 

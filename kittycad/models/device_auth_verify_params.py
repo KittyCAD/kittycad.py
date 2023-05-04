@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DeviceAuthVerifyParams")
+F = TypeVar("F", bound="DeviceAuthVerifyParams")
 
 
 @attr.s(auto_attribs=True)
 class DeviceAuthVerifyParams:
-    """ """
+    """The request parameters to verify the `user_code` for the OAuth 2.0 Device Authorization Grant."""  # noqa: E501
+
     user_code: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -21,12 +22,12 @@ class DeviceAuthVerifyParams:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if user_code is not UNSET:
-            field_dict['user_code'] = user_code
+            field_dict["user_code"] = user_code
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
         d = src_dict.copy()
         user_code = d.pop("user_code", UNSET)
 

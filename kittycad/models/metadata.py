@@ -1,22 +1,25 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.cache_metadata import CacheMetadata
+from ..models.connection import Connection
 from ..models.engine_metadata import EngineMetadata
 from ..models.environment import Environment
 from ..models.executor_metadata import ExecutorMetadata
 from ..models.file_system_metadata import FileSystemMetadata
 from ..models.point_e_metadata import PointEMetadata
-from ..models.connection import Connection
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Metadata")
+N = TypeVar("N", bound="Metadata")
 
 
 @attr.s(auto_attribs=True)
 class Metadata:
-    """ """
+    """Metadata about our currently running server.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
+
     cache: Union[Unset, CacheMetadata] = UNSET
     engine: Union[Unset, EngineMetadata] = UNSET
     environment: Union[Unset, Environment] = UNSET
@@ -29,53 +32,46 @@ class Metadata:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        cache: Union[Unset, str] = UNSET
         if not isinstance(self.cache, Unset):
-            cache = self.cache.value
-        engine: Union[Unset, str] = UNSET
+            cache = self.cache
         if not isinstance(self.engine, Unset):
-            engine = self.engine.value
-        environment: Union[Unset, str] = UNSET
+            engine = self.engine
         if not isinstance(self.environment, Unset):
-            environment = self.environment.value
-        executor: Union[Unset, str] = UNSET
+            environment = self.environment
         if not isinstance(self.executor, Unset):
-            executor = self.executor.value
-        fs: Union[Unset, str] = UNSET
+            executor = self.executor
         if not isinstance(self.fs, Unset):
-            fs = self.fs.value
+            fs = self.fs
         git_hash = self.git_hash
-        point_e: Union[Unset, str] = UNSET
         if not isinstance(self.point_e, Unset):
-            point_e = self.point_e.value
-        pubsub: Union[Unset, str] = UNSET
+            point_e = self.point_e
         if not isinstance(self.pubsub, Unset):
-            pubsub = self.pubsub.value
+            pubsub = self.pubsub
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cache is not UNSET:
-            field_dict['cache'] = cache
+            field_dict["cache"] = cache
         if engine is not UNSET:
-            field_dict['engine'] = engine
+            field_dict["engine"] = engine
         if environment is not UNSET:
-            field_dict['environment'] = environment
+            field_dict["environment"] = environment
         if executor is not UNSET:
-            field_dict['executor'] = executor
+            field_dict["executor"] = executor
         if fs is not UNSET:
-            field_dict['fs'] = fs
+            field_dict["fs"] = fs
         if git_hash is not UNSET:
-            field_dict['git_hash'] = git_hash
+            field_dict["git_hash"] = git_hash
         if point_e is not UNSET:
-            field_dict['point_e'] = point_e
+            field_dict["point_e"] = point_e
         if pubsub is not UNSET:
-            field_dict['pubsub'] = pubsub
+            field_dict["pubsub"] = pubsub
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         _cache = d.pop("cache", UNSET)
         cache: Union[Unset, CacheMetadata]

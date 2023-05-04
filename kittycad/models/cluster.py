@@ -4,12 +4,13 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Cluster")
+N = TypeVar("N", bound="Cluster")
 
 
 @attr.s(auto_attribs=True)
 class Cluster:
-    """ """
+    """Cluster information."""  # noqa: E501
+
     addr: Union[Unset, str] = UNSET
     auth_timeout: Union[Unset, int] = UNSET
     cluster_port: Union[Unset, int] = UNSET
@@ -33,22 +34,22 @@ class Cluster:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if addr is not UNSET:
-            field_dict['addr'] = addr
+            field_dict["addr"] = addr
         if auth_timeout is not UNSET:
-            field_dict['auth_timeout'] = auth_timeout
+            field_dict["auth_timeout"] = auth_timeout
         if cluster_port is not UNSET:
-            field_dict['cluster_port'] = cluster_port
+            field_dict["cluster_port"] = cluster_port
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
         if tls_timeout is not UNSET:
-            field_dict['tls_timeout'] = tls_timeout
+            field_dict["tls_timeout"] = tls_timeout
         if urls is not UNSET:
-            field_dict['urls'] = urls
+            field_dict["urls"] = urls
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         addr = d.pop("addr", UNSET)
 

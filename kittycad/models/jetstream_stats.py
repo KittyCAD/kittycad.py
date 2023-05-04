@@ -1,16 +1,17 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.jetstream_api_stats import JetstreamApiStats
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="JetstreamStats")
+K = TypeVar("K", bound="JetstreamStats")
 
 
 @attr.s(auto_attribs=True)
 class JetstreamStats:
-    """ """
+    """Jetstream statistics."""  # noqa: E501
+
     accounts: Union[Unset, int] = UNSET
     api: Union[Unset, JetstreamApiStats] = UNSET
     ha_assets: Union[Unset, int] = UNSET
@@ -23,9 +24,8 @@ class JetstreamStats:
 
     def to_dict(self) -> Dict[str, Any]:
         accounts = self.accounts
-        api: Union[Unset, str] = UNSET
         if not isinstance(self.api, Unset):
-            api = self.api.value
+            api = self.api
         ha_assets = self.ha_assets
         memory = self.memory
         reserved_memory = self.reserved_memory
@@ -36,24 +36,24 @@ class JetstreamStats:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if accounts is not UNSET:
-            field_dict['accounts'] = accounts
+            field_dict["accounts"] = accounts
         if api is not UNSET:
-            field_dict['api'] = api
+            field_dict["api"] = api
         if ha_assets is not UNSET:
-            field_dict['ha_assets'] = ha_assets
+            field_dict["ha_assets"] = ha_assets
         if memory is not UNSET:
-            field_dict['memory'] = memory
+            field_dict["memory"] = memory
         if reserved_memory is not UNSET:
-            field_dict['reserved_memory'] = reserved_memory
+            field_dict["reserved_memory"] = reserved_memory
         if reserved_store is not UNSET:
-            field_dict['reserved_store'] = reserved_store
+            field_dict["reserved_store"] = reserved_store
         if store is not UNSET:
-            field_dict['store'] = store
+            field_dict["store"] = store
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
         d = src_dict.copy()
         accounts = d.pop("accounts", UNSET)
 

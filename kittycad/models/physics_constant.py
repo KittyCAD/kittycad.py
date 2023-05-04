@@ -1,20 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.physics_constant_name import PhysicsConstantName
-from ..models.uuid import Uuid
 from ..models.api_call_status import ApiCallStatus
+from ..models.physics_constant_name import PhysicsConstantName
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PhysicsConstant")
+C = TypeVar("C", bound="PhysicsConstant")
 
 
 @attr.s(auto_attribs=True)
 class PhysicsConstant:
-    """ """
+    """A physics constant."""  # noqa: E501
+
     completed_at: Union[Unset, datetime.datetime] = UNSET
     constant: Union[Unset, PhysicsConstantName] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -32,9 +32,8 @@ class PhysicsConstant:
         completed_at: Union[Unset, str] = UNSET
         if not isinstance(self.completed_at, Unset):
             completed_at = self.completed_at.isoformat()
-        constant: Union[Unset, str] = UNSET
         if not isinstance(self.constant, Unset):
-            constant = self.constant.value
+            constant = self.constant
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
@@ -43,9 +42,8 @@ class PhysicsConstant:
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
-        status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
@@ -56,30 +54,30 @@ class PhysicsConstant:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if completed_at is not UNSET:
-            field_dict['completed_at'] = completed_at
+            field_dict["completed_at"] = completed_at
         if constant is not UNSET:
-            field_dict['constant'] = constant
+            field_dict["constant"] = constant
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if error is not UNSET:
-            field_dict['error'] = error
+            field_dict["error"] = error
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if started_at is not UNSET:
-            field_dict['started_at'] = started_at
+            field_dict["started_at"] = started_at
         if status is not UNSET:
-            field_dict['status'] = status
+            field_dict["status"] = status
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+            field_dict["user_id"] = user_id
         if value is not UNSET:
-            field_dict['value'] = value
+            field_dict["value"] = value
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

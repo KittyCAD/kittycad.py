@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
@@ -6,12 +6,15 @@ from ..models.docker_system_info import DockerSystemInfo
 from ..models.environment import Environment
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ExecutorMetadata")
+A = TypeVar("A", bound="ExecutorMetadata")
 
 
 @attr.s(auto_attribs=True)
 class ExecutorMetadata:
-    """ """
+    """Metadata about our currently running server.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
+
     docker_info: Union[Unset, DockerSystemInfo] = UNSET
     environment: Union[Unset, Environment] = UNSET
     git_hash: Union[Unset, str] = UNSET
@@ -19,28 +22,26 @@ class ExecutorMetadata:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        docker_info: Union[Unset, str] = UNSET
         if not isinstance(self.docker_info, Unset):
-            docker_info = self.docker_info.value
-        environment: Union[Unset, str] = UNSET
+            docker_info = self.docker_info
         if not isinstance(self.environment, Unset):
-            environment = self.environment.value
+            environment = self.environment
         git_hash = self.git_hash
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if docker_info is not UNSET:
-            field_dict['docker_info'] = docker_info
+            field_dict["docker_info"] = docker_info
         if environment is not UNSET:
-            field_dict['environment'] = environment
+            field_dict["environment"] = environment
         if git_hash is not UNSET:
-            field_dict['git_hash'] = git_hash
+            field_dict["git_hash"] = git_hash
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[A], src_dict: Dict[str, Any]) -> A:
         d = src_dict.copy()
         _docker_info = d.pop("docker_info", UNSET)
         docker_info: Union[Unset, DockerSystemInfo]

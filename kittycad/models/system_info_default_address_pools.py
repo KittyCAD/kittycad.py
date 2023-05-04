@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
@@ -9,7 +9,6 @@ T = TypeVar("T", bound="SystemInfoDefaultAddressPools")
 
 @attr.s(auto_attribs=True)
 class SystemInfoDefaultAddressPools:
-    """ """
     base: Union[Unset, str] = UNSET
     size: Union[Unset, int] = UNSET
 
@@ -23,9 +22,9 @@ class SystemInfoDefaultAddressPools:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if base is not UNSET:
-            field_dict['base'] = base
+            field_dict["base"] = base
         if size is not UNSET:
-            field_dict['size'] = size
+            field_dict["size"] = size
 
         return field_dict
 

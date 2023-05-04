@@ -1,20 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.uuid import Uuid
-from ..models.file_import_format import FileImportFormat
 from ..models.api_call_status import ApiCallStatus
+from ..models.file_import_format import FileImportFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileSurfaceArea")
+Y = TypeVar("Y", bound="FileSurfaceArea")
 
 
 @attr.s(auto_attribs=True)
 class FileSurfaceArea:
-    """ """
+    """A file surface area result."""  # noqa: E501
+
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
@@ -37,15 +37,13 @@ class FileSurfaceArea:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
-            src_format = self.src_format.value
+            src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
-        status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
         surface_area = self.surface_area
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
@@ -56,30 +54,30 @@ class FileSurfaceArea:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if completed_at is not UNSET:
-            field_dict['completed_at'] = completed_at
+            field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if error is not UNSET:
-            field_dict['error'] = error
+            field_dict["error"] = error
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if src_format is not UNSET:
-            field_dict['src_format'] = src_format
+            field_dict["src_format"] = src_format
         if started_at is not UNSET:
-            field_dict['started_at'] = started_at
+            field_dict["started_at"] = started_at
         if status is not UNSET:
-            field_dict['status'] = status
+            field_dict["status"] = status
         if surface_area is not UNSET:
-            field_dict['surface_area'] = surface_area
+            field_dict["surface_area"] = surface_area
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+            field_dict["user_id"] = user_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

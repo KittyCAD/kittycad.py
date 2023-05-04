@@ -1,17 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="VerificationToken")
+R = TypeVar("R", bound="VerificationToken")
 
 
 @attr.s(auto_attribs=True)
 class VerificationToken:
-    """ """
+    """A verification token for a user.
+
+    This is typically used to verify a user's email address."""  # noqa: E501
+
     created_at: Union[Unset, datetime.datetime] = UNSET
     expires: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
@@ -37,20 +40,20 @@ class VerificationToken:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if expires is not UNSET:
-            field_dict['expires'] = expires
+            field_dict["expires"] = expires
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if identifier is not UNSET:
-            field_dict['identifier'] = identifier
+            field_dict["identifier"] = identifier
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]

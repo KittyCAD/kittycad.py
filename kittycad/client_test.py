@@ -1,13 +1,29 @@
 import os
-import pytest
-import asyncio
 
-from .client import ClientFromEnv
-from .models import FileConversion, FileExportFormat, FileImportFormat, User, Pong, ApiCallStatus, FileMass, FileVolume, ApiTokenResultsPage, CreatedAtSortMode
-from .api.file import create_file_conversion_with_base64_helper, create_file_mass, create_file_volume
-from .api.meta import ping
-from .api.users import get_user_self
+import pytest
+
 from .api.api_tokens import list_api_tokens_for_user
+from .api.file import (
+    create_file_conversion_with_base64_helper,
+    create_file_mass,
+    create_file_volume,
+)
+from .api.meta import ping
+from .api.users import get_user_self, list_users_extended
+from .client import ClientFromEnv
+from .models import (
+    ApiCallStatus,
+    ApiTokenResultsPage,
+    CreatedAtSortMode,
+    ExtendedUserResultsPage,
+    FileConversion,
+    FileExportFormat,
+    FileImportFormat,
+    FileMass,
+    FileVolume,
+    Pong,
+    User,
+)
 
 
 def test_get_session():
@@ -29,7 +45,8 @@ async def test_get_api_tokens_async():
 
     # List API tokens.
     fc: ApiTokenResultsPage = list_api_tokens_for_user.sync(
-        client=client, sort_by=CreatedAtSortMode)
+        client=client, sort_by=CreatedAtSortMode
+    )
 
     assert fc is not None
 
@@ -88,7 +105,8 @@ def test_file_convert_stl():
         client=client,
         body=content,
         src_format=FileImportFormat.STL,
-        output_format=FileExportFormat.OBJ)
+        output_format=FileExportFormat.OBJ,
+    )
 
     assert fc is not None
 
@@ -112,7 +130,12 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(client=client, body=content, src_format=FileImportFormat.STL, output_format=FileExportFormat.OBJ)
+    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ,
+    )
 
     assert fc is not None
 
@@ -137,7 +160,8 @@ def test_file_mass():
         client=client,
         body=content,
         src_format=FileImportFormat.OBJ,
-        material_density=1.0)
+        material_density=1.0,
+    )
 
     assert fm is not None
 
@@ -162,9 +186,8 @@ def test_file_volume():
 
     # Get the fc.
     fv: FileVolume = create_file_volume.sync(
-        client=client,
-        body=content,
-        src_format=FileImportFormat.OBJ)
+        client=client, body=content, src_format=FileImportFormat.OBJ
+    )
 
     assert fv is not None
 
@@ -176,3 +199,17 @@ def test_file_volume():
     assert fv.to_dict() is not None
 
     assert fv.status == ApiCallStatus.COMPLETED
+
+
+def test_list_users():
+    # Create our client.
+    client = ClientFromEnv()
+
+    response: ExtendedUserResultsPage = list_users_extended.sync(
+        sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, client=client, limit=10
+    )
+
+    print(f"ExtendedUserResultsPage: {response}")
+
+    assert response is not None
+    assert response.items is not None

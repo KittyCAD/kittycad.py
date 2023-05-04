@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="OAuth2ClientInfo")
+B = TypeVar("B", bound="OAuth2ClientInfo")
 
 
 @attr.s(auto_attribs=True)
 class OAuth2ClientInfo:
-    """ """
+    """Information about an OAuth 2.0 client."""  # noqa: E501
+
     csrf_token: Union[Unset, str] = UNSET
     pkce_code_verifier: Union[Unset, str] = UNSET
     url: Union[Unset, str] = UNSET
@@ -25,16 +26,16 @@ class OAuth2ClientInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if csrf_token is not UNSET:
-            field_dict['csrf_token'] = csrf_token
+            field_dict["csrf_token"] = csrf_token
         if pkce_code_verifier is not UNSET:
-            field_dict['pkce_code_verifier'] = pkce_code_verifier
+            field_dict["pkce_code_verifier"] = pkce_code_verifier
         if url is not UNSET:
-            field_dict['url'] = url
+            field_dict["url"] = url
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         csrf_token = d.pop("csrf_token", UNSET)
 

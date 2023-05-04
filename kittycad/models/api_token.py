@@ -1,18 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ApiToken")
+G = TypeVar("G", bound="ApiToken")
 
 
 @attr.s(auto_attribs=True)
 class ApiToken:
-    """ """
+    """An API token.
+
+    These are used to authenticate users with Bearer authentication."""  # noqa: E501
+
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
     is_valid: Union[Unset, bool] = False
@@ -38,22 +40,22 @@ class ApiToken:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if is_valid is not UNSET:
-            field_dict['is_valid'] = is_valid
+            field_dict["is_valid"] = is_valid
         if token is not UNSET:
-            field_dict['token'] = token
+            field_dict["token"] = token
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+            field_dict["user_id"] = user_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]

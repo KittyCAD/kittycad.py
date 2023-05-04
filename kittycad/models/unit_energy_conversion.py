@@ -1,20 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.uuid import Uuid
-from ..models.unit_energy_format import UnitEnergyFormat
 from ..models.api_call_status import ApiCallStatus
+from ..models.unit_energy_format import UnitEnergyFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnitEnergyConversion")
+N = TypeVar("N", bound="UnitEnergyConversion")
 
 
 @attr.s(auto_attribs=True)
 class UnitEnergyConversion:
-    """ """
+    """A unit conversion."""  # noqa: E501
+
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
@@ -41,18 +41,15 @@ class UnitEnergyConversion:
         id = self.id
         input = self.input
         output = self.output
-        output_format: Union[Unset, str] = UNSET
         if not isinstance(self.output_format, Unset):
-            output_format = self.output_format.value
-        src_format: Union[Unset, str] = UNSET
+            output_format = self.output_format
         if not isinstance(self.src_format, Unset):
-            src_format = self.src_format.value
+            src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
-        status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
@@ -62,34 +59,34 @@ class UnitEnergyConversion:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if completed_at is not UNSET:
-            field_dict['completed_at'] = completed_at
+            field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if error is not UNSET:
-            field_dict['error'] = error
+            field_dict["error"] = error
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if input is not UNSET:
-            field_dict['input'] = input
+            field_dict["input"] = input
         if output is not UNSET:
-            field_dict['output'] = output
+            field_dict["output"] = output
         if output_format is not UNSET:
-            field_dict['output_format'] = output_format
+            field_dict["output_format"] = output_format
         if src_format is not UNSET:
-            field_dict['src_format'] = src_format
+            field_dict["src_format"] = src_format
         if started_at is not UNSET:
-            field_dict['started_at'] = started_at
+            field_dict["started_at"] = started_at
         if status is not UNSET:
-            field_dict['status'] = status
+            field_dict["status"] = status
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+            field_dict["user_id"] = user_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

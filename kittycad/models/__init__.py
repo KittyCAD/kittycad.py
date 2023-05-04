@@ -16,6 +16,7 @@ from .api_token import ApiToken
 from .api_token_results_page import ApiTokenResultsPage
 from .app_client_info import AppClientInfo
 from .async_api_call import AsyncApiCall
+from .async_api_call_output import AsyncApiCallOutput
 from .async_api_call_results_page import AsyncApiCallResultsPage
 from .async_api_call_type import AsyncApiCallType
 from .billing_info import BillingInfo
@@ -35,10 +36,12 @@ from .device_access_token_request_form import DeviceAccessTokenRequestForm
 from .device_auth_request_form import DeviceAuthRequestForm
 from .device_auth_verify_params import DeviceAuthVerifyParams
 from .docker_system_info import DockerSystemInfo
+from .drawing_cmd import DrawingCmd
 from .drawing_cmd_id import DrawingCmdId
 from .drawing_cmd_req import DrawingCmdReq
 from .drawing_cmd_req_batch import DrawingCmdReqBatch
 from .drawing_error import DrawingError
+from .drawing_outcome import DrawingOutcome
 from .drawing_outcomes import DrawingOutcomes
 from .email_authentication_form import EmailAuthenticationForm
 from .engine_metadata import EngineMetadata

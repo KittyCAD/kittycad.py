@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
@@ -9,7 +9,8 @@ T = TypeVar("T", bound="Commit")
 
 @attr.s(auto_attribs=True)
 class Commit:
-    """ """
+    """Commit holds the Git-commit (SHA1) that a binary was built from, as reported in the version-string of external tools, such as `containerd`, or `runC`."""  # noqa: E501
+
     expected: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
 
@@ -23,9 +24,9 @@ class Commit:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if expected is not UNSET:
-            field_dict['expected'] = expected
+            field_dict["expected"] = expected
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
 
         return field_dict
 

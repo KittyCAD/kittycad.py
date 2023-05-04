@@ -1,19 +1,21 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.uuid import Uuid
 from ..models.method import Method
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ApiCallWithPrice")
+S = TypeVar("S", bound="ApiCallWithPrice")
 
 
 @attr.s(auto_attribs=True)
 class ApiCallWithPrice:
-    """ """
+    """An API call with the price.
+
+    This is a join of the `ApiCall` and `ApiCallPrice` tables."""  # noqa: E501
+
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     duration: Union[Unset, int] = UNSET
@@ -52,9 +54,8 @@ class ApiCallWithPrice:
         id = self.id
         ip_address = self.ip_address
         litterbox = self.litterbox
-        method: Union[Unset, str] = UNSET
         if not isinstance(self.method, Unset):
-            method = self.method.value
+            method = self.method
         minutes = self.minutes
         origin = self.origin
         price = self.price
@@ -77,54 +78,54 @@ class ApiCallWithPrice:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if completed_at is not UNSET:
-            field_dict['completed_at'] = completed_at
+            field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if duration is not UNSET:
-            field_dict['duration'] = duration
+            field_dict["duration"] = duration
         if email is not UNSET:
-            field_dict['email'] = email
+            field_dict["email"] = email
         if endpoint is not UNSET:
-            field_dict['endpoint'] = endpoint
+            field_dict["endpoint"] = endpoint
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if ip_address is not UNSET:
-            field_dict['ip_address'] = ip_address
+            field_dict["ip_address"] = ip_address
         if litterbox is not UNSET:
-            field_dict['litterbox'] = litterbox
+            field_dict["litterbox"] = litterbox
         if method is not UNSET:
-            field_dict['method'] = method
+            field_dict["method"] = method
         if minutes is not UNSET:
-            field_dict['minutes'] = minutes
+            field_dict["minutes"] = minutes
         if origin is not UNSET:
-            field_dict['origin'] = origin
+            field_dict["origin"] = origin
         if price is not UNSET:
-            field_dict['price'] = price
+            field_dict["price"] = price
         if request_body is not UNSET:
-            field_dict['request_body'] = request_body
+            field_dict["request_body"] = request_body
         if request_query_params is not UNSET:
-            field_dict['request_query_params'] = request_query_params
+            field_dict["request_query_params"] = request_query_params
         if response_body is not UNSET:
-            field_dict['response_body'] = response_body
+            field_dict["response_body"] = response_body
         if started_at is not UNSET:
-            field_dict['started_at'] = started_at
+            field_dict["started_at"] = started_at
         if status_code is not UNSET:
-            field_dict['status_code'] = status_code
+            field_dict["status_code"] = status_code
         if stripe_invoice_item_id is not UNSET:
-            field_dict['stripe_invoice_item_id'] = stripe_invoice_item_id
+            field_dict["stripe_invoice_item_id"] = stripe_invoice_item_id
         if token is not UNSET:
-            field_dict['token'] = token
+            field_dict["token"] = token
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
         if user_agent is not UNSET:
-            field_dict['user_agent'] = user_agent
+            field_dict["user_agent"] = user_agent
         if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+            field_dict["user_id"] = user_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

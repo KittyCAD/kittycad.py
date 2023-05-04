@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="AppClientInfo")
+U = TypeVar("U", bound="AppClientInfo")
 
 
 @attr.s(auto_attribs=True)
 class AppClientInfo:
-    """ """
+    """Information about a third party app client."""  # noqa: E501
+
     url: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -21,12 +22,12 @@ class AppClientInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if url is not UNSET:
-            field_dict['url'] = url
+            field_dict["url"] = url
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
         d = src_dict.copy()
         url = d.pop("url", UNSET)
 

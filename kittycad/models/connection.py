@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
@@ -10,12 +10,15 @@ from ..models.jetstream import Jetstream
 from ..models.leaf_node import LeafNode
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Connection")
+L = TypeVar("L", bound="Connection")
 
 
 @attr.s(auto_attribs=True)
 class Connection:
-    """ """
+    """Metadata about a pub-sub connection.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
+
     auth_timeout: Union[Unset, int] = UNSET
     cluster: Union[Unset, Cluster] = UNSET
     config_load_time: Union[Unset, datetime.datetime] = UNSET
@@ -67,18 +70,16 @@ class Connection:
 
     def to_dict(self) -> Dict[str, Any]:
         auth_timeout = self.auth_timeout
-        cluster: Union[Unset, str] = UNSET
         if not isinstance(self.cluster, Unset):
-            cluster = self.cluster.value
+            cluster = self.cluster
         config_load_time: Union[Unset, str] = UNSET
         if not isinstance(self.config_load_time, Unset):
             config_load_time = self.config_load_time.isoformat()
         connections = self.connections
         cores = self.cores
         cpu = self.cpu
-        gateway: Union[Unset, str] = UNSET
         if not isinstance(self.gateway, Unset):
-            gateway = self.gateway.value
+            gateway = self.gateway
         git_commit = self.git_commit
         go = self.go
         gomaxprocs = self.gomaxprocs
@@ -90,12 +91,10 @@ class Connection:
         https_port = self.https_port
         in_bytes = self.in_bytes
         in_msgs = self.in_msgs
-        jetstream: Union[Unset, str] = UNSET
         if not isinstance(self.jetstream, Unset):
-            jetstream = self.jetstream.value
-        leaf: Union[Unset, str] = UNSET
+            jetstream = self.jetstream
         if not isinstance(self.leaf, Unset):
-            leaf = self.leaf.value
+            leaf = self.leaf
         leafnodes = self.leafnodes
         max_connections = self.max_connections
         max_control_line = self.max_control_line
@@ -131,102 +130,102 @@ class Connection:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if auth_timeout is not UNSET:
-            field_dict['auth_timeout'] = auth_timeout
+            field_dict["auth_timeout"] = auth_timeout
         if cluster is not UNSET:
-            field_dict['cluster'] = cluster
+            field_dict["cluster"] = cluster
         if config_load_time is not UNSET:
-            field_dict['config_load_time'] = config_load_time
+            field_dict["config_load_time"] = config_load_time
         if connections is not UNSET:
-            field_dict['connections'] = connections
+            field_dict["connections"] = connections
         if cores is not UNSET:
-            field_dict['cores'] = cores
+            field_dict["cores"] = cores
         if cpu is not UNSET:
-            field_dict['cpu'] = cpu
+            field_dict["cpu"] = cpu
         if gateway is not UNSET:
-            field_dict['gateway'] = gateway
+            field_dict["gateway"] = gateway
         if git_commit is not UNSET:
-            field_dict['git_commit'] = git_commit
+            field_dict["git_commit"] = git_commit
         if go is not UNSET:
-            field_dict['go'] = go
+            field_dict["go"] = go
         if gomaxprocs is not UNSET:
-            field_dict['gomaxprocs'] = gomaxprocs
+            field_dict["gomaxprocs"] = gomaxprocs
         if host is not UNSET:
-            field_dict['host'] = host
+            field_dict["host"] = host
         if http_base_path is not UNSET:
-            field_dict['http_base_path'] = http_base_path
+            field_dict["http_base_path"] = http_base_path
         if http_host is not UNSET:
-            field_dict['http_host'] = http_host
+            field_dict["http_host"] = http_host
         if http_port is not UNSET:
-            field_dict['http_port'] = http_port
+            field_dict["http_port"] = http_port
         if http_req_stats is not UNSET:
-            field_dict['http_req_stats'] = http_req_stats
+            field_dict["http_req_stats"] = http_req_stats
         if https_port is not UNSET:
-            field_dict['https_port'] = https_port
+            field_dict["https_port"] = https_port
         if in_bytes is not UNSET:
-            field_dict['in_bytes'] = in_bytes
+            field_dict["in_bytes"] = in_bytes
         if in_msgs is not UNSET:
-            field_dict['in_msgs'] = in_msgs
+            field_dict["in_msgs"] = in_msgs
         if jetstream is not UNSET:
-            field_dict['jetstream'] = jetstream
+            field_dict["jetstream"] = jetstream
         if leaf is not UNSET:
-            field_dict['leaf'] = leaf
+            field_dict["leaf"] = leaf
         if leafnodes is not UNSET:
-            field_dict['leafnodes'] = leafnodes
+            field_dict["leafnodes"] = leafnodes
         if max_connections is not UNSET:
-            field_dict['max_connections'] = max_connections
+            field_dict["max_connections"] = max_connections
         if max_control_line is not UNSET:
-            field_dict['max_control_line'] = max_control_line
+            field_dict["max_control_line"] = max_control_line
         if max_payload is not UNSET:
-            field_dict['max_payload'] = max_payload
+            field_dict["max_payload"] = max_payload
         if max_pending is not UNSET:
-            field_dict['max_pending'] = max_pending
+            field_dict["max_pending"] = max_pending
         if mem is not UNSET:
-            field_dict['mem'] = mem
+            field_dict["mem"] = mem
         if now is not UNSET:
-            field_dict['now'] = now
+            field_dict["now"] = now
         if out_bytes is not UNSET:
-            field_dict['out_bytes'] = out_bytes
+            field_dict["out_bytes"] = out_bytes
         if out_msgs is not UNSET:
-            field_dict['out_msgs'] = out_msgs
+            field_dict["out_msgs"] = out_msgs
         if ping_interval is not UNSET:
-            field_dict['ping_interval'] = ping_interval
+            field_dict["ping_interval"] = ping_interval
         if ping_max is not UNSET:
-            field_dict['ping_max'] = ping_max
+            field_dict["ping_max"] = ping_max
         if port is not UNSET:
-            field_dict['port'] = port
+            field_dict["port"] = port
         if proto is not UNSET:
-            field_dict['proto'] = proto
+            field_dict["proto"] = proto
         if remotes is not UNSET:
-            field_dict['remotes'] = remotes
+            field_dict["remotes"] = remotes
         if routes is not UNSET:
-            field_dict['routes'] = routes
+            field_dict["routes"] = routes
         if server_id is not UNSET:
-            field_dict['server_id'] = server_id
+            field_dict["server_id"] = server_id
         if server_name is not UNSET:
-            field_dict['server_name'] = server_name
+            field_dict["server_name"] = server_name
         if slow_consumers is not UNSET:
-            field_dict['slow_consumers'] = slow_consumers
+            field_dict["slow_consumers"] = slow_consumers
         if start is not UNSET:
-            field_dict['start'] = start
+            field_dict["start"] = start
         if subscriptions is not UNSET:
-            field_dict['subscriptions'] = subscriptions
+            field_dict["subscriptions"] = subscriptions
         if system_account is not UNSET:
-            field_dict['system_account'] = system_account
+            field_dict["system_account"] = system_account
         if tls_timeout is not UNSET:
-            field_dict['tls_timeout'] = tls_timeout
+            field_dict["tls_timeout"] = tls_timeout
         if total_connections is not UNSET:
-            field_dict['total_connections'] = total_connections
+            field_dict["total_connections"] = total_connections
         if uptime is not UNSET:
-            field_dict['uptime'] = uptime
+            field_dict["uptime"] = uptime
         if version is not UNSET:
-            field_dict['version'] = version
+            field_dict["version"] = version
         if write_deadline is not UNSET:
-            field_dict['write_deadline'] = write_deadline
+            field_dict["write_deadline"] = write_deadline
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 

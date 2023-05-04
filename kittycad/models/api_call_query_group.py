@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ApiCallQueryGroup")
+P = TypeVar("P", bound="ApiCallQueryGroup")
 
 
 @attr.s(auto_attribs=True)
 class ApiCallQueryGroup:
-    """ """
+    """A response for a query on the API call table that is grouped by something."""  # noqa: E501
+
     count: Union[Unset, int] = UNSET
     query: Union[Unset, str] = UNSET
 
@@ -23,14 +24,14 @@ class ApiCallQueryGroup:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if count is not UNSET:
-            field_dict['count'] = count
+            field_dict["count"] = count
         if query is not UNSET:
-            field_dict['query'] = query
+            field_dict["query"] = query
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
         d = src_dict.copy()
         count = d.pop("count", UNSET)
 

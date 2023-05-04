@@ -1,16 +1,17 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.currency import Currency
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="InvoiceLineItem")
+P = TypeVar("P", bound="InvoiceLineItem")
 
 
 @attr.s(auto_attribs=True)
 class InvoiceLineItem:
-    """ """
+    """An invoice line item."""  # noqa: E501
+
     amount: Union[Unset, float] = UNSET
     currency: Union[Unset, Currency] = UNSET
     description: Union[Unset, str] = UNSET
@@ -22,9 +23,8 @@ class InvoiceLineItem:
 
     def to_dict(self) -> Dict[str, Any]:
         amount = self.amount
-        currency: Union[Unset, str] = UNSET
         if not isinstance(self.currency, Unset):
-            currency = self.currency.value
+            currency = self.currency
         description = self.description
         id = self.id
         invoice_item = self.invoice_item
@@ -34,22 +34,22 @@ class InvoiceLineItem:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if amount is not UNSET:
-            field_dict['amount'] = amount
+            field_dict["amount"] = amount
         if currency is not UNSET:
-            field_dict['currency'] = currency
+            field_dict["currency"] = currency
         if description is not UNSET:
-            field_dict['description'] = description
+            field_dict["description"] = description
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if invoice_item is not UNSET:
-            field_dict['invoice_item'] = invoice_item
+            field_dict["invoice_item"] = invoice_item
         if metadata is not UNSET:
-            field_dict['metadata'] = metadata
+            field_dict["metadata"] = metadata
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
         d = src_dict.copy()
         amount = d.pop("amount", UNSET)
 

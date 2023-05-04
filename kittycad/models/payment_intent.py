@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PaymentIntent")
+J = TypeVar("J", bound="PaymentIntent")
 
 
 @attr.s(auto_attribs=True)
 class PaymentIntent:
-    """ """
+    """A payment intent response."""  # noqa: E501
+
     client_secret: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -21,12 +22,12 @@ class PaymentIntent:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if client_secret is not UNSET:
-            field_dict['client_secret'] = client_secret
+            field_dict["client_secret"] = client_secret
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
         d = src_dict.copy()
         client_secret = d.pop("client_secret", UNSET)
 

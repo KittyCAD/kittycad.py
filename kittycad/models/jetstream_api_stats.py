@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="JetstreamApiStats")
+U = TypeVar("U", bound="JetstreamApiStats")
 
 
 @attr.s(auto_attribs=True)
 class JetstreamApiStats:
-    """ """
+    """Jetstream API statistics."""  # noqa: E501
+
     errors: Union[Unset, int] = UNSET
     inflight: Union[Unset, int] = UNSET
     total: Union[Unset, int] = UNSET
@@ -25,16 +26,16 @@ class JetstreamApiStats:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if errors is not UNSET:
-            field_dict['errors'] = errors
+            field_dict["errors"] = errors
         if inflight is not UNSET:
-            field_dict['inflight'] = inflight
+            field_dict["inflight"] = inflight
         if total is not UNSET:
-            field_dict['total'] = total
+            field_dict["total"] = total
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
         d = src_dict.copy()
         errors = d.pop("errors", UNSET)
 

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta property="og:title" content="kittycad.client.Client" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="_autosummary/kittycad.client.Client.html" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.client.Client &mdash; kittycad v0.3.8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="kittycad.client.ClientFromEnv" href="kittycad.client.ClientFromEnv.html" />
+    <link rel="prev" title="kittycad.client" href="kittycad.client.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.3.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kittycad.client.html">kittycad.client</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.client.Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.client.ClientFromEnv.html">kittycad.client.ClientFromEnv</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.models.html">kittycad.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="kittycad.client.html">kittycad.client</a></li>
+      <li class="breadcrumb-item active">kittycad.client.Client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kittycad-client-client">
+<h1>kittycad.client.Client<a class="headerlink" href="#kittycad-client-client" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.client.Client">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.kittycad.io'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_Nothing.NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_Nothing.NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A Client which has been authenticated for use on secured endpoints of the KittyCAD API.</p>
+<p>Method generated by attrs for class Client.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.kittycad.io'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_Nothing.NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_Nothing.NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="kittycad.client.Client.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([base_url, cookies, headers, ...])</p></td>
+<td><p>Method generated by attrs for class Client.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.client.Client.get_cookies" title="kittycad.client.Client.get_cookies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cookies</span></code></a>()</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.Client.get_headers" title="kittycad.client.Client.get_headers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_headers</span></code></a>()</p></td>
+<td><p>Get headers to be used in all endpoints</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.client.Client.get_timeout" title="kittycad.client.Client.get_timeout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_timeout</span></code></a>()</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+</dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.Client.with_cookies" title="kittycad.client.Client.with_cookies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">with_cookies</span></code></a>(cookies)</p></td>
+<td><p>Get a new client matching this one with additional cookies</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.client.Client.with_headers" title="kittycad.client.Client.with_headers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">with_headers</span></code></a>(headers)</p></td>
+<td><p>Get a new client matching this one with additional headers</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.Client.with_timeout" title="kittycad.client.Client.with_timeout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">with_timeout</span></code></a>(timeout)</p></td>
+<td><p>Get a new client matching this one with a new timeout (in seconds)</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.Client.token" title="kittycad.client.Client.token"><code class="xref py py-obj docutils literal notranslate"><span class="pre">token</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.client.Client.base_url" title="kittycad.client.Client.base_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">base_url</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.Client.cookies" title="kittycad.client.Client.cookies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cookies</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.client.Client.headers" title="kittycad.client.Client.headers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">headers</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.client.Client.timeout" title="kittycad.client.Client.timeout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">timeout</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.client.Client.verify_ssl" title="kittycad.client.Client.verify_ssl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">verify_ssl</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'base_url':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'cookies':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">'headers':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">'timeout':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'token':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'verify_ssl':</span> <span class="pre">typing.Union[str,</span> <span class="pre">bool,</span> <span class="pre">ssl.SSLContext]}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__annotations__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.__attrs_attrs__">
+<span class="sig-name descname"><span class="pre">__attrs_attrs__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(Attribute(name='token',</span> <span class="pre">default=NOTHING,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='token'),</span> <span class="pre">Attribute(name='base_url',</span> <span class="pre">default='https://api.kittycad.io',</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='base_url'),</span> <span class="pre">Attribute(name='cookies',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='cookies'),</span> <span class="pre">Attribute(name='headers',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='headers'),</span> <span class="pre">Attribute(name='timeout',</span> <span class="pre">default=50.0,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='timeout'),</span> <span class="pre">Attribute(name='verify_ssl',</span> <span class="pre">default=True,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[str,</span> <span class="pre">bool,</span> <span class="pre">ssl.SSLContext],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='verify_ssl'))</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__attrs_attrs__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.client',</span> <span class="pre">'__annotations__':</span> <span class="pre">{'token':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'base_url':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'cookies':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">'headers':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">'timeout':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'verify_ssl':</span> <span class="pre">typing.Union[str,</span> <span class="pre">bool,</span> <span class="pre">ssl.SSLContext]},</span> <span class="pre">'__doc__':</span> <span class="pre">'A</span> <span class="pre">Client</span> <span class="pre">which</span> <span class="pre">has</span> <span class="pre">been</span> <span class="pre">authenticated</span> <span class="pre">for</span> <span class="pre">use</span> <span class="pre">on</span> <span class="pre">secured</span> <span class="pre">endpoints</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">KittyCAD</span> <span class="pre">API.',</span> <span class="pre">'get_headers':</span> <span class="pre">&lt;function</span> <span class="pre">Client.get_headers&gt;,</span> <span class="pre">'with_headers':</span> <span class="pre">&lt;function</span> <span class="pre">Client.with_headers&gt;,</span> <span class="pre">'get_cookies':</span> <span class="pre">&lt;function</span> <span class="pre">Client.get_cookies&gt;,</span> <span class="pre">'with_cookies':</span> <span class="pre">&lt;function</span> <span class="pre">Client.with_cookies&gt;,</span> <span class="pre">'get_timeout':</span> <span class="pre">&lt;function</span> <span class="pre">Client.get_timeout&gt;,</span> <span class="pre">'with_timeout':</span> <span class="pre">&lt;function</span> <span class="pre">Client.with_timeout&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Client'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Client'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__attrs_attrs__':</span> <span class="pre">(Attribute(name='token',</span> <span class="pre">default=NOTHING,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='token'),</span> <span class="pre">Attribute(name='base_url',</span> <span class="pre">default='https://api.kittycad.io',</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='base_url'),</span> <span class="pre">Attribute(name='cookies',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='cookies'),</span> <span class="pre">Attribute(name='headers',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='headers'),</span> <span class="pre">Attribute(name='timeout',</span> <span class="pre">default=50.0,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='timeout'),</span> <span class="pre">Attribute(name='verify_ssl',</span> <span class="pre">default=True,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[str,</span> <span class="pre">bool,</span> <span class="pre">ssl.SSLContext],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=True,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='verify_ssl')),</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__repr__&gt;,</span> <span class="pre">'__eq__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__eq__&gt;,</span> <span class="pre">'__ne__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__ne__&gt;,</span> <span class="pre">'__lt__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__lt__&gt;,</span> <span class="pre">'__le__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__le__&gt;,</span> <span class="pre">'__gt__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__gt__&gt;,</span> <span class="pre">'__ge__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__ge__&gt;,</span> <span class="pre">'__hash__':</span> <span class="pre">None,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Client.__init__&gt;})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__eq__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__ge__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__gt__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__hash__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://api.kittycad.io'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_Nothing.NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">_Nothing.NOTHING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_ssl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__le__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__lt__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.client'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__ne__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.__repr__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Client.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.base_url">
+<span class="sig-name descname"><span class="pre">base_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.base_url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.cookies">
+<span class="sig-name descname"><span class="pre">cookies</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.cookies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.get_cookies">
+<span class="sig-name descname"><span class="pre">get_cookies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/client.html#Client.get_cookies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.get_cookies" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.get_headers">
+<span class="sig-name descname"><span class="pre">get_headers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/client.html#Client.get_headers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.get_headers" title="Permalink to this definition"></a></dt>
+<dd><p>Get headers to be used in all endpoints</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.get_timeout">
+<span class="sig-name descname"><span class="pre">get_timeout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/client.html#Client.get_timeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.get_timeout" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.headers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.timeout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.token">
+<span class="sig-name descname"><span class="pre">token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.token" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.client.Client.verify_ssl">
+<span class="sig-name descname"><span class="pre">verify_ssl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/ssl.html#ssl.SSLContext" title="(in Python v3.11)"><span class="pre">ssl.SSLContext</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.verify_ssl" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.with_cookies">
+<span class="sig-name descname"><span class="pre">with_cookies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cookies</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/client.html#Client.with_cookies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.with_cookies" title="Permalink to this definition"></a></dt>
+<dd><p>Get a new client matching this one with additional cookies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kittycad.client.Client" title="kittycad.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.with_headers">
+<span class="sig-name descname"><span class="pre">with_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/client.html#Client.with_headers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.with_headers" title="Permalink to this definition"></a></dt>
+<dd><p>Get a new client matching this one with additional headers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kittycad.client.Client" title="kittycad.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.client.Client.with_timeout">
+<span class="sig-name descname"><span class="pre">with_timeout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/client.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/client.html#Client.with_timeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.client.Client.with_timeout" title="Permalink to this definition"></a></dt>
+<dd><p>Get a new client matching this one with a new timeout (in seconds)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kittycad.client.Client" title="kittycad.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kittycad.client.html" class="btn btn-neutral float-left" title="kittycad.client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.client.ClientFromEnv.html" class="btn btn-neutral float-right" title="kittycad.client.ClientFromEnv" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

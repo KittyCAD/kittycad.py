@@ -13,6 +13,7 @@ VERSION := $(shell toml get $(CURDIR)/pyproject.toml tool.poetry.version | jq -r
 generate: docker-image ## Generate the api client.
 	docker run --rm -i $(DOCKER_FLAGS) \
 		--name python-generator \
+		-e KITTYCAD_API_TOKEN \
 		--disable-content-trust \
 		-v $(CURDIR):/home/user/src \
 		--workdir /home/user/src \

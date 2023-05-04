@@ -4,12 +4,13 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="IndexInfo")
+R = TypeVar("R", bound="IndexInfo")
 
 
 @attr.s(auto_attribs=True)
 class IndexInfo:
-    """ """
+    """IndexInfo contains information about a registry."""  # noqa: E501
+
     mirrors: Union[Unset, List[str]] = UNSET
     name: Union[Unset, str] = UNSET
     official: Union[Unset, bool] = False
@@ -29,18 +30,18 @@ class IndexInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if mirrors is not UNSET:
-            field_dict['mirrors'] = mirrors
+            field_dict["mirrors"] = mirrors
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
         if official is not UNSET:
-            field_dict['official'] = official
+            field_dict["official"] = official
         if secure is not UNSET:
-            field_dict['secure'] = secure
+            field_dict["secure"] = secure
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
         d = src_dict.copy()
         mirrors = cast(List[str], d.pop("mirrors", UNSET))
 
