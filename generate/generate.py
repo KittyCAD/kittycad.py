@@ -5,14 +5,18 @@ import logging
 import os
 import random
 import re
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
+import black
+import isort
 import jsonpatch
 from prance import BaseParser
 
 package_name = "kittycad"
 
 random.seed(10)
+
+examples: List[str] = []
 
 
 def main():
@@ -54,6 +58,15 @@ client = ClientFromEnv()""",
     patch_file = os.path.join(cwd, "kittycad.py.patch.json")
     f = open(patch_file, "w")
     f.write(patch.to_string())
+    f.close()
+
+    # Write all the examples to a file.
+    examples_test_path = os.path.join(cwd, "kittycad", "examples_test.py")
+    logging.info("opening examples test file: ", spec_path)
+
+    f = open(examples_test_path, "w")
+    f.write("import pytest\n\n")
+    f.write("\n\n".join(examples))
     f.close()
 
 
@@ -110,6 +123,61 @@ def generatePaths(cwd: str, parser: dict) -> dict:
     return data
 
 
+def generateTypeAndExamplePython(schema: dict, data: dict) -> Tuple[str, str, str]:
+    parameter_type = ""
+    parameter_example = ""
+    example_imports = ""
+    if "type" in schema:
+        if "format" in schema and schema["format"] == "uuid":
+            parameter_type = "str"
+            parameter_example = '"<uuid>"'
+        elif schema["type"] == "string":
+            parameter_type = "str"
+            parameter_example = '"<string>"'
+        elif schema["type"] == "integer":
+            parameter_type = "int"
+            parameter_example = "10"
+        elif (
+            schema["type"] == "number"
+            and "format" in schema
+            and schema["format"] == "float"
+        ):
+            parameter_type = "float"
+            parameter_example = "3.14"
+        else:
+            logging.error("schema: %s", json.dumps(schema, indent=4))
+            raise Exception("Unknown parameter type")
+    elif "$ref" in schema:
+        parameter_type = schema["$ref"].replace("#/components/schemas/", "")
+        example_imports = example_imports + (
+            "from kittycad.models."
+            + camel_to_snake(parameter_type)
+            + " import "
+            + parameter_type
+            + "\n"
+        )
+        # Get the schema for the reference.
+        ref_schema = data["components"]["schemas"][parameter_type]
+        if "type" in ref_schema and ref_schema["type"] == "object":
+            parameter_example = parameter_type + "()"
+        elif (
+            "type" in ref_schema
+            and ref_schema["type"] == "string"
+            and "enum" in ref_schema
+        ):
+            parameter_example = (
+                parameter_type + "." + camel_to_screaming_snake(ref_schema["enum"][0])
+            )
+        else:
+            logging.error("schema: %s", json.dumps(ref_schema, indent=4))
+            raise Exception("Unknown ref schema")
+    else:
+        logging.error("schema: %s", json.dumps(schema, indent=4))
+        raise Exception("Unknown parameter type")
+
+    return parameter_type, parameter_example, example_imports
+
+
 def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) -> dict:
     # Generate the path.
     fn_name = camel_to_snake(endpoint["operationId"])
@@ -137,6 +205,18 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
     if fn_name == "get_file_conversion" or fn_name == "create_file_conversion":
         fn_name += "_with_base64_helper"
 
+    example_imports = (
+        """
+from kittycad.client import ClientFromEnv
+from kittycad.api."""
+        + tag_name
+        + """ import """
+        + fn_name
+        + """
+from kittycad.types import Response
+"""
+    )
+
     # Iterate over the parameters.
     params_str = ""
     if "parameters" in endpoint:
@@ -144,101 +224,126 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
         optional_args = []
         for parameter in parameters:
             parameter_name = parameter["name"]
-            parameter_type = ""
-            if "type" in parameter["schema"]:
-                if "format" in parameter["schema"]:
-                    if parameter["schema"]["format"] == "uuid":
-                        parameter_type = '"<uuid>"'
-                    else:
-                        parameter_type = '"<string>"'
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
+            (
+                parameter_type,
+                parameter_example,
+                more_example_imports,
+            ) = generateTypeAndExamplePython(parameter["schema"], data)
+            example_imports = example_imports + more_example_imports
+
+            if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
+                parameter_type = "Optional[" + parameter_type + "]"
+                optional_args.append(
+                    camel_to_snake(parameter_name)
+                    + "= None, # "
+                    + parameter_type
+                    + "\n"
                 )
             else:
-                logging.error("parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "]"
-                    optional_args.append(
-                        ", " + camel_to_snake(parameter_name) + "=" + parameter_type
-                    )
-                else:
-                    params_str += (
-                        ", " + camel_to_snake(parameter_name) + "=" + parameter_type
-                    )
-            else:
                 params_str += (
-                    ", " + camel_to_snake(parameter_name) + "=" + parameter_type
+                    camel_to_snake(parameter_name) + "=" + parameter_example + ",\n"
                 )
 
         for optional_arg in optional_args:
             params_str += optional_arg
 
     if request_body_type:
-        params_str += ", body=" + request_body_type
+        if request_body_type != "bytes":
+            params_str += "body=" + request_body_type + ",\n"
+            example_imports = example_imports + (
+                "from kittycad.models."
+                + camel_to_snake(request_body_type)
+                + " import "
+                + request_body_type
+                + "\n"
+            )
+        else:
+            params_str += "body=bytes('some bytes', 'utf-8'),\n"
 
-    example_imports = (
-        """
-from kittycad.api."""
-        + tag_name
-        + """ import """
-        + fn_name
-        + """
-from kittycad.types import Response
-
-        """
-    )
-
-    if success_type != "str" and success_type != "dict":
+    example_variable = ""
+    if (
+        success_type != "str"
+        and success_type != "dict"
+        and success_type != "None"
+        and success_type != ""
+    ):
         example_imports = example_imports + (
-            """from kittycad.models import """ + success_type
+            """from kittycad.models import """
+            + success_type.replace("List[", "").replace("]", "")
         )
+        example_variable = "fc: " + success_type + " = "
+        "response: Response[" + success_type + "] = "
+
+    # Add some new lines.
+    example_imports = example_imports + "\n\n"
 
     example = (
         example_imports
         + """
 
-fc: """
-        + success_type
-        + """ = """
+def test_"""
         + fn_name
-        + """.sync(client=client"""
+        + """():
+    # Create our client.
+    client = ClientFromEnv()
+
+    """
+        + example_variable
+        + fn_name
+        + """.sync(client=client,\n"""
         + params_str
         + """)
 
-# OR if you need more info (e.g. status_code)
-response: Response["""
-        + success_type
-        + """] = """
+    # OR if you need more info (e.g. status_code)
+    """
+        + example_variable
         + fn_name
-        + """.sync_detailed(client=client"""
+        + """.sync_detailed(client=client,\n"""
         + params_str
         + """)
 
 # OR run async
-fc: """
-        + success_type
-        + """ = await """
+@pytest.mark.asyncio
+async def test_"""
         + fn_name
-        + """.asyncio(client=client"""
+        + """_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    """
+        + example_variable
+        + "await "
+        + fn_name
+        + """.asyncio(client=client,\n"""
         + params_str
         + """)
 
-# OR run async with more info
-response: Response["""
-        + success_type
-        + """] = await """
+    # OR run async with more info
+    """
+        + example_variable
+        + "await "
         + fn_name
-        + """.asyncio_detailed(client=client"""
+        + """.asyncio_detailed(client=client,\n"""
         + params_str
         + """)"""
     )
 
+    # Make pretty.
+    line_length = 82
+    cleaned_example = black.format_str(
+        isort.api.sort_code_string(
+            example,
+        ),
+        mode=black.FileMode(line_length=line_length),
+    )
+
+    examples.append(cleaned_example)
+
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
-        "example": example,
+        "example": cleaned_example.replace("@pytest.mark.asyncio\n", "").replace(
+            "def test_", "def "
+        ),
         "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api."
         + tag_name
         + "."
