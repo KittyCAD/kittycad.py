@@ -37,7 +37,6 @@ from kittycad.api.hidden import auth_email, auth_email_callback, logout
 from kittycad.api.meta import (
     get_ai_plugin_manifest,
     get_metadata,
-    get_metrics,
     get_openai_schema,
     get_schema,
     ping,
@@ -235,38 +234,6 @@ async def test_get_metadata_async():
 
     # OR run async with more info
     await get_metadata.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
-def test_get_metrics():
-    # Create our client.
-    client = ClientFromEnv()
-
-    get_metrics.sync(
-        client=client,
-    )
-
-    # OR if you need more info (e.g. status_code)
-    get_metrics.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_metrics_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    await get_metrics.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    await get_metrics.asyncio_detailed(
         client=client,
     )
 
