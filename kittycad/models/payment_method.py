@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
@@ -14,7 +14,8 @@ T = TypeVar("T", bound="PaymentMethod")
 
 @attr.s(auto_attribs=True)
 class PaymentMethod:
-    """ """
+    """A payment method."""  # noqa: E501
+
     billing_info: Union[Unset, BillingInfo] = UNSET
     card: Union[Unset, CardDetails] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -25,36 +26,33 @@ class PaymentMethod:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        billing_info: Union[Unset, str] = UNSET
         if not isinstance(self.billing_info, Unset):
-            billing_info = self.billing_info.value
-        card: Union[Unset, str] = UNSET
+            billing_info = self.billing_info
         if not isinstance(self.card, Unset):
-            card = self.card.value
+            card = self.card
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
         id = self.id
         metadata = self.metadata
-        type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
-            type = self.type.value
+            type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if billing_info is not UNSET:
-            field_dict['billing_info'] = billing_info
+            field_dict["billing_info"] = billing_info
         if card is not UNSET:
-            field_dict['card'] = card
+            field_dict["card"] = card
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if metadata is not UNSET:
-            field_dict['metadata'] = metadata
+            field_dict["metadata"] = metadata
         if type is not UNSET:
-            field_dict['type'] = type
+            field_dict["type"] = type
 
         return field_dict
 

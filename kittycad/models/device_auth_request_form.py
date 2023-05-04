@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DeviceAuthRequestForm")
+V = TypeVar("V", bound="DeviceAuthRequestForm")
 
 
 @attr.s(auto_attribs=True)
 class DeviceAuthRequestForm:
-    """ """
+    """The request parameters for the OAuth 2.0 Device Authorization Grant flow."""  # noqa: E501
+
     client_id: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -21,12 +22,12 @@ class DeviceAuthRequestForm:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if client_id is not UNSET:
-            field_dict['client_id'] = client_id
+            field_dict["client_id"] = client_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         client_id = d.pop("client_id", UNSET)
 

@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="MetaClusterInfo")
+H = TypeVar("H", bound="MetaClusterInfo")
 
 
 @attr.s(auto_attribs=True)
 class MetaClusterInfo:
-    """ """
+    """Jetstream statistics."""  # noqa: E501
+
     cluster_size: Union[Unset, int] = UNSET
     leader: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
@@ -25,16 +26,16 @@ class MetaClusterInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cluster_size is not UNSET:
-            field_dict['cluster_size'] = cluster_size
+            field_dict["cluster_size"] = cluster_size
         if leader is not UNSET:
-            field_dict['leader'] = leader
+            field_dict["leader"] = leader
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         cluster_size = d.pop("cluster_size", UNSET)
 

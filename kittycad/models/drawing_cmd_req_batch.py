@@ -1,16 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.drawing_cmd_req import DrawingCmdReq
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DrawingCmdReqBatch")
+E = TypeVar("E", bound="DrawingCmdReqBatch")
 
 
 @attr.s(auto_attribs=True)
 class DrawingCmdReqBatch:
-    """ """
+    """A batch set of graphics commands submitted to the KittyCAD engine via the Drawing API."""  # noqa: E501
+
     cmds: Union[Unset, Any] = UNSET
     file_id: Union[Unset, str] = UNSET
 
@@ -24,14 +24,14 @@ class DrawingCmdReqBatch:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cmds is not UNSET:
-            field_dict['cmds'] = cmds
+            field_dict["cmds"] = cmds
         if file_id is not UNSET:
-            field_dict['file_id'] = file_id
+            field_dict["file_id"] = file_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         cmds = d.pop("cmds", UNSET)
         file_id = d.pop("file_id", UNSET)

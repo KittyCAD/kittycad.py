@@ -1,19 +1,22 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.cache_metadata import CacheMetadata
+from ..models.connection import Connection
 from ..models.environment import Environment
 from ..models.file_system_metadata import FileSystemMetadata
-from ..models.connection import Connection
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="EngineMetadata")
+B = TypeVar("B", bound="EngineMetadata")
 
 
 @attr.s(auto_attribs=True)
 class EngineMetadata:
-    """ """
+    """Metadata about our currently running server.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
+
     async_jobs_running: Union[Unset, bool] = False
     cache: Union[Unset, CacheMetadata] = UNSET
     environment: Union[Unset, Environment] = UNSET
@@ -25,40 +28,36 @@ class EngineMetadata:
 
     def to_dict(self) -> Dict[str, Any]:
         async_jobs_running = self.async_jobs_running
-        cache: Union[Unset, str] = UNSET
         if not isinstance(self.cache, Unset):
-            cache = self.cache.value
-        environment: Union[Unset, str] = UNSET
+            cache = self.cache
         if not isinstance(self.environment, Unset):
-            environment = self.environment.value
-        fs: Union[Unset, str] = UNSET
+            environment = self.environment
         if not isinstance(self.fs, Unset):
-            fs = self.fs.value
+            fs = self.fs
         git_hash = self.git_hash
-        pubsub: Union[Unset, str] = UNSET
         if not isinstance(self.pubsub, Unset):
-            pubsub = self.pubsub.value
+            pubsub = self.pubsub
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if async_jobs_running is not UNSET:
-            field_dict['async_jobs_running'] = async_jobs_running
+            field_dict["async_jobs_running"] = async_jobs_running
         if cache is not UNSET:
-            field_dict['cache'] = cache
+            field_dict["cache"] = cache
         if environment is not UNSET:
-            field_dict['environment'] = environment
+            field_dict["environment"] = environment
         if fs is not UNSET:
-            field_dict['fs'] = fs
+            field_dict["fs"] = fs
         if git_hash is not UNSET:
-            field_dict['git_hash'] = git_hash
+            field_dict["git_hash"] = git_hash
         if pubsub is not UNSET:
-            field_dict['pubsub'] = pubsub
+            field_dict["pubsub"] = pubsub
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         async_jobs_running = d.pop("async_jobs_running", UNSET)
 

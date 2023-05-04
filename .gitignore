@@ -24,3 +24,8 @@ dmypy.json
 
 poetry.lock
 testing
+
+# Sphinx documentation
+docs/_build/
+docs/_autosummary/
+docs/html/_sources/

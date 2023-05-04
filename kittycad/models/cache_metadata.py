@@ -1,15 +1,18 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="CacheMetadata")
+L = TypeVar("L", bound="CacheMetadata")
 
 
 @attr.s(auto_attribs=True)
 class CacheMetadata:
-    """ """
+    """Metadata about our cache.
+
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
+
     ok: Union[Unset, bool] = False
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -21,12 +24,12 @@ class CacheMetadata:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ok is not UNSET:
-            field_dict['ok'] = ok
+            field_dict["ok"] = ok
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
         d = src_dict.copy()
         ok = d.pop("ok", UNSET)
 

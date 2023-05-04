@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
@@ -6,12 +6,15 @@ from ..models.ai_plugin_api import AiPluginApi
 from ..models.ai_plugin_auth import AiPluginAuth
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="AiPluginManifest")
+N = TypeVar("N", bound="AiPluginManifest")
 
 
 @attr.s(auto_attribs=True)
 class AiPluginManifest:
-    """ """
+    """AI plugin manifest.
+
+    This is used for OpenAI's ChatGPT plugins. You can read more about them [here](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)."""  # noqa: E501
+
     api: Union[Unset, AiPluginApi] = UNSET
     auth: Union[Unset, AiPluginAuth] = UNSET
     contact_email: Union[Unset, str] = UNSET
@@ -26,12 +29,10 @@ class AiPluginManifest:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        api: Union[Unset, str] = UNSET
         if not isinstance(self.api, Unset):
-            api = self.api.value
-        auth: Union[Unset, str] = UNSET
+            api = self.api
         if not isinstance(self.auth, Unset):
-            auth = self.auth.value
+            auth = self.auth
         contact_email = self.contact_email
         description_for_human = self.description_for_human
         description_for_model = self.description_for_model
@@ -45,30 +46,30 @@ class AiPluginManifest:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if api is not UNSET:
-            field_dict['api'] = api
+            field_dict["api"] = api
         if auth is not UNSET:
-            field_dict['auth'] = auth
+            field_dict["auth"] = auth
         if contact_email is not UNSET:
-            field_dict['contact_email'] = contact_email
+            field_dict["contact_email"] = contact_email
         if description_for_human is not UNSET:
-            field_dict['description_for_human'] = description_for_human
+            field_dict["description_for_human"] = description_for_human
         if description_for_model is not UNSET:
-            field_dict['description_for_model'] = description_for_model
+            field_dict["description_for_model"] = description_for_model
         if legal_info_url is not UNSET:
-            field_dict['legal_info_url'] = legal_info_url
+            field_dict["legal_info_url"] = legal_info_url
         if logo_url is not UNSET:
-            field_dict['logo_url'] = logo_url
+            field_dict["logo_url"] = logo_url
         if name_for_human is not UNSET:
-            field_dict['name_for_human'] = name_for_human
+            field_dict["name_for_human"] = name_for_human
         if name_for_model is not UNSET:
-            field_dict['name_for_model'] = name_for_model
+            field_dict["name_for_model"] = name_for_model
         if schema_version is not UNSET:
-            field_dict['schema_version'] = schema_version
+            field_dict["schema_version"] = schema_version
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         _api = d.pop("api", UNSET)
         api: Union[Unset, AiPluginApi]

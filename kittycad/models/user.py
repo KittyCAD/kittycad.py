@@ -1,17 +1,18 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="User")
+H = TypeVar("H", bound="User")
 
 
 @attr.s(auto_attribs=True)
 class User:
-    """ """
+    """A user."""  # noqa: E501
+
     company: Union[Unset, str] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     discord: Union[Unset, str] = UNSET
@@ -53,36 +54,36 @@ class User:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if company is not UNSET:
-            field_dict['company'] = company
+            field_dict["company"] = company
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if discord is not UNSET:
-            field_dict['discord'] = discord
+            field_dict["discord"] = discord
         if email is not UNSET:
-            field_dict['email'] = email
+            field_dict["email"] = email
         if email_verified is not UNSET:
-            field_dict['email_verified'] = email_verified
+            field_dict["email_verified"] = email_verified
         if first_name is not UNSET:
-            field_dict['first_name'] = first_name
+            field_dict["first_name"] = first_name
         if github is not UNSET:
-            field_dict['github'] = github
+            field_dict["github"] = github
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if image is not UNSET:
-            field_dict['image'] = image
+            field_dict["image"] = image
         if last_name is not UNSET:
-            field_dict['last_name'] = last_name
+            field_dict["last_name"] = last_name
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
         if phone is not UNSET:
-            field_dict['phone'] = phone
+            field_dict["phone"] = phone
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

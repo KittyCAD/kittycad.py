@@ -1,8 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.drawing_outcome import DrawingOutcome
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="DrawingOutcomes")
@@ -10,7 +9,8 @@ T = TypeVar("T", bound="DrawingOutcomes")
 
 @attr.s(auto_attribs=True)
 class DrawingOutcomes:
-    """ """
+    """The result from a batch of drawing commands."""  # noqa: E501
+
     outcomes: Union[Unset, Any] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -22,7 +22,7 @@ class DrawingOutcomes:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if outcomes is not UNSET:
-            field_dict['outcomes'] = outcomes
+            field_dict["outcomes"] = outcomes
 
         return field_dict
 

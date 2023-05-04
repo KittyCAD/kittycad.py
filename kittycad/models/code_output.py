@@ -4,13 +4,15 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="CodeOutput")
+E = TypeVar("E", bound="CodeOutput")
 
 
 @attr.s(auto_attribs=True)
 class CodeOutput:
-    """ """
+    """Output of the code being executed."""  # noqa: E501
+
     from ..models.output_file import OutputFile
+
     output_files: Union[Unset, List[OutputFile]] = UNSET
     stderr: Union[Unset, str] = UNSET
     stdout: Union[Unset, str] = UNSET
@@ -19,6 +21,7 @@ class CodeOutput:
 
     def to_dict(self) -> Dict[str, Any]:
         from ..models.output_file import OutputFile
+
         output_files: Union[Unset, List[OutputFile]] = UNSET
         if not isinstance(self.output_files, Unset):
             output_files = self.output_files
@@ -29,18 +32,19 @@ class CodeOutput:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if output_files is not UNSET:
-            field_dict['output_files'] = output_files
+            field_dict["output_files"] = output_files
         if stderr is not UNSET:
-            field_dict['stderr'] = stderr
+            field_dict["stderr"] = stderr
         if stdout is not UNSET:
-            field_dict['stdout'] = stdout
+            field_dict["stdout"] = stdout
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         from ..models.output_file import OutputFile
+
         output_files = cast(List[OutputFile], d.pop("output_files", UNSET))
 
         stderr = d.pop("stderr", UNSET)

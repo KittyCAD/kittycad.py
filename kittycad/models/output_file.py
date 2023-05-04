@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="OutputFile")
+P = TypeVar("P", bound="OutputFile")
 
 
 @attr.s(auto_attribs=True)
 class OutputFile:
-    """ """
+    """Output file contents."""  # noqa: E501
+
     contents: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
 
@@ -23,14 +24,14 @@ class OutputFile:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if contents is not UNSET:
-            field_dict['contents'] = contents
+            field_dict["contents"] = contents
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
         d = src_dict.copy()
         contents = d.pop("contents", UNSET)
 

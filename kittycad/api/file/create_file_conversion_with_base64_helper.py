@@ -1,15 +1,10 @@
-from typing import Any, Dict, Optional, Union
-
 import base64
-import httpx
+from typing import Any, Optional, Union
 
+from ...api.file.create_file_conversion import asyncio as fc_asyncio, sync as fc_sync
 from ...client import Client
-from ...models import Error
-from ...models import FileConversion
-from ...models import FileImportFormat
-from ...models import FileExportFormat
-from ...types import Response
-from ...api.file.create_file_conversion import sync as fc_sync, asyncio as fc_asyncio
+from ...models import Error, FileConversion, FileExportFormat, FileImportFormat
+
 
 def sync(
     src_format: FileImportFormat,
@@ -30,7 +25,10 @@ def sync(
     )
 
     if isinstance(fc, FileConversion) and fc.output != "":
-        fc.output = base64.b64decode(fc.output)
+        if isinstance(fc.output, str):
+            b = base64.b64decode(fc.output)
+            # decode the bytes to a string
+            fc.output = b.decode("utf-8")
 
     return fc
 
@@ -47,13 +45,16 @@ async def asyncio(
     encoded = base64.b64encode(body)
 
     fc = await fc_asyncio(
-            src_format=src_format,
-            output_format=output_format,
-            body=encoded,
-            client=client,
-        )
+        src_format=src_format,
+        output_format=output_format,
+        body=encoded,
+        client=client,
+    )
 
     if isinstance(fc, FileConversion) and fc.output != "":
-        fc.output = base64.b64decode(fc.output)
+        if isinstance(fc.output, str):
+            b = base64.b64decode(fc.output)
+            # decode the bytes to a string
+            fc.output = b.decode("utf-8")
 
     return fc

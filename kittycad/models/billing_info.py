@@ -1,16 +1,17 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.new_address import NewAddress
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="BillingInfo")
+X = TypeVar("X", bound="BillingInfo")
 
 
 @attr.s(auto_attribs=True)
 class BillingInfo:
-    """ """
+    """The billing information for payments."""  # noqa: E501
+
     address: Union[Unset, NewAddress] = UNSET
     name: Union[Unset, str] = UNSET
     phone: Union[Unset, str] = UNSET
@@ -18,9 +19,8 @@ class BillingInfo:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        address: Union[Unset, str] = UNSET
         if not isinstance(self.address, Unset):
-            address = self.address.value
+            address = self.address
         name = self.name
         phone = self.phone
 
@@ -28,16 +28,16 @@ class BillingInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if address is not UNSET:
-            field_dict['address'] = address
+            field_dict["address"] = address
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
         if phone is not UNSET:
-            field_dict['phone'] = phone
+            field_dict["phone"] = phone
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[X], src_dict: Dict[str, Any]) -> X:
         d = src_dict.copy()
         _address = d.pop("address", UNSET)
         address: Union[Unset, NewAddress]

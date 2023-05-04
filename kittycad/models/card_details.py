@@ -1,16 +1,17 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.payment_method_card_checks import PaymentMethodCardChecks
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="CardDetails")
+B = TypeVar("B", bound="CardDetails")
 
 
 @attr.s(auto_attribs=True)
 class CardDetails:
-    """ """
+    """The card details of a payment method."""  # noqa: E501
+
     brand: Union[Unset, str] = UNSET
     checks: Union[Unset, PaymentMethodCardChecks] = UNSET
     country: Union[Unset, str] = UNSET
@@ -24,9 +25,8 @@ class CardDetails:
 
     def to_dict(self) -> Dict[str, Any]:
         brand = self.brand
-        checks: Union[Unset, str] = UNSET
         if not isinstance(self.checks, Unset):
-            checks = self.checks.value
+            checks = self.checks
         country = self.country
         exp_month = self.exp_month
         exp_year = self.exp_year
@@ -38,26 +38,26 @@ class CardDetails:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if brand is not UNSET:
-            field_dict['brand'] = brand
+            field_dict["brand"] = brand
         if checks is not UNSET:
-            field_dict['checks'] = checks
+            field_dict["checks"] = checks
         if country is not UNSET:
-            field_dict['country'] = country
+            field_dict["country"] = country
         if exp_month is not UNSET:
-            field_dict['exp_month'] = exp_month
+            field_dict["exp_month"] = exp_month
         if exp_year is not UNSET:
-            field_dict['exp_year'] = exp_year
+            field_dict["exp_year"] = exp_year
         if fingerprint is not UNSET:
-            field_dict['fingerprint'] = fingerprint
+            field_dict["fingerprint"] = fingerprint
         if funding is not UNSET:
-            field_dict['funding'] = funding
+            field_dict["funding"] = funding
         if last4 is not UNSET:
-            field_dict['last4'] = last4
+            field_dict["last4"] = last4
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         brand = d.pop("brand", UNSET)
 

@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Pong")
+E = TypeVar("E", bound="Pong")
 
 
 @attr.s(auto_attribs=True)
 class Pong:
-    """ """
+    """The response from the `/ping` endpoint."""  # noqa: E501
+
     message: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -21,12 +22,12 @@ class Pong:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if message is not UNSET:
-            field_dict['message'] = message
+            field_dict["message"] = message
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         message = d.pop("message", UNSET)
 

@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DrawingError")
+Y = TypeVar("Y", bound="DrawingError")
 
 
 @attr.s(auto_attribs=True)
 class DrawingError:
-    """ """
+    """Why a command submitted to the Drawing API failed."""  # noqa: E501
+
     error_code: Union[Unset, str] = UNSET
     external_message: Union[Unset, str] = UNSET
     internal_message: Union[Unset, str] = UNSET
@@ -27,18 +28,18 @@ class DrawingError:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if error_code is not UNSET:
-            field_dict['error_code'] = error_code
+            field_dict["error_code"] = error_code
         if external_message is not UNSET:
-            field_dict['external_message'] = external_message
+            field_dict["external_message"] = external_message
         if internal_message is not UNSET:
-            field_dict['internal_message'] = internal_message
+            field_dict["internal_message"] = internal_message
         if status_code is not UNSET:
-            field_dict['status_code'] = status_code
+            field_dict["status_code"] = status_code
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 

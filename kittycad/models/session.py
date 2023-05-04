@@ -1,18 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Session")
+L = TypeVar("L", bound="Session")
 
 
 @attr.s(auto_attribs=True)
 class Session:
-    """ """
+    """An authentication session.
+
+    For our UIs, these are automatically created by Next.js."""  # noqa: E501
+
     created_at: Union[Unset, datetime.datetime] = UNSET
     expires: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
@@ -40,22 +42,22 @@ class Session:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if expires is not UNSET:
-            field_dict['expires'] = expires
+            field_dict["expires"] = expires
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if session_token is not UNSET:
-            field_dict['session_token'] = session_token
+            field_dict["session_token"] = session_token
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+            field_dict["user_id"] = user_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]

@@ -1,18 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="CustomerBalance")
+N = TypeVar("N", bound="CustomerBalance")
 
 
 @attr.s(auto_attribs=True)
 class CustomerBalance:
-    """ """
+    """A balance for a user.
+
+    This holds information about the financial balance for the user."""  # noqa: E501
+
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
     monthly_credits_remaining: Union[Unset, float] = UNSET
@@ -42,26 +44,26 @@ class CustomerBalance:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if monthly_credits_remaining is not UNSET:
-            field_dict['monthly_credits_remaining'] = monthly_credits_remaining
+            field_dict["monthly_credits_remaining"] = monthly_credits_remaining
         if pre_pay_cash_remaining is not UNSET:
-            field_dict['pre_pay_cash_remaining'] = pre_pay_cash_remaining
+            field_dict["pre_pay_cash_remaining"] = pre_pay_cash_remaining
         if pre_pay_credits_remaining is not UNSET:
-            field_dict['pre_pay_credits_remaining'] = pre_pay_credits_remaining
+            field_dict["pre_pay_credits_remaining"] = pre_pay_credits_remaining
         if total_due is not UNSET:
-            field_dict['total_due'] = total_due
+            field_dict["total_due"] = total_due
         if updated_at is not UNSET:
-            field_dict['updated_at'] = updated_at
+            field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
-            field_dict['user_id'] = user_id
+            field_dict["user_id"] = user_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]

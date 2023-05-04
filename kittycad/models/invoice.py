@@ -8,12 +8,13 @@ from ..models.currency import Currency
 from ..models.invoice_status import InvoiceStatus
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Invoice")
+N = TypeVar("N", bound="Invoice")
 
 
 @attr.s(auto_attribs=True)
 class Invoice:
-    """ """
+    """An invoice."""  # noqa: E501
+
     amount_due: Union[Unset, float] = UNSET
     amount_paid: Union[Unset, float] = UNSET
     amount_remaining: Union[Unset, float] = UNSET
@@ -27,6 +28,7 @@ class Invoice:
     description: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     from ..models.invoice_line_item import InvoiceLineItem
+
     lines: Union[Unset, List[InvoiceLineItem]] = UNSET
     metadata: Union[Unset, Any] = UNSET
     number: Union[Unset, str] = UNSET
@@ -51,15 +53,15 @@ class Invoice:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        currency: Union[Unset, str] = UNSET
         if not isinstance(self.currency, Unset):
-            currency = self.currency.value
+            currency = self.currency
         customer_email = self.customer_email
         customer_id = self.customer_id
         default_payment_method = self.default_payment_method
         description = self.description
         id = self.id
         from ..models.invoice_line_item import InvoiceLineItem
+
         lines: Union[Unset, List[InvoiceLineItem]] = UNSET
         if not isinstance(self.lines, Unset):
             lines = self.lines
@@ -69,9 +71,8 @@ class Invoice:
         pdf = self.pdf
         receipt_number = self.receipt_number
         statement_descriptor = self.statement_descriptor
-        status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
-            status = self.status.value
+            status = self.status
         subtotal = self.subtotal
         tax = self.tax
         total = self.total
@@ -81,58 +82,58 @@ class Invoice:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if amount_due is not UNSET:
-            field_dict['amount_due'] = amount_due
+            field_dict["amount_due"] = amount_due
         if amount_paid is not UNSET:
-            field_dict['amount_paid'] = amount_paid
+            field_dict["amount_paid"] = amount_paid
         if amount_remaining is not UNSET:
-            field_dict['amount_remaining'] = amount_remaining
+            field_dict["amount_remaining"] = amount_remaining
         if attempt_count is not UNSET:
-            field_dict['attempt_count'] = attempt_count
+            field_dict["attempt_count"] = attempt_count
         if attempted is not UNSET:
-            field_dict['attempted'] = attempted
+            field_dict["attempted"] = attempted
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if currency is not UNSET:
-            field_dict['currency'] = currency
+            field_dict["currency"] = currency
         if customer_email is not UNSET:
-            field_dict['customer_email'] = customer_email
+            field_dict["customer_email"] = customer_email
         if customer_id is not UNSET:
-            field_dict['customer_id'] = customer_id
+            field_dict["customer_id"] = customer_id
         if default_payment_method is not UNSET:
-            field_dict['default_payment_method'] = default_payment_method
+            field_dict["default_payment_method"] = default_payment_method
         if description is not UNSET:
-            field_dict['description'] = description
+            field_dict["description"] = description
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if lines is not UNSET:
-            field_dict['lines'] = lines
+            field_dict["lines"] = lines
         if metadata is not UNSET:
-            field_dict['metadata'] = metadata
+            field_dict["metadata"] = metadata
         if number is not UNSET:
-            field_dict['number'] = number
+            field_dict["number"] = number
         if paid is not UNSET:
-            field_dict['paid'] = paid
+            field_dict["paid"] = paid
         if pdf is not UNSET:
-            field_dict['pdf'] = pdf
+            field_dict["pdf"] = pdf
         if receipt_number is not UNSET:
-            field_dict['receipt_number'] = receipt_number
+            field_dict["receipt_number"] = receipt_number
         if statement_descriptor is not UNSET:
-            field_dict['statement_descriptor'] = statement_descriptor
+            field_dict["statement_descriptor"] = statement_descriptor
         if status is not UNSET:
-            field_dict['status'] = status
+            field_dict["status"] = status
         if subtotal is not UNSET:
-            field_dict['subtotal'] = subtotal
+            field_dict["subtotal"] = subtotal
         if tax is not UNSET:
-            field_dict['tax'] = tax
+            field_dict["tax"] = tax
         if total is not UNSET:
-            field_dict['total'] = total
+            field_dict["total"] = total
         if url is not UNSET:
-            field_dict['url'] = url
+            field_dict["url"] = url
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         amount_due = d.pop("amount_due", UNSET)
 
@@ -169,6 +170,7 @@ class Invoice:
         id = d.pop("id", UNSET)
 
         from ..models.invoice_line_item import InvoiceLineItem
+
         lines = cast(List[InvoiceLineItem], d.pop("lines", UNSET))
 
         metadata = d.pop("metadata", UNSET)

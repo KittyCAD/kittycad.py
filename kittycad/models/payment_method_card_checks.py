@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PaymentMethodCardChecks")
+V = TypeVar("V", bound="PaymentMethodCardChecks")
 
 
 @attr.s(auto_attribs=True)
 class PaymentMethodCardChecks:
-    """ """
+    """Card checks."""  # noqa: E501
+
     address_line1_check: Union[Unset, str] = UNSET
     address_postal_code_check: Union[Unset, str] = UNSET
     cvc_check: Union[Unset, str] = UNSET
@@ -25,16 +26,16 @@ class PaymentMethodCardChecks:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if address_line1_check is not UNSET:
-            field_dict['address_line1_check'] = address_line1_check
+            field_dict["address_line1_check"] = address_line1_check
         if address_postal_code_check is not UNSET:
-            field_dict['address_postal_code_check'] = address_postal_code_check
+            field_dict["address_postal_code_check"] = address_postal_code_check
         if cvc_check is not UNSET:
-            field_dict['cvc_check'] = cvc_check
+            field_dict["cvc_check"] = cvc_check
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         address_line1_check = d.pop("address_line1_check", UNSET)
 

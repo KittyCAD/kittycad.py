@@ -4,13 +4,15 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ApiCallWithPriceResultsPage")
+A = TypeVar("A", bound="ApiCallWithPriceResultsPage")
 
 
 @attr.s(auto_attribs=True)
 class ApiCallWithPriceResultsPage:
-    """ """
+    """A single page of results"""  # noqa: E501
+
     from ..models.api_call_with_price import ApiCallWithPrice
+
     items: Union[Unset, List[ApiCallWithPrice]] = UNSET
     next_page: Union[Unset, str] = UNSET
 
@@ -18,6 +20,7 @@ class ApiCallWithPriceResultsPage:
 
     def to_dict(self) -> Dict[str, Any]:
         from ..models.api_call_with_price import ApiCallWithPrice
+
         items: Union[Unset, List[ApiCallWithPrice]] = UNSET
         if not isinstance(self.items, Unset):
             items = self.items
@@ -27,16 +30,17 @@ class ApiCallWithPriceResultsPage:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if items is not UNSET:
-            field_dict['items'] = items
+            field_dict["items"] = items
         if next_page is not UNSET:
-            field_dict['next_page'] = next_page
+            field_dict["next_page"] = next_page
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[A], src_dict: Dict[str, Any]) -> A:
         d = src_dict.copy()
         from ..models.api_call_with_price import ApiCallWithPrice
+
         items = cast(List[ApiCallWithPrice], d.pop("items", UNSET))
 
         next_page = d.pop("next_page", UNSET)

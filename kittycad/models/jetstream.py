@@ -1,18 +1,19 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.jetstream_config import JetstreamConfig
-from ..models.meta_cluster_info import MetaClusterInfo
 from ..models.jetstream_stats import JetstreamStats
+from ..models.meta_cluster_info import MetaClusterInfo
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Jetstream")
+C = TypeVar("C", bound="Jetstream")
 
 
 @attr.s(auto_attribs=True)
 class Jetstream:
-    """ """
+    """Jetstream information."""  # noqa: E501
+
     config: Union[Unset, JetstreamConfig] = UNSET
     meta: Union[Unset, MetaClusterInfo] = UNSET
     stats: Union[Unset, JetstreamStats] = UNSET
@@ -20,30 +21,27 @@ class Jetstream:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        config: Union[Unset, str] = UNSET
         if not isinstance(self.config, Unset):
-            config = self.config.value
-        meta: Union[Unset, str] = UNSET
+            config = self.config
         if not isinstance(self.meta, Unset):
-            meta = self.meta.value
-        stats: Union[Unset, str] = UNSET
+            meta = self.meta
         if not isinstance(self.stats, Unset):
-            stats = self.stats.value
+            stats = self.stats
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if config is not UNSET:
-            field_dict['config'] = config
+            field_dict["config"] = config
         if meta is not UNSET:
-            field_dict['meta'] = meta
+            field_dict["meta"] = meta
         if stats is not UNSET:
-            field_dict['stats'] = stats
+            field_dict["stats"] = stats
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
         d = src_dict.copy()
         _config = d.pop("config", UNSET)
         config: Union[Unset, JetstreamConfig]

@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="LeafNode")
+Q = TypeVar("Q", bound="LeafNode")
 
 
 @attr.s(auto_attribs=True)
 class LeafNode:
-    """ """
+    """Leaf node information."""  # noqa: E501
+
     auth_timeout: Union[Unset, int] = UNSET
     host: Union[Unset, str] = UNSET
     port: Union[Unset, int] = UNSET
@@ -27,18 +28,18 @@ class LeafNode:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if auth_timeout is not UNSET:
-            field_dict['auth_timeout'] = auth_timeout
+            field_dict["auth_timeout"] = auth_timeout
         if host is not UNSET:
-            field_dict['host'] = host
+            field_dict["host"] = host
         if port is not UNSET:
-            field_dict['port'] = port
+            field_dict["port"] = port
         if tls_timeout is not UNSET:
-            field_dict['tls_timeout'] = tls_timeout
+            field_dict["tls_timeout"] = tls_timeout
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 

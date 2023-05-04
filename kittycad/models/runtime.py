@@ -4,12 +4,13 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Runtime")
+S = TypeVar("S", bound="Runtime")
 
 
 @attr.s(auto_attribs=True)
 class Runtime:
-    """ """
+    """Runtime describes an [OCI compliant](https://github.com/opencontainers/runtime-spec) runtime.  The runtime is invoked by the daemon via the `containerd` daemon. OCI runtimes act as an interface to the Linux kernel namespaces, cgroups, and SELinux."""  # noqa: E501
+
     path: Union[Unset, str] = UNSET
     runtime_args: Union[Unset, List[str]] = UNSET
 
@@ -25,14 +26,14 @@ class Runtime:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if path is not UNSET:
-            field_dict['path'] = path
+            field_dict["path"] = path
         if runtime_args is not UNSET:
-            field_dict['runtime_args'] = runtime_args
+            field_dict["runtime_args"] = runtime_args
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         path = d.pop("path", UNSET)
 

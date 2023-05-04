@@ -1,16 +1,17 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.ai_plugin_api_type import AiPluginApiType
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="AiPluginApi")
+S = TypeVar("S", bound="AiPluginApi")
 
 
 @attr.s(auto_attribs=True)
 class AiPluginApi:
-    """ """
+    """AI plugin api information."""  # noqa: E501
+
     is_user_authenticated: Union[Unset, bool] = False
     type: Union[Unset, AiPluginApiType] = UNSET
     url: Union[Unset, str] = UNSET
@@ -19,25 +20,24 @@ class AiPluginApi:
 
     def to_dict(self) -> Dict[str, Any]:
         is_user_authenticated = self.is_user_authenticated
-        type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
-            type = self.type.value
+            type = self.type
         url = self.url
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if is_user_authenticated is not UNSET:
-            field_dict['is_user_authenticated'] = is_user_authenticated
+            field_dict["is_user_authenticated"] = is_user_authenticated
         if type is not UNSET:
-            field_dict['type'] = type
+            field_dict["type"] = type
         if url is not UNSET:
-            field_dict['url'] = url
+            field_dict["url"] = url
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         is_user_authenticated = d.pop("is_user_authenticated", UNSET)
 

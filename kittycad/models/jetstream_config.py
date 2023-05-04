@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="JetstreamConfig")
+S = TypeVar("S", bound="JetstreamConfig")
 
 
 @attr.s(auto_attribs=True)
 class JetstreamConfig:
-    """ """
+    """Jetstream configuration."""  # noqa: E501
+
     domain: Union[Unset, str] = UNSET
     max_memory: Union[Unset, int] = UNSET
     max_storage: Union[Unset, int] = UNSET
@@ -27,18 +28,18 @@ class JetstreamConfig:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if domain is not UNSET:
-            field_dict['domain'] = domain
+            field_dict["domain"] = domain
         if max_memory is not UNSET:
-            field_dict['max_memory'] = max_memory
+            field_dict["max_memory"] = max_memory
         if max_storage is not UNSET:
-            field_dict['max_storage'] = max_storage
+            field_dict["max_storage"] = max_storage
         if store_dir is not UNSET:
-            field_dict['store_dir'] = store_dir
+            field_dict["store_dir"] = store_dir
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         domain = d.pop("domain", UNSET)
 

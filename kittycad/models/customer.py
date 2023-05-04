@@ -1,19 +1,20 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.new_address import NewAddress
 from ..models.currency import Currency
+from ..models.new_address import NewAddress
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Customer")
+M = TypeVar("M", bound="Customer")
 
 
 @attr.s(auto_attribs=True)
 class Customer:
-    """ """
+    """The resource representing a payment "Customer"."""  # noqa: E501
+
     address: Union[Unset, NewAddress] = UNSET
     balance: Union[Unset, float] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -28,16 +29,14 @@ class Customer:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        address: Union[Unset, str] = UNSET
         if not isinstance(self.address, Unset):
-            address = self.address.value
+            address = self.address
         balance = self.balance
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        currency: Union[Unset, str] = UNSET
         if not isinstance(self.currency, Unset):
-            currency = self.currency.value
+            currency = self.currency
         delinquent = self.delinquent
         email = self.email
         id = self.id
@@ -49,30 +48,30 @@ class Customer:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if address is not UNSET:
-            field_dict['address'] = address
+            field_dict["address"] = address
         if balance is not UNSET:
-            field_dict['balance'] = balance
+            field_dict["balance"] = balance
         if created_at is not UNSET:
-            field_dict['created_at'] = created_at
+            field_dict["created_at"] = created_at
         if currency is not UNSET:
-            field_dict['currency'] = currency
+            field_dict["currency"] = currency
         if delinquent is not UNSET:
-            field_dict['delinquent'] = delinquent
+            field_dict["delinquent"] = delinquent
         if email is not UNSET:
-            field_dict['email'] = email
+            field_dict["email"] = email
         if id is not UNSET:
-            field_dict['id'] = id
+            field_dict["id"] = id
         if metadata is not UNSET:
-            field_dict['metadata'] = metadata
+            field_dict["metadata"] = metadata
         if name is not UNSET:
-            field_dict['name'] = name
+            field_dict["name"] = name
         if phone is not UNSET:
-            field_dict['phone'] = phone
+            field_dict["phone"] = phone
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
         d = src_dict.copy()
         _address = d.pop("address", UNSET)
         address: Union[Unset, NewAddress]

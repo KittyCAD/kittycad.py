@@ -1,15 +1,14 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Mesh")
+F = TypeVar("F", bound="Mesh")
 
 
 @attr.s(auto_attribs=True)
 class Mesh:
-    """ """
     mesh: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -21,12 +20,12 @@ class Mesh:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if mesh is not UNSET:
-            field_dict['mesh'] = mesh
+            field_dict["mesh"] = mesh
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
         d = src_dict.copy()
         mesh = d.pop("mesh", UNSET)
 

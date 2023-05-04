@@ -4,12 +4,15 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PluginsInfo")
+R = TypeVar("R", bound="PluginsInfo")
 
 
 @attr.s(auto_attribs=True)
 class PluginsInfo:
-    """ """
+    """Available plugins per type.
+
+    **Note**: Only unmanaged (V1) plugins are included in this list. V1 plugins are \"lazily\" loaded, and are not returned in this list if there is no resource using the plugin."""  # noqa: E501
+
     authorization: Union[Unset, List[str]] = UNSET
     log: Union[Unset, List[str]] = UNSET
     network: Union[Unset, List[str]] = UNSET
@@ -35,18 +38,18 @@ class PluginsInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if authorization is not UNSET:
-            field_dict['authorization'] = authorization
+            field_dict["authorization"] = authorization
         if log is not UNSET:
-            field_dict['log'] = log
+            field_dict["log"] = log
         if network is not UNSET:
-            field_dict['network'] = network
+            field_dict["network"] = network
         if volume is not UNSET:
-            field_dict['volume'] = volume
+            field_dict["volume"] = volume
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
         d = src_dict.copy()
         authorization = cast(List[str], d.pop("authorization", UNSET))
 

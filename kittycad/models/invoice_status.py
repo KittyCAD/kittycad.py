@@ -2,12 +2,20 @@ from enum import Enum
 
 
 class InvoiceStatus(str, Enum):
-    DELETED = 'deleted'
-    DRAFT = 'draft'
-    OPEN = 'open'
-    PAID = 'paid'
-    UNCOLLECTIBLE = 'uncollectible'
-    VOID = 'void'
+    """An enum representing the possible values of an `Invoice`'s `status` field."""  # noqa: E501
+
+    """# Deleted. """  # noqa: E501
+    DELETED = "deleted"
+    """# Draft. """  # noqa: E501
+    DRAFT = "draft"
+    """# Open. """  # noqa: E501
+    OPEN = "open"
+    """# Paid. """  # noqa: E501
+    PAID = "paid"
+    """# Uncollectible. """  # noqa: E501
+    UNCOLLECTIBLE = "uncollectible"
+    """# Void. """  # noqa: E501
+    VOID = "void"
 
     def __str__(self) -> str:
         return str(self.value)

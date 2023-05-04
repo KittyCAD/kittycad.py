@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="EmailAuthenticationForm")
+M = TypeVar("M", bound="EmailAuthenticationForm")
 
 
 @attr.s(auto_attribs=True)
 class EmailAuthenticationForm:
-    """ """
+    """The body of the form for email authentication."""  # noqa: E501
+
     callback_url: Union[Unset, str] = UNSET
     email: Union[Unset, str] = UNSET
 
@@ -23,14 +24,14 @@ class EmailAuthenticationForm:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if callback_url is not UNSET:
-            field_dict['callback_url'] = callback_url
+            field_dict["callback_url"] = callback_url
         if email is not UNSET:
-            field_dict['email'] = email
+            field_dict["email"] = email
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
         d = src_dict.copy()
         callback_url = d.pop("callback_url", UNSET)
 

@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UpdateUser")
+N = TypeVar("N", bound="UpdateUser")
 
 
 @attr.s(auto_attribs=True)
 class UpdateUser:
-    """ """
+    """The user-modifiable parts of a User."""  # noqa: E501
+
     company: Union[Unset, str] = UNSET
     discord: Union[Unset, str] = UNSET
     first_name: Union[Unset, str] = UNSET
@@ -31,22 +32,22 @@ class UpdateUser:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if company is not UNSET:
-            field_dict['company'] = company
+            field_dict["company"] = company
         if discord is not UNSET:
-            field_dict['discord'] = discord
+            field_dict["discord"] = discord
         if first_name is not UNSET:
-            field_dict['first_name'] = first_name
+            field_dict["first_name"] = first_name
         if github is not UNSET:
-            field_dict['github'] = github
+            field_dict["github"] = github
         if last_name is not UNSET:
-            field_dict['last_name'] = last_name
+            field_dict["last_name"] = last_name
         if phone is not UNSET:
-            field_dict['phone'] = phone
+            field_dict["phone"] = phone
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

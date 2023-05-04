@@ -1,0 +1,38 @@
+name: Black
+on:
+  push:
+    branches: main
+    paths:
+      - '**.py'
+      - .github/workflows/black.yml
+      - 'pyproject.toml'
+  pull_request:
+    paths:
+      - '**.py'
+      - .github/workflows/black.yml
+      - 'pyproject.toml'
+jobs:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+
+      # Installation instructions are from: https://python-poetry.org/docs/
+      - name: Install dependencies
+        shell: bash
+        run: |
+          pip install \
+          poetry
+
+      - name: Build
+        shell: bash
+        run: |
+          poetry install
+          poetry build
+
+      - name: Run black
+        shell: bash
+        run: |
+          poetry run black --check --diff .

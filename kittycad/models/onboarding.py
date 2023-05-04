@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Onboarding")
+B = TypeVar("B", bound="Onboarding")
 
 
 @attr.s(auto_attribs=True)
 class Onboarding:
-    """ """
+    """Onboarding details"""  # noqa: E501
+
     first_call_from_their_machine_date: Union[Unset, str] = UNSET
     first_litterbox_execute_date: Union[Unset, str] = UNSET
     first_token_date: Union[Unset, str] = UNSET
@@ -25,22 +26,24 @@ class Onboarding:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if first_call_from_their_machine_date is not UNSET:
-            field_dict['first_call_from_their_machine_date'] = first_call_from_their_machine_date
+            field_dict[
+                "first_call_from_their_machine_date"
+            ] = first_call_from_their_machine_date
         if first_litterbox_execute_date is not UNSET:
-            field_dict['first_litterbox_execute_date'] = first_litterbox_execute_date
+            field_dict["first_litterbox_execute_date"] = first_litterbox_execute_date
         if first_token_date is not UNSET:
-            field_dict['first_token_date'] = first_token_date
+            field_dict["first_token_date"] = first_token_date
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         first_call_from_their_machine_date = d.pop(
-            "first_call_from_their_machine_date", UNSET)
+            "first_call_from_their_machine_date", UNSET
+        )
 
-        first_litterbox_execute_date = d.pop(
-            "first_litterbox_execute_date", UNSET)
+        first_litterbox_execute_date = d.pop("first_litterbox_execute_date", UNSET)
 
         first_token_date = d.pop("first_token_date", UNSET)
 

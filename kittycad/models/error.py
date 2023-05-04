@@ -1,15 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Error")
+S = TypeVar("S", bound="Error")
 
 
 @attr.s(auto_attribs=True)
 class Error:
-    """ """
+    """Error information from a response."""  # noqa: E501
+
     error_code: Union[Unset, str] = UNSET
     message: Union[Unset, str] = UNSET
     request_id: Union[Unset, str] = UNSET
@@ -25,16 +26,16 @@ class Error:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if error_code is not UNSET:
-            field_dict['error_code'] = error_code
+            field_dict["error_code"] = error_code
         if message is not UNSET:
-            field_dict['message'] = message
+            field_dict["message"] = message
         if request_id is not UNSET:
-            field_dict['request_id'] = request_id
+            field_dict["request_id"] = request_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 

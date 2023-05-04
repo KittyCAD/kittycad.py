@@ -2,15 +2,15 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.index_info import IndexInfo
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="RegistryServiceConfig")
+M = TypeVar("M", bound="RegistryServiceConfig")
 
 
 @attr.s(auto_attribs=True)
 class RegistryServiceConfig:
-    """ """
+    """RegistryServiceConfig stores daemon registry services configuration."""  # noqa: E501
+
     allow_nondistributable_artifacts_cid_rs: Union[Unset, List[str]] = UNSET
     allow_nondistributable_artifacts_hostnames: Union[Unset, List[str]] = UNSET
     index_configs: Union[Unset, Any] = UNSET
@@ -20,16 +20,16 @@ class RegistryServiceConfig:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        allow_nondistributable_artifacts_cid_rs: Union[Unset,
-                                                       List[str]] = UNSET
+        allow_nondistributable_artifacts_cid_rs: Union[Unset, List[str]] = UNSET
         if not isinstance(self.allow_nondistributable_artifacts_cid_rs, Unset):
-            allow_nondistributable_artifacts_cid_rs = self.allow_nondistributable_artifacts_cid_rs
-        allow_nondistributable_artifacts_hostnames: Union[Unset,
-                                                          List[str]] = UNSET
-        if not isinstance(
-                self.allow_nondistributable_artifacts_hostnames,
-                Unset):
-            allow_nondistributable_artifacts_hostnames = self.allow_nondistributable_artifacts_hostnames
+            allow_nondistributable_artifacts_cid_rs = (
+                self.allow_nondistributable_artifacts_cid_rs
+            )
+        allow_nondistributable_artifacts_hostnames: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.allow_nondistributable_artifacts_hostnames, Unset):
+            allow_nondistributable_artifacts_hostnames = (
+                self.allow_nondistributable_artifacts_hostnames
+            )
         index_configs = self.index_configs
         insecure_registry_cid_rs: Union[Unset, List[str]] = UNSET
         if not isinstance(self.insecure_registry_cid_rs, Unset):
@@ -42,31 +42,37 @@ class RegistryServiceConfig:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if allow_nondistributable_artifacts_cid_rs is not UNSET:
-            field_dict['allow_nondistributable_artifacts_cid_rs'] = allow_nondistributable_artifacts_cid_rs
+            field_dict[
+                "allow_nondistributable_artifacts_cid_rs"
+            ] = allow_nondistributable_artifacts_cid_rs
         if allow_nondistributable_artifacts_hostnames is not UNSET:
-            field_dict['allow_nondistributable_artifacts_hostnames'] = allow_nondistributable_artifacts_hostnames
+            field_dict[
+                "allow_nondistributable_artifacts_hostnames"
+            ] = allow_nondistributable_artifacts_hostnames
         if index_configs is not UNSET:
-            field_dict['index_configs'] = index_configs
+            field_dict["index_configs"] = index_configs
         if insecure_registry_cid_rs is not UNSET:
-            field_dict['insecure_registry_cid_rs'] = insecure_registry_cid_rs
+            field_dict["insecure_registry_cid_rs"] = insecure_registry_cid_rs
         if mirrors is not UNSET:
-            field_dict['mirrors'] = mirrors
+            field_dict["mirrors"] = mirrors
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
         d = src_dict.copy()
         allow_nondistributable_artifacts_cid_rs = cast(
-            List[str], d.pop("allow_nondistributable_artifacts_cid_rs", UNSET))
+            List[str], d.pop("allow_nondistributable_artifacts_cid_rs", UNSET)
+        )
 
         allow_nondistributable_artifacts_hostnames = cast(
-            List[str], d.pop("allow_nondistributable_artifacts_hostnames", UNSET))
+            List[str], d.pop("allow_nondistributable_artifacts_hostnames", UNSET)
+        )
 
         index_configs = d.pop("index_configs", UNSET)
         insecure_registry_cid_rs = cast(
-            List[str], d.pop(
-                "insecure_registry_cid_rs", UNSET))
+            List[str], d.pop("insecure_registry_cid_rs", UNSET)
+        )
 
         mirrors = cast(List[str], d.pop("mirrors", UNSET))
 
