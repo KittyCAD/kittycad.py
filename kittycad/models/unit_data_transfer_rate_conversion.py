@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.unit_data_transfer_rate_format import UnitDataTransferRateFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnitDataTransferRateConversion")
+G = TypeVar("G", bound="UnitDataTransferRateConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class UnitDataTransferRateConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

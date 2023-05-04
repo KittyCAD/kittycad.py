@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="CodeOutput")
+B = TypeVar("B", bound="CodeOutput")
 
 
 @attr.s(auto_attribs=True)
@@ -41,7 +41,7 @@ class CodeOutput:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         from ..models.output_file import OutputFile
 

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ApiTokenResultsPage")
+A = TypeVar("A", bound="ApiTokenResultsPage")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class ApiTokenResultsPage:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[A], src_dict: Dict[str, Any]) -> A:
         d = src_dict.copy()
         from ..models.api_token import ApiToken
 

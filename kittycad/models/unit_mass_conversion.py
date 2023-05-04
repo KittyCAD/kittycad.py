@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.unit_mass_format import UnitMassFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnitMassConversion")
+L = TypeVar("L", bound="UnitMassConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class UnitMassConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

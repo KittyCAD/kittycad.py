@@ -5,7 +5,7 @@ import attr
 from ..models.country_code import CountryCode
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="NewAddress")
+U = TypeVar("U", bound="NewAddress")
 
 
 @attr.s(auto_attribs=True)
@@ -53,7 +53,7 @@ class NewAddress:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
         d = src_dict.copy()
         city = d.pop("city", UNSET)
 

@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.unit_voltage_format import UnitVoltageFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnitVoltageConversion")
+J = TypeVar("J", bound="UnitVoltageConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class UnitVoltageConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

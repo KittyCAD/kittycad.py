@@ -9,7 +9,7 @@ from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileConversion")
+V = TypeVar("V", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -83,7 +83,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

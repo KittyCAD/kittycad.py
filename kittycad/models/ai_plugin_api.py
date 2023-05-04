@@ -5,7 +5,7 @@ import attr
 from ..models.ai_plugin_api_type import AiPluginApiType
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="AiPluginApi")
+C = TypeVar("C", bound="AiPluginApi")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class AiPluginApi:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
         d = src_dict.copy()
         is_user_authenticated = d.pop("is_user_authenticated", UNSET)
 

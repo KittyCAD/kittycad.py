@@ -11,7 +11,7 @@ from ..models.file_system_metadata import FileSystemMetadata
 from ..models.point_e_metadata import PointEMetadata
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Metadata")
+L = TypeVar("L", bound="Metadata")
 
 
 @attr.s(auto_attribs=True)
@@ -71,7 +71,7 @@ class Metadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
         d = src_dict.copy()
         _cache = d.pop("cache", UNSET)
         cache: Union[Unset, CacheMetadata]

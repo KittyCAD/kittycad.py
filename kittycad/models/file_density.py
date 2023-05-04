@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileDensity")
+V = TypeVar("V", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -81,7 +81,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

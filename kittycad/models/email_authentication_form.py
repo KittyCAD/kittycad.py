@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="EmailAuthenticationForm")
+Q = TypeVar("Q", bound="EmailAuthenticationForm")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class EmailAuthenticationForm:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
         d = src_dict.copy()
         callback_url = d.pop("callback_url", UNSET)
 

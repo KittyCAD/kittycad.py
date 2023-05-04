@@ -6,7 +6,7 @@ from ..models.ai_plugin_api import AiPluginApi
 from ..models.ai_plugin_auth import AiPluginAuth
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="AiPluginManifest")
+D = TypeVar("D", bound="AiPluginManifest")
 
 
 @attr.s(auto_attribs=True)
@@ -69,7 +69,7 @@ class AiPluginManifest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[D], src_dict: Dict[str, Any]) -> D:
         d = src_dict.copy()
         _api = d.pop("api", UNSET)
         api: Union[Unset, AiPluginApi]

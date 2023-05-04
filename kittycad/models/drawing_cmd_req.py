@@ -6,7 +6,7 @@ from ..models.drawing_cmd import DrawingCmd
 from ..models.drawing_cmd_id import DrawingCmdId
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DrawingCmdReq")
+U = TypeVar("U", bound="DrawingCmdReq")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class DrawingCmdReq:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, DrawingCmd]

@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="FileSurfaceArea")
+R = TypeVar("R", bound="FileSurfaceArea")
 
 
 @attr.s(auto_attribs=True)
@@ -77,7 +77,7 @@ class FileSurfaceArea:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

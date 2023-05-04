@@ -5,7 +5,7 @@ import attr
 from ..models.drawing_cmd_id import DrawingCmdId
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DrawCircle")
+H = TypeVar("H", bound="DrawCircle")
 
 
 @attr.s(auto_attribs=True)
@@ -32,7 +32,7 @@ class DrawCircle:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         center = cast(List[float], d.pop("center", UNSET))
 
@@ -63,7 +63,7 @@ class DrawCircle:
         return key in self.additional_properties
 
 
-T = TypeVar("T", bound="Extrude")
+X = TypeVar("X", bound="Extrude")
 
 
 @attr.s(auto_attribs=True)
@@ -89,7 +89,7 @@ class Extrude:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[X], src_dict: Dict[str, Any]) -> X:
         d = src_dict.copy()
         distance = d.pop("distance", UNSET)
 

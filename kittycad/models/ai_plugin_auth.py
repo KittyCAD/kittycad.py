@@ -6,7 +6,7 @@ from ..models.ai_plugin_auth_type import AiPluginAuthType
 from ..models.ai_plugin_http_auth_type import AiPluginHttpAuthType
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="AiPluginAuth")
+Z = TypeVar("Z", bound="AiPluginAuth")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class AiPluginAuth:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[Z], src_dict: Dict[str, Any]) -> Z:
         d = src_dict.copy()
         _authorization_type = d.pop("authorization_type", UNSET)
         authorization_type: Union[Unset, AiPluginHttpAuthType]

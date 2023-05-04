@@ -2,6 +2,7 @@
 import io
 import json
 import os
+import random
 import re
 from typing import List, Optional
 
@@ -1109,7 +1110,9 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
 
     f.write("from ..types import UNSET, Unset\n")
     f.write("\n")
-    f.write('T = TypeVar("T", bound="' + name + '")\n')
+
+    type_letter = randletter()
+    f.write(type_letter + ' = TypeVar("' + type_letter + '", bound="' + name + '")\n')
     f.write("\n")
     f.write("@attr.s(auto_attribs=True)\n")
     f.write("class " + name + ":\n")
@@ -1153,7 +1156,13 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     # Now let's write the from_dict method.
     f.write("\n")
     f.write("\t@classmethod\n")
-    f.write("\tdef from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:\n")
+    f.write(
+        "\tdef from_dict(cls: Type["
+        + type_letter
+        + "], src_dict: Dict[str, Any]) -> "
+        + type_letter
+        + ":\n"
+    )
     f.write("\t\td = src_dict.copy()\n")
 
     # Iternate over the properties.
@@ -1803,6 +1812,15 @@ def getOneOfRefType(schema: dict) -> str:
         return t
 
     raise Exception("Cannot get oneOf ref type for schema: ", schema)
+
+
+# generate a random letter in the range A - Z
+# do not use O or I.
+def randletter():
+    letter = chr(random.randint(ord("A"), ord("Z")))
+    while letter == "I" or letter == "O":
+        letter = chr(random.randint(ord("A"), ord("Z")))
+    return letter
 
 
 if __name__ == "__main__":

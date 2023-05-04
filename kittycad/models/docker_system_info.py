@@ -10,7 +10,7 @@ from ..models.system_info_cgroup_version_enum import SystemInfoCgroupVersionEnum
 from ..models.system_info_isolation_enum import SystemInfoIsolationEnum
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DockerSystemInfo")
+K = TypeVar("K", bound="DockerSystemInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -293,7 +293,7 @@ class DockerSystemInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
         d = src_dict.copy()
         architecture = d.pop("architecture", UNSET)
 
