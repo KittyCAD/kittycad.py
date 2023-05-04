@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta property="og:title" content="kittycad.api.executor.create_file_execution" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="modules/kittycad.api.executor.create_file_execution.html" />
+  <meta property="og:description" content="Functions" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.api.executor.create_file_execution &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +23,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -108,40 +117,110 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio</span></code>(lang, body, *, client[, output])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.api.executor.create_file_execution.asyncio" title="kittycad.api.executor.create_file_execution.asyncio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio</span></code></a>(lang, body, *, client[, output])</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code>, <a class="reference external" href="https://python.readthedocs.io/en/latest/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
 </dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio_detailed</span></code>(lang, body, *, client[, output])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.api.executor.create_file_execution.asyncio_detailed" title="kittycad.api.executor.create_file_execution.asyncio_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio_detailed</span></code></a>(lang, body, *, client[, output])</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code>]]</p>
+<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</p>
 </dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code>(lang, body, *, client[, output])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.api.executor.create_file_execution.sync" title="kittycad.api.executor.create_file_execution.sync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code></a>(lang, body, *, client[, output])</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code>, <a class="reference external" href="https://python.readthedocs.io/en/latest/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
 </dd>
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_detailed</span></code>(lang, body, *, client[, output])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.api.executor.create_file_execution.sync_detailed" title="kittycad.api.executor.create_file_execution.sync_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_detailed</span></code></a>(lang, body, *, client[, output])</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://python.readthedocs.io/en/latest/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code>]]</p>
+<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</p>
 </dd>
 </dl>
 </p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py function">
+<dt class="sig sig-object py" id="kittycad.api.executor.create_file_execution._build_response">
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_file_execution.</span></span><span class="sig-name descname"><span class="pre">_build_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_file_execution.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_file_execution.html#_build_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_file_execution._build_response" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kittycad.api.executor.create_file_execution._get_kwargs">
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_file_execution.</span></span><span class="sig-name descname"><span class="pre">_get_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lang</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_file_execution.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_file_execution.html#_get_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_file_execution._get_kwargs" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kittycad.api.executor.create_file_execution._parse_response">
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_file_execution.</span></span><span class="sig-name descname"><span class="pre">_parse_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_file_execution.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_file_execution.html#_parse_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_file_execution._parse_response" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kittycad.api.executor.create_file_execution.asyncio">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_file_execution.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lang</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_file_execution.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_file_execution.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_file_execution.asyncio" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kittycad.api.executor.create_file_execution.asyncio_detailed">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_file_execution.</span></span><span class="sig-name descname"><span class="pre">asyncio_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lang</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_file_execution.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_file_execution.html#asyncio_detailed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_file_execution.asyncio_detailed" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kittycad.api.executor.create_file_execution.sync">
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_file_execution.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lang</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_file_execution.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_file_execution.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_file_execution.sync" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kittycad.api.executor.create_file_execution.sync_detailed">
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_file_execution.</span></span><span class="sig-name descname"><span class="pre">sync_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lang</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_file_execution.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_file_execution.html#sync_detailed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_file_execution.sync_detailed" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.code_output.html#kittycad.models.code_output.CodeOutput" title="kittycad.models.code_output.CodeOutput"><code class="xref py py-class docutils literal notranslate"><span class="pre">CodeOutput</span></code></a>, <a class="reference internal" href="kittycad.models.error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -155,7 +234,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

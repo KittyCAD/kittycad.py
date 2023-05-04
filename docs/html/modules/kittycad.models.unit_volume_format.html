@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta property="og:title" content="kittycad.models.unit_volume_format" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="modules/kittycad.models.unit_volume_format.html" />
+  <meta property="og:description" content="Classes" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.models.unit_volume_format &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +23,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -244,11 +253,382 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitVolumeFormat</span></code>(value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_volume_format.UnitVolumeFormat" title="kittycad.models.unit_volume_format.UnitVolumeFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitVolumeFormat</span></code></a>(value)</p></td>
 <td><p>The valid types of volume unit formats.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.unit_volume_format.</span></span><span class="sig-name descname"><span class="pre">UnitVolumeFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/unit_volume_format.html#UnitVolumeFormat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat" title="Permalink to this definition"></a></dt>
+<dd><p>The valid types of volume unit formats.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.BARREL">
+<span class="sig-name descname"><span class="pre">BARREL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'barrel'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.BARREL" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Bushel&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Bushel &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.BUSHEL">
+<span class="sig-name descname"><span class="pre">BUSHEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bushel'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.BUSHEL" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cord_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Cord &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CORD">
+<span class="sig-name descname"><span class="pre">CORD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cord'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CORD" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubic_fathom&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Cubic Fathom &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_CENTIMETER">
+<span class="sig-name descname"><span class="pre">CUBIC_CENTIMETER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_centimeter'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_CENTIMETER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubic_metre&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Millimeter &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_FATHOM">
+<span class="sig-name descname"><span class="pre">CUBIC_FATHOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_fathom'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_FATHOM" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Tablespoon&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Tablespoon &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_FOOT">
+<span class="sig-name descname"><span class="pre">CUBIC_FOOT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_foot'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_FOOT" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubic_foot&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Yard &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_INCH">
+<span class="sig-name descname"><span class="pre">CUBIC_INCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_inch'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_INCH" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubic_foot&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Foot &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_KILOMETER">
+<span class="sig-name descname"><span class="pre">CUBIC_KILOMETER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_kilometer'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_KILOMETER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Litre&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Unit Liter &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_METER">
+<span class="sig-name descname"><span class="pre">CUBIC_METER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_meter'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_METER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Centimetre&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Centimeter &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_MILE">
+<span class="sig-name descname"><span class="pre">CUBIC_MILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_mile'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_MILE" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Gallon&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Gallon &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_MILLIMETER">
+<span class="sig-name descname"><span class="pre">CUBIC_MILLIMETER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_millimeter'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_MILLIMETER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubic_metre&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Kilometer &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_YARD">
+<span class="sig-name descname"><span class="pre">CUBIC_YARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubic_yard'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUBIC_YARD" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubic_foot&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Mile &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.CUP">
+<span class="sig-name descname"><span class="pre">CUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cup'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.CUP" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Fluid_ounce&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Fluid Ounce &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.DASH">
+<span class="sig-name descname"><span class="pre">DASH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dash'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.DASH" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cooking_weights_and_measures&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Drop &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.DRAM">
+<span class="sig-name descname"><span class="pre">DRAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dram'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.DRAM" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Gill_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Gill &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.DROP">
+<span class="sig-name descname"><span class="pre">DROP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'drop'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.DROP" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Fifth_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Fifth &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.FIFTH">
+<span class="sig-name descname"><span class="pre">FIFTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fifth'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.FIFTH" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Dram_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Dram &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.FLUID_OUNCE">
+<span class="sig-name descname"><span class="pre">FLUID_OUNCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fluid_ounce'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.FLUID_OUNCE" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Barrel_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Barrel &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.GALLON">
+<span class="sig-name descname"><span class="pre">GALLON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gallon'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.GALLON" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Quart&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Quart &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.GILL">
+<span class="sig-name descname"><span class="pre">GILL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gill'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.GILL" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Imperial_units&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Peck &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.LITER">
+<span class="sig-name descname"><span class="pre">LITER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'liter'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.LITER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubic_inch&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Cubic Inch &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.PECK">
+<span class="sig-name descname"><span class="pre">PECK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'peck'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.PECK" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Stack_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Stack &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.PINCH">
+<span class="sig-name descname"><span class="pre">PINCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pinch'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.PINCH" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cooking_weights_and_measures&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Dash &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.PINT">
+<span class="sig-name descname"><span class="pre">PINT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pint'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.PINT" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cup_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Cup &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.QUART">
+<span class="sig-name descname"><span class="pre">QUART</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'quart'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.QUART" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Pint&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Pint &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.SACK">
+<span class="sig-name descname"><span class="pre">SACK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sack'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.SACK" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Shot_glass&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Shot &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.SHOT">
+<span class="sig-name descname"><span class="pre">SHOT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shot'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.SHOT" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Strike_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Strike &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.STRIKE">
+<span class="sig-name descname"><span class="pre">STRIKE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'strike'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.STRIKE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.TABLESPOON">
+<span class="sig-name descname"><span class="pre">TABLESPOON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tablespoon'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.TABLESPOON" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Teaspoon&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Teaspoon &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.TEASPOON">
+<span class="sig-name descname"><span class="pre">TEASPOON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'teaspoon'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.TEASPOON" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Pinch_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Pinch &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'_generate_next_value_':</span> <span class="pre">&lt;function</span> <span class="pre">Enum._generate_next_value_&gt;,</span> <span class="pre">'__module__':</span> <span class="pre">'kittycad.models.unit_volume_format',</span> <span class="pre">'__doc__':</span> <span class="pre">'The</span> <span class="pre">valid</span> <span class="pre">types</span> <span class="pre">of</span> <span class="pre">volume</span> <span class="pre">unit</span> <span class="pre">formats.',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">UnitVolumeFormat.__str__&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'UnitVolumeFormat'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'UnitVolumeFormat'</span> <span class="pre">objects&gt;,</span> <span class="pre">'_member_names_':</span> <span class="pre">['CUBIC_METER',</span> <span class="pre">'CUBIC_CENTIMETER',</span> <span class="pre">'CUBIC_MILLIMETER',</span> <span class="pre">'CUBIC_KILOMETER',</span> <span class="pre">'LITER',</span> <span class="pre">'CUBIC_INCH',</span> <span class="pre">'CUBIC_FOOT',</span> <span class="pre">'CUBIC_YARD',</span> <span class="pre">'CUBIC_MILE',</span> <span class="pre">'GALLON',</span> <span class="pre">'QUART',</span> <span class="pre">'PINT',</span> <span class="pre">'CUP',</span> <span class="pre">'FLUID_OUNCE',</span> <span class="pre">'BARREL',</span> <span class="pre">'BUSHEL',</span> <span class="pre">'CORD',</span> <span class="pre">'CUBIC_FATHOM',</span> <span class="pre">'TABLESPOON',</span> <span class="pre">'TEASPOON',</span> <span class="pre">'PINCH',</span> <span class="pre">'DASH',</span> <span class="pre">'DROP',</span> <span class="pre">'FIFTH',</span> <span class="pre">'DRAM',</span> <span class="pre">'GILL',</span> <span class="pre">'PECK',</span> <span class="pre">'SACK',</span> <span class="pre">'SHOT',</span> <span class="pre">'STRIKE'],</span> <span class="pre">'_member_map_':</span> <span class="pre">{'CUBIC_METER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_METER:</span> <span class="pre">'cubic_meter'&gt;,</span> <span class="pre">'CUBIC_CENTIMETER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_CENTIMETER:</span> <span class="pre">'cubic_centimeter'&gt;,</span> <span class="pre">'CUBIC_MILLIMETER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_MILLIMETER:</span> <span class="pre">'cubic_millimeter'&gt;,</span> <span class="pre">'CUBIC_KILOMETER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_KILOMETER:</span> <span class="pre">'cubic_kilometer'&gt;,</span> <span class="pre">'LITER':</span> <span class="pre">&lt;UnitVolumeFormat.LITER:</span> <span class="pre">'liter'&gt;,</span> <span class="pre">'CUBIC_INCH':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_INCH:</span> <span class="pre">'cubic_inch'&gt;,</span> <span class="pre">'CUBIC_FOOT':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_FOOT:</span> <span class="pre">'cubic_foot'&gt;,</span> <span class="pre">'CUBIC_YARD':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_YARD:</span> <span class="pre">'cubic_yard'&gt;,</span> <span class="pre">'CUBIC_MILE':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_MILE:</span> <span class="pre">'cubic_mile'&gt;,</span> <span class="pre">'GALLON':</span> <span class="pre">&lt;UnitVolumeFormat.GALLON:</span> <span class="pre">'gallon'&gt;,</span> <span class="pre">'QUART':</span> <span class="pre">&lt;UnitVolumeFormat.QUART:</span> <span class="pre">'quart'&gt;,</span> <span class="pre">'PINT':</span> <span class="pre">&lt;UnitVolumeFormat.PINT:</span> <span class="pre">'pint'&gt;,</span> <span class="pre">'CUP':</span> <span class="pre">&lt;UnitVolumeFormat.CUP:</span> <span class="pre">'cup'&gt;,</span> <span class="pre">'FLUID_OUNCE':</span> <span class="pre">&lt;UnitVolumeFormat.FLUID_OUNCE:</span> <span class="pre">'fluid_ounce'&gt;,</span> <span class="pre">'BARREL':</span> <span class="pre">&lt;UnitVolumeFormat.BARREL:</span> <span class="pre">'barrel'&gt;,</span> <span class="pre">'BUSHEL':</span> <span class="pre">&lt;UnitVolumeFormat.BUSHEL:</span> <span class="pre">'bushel'&gt;,</span> <span class="pre">'CORD':</span> <span class="pre">&lt;UnitVolumeFormat.CORD:</span> <span class="pre">'cord'&gt;,</span> <span class="pre">'CUBIC_FATHOM':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_FATHOM:</span> <span class="pre">'cubic_fathom'&gt;,</span> <span class="pre">'TABLESPOON':</span> <span class="pre">&lt;UnitVolumeFormat.TABLESPOON:</span> <span class="pre">'tablespoon'&gt;,</span> <span class="pre">'TEASPOON':</span> <span class="pre">&lt;UnitVolumeFormat.TEASPOON:</span> <span class="pre">'teaspoon'&gt;,</span> <span class="pre">'PINCH':</span> <span class="pre">&lt;UnitVolumeFormat.PINCH:</span> <span class="pre">'pinch'&gt;,</span> <span class="pre">'DASH':</span> <span class="pre">&lt;UnitVolumeFormat.DASH:</span> <span class="pre">'dash'&gt;,</span> <span class="pre">'DROP':</span> <span class="pre">&lt;UnitVolumeFormat.DROP:</span> <span class="pre">'drop'&gt;,</span> <span class="pre">'FIFTH':</span> <span class="pre">&lt;UnitVolumeFormat.FIFTH:</span> <span class="pre">'fifth'&gt;,</span> <span class="pre">'DRAM':</span> <span class="pre">&lt;UnitVolumeFormat.DRAM:</span> <span class="pre">'dram'&gt;,</span> <span class="pre">'GILL':</span> <span class="pre">&lt;UnitVolumeFormat.GILL:</span> <span class="pre">'gill'&gt;,</span> <span class="pre">'PECK':</span> <span class="pre">&lt;UnitVolumeFormat.PECK:</span> <span class="pre">'peck'&gt;,</span> <span class="pre">'SACK':</span> <span class="pre">&lt;UnitVolumeFormat.SACK:</span> <span class="pre">'sack'&gt;,</span> <span class="pre">'SHOT':</span> <span class="pre">&lt;UnitVolumeFormat.SHOT:</span> <span class="pre">'shot'&gt;,</span> <span class="pre">'STRIKE':</span> <span class="pre">&lt;UnitVolumeFormat.STRIKE:</span> <span class="pre">'strike'&gt;},</span> <span class="pre">'_member_type_':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'_value2member_map_':</span> <span class="pre">{'cubic_meter':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_METER:</span> <span class="pre">'cubic_meter'&gt;,</span> <span class="pre">'cubic_centimeter':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_CENTIMETER:</span> <span class="pre">'cubic_centimeter'&gt;,</span> <span class="pre">'cubic_millimeter':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_MILLIMETER:</span> <span class="pre">'cubic_millimeter'&gt;,</span> <span class="pre">'cubic_kilometer':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_KILOMETER:</span> <span class="pre">'cubic_kilometer'&gt;,</span> <span class="pre">'liter':</span> <span class="pre">&lt;UnitVolumeFormat.LITER:</span> <span class="pre">'liter'&gt;,</span> <span class="pre">'cubic_inch':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_INCH:</span> <span class="pre">'cubic_inch'&gt;,</span> <span class="pre">'cubic_foot':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_FOOT:</span> <span class="pre">'cubic_foot'&gt;,</span> <span class="pre">'cubic_yard':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_YARD:</span> <span class="pre">'cubic_yard'&gt;,</span> <span class="pre">'cubic_mile':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_MILE:</span> <span class="pre">'cubic_mile'&gt;,</span> <span class="pre">'gallon':</span> <span class="pre">&lt;UnitVolumeFormat.GALLON:</span> <span class="pre">'gallon'&gt;,</span> <span class="pre">'quart':</span> <span class="pre">&lt;UnitVolumeFormat.QUART:</span> <span class="pre">'quart'&gt;,</span> <span class="pre">'pint':</span> <span class="pre">&lt;UnitVolumeFormat.PINT:</span> <span class="pre">'pint'&gt;,</span> <span class="pre">'cup':</span> <span class="pre">&lt;UnitVolumeFormat.CUP:</span> <span class="pre">'cup'&gt;,</span> <span class="pre">'fluid_ounce':</span> <span class="pre">&lt;UnitVolumeFormat.FLUID_OUNCE:</span> <span class="pre">'fluid_ounce'&gt;,</span> <span class="pre">'barrel':</span> <span class="pre">&lt;UnitVolumeFormat.BARREL:</span> <span class="pre">'barrel'&gt;,</span> <span class="pre">'bushel':</span> <span class="pre">&lt;UnitVolumeFormat.BUSHEL:</span> <span class="pre">'bushel'&gt;,</span> <span class="pre">'cord':</span> <span class="pre">&lt;UnitVolumeFormat.CORD:</span> <span class="pre">'cord'&gt;,</span> <span class="pre">'cubic_fathom':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_FATHOM:</span> <span class="pre">'cubic_fathom'&gt;,</span> <span class="pre">'tablespoon':</span> <span class="pre">&lt;UnitVolumeFormat.TABLESPOON:</span> <span class="pre">'tablespoon'&gt;,</span> <span class="pre">'teaspoon':</span> <span class="pre">&lt;UnitVolumeFormat.TEASPOON:</span> <span class="pre">'teaspoon'&gt;,</span> <span class="pre">'pinch':</span> <span class="pre">&lt;UnitVolumeFormat.PINCH:</span> <span class="pre">'pinch'&gt;,</span> <span class="pre">'dash':</span> <span class="pre">&lt;UnitVolumeFormat.DASH:</span> <span class="pre">'dash'&gt;,</span> <span class="pre">'drop':</span> <span class="pre">&lt;UnitVolumeFormat.DROP:</span> <span class="pre">'drop'&gt;,</span> <span class="pre">'fifth':</span> <span class="pre">&lt;UnitVolumeFormat.FIFTH:</span> <span class="pre">'fifth'&gt;,</span> <span class="pre">'dram':</span> <span class="pre">&lt;UnitVolumeFormat.DRAM:</span> <span class="pre">'dram'&gt;,</span> <span class="pre">'gill':</span> <span class="pre">&lt;UnitVolumeFormat.GILL:</span> <span class="pre">'gill'&gt;,</span> <span class="pre">'peck':</span> <span class="pre">&lt;UnitVolumeFormat.PECK:</span> <span class="pre">'peck'&gt;,</span> <span class="pre">'sack':</span> <span class="pre">&lt;UnitVolumeFormat.SACK:</span> <span class="pre">'sack'&gt;,</span> <span class="pre">'shot':</span> <span class="pre">&lt;UnitVolumeFormat.SHOT:</span> <span class="pre">'shot'&gt;,</span> <span class="pre">'strike':</span> <span class="pre">&lt;UnitVolumeFormat.STRIKE:</span> <span class="pre">'strike'&gt;},</span> <span class="pre">'CUBIC_METER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_METER:</span> <span class="pre">'cubic_meter'&gt;,</span> <span class="pre">'CUBIC_CENTIMETER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_CENTIMETER:</span> <span class="pre">'cubic_centimeter'&gt;,</span> <span class="pre">'CUBIC_MILLIMETER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_MILLIMETER:</span> <span class="pre">'cubic_millimeter'&gt;,</span> <span class="pre">'CUBIC_KILOMETER':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_KILOMETER:</span> <span class="pre">'cubic_kilometer'&gt;,</span> <span class="pre">'LITER':</span> <span class="pre">&lt;UnitVolumeFormat.LITER:</span> <span class="pre">'liter'&gt;,</span> <span class="pre">'CUBIC_INCH':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_INCH:</span> <span class="pre">'cubic_inch'&gt;,</span> <span class="pre">'CUBIC_FOOT':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_FOOT:</span> <span class="pre">'cubic_foot'&gt;,</span> <span class="pre">'CUBIC_YARD':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_YARD:</span> <span class="pre">'cubic_yard'&gt;,</span> <span class="pre">'CUBIC_MILE':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_MILE:</span> <span class="pre">'cubic_mile'&gt;,</span> <span class="pre">'GALLON':</span> <span class="pre">&lt;UnitVolumeFormat.GALLON:</span> <span class="pre">'gallon'&gt;,</span> <span class="pre">'QUART':</span> <span class="pre">&lt;UnitVolumeFormat.QUART:</span> <span class="pre">'quart'&gt;,</span> <span class="pre">'PINT':</span> <span class="pre">&lt;UnitVolumeFormat.PINT:</span> <span class="pre">'pint'&gt;,</span> <span class="pre">'CUP':</span> <span class="pre">&lt;UnitVolumeFormat.CUP:</span> <span class="pre">'cup'&gt;,</span> <span class="pre">'FLUID_OUNCE':</span> <span class="pre">&lt;UnitVolumeFormat.FLUID_OUNCE:</span> <span class="pre">'fluid_ounce'&gt;,</span> <span class="pre">'BARREL':</span> <span class="pre">&lt;UnitVolumeFormat.BARREL:</span> <span class="pre">'barrel'&gt;,</span> <span class="pre">'BUSHEL':</span> <span class="pre">&lt;UnitVolumeFormat.BUSHEL:</span> <span class="pre">'bushel'&gt;,</span> <span class="pre">'CORD':</span> <span class="pre">&lt;UnitVolumeFormat.CORD:</span> <span class="pre">'cord'&gt;,</span> <span class="pre">'CUBIC_FATHOM':</span> <span class="pre">&lt;UnitVolumeFormat.CUBIC_FATHOM:</span> <span class="pre">'cubic_fathom'&gt;,</span> <span class="pre">'TABLESPOON':</span> <span class="pre">&lt;UnitVolumeFormat.TABLESPOON:</span> <span class="pre">'tablespoon'&gt;,</span> <span class="pre">'TEASPOON':</span> <span class="pre">&lt;UnitVolumeFormat.TEASPOON:</span> <span class="pre">'teaspoon'&gt;,</span> <span class="pre">'PINCH':</span> <span class="pre">&lt;UnitVolumeFormat.PINCH:</span> <span class="pre">'pinch'&gt;,</span> <span class="pre">'DASH':</span> <span class="pre">&lt;UnitVolumeFormat.DASH:</span> <span class="pre">'dash'&gt;,</span> <span class="pre">'DROP':</span> <span class="pre">&lt;UnitVolumeFormat.DROP:</span> <span class="pre">'drop'&gt;,</span> <span class="pre">'FIFTH':</span> <span class="pre">&lt;UnitVolumeFormat.FIFTH:</span> <span class="pre">'fifth'&gt;,</span> <span class="pre">'DRAM':</span> <span class="pre">&lt;UnitVolumeFormat.DRAM:</span> <span class="pre">'dram'&gt;,</span> <span class="pre">'GILL':</span> <span class="pre">&lt;UnitVolumeFormat.GILL:</span> <span class="pre">'gill'&gt;,</span> <span class="pre">'PECK':</span> <span class="pre">&lt;UnitVolumeFormat.PECK:</span> <span class="pre">'peck'&gt;,</span> <span class="pre">'SACK':</span> <span class="pre">&lt;UnitVolumeFormat.SACK:</span> <span class="pre">'sack'&gt;,</span> <span class="pre">'SHOT':</span> <span class="pre">&lt;UnitVolumeFormat.SHOT:</span> <span class="pre">'shot'&gt;,</span> <span class="pre">'STRIKE':</span> <span class="pre">&lt;UnitVolumeFormat.STRIKE:</span> <span class="pre">'strike'&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__repr__&gt;,</span> <span class="pre">'__format__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__format__&gt;,</span> <span class="pre">'__new__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__new__&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.unit_volume_format'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat._generate_next_value_">
+<span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat._generate_next_value_" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the next value when not given.</p>
+<p>name: the name of the member
+start: the initial start value or None
+count: the number of existing members
+last_value: the last value assigned or None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat._member_map_">
+<span class="sig-name descname"><span class="pre">_member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'BARREL':</span> <span class="pre">UnitVolumeFormat.BARREL,</span> <span class="pre">'BUSHEL':</span> <span class="pre">UnitVolumeFormat.BUSHEL,</span> <span class="pre">'CORD':</span> <span class="pre">UnitVolumeFormat.CORD,</span> <span class="pre">'CUBIC_CENTIMETER':</span> <span class="pre">UnitVolumeFormat.CUBIC_CENTIMETER,</span> <span class="pre">'CUBIC_FATHOM':</span> <span class="pre">UnitVolumeFormat.CUBIC_FATHOM,</span> <span class="pre">'CUBIC_FOOT':</span> <span class="pre">UnitVolumeFormat.CUBIC_FOOT,</span> <span class="pre">'CUBIC_INCH':</span> <span class="pre">UnitVolumeFormat.CUBIC_INCH,</span> <span class="pre">'CUBIC_KILOMETER':</span> <span class="pre">UnitVolumeFormat.CUBIC_KILOMETER,</span> <span class="pre">'CUBIC_METER':</span> <span class="pre">UnitVolumeFormat.CUBIC_METER,</span> <span class="pre">'CUBIC_MILE':</span> <span class="pre">UnitVolumeFormat.CUBIC_MILE,</span> <span class="pre">'CUBIC_MILLIMETER':</span> <span class="pre">UnitVolumeFormat.CUBIC_MILLIMETER,</span> <span class="pre">'CUBIC_YARD':</span> <span class="pre">UnitVolumeFormat.CUBIC_YARD,</span> <span class="pre">'CUP':</span> <span class="pre">UnitVolumeFormat.CUP,</span> <span class="pre">'DASH':</span> <span class="pre">UnitVolumeFormat.DASH,</span> <span class="pre">'DRAM':</span> <span class="pre">UnitVolumeFormat.DRAM,</span> <span class="pre">'DROP':</span> <span class="pre">UnitVolumeFormat.DROP,</span> <span class="pre">'FIFTH':</span> <span class="pre">UnitVolumeFormat.FIFTH,</span> <span class="pre">'FLUID_OUNCE':</span> <span class="pre">UnitVolumeFormat.FLUID_OUNCE,</span> <span class="pre">'GALLON':</span> <span class="pre">UnitVolumeFormat.GALLON,</span> <span class="pre">'GILL':</span> <span class="pre">UnitVolumeFormat.GILL,</span> <span class="pre">'LITER':</span> <span class="pre">UnitVolumeFormat.LITER,</span> <span class="pre">'PECK':</span> <span class="pre">UnitVolumeFormat.PECK,</span> <span class="pre">'PINCH':</span> <span class="pre">UnitVolumeFormat.PINCH,</span> <span class="pre">'PINT':</span> <span class="pre">UnitVolumeFormat.PINT,</span> <span class="pre">'QUART':</span> <span class="pre">UnitVolumeFormat.QUART,</span> <span class="pre">'SACK':</span> <span class="pre">UnitVolumeFormat.SACK,</span> <span class="pre">'SHOT':</span> <span class="pre">UnitVolumeFormat.SHOT,</span> <span class="pre">'STRIKE':</span> <span class="pre">UnitVolumeFormat.STRIKE,</span> <span class="pre">'TABLESPOON':</span> <span class="pre">UnitVolumeFormat.TABLESPOON,</span> <span class="pre">'TEASPOON':</span> <span class="pre">UnitVolumeFormat.TEASPOON}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat._member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat._member_names_">
+<span class="sig-name descname"><span class="pre">_member_names_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['CUBIC_METER',</span> <span class="pre">'CUBIC_CENTIMETER',</span> <span class="pre">'CUBIC_MILLIMETER',</span> <span class="pre">'CUBIC_KILOMETER',</span> <span class="pre">'LITER',</span> <span class="pre">'CUBIC_INCH',</span> <span class="pre">'CUBIC_FOOT',</span> <span class="pre">'CUBIC_YARD',</span> <span class="pre">'CUBIC_MILE',</span> <span class="pre">'GALLON',</span> <span class="pre">'QUART',</span> <span class="pre">'PINT',</span> <span class="pre">'CUP',</span> <span class="pre">'FLUID_OUNCE',</span> <span class="pre">'BARREL',</span> <span class="pre">'BUSHEL',</span> <span class="pre">'CORD',</span> <span class="pre">'CUBIC_FATHOM',</span> <span class="pre">'TABLESPOON',</span> <span class="pre">'TEASPOON',</span> <span class="pre">'PINCH',</span> <span class="pre">'DASH',</span> <span class="pre">'DROP',</span> <span class="pre">'FIFTH',</span> <span class="pre">'DRAM',</span> <span class="pre">'GILL',</span> <span class="pre">'PECK',</span> <span class="pre">'SACK',</span> <span class="pre">'SHOT',</span> <span class="pre">'STRIKE']</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat._member_names_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat._member_type_">
+<span class="sig-name descname"><span class="pre">_member_type_</span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat._member_type_" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_volume_format.UnitVolumeFormat._value2member_map_">
+<span class="sig-name descname"><span class="pre">_value2member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'barrel':</span> <span class="pre">UnitVolumeFormat.BARREL,</span> <span class="pre">'bushel':</span> <span class="pre">UnitVolumeFormat.BUSHEL,</span> <span class="pre">'cord':</span> <span class="pre">UnitVolumeFormat.CORD,</span> <span class="pre">'cubic_centimeter':</span> <span class="pre">UnitVolumeFormat.CUBIC_CENTIMETER,</span> <span class="pre">'cubic_fathom':</span> <span class="pre">UnitVolumeFormat.CUBIC_FATHOM,</span> <span class="pre">'cubic_foot':</span> <span class="pre">UnitVolumeFormat.CUBIC_FOOT,</span> <span class="pre">'cubic_inch':</span> <span class="pre">UnitVolumeFormat.CUBIC_INCH,</span> <span class="pre">'cubic_kilometer':</span> <span class="pre">UnitVolumeFormat.CUBIC_KILOMETER,</span> <span class="pre">'cubic_meter':</span> <span class="pre">UnitVolumeFormat.CUBIC_METER,</span> <span class="pre">'cubic_mile':</span> <span class="pre">UnitVolumeFormat.CUBIC_MILE,</span> <span class="pre">'cubic_millimeter':</span> <span class="pre">UnitVolumeFormat.CUBIC_MILLIMETER,</span> <span class="pre">'cubic_yard':</span> <span class="pre">UnitVolumeFormat.CUBIC_YARD,</span> <span class="pre">'cup':</span> <span class="pre">UnitVolumeFormat.CUP,</span> <span class="pre">'dash':</span> <span class="pre">UnitVolumeFormat.DASH,</span> <span class="pre">'dram':</span> <span class="pre">UnitVolumeFormat.DRAM,</span> <span class="pre">'drop':</span> <span class="pre">UnitVolumeFormat.DROP,</span> <span class="pre">'fifth':</span> <span class="pre">UnitVolumeFormat.FIFTH,</span> <span class="pre">'fluid_ounce':</span> <span class="pre">UnitVolumeFormat.FLUID_OUNCE,</span> <span class="pre">'gallon':</span> <span class="pre">UnitVolumeFormat.GALLON,</span> <span class="pre">'gill':</span> <span class="pre">UnitVolumeFormat.GILL,</span> <span class="pre">'liter':</span> <span class="pre">UnitVolumeFormat.LITER,</span> <span class="pre">'peck':</span> <span class="pre">UnitVolumeFormat.PECK,</span> <span class="pre">'pinch':</span> <span class="pre">UnitVolumeFormat.PINCH,</span> <span class="pre">'pint':</span> <span class="pre">UnitVolumeFormat.PINT,</span> <span class="pre">'quart':</span> <span class="pre">UnitVolumeFormat.QUART,</span> <span class="pre">'sack':</span> <span class="pre">UnitVolumeFormat.SACK,</span> <span class="pre">'shot':</span> <span class="pre">UnitVolumeFormat.SHOT,</span> <span class="pre">'strike':</span> <span class="pre">UnitVolumeFormat.STRIKE,</span> <span class="pre">'tablespoon':</span> <span class="pre">UnitVolumeFormat.TABLESPOON,</span> <span class="pre">'teaspoon':</span> <span class="pre">UnitVolumeFormat.TEASPOON}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_volume_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_volume_format.UnitVolumeFormat._value2member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -262,7 +642,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

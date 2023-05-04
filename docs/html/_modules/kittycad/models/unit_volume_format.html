@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.models.unit_volume_format &mdash; kittycad v0.3.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.3.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.models.html">kittycad.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">kittycad.models.unit_volume_format</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for kittycad.models.unit_volume_format</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="UnitVolumeFormat"><a class="viewcode-back" href="../../../modules/kittycad.models.unit_volume_format.html#kittycad.models.unit_volume_format.UnitVolumeFormat">[docs]</a><span class="k">class</span> <span class="nc">UnitVolumeFormat</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The valid types of volume unit formats.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Unit Meter &lt;https://en.wikipedia.org/wiki/Cubic_metre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_METER</span> <span class="o">=</span> <span class="s2">&quot;cubic_meter&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Centimeter &lt;https://en.wikipedia.org/wiki/Centimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_CENTIMETER</span> <span class="o">=</span> <span class="s2">&quot;cubic_centimeter&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Millimeter &lt;https://en.wikipedia.org/wiki/Cubic_metre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_MILLIMETER</span> <span class="o">=</span> <span class="s2">&quot;cubic_millimeter&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Kilometer &lt;https://en.wikipedia.org/wiki/Cubic_metre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_KILOMETER</span> <span class="o">=</span> <span class="s2">&quot;cubic_kilometer&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Unit Liter &lt;https://en.wikipedia.org/wiki/Litre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LITER</span> <span class="o">=</span> <span class="s2">&quot;liter&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic Inch &lt;https://en.wikipedia.org/wiki/Cubic_inch&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_INCH</span> <span class="o">=</span> <span class="s2">&quot;cubic_inch&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Foot &lt;https://en.wikipedia.org/wiki/Cubic_foot&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_FOOT</span> <span class="o">=</span> <span class="s2">&quot;cubic_foot&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Yard &lt;https://en.wikipedia.org/wiki/Cubic_foot&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_YARD</span> <span class="o">=</span> <span class="s2">&quot;cubic_yard&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Mile &lt;https://en.wikipedia.org/wiki/Cubic_foot&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_MILE</span> <span class="o">=</span> <span class="s2">&quot;cubic_mile&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Gallon &lt;https://en.wikipedia.org/wiki/Gallon&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GALLON</span> <span class="o">=</span> <span class="s2">&quot;gallon&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Quart &lt;https://en.wikipedia.org/wiki/Quart&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">QUART</span> <span class="o">=</span> <span class="s2">&quot;quart&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Pint &lt;https://en.wikipedia.org/wiki/Pint&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PINT</span> <span class="o">=</span> <span class="s2">&quot;pint&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cup &lt;https://en.wikipedia.org/wiki/Cup_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUP</span> <span class="o">=</span> <span class="s2">&quot;cup&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Fluid Ounce &lt;https://en.wikipedia.org/wiki/Fluid_ounce&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">FLUID_OUNCE</span> <span class="o">=</span> <span class="s2">&quot;fluid_ounce&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Barrel &lt;https://en.wikipedia.org/wiki/Barrel_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BARREL</span> <span class="o">=</span> <span class="s2">&quot;barrel&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Bushel &lt;https://en.wikipedia.org/wiki/Bushel&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BUSHEL</span> <span class="o">=</span> <span class="s2">&quot;bushel&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cord &lt;https://en.wikipedia.org/wiki/Cord_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CORD</span> <span class="o">=</span> <span class="s2">&quot;cord&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic Fathom &lt;https://en.wikipedia.org/wiki/Cubic_fathom&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CUBIC_FATHOM</span> <span class="o">=</span> <span class="s2">&quot;cubic_fathom&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Tablespoon &lt;https://en.wikipedia.org/wiki/Tablespoon&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TABLESPOON</span> <span class="o">=</span> <span class="s2">&quot;tablespoon&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Teaspoon &lt;https://en.wikipedia.org/wiki/Teaspoon&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TEASPOON</span> <span class="o">=</span> <span class="s2">&quot;teaspoon&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Pinch &lt;https://en.wikipedia.org/wiki/Pinch_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PINCH</span> <span class="o">=</span> <span class="s2">&quot;pinch&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Dash &lt;https://en.wikipedia.org/wiki/Cooking_weights_and_measures&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">DASH</span> <span class="o">=</span> <span class="s2">&quot;dash&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Drop &lt;https://en.wikipedia.org/wiki/Cooking_weights_and_measures&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">DROP</span> <span class="o">=</span> <span class="s2">&quot;drop&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Fifth &lt;https://en.wikipedia.org/wiki/Fifth_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">FIFTH</span> <span class="o">=</span> <span class="s2">&quot;fifth&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Dram &lt;https://en.wikipedia.org/wiki/Dram_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">DRAM</span> <span class="o">=</span> <span class="s2">&quot;dram&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Gill &lt;https://en.wikipedia.org/wiki/Gill_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GILL</span> <span class="o">=</span> <span class="s2">&quot;gill&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Peck &lt;https://en.wikipedia.org/wiki/Imperial_units&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PECK</span> <span class="o">=</span> <span class="s2">&quot;peck&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Stack &lt;https://en.wikipedia.org/wiki/Stack_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SACK</span> <span class="o">=</span> <span class="s2">&quot;sack&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Shot &lt;https://en.wikipedia.org/wiki/Shot_glass&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SHOT</span> <span class="o">=</span> <span class="s2">&quot;shot&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Strike &lt;https://en.wikipedia.org/wiki/Strike_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">STRIKE</span> <span class="o">=</span> <span class="s2">&quot;strike&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

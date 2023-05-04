@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.models.currency &mdash; kittycad v0.3.8 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/autoclasstoc.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.3.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.models.html">kittycad.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">kittycad.models.currency</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for kittycad.models.currency</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="Currency"><a class="viewcode-back" href="../../../modules/kittycad.models.currency.html#kittycad.models.currency.Currency">[docs]</a><span class="k">class</span> <span class="nc">Currency</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Currency is the list of supported currencies.</span>
+
+<span class="sd">    This comes from the Stripe API docs: For more details see &lt;https://support.stripe.com/questions/which-currencies-does-stripe-support&gt;.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# United Arab Emirates Dirham &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">AED</span> <span class="o">=</span> <span class="s2">&quot;aed&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Afghan Afghani &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">AFN</span> <span class="o">=</span> <span class="s2">&quot;afn&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Albanian Lek &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ALL</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Armenian Dram &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">AMD</span> <span class="o">=</span> <span class="s2">&quot;amd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Netherlands Antillean Gulden &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ANG</span> <span class="o">=</span> <span class="s2">&quot;ang&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Angolan Kwanza &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">AOA</span> <span class="o">=</span> <span class="s2">&quot;aoa&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Argentine Peso &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ARS</span> <span class="o">=</span> <span class="s2">&quot;ars&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Australian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">AUD</span> <span class="o">=</span> <span class="s2">&quot;aud&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Aruban Florin &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">AWG</span> <span class="o">=</span> <span class="s2">&quot;awg&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Azerbaijani Manat &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">AZN</span> <span class="o">=</span> <span class="s2">&quot;azn&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Bosnia &amp; Herzegovina Convertible Mark &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BAM</span> <span class="o">=</span> <span class="s2">&quot;bam&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Barbadian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BBD</span> <span class="o">=</span> <span class="s2">&quot;bbd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Bangladeshi Taka &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BDT</span> <span class="o">=</span> <span class="s2">&quot;bdt&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Bulgarian Lev &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BGN</span> <span class="o">=</span> <span class="s2">&quot;bgn&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Burundian Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BIF</span> <span class="o">=</span> <span class="s2">&quot;bif&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Bermudian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BMD</span> <span class="o">=</span> <span class="s2">&quot;bmd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Brunei Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BND</span> <span class="o">=</span> <span class="s2">&quot;bnd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Bolivian Boliviano &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BOB</span> <span class="o">=</span> <span class="s2">&quot;bob&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Brazilian Real &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BRL</span> <span class="o">=</span> <span class="s2">&quot;brl&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Bahamian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BSD</span> <span class="o">=</span> <span class="s2">&quot;bsd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Botswana Pula &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BWP</span> <span class="o">=</span> <span class="s2">&quot;bwp&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Belize Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">BZD</span> <span class="o">=</span> <span class="s2">&quot;bzd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Canadian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CAD</span> <span class="o">=</span> <span class="s2">&quot;cad&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Congolese Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CDF</span> <span class="o">=</span> <span class="s2">&quot;cdf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Swiss Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CHF</span> <span class="o">=</span> <span class="s2">&quot;chf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Chilean Peso &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CLP</span> <span class="o">=</span> <span class="s2">&quot;clp&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Chinese Renminbi Yuan &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CNY</span> <span class="o">=</span> <span class="s2">&quot;cny&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Colombian Peso &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">COP</span> <span class="o">=</span> <span class="s2">&quot;cop&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Costa Rican Colón &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CRC</span> <span class="o">=</span> <span class="s2">&quot;crc&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cape Verdean Escudo &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CVE</span> <span class="o">=</span> <span class="s2">&quot;cve&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Czech Koruna &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CZK</span> <span class="o">=</span> <span class="s2">&quot;czk&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Djiboutian Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">DJF</span> <span class="o">=</span> <span class="s2">&quot;djf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Danish Krone &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">DKK</span> <span class="o">=</span> <span class="s2">&quot;dkk&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Dominican Peso &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">DOP</span> <span class="o">=</span> <span class="s2">&quot;dop&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Algerian Dinar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">DZD</span> <span class="o">=</span> <span class="s2">&quot;dzd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Estonian Kroon &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">EEK</span> <span class="o">=</span> <span class="s2">&quot;eek&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Egyptian Pound &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">EGP</span> <span class="o">=</span> <span class="s2">&quot;egp&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Ethiopian Birr &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ETB</span> <span class="o">=</span> <span class="s2">&quot;etb&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Euro &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">EUR</span> <span class="o">=</span> <span class="s2">&quot;eur&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Fijian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">FJD</span> <span class="o">=</span> <span class="s2">&quot;fjd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Falkland Islands Pound &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">FKP</span> <span class="o">=</span> <span class="s2">&quot;fkp&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# British Pound &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GBP</span> <span class="o">=</span> <span class="s2">&quot;gbp&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Georgian Lari &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GEL</span> <span class="o">=</span> <span class="s2">&quot;gel&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Gibraltar Pound &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GIP</span> <span class="o">=</span> <span class="s2">&quot;gip&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Gambian Dalasi &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GMD</span> <span class="o">=</span> <span class="s2">&quot;gmd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Guinean Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GNF</span> <span class="o">=</span> <span class="s2">&quot;gnf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Guatemalan Quetzal &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GTQ</span> <span class="o">=</span> <span class="s2">&quot;gtq&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Guyanese Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">GYD</span> <span class="o">=</span> <span class="s2">&quot;gyd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Hong Kong Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">HKD</span> <span class="o">=</span> <span class="s2">&quot;hkd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Honduran Lempira &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">HNL</span> <span class="o">=</span> <span class="s2">&quot;hnl&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Croatian Kuna &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">HRK</span> <span class="o">=</span> <span class="s2">&quot;hrk&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Haitian Gourde &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">HTG</span> <span class="o">=</span> <span class="s2">&quot;htg&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Hungarian Forint &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">HUF</span> <span class="o">=</span> <span class="s2">&quot;huf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Indonesian Rupiah &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">IDR</span> <span class="o">=</span> <span class="s2">&quot;idr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Israeli New Sheqel &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ILS</span> <span class="o">=</span> <span class="s2">&quot;ils&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Indian Rupee &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">INR</span> <span class="o">=</span> <span class="s2">&quot;inr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Icelandic Króna &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ISK</span> <span class="o">=</span> <span class="s2">&quot;isk&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Jamaican Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">JMD</span> <span class="o">=</span> <span class="s2">&quot;jmd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Japanese Yen &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">JPY</span> <span class="o">=</span> <span class="s2">&quot;jpy&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Kenyan Shilling &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">KES</span> <span class="o">=</span> <span class="s2">&quot;kes&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Kyrgyzstani Som &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">KGS</span> <span class="o">=</span> <span class="s2">&quot;kgs&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cambodian Riel &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">KHR</span> <span class="o">=</span> <span class="s2">&quot;khr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Comorian Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">KMF</span> <span class="o">=</span> <span class="s2">&quot;kmf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# South Korean Won &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">KRW</span> <span class="o">=</span> <span class="s2">&quot;krw&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cayman Islands Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">KYD</span> <span class="o">=</span> <span class="s2">&quot;kyd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Kazakhstani Tenge &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">KZT</span> <span class="o">=</span> <span class="s2">&quot;kzt&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Lao Kip &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LAK</span> <span class="o">=</span> <span class="s2">&quot;lak&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Lebanese Pound &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LBP</span> <span class="o">=</span> <span class="s2">&quot;lbp&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Sri Lankan Rupee &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LKR</span> <span class="o">=</span> <span class="s2">&quot;lkr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Liberian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LRD</span> <span class="o">=</span> <span class="s2">&quot;lrd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Lesotho Loti &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LSL</span> <span class="o">=</span> <span class="s2">&quot;lsl&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Lithuanian Litas &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LTL</span> <span class="o">=</span> <span class="s2">&quot;ltl&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Latvian Lats &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">LVL</span> <span class="o">=</span> <span class="s2">&quot;lvl&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Moroccan Dirham &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MAD</span> <span class="o">=</span> <span class="s2">&quot;mad&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Moldovan Leu &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MDL</span> <span class="o">=</span> <span class="s2">&quot;mdl&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Malagasy Ariary &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MGA</span> <span class="o">=</span> <span class="s2">&quot;mga&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Macedonian Denar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MKD</span> <span class="o">=</span> <span class="s2">&quot;mkd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Mongolian Tögrög &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MNT</span> <span class="o">=</span> <span class="s2">&quot;mnt&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Macanese Pataca &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MOP</span> <span class="o">=</span> <span class="s2">&quot;mop&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Mauritanian Ouguiya &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MRO</span> <span class="o">=</span> <span class="s2">&quot;mro&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Mauritian Rupee &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MUR</span> <span class="o">=</span> <span class="s2">&quot;mur&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Maldivian Rufiyaa &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MVR</span> <span class="o">=</span> <span class="s2">&quot;mvr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Malawian Kwacha &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MWK</span> <span class="o">=</span> <span class="s2">&quot;mwk&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Mexican Peso &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MXN</span> <span class="o">=</span> <span class="s2">&quot;mxn&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Malaysian Ringgit &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MYR</span> <span class="o">=</span> <span class="s2">&quot;myr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Mozambican Metical &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">MZN</span> <span class="o">=</span> <span class="s2">&quot;mzn&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Namibian Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">NAD</span> <span class="o">=</span> <span class="s2">&quot;nad&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Nigerian Naira &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">NGN</span> <span class="o">=</span> <span class="s2">&quot;ngn&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Nicaraguan Córdoba &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">NIO</span> <span class="o">=</span> <span class="s2">&quot;nio&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Norwegian Krone &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">NOK</span> <span class="o">=</span> <span class="s2">&quot;nok&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Nepalese Rupee &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">NPR</span> <span class="o">=</span> <span class="s2">&quot;npr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# New Zealand Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">NZD</span> <span class="o">=</span> <span class="s2">&quot;nzd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Panamanian Balboa &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PAB</span> <span class="o">=</span> <span class="s2">&quot;pab&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Peruvian Nuevo Sol &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PEN</span> <span class="o">=</span> <span class="s2">&quot;pen&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Papua New Guinean Kina &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PGK</span> <span class="o">=</span> <span class="s2">&quot;pgk&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Philippine Peso &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PHP</span> <span class="o">=</span> <span class="s2">&quot;php&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Pakistani Rupee &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PKR</span> <span class="o">=</span> <span class="s2">&quot;pkr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Polish Złoty &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PLN</span> <span class="o">=</span> <span class="s2">&quot;pln&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Paraguayan Guaraní &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">PYG</span> <span class="o">=</span> <span class="s2">&quot;pyg&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Qatari Riyal &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">QAR</span> <span class="o">=</span> <span class="s2">&quot;qar&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Romanian Leu &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">RON</span> <span class="o">=</span> <span class="s2">&quot;ron&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Serbian Dinar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">RSD</span> <span class="o">=</span> <span class="s2">&quot;rsd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Russian Ruble &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">RUB</span> <span class="o">=</span> <span class="s2">&quot;rub&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Rwandan Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">RWF</span> <span class="o">=</span> <span class="s2">&quot;rwf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Saudi Riyal &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SAR</span> <span class="o">=</span> <span class="s2">&quot;sar&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Solomon Islands Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SBD</span> <span class="o">=</span> <span class="s2">&quot;sbd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Seychellois Rupee &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SCR</span> <span class="o">=</span> <span class="s2">&quot;scr&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Swedish Krona &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SEK</span> <span class="o">=</span> <span class="s2">&quot;sek&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Singapore Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SGD</span> <span class="o">=</span> <span class="s2">&quot;sgd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Saint Helenian Pound &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SHP</span> <span class="o">=</span> <span class="s2">&quot;shp&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Sierra Leonean Leone &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SLL</span> <span class="o">=</span> <span class="s2">&quot;sll&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Somali Shilling &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SOS</span> <span class="o">=</span> <span class="s2">&quot;sos&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Surinamese Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SRD</span> <span class="o">=</span> <span class="s2">&quot;srd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# São Tomé and Príncipe Dobra &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">STD</span> <span class="o">=</span> <span class="s2">&quot;std&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Salvadoran Colón &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SVC</span> <span class="o">=</span> <span class="s2">&quot;svc&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Swazi Lilangeni &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">SZL</span> <span class="o">=</span> <span class="s2">&quot;szl&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Thai Baht &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">THB</span> <span class="o">=</span> <span class="s2">&quot;thb&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Tajikistani Somoni &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TJS</span> <span class="o">=</span> <span class="s2">&quot;tjs&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Tongan Paʻanga &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TOP</span> <span class="o">=</span> <span class="s2">&quot;top&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Turkish Lira &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TRY</span> <span class="o">=</span> <span class="s2">&quot;try&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Trinidad and Tobago Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TTD</span> <span class="o">=</span> <span class="s2">&quot;ttd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# New Taiwan Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TWD</span> <span class="o">=</span> <span class="s2">&quot;twd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Tanzanian Shilling &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">TZS</span> <span class="o">=</span> <span class="s2">&quot;tzs&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Ukrainian Hryvnia &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">UAH</span> <span class="o">=</span> <span class="s2">&quot;uah&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Ugandan Shilling &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">UGX</span> <span class="o">=</span> <span class="s2">&quot;ugx&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# United States Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">USD</span> <span class="o">=</span> <span class="s2">&quot;usd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Uruguayan Peso &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">UYU</span> <span class="o">=</span> <span class="s2">&quot;uyu&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Uzbekistani Som &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">UZS</span> <span class="o">=</span> <span class="s2">&quot;uzs&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Venezuelan Bolívar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">VEF</span> <span class="o">=</span> <span class="s2">&quot;vef&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Vietnamese Đồng &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">VND</span> <span class="o">=</span> <span class="s2">&quot;vnd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Vanuatu Vatu &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">VUV</span> <span class="o">=</span> <span class="s2">&quot;vuv&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Samoan Tala &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">WST</span> <span class="o">=</span> <span class="s2">&quot;wst&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Central African Cfa Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">XAF</span> <span class="o">=</span> <span class="s2">&quot;xaf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# East Caribbean Dollar &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">XCD</span> <span class="o">=</span> <span class="s2">&quot;xcd&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# West African Cfa Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">XOF</span> <span class="o">=</span> <span class="s2">&quot;xof&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cfp Franc &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">XPF</span> <span class="o">=</span> <span class="s2">&quot;xpf&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Yemeni Rial &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">YER</span> <span class="o">=</span> <span class="s2">&quot;yer&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# South African Rand &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ZAR</span> <span class="o">=</span> <span class="s2">&quot;zar&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Zambian Kwacha &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">ZMW</span> <span class="o">=</span> <span class="s2">&quot;zmw&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

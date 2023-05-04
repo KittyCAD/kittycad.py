@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta property="og:title" content="kittycad.models.jetstream" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="modules/kittycad.models.jetstream.html" />
+  <meta property="og:description" content="Classes" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.models.jetstream &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +23,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -244,11 +253,180 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Jetstream</span></code>([config, meta, stats])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.jetstream.Jetstream" title="kittycad.models.jetstream.Jetstream"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Jetstream</span></code></a>([config, meta, stats])</p></td>
 <td><p>Jetstream information.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.jetstream.</span></span><span class="sig-name descname"><span class="pre">Jetstream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/jetstream.html#Jetstream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream" title="Permalink to this definition"></a></dt>
+<dd><p>Jetstream information.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'additional_properties':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">'config':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_config.JetstreamConfig],</span> <span class="pre">'meta':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.meta_cluster_info.MetaClusterInfo],</span> <span class="pre">'stats':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_stats.JetstreamStats]}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__annotations__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__attrs_attrs__">
+<span class="sig-name descname"><span class="pre">__attrs_attrs__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(Attribute(name='config',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_config.JetstreamConfig],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='config'),</span> <span class="pre">Attribute(name='meta',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.meta_cluster_info.MetaClusterInfo],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='meta'),</span> <span class="pre">Attribute(name='stats',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_stats.JetstreamStats],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='stats'),</span> <span class="pre">Attribute(name='additional_properties',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=False,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='additional_properties'))</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__attrs_attrs__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__contains__">
+<span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/jetstream.html#Jetstream.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__contains__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__delitem__">
+<span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/jetstream.html#Jetstream.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__delitem__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.models.jetstream',</span> <span class="pre">'__annotations__':</span> <span class="pre">{'config':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_config.JetstreamConfig],</span> <span class="pre">'meta':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.meta_cluster_info.MetaClusterInfo],</span> <span class="pre">'stats':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_stats.JetstreamStats],</span> <span class="pre">'additional_properties':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Any]},</span> <span class="pre">'__doc__':</span> <span class="pre">'Jetstream</span> <span class="pre">information.',</span> <span class="pre">'to_dict':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.to_dict&gt;,</span> <span class="pre">'from_dict':</span> <span class="pre">&lt;classmethod</span> <span class="pre">object&gt;,</span> <span class="pre">'additional_keys':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'__getitem__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__getitem__&gt;,</span> <span class="pre">'__setitem__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__setitem__&gt;,</span> <span class="pre">'__delitem__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__delitem__&gt;,</span> <span class="pre">'__contains__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__contains__&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Jetstream'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Jetstream'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__attrs_attrs__':</span> <span class="pre">(Attribute(name='config',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_config.JetstreamConfig],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='config'),</span> <span class="pre">Attribute(name='meta',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.meta_cluster_info.MetaClusterInfo],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='meta'),</span> <span class="pre">Attribute(name='stats',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">kittycad.models.jetstream_stats.JetstreamStats],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='stats'),</span> <span class="pre">Attribute(name='additional_properties',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=False,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='additional_properties')),</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__repr__&gt;,</span> <span class="pre">'__eq__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__eq__&gt;,</span> <span class="pre">'__ne__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__ne__&gt;,</span> <span class="pre">'__lt__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__lt__&gt;,</span> <span class="pre">'__le__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__le__&gt;,</span> <span class="pre">'__gt__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__gt__&gt;,</span> <span class="pre">'__ge__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__ge__&gt;,</span> <span class="pre">'__hash__':</span> <span class="pre">None,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Jetstream.__init__&gt;})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__eq__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__ge__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/jetstream.html#Jetstream.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__getitem__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__gt__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__hash__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__le__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__lt__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.jetstream'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__ne__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__repr__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class Jetstream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/jetstream.html#Jetstream.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.__setitem__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.additional_keys">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.additional_keys" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.additional_properties">
+<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.additional_properties" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">kittycad.types.Unset</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.jetstream_config.html#kittycad.models.jetstream_config.JetstreamConfig" title="kittycad.models.jetstream_config.JetstreamConfig"><span class="pre">kittycad.models.jetstream_config.JetstreamConfig</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/jetstream.html#Jetstream.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.from_dict" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">C</span></code>, bound= Jetstream)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">kittycad.types.Unset</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.meta_cluster_info.html#kittycad.models.meta_cluster_info.MetaClusterInfo" title="kittycad.models.meta_cluster_info.MetaClusterInfo"><span class="pre">kittycad.models.meta_cluster_info.MetaClusterInfo</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.meta" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.stats">
+<span class="sig-name descname"><span class="pre">stats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">kittycad.types.Unset</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.jetstream_stats.html#kittycad.models.jetstream_stats.JetstreamStats" title="kittycad.models.jetstream_stats.JetstreamStats"><span class="pre">kittycad.models.jetstream_stats.JetstreamStats</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.stats" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.jetstream.Jetstream.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/jetstream.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/jetstream.html#Jetstream.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.jetstream.Jetstream.to_dict" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -262,7 +440,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

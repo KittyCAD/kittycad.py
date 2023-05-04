@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta property="og:title" content="kittycad.api.users" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="modules/kittycad.api.users.html" />
+  <meta property="og:description" content="Contains methods for accessing the users API paths: A user is someone who uses the KittyCAD API. Here, we can create, delete, and list users. We can also get information about a user. Operations wi..." />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.api.users &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +23,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -66,6 +75,7 @@
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_session_for_user.html">kittycad.api.users.get_session_for_user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user.html">kittycad.api.users.get_user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_extended.html">kittycad.api.users.get_user_extended</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_front_hash_self.html">kittycad.api.users.get_user_front_hash_self</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_onboarding_self.html">kittycad.api.users.get_user_onboarding_self</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_self.html">kittycad.api.users.get_user_self</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.users.get_user_self_extended.html">kittycad.api.users.get_user_self_extended</a></li>
@@ -128,22 +138,25 @@
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.users.get_user_extended.html#module-kittycad.api.users.get_user_extended" title="kittycad.api.users.get_user_extended"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_extended</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.users.get_user_onboarding_self.html#module-kittycad.api.users.get_user_onboarding_self" title="kittycad.api.users.get_user_onboarding_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_onboarding_self</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.users.get_user_front_hash_self.html#module-kittycad.api.users.get_user_front_hash_self" title="kittycad.api.users.get_user_front_hash_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_front_hash_self</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.users.get_user_self.html#module-kittycad.api.users.get_user_self" title="kittycad.api.users.get_user_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_self</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.users.get_user_onboarding_self.html#module-kittycad.api.users.get_user_onboarding_self" title="kittycad.api.users.get_user_onboarding_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_onboarding_self</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.users.get_user_self_extended.html#module-kittycad.api.users.get_user_self_extended" title="kittycad.api.users.get_user_self_extended"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_self_extended</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.users.get_user_self.html#module-kittycad.api.users.get_user_self" title="kittycad.api.users.get_user_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_self</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.users.list_users.html#module-kittycad.api.users.list_users" title="kittycad.api.users.list_users"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.list_users</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.users.get_user_self_extended.html#module-kittycad.api.users.get_user_self_extended" title="kittycad.api.users.get_user_self_extended"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.get_user_self_extended</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.users.list_users_extended.html#module-kittycad.api.users.list_users_extended" title="kittycad.api.users.list_users_extended"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.list_users_extended</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.users.list_users.html#module-kittycad.api.users.list_users" title="kittycad.api.users.list_users"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.list_users</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.users.update_user_self.html#module-kittycad.api.users.update_user_self" title="kittycad.api.users.update_user_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.update_user_self</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.users.list_users_extended.html#module-kittycad.api.users.list_users_extended" title="kittycad.api.users.list_users_extended"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.list_users_extended</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.users.update_user_self.html#module-kittycad.api.users.update_user_self" title="kittycad.api.users.update_user_self"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.users.update_user_self</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -161,7 +174,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

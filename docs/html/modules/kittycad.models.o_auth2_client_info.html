@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta property="og:title" content="kittycad.models.o_auth2_client_info" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="modules/kittycad.models.o_auth2_client_info.html" />
+  <meta property="og:description" content="Classes" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.models.o_auth2_client_info &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +23,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -244,11 +253,180 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">OAuth2ClientInfo</span></code>([csrf_token, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo" title="kittycad.models.o_auth2_client_info.OAuth2ClientInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OAuth2ClientInfo</span></code></a>([csrf_token, ...])</p></td>
 <td><p>Information about an OAuth 2.0 client.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.o_auth2_client_info.</span></span><span class="sig-name descname"><span class="pre">OAuth2ClientInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csrf_token=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pkce_code_verifier=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/o_auth2_client_info.html#OAuth2ClientInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Information about an OAuth 2.0 client.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'additional_properties':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">'csrf_token':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">'pkce_code_verifier':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">'url':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">str]}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__annotations__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__attrs_attrs__">
+<span class="sig-name descname"><span class="pre">__attrs_attrs__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(Attribute(name='csrf_token',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='csrf_token'),</span> <span class="pre">Attribute(name='pkce_code_verifier',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='pkce_code_verifier'),</span> <span class="pre">Attribute(name='url',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='url'),</span> <span class="pre">Attribute(name='additional_properties',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=False,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='additional_properties'))</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__attrs_attrs__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__contains__">
+<span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/o_auth2_client_info.html#OAuth2ClientInfo.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__contains__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__delitem__">
+<span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/o_auth2_client_info.html#OAuth2ClientInfo.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__delitem__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.models.o_auth2_client_info',</span> <span class="pre">'__annotations__':</span> <span class="pre">{'csrf_token':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">'pkce_code_verifier':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">'url':</span> <span class="pre">typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">'additional_properties':</span> <span class="pre">typing.Dict[str,</span> <span class="pre">typing.Any]},</span> <span class="pre">'__doc__':</span> <span class="pre">'Information</span> <span class="pre">about</span> <span class="pre">an</span> <span class="pre">OAuth</span> <span class="pre">2.0</span> <span class="pre">client.',</span> <span class="pre">'to_dict':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.to_dict&gt;,</span> <span class="pre">'from_dict':</span> <span class="pre">&lt;classmethod</span> <span class="pre">object&gt;,</span> <span class="pre">'additional_keys':</span> <span class="pre">&lt;property</span> <span class="pre">object&gt;,</span> <span class="pre">'__getitem__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__getitem__&gt;,</span> <span class="pre">'__setitem__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__setitem__&gt;,</span> <span class="pre">'__delitem__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__delitem__&gt;,</span> <span class="pre">'__contains__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__contains__&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'OAuth2ClientInfo'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'OAuth2ClientInfo'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__attrs_attrs__':</span> <span class="pre">(Attribute(name='csrf_token',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='csrf_token'),</span> <span class="pre">Attribute(name='pkce_code_verifier',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='pkce_code_verifier'),</span> <span class="pre">Attribute(name='url',</span> <span class="pre">default=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;,</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=True,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Union[kittycad.types.Unset,</span> <span class="pre">str],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='url'),</span> <span class="pre">Attribute(name='additional_properties',</span> <span class="pre">default=Factory(factory=&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">takes_self=False),</span> <span class="pre">validator=None,</span> <span class="pre">repr=True,</span> <span class="pre">eq=True,</span> <span class="pre">eq_key=None,</span> <span class="pre">order=True,</span> <span class="pre">order_key=None,</span> <span class="pre">hash=None,</span> <span class="pre">init=False,</span> <span class="pre">metadata=mappingproxy({}),</span> <span class="pre">type=typing.Dict[str,</span> <span class="pre">typing.Any],</span> <span class="pre">converter=None,</span> <span class="pre">kw_only=False,</span> <span class="pre">inherited=False,</span> <span class="pre">on_setattr=None,</span> <span class="pre">alias='additional_properties')),</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__repr__&gt;,</span> <span class="pre">'__eq__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__eq__&gt;,</span> <span class="pre">'__ne__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__ne__&gt;,</span> <span class="pre">'__lt__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__lt__&gt;,</span> <span class="pre">'__le__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__le__&gt;,</span> <span class="pre">'__gt__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__gt__&gt;,</span> <span class="pre">'__ge__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__ge__&gt;,</span> <span class="pre">'__hash__':</span> <span class="pre">None,</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">OAuth2ClientInfo.__init__&gt;})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__eq__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__ge__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/o_auth2_client_info.html#OAuth2ClientInfo.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__getitem__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__gt__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__hash__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csrf_token=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pkce_code_verifier=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__le__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__lt__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.o_auth2_client_info'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__ne__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__repr__" title="Permalink to this definition"></a></dt>
+<dd><p>Method generated by attrs for class OAuth2ClientInfo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__setitem__">
+<span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/o_auth2_client_info.html#OAuth2ClientInfo.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.__setitem__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.additional_keys">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.additional_keys" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.additional_properties">
+<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.additional_properties" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.csrf_token">
+<span class="sig-name descname"><span class="pre">csrf_token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">kittycad.types.Unset</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.csrf_token" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/o_auth2_client_info.html#OAuth2ClientInfo.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.from_dict" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">B</span></code>, bound= OAuth2ClientInfo)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.pkce_code_verifier">
+<span class="sig-name descname"><span class="pre">pkce_code_verifier</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">kittycad.types.Unset</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.pkce_code_verifier" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/o_auth2_client_info.html#OAuth2ClientInfo.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.to_dict" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.o_auth2_client_info.OAuth2ClientInfo.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">kittycad.types.Unset</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/o_auth2_client_info.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.o_auth2_client_info.OAuth2ClientInfo.url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -262,7 +440,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

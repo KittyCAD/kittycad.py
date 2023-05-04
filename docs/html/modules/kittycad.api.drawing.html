@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta property="og:title" content="kittycad.api.drawing" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="modules/kittycad.api.drawing.html" />
+  <meta property="og:description" content="Contains methods for accessing the drawing API paths: Drawing API for updating your 3D files using the KittyCAD engine. Modules" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.api.drawing &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,10 +23,12 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.api.drawing.cmd_batch" href="kittycad.api.drawing.cmd_batch.html" />
+    <link rel="next" title="kittycad.api.drawing.cmd" href="kittycad.api.drawing.cmd.html" />
     <link rel="prev" title="kittycad.api.constant.get_physics_constant" href="kittycad.api.constant.get_physics_constant.html" /> 
 </head>
 
@@ -54,6 +63,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.beta.html">kittycad.api.beta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.constant.html">kittycad.api.constant</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.api.drawing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.drawing.cmd.html">kittycad.api.drawing.cmd</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.drawing.cmd_batch.html">kittycad.api.drawing.cmd_batch</a></li>
 </ul>
 </li>
@@ -107,7 +117,10 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.drawing.cmd_batch.html#module-kittycad.api.drawing.cmd_batch" title="kittycad.api.drawing.cmd_batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.drawing.cmd_batch</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.drawing.cmd.html#module-kittycad.api.drawing.cmd" title="kittycad.api.drawing.cmd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.drawing.cmd</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.drawing.cmd_batch.html#module-kittycad.api.drawing.cmd_batch" title="kittycad.api.drawing.cmd_batch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.drawing.cmd_batch</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -119,13 +132,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="kittycad.api.constant.get_physics_constant.html" class="btn btn-neutral float-left" title="kittycad.api.constant.get_physics_constant" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.api.drawing.cmd_batch.html" class="btn btn-neutral float-right" title="kittycad.api.drawing.cmd_batch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.api.drawing.cmd.html" class="btn btn-neutral float-right" title="kittycad.api.drawing.cmd" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

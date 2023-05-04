@@ -95,3 +95,6 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 exclude = ["kittycad/client_test.py"]
 show_error_codes = true
 ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = --doctest-modules

@@ -3,11 +3,18 @@
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
+  <meta property="og:title" content="kittycad.models.unit_length_format" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="modules/kittycad.models.unit_length_format.html" />
+  <meta property="og:description" content="Classes" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.models.unit_length_format &mdash; kittycad v0.3.8 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,6 +23,8 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -244,11 +253,283 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitLengthFormat</span></code>(value)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_length_format.UnitLengthFormat" title="kittycad.models.unit_length_format.UnitLengthFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitLengthFormat</span></code></a>(value)</p></td>
 <td><p>The valid types of length unit formats.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.unit_length_format.</span></span><span class="sig-name descname"><span class="pre">UnitLengthFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/unit_length_format.html#UnitLengthFormat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat" title="Permalink to this definition"></a></dt>
+<dd><p>The valid types of length unit formats.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.ANGSTROM">
+<span class="sig-name descname"><span class="pre">ANGSTROM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'angstrom'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.ANGSTROM" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Cubit&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.ASTRONOMICAL_UNIT">
+<span class="sig-name descname"><span class="pre">ASTRONOMICAL_UNIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'astronomical_unit'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.ASTRONOMICAL_UNIT" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Light-year&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.CENTIMETER">
+<span class="sig-name descname"><span class="pre">CENTIMETER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'centimeter'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.CENTIMETER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Kilometre&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.CHAIN">
+<span class="sig-name descname"><span class="pre">CHAIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'chain'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.CHAIN" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Furlong&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.CUBIT">
+<span class="sig-name descname"><span class="pre">CUBIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cubit'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.CUBIT" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Fathom&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.FATHOM">
+<span class="sig-name descname"><span class="pre">FATHOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fathom'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.FATHOM" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Chain_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.FOOT">
+<span class="sig-name descname"><span class="pre">FOOT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'foot'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.FOOT" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Thousandth_of_an_inch&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.FURLONG">
+<span class="sig-name descname"><span class="pre">FURLONG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'furlong'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.FURLONG" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Hand_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.HAND">
+<span class="sig-name descname"><span class="pre">HAND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hand'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.HAND" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/League_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.INCH">
+<span class="sig-name descname"><span class="pre">INCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'inch'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.INCH" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Mile&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.KILOMETER">
+<span class="sig-name descname"><span class="pre">KILOMETER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kilometer'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.KILOMETER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Foot_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.LEAGUE">
+<span class="sig-name descname"><span class="pre">LEAGUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'league'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.LEAGUE" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/List_of_nautical_units_of_measurement&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.LIGHTYEAR">
+<span class="sig-name descname"><span class="pre">LIGHTYEAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'lightyear'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.LIGHTYEAR" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Parsec&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.METER">
+<span class="sig-name descname"><span class="pre">METER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'meter'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.METER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Millimetre&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.MIL">
+<span class="sig-name descname"><span class="pre">MIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mil'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.MIL" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Inch&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.MILE">
+<span class="sig-name descname"><span class="pre">MILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mile'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.MILE" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Nautical_mile&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.MILLIMETER">
+<span class="sig-name descname"><span class="pre">MILLIMETER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'millimeter'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.MILLIMETER" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Centimetre&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.NAUTICAL_LEAGUE">
+<span class="sig-name descname"><span class="pre">NAUTICAL_LEAGUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nautical_league'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.NAUTICAL_LEAGUE" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Yard&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.NAUTICAL_MILE">
+<span class="sig-name descname"><span class="pre">NAUTICAL_MILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nautical_mile'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.NAUTICAL_MILE" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Astronomical_unit&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.PARSEC">
+<span class="sig-name descname"><span class="pre">PARSEC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'parsec'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.PARSEC" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Angstrom&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.YARD">
+<span class="sig-name descname"><span class="pre">YARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'yard'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.YARD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'_generate_next_value_':</span> <span class="pre">&lt;function</span> <span class="pre">Enum._generate_next_value_&gt;,</span> <span class="pre">'__module__':</span> <span class="pre">'kittycad.models.unit_length_format',</span> <span class="pre">'__doc__':</span> <span class="pre">'The</span> <span class="pre">valid</span> <span class="pre">types</span> <span class="pre">of</span> <span class="pre">length</span> <span class="pre">unit</span> <span class="pre">formats.',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">UnitLengthFormat.__str__&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'UnitLengthFormat'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'UnitLengthFormat'</span> <span class="pre">objects&gt;,</span> <span class="pre">'_member_names_':</span> <span class="pre">['METER',</span> <span class="pre">'MILLIMETER',</span> <span class="pre">'CENTIMETER',</span> <span class="pre">'KILOMETER',</span> <span class="pre">'FOOT',</span> <span class="pre">'MIL',</span> <span class="pre">'INCH',</span> <span class="pre">'MILE',</span> <span class="pre">'NAUTICAL_MILE',</span> <span class="pre">'ASTRONOMICAL_UNIT',</span> <span class="pre">'LIGHTYEAR',</span> <span class="pre">'PARSEC',</span> <span class="pre">'ANGSTROM',</span> <span class="pre">'CUBIT',</span> <span class="pre">'FATHOM',</span> <span class="pre">'CHAIN',</span> <span class="pre">'FURLONG',</span> <span class="pre">'HAND',</span> <span class="pre">'LEAGUE',</span> <span class="pre">'NAUTICAL_LEAGUE',</span> <span class="pre">'YARD'],</span> <span class="pre">'_member_map_':</span> <span class="pre">{'METER':</span> <span class="pre">&lt;UnitLengthFormat.METER:</span> <span class="pre">'meter'&gt;,</span> <span class="pre">'MILLIMETER':</span> <span class="pre">&lt;UnitLengthFormat.MILLIMETER:</span> <span class="pre">'millimeter'&gt;,</span> <span class="pre">'CENTIMETER':</span> <span class="pre">&lt;UnitLengthFormat.CENTIMETER:</span> <span class="pre">'centimeter'&gt;,</span> <span class="pre">'KILOMETER':</span> <span class="pre">&lt;UnitLengthFormat.KILOMETER:</span> <span class="pre">'kilometer'&gt;,</span> <span class="pre">'FOOT':</span> <span class="pre">&lt;UnitLengthFormat.FOOT:</span> <span class="pre">'foot'&gt;,</span> <span class="pre">'MIL':</span> <span class="pre">&lt;UnitLengthFormat.MIL:</span> <span class="pre">'mil'&gt;,</span> <span class="pre">'INCH':</span> <span class="pre">&lt;UnitLengthFormat.INCH:</span> <span class="pre">'inch'&gt;,</span> <span class="pre">'MILE':</span> <span class="pre">&lt;UnitLengthFormat.MILE:</span> <span class="pre">'mile'&gt;,</span> <span class="pre">'NAUTICAL_MILE':</span> <span class="pre">&lt;UnitLengthFormat.NAUTICAL_MILE:</span> <span class="pre">'nautical_mile'&gt;,</span> <span class="pre">'ASTRONOMICAL_UNIT':</span> <span class="pre">&lt;UnitLengthFormat.ASTRONOMICAL_UNIT:</span> <span class="pre">'astronomical_unit'&gt;,</span> <span class="pre">'LIGHTYEAR':</span> <span class="pre">&lt;UnitLengthFormat.LIGHTYEAR:</span> <span class="pre">'lightyear'&gt;,</span> <span class="pre">'PARSEC':</span> <span class="pre">&lt;UnitLengthFormat.PARSEC:</span> <span class="pre">'parsec'&gt;,</span> <span class="pre">'ANGSTROM':</span> <span class="pre">&lt;UnitLengthFormat.ANGSTROM:</span> <span class="pre">'angstrom'&gt;,</span> <span class="pre">'CUBIT':</span> <span class="pre">&lt;UnitLengthFormat.CUBIT:</span> <span class="pre">'cubit'&gt;,</span> <span class="pre">'FATHOM':</span> <span class="pre">&lt;UnitLengthFormat.FATHOM:</span> <span class="pre">'fathom'&gt;,</span> <span class="pre">'CHAIN':</span> <span class="pre">&lt;UnitLengthFormat.CHAIN:</span> <span class="pre">'chain'&gt;,</span> <span class="pre">'FURLONG':</span> <span class="pre">&lt;UnitLengthFormat.FURLONG:</span> <span class="pre">'furlong'&gt;,</span> <span class="pre">'HAND':</span> <span class="pre">&lt;UnitLengthFormat.HAND:</span> <span class="pre">'hand'&gt;,</span> <span class="pre">'LEAGUE':</span> <span class="pre">&lt;UnitLengthFormat.LEAGUE:</span> <span class="pre">'league'&gt;,</span> <span class="pre">'NAUTICAL_LEAGUE':</span> <span class="pre">&lt;UnitLengthFormat.NAUTICAL_LEAGUE:</span> <span class="pre">'nautical_league'&gt;,</span> <span class="pre">'YARD':</span> <span class="pre">&lt;UnitLengthFormat.YARD:</span> <span class="pre">'yard'&gt;},</span> <span class="pre">'_member_type_':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'_value2member_map_':</span> <span class="pre">{'meter':</span> <span class="pre">&lt;UnitLengthFormat.METER:</span> <span class="pre">'meter'&gt;,</span> <span class="pre">'millimeter':</span> <span class="pre">&lt;UnitLengthFormat.MILLIMETER:</span> <span class="pre">'millimeter'&gt;,</span> <span class="pre">'centimeter':</span> <span class="pre">&lt;UnitLengthFormat.CENTIMETER:</span> <span class="pre">'centimeter'&gt;,</span> <span class="pre">'kilometer':</span> <span class="pre">&lt;UnitLengthFormat.KILOMETER:</span> <span class="pre">'kilometer'&gt;,</span> <span class="pre">'foot':</span> <span class="pre">&lt;UnitLengthFormat.FOOT:</span> <span class="pre">'foot'&gt;,</span> <span class="pre">'mil':</span> <span class="pre">&lt;UnitLengthFormat.MIL:</span> <span class="pre">'mil'&gt;,</span> <span class="pre">'inch':</span> <span class="pre">&lt;UnitLengthFormat.INCH:</span> <span class="pre">'inch'&gt;,</span> <span class="pre">'mile':</span> <span class="pre">&lt;UnitLengthFormat.MILE:</span> <span class="pre">'mile'&gt;,</span> <span class="pre">'nautical_mile':</span> <span class="pre">&lt;UnitLengthFormat.NAUTICAL_MILE:</span> <span class="pre">'nautical_mile'&gt;,</span> <span class="pre">'astronomical_unit':</span> <span class="pre">&lt;UnitLengthFormat.ASTRONOMICAL_UNIT:</span> <span class="pre">'astronomical_unit'&gt;,</span> <span class="pre">'lightyear':</span> <span class="pre">&lt;UnitLengthFormat.LIGHTYEAR:</span> <span class="pre">'lightyear'&gt;,</span> <span class="pre">'parsec':</span> <span class="pre">&lt;UnitLengthFormat.PARSEC:</span> <span class="pre">'parsec'&gt;,</span> <span class="pre">'angstrom':</span> <span class="pre">&lt;UnitLengthFormat.ANGSTROM:</span> <span class="pre">'angstrom'&gt;,</span> <span class="pre">'cubit':</span> <span class="pre">&lt;UnitLengthFormat.CUBIT:</span> <span class="pre">'cubit'&gt;,</span> <span class="pre">'fathom':</span> <span class="pre">&lt;UnitLengthFormat.FATHOM:</span> <span class="pre">'fathom'&gt;,</span> <span class="pre">'chain':</span> <span class="pre">&lt;UnitLengthFormat.CHAIN:</span> <span class="pre">'chain'&gt;,</span> <span class="pre">'furlong':</span> <span class="pre">&lt;UnitLengthFormat.FURLONG:</span> <span class="pre">'furlong'&gt;,</span> <span class="pre">'hand':</span> <span class="pre">&lt;UnitLengthFormat.HAND:</span> <span class="pre">'hand'&gt;,</span> <span class="pre">'league':</span> <span class="pre">&lt;UnitLengthFormat.LEAGUE:</span> <span class="pre">'league'&gt;,</span> <span class="pre">'nautical_league':</span> <span class="pre">&lt;UnitLengthFormat.NAUTICAL_LEAGUE:</span> <span class="pre">'nautical_league'&gt;,</span> <span class="pre">'yard':</span> <span class="pre">&lt;UnitLengthFormat.YARD:</span> <span class="pre">'yard'&gt;},</span> <span class="pre">'METER':</span> <span class="pre">&lt;UnitLengthFormat.METER:</span> <span class="pre">'meter'&gt;,</span> <span class="pre">'MILLIMETER':</span> <span class="pre">&lt;UnitLengthFormat.MILLIMETER:</span> <span class="pre">'millimeter'&gt;,</span> <span class="pre">'CENTIMETER':</span> <span class="pre">&lt;UnitLengthFormat.CENTIMETER:</span> <span class="pre">'centimeter'&gt;,</span> <span class="pre">'KILOMETER':</span> <span class="pre">&lt;UnitLengthFormat.KILOMETER:</span> <span class="pre">'kilometer'&gt;,</span> <span class="pre">'FOOT':</span> <span class="pre">&lt;UnitLengthFormat.FOOT:</span> <span class="pre">'foot'&gt;,</span> <span class="pre">'MIL':</span> <span class="pre">&lt;UnitLengthFormat.MIL:</span> <span class="pre">'mil'&gt;,</span> <span class="pre">'INCH':</span> <span class="pre">&lt;UnitLengthFormat.INCH:</span> <span class="pre">'inch'&gt;,</span> <span class="pre">'MILE':</span> <span class="pre">&lt;UnitLengthFormat.MILE:</span> <span class="pre">'mile'&gt;,</span> <span class="pre">'NAUTICAL_MILE':</span> <span class="pre">&lt;UnitLengthFormat.NAUTICAL_MILE:</span> <span class="pre">'nautical_mile'&gt;,</span> <span class="pre">'ASTRONOMICAL_UNIT':</span> <span class="pre">&lt;UnitLengthFormat.ASTRONOMICAL_UNIT:</span> <span class="pre">'astronomical_unit'&gt;,</span> <span class="pre">'LIGHTYEAR':</span> <span class="pre">&lt;UnitLengthFormat.LIGHTYEAR:</span> <span class="pre">'lightyear'&gt;,</span> <span class="pre">'PARSEC':</span> <span class="pre">&lt;UnitLengthFormat.PARSEC:</span> <span class="pre">'parsec'&gt;,</span> <span class="pre">'ANGSTROM':</span> <span class="pre">&lt;UnitLengthFormat.ANGSTROM:</span> <span class="pre">'angstrom'&gt;,</span> <span class="pre">'CUBIT':</span> <span class="pre">&lt;UnitLengthFormat.CUBIT:</span> <span class="pre">'cubit'&gt;,</span> <span class="pre">'FATHOM':</span> <span class="pre">&lt;UnitLengthFormat.FATHOM:</span> <span class="pre">'fathom'&gt;,</span> <span class="pre">'CHAIN':</span> <span class="pre">&lt;UnitLengthFormat.CHAIN:</span> <span class="pre">'chain'&gt;,</span> <span class="pre">'FURLONG':</span> <span class="pre">&lt;UnitLengthFormat.FURLONG:</span> <span class="pre">'furlong'&gt;,</span> <span class="pre">'HAND':</span> <span class="pre">&lt;UnitLengthFormat.HAND:</span> <span class="pre">'hand'&gt;,</span> <span class="pre">'LEAGUE':</span> <span class="pre">&lt;UnitLengthFormat.LEAGUE:</span> <span class="pre">'league'&gt;,</span> <span class="pre">'NAUTICAL_LEAGUE':</span> <span class="pre">&lt;UnitLengthFormat.NAUTICAL_LEAGUE:</span> <span class="pre">'nautical_league'&gt;,</span> <span class="pre">'YARD':</span> <span class="pre">&lt;UnitLengthFormat.YARD:</span> <span class="pre">'yard'&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__repr__&gt;,</span> <span class="pre">'__format__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__format__&gt;,</span> <span class="pre">'__new__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__new__&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.unit_length_format'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat._generate_next_value_">
+<span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat._generate_next_value_" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the next value when not given.</p>
+<p>name: the name of the member
+start: the initial start value or None
+count: the number of existing members
+last_value: the last value assigned or None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat._member_map_">
+<span class="sig-name descname"><span class="pre">_member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ANGSTROM':</span> <span class="pre">UnitLengthFormat.ANGSTROM,</span> <span class="pre">'ASTRONOMICAL_UNIT':</span> <span class="pre">UnitLengthFormat.ASTRONOMICAL_UNIT,</span> <span class="pre">'CENTIMETER':</span> <span class="pre">UnitLengthFormat.CENTIMETER,</span> <span class="pre">'CHAIN':</span> <span class="pre">UnitLengthFormat.CHAIN,</span> <span class="pre">'CUBIT':</span> <span class="pre">UnitLengthFormat.CUBIT,</span> <span class="pre">'FATHOM':</span> <span class="pre">UnitLengthFormat.FATHOM,</span> <span class="pre">'FOOT':</span> <span class="pre">UnitLengthFormat.FOOT,</span> <span class="pre">'FURLONG':</span> <span class="pre">UnitLengthFormat.FURLONG,</span> <span class="pre">'HAND':</span> <span class="pre">UnitLengthFormat.HAND,</span> <span class="pre">'INCH':</span> <span class="pre">UnitLengthFormat.INCH,</span> <span class="pre">'KILOMETER':</span> <span class="pre">UnitLengthFormat.KILOMETER,</span> <span class="pre">'LEAGUE':</span> <span class="pre">UnitLengthFormat.LEAGUE,</span> <span class="pre">'LIGHTYEAR':</span> <span class="pre">UnitLengthFormat.LIGHTYEAR,</span> <span class="pre">'METER':</span> <span class="pre">UnitLengthFormat.METER,</span> <span class="pre">'MIL':</span> <span class="pre">UnitLengthFormat.MIL,</span> <span class="pre">'MILE':</span> <span class="pre">UnitLengthFormat.MILE,</span> <span class="pre">'MILLIMETER':</span> <span class="pre">UnitLengthFormat.MILLIMETER,</span> <span class="pre">'NAUTICAL_LEAGUE':</span> <span class="pre">UnitLengthFormat.NAUTICAL_LEAGUE,</span> <span class="pre">'NAUTICAL_MILE':</span> <span class="pre">UnitLengthFormat.NAUTICAL_MILE,</span> <span class="pre">'PARSEC':</span> <span class="pre">UnitLengthFormat.PARSEC,</span> <span class="pre">'YARD':</span> <span class="pre">UnitLengthFormat.YARD}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat._member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat._member_names_">
+<span class="sig-name descname"><span class="pre">_member_names_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['METER',</span> <span class="pre">'MILLIMETER',</span> <span class="pre">'CENTIMETER',</span> <span class="pre">'KILOMETER',</span> <span class="pre">'FOOT',</span> <span class="pre">'MIL',</span> <span class="pre">'INCH',</span> <span class="pre">'MILE',</span> <span class="pre">'NAUTICAL_MILE',</span> <span class="pre">'ASTRONOMICAL_UNIT',</span> <span class="pre">'LIGHTYEAR',</span> <span class="pre">'PARSEC',</span> <span class="pre">'ANGSTROM',</span> <span class="pre">'CUBIT',</span> <span class="pre">'FATHOM',</span> <span class="pre">'CHAIN',</span> <span class="pre">'FURLONG',</span> <span class="pre">'HAND',</span> <span class="pre">'LEAGUE',</span> <span class="pre">'NAUTICAL_LEAGUE',</span> <span class="pre">'YARD']</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat._member_names_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat._member_type_">
+<span class="sig-name descname"><span class="pre">_member_type_</span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat._member_type_" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_length_format.UnitLengthFormat._value2member_map_">
+<span class="sig-name descname"><span class="pre">_value2member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'angstrom':</span> <span class="pre">UnitLengthFormat.ANGSTROM,</span> <span class="pre">'astronomical_unit':</span> <span class="pre">UnitLengthFormat.ASTRONOMICAL_UNIT,</span> <span class="pre">'centimeter':</span> <span class="pre">UnitLengthFormat.CENTIMETER,</span> <span class="pre">'chain':</span> <span class="pre">UnitLengthFormat.CHAIN,</span> <span class="pre">'cubit':</span> <span class="pre">UnitLengthFormat.CUBIT,</span> <span class="pre">'fathom':</span> <span class="pre">UnitLengthFormat.FATHOM,</span> <span class="pre">'foot':</span> <span class="pre">UnitLengthFormat.FOOT,</span> <span class="pre">'furlong':</span> <span class="pre">UnitLengthFormat.FURLONG,</span> <span class="pre">'hand':</span> <span class="pre">UnitLengthFormat.HAND,</span> <span class="pre">'inch':</span> <span class="pre">UnitLengthFormat.INCH,</span> <span class="pre">'kilometer':</span> <span class="pre">UnitLengthFormat.KILOMETER,</span> <span class="pre">'league':</span> <span class="pre">UnitLengthFormat.LEAGUE,</span> <span class="pre">'lightyear':</span> <span class="pre">UnitLengthFormat.LIGHTYEAR,</span> <span class="pre">'meter':</span> <span class="pre">UnitLengthFormat.METER,</span> <span class="pre">'mil':</span> <span class="pre">UnitLengthFormat.MIL,</span> <span class="pre">'mile':</span> <span class="pre">UnitLengthFormat.MILE,</span> <span class="pre">'millimeter':</span> <span class="pre">UnitLengthFormat.MILLIMETER,</span> <span class="pre">'nautical_league':</span> <span class="pre">UnitLengthFormat.NAUTICAL_LEAGUE,</span> <span class="pre">'nautical_mile':</span> <span class="pre">UnitLengthFormat.NAUTICAL_MILE,</span> <span class="pre">'parsec':</span> <span class="pre">UnitLengthFormat.PARSEC,</span> <span class="pre">'yard':</span> <span class="pre">UnitLengthFormat.YARD}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_length_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_length_format.UnitLengthFormat._value2member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -262,7 +543,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
