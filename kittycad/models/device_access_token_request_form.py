@@ -21,7 +21,6 @@ class DeviceAccessTokenRequestForm:
     def to_dict(self) -> Dict[str, Any]:
         client_id = self.client_id
         device_code = self.device_code
-        grant_type: Union[Unset, str] = UNSET
         if not isinstance(self.grant_type, Unset):
             grant_type = self.grant_type
 

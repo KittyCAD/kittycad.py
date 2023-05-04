@@ -86,15 +86,12 @@ class DockerSystemInfo:
         architecture = self.architecture
         bridge_nf_ip6tables = self.bridge_nf_ip6tables
         bridge_nf_iptables = self.bridge_nf_iptables
-        cgroup_driver: Union[Unset, str] = UNSET
         if not isinstance(self.cgroup_driver, Unset):
             cgroup_driver = self.cgroup_driver
-        cgroup_version: Union[Unset, str] = UNSET
         if not isinstance(self.cgroup_version, Unset):
             cgroup_version = self.cgroup_version
         cluster_advertise = self.cluster_advertise
         cluster_store = self.cluster_store
-        containerd_commit: Union[Unset, str] = UNSET
         if not isinstance(self.containerd_commit, Unset):
             containerd_commit = self.containerd_commit
         containers = self.containers
@@ -126,11 +123,9 @@ class DockerSystemInfo:
         images = self.images
         index_server_address = self.index_server_address
         init_binary = self.init_binary
-        init_commit: Union[Unset, str] = UNSET
         if not isinstance(self.init_commit, Unset):
             init_commit = self.init_commit
         ipv4_forwarding = self.ipv4_forwarding
-        isolation: Union[Unset, str] = UNSET
         if not isinstance(self.isolation, Unset):
             isolation = self.isolation
         kernel_memory = self.kernel_memory
@@ -153,14 +148,11 @@ class DockerSystemInfo:
         os_type = self.os_type
         os_version = self.os_version
         pids_limit = self.pids_limit
-        plugins: Union[Unset, str] = UNSET
         if not isinstance(self.plugins, Unset):
             plugins = self.plugins
         product_license = self.product_license
-        registry_config: Union[Unset, str] = UNSET
         if not isinstance(self.registry_config, Unset):
             registry_config = self.registry_config
-        runc_commit: Union[Unset, str] = UNSET
         if not isinstance(self.runc_commit, Unset):
             runc_commit = self.runc_commit
         runtimes = self.runtimes

@@ -28,17 +28,13 @@ class EngineMetadata:
 
     def to_dict(self) -> Dict[str, Any]:
         async_jobs_running = self.async_jobs_running
-        cache: Union[Unset, str] = UNSET
         if not isinstance(self.cache, Unset):
             cache = self.cache
-        environment: Union[Unset, str] = UNSET
         if not isinstance(self.environment, Unset):
             environment = self.environment
-        fs: Union[Unset, str] = UNSET
         if not isinstance(self.fs, Unset):
             fs = self.fs
         git_hash = self.git_hash
-        pubsub: Union[Unset, str] = UNSET
         if not isinstance(self.pubsub, Unset):
             pubsub = self.pubsub
 

@@ -1,8 +1,8 @@
 import base64
 from typing import Any, Optional, Union
 
-from ...api.file.get_file_conversion import asyncio as fc_asyncio
-from ...api.file.get_file_conversion import sync as fc_sync
+from ...api.api_calls.get_async_operation import asyncio as fc_asyncio
+from ...api.api_calls.get_async_operation import sync as fc_sync
 from ...client import Client
 from ...models import Error
 from ...models.file_conversion import FileConversion
@@ -21,7 +21,10 @@ def sync(
     )
 
     if isinstance(fc, FileConversion) and fc.output != "":
-        fc.output = base64.b64decode(fc.output)
+        if isinstance(fc.output, str):
+            b = base64.b64decode(fc.output)
+            # decode the bytes to a string
+            fc.output = b.decode("utf-8")
 
     return fc
 
@@ -39,6 +42,9 @@ async def asyncio(
     )
 
     if isinstance(fc, FileConversion) and fc.output != "":
-        fc.output = base64.b64decode(fc.output)
+        if isinstance(fc.output, str):
+            b = base64.b64decode(fc.output)
+            # decode the bytes to a string
+            fc.output = b.decode("utf-8")
 
     return fc

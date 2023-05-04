@@ -19,7 +19,6 @@ class BillingInfo:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        address: Union[Unset, str] = UNSET
         if not isinstance(self.address, Unset):
             address = self.address
         name = self.name

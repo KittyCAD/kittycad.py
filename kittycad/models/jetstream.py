@@ -21,13 +21,10 @@ class Jetstream:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        config: Union[Unset, str] = UNSET
         if not isinstance(self.config, Unset):
             config = self.config
-        meta: Union[Unset, str] = UNSET
         if not isinstance(self.meta, Unset):
             meta = self.meta
-        stats: Union[Unset, str] = UNSET
         if not isinstance(self.stats, Unset):
             stats = self.stats
 

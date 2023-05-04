@@ -23,7 +23,6 @@ class InvoiceLineItem:
 
     def to_dict(self) -> Dict[str, Any]:
         amount = self.amount
-        currency: Union[Unset, str] = UNSET
         if not isinstance(self.currency, Unset):
             currency = self.currency
         description = self.description

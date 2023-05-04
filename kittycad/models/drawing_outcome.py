@@ -22,7 +22,6 @@ class Cancelled:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        what_failed: Union[Unset, str] = UNSET
         if not isinstance(self.what_failed, Unset):
             what_failed = self.what_failed
 

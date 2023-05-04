@@ -3,7 +3,6 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.dict import dict
 from ...models.drawing_cmd_req import DrawingCmdReq
 from ...models.error import Error
 from ...types import Response

@@ -29,10 +29,8 @@ class AiPluginManifest:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        api: Union[Unset, str] = UNSET
         if not isinstance(self.api, Unset):
             api = self.api
-        auth: Union[Unset, str] = UNSET
         if not isinstance(self.auth, Unset):
             auth = self.auth
         contact_email = self.contact_email

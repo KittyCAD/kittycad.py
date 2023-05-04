@@ -20,10 +20,8 @@ class DrawingCmdReq:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        cmd: Union[Unset, str] = UNSET
         if not isinstance(self.cmd, Unset):
             cmd = self.cmd
-        cmd_id: Union[Unset, str] = UNSET
         if not isinstance(self.cmd_id, Unset):
             cmd_id = self.cmd_id
         file_id = self.file_id

@@ -32,7 +32,6 @@ class PhysicsConstant:
         completed_at: Union[Unset, str] = UNSET
         if not isinstance(self.completed_at, Unset):
             completed_at = self.completed_at.isoformat()
-        constant: Union[Unset, str] = UNSET
         if not isinstance(self.constant, Unset):
             constant = self.constant
         created_at: Union[Unset, str] = UNSET
@@ -43,7 +42,6 @@ class PhysicsConstant:
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
-        status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET

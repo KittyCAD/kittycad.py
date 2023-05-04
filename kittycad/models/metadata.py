@@ -32,26 +32,19 @@ class Metadata:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        cache: Union[Unset, str] = UNSET
         if not isinstance(self.cache, Unset):
             cache = self.cache
-        engine: Union[Unset, str] = UNSET
         if not isinstance(self.engine, Unset):
             engine = self.engine
-        environment: Union[Unset, str] = UNSET
         if not isinstance(self.environment, Unset):
             environment = self.environment
-        executor: Union[Unset, str] = UNSET
         if not isinstance(self.executor, Unset):
             executor = self.executor
-        fs: Union[Unset, str] = UNSET
         if not isinstance(self.fs, Unset):
             fs = self.fs
         git_hash = self.git_hash
-        point_e: Union[Unset, str] = UNSET
         if not isinstance(self.point_e, Unset):
             point_e = self.point_e
-        pubsub: Union[Unset, str] = UNSET
         if not isinstance(self.pubsub, Unset):
             pubsub = self.pubsub
 

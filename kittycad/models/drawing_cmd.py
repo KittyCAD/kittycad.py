@@ -75,7 +75,6 @@ class Extrude:
 
     def to_dict(self) -> Dict[str, Any]:
         distance = self.distance
-        sketch: Union[Unset, str] = UNSET
         if not isinstance(self.sketch, Unset):
             sketch = self.sketch
 

@@ -8,7 +8,7 @@ Welcome to kittycad's documentation!
 
 .. autosummary::
    :recursive:
-   :toctree: modules
+   :toctree: generated
 
    kittycad.api
    kittycad.client

@@ -40,13 +40,11 @@ class FileDensity:
         error = self.error
         id = self.id
         material_mass = self.material_mass
-        src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
-        status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET

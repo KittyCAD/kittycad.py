@@ -29,14 +29,12 @@ class Customer:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        address: Union[Unset, str] = UNSET
         if not isinstance(self.address, Unset):
             address = self.address
         balance = self.balance
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        currency: Union[Unset, str] = UNSET
         if not isinstance(self.currency, Unset):
             currency = self.currency
         delinquent = self.delinquent

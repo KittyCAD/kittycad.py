@@ -189,7 +189,7 @@ from kittycad.types import Response
         """
     )
 
-    if success_type != "str":
+    if success_type != "str" and success_type != "dict":
         example_imports = example_imports + (
             """from kittycad.models import """ + success_type
         )
@@ -254,7 +254,7 @@ response: Response["""
     for ref in endpoint_refs:
         if ref.startswith("List[") and ref.endswith("]"):
             ref = ref.replace("List[", "").replace("]", "")
-        if ref != "str":
+        if ref != "str" and ref != "dict":
             f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
     for ref in parameter_refs:
         f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
@@ -1299,7 +1299,6 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
             f.write("\t\t" + property_name + " = self." + property_name + "\n")
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
-        f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
         f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
         f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
     elif "allOf" in property_schema:
@@ -1310,7 +1309,6 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 return renderTypeToDict(
                     f, property_name, data["components"]["schemas"][ref], data
                 )
-            f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
             f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
             f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
         else:

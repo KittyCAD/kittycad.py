@@ -25,7 +25,6 @@ class CardDetails:
 
     def to_dict(self) -> Dict[str, Any]:
         brand = self.brand
-        checks: Union[Unset, str] = UNSET
         if not isinstance(self.checks, Unset):
             checks = self.checks
         country = self.country

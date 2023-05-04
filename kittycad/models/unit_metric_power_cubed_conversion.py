@@ -41,16 +41,13 @@ class UnitMetricPowerCubedConversion:
         id = self.id
         input = self.input
         output = self.output
-        output_format: Union[Unset, str] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
-        src_format: Union[Unset, str] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
-        status: Union[Unset, str] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET

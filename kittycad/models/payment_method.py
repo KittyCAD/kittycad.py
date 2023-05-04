@@ -26,10 +26,8 @@ class PaymentMethod:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        billing_info: Union[Unset, str] = UNSET
         if not isinstance(self.billing_info, Unset):
             billing_info = self.billing_info
-        card: Union[Unset, str] = UNSET
         if not isinstance(self.card, Unset):
             card = self.card
         created_at: Union[Unset, str] = UNSET
@@ -37,7 +35,6 @@ class PaymentMethod:
             created_at = self.created_at.isoformat()
         id = self.id
         metadata = self.metadata
-        type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type
 

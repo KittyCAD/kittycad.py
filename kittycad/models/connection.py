@@ -70,7 +70,6 @@ class Connection:
 
     def to_dict(self) -> Dict[str, Any]:
         auth_timeout = self.auth_timeout
-        cluster: Union[Unset, str] = UNSET
         if not isinstance(self.cluster, Unset):
             cluster = self.cluster
         config_load_time: Union[Unset, str] = UNSET
@@ -79,7 +78,6 @@ class Connection:
         connections = self.connections
         cores = self.cores
         cpu = self.cpu
-        gateway: Union[Unset, str] = UNSET
         if not isinstance(self.gateway, Unset):
             gateway = self.gateway
         git_commit = self.git_commit
@@ -93,10 +91,8 @@ class Connection:
         https_port = self.https_port
         in_bytes = self.in_bytes
         in_msgs = self.in_msgs
-        jetstream: Union[Unset, str] = UNSET
         if not isinstance(self.jetstream, Unset):
             jetstream = self.jetstream
-        leaf: Union[Unset, str] = UNSET
         if not isinstance(self.leaf, Unset):
             leaf = self.leaf
         leafnodes = self.leafnodes

@@ -22,10 +22,8 @@ class ExecutorMetadata:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        docker_info: Union[Unset, str] = UNSET
         if not isinstance(self.docker_info, Unset):
             docker_info = self.docker_info
-        environment: Union[Unset, str] = UNSET
         if not isinstance(self.environment, Unset):
             environment = self.environment
         git_hash = self.git_hash

@@ -24,7 +24,6 @@ class JetstreamStats:
 
     def to_dict(self) -> Dict[str, Any]:
         accounts = self.accounts
-        api: Union[Unset, str] = UNSET
         if not isinstance(self.api, Unset):
             api = self.api
         ha_assets = self.ha_assets
