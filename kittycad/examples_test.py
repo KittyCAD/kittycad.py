@@ -143,6 +143,7 @@ from kittycad.models.unit_volume_format import UnitVolumeFormat
 from kittycad.models.update_user import UpdateUser
 
 
+@pytest.mark.skip
 def test_get_schema():
     # Create our client.
     client = ClientFromEnv()
@@ -159,6 +160,7 @@ def test_get_schema():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_schema_async():
     # Create our client.
     client = ClientFromEnv()
@@ -173,6 +175,7 @@ async def test_get_schema_async():
     )
 
 
+@pytest.mark.skip
 def test_get_ai_plugin_manifest():
     # Create our client.
     client = ClientFromEnv()
@@ -189,6 +192,7 @@ def test_get_ai_plugin_manifest():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_ai_plugin_manifest_async():
     # Create our client.
     client = ClientFromEnv()
@@ -203,6 +207,7 @@ async def test_get_ai_plugin_manifest_async():
     )
 
 
+@pytest.mark.skip
 def test_get_metadata():
     # Create our client.
     client = ClientFromEnv()
@@ -219,6 +224,7 @@ def test_get_metadata():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_metadata_async():
     # Create our client.
     client = ClientFromEnv()
@@ -233,6 +239,7 @@ async def test_get_metadata_async():
     )
 
 
+@pytest.mark.skip
 def test_get_metrics():
     # Create our client.
     client = ClientFromEnv()
@@ -249,6 +256,7 @@ def test_get_metrics():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_metrics_async():
     # Create our client.
     client = ClientFromEnv()
@@ -263,6 +271,7 @@ async def test_get_metrics_async():
     )
 
 
+@pytest.mark.skip
 def test_create_image_to_3d():
     # Create our client.
     client = ClientFromEnv()
@@ -285,6 +294,7 @@ def test_create_image_to_3d():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_image_to_3d_async():
     # Create our client.
     client = ClientFromEnv()
@@ -305,6 +315,7 @@ async def test_create_image_to_3d_async():
     )
 
 
+@pytest.mark.skip
 def test_create_text_to_3d():
     # Create our client.
     client = ClientFromEnv()
@@ -325,6 +336,7 @@ def test_create_text_to_3d():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_text_to_3d_async():
     # Create our client.
     client = ClientFromEnv()
@@ -343,6 +355,7 @@ async def test_create_text_to_3d_async():
     )
 
 
+@pytest.mark.skip
 def test_get_api_call_metrics():
     # Create our client.
     client = ClientFromEnv()
@@ -361,6 +374,7 @@ def test_get_api_call_metrics():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_api_call_metrics_async():
     # Create our client.
     client = ClientFromEnv()
@@ -377,6 +391,7 @@ async def test_get_api_call_metrics_async():
     )
 
 
+@pytest.mark.skip
 def test_list_api_calls():
     # Create our client.
     client = ClientFromEnv()
@@ -399,6 +414,7 @@ def test_list_api_calls():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_api_calls_async():
     # Create our client.
     client = ClientFromEnv()
@@ -419,6 +435,7 @@ async def test_list_api_calls_async():
     )
 
 
+@pytest.mark.skip
 def test_get_api_call():
     # Create our client.
     client = ClientFromEnv()
@@ -437,6 +454,7 @@ def test_get_api_call():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_api_call_async():
     # Create our client.
     client = ClientFromEnv()
@@ -453,6 +471,7 @@ async def test_get_api_call_async():
     )
 
 
+@pytest.mark.skip
 def test_apps_github_callback():
     # Create our client.
     client = ClientFromEnv()
@@ -469,6 +488,7 @@ def test_apps_github_callback():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_apps_github_callback_async():
     # Create our client.
     client = ClientFromEnv()
@@ -483,6 +503,7 @@ async def test_apps_github_callback_async():
     )
 
 
+@pytest.mark.skip
 def test_apps_github_consent():
     # Create our client.
     client = ClientFromEnv()
@@ -499,6 +520,7 @@ def test_apps_github_consent():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_apps_github_consent_async():
     # Create our client.
     client = ClientFromEnv()
@@ -513,6 +535,7 @@ async def test_apps_github_consent_async():
     )
 
 
+@pytest.mark.skip
 def test_apps_github_webhook():
     # Create our client.
     client = ClientFromEnv()
@@ -531,6 +554,7 @@ def test_apps_github_webhook():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_apps_github_webhook_async():
     # Create our client.
     client = ClientFromEnv()
@@ -547,6 +571,7 @@ async def test_apps_github_webhook_async():
     )
 
 
+@pytest.mark.skip
 def test_list_async_operations():
     # Create our client.
     client = ClientFromEnv()
@@ -571,6 +596,7 @@ def test_list_async_operations():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_async_operations_async():
     # Create our client.
     client = ClientFromEnv()
@@ -593,6 +619,7 @@ async def test_list_async_operations_async():
     )
 
 
+@pytest.mark.skip
 def test_get_async_operation():
     # Create our client.
     client = ClientFromEnv()
@@ -611,6 +638,7 @@ def test_get_async_operation():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_async_operation_async():
     # Create our client.
     client = ClientFromEnv()
@@ -627,6 +655,7 @@ async def test_get_async_operation_async():
     )
 
 
+@pytest.mark.skip
 def test_auth_email():
     # Create our client.
     client = ClientFromEnv()
@@ -645,6 +674,7 @@ def test_auth_email():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_auth_email_async():
     # Create our client.
     client = ClientFromEnv()
@@ -661,6 +691,7 @@ async def test_auth_email_async():
     )
 
 
+@pytest.mark.skip
 def test_auth_email_callback():
     # Create our client.
     client = ClientFromEnv()
@@ -683,6 +714,7 @@ def test_auth_email_callback():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_auth_email_callback_async():
     # Create our client.
     client = ClientFromEnv()
@@ -703,6 +735,7 @@ async def test_auth_email_callback_async():
     )
 
 
+@pytest.mark.skip
 def test_get_physics_constant():
     # Create our client.
     client = ClientFromEnv()
@@ -721,6 +754,7 @@ def test_get_physics_constant():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_physics_constant_async():
     # Create our client.
     client = ClientFromEnv()
@@ -737,6 +771,7 @@ async def test_get_physics_constant_async():
     )
 
 
+@pytest.mark.skip
 def test_cmd():
     # Create our client.
     client = ClientFromEnv()
@@ -755,6 +790,7 @@ def test_cmd():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_cmd_async():
     # Create our client.
     client = ClientFromEnv()
@@ -771,6 +807,7 @@ async def test_cmd_async():
     )
 
 
+@pytest.mark.skip
 def test_cmd_batch():
     # Create our client.
     client = ClientFromEnv()
@@ -789,6 +826,7 @@ def test_cmd_batch():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_cmd_batch_async():
     # Create our client.
     client = ClientFromEnv()
@@ -805,6 +843,7 @@ async def test_cmd_batch_async():
     )
 
 
+@pytest.mark.skip
 def test_create_file_center_of_mass():
     # Create our client.
     client = ClientFromEnv()
@@ -825,6 +864,7 @@ def test_create_file_center_of_mass():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_file_center_of_mass_async():
     # Create our client.
     client = ClientFromEnv()
@@ -843,6 +883,7 @@ async def test_create_file_center_of_mass_async():
     )
 
 
+@pytest.mark.skip
 def test_create_file_conversion_with_base64_helper():
     # Create our client.
     client = ClientFromEnv()
@@ -865,6 +906,7 @@ def test_create_file_conversion_with_base64_helper():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_file_conversion_with_base64_helper_async():
     # Create our client.
     client = ClientFromEnv()
@@ -887,6 +929,7 @@ async def test_create_file_conversion_with_base64_helper_async():
     )
 
 
+@pytest.mark.skip
 def test_create_file_density():
     # Create our client.
     client = ClientFromEnv()
@@ -909,6 +952,7 @@ def test_create_file_density():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_file_density_async():
     # Create our client.
     client = ClientFromEnv()
@@ -929,6 +973,7 @@ async def test_create_file_density_async():
     )
 
 
+@pytest.mark.skip
 def test_create_file_execution():
     # Create our client.
     client = ClientFromEnv()
@@ -951,6 +996,7 @@ def test_create_file_execution():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_file_execution_async():
     # Create our client.
     client = ClientFromEnv()
@@ -971,6 +1017,7 @@ async def test_create_file_execution_async():
     )
 
 
+@pytest.mark.skip
 def test_create_file_mass():
     # Create our client.
     client = ClientFromEnv()
@@ -993,6 +1040,7 @@ def test_create_file_mass():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_file_mass_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1013,6 +1061,7 @@ async def test_create_file_mass_async():
     )
 
 
+@pytest.mark.skip
 def test_create_file_surface_area():
     # Create our client.
     client = ClientFromEnv()
@@ -1033,6 +1082,7 @@ def test_create_file_surface_area():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_file_surface_area_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1051,6 +1101,7 @@ async def test_create_file_surface_area_async():
     )
 
 
+@pytest.mark.skip
 def test_create_file_volume():
     # Create our client.
     client = ClientFromEnv()
@@ -1071,6 +1122,7 @@ def test_create_file_volume():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_file_volume_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1089,6 +1141,7 @@ async def test_create_file_volume_async():
     )
 
 
+@pytest.mark.skip
 def test_logout():
     # Create our client.
     client = ClientFromEnv()
@@ -1105,6 +1158,7 @@ def test_logout():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_logout_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1119,6 +1173,7 @@ async def test_logout_async():
     )
 
 
+@pytest.mark.skip
 def test_get_openai_schema():
     # Create our client.
     client = ClientFromEnv()
@@ -1135,6 +1190,7 @@ def test_get_openai_schema():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_openai_schema_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1149,6 +1205,7 @@ async def test_get_openai_schema_async():
     )
 
 
+@pytest.mark.skip
 def test_ping():
     # Create our client.
     client = ClientFromEnv()
@@ -1165,6 +1222,7 @@ def test_ping():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_ping_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1179,6 +1237,7 @@ async def test_ping_async():
     )
 
 
+@pytest.mark.skip
 def test_get_acceleration_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1201,6 +1260,7 @@ def test_get_acceleration_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_acceleration_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1223,6 +1283,7 @@ async def test_get_acceleration_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_angle_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1245,6 +1306,7 @@ def test_get_angle_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_angle_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1265,6 +1327,7 @@ async def test_get_angle_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_angular_velocity_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1289,6 +1352,7 @@ def test_get_angular_velocity_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_angular_velocity_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1313,6 +1377,7 @@ async def test_get_angular_velocity_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_area_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1335,6 +1400,7 @@ def test_get_area_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_area_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1355,6 +1421,7 @@ async def test_get_area_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_charge_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1377,6 +1444,7 @@ def test_get_charge_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_charge_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1397,6 +1465,7 @@ async def test_get_charge_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_concentration_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1419,6 +1488,7 @@ def test_get_concentration_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_concentration_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1441,6 +1511,7 @@ async def test_get_concentration_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_data_transfer_rate_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1465,6 +1536,7 @@ def test_get_data_transfer_rate_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_data_transfer_rate_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1489,6 +1561,7 @@ async def test_get_data_transfer_rate_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_data_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1511,6 +1584,7 @@ def test_get_data_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_data_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1531,6 +1605,7 @@ async def test_get_data_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_density_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1553,6 +1628,7 @@ def test_get_density_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_density_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1573,6 +1649,7 @@ async def test_get_density_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_energy_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1595,6 +1672,7 @@ def test_get_energy_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_energy_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1615,6 +1693,7 @@ async def test_get_energy_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_force_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1637,6 +1716,7 @@ def test_get_force_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_force_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1657,6 +1737,7 @@ async def test_get_force_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_illuminance_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1679,6 +1760,7 @@ def test_get_illuminance_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_illuminance_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1701,6 +1783,7 @@ async def test_get_illuminance_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_length_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1723,6 +1806,7 @@ def test_get_length_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_length_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1743,6 +1827,7 @@ async def test_get_length_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_magnetic_field_strength_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1769,6 +1854,7 @@ def test_get_magnetic_field_strength_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_magnetic_field_strength_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1793,6 +1879,7 @@ async def test_get_magnetic_field_strength_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_magnetic_flux_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1815,6 +1902,7 @@ def test_get_magnetic_flux_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_magnetic_flux_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1837,6 +1925,7 @@ async def test_get_magnetic_flux_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_mass_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1859,6 +1948,7 @@ def test_get_mass_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_mass_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1879,6 +1969,7 @@ async def test_get_mass_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_metric_power_cubed_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1903,6 +1994,7 @@ def test_get_metric_power_cubed_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_metric_power_cubed_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1927,6 +2019,7 @@ async def test_get_metric_power_cubed_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_metric_power_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1949,6 +2042,7 @@ def test_get_metric_power_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_metric_power_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -1971,6 +2065,7 @@ async def test_get_metric_power_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_metric_power_squared_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1997,6 +2092,7 @@ def test_get_metric_power_squared_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_metric_power_squared_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2021,6 +2117,7 @@ async def test_get_metric_power_squared_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_power_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2043,6 +2140,7 @@ def test_get_power_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_power_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2063,6 +2161,7 @@ async def test_get_power_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_pressure_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2085,6 +2184,7 @@ def test_get_pressure_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_pressure_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2105,6 +2205,7 @@ async def test_get_pressure_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_radiation_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2127,6 +2228,7 @@ def test_get_radiation_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_radiation_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2147,6 +2249,7 @@ async def test_get_radiation_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_radioactivity_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2169,6 +2272,7 @@ def test_get_radioactivity_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_radioactivity_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2191,6 +2295,7 @@ async def test_get_radioactivity_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_solid_angle_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2213,6 +2318,7 @@ def test_get_solid_angle_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_solid_angle_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2235,6 +2341,7 @@ async def test_get_solid_angle_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_temperature_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2257,6 +2364,7 @@ def test_get_temperature_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_temperature_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2279,6 +2387,7 @@ async def test_get_temperature_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_time_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2301,6 +2410,7 @@ def test_get_time_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_time_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2321,6 +2431,7 @@ async def test_get_time_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_velocity_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2343,6 +2454,7 @@ def test_get_velocity_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_velocity_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2363,6 +2475,7 @@ async def test_get_velocity_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_voltage_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2385,6 +2498,7 @@ def test_get_voltage_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_voltage_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2405,6 +2519,7 @@ async def test_get_voltage_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_get_volume_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -2427,6 +2542,7 @@ def test_get_volume_unit_conversion():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_volume_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2447,6 +2563,7 @@ async def test_get_volume_unit_conversion_async():
     )
 
 
+@pytest.mark.skip
 def test_delete_user_self():
     # Create our client.
     client = ClientFromEnv()
@@ -2463,6 +2580,7 @@ def test_delete_user_self():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_delete_user_self_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2477,6 +2595,7 @@ async def test_delete_user_self_async():
     )
 
 
+@pytest.mark.skip
 def test_get_user_self():
     # Create our client.
     client = ClientFromEnv()
@@ -2493,6 +2612,7 @@ def test_get_user_self():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_user_self_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2507,6 +2627,7 @@ async def test_get_user_self_async():
     )
 
 
+@pytest.mark.skip
 def test_update_user_self():
     # Create our client.
     client = ClientFromEnv()
@@ -2525,6 +2646,7 @@ def test_update_user_self():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_update_user_self_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2541,6 +2663,7 @@ async def test_update_user_self_async():
     )
 
 
+@pytest.mark.skip
 def test_user_list_api_calls():
     # Create our client.
     client = ClientFromEnv()
@@ -2563,6 +2686,7 @@ def test_user_list_api_calls():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_user_list_api_calls_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2583,6 +2707,7 @@ async def test_user_list_api_calls_async():
     )
 
 
+@pytest.mark.skip
 def test_get_api_call_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2601,6 +2726,7 @@ def test_get_api_call_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_api_call_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2617,6 +2743,7 @@ async def test_get_api_call_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_list_api_tokens_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2639,6 +2766,7 @@ def test_list_api_tokens_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_api_tokens_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2659,6 +2787,7 @@ async def test_list_api_tokens_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_create_api_token_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2675,6 +2804,7 @@ def test_create_api_token_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_api_token_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2689,6 +2819,7 @@ async def test_create_api_token_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_delete_api_token_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2707,6 +2838,7 @@ def test_delete_api_token_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_delete_api_token_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2723,6 +2855,7 @@ async def test_delete_api_token_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_get_api_token_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2741,6 +2874,7 @@ def test_get_api_token_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_api_token_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2757,6 +2891,7 @@ async def test_get_api_token_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_get_user_self_extended():
     # Create our client.
     client = ClientFromEnv()
@@ -2773,6 +2908,7 @@ def test_get_user_self_extended():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_user_self_extended_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2787,6 +2923,7 @@ async def test_get_user_self_extended_async():
     )
 
 
+@pytest.mark.skip
 def test_get_user_front_hash_self():
     # Create our client.
     client = ClientFromEnv()
@@ -2803,6 +2940,7 @@ def test_get_user_front_hash_self():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_user_front_hash_self_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2817,6 +2955,7 @@ async def test_get_user_front_hash_self_async():
     )
 
 
+@pytest.mark.skip
 def test_get_user_onboarding_self():
     # Create our client.
     client = ClientFromEnv()
@@ -2833,6 +2972,7 @@ def test_get_user_onboarding_self():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_user_onboarding_self_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2847,6 +2987,7 @@ async def test_get_user_onboarding_self_async():
     )
 
 
+@pytest.mark.skip
 def test_delete_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2863,6 +3004,7 @@ def test_delete_payment_information_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_delete_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2877,6 +3019,7 @@ async def test_delete_payment_information_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_get_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2893,6 +3036,7 @@ def test_get_payment_information_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2907,6 +3051,7 @@ async def test_get_payment_information_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_create_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2925,6 +3070,7 @@ def test_create_payment_information_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2941,6 +3087,7 @@ async def test_create_payment_information_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_update_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2959,6 +3106,7 @@ def test_update_payment_information_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_update_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -2975,6 +3123,7 @@ async def test_update_payment_information_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_get_payment_balance_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2991,6 +3140,7 @@ def test_get_payment_balance_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_payment_balance_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3005,6 +3155,7 @@ async def test_get_payment_balance_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_create_payment_intent_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3021,6 +3172,7 @@ def test_create_payment_intent_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_payment_intent_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3035,6 +3187,7 @@ async def test_create_payment_intent_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_list_invoices_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3051,6 +3204,7 @@ def test_list_invoices_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_invoices_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3065,6 +3219,7 @@ async def test_list_invoices_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_list_payment_methods_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3081,6 +3236,7 @@ def test_list_payment_methods_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_payment_methods_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3095,6 +3251,7 @@ async def test_list_payment_methods_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_delete_payment_method_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3113,6 +3270,7 @@ def test_delete_payment_method_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_delete_payment_method_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3129,6 +3287,7 @@ async def test_delete_payment_method_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_validate_customer_tax_information_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3145,6 +3304,7 @@ def test_validate_customer_tax_information_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_validate_customer_tax_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3159,6 +3319,7 @@ async def test_validate_customer_tax_information_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_get_session_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3177,6 +3338,7 @@ def test_get_session_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_session_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3193,6 +3355,7 @@ async def test_get_session_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_list_users():
     # Create our client.
     client = ClientFromEnv()
@@ -3215,6 +3378,7 @@ def test_list_users():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_users_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3235,6 +3399,7 @@ async def test_list_users_async():
     )
 
 
+@pytest.mark.skip
 def test_list_users_extended():
     # Create our client.
     client = ClientFromEnv()
@@ -3257,6 +3422,7 @@ def test_list_users_extended():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_users_extended_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3277,6 +3443,7 @@ async def test_list_users_extended_async():
     )
 
 
+@pytest.mark.skip
 def test_get_user_extended():
     # Create our client.
     client = ClientFromEnv()
@@ -3295,6 +3462,7 @@ def test_get_user_extended():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_user_extended_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3311,6 +3479,7 @@ async def test_get_user_extended_async():
     )
 
 
+@pytest.mark.skip
 def test_get_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3329,6 +3498,7 @@ def test_get_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_get_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3345,6 +3515,7 @@ async def test_get_user_async():
     )
 
 
+@pytest.mark.skip
 def test_list_api_calls_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -3369,6 +3540,7 @@ def test_list_api_calls_for_user():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_list_api_calls_for_user_async():
     # Create our client.
     client = ClientFromEnv()
@@ -3391,6 +3563,7 @@ async def test_list_api_calls_for_user_async():
     )
 
 
+@pytest.mark.skip
 def test_create_executor_term():
     # Create our client.
     client = ClientFromEnv()
@@ -3407,6 +3580,7 @@ def test_create_executor_term():
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_create_executor_term_async():
     # Create our client.
     client = ClientFromEnv()

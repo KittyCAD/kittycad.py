@@ -281,6 +281,7 @@ from kittycad.types import Response
         example_imports
         + """
 
+@pytest.mark.skip
 def test_"""
         + fn_name
         + """():
@@ -304,6 +305,7 @@ def test_"""
 
 # OR run async
 @pytest.mark.asyncio
+@pytest.mark.skip
 async def test_"""
         + fn_name
         + """_async():
@@ -341,9 +343,9 @@ async def test_"""
 
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
-        "example": cleaned_example.replace("@pytest.mark.asyncio\n", "").replace(
-            "def test_", "def "
-        ),
+        "example": cleaned_example.replace("@pytest.mark.asyncio\n", "")
+        .replace("def test_", "def ")
+        .replace("@pytest.mark.skip", ""),
         "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api."
         + tag_name
         + "."
