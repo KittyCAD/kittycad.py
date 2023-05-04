@@ -23,9 +23,9 @@ def _get_kwargs(
     )  # noqa: E501
     if value is not None:
         if "?" in url:
-            url = url + "&value=" + value
+            url = url + "&value=" + str(value)
         else:
-            url = url + "?value=" + value
+            url = url + "?value=" + str(value)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

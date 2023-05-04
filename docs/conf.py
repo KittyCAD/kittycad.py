@@ -59,11 +59,11 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_autodoc_typehints",
     "sphinx_automodapi.automodapi",
-    #"sphinx_rtd_theme",
+    # "sphinx_rtd_theme",
     "sphinx_copybutton",
-    #"sphinx_json_schema_spec",
-    #"sphinxcontrib.spelling",
-    #"sphinxext.opengraph",
+    # "sphinx_json_schema_spec",
+    # "sphinxcontrib.spelling",
+    # "sphinxext.opengraph",
 ]
 
 numpydoc_show_class_members = False

@@ -19,14 +19,14 @@ def _get_kwargs(
     url = "{}/file/density".format(client.base_url)  # noqa: E501
     if material_mass is not None:
         if "?" in url:
-            url = url + "&material_mass=" + material_mass
+            url = url + "&material_mass=" + str(material_mass)
         else:
-            url = url + "?material_mass=" + material_mass
+            url = url + "?material_mass=" + str(material_mass)
     if src_format is not None:
         if "?" in url:
-            url = url + "&src_format=" + src_format
+            url = url + "&src_format=" + str(src_format)
         else:
-            url = url + "?src_format=" + src_format
+            url = url + "?src_format=" + str(src_format)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

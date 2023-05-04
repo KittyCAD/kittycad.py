@@ -20,9 +20,9 @@ def _get_kwargs(
     )  # noqa: E501
     if prompt is not None:
         if "?" in url:
-            url = url + "&prompt=" + prompt
+            url = url + "&prompt=" + str(prompt)
         else:
-            url = url + "?prompt=" + prompt
+            url = url + "?prompt=" + str(prompt)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

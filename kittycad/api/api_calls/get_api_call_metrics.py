@@ -17,9 +17,9 @@ def _get_kwargs(
     url = "{}/api-call-metrics".format(client.base_url)  # noqa: E501
     if group_by is not None:
         if "?" in url:
-            url = url + "&group_by=" + group_by
+            url = url + "&group_by=" + str(group_by)
         else:
-            url = url + "?group_by=" + group_by
+            url = url + "?group_by=" + str(group_by)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

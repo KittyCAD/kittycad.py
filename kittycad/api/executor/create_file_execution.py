@@ -19,9 +19,9 @@ def _get_kwargs(
     url = "{}/file/execute/{lang}".format(client.base_url, lang=lang)  # noqa: E501
     if output is not None:
         if "?" in url:
-            url = url + "&output=" + output
+            url = url + "&output=" + str(output)
         else:
-            url = url + "?output=" + output
+            url = url + "?output=" + str(output)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

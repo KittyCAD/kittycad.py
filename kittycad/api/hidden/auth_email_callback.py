@@ -17,19 +17,19 @@ def _get_kwargs(
     url = "{}/auth/email/callback".format(client.base_url)  # noqa: E501
     if callback_url is not None:
         if "?" in url:
-            url = url + "&callback_url=" + callback_url
+            url = url + "&callback_url=" + str(callback_url)
         else:
-            url = url + "?callback_url=" + callback_url
+            url = url + "?callback_url=" + str(callback_url)
     if email is not None:
         if "?" in url:
-            url = url + "&email=" + email
+            url = url + "&email=" + str(email)
         else:
-            url = url + "?email=" + email
+            url = url + "?email=" + str(email)
     if token is not None:
         if "?" in url:
-            url = url + "&token=" + token
+            url = url + "&token=" + str(token)
         else:
-            url = url + "?token=" + token
+            url = url + "?token=" + str(token)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
