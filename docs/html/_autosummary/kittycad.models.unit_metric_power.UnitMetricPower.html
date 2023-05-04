@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta property="og:title" content="kittycad.models.unit_metric_power.UnitMetricPower" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="_autosummary/kittycad.models.unit_metric_power.UnitMetricPower.html" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.models.unit_metric_power.UnitMetricPower &mdash; kittycad v0.3.8 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="kittycad.models.unit_metric_power_conversion" href="kittycad.models.unit_metric_power_conversion.html" />
+    <link rel="prev" title="kittycad.models.unit_metric_power" href="kittycad.models.unit_metric_power.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.3.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kittycad.models.html">kittycad.models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.account_provider.html">kittycad.models.account_provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api.html">kittycad.models.ai_plugin_api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api_type.html">kittycad.models.ai_plugin_api_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth.html">kittycad.models.ai_plugin_auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth_type.html">kittycad.models.ai_plugin_auth_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_http_auth_type.html">kittycad.models.ai_plugin_http_auth_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_manifest.html">kittycad.models.ai_plugin_manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group.html">kittycad.models.api_call_query_group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group_by.html">kittycad.models.api_call_query_group_by</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_status.html">kittycad.models.api_call_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_with_price.html">kittycad.models.api_call_with_price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_with_price_results_page.html">kittycad.models.api_call_with_price_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_token.html">kittycad.models.api_token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_token_results_page.html">kittycad.models.api_token_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.app_client_info.html">kittycad.models.app_client_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call.html">kittycad.models.async_api_call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_output.html">kittycad.models.async_api_call_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_results_page.html">kittycad.models.async_api_call_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_type.html">kittycad.models.async_api_call_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.billing_info.html">kittycad.models.billing_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.cache_metadata.html">kittycad.models.cache_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.card_details.html">kittycad.models.card_details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_language.html">kittycad.models.code_language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_output.html">kittycad.models.code_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.commit.html">kittycad.models.commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.connection.html">kittycad.models.connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.country_code.html">kittycad.models.country_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.currency.html">kittycad.models.currency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer.html">kittycad.models.customer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer_balance.html">kittycad.models.customer_balance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_access_token_request_form.html">kittycad.models.device_access_token_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_request_form.html">kittycad.models.device_auth_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_verify_params.html">kittycad.models.device_auth_verify_params</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.docker_system_info.html">kittycad.models.docker_system_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_cmd.html">kittycad.models.drawing_cmd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_cmd_id.html">kittycad.models.drawing_cmd_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_cmd_req.html">kittycad.models.drawing_cmd_req</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_cmd_req_batch.html">kittycad.models.drawing_cmd_req_batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_error.html">kittycad.models.drawing_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_outcome.html">kittycad.models.drawing_outcome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_outcomes.html">kittycad.models.drawing_outcomes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.email_authentication_form.html">kittycad.models.email_authentication_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.engine_metadata.html">kittycad.models.engine_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.environment.html">kittycad.models.environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.error.html">kittycad.models.error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.executor_metadata.html">kittycad.models.executor_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user.html">kittycad.models.extended_user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user_results_page.html">kittycad.models.extended_user_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_center_of_mass.html">kittycad.models.file_center_of_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_conversion.html">kittycad.models.file_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_density.html">kittycad.models.file_density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_export_format.html">kittycad.models.file_export_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_import_format.html">kittycad.models.file_import_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_mass.html">kittycad.models.file_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_surface_area.html">kittycad.models.file_surface_area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_system_metadata.html">kittycad.models.file_system_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_volume.html">kittycad.models.file_volume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.gateway.html">kittycad.models.gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.image_type.html">kittycad.models.image_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.index_info.html">kittycad.models.index_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice.html">kittycad.models.invoice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_line_item.html">kittycad.models.invoice_line_item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_status.html">kittycad.models.invoice_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream.html">kittycad.models.jetstream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_api_stats.html">kittycad.models.jetstream_api_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_config.html">kittycad.models.jetstream_config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_stats.html">kittycad.models.jetstream_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.leaf_node.html">kittycad.models.leaf_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.mesh.html">kittycad.models.mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.meta_cluster_info.html">kittycad.models.meta_cluster_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.metadata.html">kittycad.models.metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.method.html">kittycad.models.method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.new_address.html">kittycad.models.new_address</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_client_info.html">kittycad.models.o_auth2_client_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_grant_type.html">kittycad.models.o_auth2_grant_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.onboarding.html">kittycad.models.onboarding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_file.html">kittycad.models.output_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_intent.html">kittycad.models.payment_intent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method.html">kittycad.models.payment_method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_card_checks.html">kittycad.models.payment_method_card_checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_type.html">kittycad.models.payment_method_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.physics_constant.html">kittycad.models.physics_constant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.physics_constant_name.html">kittycad.models.physics_constant_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.plugins_info.html">kittycad.models.plugins_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.point_e_metadata.html">kittycad.models.point_e_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.pong.html">kittycad.models.pong</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.registry_service_config.html">kittycad.models.registry_service_config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.runtime.html">kittycad.models.runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.session.html">kittycad.models.session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_cgroup_driver_enum.html">kittycad.models.system_info_cgroup_driver_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_cgroup_version_enum.html">kittycad.models.system_info_cgroup_version_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_default_address_pools.html">kittycad.models.system_info_default_address_pools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_isolation_enum.html">kittycad.models.system_info_isolation_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_acceleration_conversion.html">kittycad.models.unit_acceleration_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_acceleration_format.html">kittycad.models.unit_acceleration_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angle_conversion.html">kittycad.models.unit_angle_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angle_format.html">kittycad.models.unit_angle_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angular_velocity_conversion.html">kittycad.models.unit_angular_velocity_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angular_velocity_format.html">kittycad.models.unit_angular_velocity_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_area_conversion.html">kittycad.models.unit_area_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_area_format.html">kittycad.models.unit_area_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_charge_conversion.html">kittycad.models.unit_charge_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_charge_format.html">kittycad.models.unit_charge_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_concentration_conversion.html">kittycad.models.unit_concentration_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_concentration_format.html">kittycad.models.unit_concentration_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_data_conversion.html">kittycad.models.unit_data_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_data_format.html">kittycad.models.unit_data_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_data_transfer_rate_conversion.html">kittycad.models.unit_data_transfer_rate_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_data_transfer_rate_format.html">kittycad.models.unit_data_transfer_rate_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_density_conversion.html">kittycad.models.unit_density_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_density_format.html">kittycad.models.unit_density_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy_conversion.html">kittycad.models.unit_energy_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy_format.html">kittycad.models.unit_energy_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force_conversion.html">kittycad.models.unit_force_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force_format.html">kittycad.models.unit_force_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_illuminance_conversion.html">kittycad.models.unit_illuminance_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_illuminance_format.html">kittycad.models.unit_illuminance_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_length_conversion.html">kittycad.models.unit_length_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_length_format.html">kittycad.models.unit_length_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_magnetic_field_strength_conversion.html">kittycad.models.unit_magnetic_field_strength_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_magnetic_field_strength_format.html">kittycad.models.unit_magnetic_field_strength_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_magnetic_flux_conversion.html">kittycad.models.unit_magnetic_flux_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_magnetic_flux_format.html">kittycad.models.unit_magnetic_flux_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_mass_conversion.html">kittycad.models.unit_mass_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_mass_format.html">kittycad.models.unit_mass_format</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="kittycad.models.unit_metric_power.html">kittycad.models.unit_metric_power</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.unit_metric_power.UnitMetricPower</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_metric_power_conversion.html">kittycad.models.unit_metric_power_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_metric_power_cubed_conversion.html">kittycad.models.unit_metric_power_cubed_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_metric_power_squared_conversion.html">kittycad.models.unit_metric_power_squared_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_power_conversion.html">kittycad.models.unit_power_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_power_format.html">kittycad.models.unit_power_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_pressure_conversion.html">kittycad.models.unit_pressure_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_pressure_format.html">kittycad.models.unit_pressure_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_radiation_conversion.html">kittycad.models.unit_radiation_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_radiation_format.html">kittycad.models.unit_radiation_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_radioactivity_conversion.html">kittycad.models.unit_radioactivity_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_radioactivity_format.html">kittycad.models.unit_radioactivity_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_solid_angle_conversion.html">kittycad.models.unit_solid_angle_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_solid_angle_format.html">kittycad.models.unit_solid_angle_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_temperature_conversion.html">kittycad.models.unit_temperature_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_temperature_format.html">kittycad.models.unit_temperature_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_time_conversion.html">kittycad.models.unit_time_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_time_format.html">kittycad.models.unit_time_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_velocity_conversion.html">kittycad.models.unit_velocity_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_velocity_format.html">kittycad.models.unit_velocity_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_voltage_conversion.html">kittycad.models.unit_voltage_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_voltage_format.html">kittycad.models.unit_voltage_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume_conversion.html">kittycad.models.unit_volume_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume_format.html">kittycad.models.unit_volume_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.update_user.html">kittycad.models.update_user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user.html">kittycad.models.user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user_results_page.html">kittycad.models.user_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.uuid.html">kittycad.models.uuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.verification_token.html">kittycad.models.verification_token</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="kittycad.models.html">kittycad.models</a></li>
+          <li class="breadcrumb-item"><a href="kittycad.models.unit_metric_power.html">kittycad.models.unit_metric_power</a></li>
+      <li class="breadcrumb-item active">kittycad.models.unit_metric_power.UnitMetricPower</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kittycad-models-unit-metric-power-unitmetricpower">
+<h1>kittycad.models.unit_metric_power.UnitMetricPower<a class="headerlink" href="#kittycad-models-unit-metric-power-unitmetricpower" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.unit_metric_power.</span></span><span class="sig-name descname"><span class="pre">UnitMetricPower</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/unit_metric_power.html#UnitMetricPower"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>The valid types of metric unit formats.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.ATTO" title="kittycad.models.unit_metric_power.UnitMetricPower.ATTO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ATTO</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Femto-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.FEMTO" title="kittycad.models.unit_metric_power.UnitMetricPower.FEMTO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FEMTO</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Pico-&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.PICO" title="kittycad.models.unit_metric_power.UnitMetricPower.PICO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PICO</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Nano-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.NANO" title="kittycad.models.unit_metric_power.UnitMetricPower.NANO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NANO</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Micro-&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.MICRO" title="kittycad.models.unit_metric_power.UnitMetricPower.MICRO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MICRO</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Milli-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.MILLI" title="kittycad.models.unit_metric_power.UnitMetricPower.MILLI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MILLI</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Centi-&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.CENTI" title="kittycad.models.unit_metric_power.UnitMetricPower.CENTI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CENTI</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Deci-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.DECI" title="kittycad.models.unit_metric_power.UnitMetricPower.DECI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DECI</span></code></a></p></td>
+<td><p># One metric unit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.UNIT" title="kittycad.models.unit_metric_power.UnitMetricPower.UNIT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UNIT</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Deca-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.DECA" title="kittycad.models.unit_metric_power.UnitMetricPower.DECA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DECA</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Hecto-&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.HECTO" title="kittycad.models.unit_metric_power.UnitMetricPower.HECTO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HECTO</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Kilo-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.KILO" title="kittycad.models.unit_metric_power.UnitMetricPower.KILO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KILO</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Mega-&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.MEGA" title="kittycad.models.unit_metric_power.UnitMetricPower.MEGA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MEGA</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Giga-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.GIGA" title="kittycad.models.unit_metric_power.UnitMetricPower.GIGA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GIGA</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Tera-&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.TERA" title="kittycad.models.unit_metric_power.UnitMetricPower.TERA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TERA</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Peta-&gt;</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.PETA" title="kittycad.models.unit_metric_power.UnitMetricPower.PETA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PETA</span></code></a></p></td>
+<td><p>//en.wikipedia.org/wiki/Exa-&gt;</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.unit_metric_power.UnitMetricPower.EXA" title="kittycad.models.unit_metric_power.UnitMetricPower.EXA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EXA</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.ATTO">
+<span class="sig-name descname"><span class="pre">ATTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'atto'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.ATTO" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Femto-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Femto (symbol f) is a unit prefix in the metric system denoting a factor of 10^-15. &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.CENTI">
+<span class="sig-name descname"><span class="pre">CENTI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'centi'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.CENTI" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Deci-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Deci (symbol d) is a decimal unit prefix in the metric system denoting a factor of one tenth. &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.DECA">
+<span class="sig-name descname"><span class="pre">DECA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'deca'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.DECA" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Hecto-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Hecto (symbol</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><ol class="loweralpha simple" start="8">
+<li><p>is a decimal unit prefix in the metric system denoting a factor of one hundred. &lt;https</p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.DECI">
+<span class="sig-name descname"><span class="pre">DECI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'deci'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.DECI" title="Permalink to this definition"></a></dt>
+<dd><p># One metric unit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.EXA">
+<span class="sig-name descname"><span class="pre">EXA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'exa'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.EXA" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.FEMTO">
+<span class="sig-name descname"><span class="pre">FEMTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'femto'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.FEMTO" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Pico-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Pico (unit symbol p) is a unit prefix in the metric system denoting a factor of one trillionth in the short scale and one billionth in the long scale (0.000000000001); that is, 10^−12. &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.GIGA">
+<span class="sig-name descname"><span class="pre">GIGA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'giga'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.GIGA" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Tera-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Tera is a unit prefix in the metric system denoting multiplication by one trillion, or 10^12 or 1000000000000 (one trillion short scale; one billion long scale). &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.HECTO">
+<span class="sig-name descname"><span class="pre">HECTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hecto'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.HECTO" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Kilo-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Kilo is a decimal unit prefix in the metric system denoting multiplication by one thousand (10^3). &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.KILO">
+<span class="sig-name descname"><span class="pre">KILO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kilo'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.KILO" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Mega-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Mega is a unit prefix in metric systems of units denoting a factor of one million (10^6 or 1000000). &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.MEGA">
+<span class="sig-name descname"><span class="pre">MEGA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mega'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.MEGA" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Giga-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Giga is a unit prefix in the metric system denoting a factor of a short-scale billion or long-scale milliard (10^9 or 1000000000). &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.MICRO">
+<span class="sig-name descname"><span class="pre">MICRO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'micro'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.MICRO" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Milli-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Milli (symbol m) is a unit prefix in the metric system denoting a factor of one thousandth (10^−3). &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.MILLI">
+<span class="sig-name descname"><span class="pre">MILLI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'milli'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.MILLI" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Centi-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Centi (symbol c) is a unit prefix in the metric system denoting a factor of one hundredth. &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.NANO">
+<span class="sig-name descname"><span class="pre">NANO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'nano'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.NANO" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Micro-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Micro (Greek letter μ (U+03BC) or the legacy symbol µ (U+00B5)) is a unit prefix in the metric system denoting a factor of 10^−6 (one millionth). &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.PETA">
+<span class="sig-name descname"><span class="pre">PETA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'peta'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.PETA" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Exa-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Exa is a decimal unit prefix in the metric system denoting 10^18 or 1000000000000000000. &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.PICO">
+<span class="sig-name descname"><span class="pre">PICO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pico'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.PICO" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Nano-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Nano (symbol n) is a unit prefix meaning “one billionth”. Used primarily with the metric system, this prefix denotes a factor of 10^−9 or 0.000000001. &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.TERA">
+<span class="sig-name descname"><span class="pre">TERA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tera'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.TERA" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Peta-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Peta is a decimal unit prefix in the metric system denoting multiplication by one quadrillion, or 10^15 (1000000000000000). &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.UNIT">
+<span class="sig-name descname"><span class="pre">UNIT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'unit'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.UNIT" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Deca-&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p># Deca is a decimal unit prefix in the metric system denoting a factor of ten. &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.__annotations__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'_generate_next_value_':</span> <span class="pre">&lt;function</span> <span class="pre">Enum._generate_next_value_&gt;,</span> <span class="pre">'__module__':</span> <span class="pre">'kittycad.models.unit_metric_power',</span> <span class="pre">'__doc__':</span> <span class="pre">'The</span> <span class="pre">valid</span> <span class="pre">types</span> <span class="pre">of</span> <span class="pre">metric</span> <span class="pre">unit</span> <span class="pre">formats.',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">UnitMetricPower.__str__&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'UnitMetricPower'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'UnitMetricPower'</span> <span class="pre">objects&gt;,</span> <span class="pre">'_member_names_':</span> <span class="pre">['ATTO',</span> <span class="pre">'FEMTO',</span> <span class="pre">'PICO',</span> <span class="pre">'NANO',</span> <span class="pre">'MICRO',</span> <span class="pre">'MILLI',</span> <span class="pre">'CENTI',</span> <span class="pre">'DECI',</span> <span class="pre">'UNIT',</span> <span class="pre">'DECA',</span> <span class="pre">'HECTO',</span> <span class="pre">'KILO',</span> <span class="pre">'MEGA',</span> <span class="pre">'GIGA',</span> <span class="pre">'TERA',</span> <span class="pre">'PETA',</span> <span class="pre">'EXA'],</span> <span class="pre">'_member_map_':</span> <span class="pre">{'ATTO':</span> <span class="pre">&lt;UnitMetricPower.ATTO:</span> <span class="pre">'atto'&gt;,</span> <span class="pre">'FEMTO':</span> <span class="pre">&lt;UnitMetricPower.FEMTO:</span> <span class="pre">'femto'&gt;,</span> <span class="pre">'PICO':</span> <span class="pre">&lt;UnitMetricPower.PICO:</span> <span class="pre">'pico'&gt;,</span> <span class="pre">'NANO':</span> <span class="pre">&lt;UnitMetricPower.NANO:</span> <span class="pre">'nano'&gt;,</span> <span class="pre">'MICRO':</span> <span class="pre">&lt;UnitMetricPower.MICRO:</span> <span class="pre">'micro'&gt;,</span> <span class="pre">'MILLI':</span> <span class="pre">&lt;UnitMetricPower.MILLI:</span> <span class="pre">'milli'&gt;,</span> <span class="pre">'CENTI':</span> <span class="pre">&lt;UnitMetricPower.CENTI:</span> <span class="pre">'centi'&gt;,</span> <span class="pre">'DECI':</span> <span class="pre">&lt;UnitMetricPower.DECI:</span> <span class="pre">'deci'&gt;,</span> <span class="pre">'UNIT':</span> <span class="pre">&lt;UnitMetricPower.UNIT:</span> <span class="pre">'unit'&gt;,</span> <span class="pre">'DECA':</span> <span class="pre">&lt;UnitMetricPower.DECA:</span> <span class="pre">'deca'&gt;,</span> <span class="pre">'HECTO':</span> <span class="pre">&lt;UnitMetricPower.HECTO:</span> <span class="pre">'hecto'&gt;,</span> <span class="pre">'KILO':</span> <span class="pre">&lt;UnitMetricPower.KILO:</span> <span class="pre">'kilo'&gt;,</span> <span class="pre">'MEGA':</span> <span class="pre">&lt;UnitMetricPower.MEGA:</span> <span class="pre">'mega'&gt;,</span> <span class="pre">'GIGA':</span> <span class="pre">&lt;UnitMetricPower.GIGA:</span> <span class="pre">'giga'&gt;,</span> <span class="pre">'TERA':</span> <span class="pre">&lt;UnitMetricPower.TERA:</span> <span class="pre">'tera'&gt;,</span> <span class="pre">'PETA':</span> <span class="pre">&lt;UnitMetricPower.PETA:</span> <span class="pre">'peta'&gt;,</span> <span class="pre">'EXA':</span> <span class="pre">&lt;UnitMetricPower.EXA:</span> <span class="pre">'exa'&gt;},</span> <span class="pre">'_member_type_':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'_value2member_map_':</span> <span class="pre">{'atto':</span> <span class="pre">&lt;UnitMetricPower.ATTO:</span> <span class="pre">'atto'&gt;,</span> <span class="pre">'femto':</span> <span class="pre">&lt;UnitMetricPower.FEMTO:</span> <span class="pre">'femto'&gt;,</span> <span class="pre">'pico':</span> <span class="pre">&lt;UnitMetricPower.PICO:</span> <span class="pre">'pico'&gt;,</span> <span class="pre">'nano':</span> <span class="pre">&lt;UnitMetricPower.NANO:</span> <span class="pre">'nano'&gt;,</span> <span class="pre">'micro':</span> <span class="pre">&lt;UnitMetricPower.MICRO:</span> <span class="pre">'micro'&gt;,</span> <span class="pre">'milli':</span> <span class="pre">&lt;UnitMetricPower.MILLI:</span> <span class="pre">'milli'&gt;,</span> <span class="pre">'centi':</span> <span class="pre">&lt;UnitMetricPower.CENTI:</span> <span class="pre">'centi'&gt;,</span> <span class="pre">'deci':</span> <span class="pre">&lt;UnitMetricPower.DECI:</span> <span class="pre">'deci'&gt;,</span> <span class="pre">'unit':</span> <span class="pre">&lt;UnitMetricPower.UNIT:</span> <span class="pre">'unit'&gt;,</span> <span class="pre">'deca':</span> <span class="pre">&lt;UnitMetricPower.DECA:</span> <span class="pre">'deca'&gt;,</span> <span class="pre">'hecto':</span> <span class="pre">&lt;UnitMetricPower.HECTO:</span> <span class="pre">'hecto'&gt;,</span> <span class="pre">'kilo':</span> <span class="pre">&lt;UnitMetricPower.KILO:</span> <span class="pre">'kilo'&gt;,</span> <span class="pre">'mega':</span> <span class="pre">&lt;UnitMetricPower.MEGA:</span> <span class="pre">'mega'&gt;,</span> <span class="pre">'giga':</span> <span class="pre">&lt;UnitMetricPower.GIGA:</span> <span class="pre">'giga'&gt;,</span> <span class="pre">'tera':</span> <span class="pre">&lt;UnitMetricPower.TERA:</span> <span class="pre">'tera'&gt;,</span> <span class="pre">'peta':</span> <span class="pre">&lt;UnitMetricPower.PETA:</span> <span class="pre">'peta'&gt;,</span> <span class="pre">'exa':</span> <span class="pre">&lt;UnitMetricPower.EXA:</span> <span class="pre">'exa'&gt;},</span> <span class="pre">'ATTO':</span> <span class="pre">&lt;UnitMetricPower.ATTO:</span> <span class="pre">'atto'&gt;,</span> <span class="pre">'FEMTO':</span> <span class="pre">&lt;UnitMetricPower.FEMTO:</span> <span class="pre">'femto'&gt;,</span> <span class="pre">'PICO':</span> <span class="pre">&lt;UnitMetricPower.PICO:</span> <span class="pre">'pico'&gt;,</span> <span class="pre">'NANO':</span> <span class="pre">&lt;UnitMetricPower.NANO:</span> <span class="pre">'nano'&gt;,</span> <span class="pre">'MICRO':</span> <span class="pre">&lt;UnitMetricPower.MICRO:</span> <span class="pre">'micro'&gt;,</span> <span class="pre">'MILLI':</span> <span class="pre">&lt;UnitMetricPower.MILLI:</span> <span class="pre">'milli'&gt;,</span> <span class="pre">'CENTI':</span> <span class="pre">&lt;UnitMetricPower.CENTI:</span> <span class="pre">'centi'&gt;,</span> <span class="pre">'DECI':</span> <span class="pre">&lt;UnitMetricPower.DECI:</span> <span class="pre">'deci'&gt;,</span> <span class="pre">'UNIT':</span> <span class="pre">&lt;UnitMetricPower.UNIT:</span> <span class="pre">'unit'&gt;,</span> <span class="pre">'DECA':</span> <span class="pre">&lt;UnitMetricPower.DECA:</span> <span class="pre">'deca'&gt;,</span> <span class="pre">'HECTO':</span> <span class="pre">&lt;UnitMetricPower.HECTO:</span> <span class="pre">'hecto'&gt;,</span> <span class="pre">'KILO':</span> <span class="pre">&lt;UnitMetricPower.KILO:</span> <span class="pre">'kilo'&gt;,</span> <span class="pre">'MEGA':</span> <span class="pre">&lt;UnitMetricPower.MEGA:</span> <span class="pre">'mega'&gt;,</span> <span class="pre">'GIGA':</span> <span class="pre">&lt;UnitMetricPower.GIGA:</span> <span class="pre">'giga'&gt;,</span> <span class="pre">'TERA':</span> <span class="pre">&lt;UnitMetricPower.TERA:</span> <span class="pre">'tera'&gt;,</span> <span class="pre">'PETA':</span> <span class="pre">&lt;UnitMetricPower.PETA:</span> <span class="pre">'peta'&gt;,</span> <span class="pre">'EXA':</span> <span class="pre">&lt;UnitMetricPower.EXA:</span> <span class="pre">'exa'&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__repr__&gt;,</span> <span class="pre">'__format__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__format__&gt;,</span> <span class="pre">'__new__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__new__&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.unit_metric_power'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower._generate_next_value_">
+<span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower._generate_next_value_" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the next value when not given.</p>
+<p>name: the name of the member
+start: the initial start value or None
+count: the number of existing members
+last_value: the last value assigned or None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower._member_map_">
+<span class="sig-name descname"><span class="pre">_member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ATTO':</span> <span class="pre">UnitMetricPower.ATTO,</span> <span class="pre">'CENTI':</span> <span class="pre">UnitMetricPower.CENTI,</span> <span class="pre">'DECA':</span> <span class="pre">UnitMetricPower.DECA,</span> <span class="pre">'DECI':</span> <span class="pre">UnitMetricPower.DECI,</span> <span class="pre">'EXA':</span> <span class="pre">UnitMetricPower.EXA,</span> <span class="pre">'FEMTO':</span> <span class="pre">UnitMetricPower.FEMTO,</span> <span class="pre">'GIGA':</span> <span class="pre">UnitMetricPower.GIGA,</span> <span class="pre">'HECTO':</span> <span class="pre">UnitMetricPower.HECTO,</span> <span class="pre">'KILO':</span> <span class="pre">UnitMetricPower.KILO,</span> <span class="pre">'MEGA':</span> <span class="pre">UnitMetricPower.MEGA,</span> <span class="pre">'MICRO':</span> <span class="pre">UnitMetricPower.MICRO,</span> <span class="pre">'MILLI':</span> <span class="pre">UnitMetricPower.MILLI,</span> <span class="pre">'NANO':</span> <span class="pre">UnitMetricPower.NANO,</span> <span class="pre">'PETA':</span> <span class="pre">UnitMetricPower.PETA,</span> <span class="pre">'PICO':</span> <span class="pre">UnitMetricPower.PICO,</span> <span class="pre">'TERA':</span> <span class="pre">UnitMetricPower.TERA,</span> <span class="pre">'UNIT':</span> <span class="pre">UnitMetricPower.UNIT}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower._member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower._member_names_">
+<span class="sig-name descname"><span class="pre">_member_names_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['ATTO',</span> <span class="pre">'FEMTO',</span> <span class="pre">'PICO',</span> <span class="pre">'NANO',</span> <span class="pre">'MICRO',</span> <span class="pre">'MILLI',</span> <span class="pre">'CENTI',</span> <span class="pre">'DECI',</span> <span class="pre">'UNIT',</span> <span class="pre">'DECA',</span> <span class="pre">'HECTO',</span> <span class="pre">'KILO',</span> <span class="pre">'MEGA',</span> <span class="pre">'GIGA',</span> <span class="pre">'TERA',</span> <span class="pre">'PETA',</span> <span class="pre">'EXA']</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower._member_names_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower._member_type_">
+<span class="sig-name descname"><span class="pre">_member_type_</span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower._member_type_" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_metric_power.UnitMetricPower._value2member_map_">
+<span class="sig-name descname"><span class="pre">_value2member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'atto':</span> <span class="pre">UnitMetricPower.ATTO,</span> <span class="pre">'centi':</span> <span class="pre">UnitMetricPower.CENTI,</span> <span class="pre">'deca':</span> <span class="pre">UnitMetricPower.DECA,</span> <span class="pre">'deci':</span> <span class="pre">UnitMetricPower.DECI,</span> <span class="pre">'exa':</span> <span class="pre">UnitMetricPower.EXA,</span> <span class="pre">'femto':</span> <span class="pre">UnitMetricPower.FEMTO,</span> <span class="pre">'giga':</span> <span class="pre">UnitMetricPower.GIGA,</span> <span class="pre">'hecto':</span> <span class="pre">UnitMetricPower.HECTO,</span> <span class="pre">'kilo':</span> <span class="pre">UnitMetricPower.KILO,</span> <span class="pre">'mega':</span> <span class="pre">UnitMetricPower.MEGA,</span> <span class="pre">'micro':</span> <span class="pre">UnitMetricPower.MICRO,</span> <span class="pre">'milli':</span> <span class="pre">UnitMetricPower.MILLI,</span> <span class="pre">'nano':</span> <span class="pre">UnitMetricPower.NANO,</span> <span class="pre">'peta':</span> <span class="pre">UnitMetricPower.PETA,</span> <span class="pre">'pico':</span> <span class="pre">UnitMetricPower.PICO,</span> <span class="pre">'tera':</span> <span class="pre">UnitMetricPower.TERA,</span> <span class="pre">'unit':</span> <span class="pre">UnitMetricPower.UNIT}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_metric_power.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_metric_power.UnitMetricPower._value2member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kittycad.models.unit_metric_power.html" class="btn btn-neutral float-left" title="kittycad.models.unit_metric_power" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.models.unit_metric_power_conversion.html" class="btn btn-neutral float-right" title="kittycad.models.unit_metric_power_conversion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
