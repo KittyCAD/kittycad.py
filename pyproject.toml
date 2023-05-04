@@ -32,8 +32,8 @@ pytest-asyncio = "^0.21.0"
 pytest-cov = "^4.0.0"
 ruff = "^0.0.264"
 Sphinx = "^4.3.1"
+sphinx-autoapi = "^0.5.0"
 sphinx-autodoc-typehints = "^1.12.0"
-sphinx-automodapi = "^0.15"
 sphinxcontrib-spelling = "^8.0.0"
 sphinx-copybutton = "^0.5.2"
 sphinxext-opengraph = "^0.4.0"
@@ -97,4 +97,4 @@ show_error_codes = true
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
-addopts = --doctest-modules
+addopts = "--doctest-modules"

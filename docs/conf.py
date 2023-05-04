@@ -48,23 +48,23 @@ extensions = [
     "autoclasstoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
+    "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
     "sphinx.ext.doctest",
+    "sphinx.ext.graphviz",
     "sphinx.ext.imgconverter",
     "sphinx.ext.intersphinx",
     "sphinx.ext.linkcode",
+    "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx_autodoc_typehints",
-    "sphinx_automodapi.automodapi",
     "sphinx_rtd_theme",
     "sphinx_copybutton",
     "sphinxext.opengraph",
 ]
 
 numpydoc_show_class_members = False
-
-automodapi_inheritance_diagram = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -107,26 +107,14 @@ autodoc_default_options = {
     "exclude-members": "__weakref__",
 }
 
-# -- autoapi --
+autodoc_inherit_docstrings = True
 
-suppress_warnings: List[str] = [
-    # "autoapi.python_import_resolution",
-    # "autoapi.toc_reference",
-    # "epub.duplicated_toc_entry",
-]
-autoapi_root = "api"
-autoapi_ignore = [
-    "*/client_test.py",
-]
-autoapi_options = [
-    "members",
-    "undoc-members",
-    "show-module-summary",
-    "imported-members",
-]
+# -- autosummary --
 
-autoapi_type = "python"
-autoapi_dirs = [PACKAGE_SRC]
+autosummary_generate = True
+autoclass_content = 'both'
+html_show_sourcelink = False
+set_type_checking_flag = True
 
 # -- autosectionlabel --
 

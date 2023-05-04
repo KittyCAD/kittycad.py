@@ -7,20 +7,11 @@ Welcome to kittycad's documentation!
 ====================================
 
 .. autosummary::
+   :toctree: _autosummary
+   :template: custom-module-template.rst
    :recursive:
-   :toctree: modules
 
    kittycad.api
    kittycad.client
    kittycad.models
    kittycad.types
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-.. automodapi:: kittycad
