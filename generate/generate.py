@@ -239,7 +239,7 @@ response: Response["""
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
         "example": example,
-        "libDocsLink": "https://python.api.docs.kittycad.io/modules/kittycad.api."
+        "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api."
         + tag_name
         + "."
         + fn_name

@@ -112,7 +112,7 @@ autodoc_inherit_docstrings = True
 # -- autosummary --
 
 autosummary_generate = True
-autoclass_content = 'both'
+autoclass_content = "both"
 html_show_sourcelink = False
 set_type_checking_flag = True
 
