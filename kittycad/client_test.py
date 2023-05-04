@@ -204,7 +204,7 @@ def test_list_users():
     # Create our client.
     client = ClientFromEnv()
 
-    response: ExtendedUserResultsPage = sync(
+    response: ExtendedUserResultsPage = list_users_extended.sync(
         sort_by = CreatedAtSortMode.CREATED_AT_DESCENDING,
         client=client,
         limit = 10
