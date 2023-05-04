@@ -4,32 +4,29 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-# -- Path setup --------------------------------------------------------------
-
 import datetime
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
 import os
+import pathlib
 import sys
+from typing import List
+
+import toml
 
 # The full version, including alpha/beta/rc tags
-# Get the version from the poetry file.
-import toml
+# Get the version from the pyproject file.
+
+ROOT = pathlib.Path(__file__).parent.parent
+PACKAGE_SRC = ROOT / "kittycad"
 
 sys.path.insert(1, os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.abspath("../kittycad"))
-
 
 # -- Project information -----------------------------------------------------
 
 project = "kittycad"
 author = "KittyCAD Team Members"
 year = datetime.date.today().year
-copyright = year + ", " + author
-
+copyright = str(year) + ", " + author
 
 with open(os.path.abspath("../pyproject.toml"), "r") as f:
     parsed_toml = toml.load(f)
@@ -48,6 +45,7 @@ default_role = "any"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "autoclasstoc",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.coverage",
@@ -59,11 +57,9 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx_autodoc_typehints",
     "sphinx_automodapi.automodapi",
-    # "sphinx_rtd_theme",
+    "sphinx_rtd_theme",
     "sphinx_copybutton",
-    # "sphinx_json_schema_spec",
-    # "sphinxcontrib.spelling",
-    # "sphinxext.opengraph",
+    "sphinxext.opengraph",
 ]
 
 numpydoc_show_class_members = False
@@ -87,20 +83,59 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = []
+html_theme_path: List[str] = []
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
+html_static_path: List[str] = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "trac"
 
-# Intersphinx configuration.
-# FROM: https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html#module-sphinx.ext.intersphinx
+# pygments_style = "lovelace"
+# pygments_dark_style = "one-dark"
+
+# -- autodoc --
+
+autodoc_default_options = {
+    "members": True,
+    "special-members": True,
+    "private-members": True,
+    "inherited-members": True,
+    "undoc-members": True,
+    "exclude-members": "__weakref__",
+}
+
+# -- autoapi --
+
+suppress_warnings: List[str] = [
+    # "autoapi.python_import_resolution",
+    # "autoapi.toc_reference",
+    # "epub.duplicated_toc_entry",
+]
+autoapi_root = "api"
+autoapi_ignore = [
+    "*/client_test.py",
+]
+autoapi_options = [
+    "members",
+    "undoc-members",
+    "show-module-summary",
+    "imported-members",
+]
+
+autoapi_type = "python"
+autoapi_dirs = [PACKAGE_SRC]
+
+# -- autosectionlabel --
+
+autosectionlabel_prefix_document = True
+
+# -- intersphinx --
+
 intersphinx_mapping = {
-    "python": ("https://python.readthedocs.io/en/latest/", None),
+    "python": ("https://docs.python.org/3", None),
 }
 
 # This is a function linkcode_resolve(domain, info), which should return the URL
