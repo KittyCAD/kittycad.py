@@ -48,7 +48,6 @@ extensions = [
     "sphinx.ext.linkcode",
     "sphinx_automodapi.automodapi",
     "sphinx_rtd_theme",
-    "sphinx.ext.autosummary",
 ]
 
 numpydoc_show_class_members = False
