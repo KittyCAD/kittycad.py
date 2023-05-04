@@ -9,7 +9,7 @@ from .api.file import (
     create_file_volume,
 )
 from .api.meta import ping
-from .api.users import get_user_self
+from .api.users import get_user_self,list_users_extended
 from .client import ClientFromEnv
 from .models import (
     ApiCallStatus,
@@ -22,6 +22,7 @@ from .models import (
     FileVolume,
     Pong,
     User,
+    CreatedAtSortMode
 )
 
 
@@ -198,3 +199,18 @@ def test_file_volume():
     assert fv.to_dict() is not None
 
     assert fv.status == ApiCallStatus.COMPLETED
+
+def test_list_users():
+    # Create our client.
+    client = ClientFromEnv()
+
+    response: ExtendedUserResultsPage = sync(
+        sort_by = CreatedAtSortMode.CREATED_AT_DESCENDING,
+        client=client,
+        limit = 10
+    )
+
+    print(f"ExtendedUserResultsPage: {response}")
+
+    assert response is not None
+    assert response.items is not None
