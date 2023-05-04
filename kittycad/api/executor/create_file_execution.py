@@ -16,9 +16,12 @@ def _get_kwargs(
     client: Client,
     output: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/file/execute/{lang}?output={output}".format(
-        client.base_url, lang=lang, output=output
-    )  # noqa: E501
+    url = "{}/file/execute/{lang}".format(client.base_url, lang=lang)  # noqa: E501
+    if output is not None:
+        if "?" in url:
+            url = url + "&output=" + output
+        else:
+            url = url + "?output=" + output
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

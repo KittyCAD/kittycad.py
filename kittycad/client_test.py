@@ -14,8 +14,8 @@ from .client import ClientFromEnv
 from .models import (
     ApiCallStatus,
     ApiTokenResultsPage,
-    ExtendedUserResultsPage,
     CreatedAtSortMode,
+    ExtendedUserResultsPage,
     FileConversion,
     FileExportFormat,
     FileImportFormat,

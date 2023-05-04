@@ -15,9 +15,12 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/file/center-of-mass?src_format={src_format}".format(
-        client.base_url, src_format=src_format
-    )  # noqa: E501
+    url = "{}/file/center-of-mass".format(client.base_url)  # noqa: E501
+    if src_format is not None:
+        if "?" in url:
+            url = url + "&src_format=" + src_format
+        else:
+            url = url + "?src_format=" + src_format
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

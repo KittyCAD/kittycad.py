@@ -323,7 +323,7 @@ response: Response["""
     f.write(") -> Dict[str, Any]:\n")
     templateUrl = "{}" + name
     formatTemplate = ".format(client.base_url"
-    queryTemplate = ""
+    query_params: List[str] = []
     # Iterate over the parameters.
     if "parameters" in endpoint:
         parameters = endpoint["parameters"]
@@ -347,34 +347,15 @@ response: Response["""
                     + camel_to_snake(parameter_name)
                 )
             elif parameter["in"] == "query":
-                formatTemplate = (
-                    formatTemplate
-                    + ", "
-                    + parameter_name
-                    + "="
-                    + camel_to_snake(parameter_name)
-                )
-                queryTemplate = (
-                    queryTemplate
-                    + "&"
-                    + camel_to_snake(parameter_name)
-                    + "="
-                    + "{"
-                    + camel_to_snake(parameter_name)
-                    + "}"
-                )
-    if queryTemplate[1:].__len__() > 0:
-        f.write(
-            '\turl = "'
-            + templateUrl
-            + "?"
-            + queryTemplate[1:]
-            + '"'
-            + formatTemplate
-            + ") # noqa: E501\n"
-        )
-    else:
-        f.write('\turl = "' + templateUrl + '"' + formatTemplate + ") # noqa: E501\n")
+                query_params.append(parameter_name)
+
+    f.write('\turl = "' + templateUrl + '"' + formatTemplate + ") # noqa: E501\n")
+    for query_param in query_params:
+        f.write("\tif " + query_param + " is not None:\n")
+        f.write("\t\tif '?' in url:\n")
+        f.write("\t\t\turl = url + '&" + query_param + "='+str(" + query_param + ")\n")
+        f.write("\t\telse:\n")
+        f.write("\t\t\turl = url + '?" + query_param + "='+str(" + query_param + ")\n")
 
     f.write("\n")
     f.write("\theaders: Dict[str, Any] = client.get_headers()\n")

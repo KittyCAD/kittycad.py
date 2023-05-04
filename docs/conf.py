@@ -6,6 +6,8 @@
 
 # -- Path setup --------------------------------------------------------------
 
+import datetime
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -25,7 +27,8 @@ sys.path.append(os.path.abspath("../kittycad"))
 
 project = "kittycad"
 author = "KittyCAD Team Members"
-copyright = author
+year = datetime.date.today().year
+copyright = year + ", " + author
 
 
 with open(os.path.abspath("../pyproject.toml"), "r") as f:
@@ -33,7 +36,10 @@ with open(os.path.abspath("../pyproject.toml"), "r") as f:
     version = parsed_toml["tool"]["poetry"]["version"]
     version = "v" + version
 
+
 release = version
+language = "en"
+default_role = "any"
 
 
 # -- General configuration ---------------------------------------------------
@@ -43,11 +49,21 @@ release = version
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx_autodoc_typehints",
+    "sphinx.ext.autosectionlabel",
+    "sphinx.ext.coverage",
+    "sphinx.ext.doctest",
+    "sphinx.ext.imgconverter",
     "sphinx.ext.intersphinx",
     "sphinx.ext.linkcode",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "sphinx_autodoc_typehints",
     "sphinx_automodapi.automodapi",
-    "sphinx_rtd_theme",
+    #"sphinx_rtd_theme",
+    "sphinx_copybutton",
+    #"sphinx_json_schema_spec",
+    #"sphinxcontrib.spelling",
+    #"sphinxext.opengraph",
 ]
 
 numpydoc_show_class_members = False

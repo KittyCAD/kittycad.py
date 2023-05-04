@@ -16,9 +16,17 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/file/mass?material_density={material_density}&src_format={src_format}".format(
-        client.base_url, material_density=material_density, src_format=src_format
-    )  # noqa: E501
+    url = "{}/file/mass".format(client.base_url)  # noqa: E501
+    if material_density is not None:
+        if "?" in url:
+            url = url + "&material_density=" + material_density
+        else:
+            url = url + "?material_density=" + material_density
+    if src_format is not None:
+        if "?" in url:
+            url = url + "&src_format=" + src_format
+        else:
+            url = url + "?src_format=" + src_format
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

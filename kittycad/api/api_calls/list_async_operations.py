@@ -18,13 +18,27 @@ def _get_kwargs(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/async/operations?limit={limit}&page_token={page_token}&sort_by={sort_by}&status={status}".format(
-        client.base_url,
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        status=status,
-    )  # noqa: E501
+    url = "{}/async/operations".format(client.base_url)  # noqa: E501
+    if limit is not None:
+        if "?" in url:
+            url = url + "&limit=" + limit
+        else:
+            url = url + "?limit=" + limit
+    if page_token is not None:
+        if "?" in url:
+            url = url + "&page_token=" + page_token
+        else:
+            url = url + "?page_token=" + page_token
+    if sort_by is not None:
+        if "?" in url:
+            url = url + "&sort_by=" + sort_by
+        else:
+            url = url + "?sort_by=" + sort_by
+    if status is not None:
+        if "?" in url:
+            url = url + "&status=" + status
+        else:
+            url = url + "?status=" + status
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

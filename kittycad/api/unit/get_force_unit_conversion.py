@@ -16,9 +16,14 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/unit/conversion/force/{src_format}/{output_format}?value={value}".format(
-        client.base_url, output_format=output_format, src_format=src_format, value=value
+    url = "{}/unit/conversion/force/{src_format}/{output_format}".format(
+        client.base_url, output_format=output_format, src_format=src_format
     )  # noqa: E501
+    if value is not None:
+        if "?" in url:
+            url = url + "&value=" + value
+        else:
+            url = url + "?value=" + value
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

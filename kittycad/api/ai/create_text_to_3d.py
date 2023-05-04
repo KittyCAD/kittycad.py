@@ -15,9 +15,14 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/ai/text-to-3d/{output_format}?prompt={prompt}".format(
-        client.base_url, output_format=output_format, prompt=prompt
+    url = "{}/ai/text-to-3d/{output_format}".format(
+        client.base_url, output_format=output_format
     )  # noqa: E501
+    if prompt is not None:
+        if "?" in url:
+            url = url + "&prompt=" + prompt
+        else:
+            url = url + "?prompt=" + prompt
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

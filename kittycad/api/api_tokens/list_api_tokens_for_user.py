@@ -16,9 +16,22 @@ def _get_kwargs(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/user/api-tokens?limit={limit}&page_token={page_token}&sort_by={sort_by}".format(
-        client.base_url, limit=limit, page_token=page_token, sort_by=sort_by
-    )  # noqa: E501
+    url = "{}/user/api-tokens".format(client.base_url)  # noqa: E501
+    if limit is not None:
+        if "?" in url:
+            url = url + "&limit=" + limit
+        else:
+            url = url + "?limit=" + limit
+    if page_token is not None:
+        if "?" in url:
+            url = url + "&page_token=" + page_token
+        else:
+            url = url + "?page_token=" + page_token
+    if sort_by is not None:
+        if "?" in url:
+            url = url + "&sort_by=" + sort_by
+        else:
+            url = url + "?sort_by=" + sort_by
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

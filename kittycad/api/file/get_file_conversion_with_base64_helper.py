@@ -1,8 +1,7 @@
 import base64
 from typing import Any, Optional, Union
 
-from ...api.api_calls.get_async_operation import asyncio as fc_asyncio
-from ...api.api_calls.get_async_operation import sync as fc_sync
+from ...api.api_calls.get_async_operation import asyncio as fc_asyncio, sync as fc_sync
 from ...client import Client
 from ...models import Error
 from ...models.file_conversion import FileConversion
