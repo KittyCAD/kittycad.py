@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-U = TypeVar("U", bound="DrawingOutcomes")
+T = TypeVar("T", bound="DrawingOutcomes")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class DrawingOutcomes:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         outcomes = d.pop("outcomes", UNSET)
 

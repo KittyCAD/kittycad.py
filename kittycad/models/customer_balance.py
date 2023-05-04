@@ -6,7 +6,7 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-C = TypeVar("C", bound="CustomerBalance")
+N = TypeVar("N", bound="CustomerBalance")
 
 
 @attr.s(auto_attribs=True)
@@ -63,7 +63,7 @@ class CustomerBalance:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]

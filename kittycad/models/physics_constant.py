@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.physics_constant_name import PhysicsConstantName
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PhysicsConstant")
+C = TypeVar("C", bound="PhysicsConstant")
 
 
 @attr.s(auto_attribs=True)
@@ -77,7 +77,7 @@ class PhysicsConstant:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

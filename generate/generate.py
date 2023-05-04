@@ -11,6 +11,8 @@ from prance import BaseParser
 
 package_name = "kittycad"
 
+random.seed(10)
+
 
 def main():
     cwd = os.getcwd()

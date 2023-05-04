@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.unit_metric_power import UnitMetricPower
 from ..types import UNSET, Unset
 
-W = TypeVar("W", bound="UnitMetricPowerConversion")
+F = TypeVar("F", bound="UnitMetricPowerConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class UnitMetricPowerConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[W], src_dict: Dict[str, Any]) -> W:
+    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

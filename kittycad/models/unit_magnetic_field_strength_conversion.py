@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.unit_magnetic_field_strength_format import UnitMagneticFieldStrengthFormat
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="UnitMagneticFieldStrengthConversion")
+E = TypeVar("E", bound="UnitMagneticFieldStrengthConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class UnitMagneticFieldStrengthConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="DrawingCmdReqBatch")
+E = TypeVar("E", bound="DrawingCmdReqBatch")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class DrawingCmdReqBatch:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         cmds = d.pop("cmds", UNSET)
         file_id = d.pop("file_id", UNSET)

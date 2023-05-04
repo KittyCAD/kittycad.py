@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-Z = TypeVar("Z", bound="JetstreamConfig")
+S = TypeVar("S", bound="JetstreamConfig")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class JetstreamConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Z], src_dict: Dict[str, Any]) -> Z:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         domain = d.pop("domain", UNSET)
 

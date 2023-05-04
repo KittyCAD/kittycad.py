@@ -12,7 +12,7 @@ Success = Any
 Error = DrawingError
 
 
-Q = TypeVar("Q", bound="Cancelled")
+H = TypeVar("H", bound="Cancelled")
 
 
 @attr.s(auto_attribs=True)
@@ -34,7 +34,7 @@ class Cancelled:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         _what_failed = d.pop("what_failed", UNSET)
         what_failed: Union[Unset, DrawingCmdId]

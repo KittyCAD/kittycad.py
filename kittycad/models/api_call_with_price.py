@@ -7,7 +7,7 @@ from dateutil.parser import isoparse
 from ..models.method import Method
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="ApiCallWithPrice")
+S = TypeVar("S", bound="ApiCallWithPrice")
 
 
 @attr.s(auto_attribs=True)
@@ -125,7 +125,7 @@ class ApiCallWithPrice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

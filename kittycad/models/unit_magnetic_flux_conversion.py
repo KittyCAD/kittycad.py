@@ -8,7 +8,7 @@ from ..models.api_call_status import ApiCallStatus
 from ..models.unit_magnetic_flux_format import UnitMagneticFluxFormat
 from ..types import UNSET, Unset
 
-W = TypeVar("W", bound="UnitMagneticFluxConversion")
+T = TypeVar("T", bound="UnitMagneticFluxConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class UnitMagneticFluxConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[W], src_dict: Dict[str, Any]) -> W:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

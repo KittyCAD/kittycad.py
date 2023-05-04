@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-Q = TypeVar("Q", bound="DrawingError")
+Y = TypeVar("Y", bound="DrawingError")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class DrawingError:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
+    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 
