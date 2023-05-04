@@ -94,3 +94,4 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 [tool.mypy]
 exclude = ["kittycad/client_test.py"]
 show_error_codes = true
+ignore_missing_imports = true

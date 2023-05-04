@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import io
 import json
+import logging
 import os
 import random
 import re
@@ -17,7 +18,7 @@ random.seed(10)
 def main():
     cwd = os.getcwd()
     spec_path = os.path.join(cwd, "spec.json")
-    print("opening spec file: ", spec_path)
+    logging.info("opening spec file: ", spec_path)
     parser = BaseParser(spec_path)
 
     # Generate the types.
@@ -101,7 +102,6 @@ def generatePaths(cwd: str, parser: dict) -> dict:
             continue
         else:
             for method in paths[p]:
-                print("METHOD: ", method.upper())
                 # Skip OPTIONS.
                 if method.upper() != "OPTIONS":
                     endpoint = paths[p][method]
@@ -120,8 +120,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
         tag_name = endpoint["tags"][0].replace("-", "_")
         path = os.path.join(path, tag_name)
     file_path = os.path.join(path, file_name)
-    print("generating type: ", name, " at: ", file_path)
-    print("  endpoint: ", [endpoint])
+    logging.info("generating type: ", name, " at: ", file_path)
     f = open(file_path, "w")
 
     f.write("from typing import List\n\n")
@@ -157,7 +156,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
                     "#/components/schemas/", ""
                 )
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
@@ -286,7 +285,7 @@ response: Response["""
                     "#/components/schemas/", ""
                 )
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
@@ -336,7 +335,7 @@ response: Response["""
                     "#/components/schemas/", ""
                 )
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if parameter["in"] == "path":
                 formatTemplate = (
@@ -529,7 +528,7 @@ response: Response["""
                     "#/components/schemas/", ""
                 )
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
@@ -600,7 +599,7 @@ response: Response["""
                     "#/components/schemas/", ""
                 )
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
@@ -667,7 +666,7 @@ response: Response["""
                     "#/components/schemas/", ""
                 )
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
@@ -736,7 +735,7 @@ response: Response["""
                     "#/components/schemas/", ""
                 )
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             if "nullable" in parameter["schema"]:
                 if parameter["schema"]["nullable"]:
@@ -806,7 +805,7 @@ def generateTypes(cwd: str, parser: dict):
     schemas = data["components"]["schemas"]
     for key in schemas:
         schema = schemas[key]
-        print("generating schema: ", key)
+        logging.info("generating schema: ", key)
         generateType(path, key, schema, data)
         f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
 
@@ -834,22 +833,21 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         elif type_name == "string":
             generateStringType(file_path, name, schema, type_name)
         else:
-            print("  unsupported type: ", type_name)
-            raise Exception("  unsupported type: ", type_name)
+            logging.error("unsupported type: ", type_name)
+            raise Exception("unsupported type: ", type_name)
     elif "$ref" in schema:
         # Skip it since we will already have generated it.
         return
     elif "oneOf" in schema:
         generateOneOfType(file_path, name, schema, data)
     else:
-        print("  schema: ", [schema])
-        print("  unsupported type: ", name)
-        raise Exception("  unsupported type: ", name)
+        logging.error("schema: ", [schema])
+        logging.error("unsupported type: ", name)
+        raise Exception("unsupported type: ", name)
 
 
 def generateStringType(path: str, name: str, schema: dict, type_name: str):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
+    logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
     f.write("class " + name + "(str):\n")
@@ -862,8 +860,7 @@ def generateStringType(path: str, name: str, schema: dict, type_name: str):
 
 
 def generateIntegerType(path: str, name: str, schema: dict, type_name: str):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
+    logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
     f.write("class " + name + "(int):\n")
@@ -876,8 +873,7 @@ def generateIntegerType(path: str, name: str, schema: dict, type_name: str):
 
 
 def generateFloatType(path: str, name: str, schema: dict, type_name: str):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
+    logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
     f.write("class " + name + "(float):\n")
@@ -896,8 +892,7 @@ def generateEnumType(
     type_name: str,
     additional_docs: List[str],
 ):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
+    logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
     f.write("from enum import Enum\n")
@@ -932,8 +927,7 @@ def generateEnumType(
 
 
 def generateOneOfType(path: str, name: str, schema: dict, data: dict):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
+    logging.info("generating type: ", name, " at: ", path)
 
     is_enum_with_docs = False
     for one_of in schema["oneOf"]:
@@ -1088,7 +1082,6 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
 
     refs = getRefs(schema)
     for ref in refs:
-        print("  ref: ", ref, "schema: ", [schema])
         f.write("from ..models." + camel_to_snake(ref) + " import " + ref + "\n")
 
     f.write("from ..types import UNSET, Unset\n")
@@ -1198,8 +1191,8 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
 
 
 def generateObjectType(path: str, name: str, schema: dict, type_name: str, data: dict):
-    print("generating type: ", name, " at: ", path)
-    print("  schema: ", [schema])
+    logging.info("generating type: ", name, " at: ", path)
+
     f = open(path, "w")
 
     code = generateObjectTypeCode(name, schema, type_name, data)
@@ -1265,17 +1258,17 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                             elif property_schema["items"]["items"]["type"] == "number":
                                 property_type = "List[float]"
                             else:
-                                print("  property: ", property_schema)
+                                logging.error("property: ", property_schema)
                                 raise Exception("Unknown property type")
                         else:
-                            print("  property: ", property_schema)
+                            logging.error("property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
-                        print("  property: ", property_schema)
+                        logging.error("property: ", property_schema)
                         raise Exception("Unknown property type")
                 else:
-                    print("  array: ", [property_schema])
-                    print("  array: ", [property_schema["items"]])
+                    logging.error("array: ", [property_schema])
+                    logging.error("array: ", [property_schema["items"]])
                     raise Exception("Unknown array type")
 
             f.write(
@@ -1304,7 +1297,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
             f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
             f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
         else:
-            raise Exception("  unknown allOf type: ", property_schema)
+            raise Exception("unknown allOf type: ", property_schema)
     else:
         f.write("\t\t" + property_name + " = self." + property_name + "\n")
 
@@ -1361,17 +1354,17 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                             elif property_schema["items"]["items"]["type"] == "number":
                                 property_type = "List[float]"
                             else:
-                                print("  property: ", property_schema)
+                                logging.error("property: ", property_schema)
                                 raise Exception("Unknown property type")
                         else:
-                            print("  property: ", property_schema)
+                            logging.error("property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
-                        print("  property: ", property_schema)
+                        logging.error("property: ", property_schema)
                         raise Exception("Unknown property type")
                 else:
-                    print("  array: ", [property_schema])
-                    print("  array: ", [property_schema["items"]])
+                    logging.error("array: ", [property_schema])
+                    logging.error("array: ", [property_schema["items"]])
                     raise Exception("Unknown array type")
 
                 f.write(
@@ -1384,8 +1377,8 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
             else:
                 raise Exception("Unknown array type")
         else:
-            print("  property type: ", property_type)
-            raise Exception("  unknown type: ", property_type)
+            logging.error("property type: ", property_type)
+            raise Exception("unknown type: ", property_type)
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
         f.write("\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
@@ -1399,7 +1392,7 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                 )
             f.write("\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
         else:
-            raise Exception("  unknown allOf type: ", property_schema)
+            raise Exception("unknown allOf type: ", property_schema)
     else:
         f.write("\t" + property_name + ": Union[Unset, Any] = UNSET\n")
 
@@ -1482,10 +1475,10 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                             elif property_schema["items"]["items"]["type"] == "number":
                                 property_type = "List[float]"
                             else:
-                                print("  property: ", property_schema)
+                                logging.error("property: ", property_schema)
                                 raise Exception("Unknown property type")
                         else:
-                            print("  property: ", property_schema)
+                            logging.error("property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
                         raise Exception(
@@ -1493,8 +1486,8 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                             property_schema["items"]["type"],
                         )
                 else:
-                    print("  array: ", [property_schema])
-                    print("  array: ", [property_schema["items"]])
+                    logging.error("array: ", [property_schema])
+                    logging.error("array: ", [property_schema["items"]])
                     raise Exception("Unknown array type")
 
             f.write(
@@ -1513,12 +1506,34 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             )
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
+        # Get the type for the reference.
+        ref_schema = data["components"]["schemas"][ref]
+
         f.write("\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
         f.write("\t\t" + property_name + ": Union[Unset, " + ref + "]\n")
         f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
         f.write("\t\t\t" + property_name + " = UNSET\n")
         f.write("\t\telse:\n")
-        f.write("\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n")
+        nested_objects = False
+        if "oneOf" in ref_schema and len(ref_schema["oneOf"]) > 0:
+            # Check if the nested_object is a object.
+            for one_of in ref_schema["oneOf"]:
+                if "type" in one_of and one_of["type"] == "object":
+                    nested_objects = True
+                    break
+
+        if nested_objects:
+            f.write(
+                "\t\t\t"
+                + property_name
+                + " = _"
+                + property_name
+                + " # type: ignore[arg-type]\n"
+            )
+        else:
+            f.write(
+                "\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n"
+            )
         f.write("\n")
     elif "allOf" in property_schema:
         thing = property_schema["allOf"][0]
@@ -1540,7 +1555,7 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             )
             f.write("\n")
         else:
-            raise Exception("  unknown allOf type: ", property_schema)
+            raise Exception("unknown allOf type: ", property_schema)
     else:
         f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
 
@@ -1595,8 +1610,8 @@ def getRefs(schema: dict) -> List[str]:
                         if ref not in refs:
                             refs.append(ref)
                 else:
-                    print("  unsupported type: ", schema)
-                    raise Exception("  unsupported type: ", schema)
+                    logging.error("unsupported type: ", schema)
+                    raise Exception("unsupported type: ", schema)
 
     return refs
 
@@ -1646,11 +1661,11 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                         continue
                     else:
                         # Throw an error for an unsupported content type.
-                        print("content: ", content)
+                        logging.error("content: ", content)
                         raise Exception("Unsupported content type: ", content_type)
                 else:
                     # Throw an error for an unsupported content type.
-                    print("content: ", content)
+                    logging.error("content: ", content)
                     raise Exception("Unsupported content type: ", content_type)
         elif "$ref" in response:
             schema_name = response["$ref"].replace("#/components/responses/", "")
@@ -1707,7 +1722,7 @@ def getRequestBodyRefs(endpoint: dict) -> List[str]:
                         refs.append(ref)
                 else:
                     # Throw an error for an unsupported content type.
-                    print("content: ", content)
+                    logging.error("content: ", content)
                     raise Exception("Unsupported content type: ", content_type)
 
     return refs
@@ -1736,7 +1751,7 @@ def getRequestBodyType(endpoint: dict) -> Optional[str]:
                         ref = json["$ref"].replace("#/components/schemas/", "")
                         return ref
                 else:
-                    print("  unsupported content type: ", content_type)
+                    logging.error("unsupported content type: ", content_type)
                     raise Exception("unsupported content type")
 
     return type_name
@@ -1781,7 +1796,7 @@ def get_function_parameters(
             elif "$ref" in parameter["schema"]:
                 parameter["schema"]["$ref"].replace("#/components/schemas/", "")
             else:
-                print("  parameter: ", parameter)
+                logging.error("parameter: ", parameter)
                 raise Exception("Unknown parameter type")
             params.append(camel_to_snake(parameter_name))
     if request_body_type:

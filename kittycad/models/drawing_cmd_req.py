@@ -46,7 +46,7 @@ class DrawingCmdReq:
         if isinstance(_cmd, Unset):
             cmd = UNSET
         else:
-            cmd = DrawingCmd(_cmd)
+            cmd = _cmd  # type: ignore[arg-type]
 
         _cmd_id = d.pop("cmd_id", UNSET)
         cmd_id: Union[Unset, DrawingCmdId]
