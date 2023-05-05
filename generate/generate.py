@@ -44,7 +44,13 @@ client = Client(token="$TOKEN")
 #   `KITTYCAD_API_TOKEN`.
 from kittycad import ClientFromEnv
 
-client = ClientFromEnv()""",
+client = ClientFromEnv()
+
+# NOTE: The python library additionally implements asyncio, however all the code samples we
+# show below use the sync functions for ease of use and understanding.
+# Check out the library docs at:
+# https://python.api.docs.kittycad.io/_autosummary/kittycad.api.html#module-kittycad.api
+# for more details.""",
         "install": "pip install kittycad",
     }
 
@@ -277,12 +283,8 @@ from kittycad.types import Response
     # Add some new lines.
     example_imports = example_imports + "\n\n"
 
-    example = (
-        example_imports
-        + """
-
-@pytest.mark.skip
-def test_"""
+    short_sync_example = (
+        """def test_"""
         + fn_name
         + """():
     # Create our client.
@@ -293,7 +295,19 @@ def test_"""
         + fn_name
         + """.sync(client=client,\n"""
         + params_str
-        + """)
+        + """)"""
+    )
+
+    # This longer example we use for generating tests.
+    # We only show the short example in the docs since it is much more intuitive to MEs
+    example = (
+        example_imports
+        + """
+
+@pytest.mark.skip
+"""
+        + short_sync_example
+        + """
 
     # OR if you need more info (e.g. status_code)
     """
@@ -334,18 +348,16 @@ async def test_"""
     line_length = 82
     cleaned_example = black.format_str(
         isort.api.sort_code_string(
-            example,
+            short_sync_example,
         ),
         mode=black.FileMode(line_length=line_length),
     )
 
-    examples.append(cleaned_example)
+    examples.append(example)
 
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
-        "example": cleaned_example.replace("@pytest.mark.asyncio\n", "")
-        .replace("def test_", "def ")
-        .replace("@pytest.mark.skip", ""),
+        "example": cleaned_example.replace("def test_", "def "),
         "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api."
         + tag_name
         + "."
