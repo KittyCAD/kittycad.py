@@ -1,4 +1,4 @@
-name: Black
+name: black
 on:
   push:
     branches: main
@@ -35,4 +35,4 @@ jobs:
       - name: Run black
         shell: bash
         run: |
-          poetry run black --check --diff .
+          poetry run black --check --diff . generate/generate.py docs/conf.py kittycad/client_test.py kittycad/examples_test.py

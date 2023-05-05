@@ -96,6 +96,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 exclude = []
 show_error_codes = true
 ignore_missing_imports = true
+check_untyped_defs = true
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules"

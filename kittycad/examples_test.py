@@ -103,6 +103,8 @@ from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
+from kittycad.models.draw_circle import DrawCircle
+from kittycad.models.drawing_cmd_id import DrawingCmdId
 from kittycad.models.drawing_cmd_req import DrawingCmdReq
 from kittycad.models.drawing_cmd_req_batch import DrawingCmdReqBatch
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
@@ -629,13 +631,17 @@ def test_auth_email():
 
     auth_email.sync(
         client=client,
-        body=EmailAuthenticationForm,
+        body=EmailAuthenticationForm(
+            email="<string>",
+        ),
     )
 
     # OR if you need more info (e.g. status_code)
     auth_email.sync_detailed(
         client=client,
-        body=EmailAuthenticationForm,
+        body=EmailAuthenticationForm(
+            email="<string>",
+        ),
     )
 
 
@@ -648,13 +654,17 @@ async def test_auth_email_async():
 
     await auth_email.asyncio(
         client=client,
-        body=EmailAuthenticationForm,
+        body=EmailAuthenticationForm(
+            email="<string>",
+        ),
     )
 
     # OR run async with more info
     await auth_email.asyncio_detailed(
         client=client,
-        body=EmailAuthenticationForm,
+        body=EmailAuthenticationForm(
+            email="<string>",
+        ),
     )
 
 
@@ -745,13 +755,33 @@ def test_cmd():
 
     cmd.sync(
         client=client,
-        body=DrawingCmdReq,
+        body=DrawingCmdReq(
+            cmd=DrawCircle(
+                center=[
+                    3.14,
+                    3.14,
+                ],
+                radius=3.14,
+            ),
+            cmd_id=DrawingCmdId("<string>"),
+            file_id="<string>",
+        ),
     )
 
     # OR if you need more info (e.g. status_code)
     cmd.sync_detailed(
         client=client,
-        body=DrawingCmdReq,
+        body=DrawingCmdReq(
+            cmd=DrawCircle(
+                center=[
+                    3.14,
+                    3.14,
+                ],
+                radius=3.14,
+            ),
+            cmd_id=DrawingCmdId("<string>"),
+            file_id="<string>",
+        ),
     )
 
 
@@ -764,13 +794,33 @@ async def test_cmd_async():
 
     await cmd.asyncio(
         client=client,
-        body=DrawingCmdReq,
+        body=DrawingCmdReq(
+            cmd=DrawCircle(
+                center=[
+                    3.14,
+                    3.14,
+                ],
+                radius=3.14,
+            ),
+            cmd_id=DrawingCmdId("<string>"),
+            file_id="<string>",
+        ),
     )
 
     # OR run async with more info
     await cmd.asyncio_detailed(
         client=client,
-        body=DrawingCmdReq,
+        body=DrawingCmdReq(
+            cmd=DrawCircle(
+                center=[
+                    3.14,
+                    3.14,
+                ],
+                radius=3.14,
+            ),
+            cmd_id=DrawingCmdId("<string>"),
+            file_id="<string>",
+        ),
     )
 
 
@@ -781,13 +831,43 @@ def test_cmd_batch():
 
     cmd_batch.sync(
         client=client,
-        body=DrawingCmdReqBatch,
+        body=DrawingCmdReqBatch(
+            cmds={
+                "<string>": DrawingCmdReq(
+                    cmd=DrawCircle(
+                        center=[
+                            3.14,
+                            3.14,
+                        ],
+                        radius=3.14,
+                    ),
+                    cmd_id=DrawingCmdId("<string>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
     )
 
     # OR if you need more info (e.g. status_code)
     cmd_batch.sync_detailed(
         client=client,
-        body=DrawingCmdReqBatch,
+        body=DrawingCmdReqBatch(
+            cmds={
+                "<string>": DrawingCmdReq(
+                    cmd=DrawCircle(
+                        center=[
+                            3.14,
+                            3.14,
+                        ],
+                        radius=3.14,
+                    ),
+                    cmd_id=DrawingCmdId("<string>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
     )
 
 
@@ -800,13 +880,43 @@ async def test_cmd_batch_async():
 
     await cmd_batch.asyncio(
         client=client,
-        body=DrawingCmdReqBatch,
+        body=DrawingCmdReqBatch(
+            cmds={
+                "<string>": DrawingCmdReq(
+                    cmd=DrawCircle(
+                        center=[
+                            3.14,
+                            3.14,
+                        ],
+                        radius=3.14,
+                    ),
+                    cmd_id=DrawingCmdId("<string>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
     )
 
     # OR run async with more info
     await cmd_batch.asyncio_detailed(
         client=client,
-        body=DrawingCmdReqBatch,
+        body=DrawingCmdReqBatch(
+            cmds={
+                "<string>": DrawingCmdReq(
+                    cmd=DrawCircle(
+                        center=[
+                            3.14,
+                            3.14,
+                        ],
+                        radius=3.14,
+                    ),
+                    cmd_id=DrawingCmdId("<string>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
     )
 
 
@@ -2601,13 +2711,27 @@ def test_update_user_self():
 
     update_user_self.sync(
         client=client,
-        body=UpdateUser,
+        body=UpdateUser(
+            company="<string>",
+            discord="<string>",
+            first_name="<string>",
+            github="<string>",
+            last_name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR if you need more info (e.g. status_code)
     update_user_self.sync_detailed(
         client=client,
-        body=UpdateUser,
+        body=UpdateUser(
+            company="<string>",
+            discord="<string>",
+            first_name="<string>",
+            github="<string>",
+            last_name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -2620,13 +2744,27 @@ async def test_update_user_self_async():
 
     await update_user_self.asyncio(
         client=client,
-        body=UpdateUser,
+        body=UpdateUser(
+            company="<string>",
+            discord="<string>",
+            first_name="<string>",
+            github="<string>",
+            last_name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
     await update_user_self.asyncio_detailed(
         client=client,
-        body=UpdateUser,
+        body=UpdateUser(
+            company="<string>",
+            discord="<string>",
+            first_name="<string>",
+            github="<string>",
+            last_name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -3025,13 +3163,19 @@ def test_create_payment_information_for_user():
 
     create_payment_information_for_user.sync(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR if you need more info (e.g. status_code)
     create_payment_information_for_user.sync_detailed(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -3044,13 +3188,19 @@ async def test_create_payment_information_for_user_async():
 
     await create_payment_information_for_user.asyncio(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
     await create_payment_information_for_user.asyncio_detailed(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -3061,13 +3211,19 @@ def test_update_payment_information_for_user():
 
     update_payment_information_for_user.sync(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR if you need more info (e.g. status_code)
     update_payment_information_for_user.sync_detailed(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -3080,13 +3236,19 @@ async def test_update_payment_information_for_user_async():
 
     await update_payment_information_for_user.asyncio(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
     await update_payment_information_for_user.asyncio_detailed(
         client=client,
-        body=BillingInfo,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 

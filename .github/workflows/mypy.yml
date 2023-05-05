@@ -1,18 +1,18 @@
-name: ruff
+name: mypy
 on:
   push:
     branches: main
     paths:
       - '**.py'
-      - .github/workflows/ruff.yml
+      - .github/workflows/mypy.yml
       - 'pyproject.toml'
   pull_request:
     paths:
       - '**.py'
-      - .github/workflows/ruff.yml
+      - .github/workflows/mypy.yml
       - 'pyproject.toml'
 jobs:
-  ruff:
+  mypy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
           poetry install
           poetry build
 
-      - name: Run ruff
+      - name: Run mypy
         shell: bash
         run: |
-          poetry run ruff check .
+          poetry run mypy .

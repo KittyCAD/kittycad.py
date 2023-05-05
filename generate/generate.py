@@ -129,17 +129,61 @@ def generatePaths(cwd: str, parser: dict) -> dict:
     return data
 
 
-def generateTypeAndExamplePython(schema: dict, data: dict) -> Tuple[str, str, str]:
+def generateTypeAndExamplePython(
+    name: str, schema: dict, data: dict
+) -> Tuple[str, str, str]:
     parameter_type = ""
     parameter_example = ""
     example_imports = ""
     if "type" in schema:
         if "format" in schema and schema["format"] == "uuid":
-            parameter_type = "str"
-            parameter_example = '"<uuid>"'
+            if name != "":
+                parameter_type = name
+                example_imports = example_imports + (
+                "from kittycad.models."
+                + camel_to_snake(parameter_type)
+                + " import "
+                + parameter_type
+                + "\n"
+                )
+                parameter_example = parameter_type + '("<uuid>")'
+            else:
+                parameter_type = "str"
+                parameter_example = '"<uuid>"'
+        elif (
+            schema["type"] == "string" and "enum" in schema and len(schema["enum"]) > 0
+        ):
+            if name == "":
+                logging.error("schema: %s", json.dumps(schema, indent=4))
+                raise Exception("Unknown type name for enum")
+
+            parameter_type = name
+
+            example_imports = example_imports + (
+                "from kittycad.models."
+                + camel_to_snake(parameter_type)
+                + " import "
+                + parameter_type
+                + "\n"
+            )
+
+            parameter_example = (
+                parameter_type + "." + camel_to_screaming_snake(schema["enum"][0])
+            )
         elif schema["type"] == "string":
-            parameter_type = "str"
-            parameter_example = '"<string>"'
+            if name != "":
+                parameter_type = name
+                example_imports = example_imports + (
+                "from kittycad.models."
+                + camel_to_snake(parameter_type)
+                + " import "
+                + parameter_type
+                + "\n"
+                )
+                parameter_example = parameter_type + '("<string>")'
+            else:
+                parameter_type = "str"
+                parameter_example = '"<string>"'
         elif schema["type"] == "integer":
             parameter_type = "int"
             parameter_example = "10"
@@ -150,33 +194,80 @@ def generateTypeAndExamplePython(schema: dict, data: dict) -> Tuple[str, str, st
         ):
             parameter_type = "float"
             parameter_example = "3.14"
+        elif schema["type"] == "array" and "items" in schema:
+            items_type, items_example, items_imports = generateTypeAndExamplePython(
+                "", schema["items"], data
+            )
+            example_imports = example_imports + items_imports
+            parameter_type = "List[" + items_type + "]"
+            if "minItems" in schema and schema["minItems"] > 1:
+                parameter_example = "["
+                for i in range(schema["minItems"] - 1):
+                    parameter_example = parameter_example + items_example + ", "
+                parameter_example = parameter_example + "]"
+            else:
+                parameter_example = "[" + items_example + "]"
+        elif schema["type"] == "object" and "properties" in schema:
+            if name == "":
+                logging.error("schema: %s", json.dumps(schema, indent=4))
+                raise Exception("Unknown type name for object")
+
+            parameter_type = name
+
+            example_imports = example_imports + (
+                "from kittycad.models."
+                + camel_to_snake(parameter_type)
+                + " import "
+                + parameter_type
+                + "\n"
+            )
+            parameter_example = name + "("
+            for property_name in schema["properties"]:
+                prop = schema["properties"][property_name]
+                if "nullable" in prop:
+                    # We don't care if it's nullable
+                    continue
+                else:
+                    (
+                        prop_type,
+                        prop_example,
+                        prop_imports,
+                    ) = generateTypeAndExamplePython("", prop, data)
+                    example_imports = example_imports + prop_imports
+                    parameter_example = parameter_example + (
+                        "\n" + property_name + "=" + prop_example + ",\n"
+                    )
+
+            parameter_example = parameter_example + ")"
+        elif (
+            schema["type"] == "object"
+            and "additionalProperties" in schema
+            and schema["additionalProperties"] is not False
+        ):
+            items_type, items_example, items_imports = generateTypeAndExamplePython(
+                "", schema["additionalProperties"], data
+            )
+            example_imports = example_imports + items_imports
+            parameter_type = "Dict[str, " + items_type + "]"
+            parameter_example = '{"<string>": ' + items_example + "}"
         else:
             logging.error("schema: %s", json.dumps(schema, indent=4))
             raise Exception("Unknown parameter type")
+    elif "oneOf" in schema and len(schema["oneOf"]) > 0:
+        # Check if each of these only has a object w 1 property.
+        if isNestedObjectOneOf(schema):
+            properties = schema["oneOf"][0]["properties"]
+            for prop in properties:
+                return generateTypeAndExamplePython(prop, properties[prop], data)
+                break
+
+        return generateTypeAndExamplePython(name, schema["oneOf"][0], data)
     elif "$ref" in schema:
         parameter_type = schema["$ref"].replace("#/components/schemas/", "")
-        example_imports = example_imports + (
-            "from kittycad.models."
-            + camel_to_snake(parameter_type)
-            + " import "
-            + parameter_type
-            + "\n"
-        )
         # Get the schema for the reference.
         ref_schema = data["components"]["schemas"][parameter_type]
-        if "type" in ref_schema and ref_schema["type"] == "object":
-            parameter_example = parameter_type + "()"
-        elif (
-            "type" in ref_schema
-            and ref_schema["type"] == "string"
-            and "enum" in ref_schema
-        ):
-            parameter_example = (
-                parameter_type + "." + camel_to_screaming_snake(ref_schema["enum"][0])
-            )
-        else:
-            logging.error("schema: %s", json.dumps(ref_schema, indent=4))
-            raise Exception("Unknown ref schema")
+
+        return generateTypeAndExamplePython(parameter_type, ref_schema, data)
     else:
         logging.error("schema: %s", json.dumps(schema, indent=4))
         raise Exception("Unknown parameter type")
@@ -202,7 +293,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
     endpoint_refs = getEndpointRefs(endpoint, data)
     parameter_refs = getParameterRefs(endpoint)
     request_body_refs = getRequestBodyRefs(endpoint)
-    request_body_type = getRequestBodyType(endpoint)
+    (request_body_type, request_body_schema) = getRequestBodyTypeSchema(endpoint, data)
 
     success_type = ""
     if len(endpoint_refs) > 0:
@@ -234,7 +325,7 @@ from kittycad.types import Response
                 parameter_type,
                 parameter_example,
                 more_example_imports,
-            ) = generateTypeAndExamplePython(parameter["schema"], data)
+            ) = generateTypeAndExamplePython("", parameter["schema"], data)
             example_imports = example_imports + more_example_imports
 
             if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
@@ -254,17 +345,20 @@ from kittycad.types import Response
             params_str += optional_arg
 
     if request_body_type:
-        if request_body_type != "bytes":
-            params_str += "body=" + request_body_type + ",\n"
-            example_imports = example_imports + (
-                "from kittycad.models."
-                + camel_to_snake(request_body_type)
-                + " import "
-                + request_body_type
-                + "\n"
-            )
-        else:
+        if request_body_type == "str":
+            params_str += "body='<string>',\n"
+        elif request_body_type == "bytes":
             params_str += "body=bytes('some bytes', 'utf-8'),\n"
+        else:
+            # Generate an example for the schema.
+            rbs: dict = request_body_schema
+            (
+                body_type,
+                body_example,
+                more_example_imports,
+            ) = generateTypeAndExamplePython(request_body_type, rbs, data)
+            params_str += "body=" + body_example + ",\n"
+            example_imports = example_imports + more_example_imports
 
     example_variable = ""
     if (
@@ -346,6 +440,7 @@ async def test_"""
 
     # Make pretty.
     line_length = 82
+    short_sync_example = example_imports + short_sync_example
     cleaned_example = black.format_str(
         isort.api.sort_code_string(
             short_sync_example,
@@ -1048,15 +1143,7 @@ def generateEnumType(
 def generateOneOfType(path: str, name: str, schema: dict, data: dict):
     logging.info("generating type: ", name, " at: ", path)
 
-    is_enum_with_docs = False
-    for one_of in schema["oneOf"]:
-        if one_of["type"] == "string" and "enum" in one_of and len(one_of["enum"]) == 1:
-            is_enum_with_docs = True
-        else:
-            is_enum_with_docs = False
-            break
-
-    if is_enum_with_docs:
+    if isEnumWithDocsOneOf(schema):
         additional_docs = []
         enum = []
         # We want to treat this as an enum with additional docs.
@@ -1085,26 +1172,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
             all_options.append(ref_name)
 
-    is_nested_object = False
-    for one_of in schema["oneOf"]:
-        # Check if each are an object w 1 property in it.
-        if (
-            one_of["type"] == "object"
-            and "properties" in one_of
-            and len(one_of["properties"]) == 1
-        ):
-            for prop_name in one_of["properties"]:
-                nested_object = one_of["properties"][prop_name]
-                if "type" in nested_object and nested_object["type"] == "object":
-                    is_nested_object = True
-                else:
-                    is_nested_object = False
-                    break
-        else:
-            is_nested_object = False
-            break
-
-    if is_nested_object:
+    if isNestedObjectOneOf(schema):
         # We want to write each of the nested objects.
         for one_of in schema["oneOf"]:
             # Get the nested object.
@@ -1847,9 +1915,9 @@ def getRequestBodyRefs(endpoint: dict) -> List[str]:
     return refs
 
 
-def getRequestBodyType(endpoint: dict) -> Optional[str]:
-    type_name = None
-
+def getRequestBodyTypeSchema(
+    endpoint: dict, data: dict
+) -> Tuple[Optional[str], Optional[dict]]:
     if "requestBody" in endpoint:
         requestBody = endpoint["requestBody"]
         if "content" in requestBody:
@@ -1859,21 +1927,29 @@ def getRequestBodyType(endpoint: dict) -> Optional[str]:
                     json = content[content_type]["schema"]
                     if "$ref" in json:
                         ref = json["$ref"].replace("#/components/schemas/", "")
-                        return ref
+                        type_schema = data["components"]["schemas"][ref]
+                        return ref, type_schema
+                    elif json != {}:
+                        logging.error("not a ref: ", json)
+                        raise Exception("not a ref")
                 elif content_type == "text/plain":
-                    return "bytes"
+                    return "str", None
                 elif content_type == "application/octet-stream":
-                    return "bytes"
+                    return "bytes", None
                 elif content_type == "application/x-www-form-urlencoded":
-                    json = content[content_type]["schema"]
-                    if "$ref" in json:
-                        ref = json["$ref"].replace("#/components/schemas/", "")
-                        return ref
+                    form = content[content_type]["schema"]
+                    if "$ref" in form:
+                        ref = form["$ref"].replace("#/components/schemas/", "")
+                        type_schema = data["components"]["schemas"][ref]
+                        return ref, type_schema
+                    elif form != {}:
+                        logging.error("not a ref: ", form)
+                        raise Exception("not a ref")
                 else:
                     logging.error("unsupported content type: ", content_type)
                     raise Exception("unsupported content type")
 
-    return type_name
+    return None, None
 
 
 def to_camel_case(s: str):
@@ -1929,6 +2005,41 @@ def getOneOfRefType(schema: dict) -> str:
         return t
 
     raise Exception("Cannot get oneOf ref type for schema: ", schema)
+
+
+def isNestedObjectOneOf(schema: dict) -> bool:
+    is_nested_object = False
+    for one_of in schema["oneOf"]:
+        # Check if each are an object w 1 property in it.
+        if (
+            one_of["type"] == "object"
+            and "properties" in one_of
+            and len(one_of["properties"]) == 1
+        ):
+            for prop_name in one_of["properties"]:
+                nested_object = one_of["properties"][prop_name]
+                if "type" in nested_object and nested_object["type"] == "object":
+                    is_nested_object = True
+                else:
+                    is_nested_object = False
+                    break
+        else:
+            is_nested_object = False
+            break
+
+    return is_nested_object
+
+
+def isEnumWithDocsOneOf(schema: dict) -> bool:
+    is_enum_with_docs = False
+    for one_of in schema["oneOf"]:
+        if one_of["type"] == "string" and "enum" in one_of and len(one_of["enum"]) == 1:
+            is_enum_with_docs = True
+        else:
+            is_enum_with_docs = False
+            break
+
+    return is_enum_with_docs
 
 
 # generate a random letter in the range A - Z
