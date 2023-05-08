@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio_66f4ad1d.png" />
+<meta property="og:image:alt" content="" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio.html" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -18,10 +23,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -43,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -76,6 +82,13 @@
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio_detailed.html">kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio_detailed</a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.sync.html">kittycad.api.unit.get_angular_velocity_unit_conversion.sync</a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.sync_detailed.html">kittycad.api.unit.get_angular_velocity_unit_conversion.sync_detailed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.html#kittycad.api.unit.get_angular_velocity_unit_conversion._build_response"><code class="docutils literal notranslate"><span class="pre">_build_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.html#kittycad.api.unit.get_angular_velocity_unit_conversion._get_kwargs"><code class="docutils literal notranslate"><span class="pre">_get_kwargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.html#kittycad.api.unit.get_angular_velocity_unit_conversion._parse_response"><code class="docutils literal notranslate"><span class="pre">_parse_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.html#kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio"><code class="docutils literal notranslate"><span class="pre">asyncio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.html#kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio_detailed"><code class="docutils literal notranslate"><span class="pre">asyncio_detailed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.html#kittycad.api.unit.get_angular_velocity_unit_conversion.sync"><code class="docutils literal notranslate"><span class="pre">sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.unit.get_angular_velocity_unit_conversion.html#kittycad.api.unit.get_angular_velocity_unit_conversion.sync_detailed"><code class="docutils literal notranslate"><span class="pre">sync_detailed()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.unit.get_area_unit_conversion.html">kittycad.api.unit.get_area_unit_conversion</a></li>
@@ -141,14 +154,14 @@
            <div itemprop="articleBody">
              
   <section id="kittycad-api-unit-get-angular-velocity-unit-conversion-asyncio">
-<h1>kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio<a class="headerlink" href="#kittycad-api-unit-get-angular-velocity-unit-conversion-asyncio" title="Permalink to this headline"></a></h1>
+<h1>kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio<a class="headerlink" href="#kittycad-api-unit-get-angular-velocity-unit-conversion-asyncio" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.unit.get_angular_velocity_unit_conversion.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/unit/get_angular_velocity_unit_conversion.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/unit/get_angular_velocity_unit_conversion.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.unit.get_angular_velocity_unit_conversion.asyncio" title="Permalink to this definition"></a></dt>
 <dd><p>Convert an angular velocity unit value to another angular velocity unit value. This is a nice endpoint to use for helper functions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.unit_angular_velocity_conversion.UnitAngularVelocityConversion.html#kittycad.models.unit_angular_velocity_conversion.UnitAngularVelocityConversion" title="kittycad.models.unit_angular_velocity_conversion.UnitAngularVelocityConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnitAngularVelocityConversion</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="kittycad.models.unit_angular_velocity_conversion.UnitAngularVelocityConversion.html#kittycad.models.unit_angular_velocity_conversion.UnitAngularVelocityConversion" title="kittycad.models.unit_angular_velocity_conversion.UnitAngularVelocityConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnitAngularVelocityConversion</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>

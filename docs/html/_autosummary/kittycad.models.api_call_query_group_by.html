@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.api_call_query_group_by" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.api_call_query_group_by.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.api_call_query_group_by_2babc130.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.api_call_query_group_by" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.api_call_query_group_by.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.api_call_query_group_by &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.api_call_query_group_by &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -68,6 +75,100 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group.html">kittycad.models.api_call_query_group</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.api_call_query_group_by</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.html">kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.EMAIL"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.EMAIL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.ENDPOINT"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.ENDPOINT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.IP_ADDRESS"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.IP_ADDRESS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.METHOD"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.METHOD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.ORIGIN"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.ORIGIN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.USER_ID"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.USER_ID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__add__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__annotations__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__contains__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__dict__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__dir__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__eq__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__format__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__ge__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__getattribute__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__getitem__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__getnewargs__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__getnewargs__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__gt__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__hash__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__init__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__iter__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__iter__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__le__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__len__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__lt__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__mod__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__mod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__module__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__mul__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__ne__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__new__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__repr__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__rmod__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__rmod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__rmul__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__sizeof__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__str__"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._member_map_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._member_names_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._member_names_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._member_type_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._member_type_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._new_member_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._new_member_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._unhashable_values_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._unhashable_values_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._use_args_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._use_args_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._value2member_map_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._value2member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy._value_repr_"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy._value_repr_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.capitalize"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.capitalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.casefold"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.casefold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.center"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.count"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.encode"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.endswith"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.endswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.expandtabs"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.expandtabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.find"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format_map"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.format_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.index"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isalnum"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isalnum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isalpha"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isalpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isascii"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isascii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isdecimal"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isdecimal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isdigit"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isdigit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isidentifier"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isidentifier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.islower"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.islower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isnumeric"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isnumeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isprintable"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isprintable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isspace"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.istitle"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.istitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.isupper"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.isupper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.join"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.ljust"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.ljust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.lower"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.lower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.lstrip"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.lstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.maketrans"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.maketrans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.partition"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.removeprefix"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.removeprefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.removesuffix"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.removesuffix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.replace"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rfind"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.rfind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rindex"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.rindex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rjust"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.rjust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rpartition"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.rpartition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rsplit"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.rsplit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rstrip"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.rstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.split"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.splitlines"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.splitlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.startswith"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.startswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.strip"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.strip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.swapcase"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.swapcase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.title"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.title()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.translate"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.upper"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.upper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.zfill"><code class="docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy.zfill()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_status.html">kittycad.models.api_call_status</a></li>
@@ -247,13 +348,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.api_call_query_group_by">
-<span id="kittycad-models-api-call-query-group-by"></span><h1>kittycad.models.api_call_query_group_by<a class="headerlink" href="#module-kittycad.models.api_call_query_group_by" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-api-call-query-group-by"></span><h1>kittycad.models.api_call_query_group_by<a class="headerlink" href="#module-kittycad.models.api_call_query_group_by" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.html#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy" title="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiCallQueryGroupBy</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>The field of an API call to group by.</p></td>
@@ -296,7 +393,7 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.USER_ID">
 <span class="sig-name descname"><span class="pre">USER_ID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user_id'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.USER_ID" title="Permalink to this definition"></a></dt>
-<dd><p># The origin of the API call. This is parsed from the <code class="xref any docutils literal notranslate"><span class="pre">Origin</span></code> header.</p>
+<dd><p># The origin of the API call. This is parsed from the <cite>Origin</cite> header.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -466,7 +563,7 @@
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/api_call_query_group_by.html#ApiCallQueryGroupBy.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.__str__" title="Permalink to this definition"></a></dt>
 <dd><p>Return str(self).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
@@ -786,7 +883,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.replace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.replace" title="Permalink to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -837,7 +934,7 @@ and the original string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rsplit">
-<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rsplit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rsplit" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>
@@ -863,7 +960,7 @@ empty strings from the result.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.split">
-<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.split" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.split" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>

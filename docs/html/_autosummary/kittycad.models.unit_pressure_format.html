@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.unit_pressure_format" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.unit_pressure_format.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.unit_pressure_format_44fc3e04.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.unit_pressure_format" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.unit_pressure_format.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.unit_pressure_format &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.unit_pressure_format &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -194,6 +201,99 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_pressure_conversion.html">kittycad.models.unit_pressure_conversion</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.unit_pressure_format</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.unit_pressure_format.UnitPressureFormat.html">kittycad.models.unit_pressure_format.UnitPressureFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.ATMOSPHERE"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.ATMOSPHERE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.BAR"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.BAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.MBAR"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.MBAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.PASCAL"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.PASCAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.POUNDS_PER_SQUARE_INCH"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.POUNDS_PER_SQUARE_INCH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__add__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__annotations__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__contains__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__dict__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__dir__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__eq__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__format__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__ge__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__getattribute__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__getitem__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__getnewargs__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__getnewargs__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__gt__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__hash__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__init__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__iter__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__iter__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__le__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__len__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__lt__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__mod__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__mod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__module__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__mul__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__ne__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__new__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__repr__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__rmod__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__rmod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__rmul__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__sizeof__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__str__"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._member_map_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._member_names_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._member_names_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._member_type_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._member_type_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._new_member_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._new_member_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._unhashable_values_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._unhashable_values_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._use_args_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._use_args_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._value2member_map_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._value2member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat._value_repr_"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat._value_repr_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.capitalize"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.capitalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.casefold"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.casefold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.center"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.count"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.encode"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.endswith"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.endswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.expandtabs"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.expandtabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.find"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.format"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.format_map"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.format_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.index"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isalnum"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isalnum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isalpha"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isalpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isascii"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isascii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isdecimal"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isdecimal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isdigit"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isdigit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isidentifier"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isidentifier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.islower"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.islower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isnumeric"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isnumeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isprintable"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isprintable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isspace"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.istitle"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.istitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.isupper"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.isupper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.join"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.ljust"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.ljust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.lower"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.lower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.lstrip"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.lstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.maketrans"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.maketrans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.partition"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.removeprefix"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.removeprefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.removesuffix"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.removesuffix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.replace"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rfind"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.rfind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rindex"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.rindex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rjust"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.rjust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rpartition"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.rpartition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rsplit"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.rsplit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rstrip"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.rstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.split"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.splitlines"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.splitlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.startswith"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.startswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.strip"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.strip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.swapcase"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.swapcase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.title"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.title()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.translate"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.upper"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.upper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.zfill"><code class="docutils literal notranslate"><span class="pre">UnitPressureFormat.zfill()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_radiation_conversion.html">kittycad.models.unit_radiation_conversion</a></li>
@@ -247,13 +347,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.unit_pressure_format">
-<span id="kittycad-models-unit-pressure-format"></span><h1>kittycad.models.unit_pressure_format<a class="headerlink" href="#module-kittycad.models.unit_pressure_format" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-unit-pressure-format"></span><h1>kittycad.models.unit_pressure_format<a class="headerlink" href="#module-kittycad.models.unit_pressure_format" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.unit_pressure_format.UnitPressureFormat.html#kittycad.models.unit_pressure_format.UnitPressureFormat" title="kittycad.models.unit_pressure_format.UnitPressureFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitPressureFormat</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>The valid types of pressure unit formats.</p></td>
@@ -269,7 +365,7 @@
 <span class="sig-name descname"><span class="pre">ATMOSPHERE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'atmosphere'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.ATMOSPHERE" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Pound_per_square_inch&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># psi - &lt;https</p>
 </dd>
 </dl>
@@ -280,7 +376,7 @@
 <span class="sig-name descname"><span class="pre">BAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bar'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.BAR" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Bar_(unit)&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># MilliBar &lt;https</p>
 </dd>
 </dl>
@@ -291,7 +387,7 @@
 <span class="sig-name descname"><span class="pre">MBAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mbar'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.MBAR" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Standard_atmosphere_(unit)&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># &lt;https</p>
 </dd>
 </dl>
@@ -302,7 +398,7 @@
 <span class="sig-name descname"><span class="pre">PASCAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pascal'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.PASCAL" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Bar_(unit)&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># &lt;https</p>
 </dd>
 </dl>
@@ -480,7 +576,7 @@
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/unit_pressure_format.html#UnitPressureFormat.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.__str__" title="Permalink to this definition"></a></dt>
 <dd><p>Return str(self).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
@@ -800,7 +896,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.unit_pressure_format.UnitPressureFormat.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.replace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.replace" title="Permalink to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -851,7 +947,7 @@ and the original string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.unit_pressure_format.UnitPressureFormat.rsplit">
-<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rsplit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.rsplit" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>
@@ -877,7 +973,7 @@ empty strings from the result.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.unit_pressure_format.UnitPressureFormat.split">
-<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.split" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure_format.UnitPressureFormat.split" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>

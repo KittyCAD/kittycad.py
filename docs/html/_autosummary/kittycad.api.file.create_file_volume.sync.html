@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.api.file.create_file_volume.sync" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.api.file.create_file_volume.sync.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.api.file.create_file_volume.sync_f0debb33.png" />
+<meta property="og:image:alt" content="" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.api.file.create_file_volume.sync" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.api.file.create_file_volume.sync.html" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.file.create_file_volume.sync &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.api.file.create_file_volume.sync &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -18,10 +23,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -43,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -75,6 +81,13 @@
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.asyncio_detailed.html">kittycad.api.file.create_file_volume.asyncio_detailed</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">kittycad.api.file.create_file_volume.sync</a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.sync_detailed.html">kittycad.api.file.create_file_volume.sync_detailed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.html#kittycad.api.file.create_file_volume._build_response"><code class="docutils literal notranslate"><span class="pre">_build_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.html#kittycad.api.file.create_file_volume._get_kwargs"><code class="docutils literal notranslate"><span class="pre">_get_kwargs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.html#kittycad.api.file.create_file_volume._parse_response"><code class="docutils literal notranslate"><span class="pre">_parse_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.html#kittycad.api.file.create_file_volume.asyncio"><code class="docutils literal notranslate"><span class="pre">asyncio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.html#kittycad.api.file.create_file_volume.asyncio_detailed"><code class="docutils literal notranslate"><span class="pre">asyncio_detailed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.html#kittycad.api.file.create_file_volume.sync"><code class="docutils literal notranslate"><span class="pre">sync()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.file.create_file_volume.html#kittycad.api.file.create_file_volume.sync_detailed"><code class="docutils literal notranslate"><span class="pre">sync_detailed()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.file.get_file_conversion_with_base64_helper.html">kittycad.api.file.get_file_conversion_with_base64_helper</a></li>
@@ -120,15 +133,15 @@
            <div itemprop="articleBody">
              
   <section id="kittycad-api-file-create-file-volume-sync">
-<h1>kittycad.api.file.create_file_volume.sync<a class="headerlink" href="#kittycad-api-file-create-file-volume-sync" title="Permalink to this headline"></a></h1>
+<h1>kittycad.api.file.create_file_volume.sync<a class="headerlink" href="#kittycad-api-file-create-file-volume-sync" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.file.create_file_volume.sync">
 <span class="sig-prename descclassname"><span class="pre">kittycad.api.file.create_file_volume.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/file/create_file_volume.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/file/create_file_volume.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.file.create_file_volume.sync" title="Permalink to this definition"></a></dt>
 <dd><p>Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-If the operation is performed asynchronously, the <a class="reference internal" href="kittycad.models.api_call_with_price.ApiCallWithPrice.html#kittycad.models.api_call_with_price.ApiCallWithPrice.id" title="kittycad.models.api_call_with_price.ApiCallWithPrice.id"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">id</span></code></a> of the operation will be returned. You can use the <a class="reference internal" href="kittycad.models.api_call_with_price.ApiCallWithPrice.html#kittycad.models.api_call_with_price.ApiCallWithPrice.id" title="kittycad.models.api_call_with_price.ApiCallWithPrice.id"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">id</span></code></a> returned from the request to get status information about the async operation from the <code class="xref any docutils literal notranslate"><span class="pre">/async/operations/{id}</span></code> endpoint.</p>
+If the operation is performed asynchronously, the <cite>id</cite> of the operation will be returned. You can use the <cite>id</cite> returned from the request to get status information about the async operation from the <cite>/async/operations/{id}</cite> endpoint.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference internal" href="kittycad.models.file_volume.FileVolume.html#kittycad.models.file_volume.FileVolume" title="kittycad.models.file_volume.FileVolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileVolume</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="kittycad.models.file_volume.FileVolume.html#kittycad.models.file_volume.FileVolume" title="kittycad.models.file_volume.FileVolume"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileVolume</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>

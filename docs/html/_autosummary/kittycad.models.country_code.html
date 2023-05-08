@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.country_code" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.country_code.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.country_code_9fa8782f.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.country_code" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.country_code.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.country_code &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.country_code &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -87,6 +94,343 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.connection.html">kittycad.models.connection</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.country_code</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.country_code.CountryCode.html">kittycad.models.country_code.CountryCode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.country_code.CountryCode"><code class="docutils literal notranslate"><span class="pre">CountryCode</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AD"><code class="docutils literal notranslate"><span class="pre">CountryCode.AD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AE"><code class="docutils literal notranslate"><span class="pre">CountryCode.AE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AF"><code class="docutils literal notranslate"><span class="pre">CountryCode.AF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AG"><code class="docutils literal notranslate"><span class="pre">CountryCode.AG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AI"><code class="docutils literal notranslate"><span class="pre">CountryCode.AI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AL"><code class="docutils literal notranslate"><span class="pre">CountryCode.AL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AM"><code class="docutils literal notranslate"><span class="pre">CountryCode.AM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AO"><code class="docutils literal notranslate"><span class="pre">CountryCode.AO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AQ"><code class="docutils literal notranslate"><span class="pre">CountryCode.AQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AR"><code class="docutils literal notranslate"><span class="pre">CountryCode.AR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AS"><code class="docutils literal notranslate"><span class="pre">CountryCode.AS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AT"><code class="docutils literal notranslate"><span class="pre">CountryCode.AT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AU"><code class="docutils literal notranslate"><span class="pre">CountryCode.AU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AW"><code class="docutils literal notranslate"><span class="pre">CountryCode.AW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AX"><code class="docutils literal notranslate"><span class="pre">CountryCode.AX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.AZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.AZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BA"><code class="docutils literal notranslate"><span class="pre">CountryCode.BA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BB"><code class="docutils literal notranslate"><span class="pre">CountryCode.BB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BD"><code class="docutils literal notranslate"><span class="pre">CountryCode.BD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BE"><code class="docutils literal notranslate"><span class="pre">CountryCode.BE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BF"><code class="docutils literal notranslate"><span class="pre">CountryCode.BF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BG"><code class="docutils literal notranslate"><span class="pre">CountryCode.BG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BH"><code class="docutils literal notranslate"><span class="pre">CountryCode.BH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BI"><code class="docutils literal notranslate"><span class="pre">CountryCode.BI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BJ"><code class="docutils literal notranslate"><span class="pre">CountryCode.BJ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BL"><code class="docutils literal notranslate"><span class="pre">CountryCode.BL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BM"><code class="docutils literal notranslate"><span class="pre">CountryCode.BM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BN"><code class="docutils literal notranslate"><span class="pre">CountryCode.BN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BO"><code class="docutils literal notranslate"><span class="pre">CountryCode.BO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BQ"><code class="docutils literal notranslate"><span class="pre">CountryCode.BQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BR"><code class="docutils literal notranslate"><span class="pre">CountryCode.BR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BS"><code class="docutils literal notranslate"><span class="pre">CountryCode.BS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BT"><code class="docutils literal notranslate"><span class="pre">CountryCode.BT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BV"><code class="docutils literal notranslate"><span class="pre">CountryCode.BV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BW"><code class="docutils literal notranslate"><span class="pre">CountryCode.BW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BY"><code class="docutils literal notranslate"><span class="pre">CountryCode.BY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.BZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.BZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CA"><code class="docutils literal notranslate"><span class="pre">CountryCode.CA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CC"><code class="docutils literal notranslate"><span class="pre">CountryCode.CC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CD"><code class="docutils literal notranslate"><span class="pre">CountryCode.CD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CF"><code class="docutils literal notranslate"><span class="pre">CountryCode.CF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CG"><code class="docutils literal notranslate"><span class="pre">CountryCode.CG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CH"><code class="docutils literal notranslate"><span class="pre">CountryCode.CH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CI"><code class="docutils literal notranslate"><span class="pre">CountryCode.CI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CK"><code class="docutils literal notranslate"><span class="pre">CountryCode.CK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CL"><code class="docutils literal notranslate"><span class="pre">CountryCode.CL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CM"><code class="docutils literal notranslate"><span class="pre">CountryCode.CM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CN"><code class="docutils literal notranslate"><span class="pre">CountryCode.CN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CO"><code class="docutils literal notranslate"><span class="pre">CountryCode.CO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CR"><code class="docutils literal notranslate"><span class="pre">CountryCode.CR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CU"><code class="docutils literal notranslate"><span class="pre">CountryCode.CU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CV"><code class="docutils literal notranslate"><span class="pre">CountryCode.CV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CW"><code class="docutils literal notranslate"><span class="pre">CountryCode.CW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CX"><code class="docutils literal notranslate"><span class="pre">CountryCode.CX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CY"><code class="docutils literal notranslate"><span class="pre">CountryCode.CY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.CZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.CZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.DE"><code class="docutils literal notranslate"><span class="pre">CountryCode.DE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.DJ"><code class="docutils literal notranslate"><span class="pre">CountryCode.DJ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.DK"><code class="docutils literal notranslate"><span class="pre">CountryCode.DK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.DM"><code class="docutils literal notranslate"><span class="pre">CountryCode.DM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.DO"><code class="docutils literal notranslate"><span class="pre">CountryCode.DO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.DZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.DZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.EC"><code class="docutils literal notranslate"><span class="pre">CountryCode.EC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.EE"><code class="docutils literal notranslate"><span class="pre">CountryCode.EE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.EG"><code class="docutils literal notranslate"><span class="pre">CountryCode.EG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.EH"><code class="docutils literal notranslate"><span class="pre">CountryCode.EH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ER"><code class="docutils literal notranslate"><span class="pre">CountryCode.ER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ES"><code class="docutils literal notranslate"><span class="pre">CountryCode.ES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ET"><code class="docutils literal notranslate"><span class="pre">CountryCode.ET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.FI"><code class="docutils literal notranslate"><span class="pre">CountryCode.FI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.FJ"><code class="docutils literal notranslate"><span class="pre">CountryCode.FJ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.FK"><code class="docutils literal notranslate"><span class="pre">CountryCode.FK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.FM"><code class="docutils literal notranslate"><span class="pre">CountryCode.FM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.FO"><code class="docutils literal notranslate"><span class="pre">CountryCode.FO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.FR"><code class="docutils literal notranslate"><span class="pre">CountryCode.FR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GA"><code class="docutils literal notranslate"><span class="pre">CountryCode.GA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GB"><code class="docutils literal notranslate"><span class="pre">CountryCode.GB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GD"><code class="docutils literal notranslate"><span class="pre">CountryCode.GD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GE"><code class="docutils literal notranslate"><span class="pre">CountryCode.GE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GF"><code class="docutils literal notranslate"><span class="pre">CountryCode.GF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GG"><code class="docutils literal notranslate"><span class="pre">CountryCode.GG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GH"><code class="docutils literal notranslate"><span class="pre">CountryCode.GH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GI"><code class="docutils literal notranslate"><span class="pre">CountryCode.GI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GL"><code class="docutils literal notranslate"><span class="pre">CountryCode.GL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GM"><code class="docutils literal notranslate"><span class="pre">CountryCode.GM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GN"><code class="docutils literal notranslate"><span class="pre">CountryCode.GN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GP"><code class="docutils literal notranslate"><span class="pre">CountryCode.GP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GQ"><code class="docutils literal notranslate"><span class="pre">CountryCode.GQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GR"><code class="docutils literal notranslate"><span class="pre">CountryCode.GR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GS"><code class="docutils literal notranslate"><span class="pre">CountryCode.GS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GT"><code class="docutils literal notranslate"><span class="pre">CountryCode.GT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GU"><code class="docutils literal notranslate"><span class="pre">CountryCode.GU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GW"><code class="docutils literal notranslate"><span class="pre">CountryCode.GW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.GY"><code class="docutils literal notranslate"><span class="pre">CountryCode.GY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.HK"><code class="docutils literal notranslate"><span class="pre">CountryCode.HK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.HM"><code class="docutils literal notranslate"><span class="pre">CountryCode.HM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.HN"><code class="docutils literal notranslate"><span class="pre">CountryCode.HN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.HR"><code class="docutils literal notranslate"><span class="pre">CountryCode.HR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.HT"><code class="docutils literal notranslate"><span class="pre">CountryCode.HT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.HU"><code class="docutils literal notranslate"><span class="pre">CountryCode.HU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ID"><code class="docutils literal notranslate"><span class="pre">CountryCode.ID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IE"><code class="docutils literal notranslate"><span class="pre">CountryCode.IE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IL"><code class="docutils literal notranslate"><span class="pre">CountryCode.IL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IM"><code class="docutils literal notranslate"><span class="pre">CountryCode.IM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IN"><code class="docutils literal notranslate"><span class="pre">CountryCode.IN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IO"><code class="docutils literal notranslate"><span class="pre">CountryCode.IO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IQ"><code class="docutils literal notranslate"><span class="pre">CountryCode.IQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IR"><code class="docutils literal notranslate"><span class="pre">CountryCode.IR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IS"><code class="docutils literal notranslate"><span class="pre">CountryCode.IS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.IT"><code class="docutils literal notranslate"><span class="pre">CountryCode.IT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.JE"><code class="docutils literal notranslate"><span class="pre">CountryCode.JE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.JM"><code class="docutils literal notranslate"><span class="pre">CountryCode.JM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.JO"><code class="docutils literal notranslate"><span class="pre">CountryCode.JO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.JP"><code class="docutils literal notranslate"><span class="pre">CountryCode.JP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KE"><code class="docutils literal notranslate"><span class="pre">CountryCode.KE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KG"><code class="docutils literal notranslate"><span class="pre">CountryCode.KG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KH"><code class="docutils literal notranslate"><span class="pre">CountryCode.KH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KI"><code class="docutils literal notranslate"><span class="pre">CountryCode.KI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KM"><code class="docutils literal notranslate"><span class="pre">CountryCode.KM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KN"><code class="docutils literal notranslate"><span class="pre">CountryCode.KN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KP"><code class="docutils literal notranslate"><span class="pre">CountryCode.KP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KR"><code class="docutils literal notranslate"><span class="pre">CountryCode.KR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KW"><code class="docutils literal notranslate"><span class="pre">CountryCode.KW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KY"><code class="docutils literal notranslate"><span class="pre">CountryCode.KY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.KZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.KZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LA"><code class="docutils literal notranslate"><span class="pre">CountryCode.LA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LB"><code class="docutils literal notranslate"><span class="pre">CountryCode.LB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LC"><code class="docutils literal notranslate"><span class="pre">CountryCode.LC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LI"><code class="docutils literal notranslate"><span class="pre">CountryCode.LI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LK"><code class="docutils literal notranslate"><span class="pre">CountryCode.LK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LR"><code class="docutils literal notranslate"><span class="pre">CountryCode.LR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LS"><code class="docutils literal notranslate"><span class="pre">CountryCode.LS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LT"><code class="docutils literal notranslate"><span class="pre">CountryCode.LT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LU"><code class="docutils literal notranslate"><span class="pre">CountryCode.LU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LV"><code class="docutils literal notranslate"><span class="pre">CountryCode.LV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.LY"><code class="docutils literal notranslate"><span class="pre">CountryCode.LY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MA"><code class="docutils literal notranslate"><span class="pre">CountryCode.MA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MC"><code class="docutils literal notranslate"><span class="pre">CountryCode.MC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MD"><code class="docutils literal notranslate"><span class="pre">CountryCode.MD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ME"><code class="docutils literal notranslate"><span class="pre">CountryCode.ME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MF"><code class="docutils literal notranslate"><span class="pre">CountryCode.MF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MG"><code class="docutils literal notranslate"><span class="pre">CountryCode.MG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MH"><code class="docutils literal notranslate"><span class="pre">CountryCode.MH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MK"><code class="docutils literal notranslate"><span class="pre">CountryCode.MK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ML"><code class="docutils literal notranslate"><span class="pre">CountryCode.ML</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MM"><code class="docutils literal notranslate"><span class="pre">CountryCode.MM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MN"><code class="docutils literal notranslate"><span class="pre">CountryCode.MN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MO"><code class="docutils literal notranslate"><span class="pre">CountryCode.MO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MP"><code class="docutils literal notranslate"><span class="pre">CountryCode.MP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MQ"><code class="docutils literal notranslate"><span class="pre">CountryCode.MQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MR"><code class="docutils literal notranslate"><span class="pre">CountryCode.MR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MS"><code class="docutils literal notranslate"><span class="pre">CountryCode.MS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MT"><code class="docutils literal notranslate"><span class="pre">CountryCode.MT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MU"><code class="docutils literal notranslate"><span class="pre">CountryCode.MU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MV"><code class="docutils literal notranslate"><span class="pre">CountryCode.MV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MW"><code class="docutils literal notranslate"><span class="pre">CountryCode.MW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MX"><code class="docutils literal notranslate"><span class="pre">CountryCode.MX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MY"><code class="docutils literal notranslate"><span class="pre">CountryCode.MY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.MZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.MZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NA"><code class="docutils literal notranslate"><span class="pre">CountryCode.NA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NC"><code class="docutils literal notranslate"><span class="pre">CountryCode.NC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NE"><code class="docutils literal notranslate"><span class="pre">CountryCode.NE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NF"><code class="docutils literal notranslate"><span class="pre">CountryCode.NF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NG"><code class="docutils literal notranslate"><span class="pre">CountryCode.NG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NI"><code class="docutils literal notranslate"><span class="pre">CountryCode.NI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NL"><code class="docutils literal notranslate"><span class="pre">CountryCode.NL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NO"><code class="docutils literal notranslate"><span class="pre">CountryCode.NO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NP"><code class="docutils literal notranslate"><span class="pre">CountryCode.NP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NR"><code class="docutils literal notranslate"><span class="pre">CountryCode.NR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NU"><code class="docutils literal notranslate"><span class="pre">CountryCode.NU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.NZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.NZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.OM"><code class="docutils literal notranslate"><span class="pre">CountryCode.OM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PA"><code class="docutils literal notranslate"><span class="pre">CountryCode.PA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PE"><code class="docutils literal notranslate"><span class="pre">CountryCode.PE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PF"><code class="docutils literal notranslate"><span class="pre">CountryCode.PF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PG"><code class="docutils literal notranslate"><span class="pre">CountryCode.PG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PH"><code class="docutils literal notranslate"><span class="pre">CountryCode.PH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PK"><code class="docutils literal notranslate"><span class="pre">CountryCode.PK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PL"><code class="docutils literal notranslate"><span class="pre">CountryCode.PL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PM"><code class="docutils literal notranslate"><span class="pre">CountryCode.PM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PN"><code class="docutils literal notranslate"><span class="pre">CountryCode.PN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PR"><code class="docutils literal notranslate"><span class="pre">CountryCode.PR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PS"><code class="docutils literal notranslate"><span class="pre">CountryCode.PS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PT"><code class="docutils literal notranslate"><span class="pre">CountryCode.PT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PW"><code class="docutils literal notranslate"><span class="pre">CountryCode.PW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.PY"><code class="docutils literal notranslate"><span class="pre">CountryCode.PY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.QA"><code class="docutils literal notranslate"><span class="pre">CountryCode.QA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.RE"><code class="docutils literal notranslate"><span class="pre">CountryCode.RE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.RO"><code class="docutils literal notranslate"><span class="pre">CountryCode.RO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.RS"><code class="docutils literal notranslate"><span class="pre">CountryCode.RS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.RU"><code class="docutils literal notranslate"><span class="pre">CountryCode.RU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.RW"><code class="docutils literal notranslate"><span class="pre">CountryCode.RW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SA"><code class="docutils literal notranslate"><span class="pre">CountryCode.SA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SB"><code class="docutils literal notranslate"><span class="pre">CountryCode.SB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SC"><code class="docutils literal notranslate"><span class="pre">CountryCode.SC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SD"><code class="docutils literal notranslate"><span class="pre">CountryCode.SD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SE"><code class="docutils literal notranslate"><span class="pre">CountryCode.SE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SG"><code class="docutils literal notranslate"><span class="pre">CountryCode.SG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SH"><code class="docutils literal notranslate"><span class="pre">CountryCode.SH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SI"><code class="docutils literal notranslate"><span class="pre">CountryCode.SI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SJ"><code class="docutils literal notranslate"><span class="pre">CountryCode.SJ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SK"><code class="docutils literal notranslate"><span class="pre">CountryCode.SK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SL"><code class="docutils literal notranslate"><span class="pre">CountryCode.SL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SM"><code class="docutils literal notranslate"><span class="pre">CountryCode.SM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SN"><code class="docutils literal notranslate"><span class="pre">CountryCode.SN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SO"><code class="docutils literal notranslate"><span class="pre">CountryCode.SO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SR"><code class="docutils literal notranslate"><span class="pre">CountryCode.SR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SS"><code class="docutils literal notranslate"><span class="pre">CountryCode.SS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ST"><code class="docutils literal notranslate"><span class="pre">CountryCode.ST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SV"><code class="docutils literal notranslate"><span class="pre">CountryCode.SV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SX"><code class="docutils literal notranslate"><span class="pre">CountryCode.SX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SY"><code class="docutils literal notranslate"><span class="pre">CountryCode.SY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.SZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.SZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TC"><code class="docutils literal notranslate"><span class="pre">CountryCode.TC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TD"><code class="docutils literal notranslate"><span class="pre">CountryCode.TD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TF"><code class="docutils literal notranslate"><span class="pre">CountryCode.TF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TG"><code class="docutils literal notranslate"><span class="pre">CountryCode.TG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TH"><code class="docutils literal notranslate"><span class="pre">CountryCode.TH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TJ"><code class="docutils literal notranslate"><span class="pre">CountryCode.TJ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TK"><code class="docutils literal notranslate"><span class="pre">CountryCode.TK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TL"><code class="docutils literal notranslate"><span class="pre">CountryCode.TL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TM"><code class="docutils literal notranslate"><span class="pre">CountryCode.TM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TN"><code class="docutils literal notranslate"><span class="pre">CountryCode.TN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TO"><code class="docutils literal notranslate"><span class="pre">CountryCode.TO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TR"><code class="docutils literal notranslate"><span class="pre">CountryCode.TR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TT"><code class="docutils literal notranslate"><span class="pre">CountryCode.TT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TV"><code class="docutils literal notranslate"><span class="pre">CountryCode.TV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TW"><code class="docutils literal notranslate"><span class="pre">CountryCode.TW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.TZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.TZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.UA"><code class="docutils literal notranslate"><span class="pre">CountryCode.UA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.UG"><code class="docutils literal notranslate"><span class="pre">CountryCode.UG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.UM"><code class="docutils literal notranslate"><span class="pre">CountryCode.UM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.US"><code class="docutils literal notranslate"><span class="pre">CountryCode.US</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.UY"><code class="docutils literal notranslate"><span class="pre">CountryCode.UY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.UZ"><code class="docutils literal notranslate"><span class="pre">CountryCode.UZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.VA"><code class="docutils literal notranslate"><span class="pre">CountryCode.VA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.VC"><code class="docutils literal notranslate"><span class="pre">CountryCode.VC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.VE"><code class="docutils literal notranslate"><span class="pre">CountryCode.VE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.VG"><code class="docutils literal notranslate"><span class="pre">CountryCode.VG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.VI"><code class="docutils literal notranslate"><span class="pre">CountryCode.VI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.VN"><code class="docutils literal notranslate"><span class="pre">CountryCode.VN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.VU"><code class="docutils literal notranslate"><span class="pre">CountryCode.VU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.WF"><code class="docutils literal notranslate"><span class="pre">CountryCode.WF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.WS"><code class="docutils literal notranslate"><span class="pre">CountryCode.WS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.YE"><code class="docutils literal notranslate"><span class="pre">CountryCode.YE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.YT"><code class="docutils literal notranslate"><span class="pre">CountryCode.YT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ZA"><code class="docutils literal notranslate"><span class="pre">CountryCode.ZA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ZM"><code class="docutils literal notranslate"><span class="pre">CountryCode.ZM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ZW"><code class="docutils literal notranslate"><span class="pre">CountryCode.ZW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__add__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__annotations__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__contains__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__dict__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__dir__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__eq__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__format__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__ge__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__getattribute__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__getitem__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__getnewargs__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__getnewargs__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__gt__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__hash__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__init__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__iter__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__iter__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__le__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__len__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__lt__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__mod__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__mod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__module__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__mul__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__ne__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__new__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__repr__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__rmod__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__rmod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__rmul__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__sizeof__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.__str__"><code class="docutils literal notranslate"><span class="pre">CountryCode.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">CountryCode._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._member_map_"><code class="docutils literal notranslate"><span class="pre">CountryCode._member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._member_names_"><code class="docutils literal notranslate"><span class="pre">CountryCode._member_names_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._member_type_"><code class="docutils literal notranslate"><span class="pre">CountryCode._member_type_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._new_member_"><code class="docutils literal notranslate"><span class="pre">CountryCode._new_member_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._unhashable_values_"><code class="docutils literal notranslate"><span class="pre">CountryCode._unhashable_values_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._use_args_"><code class="docutils literal notranslate"><span class="pre">CountryCode._use_args_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._value2member_map_"><code class="docutils literal notranslate"><span class="pre">CountryCode._value2member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode._value_repr_"><code class="docutils literal notranslate"><span class="pre">CountryCode._value_repr_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.capitalize"><code class="docutils literal notranslate"><span class="pre">CountryCode.capitalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.casefold"><code class="docutils literal notranslate"><span class="pre">CountryCode.casefold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.center"><code class="docutils literal notranslate"><span class="pre">CountryCode.center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.count"><code class="docutils literal notranslate"><span class="pre">CountryCode.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.encode"><code class="docutils literal notranslate"><span class="pre">CountryCode.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.endswith"><code class="docutils literal notranslate"><span class="pre">CountryCode.endswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.expandtabs"><code class="docutils literal notranslate"><span class="pre">CountryCode.expandtabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.find"><code class="docutils literal notranslate"><span class="pre">CountryCode.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.format"><code class="docutils literal notranslate"><span class="pre">CountryCode.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.format_map"><code class="docutils literal notranslate"><span class="pre">CountryCode.format_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.index"><code class="docutils literal notranslate"><span class="pre">CountryCode.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isalnum"><code class="docutils literal notranslate"><span class="pre">CountryCode.isalnum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isalpha"><code class="docutils literal notranslate"><span class="pre">CountryCode.isalpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isascii"><code class="docutils literal notranslate"><span class="pre">CountryCode.isascii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isdecimal"><code class="docutils literal notranslate"><span class="pre">CountryCode.isdecimal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isdigit"><code class="docutils literal notranslate"><span class="pre">CountryCode.isdigit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isidentifier"><code class="docutils literal notranslate"><span class="pre">CountryCode.isidentifier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.islower"><code class="docutils literal notranslate"><span class="pre">CountryCode.islower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isnumeric"><code class="docutils literal notranslate"><span class="pre">CountryCode.isnumeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isprintable"><code class="docutils literal notranslate"><span class="pre">CountryCode.isprintable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isspace"><code class="docutils literal notranslate"><span class="pre">CountryCode.isspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.istitle"><code class="docutils literal notranslate"><span class="pre">CountryCode.istitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.isupper"><code class="docutils literal notranslate"><span class="pre">CountryCode.isupper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.join"><code class="docutils literal notranslate"><span class="pre">CountryCode.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.ljust"><code class="docutils literal notranslate"><span class="pre">CountryCode.ljust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.lower"><code class="docutils literal notranslate"><span class="pre">CountryCode.lower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.lstrip"><code class="docutils literal notranslate"><span class="pre">CountryCode.lstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.maketrans"><code class="docutils literal notranslate"><span class="pre">CountryCode.maketrans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.partition"><code class="docutils literal notranslate"><span class="pre">CountryCode.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.removeprefix"><code class="docutils literal notranslate"><span class="pre">CountryCode.removeprefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.removesuffix"><code class="docutils literal notranslate"><span class="pre">CountryCode.removesuffix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.replace"><code class="docutils literal notranslate"><span class="pre">CountryCode.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.rfind"><code class="docutils literal notranslate"><span class="pre">CountryCode.rfind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.rindex"><code class="docutils literal notranslate"><span class="pre">CountryCode.rindex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.rjust"><code class="docutils literal notranslate"><span class="pre">CountryCode.rjust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.rpartition"><code class="docutils literal notranslate"><span class="pre">CountryCode.rpartition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.rsplit"><code class="docutils literal notranslate"><span class="pre">CountryCode.rsplit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.rstrip"><code class="docutils literal notranslate"><span class="pre">CountryCode.rstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.split"><code class="docutils literal notranslate"><span class="pre">CountryCode.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.splitlines"><code class="docutils literal notranslate"><span class="pre">CountryCode.splitlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.startswith"><code class="docutils literal notranslate"><span class="pre">CountryCode.startswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.strip"><code class="docutils literal notranslate"><span class="pre">CountryCode.strip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.swapcase"><code class="docutils literal notranslate"><span class="pre">CountryCode.swapcase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.title"><code class="docutils literal notranslate"><span class="pre">CountryCode.title()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.translate"><code class="docutils literal notranslate"><span class="pre">CountryCode.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.upper"><code class="docutils literal notranslate"><span class="pre">CountryCode.upper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.country_code.CountryCode.zfill"><code class="docutils literal notranslate"><span class="pre">CountryCode.zfill()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
@@ -247,13 +591,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.country_code">
-<span id="kittycad-models-country-code"></span><h1>kittycad.models.country_code<a class="headerlink" href="#module-kittycad.models.country_code" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-country-code"></span><h1>kittycad.models.country_code<a class="headerlink" href="#module-kittycad.models.country_code" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.country_code.CountryCode.html#kittycad.models.country_code.CountryCode" title="kittycad.models.country_code.CountryCode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CountryCode</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>An enumeration of all ISO-3166 alpha-2 country codes.</p></td>
@@ -1924,7 +2264,7 @@
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/country_code.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/country_code.html#CountryCode.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.country_code.CountryCode.__str__" title="Permalink to this definition"></a></dt>
 <dd><p>Return str(self).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
@@ -2244,7 +2584,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.country_code.CountryCode.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/country_code.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.country_code.CountryCode.replace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/country_code.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.country_code.CountryCode.replace" title="Permalink to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -2295,7 +2635,7 @@ and the original string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.country_code.CountryCode.rsplit">
-<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/country_code.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.country_code.CountryCode.rsplit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/country_code.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.country_code.CountryCode.rsplit" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>
@@ -2321,7 +2661,7 @@ empty strings from the result.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.country_code.CountryCode.split">
-<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/country_code.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.country_code.CountryCode.split" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/country_code.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.country_code.CountryCode.split" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>

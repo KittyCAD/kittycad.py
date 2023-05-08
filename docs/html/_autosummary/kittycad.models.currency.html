@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.currency" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.currency.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.currency_d19d8486.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.currency" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.currency.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.currency &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.currency &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -89,6 +96,233 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.currency</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.currency.Currency.html">kittycad.models.currency.Currency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.currency.Currency"><code class="docutils literal notranslate"><span class="pre">Currency</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.AED"><code class="docutils literal notranslate"><span class="pre">Currency.AED</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.AFN"><code class="docutils literal notranslate"><span class="pre">Currency.AFN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ALL"><code class="docutils literal notranslate"><span class="pre">Currency.ALL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.AMD"><code class="docutils literal notranslate"><span class="pre">Currency.AMD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ANG"><code class="docutils literal notranslate"><span class="pre">Currency.ANG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.AOA"><code class="docutils literal notranslate"><span class="pre">Currency.AOA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ARS"><code class="docutils literal notranslate"><span class="pre">Currency.ARS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.AUD"><code class="docutils literal notranslate"><span class="pre">Currency.AUD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.AWG"><code class="docutils literal notranslate"><span class="pre">Currency.AWG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.AZN"><code class="docutils literal notranslate"><span class="pre">Currency.AZN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BAM"><code class="docutils literal notranslate"><span class="pre">Currency.BAM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BBD"><code class="docutils literal notranslate"><span class="pre">Currency.BBD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BDT"><code class="docutils literal notranslate"><span class="pre">Currency.BDT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BGN"><code class="docutils literal notranslate"><span class="pre">Currency.BGN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BIF"><code class="docutils literal notranslate"><span class="pre">Currency.BIF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BMD"><code class="docutils literal notranslate"><span class="pre">Currency.BMD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BND"><code class="docutils literal notranslate"><span class="pre">Currency.BND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BOB"><code class="docutils literal notranslate"><span class="pre">Currency.BOB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BRL"><code class="docutils literal notranslate"><span class="pre">Currency.BRL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BSD"><code class="docutils literal notranslate"><span class="pre">Currency.BSD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BWP"><code class="docutils literal notranslate"><span class="pre">Currency.BWP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.BZD"><code class="docutils literal notranslate"><span class="pre">Currency.BZD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CAD"><code class="docutils literal notranslate"><span class="pre">Currency.CAD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CDF"><code class="docutils literal notranslate"><span class="pre">Currency.CDF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CHF"><code class="docutils literal notranslate"><span class="pre">Currency.CHF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CLP"><code class="docutils literal notranslate"><span class="pre">Currency.CLP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CNY"><code class="docutils literal notranslate"><span class="pre">Currency.CNY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.COP"><code class="docutils literal notranslate"><span class="pre">Currency.COP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CRC"><code class="docutils literal notranslate"><span class="pre">Currency.CRC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CVE"><code class="docutils literal notranslate"><span class="pre">Currency.CVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.CZK"><code class="docutils literal notranslate"><span class="pre">Currency.CZK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.DJF"><code class="docutils literal notranslate"><span class="pre">Currency.DJF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.DKK"><code class="docutils literal notranslate"><span class="pre">Currency.DKK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.DOP"><code class="docutils literal notranslate"><span class="pre">Currency.DOP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.DZD"><code class="docutils literal notranslate"><span class="pre">Currency.DZD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.EEK"><code class="docutils literal notranslate"><span class="pre">Currency.EEK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.EGP"><code class="docutils literal notranslate"><span class="pre">Currency.EGP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ETB"><code class="docutils literal notranslate"><span class="pre">Currency.ETB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.EUR"><code class="docutils literal notranslate"><span class="pre">Currency.EUR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.FJD"><code class="docutils literal notranslate"><span class="pre">Currency.FJD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.FKP"><code class="docutils literal notranslate"><span class="pre">Currency.FKP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.GBP"><code class="docutils literal notranslate"><span class="pre">Currency.GBP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.GEL"><code class="docutils literal notranslate"><span class="pre">Currency.GEL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.GIP"><code class="docutils literal notranslate"><span class="pre">Currency.GIP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.GMD"><code class="docutils literal notranslate"><span class="pre">Currency.GMD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.GNF"><code class="docutils literal notranslate"><span class="pre">Currency.GNF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.GTQ"><code class="docutils literal notranslate"><span class="pre">Currency.GTQ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.GYD"><code class="docutils literal notranslate"><span class="pre">Currency.GYD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.HKD"><code class="docutils literal notranslate"><span class="pre">Currency.HKD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.HNL"><code class="docutils literal notranslate"><span class="pre">Currency.HNL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.HRK"><code class="docutils literal notranslate"><span class="pre">Currency.HRK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.HTG"><code class="docutils literal notranslate"><span class="pre">Currency.HTG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.HUF"><code class="docutils literal notranslate"><span class="pre">Currency.HUF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.IDR"><code class="docutils literal notranslate"><span class="pre">Currency.IDR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ILS"><code class="docutils literal notranslate"><span class="pre">Currency.ILS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.INR"><code class="docutils literal notranslate"><span class="pre">Currency.INR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ISK"><code class="docutils literal notranslate"><span class="pre">Currency.ISK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.JMD"><code class="docutils literal notranslate"><span class="pre">Currency.JMD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.JPY"><code class="docutils literal notranslate"><span class="pre">Currency.JPY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.KES"><code class="docutils literal notranslate"><span class="pre">Currency.KES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.KGS"><code class="docutils literal notranslate"><span class="pre">Currency.KGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.KHR"><code class="docutils literal notranslate"><span class="pre">Currency.KHR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.KMF"><code class="docutils literal notranslate"><span class="pre">Currency.KMF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.KRW"><code class="docutils literal notranslate"><span class="pre">Currency.KRW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.KYD"><code class="docutils literal notranslate"><span class="pre">Currency.KYD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.KZT"><code class="docutils literal notranslate"><span class="pre">Currency.KZT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.LAK"><code class="docutils literal notranslate"><span class="pre">Currency.LAK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.LBP"><code class="docutils literal notranslate"><span class="pre">Currency.LBP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.LKR"><code class="docutils literal notranslate"><span class="pre">Currency.LKR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.LRD"><code class="docutils literal notranslate"><span class="pre">Currency.LRD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.LSL"><code class="docutils literal notranslate"><span class="pre">Currency.LSL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.LTL"><code class="docutils literal notranslate"><span class="pre">Currency.LTL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.LVL"><code class="docutils literal notranslate"><span class="pre">Currency.LVL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MAD"><code class="docutils literal notranslate"><span class="pre">Currency.MAD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MDL"><code class="docutils literal notranslate"><span class="pre">Currency.MDL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MGA"><code class="docutils literal notranslate"><span class="pre">Currency.MGA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MKD"><code class="docutils literal notranslate"><span class="pre">Currency.MKD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MNT"><code class="docutils literal notranslate"><span class="pre">Currency.MNT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MOP"><code class="docutils literal notranslate"><span class="pre">Currency.MOP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MRO"><code class="docutils literal notranslate"><span class="pre">Currency.MRO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MUR"><code class="docutils literal notranslate"><span class="pre">Currency.MUR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MVR"><code class="docutils literal notranslate"><span class="pre">Currency.MVR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MWK"><code class="docutils literal notranslate"><span class="pre">Currency.MWK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MXN"><code class="docutils literal notranslate"><span class="pre">Currency.MXN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MYR"><code class="docutils literal notranslate"><span class="pre">Currency.MYR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.MZN"><code class="docutils literal notranslate"><span class="pre">Currency.MZN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.NAD"><code class="docutils literal notranslate"><span class="pre">Currency.NAD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.NGN"><code class="docutils literal notranslate"><span class="pre">Currency.NGN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.NIO"><code class="docutils literal notranslate"><span class="pre">Currency.NIO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.NOK"><code class="docutils literal notranslate"><span class="pre">Currency.NOK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.NPR"><code class="docutils literal notranslate"><span class="pre">Currency.NPR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.NZD"><code class="docutils literal notranslate"><span class="pre">Currency.NZD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.PAB"><code class="docutils literal notranslate"><span class="pre">Currency.PAB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.PEN"><code class="docutils literal notranslate"><span class="pre">Currency.PEN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.PGK"><code class="docutils literal notranslate"><span class="pre">Currency.PGK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.PHP"><code class="docutils literal notranslate"><span class="pre">Currency.PHP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.PKR"><code class="docutils literal notranslate"><span class="pre">Currency.PKR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.PLN"><code class="docutils literal notranslate"><span class="pre">Currency.PLN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.PYG"><code class="docutils literal notranslate"><span class="pre">Currency.PYG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.QAR"><code class="docutils literal notranslate"><span class="pre">Currency.QAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.RON"><code class="docutils literal notranslate"><span class="pre">Currency.RON</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.RSD"><code class="docutils literal notranslate"><span class="pre">Currency.RSD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.RUB"><code class="docutils literal notranslate"><span class="pre">Currency.RUB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.RWF"><code class="docutils literal notranslate"><span class="pre">Currency.RWF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SAR"><code class="docutils literal notranslate"><span class="pre">Currency.SAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SBD"><code class="docutils literal notranslate"><span class="pre">Currency.SBD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SCR"><code class="docutils literal notranslate"><span class="pre">Currency.SCR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SEK"><code class="docutils literal notranslate"><span class="pre">Currency.SEK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SGD"><code class="docutils literal notranslate"><span class="pre">Currency.SGD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SHP"><code class="docutils literal notranslate"><span class="pre">Currency.SHP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SLL"><code class="docutils literal notranslate"><span class="pre">Currency.SLL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SOS"><code class="docutils literal notranslate"><span class="pre">Currency.SOS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SRD"><code class="docutils literal notranslate"><span class="pre">Currency.SRD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.STD"><code class="docutils literal notranslate"><span class="pre">Currency.STD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SVC"><code class="docutils literal notranslate"><span class="pre">Currency.SVC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.SZL"><code class="docutils literal notranslate"><span class="pre">Currency.SZL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.THB"><code class="docutils literal notranslate"><span class="pre">Currency.THB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.TJS"><code class="docutils literal notranslate"><span class="pre">Currency.TJS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.TOP"><code class="docutils literal notranslate"><span class="pre">Currency.TOP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.TRY"><code class="docutils literal notranslate"><span class="pre">Currency.TRY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.TTD"><code class="docutils literal notranslate"><span class="pre">Currency.TTD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.TWD"><code class="docutils literal notranslate"><span class="pre">Currency.TWD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.TZS"><code class="docutils literal notranslate"><span class="pre">Currency.TZS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.UAH"><code class="docutils literal notranslate"><span class="pre">Currency.UAH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.UGX"><code class="docutils literal notranslate"><span class="pre">Currency.UGX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.USD"><code class="docutils literal notranslate"><span class="pre">Currency.USD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.UYU"><code class="docutils literal notranslate"><span class="pre">Currency.UYU</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.UZS"><code class="docutils literal notranslate"><span class="pre">Currency.UZS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.VEF"><code class="docutils literal notranslate"><span class="pre">Currency.VEF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.VND"><code class="docutils literal notranslate"><span class="pre">Currency.VND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.VUV"><code class="docutils literal notranslate"><span class="pre">Currency.VUV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.WST"><code class="docutils literal notranslate"><span class="pre">Currency.WST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.XAF"><code class="docutils literal notranslate"><span class="pre">Currency.XAF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.XCD"><code class="docutils literal notranslate"><span class="pre">Currency.XCD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.XOF"><code class="docutils literal notranslate"><span class="pre">Currency.XOF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.XPF"><code class="docutils literal notranslate"><span class="pre">Currency.XPF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.YER"><code class="docutils literal notranslate"><span class="pre">Currency.YER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ZAR"><code class="docutils literal notranslate"><span class="pre">Currency.ZAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ZMW"><code class="docutils literal notranslate"><span class="pre">Currency.ZMW</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__add__"><code class="docutils literal notranslate"><span class="pre">Currency.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__annotations__"><code class="docutils literal notranslate"><span class="pre">Currency.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__contains__"><code class="docutils literal notranslate"><span class="pre">Currency.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__dict__"><code class="docutils literal notranslate"><span class="pre">Currency.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__dir__"><code class="docutils literal notranslate"><span class="pre">Currency.__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__eq__"><code class="docutils literal notranslate"><span class="pre">Currency.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__format__"><code class="docutils literal notranslate"><span class="pre">Currency.__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__ge__"><code class="docutils literal notranslate"><span class="pre">Currency.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__getattribute__"><code class="docutils literal notranslate"><span class="pre">Currency.__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__getitem__"><code class="docutils literal notranslate"><span class="pre">Currency.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__getnewargs__"><code class="docutils literal notranslate"><span class="pre">Currency.__getnewargs__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__gt__"><code class="docutils literal notranslate"><span class="pre">Currency.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__hash__"><code class="docutils literal notranslate"><span class="pre">Currency.__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__init__"><code class="docutils literal notranslate"><span class="pre">Currency.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__iter__"><code class="docutils literal notranslate"><span class="pre">Currency.__iter__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__le__"><code class="docutils literal notranslate"><span class="pre">Currency.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__len__"><code class="docutils literal notranslate"><span class="pre">Currency.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__lt__"><code class="docutils literal notranslate"><span class="pre">Currency.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__mod__"><code class="docutils literal notranslate"><span class="pre">Currency.__mod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__module__"><code class="docutils literal notranslate"><span class="pre">Currency.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__mul__"><code class="docutils literal notranslate"><span class="pre">Currency.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__ne__"><code class="docutils literal notranslate"><span class="pre">Currency.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__new__"><code class="docutils literal notranslate"><span class="pre">Currency.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">Currency.__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__repr__"><code class="docutils literal notranslate"><span class="pre">Currency.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__rmod__"><code class="docutils literal notranslate"><span class="pre">Currency.__rmod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__rmul__"><code class="docutils literal notranslate"><span class="pre">Currency.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__sizeof__"><code class="docutils literal notranslate"><span class="pre">Currency.__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.__str__"><code class="docutils literal notranslate"><span class="pre">Currency.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">Currency._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._member_map_"><code class="docutils literal notranslate"><span class="pre">Currency._member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._member_names_"><code class="docutils literal notranslate"><span class="pre">Currency._member_names_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._member_type_"><code class="docutils literal notranslate"><span class="pre">Currency._member_type_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._new_member_"><code class="docutils literal notranslate"><span class="pre">Currency._new_member_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._unhashable_values_"><code class="docutils literal notranslate"><span class="pre">Currency._unhashable_values_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._use_args_"><code class="docutils literal notranslate"><span class="pre">Currency._use_args_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._value2member_map_"><code class="docutils literal notranslate"><span class="pre">Currency._value2member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency._value_repr_"><code class="docutils literal notranslate"><span class="pre">Currency._value_repr_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.capitalize"><code class="docutils literal notranslate"><span class="pre">Currency.capitalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.casefold"><code class="docutils literal notranslate"><span class="pre">Currency.casefold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.center"><code class="docutils literal notranslate"><span class="pre">Currency.center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.count"><code class="docutils literal notranslate"><span class="pre">Currency.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.encode"><code class="docutils literal notranslate"><span class="pre">Currency.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.endswith"><code class="docutils literal notranslate"><span class="pre">Currency.endswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.expandtabs"><code class="docutils literal notranslate"><span class="pre">Currency.expandtabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.find"><code class="docutils literal notranslate"><span class="pre">Currency.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.format"><code class="docutils literal notranslate"><span class="pre">Currency.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.format_map"><code class="docutils literal notranslate"><span class="pre">Currency.format_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.index"><code class="docutils literal notranslate"><span class="pre">Currency.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isalnum"><code class="docutils literal notranslate"><span class="pre">Currency.isalnum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isalpha"><code class="docutils literal notranslate"><span class="pre">Currency.isalpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isascii"><code class="docutils literal notranslate"><span class="pre">Currency.isascii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isdecimal"><code class="docutils literal notranslate"><span class="pre">Currency.isdecimal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isdigit"><code class="docutils literal notranslate"><span class="pre">Currency.isdigit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isidentifier"><code class="docutils literal notranslate"><span class="pre">Currency.isidentifier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.islower"><code class="docutils literal notranslate"><span class="pre">Currency.islower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isnumeric"><code class="docutils literal notranslate"><span class="pre">Currency.isnumeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isprintable"><code class="docutils literal notranslate"><span class="pre">Currency.isprintable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isspace"><code class="docutils literal notranslate"><span class="pre">Currency.isspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.istitle"><code class="docutils literal notranslate"><span class="pre">Currency.istitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.isupper"><code class="docutils literal notranslate"><span class="pre">Currency.isupper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.join"><code class="docutils literal notranslate"><span class="pre">Currency.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.ljust"><code class="docutils literal notranslate"><span class="pre">Currency.ljust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.lower"><code class="docutils literal notranslate"><span class="pre">Currency.lower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.lstrip"><code class="docutils literal notranslate"><span class="pre">Currency.lstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.maketrans"><code class="docutils literal notranslate"><span class="pre">Currency.maketrans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.partition"><code class="docutils literal notranslate"><span class="pre">Currency.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.removeprefix"><code class="docutils literal notranslate"><span class="pre">Currency.removeprefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.removesuffix"><code class="docutils literal notranslate"><span class="pre">Currency.removesuffix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.replace"><code class="docutils literal notranslate"><span class="pre">Currency.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.rfind"><code class="docutils literal notranslate"><span class="pre">Currency.rfind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.rindex"><code class="docutils literal notranslate"><span class="pre">Currency.rindex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.rjust"><code class="docutils literal notranslate"><span class="pre">Currency.rjust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.rpartition"><code class="docutils literal notranslate"><span class="pre">Currency.rpartition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.rsplit"><code class="docutils literal notranslate"><span class="pre">Currency.rsplit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.rstrip"><code class="docutils literal notranslate"><span class="pre">Currency.rstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.split"><code class="docutils literal notranslate"><span class="pre">Currency.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.splitlines"><code class="docutils literal notranslate"><span class="pre">Currency.splitlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.startswith"><code class="docutils literal notranslate"><span class="pre">Currency.startswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.strip"><code class="docutils literal notranslate"><span class="pre">Currency.strip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.swapcase"><code class="docutils literal notranslate"><span class="pre">Currency.swapcase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.title"><code class="docutils literal notranslate"><span class="pre">Currency.title()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.translate"><code class="docutils literal notranslate"><span class="pre">Currency.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.upper"><code class="docutils literal notranslate"><span class="pre">Currency.upper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.currency.Currency.zfill"><code class="docutils literal notranslate"><span class="pre">Currency.zfill()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer.html">kittycad.models.customer</a></li>
@@ -247,13 +481,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.currency">
-<span id="kittycad-models-currency"></span><h1>kittycad.models.currency<a class="headerlink" href="#module-kittycad.models.currency" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-currency"></span><h1>kittycad.models.currency<a class="headerlink" href="#module-kittycad.models.currency" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.currency.Currency.html#kittycad.models.currency.Currency" title="kittycad.models.currency.Currency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Currency</span></code></a>(value[, names, module, qualname, ...])</p></td>
 <td><p>Currency is the list of supported currencies.</p></td>
@@ -1265,7 +1495,7 @@
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/currency.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/currency.html#Currency.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.currency.Currency.__str__" title="Permalink to this definition"></a></dt>
 <dd><p>Return str(self).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
@@ -1585,7 +1815,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.currency.Currency.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/currency.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.currency.Currency.replace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/currency.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.currency.Currency.replace" title="Permalink to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -1636,7 +1866,7 @@ and the original string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.currency.Currency.rsplit">
-<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/currency.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.currency.Currency.rsplit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/currency.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.currency.Currency.rsplit" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>
@@ -1662,7 +1892,7 @@ empty strings from the result.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.currency.Currency.split">
-<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/currency.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.currency.Currency.split" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/currency.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.currency.Currency.split" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>

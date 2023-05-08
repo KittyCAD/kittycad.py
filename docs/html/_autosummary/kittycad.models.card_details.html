@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.card_details" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.card_details.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.card_details_a1eec3ad.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.card_details" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.card_details.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.card_details &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.card_details &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -81,6 +88,39 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cache_metadata.html">kittycad.models.cache_metadata</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.card_details</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.card_details.CardDetails.html">kittycad.models.card_details.CardDetails</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.card_details.CardDetails"><code class="docutils literal notranslate"><span class="pre">CardDetails</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__annotations__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__attrs_attrs__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__attrs_attrs__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__contains__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__delitem__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__delitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__dict__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__eq__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__ge__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__getitem__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__gt__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__hash__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__hash__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__init__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__le__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__lt__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__match_args__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__match_args__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__module__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__ne__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__repr__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.__setitem__"><code class="docutils literal notranslate"><span class="pre">CardDetails.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.additional_keys"><code class="docutils literal notranslate"><span class="pre">CardDetails.additional_keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.additional_properties"><code class="docutils literal notranslate"><span class="pre">CardDetails.additional_properties</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.brand"><code class="docutils literal notranslate"><span class="pre">CardDetails.brand</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.checks"><code class="docutils literal notranslate"><span class="pre">CardDetails.checks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.country"><code class="docutils literal notranslate"><span class="pre">CardDetails.country</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.exp_month"><code class="docutils literal notranslate"><span class="pre">CardDetails.exp_month</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.exp_year"><code class="docutils literal notranslate"><span class="pre">CardDetails.exp_year</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.fingerprint"><code class="docutils literal notranslate"><span class="pre">CardDetails.fingerprint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.from_dict"><code class="docutils literal notranslate"><span class="pre">CardDetails.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.funding"><code class="docutils literal notranslate"><span class="pre">CardDetails.funding</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.last4"><code class="docutils literal notranslate"><span class="pre">CardDetails.last4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.card_details.CardDetails.to_dict"><code class="docutils literal notranslate"><span class="pre">CardDetails.to_dict()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
@@ -247,13 +287,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.card_details">
-<span id="kittycad-models-card-details"></span><h1>kittycad.models.card_details<a class="headerlink" href="#module-kittycad.models.card_details" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-card-details"></span><h1>kittycad.models.card_details<a class="headerlink" href="#module-kittycad.models.card_details" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.card_details.CardDetails.html#kittycad.models.card_details.CardDetails" title="kittycad.models.card_details.CardDetails"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CardDetails</span></code></a>([brand, checks, country, ...])</p></td>
 <td><p>The card details of a payment method.</p></td>
@@ -279,7 +315,7 @@
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.__contains__">
 <span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/card_details.html#CardDetails.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.__contains__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
 </dd>
 </dl>
@@ -289,7 +325,7 @@
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.__delitem__">
 <span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/card_details.html#CardDetails.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.__delitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -316,7 +352,7 @@
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/card_details.html#CardDetails.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.__getitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
 </dd>
 </dl>
@@ -377,7 +413,7 @@
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.__setitem__">
 <span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/card_details.html#CardDetails.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.__setitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -385,54 +421,49 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.additional_keys">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.additional_keys" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.additional_keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.additional_properties">
-<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.additional_properties" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.additional_properties" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.brand">
-<span class="sig-name descname"><span class="pre">brand</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.brand" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">brand</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.brand" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.checks">
-<span class="sig-name descname"><span class="pre">checks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.payment_method_card_checks.PaymentMethodCardChecks.html#kittycad.models.payment_method_card_checks.PaymentMethodCardChecks" title="kittycad.models.payment_method_card_checks.PaymentMethodCardChecks"><span class="pre">kittycad.models.payment_method_card_checks.PaymentMethodCardChecks</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.checks" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">checks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference internal" href="kittycad.models.payment_method_card_checks.PaymentMethodCardChecks.html#kittycad.models.payment_method_card_checks.PaymentMethodCardChecks" title="kittycad.models.payment_method_card_checks.PaymentMethodCardChecks"><code class="xref py py-class docutils literal notranslate"><span class="pre">PaymentMethodCardChecks</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.checks" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.country">
-<span class="sig-name descname"><span class="pre">country</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.country" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">country</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.country" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.exp_month">
-<span class="sig-name descname"><span class="pre">exp_month</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.exp_month" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">exp_month</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.exp_month" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.exp_year">
-<span class="sig-name descname"><span class="pre">exp_year</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.exp_year" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">exp_year</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.exp_year" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.fingerprint">
-<span class="sig-name descname"><span class="pre">fingerprint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.fingerprint" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fingerprint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.fingerprint" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/card_details.html#CardDetails.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">B</span></code>, bound= CardDetails)</p>
 </dd>
 </dl>
@@ -440,19 +471,19 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.funding">
-<span class="sig-name descname"><span class="pre">funding</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.funding" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">funding</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.funding" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.last4">
-<span class="sig-name descname"><span class="pre">last4</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.last4" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">last4</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.last4" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.card_details.CardDetails.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/card_details.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/card_details.html#CardDetails.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.card_details.CardDetails.to_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
 </dd>
 </dl>

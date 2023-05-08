@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.ai_plugin_auth_type.AiPluginAuthType" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.ai_plugin_auth_type.AiPluginAuthType.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.ai_plugin_auth_type.AiPluginAuthType_ae27a139.png" />
+<meta property="og:image:alt" content="" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.ai_plugin_auth_type.AiPluginAuthType" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.ai_plugin_auth_type.AiPluginAuthType.html" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.ai_plugin_auth_type.AiPluginAuthType &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.ai_plugin_auth_type.AiPluginAuthType &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -18,10 +23,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -43,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -62,7 +68,11 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api_type.html">kittycad.models.ai_plugin_api_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth.html">kittycad.models.ai_plugin_auth</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="kittycad.models.ai_plugin_auth_type.html">kittycad.models.ai_plugin_auth_type</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.ai_plugin_auth_type.AiPluginAuthType</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.ai_plugin_auth_type.AiPluginAuthType</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType"><code class="docutils literal notranslate"><span class="pre">AiPluginAuthType</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.models.ai_plugin_auth_type.html#kittycad.models.ai_plugin_auth_type.AiPluginAuthType"><code class="docutils literal notranslate"><span class="pre">AiPluginAuthType</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_http_auth_type.html">kittycad.models.ai_plugin_http_auth_type</a></li>
@@ -247,11 +257,11 @@
            <div itemprop="articleBody">
              
   <section id="kittycad-models-ai-plugin-auth-type-aipluginauthtype">
-<h1>kittycad.models.ai_plugin_auth_type.AiPluginAuthType<a class="headerlink" href="#kittycad-models-ai-plugin-auth-type-aipluginauthtype" title="Permalink to this headline"></a></h1>
+<h1>kittycad.models.ai_plugin_auth_type.AiPluginAuthType<a class="headerlink" href="#kittycad-models-ai-plugin-auth-type-aipluginauthtype" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_auth_type.AiPluginAuthType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.ai_plugin_auth_type.</span></span><span class="sig-name descname"><span class="pre">AiPluginAuthType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_auth_type.html#AiPluginAuthType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
 <p>AI plugin auth type.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_auth_type.AiPluginAuthType.__init__">
@@ -260,10 +270,6 @@
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="kittycad.models.ai_plugin_auth_type.AiPluginAuthType.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(*args, **kwds)</p></td>
 <td><p></p></td>
@@ -413,10 +419,6 @@
 </table>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.NONE" title="kittycad.models.ai_plugin_auth_type.AiPluginAuthType.NONE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NONE</span></code></a></p></td>
 <td><p># User http.</p></td>
@@ -622,7 +624,7 @@
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_auth_type.html#AiPluginAuthType.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.__str__" title="Permalink to this definition"></a></dt>
 <dd><p>Return str(self).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
@@ -942,7 +944,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_auth_type.AiPluginAuthType.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.replace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.replace" title="Permalink to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -993,7 +995,7 @@ and the original string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_auth_type.AiPluginAuthType.rsplit">
-<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.rsplit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.rsplit" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>
@@ -1019,7 +1021,7 @@ empty strings from the result.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_auth_type.AiPluginAuthType.split">
-<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.split" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_auth_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_auth_type.AiPluginAuthType.split" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>

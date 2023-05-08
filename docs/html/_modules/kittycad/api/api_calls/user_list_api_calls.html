@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.api_calls.user_list_api_calls &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.api.api_calls.user_list_api_calls &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -13,10 +13,11 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
         <script src="../../../../_static/clipboard.min.js"></script>
         <script src="../../../../_static/copybutton.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -36,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -126,7 +127,7 @@
 
 <div class="viewcode-block" id="_parse_response"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_calls.user_list_api_calls.html#kittycad.api.api_calls.user_list_api_calls._parse_response">[docs]</a><span class="k">def</span> <span class="nf">_parse_response</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
         <span class="n">response_200</span> <span class="o">=</span> <span class="n">ApiCallWithPriceResultsPage</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">response_200</span>
@@ -136,12 +137,12 @@
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
         <span class="n">response_5XX</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">response_5XX</span>
-    <span class="k">return</span> <span class="kc">None</span></div>
+    <span class="k">return</span> <span class="n">Error</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="_build_response"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_calls.user_list_api_calls.html#kittycad.api.api_calls.user_list_api_calls._build_response">[docs]</a><span class="k">def</span> <span class="nf">_build_response</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
         <span class="n">status_code</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span>
         <span class="n">content</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
@@ -156,7 +157,7 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
         <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
         <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
@@ -178,7 +179,7 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.</span>
 <span class="sd">    The API calls are returned in order of creation, with the most recently created API calls first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
@@ -196,7 +197,7 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
         <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
         <span class="n">page_token</span><span class="o">=</span><span class="n">page_token</span><span class="p">,</span>
@@ -216,7 +217,7 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.</span>
 <span class="sd">    The API calls are returned in order of creation, with the most recently created API calls first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 

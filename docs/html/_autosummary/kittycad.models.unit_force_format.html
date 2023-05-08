@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.unit_force_format" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.unit_force_format.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.unit_force_format_51bfcf09.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.unit_force_format" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.unit_force_format.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.unit_force_format &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.unit_force_format &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -176,6 +183,99 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force_conversion.html">kittycad.models.unit_force_conversion</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.unit_force_format</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.unit_force_format.UnitForceFormat.html">kittycad.models.unit_force_format.UnitForceFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.DYNE"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.DYNE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.KILOPOND"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.KILOPOND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.NEWTON"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.NEWTON</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.POUND"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.POUND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.POUNDAL"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.POUNDAL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__add__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__annotations__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__contains__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__dict__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__dir__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__eq__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__format__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__ge__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__getattribute__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__getitem__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__getnewargs__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__getnewargs__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__gt__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__hash__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__init__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__iter__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__iter__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__le__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__len__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__lt__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__mod__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__mod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__module__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__mul__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__ne__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__new__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__repr__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__rmod__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__rmod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__rmul__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__sizeof__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.__str__"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._member_map_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._member_names_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._member_names_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._member_type_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._member_type_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._new_member_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._new_member_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._unhashable_values_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._unhashable_values_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._use_args_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._use_args_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._value2member_map_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._value2member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat._value_repr_"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat._value_repr_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.capitalize"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.capitalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.casefold"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.casefold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.center"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.count"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.encode"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.endswith"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.endswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.expandtabs"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.expandtabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.find"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.format"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.format_map"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.format_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.index"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isalnum"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isalnum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isalpha"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isalpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isascii"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isascii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isdecimal"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isdecimal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isdigit"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isdigit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isidentifier"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isidentifier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.islower"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.islower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isnumeric"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isnumeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isprintable"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isprintable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isspace"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.istitle"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.istitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.isupper"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.isupper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.join"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.ljust"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.ljust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.lower"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.lower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.lstrip"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.lstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.maketrans"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.maketrans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.partition"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.removeprefix"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.removeprefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.removesuffix"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.removesuffix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.replace"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.rfind"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.rfind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.rindex"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.rindex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.rjust"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.rjust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.rpartition"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.rpartition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.rsplit"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.rsplit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.rstrip"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.rstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.split"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.splitlines"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.splitlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.startswith"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.startswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.strip"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.strip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.swapcase"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.swapcase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.title"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.title()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.translate"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.upper"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.upper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_force_format.UnitForceFormat.zfill"><code class="docutils literal notranslate"><span class="pre">UnitForceFormat.zfill()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_illuminance_conversion.html">kittycad.models.unit_illuminance_conversion</a></li>
@@ -247,13 +347,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.unit_force_format">
-<span id="kittycad-models-unit-force-format"></span><h1>kittycad.models.unit_force_format<a class="headerlink" href="#module-kittycad.models.unit_force_format" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-unit-force-format"></span><h1>kittycad.models.unit_force_format<a class="headerlink" href="#module-kittycad.models.unit_force_format" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.unit_force_format.UnitForceFormat.html#kittycad.models.unit_force_format.UnitForceFormat" title="kittycad.models.unit_force_format.UnitForceFormat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitForceFormat</span></code></a>(value[, names, module, ...])</p></td>
 <td><p>The valid types of force unit formats.</p></td>
@@ -269,7 +365,7 @@
 <span class="sig-name descname"><span class="pre">DYNE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dyne'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.DYNE" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Kilogram-force&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># &lt;https</p>
 </dd>
 </dl>
@@ -280,7 +376,7 @@
 <span class="sig-name descname"><span class="pre">KILOPOND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kilopond'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.KILOPOND" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Poundal&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># &lt;https</p>
 </dd>
 </dl>
@@ -291,7 +387,7 @@
 <span class="sig-name descname"><span class="pre">NEWTON</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'newton'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.NEWTON" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Pound_(force)&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># &lt;https</p>
 </dd>
 </dl>
@@ -302,7 +398,7 @@
 <span class="sig-name descname"><span class="pre">POUND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pound'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.POUND" title="Permalink to this definition"></a></dt>
 <dd><p>//en.wikipedia.org/wiki/Dyne&gt;</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p># &lt;https</p>
 </dd>
 </dl>
@@ -480,7 +576,7 @@
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/unit_force_format.html#UnitForceFormat.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.__str__" title="Permalink to this definition"></a></dt>
 <dd><p>Return str(self).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
 </dd>
 </dl>
@@ -800,7 +896,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.unit_force_format.UnitForceFormat.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.replace" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.replace" title="Permalink to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -851,7 +947,7 @@ and the original string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.unit_force_format.UnitForceFormat.rsplit">
-<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.rsplit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.rsplit" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>
@@ -877,7 +973,7 @@ empty strings from the result.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.unit_force_format.UnitForceFormat.split">
-<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.split" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_force_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_force_format.UnitForceFormat.split" title="Permalink to this definition"></a></dt>
 <dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
 <blockquote>
 <div><dl>

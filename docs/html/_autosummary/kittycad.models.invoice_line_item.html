@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.invoice_line_item" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.invoice_line_item.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.invoice_line_item_d53340d7.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.invoice_line_item" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.invoice_line_item.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.invoice_line_item &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.invoice_line_item &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -123,6 +130,37 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice.html">kittycad.models.invoice</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.invoice_line_item</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.invoice_line_item.InvoiceLineItem.html">kittycad.models.invoice_line_item.InvoiceLineItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__annotations__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__attrs_attrs__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__attrs_attrs__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__contains__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__delitem__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__delitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__dict__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__eq__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__ge__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__getitem__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__gt__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__hash__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__hash__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__init__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__le__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__lt__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__match_args__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__match_args__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__module__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__ne__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__repr__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__setitem__"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.additional_keys"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.additional_keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.additional_properties"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.additional_properties</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.amount"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.amount</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.currency"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.currency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.description"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.from_dict"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.id"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.invoice_item"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.invoice_item</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.metadata"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.invoice_line_item.InvoiceLineItem.to_dict"><code class="docutils literal notranslate"><span class="pre">InvoiceLineItem.to_dict()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_status.html">kittycad.models.invoice_status</a></li>
@@ -247,13 +285,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.invoice_line_item">
-<span id="kittycad-models-invoice-line-item"></span><h1>kittycad.models.invoice_line_item<a class="headerlink" href="#module-kittycad.models.invoice_line_item" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-invoice-line-item"></span><h1>kittycad.models.invoice_line_item<a class="headerlink" href="#module-kittycad.models.invoice_line_item" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.invoice_line_item.InvoiceLineItem.html#kittycad.models.invoice_line_item.InvoiceLineItem" title="kittycad.models.invoice_line_item.InvoiceLineItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InvoiceLineItem</span></code></a>([amount, currency, ...])</p></td>
 <td><p>An invoice line item.</p></td>
@@ -279,7 +313,7 @@
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.__contains__">
 <span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/invoice_line_item.html#InvoiceLineItem.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__contains__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
 </dd>
 </dl>
@@ -289,7 +323,7 @@
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.__delitem__">
 <span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/invoice_line_item.html#InvoiceLineItem.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__delitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -316,7 +350,7 @@
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/invoice_line_item.html#InvoiceLineItem.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__getitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
 </dd>
 </dl>
@@ -377,7 +411,7 @@
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.__setitem__">
 <span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/invoice_line_item.html#InvoiceLineItem.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.__setitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -385,39 +419,34 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.additional_keys">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.additional_keys" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.additional_keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.additional_properties">
-<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.additional_properties" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.additional_properties" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.amount">
-<span class="sig-name descname"><span class="pre">amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.amount" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">amount</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.amount" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.currency">
-<span class="sig-name descname"><span class="pre">currency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.currency.Currency.html#kittycad.models.currency.Currency" title="kittycad.models.currency.Currency"><span class="pre">kittycad.models.currency.Currency</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.currency" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">currency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference internal" href="kittycad.models.currency.Currency.html#kittycad.models.currency.Currency" title="kittycad.models.currency.Currency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Currency</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.currency" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.description">
-<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.description" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.description" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/invoice_line_item.html#InvoiceLineItem.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">P</span></code>, bound= InvoiceLineItem)</p>
 </dd>
 </dl>
@@ -425,24 +454,24 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.id">
-<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.invoice_item">
-<span class="sig-name descname"><span class="pre">invoice_item</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.invoice_item" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">invoice_item</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.invoice_item" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.metadata">
-<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.metadata" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.metadata" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.invoice_line_item.InvoiceLineItem.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/invoice_line_item.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/invoice_line_item.html#InvoiceLineItem.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.invoice_line_item.InvoiceLineItem.to_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
 </dd>
 </dl>

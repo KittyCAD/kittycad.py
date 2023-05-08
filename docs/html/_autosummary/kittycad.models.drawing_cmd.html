@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.drawing_cmd" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.drawing_cmd.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.drawing_cmd_6dff789e.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.drawing_cmd" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.drawing_cmd.html" />
-  <meta property="og:description" content="Classes" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.drawing_cmd &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.drawing_cmd &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -19,10 +25,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -44,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -97,6 +104,60 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.drawing_cmd</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.drawing_cmd.DrawCircle.html">kittycad.models.drawing_cmd.DrawCircle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.drawing_cmd.Extrude.html">kittycad.models.drawing_cmd.Extrude</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle"><code class="docutils literal notranslate"><span class="pre">DrawCircle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__annotations__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__attrs_attrs__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__attrs_attrs__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__contains__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__delitem__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__delitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__dict__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__eq__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__ge__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__getitem__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__gt__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__hash__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__hash__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__init__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__le__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__lt__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__match_args__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__match_args__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__module__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__ne__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__repr__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.__setitem__"><code class="docutils literal notranslate"><span class="pre">DrawCircle.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.additional_keys"><code class="docutils literal notranslate"><span class="pre">DrawCircle.additional_keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.additional_properties"><code class="docutils literal notranslate"><span class="pre">DrawCircle.additional_properties</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.center"><code class="docutils literal notranslate"><span class="pre">DrawCircle.center</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.from_dict"><code class="docutils literal notranslate"><span class="pre">DrawCircle.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.radius"><code class="docutils literal notranslate"><span class="pre">DrawCircle.radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.DrawCircle.to_dict"><code class="docutils literal notranslate"><span class="pre">DrawCircle.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude"><code class="docutils literal notranslate"><span class="pre">Extrude</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__annotations__"><code class="docutils literal notranslate"><span class="pre">Extrude.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__attrs_attrs__"><code class="docutils literal notranslate"><span class="pre">Extrude.__attrs_attrs__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__contains__"><code class="docutils literal notranslate"><span class="pre">Extrude.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__delitem__"><code class="docutils literal notranslate"><span class="pre">Extrude.__delitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__dict__"><code class="docutils literal notranslate"><span class="pre">Extrude.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__eq__"><code class="docutils literal notranslate"><span class="pre">Extrude.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__ge__"><code class="docutils literal notranslate"><span class="pre">Extrude.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__getitem__"><code class="docutils literal notranslate"><span class="pre">Extrude.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__gt__"><code class="docutils literal notranslate"><span class="pre">Extrude.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__hash__"><code class="docutils literal notranslate"><span class="pre">Extrude.__hash__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__init__"><code class="docutils literal notranslate"><span class="pre">Extrude.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__le__"><code class="docutils literal notranslate"><span class="pre">Extrude.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__lt__"><code class="docutils literal notranslate"><span class="pre">Extrude.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__match_args__"><code class="docutils literal notranslate"><span class="pre">Extrude.__match_args__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__module__"><code class="docutils literal notranslate"><span class="pre">Extrude.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__ne__"><code class="docutils literal notranslate"><span class="pre">Extrude.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__repr__"><code class="docutils literal notranslate"><span class="pre">Extrude.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.__setitem__"><code class="docutils literal notranslate"><span class="pre">Extrude.__setitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.additional_keys"><code class="docutils literal notranslate"><span class="pre">Extrude.additional_keys</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.additional_properties"><code class="docutils literal notranslate"><span class="pre">Extrude.additional_properties</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.distance"><code class="docutils literal notranslate"><span class="pre">Extrude.distance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.from_dict"><code class="docutils literal notranslate"><span class="pre">Extrude.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.sketch"><code class="docutils literal notranslate"><span class="pre">Extrude.sketch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.drawing_cmd.Extrude.to_dict"><code class="docutils literal notranslate"><span class="pre">Extrude.to_dict()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.drawing_cmd_id.html">kittycad.models.drawing_cmd_id</a></li>
@@ -248,13 +309,9 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.models.drawing_cmd">
-<span id="kittycad-models-drawing-cmd"></span><h1>kittycad.models.drawing_cmd<a class="headerlink" href="#module-kittycad.models.drawing_cmd" title="Permalink to this headline"></a></h1>
+<span id="kittycad-models-drawing-cmd"></span><h1>kittycad.models.drawing_cmd<a class="headerlink" href="#module-kittycad.models.drawing_cmd" title="Permalink to this heading"></a></h1>
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.drawing_cmd.DrawCircle.html#kittycad.models.drawing_cmd.DrawCircle" title="kittycad.models.drawing_cmd.DrawCircle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DrawCircle</span></code></a>([center, radius])</p></td>
 <td><p>Method generated by attrs for class DrawCircle.</p></td>
@@ -282,7 +339,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.__contains__">
 <span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#DrawCircle.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.__contains__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
 </dd>
 </dl>
@@ -292,7 +349,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.__delitem__">
 <span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#DrawCircle.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.__delitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -319,7 +376,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#DrawCircle.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.__getitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
 </dd>
 </dl>
@@ -380,7 +437,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.__setitem__">
 <span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#DrawCircle.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.__setitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -388,29 +445,24 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.additional_keys">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.additional_keys" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.additional_keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.additional_properties">
-<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.additional_properties" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.additional_properties" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.center">
-<span class="sig-name descname"><span class="pre">center</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.center" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">center</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a><span class="pre">]]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.center" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#DrawCircle.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">J</span></code>, bound= DrawCircle)</p>
 </dd>
 </dl>
@@ -418,14 +470,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.radius">
-<span class="sig-name descname"><span class="pre">radius</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.radius" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">radius</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.radius" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.DrawCircle.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#DrawCircle.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.DrawCircle.to_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
 </dd>
 </dl>
@@ -451,7 +503,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.__contains__">
 <span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#Extrude.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.__contains__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
 </dd>
 </dl>
@@ -461,7 +513,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.__delitem__">
 <span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#Extrude.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.__delitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -488,7 +540,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#Extrude.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.__getitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
 </dd>
 </dl>
@@ -549,7 +601,7 @@
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.__setitem__">
 <span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#Extrude.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.__setitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -557,29 +609,24 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.additional_keys">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.additional_keys" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.additional_keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.additional_properties">
-<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.additional_properties" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.additional_properties" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.distance">
-<span class="sig-name descname"><span class="pre">distance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.distance" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">distance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.distance" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#Extrude.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">V</span></code>, bound= Extrude)</p>
 </dd>
 </dl>
@@ -587,14 +634,14 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.sketch">
-<span class="sig-name descname"><span class="pre">sketch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.drawing_cmd_id.DrawingCmdId.html#kittycad.models.drawing_cmd_id.DrawingCmdId" title="kittycad.models.drawing_cmd_id.DrawingCmdId"><span class="pre">kittycad.models.drawing_cmd_id.DrawingCmdId</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.sketch" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sketch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference internal" href="kittycad.models.drawing_cmd_id.DrawingCmdId.html#kittycad.models.drawing_cmd_id.DrawingCmdId" title="kittycad.models.drawing_cmd_id.DrawingCmdId"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrawingCmdId</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.sketch" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.drawing_cmd.Extrude.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/drawing_cmd.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/drawing_cmd.html#Extrude.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.drawing_cmd.Extrude.to_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
 </dd>
 </dl>

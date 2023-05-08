@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.types.Response" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.types.Response.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.types.Response_4f957d49.png" />
+<meta property="og:image:alt" content="" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.types.Response" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.types.Response.html" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.types.Response &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.types.Response &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -18,10 +23,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -43,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -59,8 +65,40 @@
 <li class="toctree-l1"><a class="reference internal" href="kittycad.models.html">kittycad.models</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="kittycad.types.html">kittycad.types</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="kittycad.types.File.html">kittycad.types.File</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.types.Response</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.types.Response</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.types.Response"><code class="docutils literal notranslate"><span class="pre">Response</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__init__"><code class="docutils literal notranslate"><span class="pre">Response.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__annotations__"><code class="docutils literal notranslate"><span class="pre">Response.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__attrs_attrs__"><code class="docutils literal notranslate"><span class="pre">Response.__attrs_attrs__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__class_getitem__"><code class="docutils literal notranslate"><span class="pre">Response.__class_getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__dict__"><code class="docutils literal notranslate"><span class="pre">Response.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__eq__"><code class="docutils literal notranslate"><span class="pre">Response.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__ge__"><code class="docutils literal notranslate"><span class="pre">Response.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__gt__"><code class="docutils literal notranslate"><span class="pre">Response.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__hash__"><code class="docutils literal notranslate"><span class="pre">Response.__hash__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Response.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__init_subclass__"><code class="docutils literal notranslate"><span class="pre">Response.__init_subclass__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__le__"><code class="docutils literal notranslate"><span class="pre">Response.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__lt__"><code class="docutils literal notranslate"><span class="pre">Response.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__match_args__"><code class="docutils literal notranslate"><span class="pre">Response.__match_args__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__module__"><code class="docutils literal notranslate"><span class="pre">Response.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__ne__"><code class="docutils literal notranslate"><span class="pre">Response.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__orig_bases__"><code class="docutils literal notranslate"><span class="pre">Response.__orig_bases__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__parameters__"><code class="docutils literal notranslate"><span class="pre">Response.__parameters__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__repr__"><code class="docutils literal notranslate"><span class="pre">Response.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.__slots__"><code class="docutils literal notranslate"><span class="pre">Response.__slots__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response._is_protocol"><code class="docutils literal notranslate"><span class="pre">Response._is_protocol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.content"><code class="docutils literal notranslate"><span class="pre">Response.content</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.headers"><code class="docutils literal notranslate"><span class="pre">Response.headers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.parsed"><code class="docutils literal notranslate"><span class="pre">Response.parsed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.types.Response.status_code"><code class="docutils literal notranslate"><span class="pre">Response.status_code</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.types.Unset.html">kittycad.types.Unset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.types.html#kittycad.types.File"><code class="docutils literal notranslate"><span class="pre">File</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.types.html#kittycad.types.Response"><code class="docutils literal notranslate"><span class="pre">Response</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -90,11 +128,11 @@
            <div itemprop="articleBody">
              
   <section id="kittycad-types-response">
-<h1>kittycad.types.Response<a class="headerlink" href="#kittycad-types-response" title="Permalink to this headline"></a></h1>
+<h1>kittycad.types.Response<a class="headerlink" href="#kittycad-types-response" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="kittycad.types.Response">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.types.</span></span><span class="sig-name descname"><span class="pre">Response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parsed</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/types.html#Response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.types.T</span></code>]</p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
 <p>A response from an endpoint</p>
 <p>Method generated by attrs for class Response.</p>
 <dl class="py method">
@@ -105,10 +143,6 @@
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="kittycad.types.Response.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(status_code, content, headers, parsed)</p></td>
 <td><p>Method generated by attrs for class Response.</p></td>
@@ -117,10 +151,6 @@
 </table>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.types.Response.status_code" title="kittycad.types.Response.status_code"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status_code</span></code></a></p></td>
 <td><p></p></td>
@@ -255,22 +285,22 @@ overridden to extend subclasses.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.types.Response.content">
-<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><span class="pre">bytes</span></a></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.content" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.content" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.types.Response.headers">
-<span class="sig-name descname"><span class="pre">headers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">MutableMapping</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.headers" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">headers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableMapping</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.headers" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.types.Response.parsed">
-<span class="sig-name descname"><span class="pre">parsed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">kittycad.types.T</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.parsed" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">parsed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a><span class="pre">(</span><code class="docutils literal notranslate"><span class="pre">T</span></code><span class="pre">)]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.parsed" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.types.Response.status_code">
-<span class="sig-name descname"><span class="pre">status_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.status_code" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">status_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/types.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.types.Response.status_code" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

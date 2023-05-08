@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.ai_plugin_manifest.AiPluginManifest" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.ai_plugin_manifest.AiPluginManifest.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.ai_plugin_manifest.AiPluginManifest_8b76a1cb.png" />
+<meta property="og:image:alt" content="" />
+<meta name="twitter:card" content="summary_large_image" />
 
-  <meta property="og:title" content="kittycad.models.ai_plugin_manifest.AiPluginManifest" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="_autosummary/kittycad.models.ai_plugin_manifest.AiPluginManifest.html" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.ai_plugin_manifest.AiPluginManifest &mdash; kittycad v0.3.9 documentation</title>
+  <title>kittycad.models.ai_plugin_manifest.AiPluginManifest &mdash; kittycad v0.4.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -18,10 +23,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -43,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.3.9
+                v0.4.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -64,7 +70,11 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth_type.html">kittycad.models.ai_plugin_auth_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_http_auth_type.html">kittycad.models.ai_plugin_http_auth_type</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="kittycad.models.ai_plugin_manifest.html">kittycad.models.ai_plugin_manifest</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.ai_plugin_manifest.AiPluginManifest</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.ai_plugin_manifest.AiPluginManifest</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest"><code class="docutils literal notranslate"><span class="pre">AiPluginManifest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.models.ai_plugin_manifest.html#kittycad.models.ai_plugin_manifest.AiPluginManifest"><code class="docutils literal notranslate"><span class="pre">AiPluginManifest</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group.html">kittycad.models.api_call_query_group</a></li>
@@ -247,7 +257,7 @@
            <div itemprop="articleBody">
              
   <section id="kittycad-models-ai-plugin-manifest-aipluginmanifest">
-<h1>kittycad.models.ai_plugin_manifest.AiPluginManifest<a class="headerlink" href="#kittycad-models-ai-plugin-manifest-aipluginmanifest" title="Permalink to this headline"></a></h1>
+<h1>kittycad.models.ai_plugin_manifest.AiPluginManifest<a class="headerlink" href="#kittycad-models-ai-plugin-manifest-aipluginmanifest" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.ai_plugin_manifest.</span></span><span class="sig-name descname"><span class="pre">AiPluginManifest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auth=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contact_email=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description_for_human=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description_for_model=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legal_info_url=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo_url=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_for_human=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_for_model=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_version=&lt;kittycad.types.Unset</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_manifest.html#AiPluginManifest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest" title="Permalink to this definition"></a></dt>
@@ -263,17 +273,13 @@
 
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#id0" title="kittycad.models.ai_plugin_manifest.AiPluginManifest.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([api, auth, contact_email, ...])</p></td>
 <td><p>Method generated by attrs for class AiPluginManifest.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.from_dict" title="kittycad.models.ai_plugin_manifest.AiPluginManifest.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(src_dict)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">N</span></code>, bound= AiPluginManifest)</p>
 </dd>
 </dl>
@@ -281,7 +287,7 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.to_dict" title="kittycad.models.ai_plugin_manifest.AiPluginManifest.to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dict</span></code></a>()</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
 </dd>
 </dl>
@@ -291,18 +297,9 @@
 </table>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_keys" title="kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">additional_keys</span></code></a></p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
-</dd>
-</dl>
-</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.api" title="kittycad.models.ai_plugin_manifest.AiPluginManifest.api"><code class="xref py py-obj docutils literal notranslate"><span class="pre">api</span></code></a></p></td>
 <td><p></p></td>
@@ -353,7 +350,7 @@
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.__contains__">
 <span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_manifest.html#AiPluginManifest.__contains__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.__contains__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
 </dd>
 </dl>
@@ -363,7 +360,7 @@
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.__delitem__">
 <span class="sig-name descname"><span class="pre">__delitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_manifest.html#AiPluginManifest.__delitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.__delitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -390,7 +387,7 @@
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.__getitem__">
 <span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_manifest.html#AiPluginManifest.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.__getitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></p>
 </dd>
 </dl>
@@ -451,7 +448,7 @@
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.__setitem__">
 <span class="sig-name descname"><span class="pre">__setitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_manifest.html#AiPluginManifest.__setitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.__setitem__" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
 </dd>
 </dl>
@@ -459,49 +456,44 @@
 
 <dl class="py property">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_keys">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_keys" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">additional_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.11)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_properties">
-<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_properties" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">additional_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.additional_properties" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.api">
-<span class="sig-name descname"><span class="pre">api</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.ai_plugin_api.AiPluginApi.html#kittycad.models.ai_plugin_api.AiPluginApi" title="kittycad.models.ai_plugin_api.AiPluginApi"><span class="pre">kittycad.models.ai_plugin_api.AiPluginApi</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.api" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">api</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference internal" href="kittycad.models.ai_plugin_api.AiPluginApi.html#kittycad.models.ai_plugin_api.AiPluginApi" title="kittycad.models.ai_plugin_api.AiPluginApi"><code class="xref py py-class docutils literal notranslate"><span class="pre">AiPluginApi</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.api" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.auth">
-<span class="sig-name descname"><span class="pre">auth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="kittycad.models.ai_plugin_auth.AiPluginAuth.html#kittycad.models.ai_plugin_auth.AiPluginAuth" title="kittycad.models.ai_plugin_auth.AiPluginAuth"><span class="pre">kittycad.models.ai_plugin_auth.AiPluginAuth</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.auth" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">auth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference internal" href="kittycad.models.ai_plugin_auth.AiPluginAuth.html#kittycad.models.ai_plugin_auth.AiPluginAuth" title="kittycad.models.ai_plugin_auth.AiPluginAuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">AiPluginAuth</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.auth" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.contact_email">
-<span class="sig-name descname"><span class="pre">contact_email</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.contact_email" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">contact_email</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.contact_email" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.description_for_human">
-<span class="sig-name descname"><span class="pre">description_for_human</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.description_for_human" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">description_for_human</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.description_for_human" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.description_for_model">
-<span class="sig-name descname"><span class="pre">description_for_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.description_for_model" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">description_for_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.description_for_model" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_manifest.html#AiPluginManifest.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">N</span></code>, bound= AiPluginManifest)</p>
 </dd>
 </dl>
@@ -509,34 +501,34 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.legal_info_url">
-<span class="sig-name descname"><span class="pre">legal_info_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.legal_info_url" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">legal_info_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.legal_info_url" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.logo_url">
-<span class="sig-name descname"><span class="pre">logo_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.logo_url" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">logo_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.logo_url" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.name_for_human">
-<span class="sig-name descname"><span class="pre">name_for_human</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.name_for_human" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">name_for_human</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.name_for_human" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.name_for_model">
-<span class="sig-name descname"><span class="pre">name_for_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.name_for_model" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">name_for_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.name_for_model" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.schema_version">
-<span class="sig-name descname"><span class="pre">schema_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><span class="pre">kittycad.types.Unset</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.schema_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">schema_version</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="kittycad.types.Unset.html#kittycad.types.Unset" title="kittycad.types.Unset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unset</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.schema_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.ai_plugin_manifest.AiPluginManifest.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ai_plugin_manifest.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ai_plugin_manifest.html#AiPluginManifest.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ai_plugin_manifest.AiPluginManifest.to_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
 </dd>
 </dl>
