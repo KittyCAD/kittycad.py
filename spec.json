@@ -12089,7 +12089,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -12248,7 +12248,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -12757,7 +12757,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -13051,7 +13051,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -13341,7 +13341,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -13465,7 +13465,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -13590,7 +13590,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -13748,7 +13748,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -13894,7 +13894,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14053,7 +14053,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14199,7 +14199,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14347,7 +14347,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14485,7 +14485,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14623,7 +14623,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14739,7 +14739,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14823,7 +14823,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -14942,7 +14942,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -18197,7 +18197,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -18577,7 +18577,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -18841,7 +18841,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -19198,7 +19198,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -19455,7 +19455,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
@@ -19779,7 +19779,7 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "summary": "OPTIONS endoint.",
+        "summary": "OPTIONS endpoint.",
         "tags": [
           "hidden"
         ]
