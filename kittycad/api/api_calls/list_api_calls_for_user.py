@@ -47,7 +47,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     if response.status_code == 200:
         response_200 = ApiCallWithPriceResultsPage.from_dict(response.json())
         return response_200
@@ -57,12 +57,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -78,7 +78,7 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         limit=limit,
@@ -102,7 +102,7 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
     If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.
@@ -124,7 +124,7 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         limit=limit,
@@ -146,7 +146,7 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
     If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.

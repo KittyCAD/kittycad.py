@@ -40,7 +40,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+) -> Optional[Union[UnitMetricPowerSquaredConversion, Error]]:
     if response.status_code == 200:
         response_200 = UnitMetricPowerSquaredConversion.from_dict(response.json())
         return response_200
@@ -50,12 +50,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+) -> Response[Optional[Union[UnitMetricPowerSquaredConversion, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -70,7 +70,7 @@ def sync_detailed(
     value: float,
     *,
     client: Client,
-) -> Response[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+) -> Response[Optional[Union[UnitMetricPowerSquaredConversion, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -92,7 +92,7 @@ def sync(
     value: float,
     *,
     client: Client,
-) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+) -> Optional[Union[UnitMetricPowerSquaredConversion, Error]]:
     """Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
@@ -109,7 +109,7 @@ async def asyncio_detailed(
     value: float,
     *,
     client: Client,
-) -> Response[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+) -> Response[Optional[Union[UnitMetricPowerSquaredConversion, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -129,7 +129,7 @@ async def asyncio(
     value: float,
     *,
     client: Client,
-) -> Optional[Union[Any, UnitMetricPowerSquaredConversion, Error]]:
+) -> Optional[Union[UnitMetricPowerSquaredConversion, Error]]:
     """Convert a metric squared unit value to another metric squared unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (

@@ -36,7 +36,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, FileSurfaceArea, Error]]:
+) -> Optional[Union[FileSurfaceArea, Error]]:
     if response.status_code == 201:
         response_201 = FileSurfaceArea.from_dict(response.json())
         return response_201
@@ -46,12 +46,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, FileSurfaceArea, Error]]:
+) -> Response[Optional[Union[FileSurfaceArea, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -65,7 +65,7 @@ def sync_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Union[Any, FileSurfaceArea, Error]]:
+) -> Response[Optional[Union[FileSurfaceArea, Error]]]:
     kwargs = _get_kwargs(
         src_format=src_format,
         body=body,
@@ -85,7 +85,7 @@ def sync(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileSurfaceArea, Error]]:
+) -> Optional[Union[FileSurfaceArea, Error]]:
     """Get the surface area of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
@@ -101,7 +101,7 @@ async def asyncio_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Union[Any, FileSurfaceArea, Error]]:
+) -> Response[Optional[Union[FileSurfaceArea, Error]]]:
     kwargs = _get_kwargs(
         src_format=src_format,
         body=body,
@@ -119,7 +119,7 @@ async def asyncio(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileSurfaceArea, Error]]:
+) -> Optional[Union[FileSurfaceArea, Error]]:
     """Get the surface area of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 

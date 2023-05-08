@@ -27,7 +27,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, List[PaymentMethod], Error]]:
+) -> Optional[Union[List[PaymentMethod], Error]]:
     if response.status_code == 200:
         response_200 = [PaymentMethod.from_dict(item) for item in response.json()]
         return response_200
@@ -37,12 +37,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, List[PaymentMethod], Error]]:
+) -> Response[Optional[Union[List[PaymentMethod], Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -54,7 +54,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, List[PaymentMethod], Error]]:
+) -> Response[Optional[Union[List[PaymentMethod], Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[Any, List[PaymentMethod], Error]]:
+) -> Optional[Union[List[PaymentMethod], Error]]:
     """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""  # noqa: E501
 
     return sync_detailed(
@@ -81,7 +81,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, List[PaymentMethod], Error]]:
+) -> Response[Optional[Union[List[PaymentMethod], Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -95,7 +95,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[Any, List[PaymentMethod], Error]]:
+) -> Optional[Union[List[PaymentMethod], Error]]:
     """This endpoint requires authentication by any KittyCAD user. It lists payment methods for the authenticated user."""  # noqa: E501
 
     return (

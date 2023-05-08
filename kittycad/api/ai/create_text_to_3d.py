@@ -35,7 +35,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Mesh, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Mesh, Error]]:
     if response.status_code == 200:
         response_200 = Mesh.from_dict(response.json())
         return response_200
@@ -45,10 +45,12 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Mesh, Er
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, Mesh, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Optional[Union[Mesh, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -62,7 +64,7 @@ def sync_detailed(
     prompt: str,
     *,
     client: Client,
-) -> Response[Union[Any, Mesh, Error]]:
+) -> Response[Optional[Union[Mesh, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         prompt=prompt,
@@ -82,7 +84,7 @@ def sync(
     prompt: str,
     *,
     client: Client,
-) -> Optional[Union[Any, Mesh, Error]]:
+) -> Optional[Union[Mesh, Error]]:
     """This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
 
     return sync_detailed(
@@ -97,7 +99,7 @@ async def asyncio_detailed(
     prompt: str,
     *,
     client: Client,
-) -> Response[Union[Any, Mesh, Error]]:
+) -> Response[Optional[Union[Mesh, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         prompt=prompt,
@@ -115,7 +117,7 @@ async def asyncio(
     prompt: str,
     *,
     client: Client,
-) -> Optional[Union[Any, Mesh, Error]]:
+) -> Optional[Union[Mesh, Error]]:
     """This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
 
     return (

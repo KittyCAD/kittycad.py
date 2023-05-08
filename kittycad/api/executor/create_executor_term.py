@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
 import httpx
 
@@ -23,16 +23,11 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[Any,]]:
-    return None
-    return None
+def _parse_response(*, response: httpx.Response):
+    return
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Union[Any,]]:
+def _build_response(*, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -44,7 +39,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[Any,]]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -60,7 +55,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[Any,]]:
+):
     """Attach to a docker container to create an interactive terminal."""  # noqa: E501
 
     return sync_detailed(
@@ -71,7 +66,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[Any,]]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -85,7 +80,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[Any,]]:
+):
     """Attach to a docker container to create an interactive terminal."""  # noqa: E501
 
     return (

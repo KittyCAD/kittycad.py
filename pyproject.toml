@@ -91,6 +91,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 # We exclude init files since otherwise ruff will delete all the unused imports.
 # This code comes from here: https://beta.ruff.rs/docs/rules/#pyflakes-f
 "__init__.py" = ["F401"]
+"examples_test.py" = ["F841"]
 
 [tool.mypy]
 exclude = []

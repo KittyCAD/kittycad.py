@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 import pytest
 
@@ -15,6 +16,7 @@ from .models import (
     ApiCallStatus,
     ApiTokenResultsPage,
     CreatedAtSortMode,
+    Error,
     ExtendedUserResultsPage,
     FileConversion,
     FileExportFormat,
@@ -31,9 +33,9 @@ def test_get_session():
     client = ClientFromEnv()
 
     # Get the session.
-    session: User = get_user_self.sync(client=client)
+    session: Union[User, Error, None] = get_user_self.sync(client=client)
 
-    assert session is not None
+    assert isinstance(session, User)
 
     print(f"Session: {session}")
 
@@ -44,11 +46,11 @@ async def test_get_api_tokens_async():
     client = ClientFromEnv()
 
     # List API tokens.
-    fc: ApiTokenResultsPage = list_api_tokens_for_user.sync(
-        client=client, sort_by=CreatedAtSortMode
+    fc: Union[ApiTokenResultsPage, Error, None] = list_api_tokens_for_user.sync(
+        client=client, sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
     )
 
-    assert fc is not None
+    assert isinstance(fc, ApiTokenResultsPage)
 
     print(f"fc: {fc}")
 
@@ -59,9 +61,9 @@ async def test_get_session_async():
     client = ClientFromEnv()
 
     # Get the session.
-    session: User = await get_user_self.asyncio(client=client)
+    session: Union[User, Error, None] = await get_user_self.asyncio(client=client)
 
-    assert session is not None
+    assert isinstance(session, User)
 
     print(f"Session: {session}")
 
@@ -71,9 +73,9 @@ def test_ping():
     client = ClientFromEnv()
 
     # Get the message.
-    message: Pong = ping.sync(client=client)
+    message: Union[Pong, Error, None] = ping.sync(client=client)
 
-    assert message is not None
+    assert isinstance(message, Pong)
 
     print(f"Message: {message}")
 
@@ -84,9 +86,9 @@ async def test_ping_async():
     client = ClientFromEnv()
 
     # Get the message.
-    message: Pong = await ping.asyncio(client=client)
+    message: Union[Pong, Error, None] = await ping.asyncio(client=client)
 
-    assert message is not None
+    assert isinstance(message, Pong)
 
     print(f"Message: {message}")
 
@@ -101,14 +103,18 @@ def test_file_convert_stl():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = create_file_conversion_with_base64_helper.sync(
+    result: Union[
+        FileConversion, Error, None
+    ] = create_file_conversion_with_base64_helper.sync(
         client=client,
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
     )
 
-    assert fc is not None
+    assert isinstance(result, FileConversion)
+
+    fc: FileConversion = result
 
     print(f"FileConversion: {fc}")
 
@@ -130,14 +136,18 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    fc: FileConversion = await create_file_conversion_with_base64_helper.asyncio(
+    result: Union[
+        FileConversion, Error, None
+    ] = await create_file_conversion_with_base64_helper.asyncio(
         client=client,
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
     )
 
-    assert fc is not None
+    assert isinstance(result, FileConversion)
+
+    fc: FileConversion = result
 
     print(f"FileConversion: {fc}")
 
@@ -156,14 +166,16 @@ def test_file_mass():
     file.close()
 
     # Get the fc.
-    fm: FileMass = create_file_mass.sync(
+    result: Union[FileMass, Error, None] = create_file_mass.sync(
         client=client,
         body=content,
         src_format=FileImportFormat.OBJ,
         material_density=1.0,
     )
 
-    assert fm is not None
+    assert isinstance(result, FileMass)
+
+    fm: FileMass = result
 
     print(f"FileMass: {fm}")
 
@@ -185,11 +197,13 @@ def test_file_volume():
     file.close()
 
     # Get the fc.
-    fv: FileVolume = create_file_volume.sync(
+    result: Union[FileVolume, Error, None] = create_file_volume.sync(
         client=client, body=content, src_format=FileImportFormat.OBJ
     )
 
-    assert fv is not None
+    assert isinstance(result, FileVolume)
+
+    fv: FileVolume = result
 
     print(f"FileVolume: {fv}")
 
@@ -205,11 +219,10 @@ def test_list_users():
     # Create our client.
     client = ClientFromEnv()
 
-    response: ExtendedUserResultsPage = list_users_extended.sync(
+    response: Union[ExtendedUserResultsPage, Error, None] = list_users_extended.sync(
         sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, client=client, limit=10
     )
 
-    print(f"ExtendedUserResultsPage: {response}")
+    assert isinstance(response, ExtendedUserResultsPage)
 
-    assert response is not None
-    assert response.items is not None
+    print(f"ExtendedUserResultsPage: {response}")

@@ -28,7 +28,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, User, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[User, Error]]:
     if response.status_code == 200:
         response_200 = User.from_dict(response.json())
         return response_200
@@ -38,10 +38,12 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, User, Er
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, User, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Optional[Union[User, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -54,7 +56,7 @@ def sync_detailed(
     body: UpdateUser,
     *,
     client: Client,
-) -> Response[Union[Any, User, Error]]:
+) -> Response[Optional[Union[User, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -72,7 +74,7 @@ def sync(
     body: UpdateUser,
     *,
     client: Client,
-) -> Optional[Union[Any, User, Error]]:
+) -> Optional[Union[User, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It updates information about the authenticated user."""  # noqa: E501
 
     return sync_detailed(
@@ -85,7 +87,7 @@ async def asyncio_detailed(
     body: UpdateUser,
     *,
     client: Client,
-) -> Response[Union[Any, User, Error]]:
+) -> Response[Optional[Union[User, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -101,7 +103,7 @@ async def asyncio(
     body: UpdateUser,
     *,
     client: Client,
-) -> Optional[Union[Any, User, Error]]:
+) -> Optional[Union[User, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It updates information about the authenticated user."""  # noqa: E501
 
     return (

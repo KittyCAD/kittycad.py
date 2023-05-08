@@ -35,7 +35,6 @@ def _parse_response(
     *, response: httpx.Response
 ) -> Optional[
     Union[
-        Any,
         FileConversion,
         FileCenterOfMass,
         FileMass,
@@ -107,21 +106,22 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
 ) -> Response[
-    Union[
-        Any,
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
-        Error,
+    Optional[
+        Union[
+            FileConversion,
+            FileCenterOfMass,
+            FileMass,
+            FileVolume,
+            FileDensity,
+            FileSurfaceArea,
+            Error,
+        ]
     ]
 ]:
     return Response(
@@ -137,15 +137,16 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[
-    Union[
-        Any,
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
-        Error,
+    Optional[
+        Union[
+            FileConversion,
+            FileCenterOfMass,
+            FileMass,
+            FileVolume,
+            FileDensity,
+            FileSurfaceArea,
+            Error,
+        ]
     ]
 ]:
     kwargs = _get_kwargs(
@@ -167,7 +168,6 @@ def sync(
     client: Client,
 ) -> Optional[
     Union[
-        Any,
         FileConversion,
         FileCenterOfMass,
         FileMass,
@@ -193,15 +193,16 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[
-    Union[
-        Any,
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
-        Error,
+    Optional[
+        Union[
+            FileConversion,
+            FileCenterOfMass,
+            FileMass,
+            FileVolume,
+            FileDensity,
+            FileSurfaceArea,
+            Error,
+        ]
     ]
 ]:
     kwargs = _get_kwargs(
@@ -221,7 +222,6 @@ async def asyncio(
     client: Client,
 ) -> Optional[
     Union[
-        Any,
         FileConversion,
         FileCenterOfMass,
         FileMass,

@@ -30,7 +30,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, VerificationToken, Error]]:
+) -> Optional[Union[VerificationToken, Error]]:
     if response.status_code == 201:
         response_201 = VerificationToken.from_dict(response.json())
         return response_201
@@ -40,12 +40,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, VerificationToken, Error]]:
+) -> Response[Optional[Union[VerificationToken, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -58,7 +58,7 @@ def sync_detailed(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Response[Union[Any, VerificationToken, Error]]:
+) -> Response[Optional[Union[VerificationToken, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -76,7 +76,7 @@ def sync(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Optional[Union[Any, VerificationToken, Error]]:
+) -> Optional[Union[VerificationToken, Error]]:
 
     return sync_detailed(
         body=body,
@@ -88,7 +88,7 @@ async def asyncio_detailed(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Response[Union[Any, VerificationToken, Error]]:
+) -> Response[Optional[Union[VerificationToken, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -104,7 +104,7 @@ async def asyncio(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Optional[Union[Any, VerificationToken, Error]]:
+) -> Optional[Union[VerificationToken, Error]]:
 
     return (
         await asyncio_detailed(

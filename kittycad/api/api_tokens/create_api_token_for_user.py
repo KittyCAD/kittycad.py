@@ -25,9 +25,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[Any, ApiToken, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[ApiToken, Error]]:
     if response.status_code == 201:
         response_201 = ApiToken.from_dict(response.json())
         return response_201
@@ -37,12 +35,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, ApiToken, Error]]:
+) -> Response[Optional[Union[ApiToken, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -54,7 +52,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, ApiToken, Error]]:
+) -> Response[Optional[Union[ApiToken, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -70,7 +68,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[Any, ApiToken, Error]]:
+) -> Optional[Union[ApiToken, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It creates a new API token for the authenticated user."""  # noqa: E501
 
     return sync_detailed(
@@ -81,7 +79,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, ApiToken, Error]]:
+) -> Response[Optional[Union[ApiToken, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -95,7 +93,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[Any, ApiToken, Error]]:
+) -> Optional[Union[ApiToken, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It creates a new API token for the authenticated user."""  # noqa: E501
 
     return (

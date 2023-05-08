@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -42,20 +42,18 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Error]]:
-    if response.status_code == 302:
-        response_302 = None
-        return response_302
+def _parse_response(*, response: httpx.Response) -> Optional[Error]:
+    return None
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())
         return response_4XX
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -70,7 +68,7 @@ def sync_detailed(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Response[Union[Any, Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
         callback_url=callback_url,
         email=email,
@@ -92,7 +90,7 @@ def sync(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Optional[Union[Any, Error]]:
+) -> Optional[Error]:
 
     return sync_detailed(
         callback_url=callback_url,
@@ -108,7 +106,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Response[Union[Any, Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
         callback_url=callback_url,
         email=email,
@@ -128,7 +126,7 @@ async def asyncio(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Optional[Union[Any, Error]]:
+) -> Optional[Error]:
 
     return (
         await asyncio_detailed(
