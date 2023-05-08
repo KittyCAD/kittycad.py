@@ -35,7 +35,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, FileConversion, Error]]:
+) -> Optional[Union[FileConversion, Error]]:
     if response.status_code == 201:
         response_201 = FileConversion.from_dict(response.json())
         return response_201
@@ -45,12 +45,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, FileConversion, Error]]:
+) -> Response[Optional[Union[FileConversion, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -65,7 +65,7 @@ def sync_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Union[Any, FileConversion, Error]]:
+) -> Response[Optional[Union[FileConversion, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -87,7 +87,7 @@ def sync(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversion, Error]]:
+) -> Optional[Union[FileConversion, Error]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
     If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
@@ -106,7 +106,7 @@ async def asyncio_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Union[Any, FileConversion, Error]]:
+) -> Response[Optional[Union[FileConversion, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -126,7 +126,7 @@ async def asyncio(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversion, Error]]:
+) -> Optional[Union[FileConversion, Error]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
     If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501

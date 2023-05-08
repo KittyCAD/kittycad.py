@@ -46,7 +46,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     if response.status_code == 200:
         response_200 = ApiCallWithPriceResultsPage.from_dict(response.json())
         return response_200
@@ -56,12 +56,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -76,7 +76,7 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -98,7 +98,7 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This endpoint requires authentication by a KittyCAD employee. The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return sync_detailed(
@@ -115,7 +115,7 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -135,7 +135,7 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, ApiCallWithPriceResultsPage, Error]]:
+) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This endpoint requires authentication by a KittyCAD employee. The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return (

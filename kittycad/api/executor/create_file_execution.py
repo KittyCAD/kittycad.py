@@ -35,9 +35,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[Any, CodeOutput, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[CodeOutput, Error]]:
     if response.status_code == 200:
         response_200 = CodeOutput.from_dict(response.json())
         return response_200
@@ -47,12 +45,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, CodeOutput, Error]]:
+) -> Response[Optional[Union[CodeOutput, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -67,7 +65,7 @@ def sync_detailed(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Response[Union[Any, CodeOutput, Error]]:
+) -> Response[Optional[Union[CodeOutput, Error]]]:
     kwargs = _get_kwargs(
         lang=lang,
         output=output,
@@ -89,7 +87,7 @@ def sync(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Optional[Union[Any, CodeOutput, Error]]:
+) -> Optional[Union[CodeOutput, Error]]:
 
     return sync_detailed(
         lang=lang,
@@ -105,7 +103,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Response[Union[Any, CodeOutput, Error]]:
+) -> Response[Optional[Union[CodeOutput, Error]]]:
     kwargs = _get_kwargs(
         lang=lang,
         output=output,
@@ -125,7 +123,7 @@ async def asyncio(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Optional[Union[Any, CodeOutput, Error]]:
+) -> Optional[Union[CodeOutput, Error]]:
 
     return (
         await asyncio_detailed(

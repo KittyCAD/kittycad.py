@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
@@ -25,20 +25,18 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Error]]:
-    if response.status_code == 204:
-        response_204 = None
-        return response_204
+def _parse_response(*, response: httpx.Response) -> Optional[Error]:
+    return None
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())
         return response_4XX
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -51,7 +49,7 @@ def sync_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Union[Any, Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -69,7 +67,7 @@ def sync(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, Error]]:
+) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. It deletes the specified payment method for the authenticated user."""  # noqa: E501
 
     return sync_detailed(
@@ -82,7 +80,7 @@ async def asyncio_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Union[Any, Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -98,7 +96,7 @@ async def asyncio(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, Error]]:
+) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. It deletes the specified payment method for the authenticated user."""  # noqa: E501
 
     return (

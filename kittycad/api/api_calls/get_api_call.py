@@ -28,7 +28,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, ApiCallWithPrice, Error]]:
+) -> Optional[Union[ApiCallWithPrice, Error]]:
     if response.status_code == 200:
         response_200 = ApiCallWithPrice.from_dict(response.json())
         return response_200
@@ -38,12 +38,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, ApiCallWithPrice, Error]]:
+) -> Response[Optional[Union[ApiCallWithPrice, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -56,7 +56,7 @@ def sync_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Union[Any, ApiCallWithPrice, Error]]:
+) -> Response[Optional[Union[ApiCallWithPrice, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -74,7 +74,7 @@ def sync(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, ApiCallWithPrice, Error]]:
+) -> Optional[Union[ApiCallWithPrice, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user.
     If the user is not authenticated to view the specified API call, then it is not returned.
     Only KittyCAD employees can view API calls for other users."""  # noqa: E501
@@ -89,7 +89,7 @@ async def asyncio_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Union[Any, ApiCallWithPrice, Error]]:
+) -> Response[Optional[Union[ApiCallWithPrice, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -105,7 +105,7 @@ async def asyncio(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, ApiCallWithPrice, Error]]:
+) -> Optional[Union[ApiCallWithPrice, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user.
     If the user is not authenticated to view the specified API call, then it is not returned.
     Only KittyCAD employees can view API calls for other users."""  # noqa: E501

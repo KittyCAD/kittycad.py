@@ -27,7 +27,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, AppClientInfo, Error]]:
+) -> Optional[Union[AppClientInfo, Error]]:
     if response.status_code == 200:
         response_200 = AppClientInfo.from_dict(response.json())
         return response_200
@@ -37,12 +37,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, AppClientInfo, Error]]:
+) -> Response[Optional[Union[AppClientInfo, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -54,7 +54,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, AppClientInfo, Error]]:
+) -> Response[Optional[Union[AppClientInfo, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -70,7 +70,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[Any, AppClientInfo, Error]]:
+) -> Optional[Union[AppClientInfo, Error]]:
     """This is different than OAuth 2.0 authentication for users. This endpoint grants access for KittyCAD to access user's repos.
     The user doesn't need KittyCAD OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""  # noqa: E501
 
@@ -82,7 +82,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, AppClientInfo, Error]]:
+) -> Response[Optional[Union[AppClientInfo, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -96,7 +96,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[Any, AppClientInfo, Error]]:
+) -> Optional[Union[AppClientInfo, Error]]:
     """This is different than OAuth 2.0 authentication for users. This endpoint grants access for KittyCAD to access user's repos.
     The user doesn't need KittyCAD OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""  # noqa: E501
 

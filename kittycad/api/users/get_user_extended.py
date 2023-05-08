@@ -28,7 +28,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, ExtendedUser, Error]]:
+) -> Optional[Union[ExtendedUser, Error]]:
     if response.status_code == 200:
         response_200 = ExtendedUser.from_dict(response.json())
         return response_200
@@ -38,12 +38,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, ExtendedUser, Error]]:
+) -> Response[Optional[Union[ExtendedUser, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -56,7 +56,7 @@ def sync_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Union[Any, ExtendedUser, Error]]:
+) -> Response[Optional[Union[ExtendedUser, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -74,7 +74,7 @@ def sync(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, ExtendedUser, Error]]:
+) -> Optional[Union[ExtendedUser, Error]]:
     """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
     Alternatively, to get information about the authenticated user, use `/user/extended` endpoint.
     To get information about any KittyCAD user, you must be a KittyCAD employee."""  # noqa: E501
@@ -89,7 +89,7 @@ async def asyncio_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Union[Any, ExtendedUser, Error]]:
+) -> Response[Optional[Union[ExtendedUser, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -105,7 +105,7 @@ async def asyncio(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[Any, ExtendedUser, Error]]:
+) -> Optional[Union[ExtendedUser, Error]]:
     """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
     Alternatively, to get information about the authenticated user, use `/user/extended` endpoint.
     To get information about any KittyCAD user, you must be a KittyCAD employee."""  # noqa: E501

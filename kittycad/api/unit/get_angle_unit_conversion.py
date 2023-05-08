@@ -38,7 +38,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, UnitAngleConversion, Error]]:
+) -> Optional[Union[UnitAngleConversion, Error]]:
     if response.status_code == 200:
         response_200 = UnitAngleConversion.from_dict(response.json())
         return response_200
@@ -48,12 +48,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, UnitAngleConversion, Error]]:
+) -> Response[Optional[Union[UnitAngleConversion, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -68,7 +68,7 @@ def sync_detailed(
     value: float,
     *,
     client: Client,
-) -> Response[Union[Any, UnitAngleConversion, Error]]:
+) -> Response[Optional[Union[UnitAngleConversion, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -90,7 +90,7 @@ def sync(
     value: float,
     *,
     client: Client,
-) -> Optional[Union[Any, UnitAngleConversion, Error]]:
+) -> Optional[Union[UnitAngleConversion, Error]]:
     """Convert an angle unit value to another angle unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
@@ -107,7 +107,7 @@ async def asyncio_detailed(
     value: float,
     *,
     client: Client,
-) -> Response[Union[Any, UnitAngleConversion, Error]]:
+) -> Response[Optional[Union[UnitAngleConversion, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -127,7 +127,7 @@ async def asyncio(
     value: float,
     *,
     client: Client,
-) -> Optional[Union[Any, UnitAngleConversion, Error]]:
+) -> Optional[Union[UnitAngleConversion, Error]]:
     """Convert an angle unit value to another angle unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (

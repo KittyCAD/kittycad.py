@@ -34,7 +34,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
+) -> Optional[Union[List[ApiCallQueryGroup], Error]]:
     if response.status_code == 200:
         response_200 = [ApiCallQueryGroup.from_dict(item) for item in response.json()]
         return response_200
@@ -44,12 +44,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, List[ApiCallQueryGroup], Error]]:
+) -> Response[Optional[Union[List[ApiCallQueryGroup], Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -62,7 +62,7 @@ def sync_detailed(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Response[Union[Any, List[ApiCallQueryGroup], Error]]:
+) -> Response[Optional[Union[List[ApiCallQueryGroup], Error]]]:
     kwargs = _get_kwargs(
         group_by=group_by,
         client=client,
@@ -80,7 +80,7 @@ def sync(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
+) -> Optional[Union[List[ApiCallQueryGroup], Error]]:
     """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""  # noqa: E501
 
     return sync_detailed(
@@ -93,7 +93,7 @@ async def asyncio_detailed(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Response[Union[Any, List[ApiCallQueryGroup], Error]]:
+) -> Response[Optional[Union[List[ApiCallQueryGroup], Error]]]:
     kwargs = _get_kwargs(
         group_by=group_by,
         client=client,
@@ -109,7 +109,7 @@ async def asyncio(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Optional[Union[Any, List[ApiCallQueryGroup], Error]]:
+) -> Optional[Union[List[ApiCallQueryGroup], Error]]:
     """This endpoint requires authentication by a KittyCAD employee. The API calls are grouped by the parameter passed."""  # noqa: E501
 
     return (

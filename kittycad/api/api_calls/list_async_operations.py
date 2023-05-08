@@ -53,7 +53,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
+) -> Optional[Union[AsyncApiCallResultsPage, Error]]:
     if response.status_code == 200:
         response_200 = AsyncApiCallResultsPage.from_dict(response.json())
         return response_200
@@ -63,12 +63,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
+) -> Response[Optional[Union[AsyncApiCallResultsPage, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -84,7 +84,7 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
+) -> Response[Optional[Union[AsyncApiCallResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -108,7 +108,7 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
+) -> Optional[Union[AsyncApiCallResultsPage, Error]]:
     """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
     This endpoint requires authentication by a KittyCAD employee."""  # noqa: E501
 
@@ -128,7 +128,7 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, AsyncApiCallResultsPage, Error]]:
+) -> Response[Optional[Union[AsyncApiCallResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -150,7 +150,7 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, AsyncApiCallResultsPage, Error]]:
+) -> Optional[Union[AsyncApiCallResultsPage, Error]]:
     """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
     This endpoint requires authentication by a KittyCAD employee."""  # noqa: E501
 

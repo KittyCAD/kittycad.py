@@ -25,9 +25,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[Any, Customer, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Customer, Error]]:
     if response.status_code == 200:
         response_200 = Customer.from_dict(response.json())
         return response_200
@@ -37,12 +35,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, Customer, Error]]:
+) -> Response[Optional[Union[Customer, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -54,7 +52,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, Customer, Error]]:
+) -> Response[Optional[Union[Customer, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -70,7 +68,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[Any, Customer, Error]]:
+) -> Optional[Union[Customer, Error]]:
     """This includes billing address, phone, and name.
     This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user."""  # noqa: E501
 
@@ -82,7 +80,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, Customer, Error]]:
+) -> Response[Optional[Union[Customer, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -96,7 +94,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[Any, Customer, Error]]:
+) -> Optional[Union[Customer, Error]]:
     """This includes billing address, phone, and name.
     This endpoint requires authentication by any KittyCAD user. It gets the payment information for the authenticated user."""  # noqa: E501
 

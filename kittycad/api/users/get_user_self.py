@@ -25,7 +25,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, User, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[User, Error]]:
     if response.status_code == 200:
         response_200 = User.from_dict(response.json())
         return response_200
@@ -35,10 +35,12 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, User, Er
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, User, Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Optional[Union[User, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -50,7 +52,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, User, Er
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, User, Error]]:
+) -> Response[Optional[Union[User, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -66,7 +68,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[Any, User, Error]]:
+) -> Optional[Union[User, Error]]:
     """Get the user information for the authenticated user.
     Alternatively, you can also use the `/users/me` endpoint."""  # noqa: E501
 
@@ -78,7 +80,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[Any, User, Error]]:
+) -> Response[Optional[Union[User, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -92,7 +94,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[Any, User, Error]]:
+) -> Optional[Union[User, Error]]:
     """Get the user information for the authenticated user.
     Alternatively, you can also use the `/users/me` endpoint."""  # noqa: E501
 

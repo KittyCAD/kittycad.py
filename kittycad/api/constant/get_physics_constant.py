@@ -31,7 +31,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, PhysicsConstant, Error]]:
+) -> Optional[Union[PhysicsConstant, Error]]:
     if response.status_code == 200:
         response_200 = PhysicsConstant.from_dict(response.json())
         return response_200
@@ -41,12 +41,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, PhysicsConstant, Error]]:
+) -> Response[Optional[Union[PhysicsConstant, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -59,7 +59,7 @@ def sync_detailed(
     constant: PhysicsConstantName,
     *,
     client: Client,
-) -> Response[Union[Any, PhysicsConstant, Error]]:
+) -> Response[Optional[Union[PhysicsConstant, Error]]]:
     kwargs = _get_kwargs(
         constant=constant,
         client=client,
@@ -77,7 +77,7 @@ def sync(
     constant: PhysicsConstantName,
     *,
     client: Client,
-) -> Optional[Union[Any, PhysicsConstant, Error]]:
+) -> Optional[Union[PhysicsConstant, Error]]:
 
     return sync_detailed(
         constant=constant,
@@ -89,7 +89,7 @@ async def asyncio_detailed(
     constant: PhysicsConstantName,
     *,
     client: Client,
-) -> Response[Union[Any, PhysicsConstant, Error]]:
+) -> Response[Optional[Union[PhysicsConstant, Error]]]:
     kwargs = _get_kwargs(
         constant=constant,
         client=client,
@@ -105,7 +105,7 @@ async def asyncio(
     constant: PhysicsConstantName,
     *,
     client: Client,
-) -> Optional[Union[Any, PhysicsConstant, Error]]:
+) -> Optional[Union[PhysicsConstant, Error]]:
 
     return (
         await asyncio_detailed(

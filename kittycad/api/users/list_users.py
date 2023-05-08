@@ -46,7 +46,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, UserResultsPage, Error]]:
+) -> Optional[Union[UserResultsPage, Error]]:
     if response.status_code == 200:
         response_200 = UserResultsPage.from_dict(response.json())
         return response_200
@@ -56,12 +56,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, UserResultsPage, Error]]:
+) -> Response[Optional[Union[UserResultsPage, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -76,7 +76,7 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, UserResultsPage, Error]]:
+) -> Response[Optional[Union[UserResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -98,7 +98,7 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, UserResultsPage, Error]]:
+) -> Optional[Union[UserResultsPage, Error]]:
     """This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first."""  # noqa: E501
 
     return sync_detailed(
@@ -115,7 +115,7 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, UserResultsPage, Error]]:
+) -> Response[Optional[Union[UserResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -135,7 +135,7 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, UserResultsPage, Error]]:
+) -> Optional[Union[UserResultsPage, Error]]:
     """This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first."""  # noqa: E501
 
     return (

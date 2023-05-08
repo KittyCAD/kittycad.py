@@ -46,7 +46,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
+) -> Optional[Union[ApiTokenResultsPage, Error]]:
     if response.status_code == 200:
         response_200 = ApiTokenResultsPage.from_dict(response.json())
         return response_200
@@ -56,12 +56,12 @@ def _parse_response(
     if response.status_code == 500:
         response_5XX = Error.from_dict(response.json())
         return response_5XX
-    return None
+    return Error.from_dict(response.json())
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
+) -> Response[Optional[Union[ApiTokenResultsPage, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -76,7 +76,7 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
+) -> Response[Optional[Union[ApiTokenResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -98,7 +98,7 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
+) -> Optional[Union[ApiTokenResultsPage, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
     The API tokens are returned in order of creation, with the most recently created API tokens first."""  # noqa: E501
 
@@ -116,7 +116,7 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Union[Any, ApiTokenResultsPage, Error]]:
+) -> Response[Optional[Union[ApiTokenResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -136,7 +136,7 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[Any, ApiTokenResultsPage, Error]]:
+) -> Optional[Union[ApiTokenResultsPage, Error]]:
     """This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.
     The API tokens are returned in order of creation, with the most recently created API tokens first."""  # noqa: E501
 
