@@ -1,11 +1,10 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.method import Method
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 S = TypeVar("S", bound="ApiCallWithPrice")

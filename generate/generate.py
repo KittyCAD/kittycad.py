@@ -269,7 +269,11 @@ def generateTypeAndExamplePython(
                     ) = generateTypeAndExamplePython("", prop, data, None)
                     example_imports = example_imports + prop_imports
                     parameter_example = parameter_example + (
-                        "\n" + property_name + "=" + prop_example + ",\n"
+                        "\n"
+                        + clean_parameter_name(property_name)
+                        + "="
+                        + prop_example
+                        + ",\n"
                     )
 
             parameter_example = parameter_example + ")"
@@ -383,14 +387,17 @@ from kittycad.types import Response
             if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
                 parameter_type = "Optional[" + parameter_type + "]"
                 optional_args.append(
-                    camel_to_snake(parameter_name)
+                    clean_parameter_name(parameter_name)
                     + "= None, # "
                     + parameter_type
                     + "\n"
                 )
             else:
                 params_str += (
-                    camel_to_snake(parameter_name) + "=" + parameter_example + ",\n"
+                    clean_parameter_name(parameter_name)
+                    + "="
+                    + parameter_example
+                    + ",\n"
                 )
 
         for optional_arg in optional_args:
@@ -431,7 +438,9 @@ from kittycad.types import Response
                 + endpoint_ref.replace("List[", "").replace("]", "")
                 + "\n"
             )
-        example_imports = example_imports + "from typing import Union, Any, Optional\n"
+        example_imports = (
+            example_imports + "from typing import Union, Any, Optional, List\n"
+        )
         example_variable = "result: " + response_type + " = "
 
         example_imports = example_imports + "from kittycad.types import Response\n"
@@ -526,15 +535,11 @@ async def test_"""
     # Make pretty.
     line_length = 82
     short_sync_example = example_imports + short_sync_example
-    print(short_sync_example)
-    # cleaned_example = black.format_str(
-    #    isort.api.sort_code_string(
-    #        short_sync_example,
-    #    ),
-    #    mode=black.FileMode(line_length=line_length),
-    # )
-    cleaned_example = isort.api.sort_code_string(
-        short_sync_example,
+    cleaned_example = black.format_str(
+        isort.api.sort_code_string(
+            short_sync_example,
+        ),
+        mode=black.FileMode(line_length=line_length),
     )
 
     examples.append(example)
@@ -644,7 +649,7 @@ async def test_"""
                 formatTemplate = (
                     formatTemplate
                     + ", "
-                    + parameter_name
+                    + clean_parameter_name(parameter_name)
                     + "="
                     + camel_to_snake(parameter_name)
                 )
@@ -900,7 +905,7 @@ async def test_"""
     f.write("\tkwargs = _get_kwargs(\n")
     params = get_function_parameters(endpoint, request_body_type)
     for param in params:
-        f.write("\t\t" + param + "=" + param + ",\n")
+        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
@@ -979,7 +984,7 @@ async def test_"""
     f.write("\treturn sync_detailed(\n")
     params = get_function_parameters(endpoint, request_body_type)
     for param in params:
-        f.write("\t\t" + param + "=" + param + ",\n")
+        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
     f.write("\t\tclient=client,\n")
     f.write("\t).parsed\n")
 
@@ -1048,7 +1053,7 @@ async def test_"""
     f.write("\tkwargs = _get_kwargs(\n")
     params = get_function_parameters(endpoint, request_body_type)
     for param in params:
-        f.write("\t\t" + param + "=" + param + ",\n")
+        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
     f.write("\t\tclient=client,\n")
     f.write("\t)\n")
     f.write("\n")
@@ -1126,7 +1131,7 @@ async def test_"""
     f.write("\t\tawait asyncio_detailed(\n")
     params = get_function_parameters(endpoint, request_body_type)
     for param in params:
-        f.write("\t\t" + param + "=" + param + ",\n")
+        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
     f.write("\t\t\tclient=client,\n")
     f.write("\t\t)\n")
     f.write("\t).parsed\n")
@@ -1445,8 +1450,14 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     # Iternate over the properties.
     for property_name in schema["properties"]:
         # Write the property.
-        f.write("\t\tif " + property_name + " is not UNSET:\n")
-        f.write("\t\t\tfield_dict['" + property_name + "'] = " + property_name + "\n")
+        f.write("\t\tif " + clean_parameter_name(property_name) + " is not UNSET:\n")
+        f.write(
+            "\t\t\tfield_dict['"
+            + property_name
+            + "'] = "
+            + clean_parameter_name(property_name)
+            + "\n"
+        )
 
     f.write("\n")
     f.write("\t\treturn field_dict\n")
@@ -1474,7 +1485,13 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     # Iternate over the properties.
     for property_name in schema["properties"]:
         # Write the property.
-        f.write("\t\t\t" + property_name + "= " + property_name + ",\n")
+        f.write(
+            "\t\t\t"
+            + clean_parameter_name(property_name)
+            + "= "
+            + clean_parameter_name(property_name)
+            + ",\n"
+        )
 
     # Close the class.
     f.write("\t\t)\n")
@@ -1537,25 +1554,51 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 ):
                     f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
                     f.write(
-                        "\t\tif not isinstance(self." + property_name + ", Unset):\n"
+                        "\t\tif not isinstance(self."
+                        + clean_parameter_name(property_name)
+                        + ", Unset):\n"
                     )
                     f.write(
                         "\t\t\t"
-                        + property_name
+                        + clean_parameter_name(property_name)
                         + " = self."
-                        + property_name
+                        + clean_parameter_name(property_name)
                         + ".isoformat()\n"
                     )
                     # return early
                     return
 
-            f.write("\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + " = self."
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
         elif property_type == "integer":
-            f.write("\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + " = self."
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
         elif property_type == "number":
-            f.write("\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + " = self."
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
         elif property_type == "boolean":
-            f.write("\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + " = self."
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
         elif property_type == "array":
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
@@ -1600,14 +1643,40 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 + property_type
                 + "]] = UNSET\n"
             )
-            f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-            f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\tif not isinstance(self."
+                + clean_parameter_name(property_name)
+                + ", Unset):\n"
+            )
+            f.write(
+                "\t\t\t"
+                + clean_parameter_name(property_name)
+                + " = self."
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
         else:
-            f.write("\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + " = self."
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
-        f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-        f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
+        f.write(
+            "\t\tif not isinstance(self."
+            + clean_parameter_name(property_name)
+            + ", Unset):\n"
+        )
+        f.write(
+            "\t\t\t"
+            + clean_parameter_name(property_name)
+            + " = self."
+            + clean_parameter_name(property_name)
+            + "\n"
+        )
     elif "allOf" in property_schema:
         thing = property_schema["allOf"][0]
         if "$ref" in thing:
@@ -1616,15 +1685,32 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 return renderTypeToDict(
                     f, property_name, data["components"]["schemas"][ref], data
                 )
-            f.write("\t\tif not isinstance(self." + property_name + ", Unset):\n")
-            f.write("\t\t\t" + property_name + " = self." + property_name + "\n")
+            f.write(
+                "\t\tif not isinstance(self."
+                + clean_parameter_name(property_name)
+                + ", Unset):\n"
+            )
+            f.write(
+                "\t\t\t"
+                + clean_parameter_name(property_name)
+                + " = self."
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
         else:
             raise Exception("unknown allOf type: ", property_schema)
     else:
-        f.write("\t\t" + property_name + " = self." + property_name + "\n")
+        f.write(
+            "\t\t"
+            + clean_parameter_name(property_name)
+            + " = self."
+            + clean_parameter_name(property_name)
+            + "\n"
+        )
 
 
 def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
+    property_name = clean_parameter_name(property_name)
     if "type" in property_schema:
         property_type = property_schema["type"]
 
@@ -1732,22 +1818,30 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                 ):
                     f.write(
                         "\t\t_"
-                        + property_name
+                        + clean_parameter_name(property_name)
                         + ' = d.pop("'
                         + property_name
                         + '", UNSET)\n'
                     )
                     f.write(
-                        "\t\t" + property_name + ": Union[Unset, datetime.datetime]\n"
+                        "\t\t"
+                        + clean_parameter_name(property_name)
+                        + ": Union[Unset, datetime.datetime]\n"
                     )
-                    f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
-                    f.write("\t\t\t" + property_name + " = UNSET\n")
+                    f.write(
+                        "\t\tif isinstance(_"
+                        + clean_parameter_name(property_name)
+                        + ", Unset):\n"
+                    )
+                    f.write(
+                        "\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n"
+                    )
                     f.write("\t\telse:\n")
                     f.write(
                         "\t\t\t"
-                        + property_name
+                        + clean_parameter_name(property_name)
                         + " = isoparse(_"
-                        + property_name
+                        + clean_parameter_name(property_name)
                         + ")\n"
                     )
                     f.write("\n")
@@ -1755,22 +1849,38 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                     return
 
             f.write(
-                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "integer":
             f.write(
-                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "number":
             f.write(
-                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "boolean":
             f.write(
-                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
             )
             f.write("\n")
         elif property_type == "array":
@@ -1814,7 +1924,7 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
 
             f.write(
                 "\t\t"
-                + property_name
+                + clean_parameter_name(property_name)
                 + " = cast(List["
                 + property_type
                 + '], d.pop("'
@@ -1824,17 +1934,35 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             f.write("\n")
         else:
             f.write(
-                "\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
             )
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
         # Get the type for the reference.
         ref_schema = data["components"]["schemas"][ref]
 
-        f.write("\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
-        f.write("\t\t" + property_name + ": Union[Unset, " + ref + "]\n")
-        f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
-        f.write("\t\t\t" + property_name + " = UNSET\n")
+        f.write(
+            "\t\t_"
+            + clean_parameter_name(property_name)
+            + ' = d.pop("'
+            + property_name
+            + '", UNSET)\n'
+        )
+        f.write(
+            "\t\t"
+            + clean_parameter_name(property_name)
+            + ": Union[Unset, "
+            + ref
+            + "]\n"
+        )
+        f.write(
+            "\t\tif isinstance(_" + clean_parameter_name(property_name) + ", Unset):\n"
+        )
+        f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
         f.write("\t\telse:\n")
         nested_objects = False
         if "oneOf" in ref_schema and len(ref_schema["oneOf"]) > 0:
@@ -1847,14 +1975,20 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
         if nested_objects:
             f.write(
                 "\t\t\t"
-                + property_name
+                + clean_parameter_name(property_name)
                 + " = _"
-                + property_name
+                + clean_parameter_name(property_name)
                 + " # type: ignore[arg-type]\n"
             )
         else:
             f.write(
-                "\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n"
+                "\t\t\t"
+                + clean_parameter_name(property_name)
+                + " = "
+                + ref
+                + "(_"
+                + clean_parameter_name(property_name)
+                + ")\n"
             )
         f.write("\n")
     elif "allOf" in property_schema:
@@ -1863,23 +1997,52 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             ref = thing["$ref"].replace("#/components/schemas/", "")
             if ref == "Uuid":
                 return renderTypeFromDict(
-                    f, property_name, data["components"]["schemas"][ref], data
+                    f,
+                    clean_parameter_name(property_name),
+                    data["components"]["schemas"][ref],
+                    data,
                 )
             f.write(
-                "\t\t_" + property_name + ' = d.pop("' + property_name + '", UNSET)\n'
+                "\t\t_"
+                + clean_parameter_name(property_name)
+                + ' = d.pop("'
+                + property_name
+                + '", UNSET)\n'
             )
-            f.write("\t\t" + property_name + ": Union[Unset, " + ref + "]\n")
-            f.write("\t\tif isinstance(_" + property_name + ", Unset):\n")
-            f.write("\t\t\t" + property_name + " = UNSET\n")
+            f.write(
+                "\t\t"
+                + clean_parameter_name(property_name)
+                + ": Union[Unset, "
+                + ref
+                + "]\n"
+            )
+            f.write(
+                "\t\tif isinstance(_"
+                + clean_parameter_name(property_name)
+                + ", Unset):\n"
+            )
+            f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
             f.write("\t\telse:\n")
             f.write(
-                "\t\t\t" + property_name + " = " + ref + "(_" + property_name + ")\n"
+                "\t\t\t"
+                + clean_parameter_name(property_name)
+                + " = "
+                + ref
+                + "(_"
+                + clean_parameter_name(property_name)
+                + ")\n"
             )
             f.write("\n")
         else:
             raise Exception("unknown allOf type: ", property_schema)
     else:
-        f.write("\t\t" + property_name + ' = d.pop("' + property_name + '", UNSET)\n')
+        f.write(
+            "\t\t"
+            + clean_parameter_name(property_name)
+            + ' = d.pop("'
+            + property_name
+            + '", UNSET)\n'
+        )
 
 
 def hasDateTime(schema: dict) -> bool:
@@ -2093,6 +2256,10 @@ def getRequestBodyTypeSchema(
 def to_camel_case(s: str):
     s = re.sub(r"(_|-)+", " ", s).title().replace(" ", "")
     return "".join([s[0].lower(), s[1:]])
+
+
+def clean_parameter_name(name: str):
+    return camel_to_snake(name).replace("from", "from_")
 
 
 def camel_to_snake(name: str):

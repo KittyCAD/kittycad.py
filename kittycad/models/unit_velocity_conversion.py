@@ -1,12 +1,11 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_velocity_format import UnitVelocityFormat
-from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 N = TypeVar("N", bound="UnitVelocityConversion")
