@@ -1,14 +1,15 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-K = TypeVar("K", bound="FileVolume")
+G = TypeVar("G", bound="FileVolume")
 
 
 @attr.s(auto_attribs=True)
@@ -77,7 +78,7 @@ class FileVolume:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
+    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

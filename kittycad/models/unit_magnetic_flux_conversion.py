@@ -1,14 +1,15 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_magnetic_flux_format import UnitMagneticFluxFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnitMagneticFluxConversion")
+D = TypeVar("D", bound="UnitMagneticFluxConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +87,7 @@ class UnitMagneticFluxConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[D], src_dict: Dict[str, Any]) -> D:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

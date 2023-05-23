@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-J = TypeVar("J", bound="PaymentIntent")
+T = TypeVar("T", bound="PaymentIntent")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class PaymentIntent:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         client_secret = d.pop("client_secret", UNSET)
 

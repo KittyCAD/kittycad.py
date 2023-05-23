@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -9,7 +9,7 @@ from ..models.card_details import CardDetails
 from ..models.payment_method_type import PaymentMethodType
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PaymentMethod")
+V = TypeVar("V", bound="PaymentMethod")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +57,7 @@ class PaymentMethod:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         _billing_info = d.pop("billing_info", UNSET)
         billing_info: Union[Unset, BillingInfo]

@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-H = TypeVar("H", bound="FileSystemMetadata")
+E = TypeVar("E", bound="FileSystemMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class FileSystemMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         ok = d.pop("ok", UNSET)
 

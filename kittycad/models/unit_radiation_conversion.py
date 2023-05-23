@@ -1,14 +1,15 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_radiation_format import UnitRadiationFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-U = TypeVar("U", bound="UnitRadiationConversion")
+F = TypeVar("F", bound="UnitRadiationConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +87,7 @@ class UnitRadiationConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
+    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

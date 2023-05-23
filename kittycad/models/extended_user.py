@@ -1,12 +1,12 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-H = TypeVar("H", bound="ExtendedUser")
+Y = TypeVar("Y", bound="ExtendedUser")
 
 
 @attr.s(auto_attribs=True)
@@ -97,7 +97,7 @@ class ExtendedUser:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

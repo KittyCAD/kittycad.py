@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-S = TypeVar("S", bound="Error")
+L = TypeVar("L", bound="Error")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class Error:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 

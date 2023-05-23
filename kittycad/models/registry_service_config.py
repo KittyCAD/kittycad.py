@@ -2,9 +2,10 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.index_info import IndexInfo
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="RegistryServiceConfig")
+T = TypeVar("T", bound="RegistryServiceConfig")
 
 
 @attr.s(auto_attribs=True)
@@ -59,7 +60,7 @@ class RegistryServiceConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         allow_nondistributable_artifacts_cid_rs = cast(
             List[str], d.pop("allow_nondistributable_artifacts_cid_rs", UNSET)

@@ -1,14 +1,15 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_energy_format import UnitEnergyFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="UnitEnergyConversion")
+V = TypeVar("V", bound="UnitEnergyConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +87,7 @@ class UnitEnergyConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

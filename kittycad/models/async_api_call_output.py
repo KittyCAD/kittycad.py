@@ -7,6 +7,7 @@ from dateutil.parser import isoparse
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 F = TypeVar("F", bound="FileConversion")

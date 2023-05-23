@@ -298,6 +298,8 @@ def generateTypeAndExamplePython(
                 break
 
         return generateTypeAndExamplePython(name, schema["oneOf"][0], data, None)
+    elif "allOf" in schema and len(schema["allOf"]) == 1:
+        return generateTypeAndExamplePython(name, schema["allOf"][0], data, None)
     elif "$ref" in schema:
         parameter_type = schema["$ref"].replace("#/components/schemas/", "")
         # Get the schema for the reference.
@@ -524,11 +526,15 @@ async def test_"""
     # Make pretty.
     line_length = 82
     short_sync_example = example_imports + short_sync_example
-    cleaned_example = black.format_str(
-        isort.api.sort_code_string(
-            short_sync_example,
-        ),
-        mode=black.FileMode(line_length=line_length),
+    print(short_sync_example)
+    # cleaned_example = black.format_str(
+    #    isort.api.sort_code_string(
+    #        short_sync_example,
+    #    ),
+    #    mode=black.FileMode(line_length=line_length),
+    # )
+    cleaned_example = isort.api.sort_code_string(
+        short_sync_example,
     )
 
     examples.append(example)

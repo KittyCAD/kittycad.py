@@ -1,11 +1,11 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..models.jetstream_api_stats import JetstreamApiStats
 from ..types import UNSET, Unset
 
-K = TypeVar("K", bound="JetstreamStats")
+R = TypeVar("R", bound="JetstreamStats")
 
 
 @attr.s(auto_attribs=True)
@@ -53,7 +53,7 @@ class JetstreamStats:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
+    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
         d = src_dict.copy()
         accounts = d.pop("accounts", UNSET)
 

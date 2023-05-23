@@ -1,14 +1,15 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_data_transfer_rate_format import UnitDataTransferRateFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-G = TypeVar("G", bound="UnitDataTransferRateConversion")
+N = TypeVar("N", bound="UnitDataTransferRateConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +87,7 @@ class UnitDataTransferRateConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

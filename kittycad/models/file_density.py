@@ -1,14 +1,15 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-R = TypeVar("R", bound="FileDensity")
+S = TypeVar("S", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -81,7 +82,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

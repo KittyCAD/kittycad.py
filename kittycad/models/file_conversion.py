@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -7,9 +7,10 @@ from dateutil.parser import isoparse
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-J = TypeVar("J", bound="FileConversion")
+B = TypeVar("B", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -83,7 +84,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

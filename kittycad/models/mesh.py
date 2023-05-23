@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-F = TypeVar("F", bound="Mesh")
+C = TypeVar("C", bound="Mesh")
 
 
 @attr.s(auto_attribs=True)
@@ -25,7 +25,7 @@ class Mesh:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
+    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
         d = src_dict.copy()
         mesh = d.pop("mesh", UNSET)
 

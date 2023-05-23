@@ -1,11 +1,12 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_metric_power import UnitMetricPower
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 F = TypeVar("F", bound="UnitMetricPowerConversion")

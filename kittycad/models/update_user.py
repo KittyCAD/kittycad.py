@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="UpdateUser")
+R = TypeVar("R", bound="UpdateUser")
 
 
 @attr.s(auto_attribs=True)
@@ -47,7 +47,7 @@ class UpdateUser:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

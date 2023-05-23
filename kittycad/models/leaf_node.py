@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-Q = TypeVar("Q", bound="LeafNode")
+N = TypeVar("N", bound="LeafNode")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class LeafNode:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 

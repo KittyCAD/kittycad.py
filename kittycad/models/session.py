@@ -1,12 +1,13 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="Session")
+D = TypeVar("D", bound="Session")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +58,7 @@ class Session:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[D], src_dict: Dict[str, Any]) -> D:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
