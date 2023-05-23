@@ -3,18 +3,18 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.drawing_cmd_req_batch import DrawingCmdReqBatch
-from ...models.drawing_outcomes import DrawingOutcomes
 from ...models.error import Error
+from ...models.modeling_cmd_req_batch import ModelingCmdReqBatch
+from ...models.modeling_outcomes import ModelingOutcomes
 from ...types import Response
 
 
 def _get_kwargs(
-    body: DrawingCmdReqBatch,
+    body: ModelingCmdReqBatch,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/drawing/cmd_batch".format(client.base_url)  # noqa: E501
+    url = "{}/modeling/cmd_batch".format(client.base_url)  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -30,9 +30,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[DrawingOutcomes, Error]]:
+) -> Optional[Union[ModelingOutcomes, Error]]:
     if response.status_code == 200:
-        response_200 = DrawingOutcomes.from_dict(response.json())
+        response_200 = ModelingOutcomes.from_dict(response.json())
         return response_200
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())
@@ -45,7 +45,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[DrawingOutcomes, Error]]]:
+) -> Response[Optional[Union[ModelingOutcomes, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -55,10 +55,10 @@ def _build_response(
 
 
 def sync_detailed(
-    body: DrawingCmdReqBatch,
+    body: ModelingCmdReqBatch,
     *,
     client: Client,
-) -> Response[Optional[Union[DrawingOutcomes, Error]]]:
+) -> Response[Optional[Union[ModelingOutcomes, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -73,10 +73,10 @@ def sync_detailed(
 
 
 def sync(
-    body: DrawingCmdReqBatch,
+    body: ModelingCmdReqBatch,
     *,
     client: Client,
-) -> Optional[Union[DrawingOutcomes, Error]]:
+) -> Optional[Union[ModelingOutcomes, Error]]:
 
     return sync_detailed(
         body=body,
@@ -85,10 +85,10 @@ def sync(
 
 
 async def asyncio_detailed(
-    body: DrawingCmdReqBatch,
+    body: ModelingCmdReqBatch,
     *,
     client: Client,
-) -> Response[Optional[Union[DrawingOutcomes, Error]]]:
+) -> Response[Optional[Union[ModelingOutcomes, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -101,10 +101,10 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    body: DrawingCmdReqBatch,
+    body: ModelingCmdReqBatch,
     *,
     client: Client,
-) -> Optional[Union[DrawingOutcomes, Error]]:
+) -> Optional[Union[ModelingOutcomes, Error]]:
 
     return (
         await asyncio_detailed(

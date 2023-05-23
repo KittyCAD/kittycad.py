@@ -4,39 +4,39 @@ import attr
 
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="Pong")
+H = TypeVar("H", bound="ModelingOutcomes")
 
 
 @attr.s(auto_attribs=True)
-class Pong:
-    """The response from the `/ping` endpoint."""  # noqa: E501
+class ModelingOutcomes:
+    """The result from a batch of modeling commands."""  # noqa: E501
 
-    message: Union[Unset, str] = UNSET
+    outcomes: Union[Unset, Any] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        message = self.message
+        outcomes = self.outcomes
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if message is not UNSET:
-            field_dict["message"] = message
+        if outcomes is not UNSET:
+            field_dict["outcomes"] = outcomes
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
-        message = d.pop("message", UNSET)
+        outcomes = d.pop("outcomes", UNSET)
 
-        pong = cls(
-            message=message,
+        modeling_outcomes = cls(
+            outcomes=outcomes,
         )
 
-        pong.additional_properties = d
-        return pong
+        modeling_outcomes.additional_properties = d
+        return modeling_outcomes
 
     @property
     def additional_keys(self) -> List[str]:

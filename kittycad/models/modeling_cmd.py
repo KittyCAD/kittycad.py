@@ -2,41 +2,51 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
+from ..models.point2d import Point2d
 from ..types import UNSET, Unset
+from .extrude import Extrude
+from .line3d import Line3d
 
-L = TypeVar("L", bound="Pong")
+AddLine = Line3d
+
+
+K = TypeVar("K", bound="SelectionClick")
 
 
 @attr.s(auto_attribs=True)
-class Pong:
-    """The response from the `/ping` endpoint."""  # noqa: E501
-
-    message: Union[Unset, str] = UNSET
+class SelectionClick:
+    at: Union[Unset, Point2d] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        message = self.message
+        if not isinstance(self.at, Unset):
+            at = self.at
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if message is not UNSET:
-            field_dict["message"] = message
+        if at is not UNSET:
+            field_dict["at"] = at
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
         d = src_dict.copy()
-        message = d.pop("message", UNSET)
+        _at = d.pop("at", UNSET)
+        at: Union[Unset, Point2d]
+        if isinstance(_at, Unset):
+            at = UNSET
+        else:
+            at = Point2d(_at)
 
-        pong = cls(
-            message=message,
+        selection_click = cls(
+            at=at,
         )
 
-        pong.additional_properties = d
-        return pong
+        selection_click.additional_properties = d
+        return selection_click
 
     @property
     def additional_keys(self) -> List[str]:
@@ -53,3 +63,6 @@ class Pong:
 
     def __contains__(self, key: str) -> bool:
         return key in self.additional_properties
+
+
+ModelingCmd = Union[AddLine, Extrude, SelectionClick]

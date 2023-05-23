@@ -4,39 +4,45 @@ import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="DrawingOutcomes")
+F = TypeVar("F", bound="ModelingCmdReqBatch")
 
 
 @attr.s(auto_attribs=True)
-class DrawingOutcomes:
-    """The result from a batch of drawing commands."""  # noqa: E501
+class ModelingCmdReqBatch:
+    """A batch set of graphics commands submitted to the KittyCAD engine via the Modeling API."""  # noqa: E501
 
-    outcomes: Union[Unset, Any] = UNSET
+    cmds: Union[Unset, Any] = UNSET
+    file_id: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        outcomes = self.outcomes
+        cmds = self.cmds
+        file_id = self.file_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if outcomes is not UNSET:
-            field_dict["outcomes"] = outcomes
+        if cmds is not UNSET:
+            field_dict["cmds"] = cmds
+        if file_id is not UNSET:
+            field_dict["file_id"] = file_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
         d = src_dict.copy()
-        outcomes = d.pop("outcomes", UNSET)
+        cmds = d.pop("cmds", UNSET)
+        file_id = d.pop("file_id", UNSET)
 
-        drawing_outcomes = cls(
-            outcomes=outcomes,
+        modeling_cmd_req_batch = cls(
+            cmds=cmds,
+            file_id=file_id,
         )
 
-        drawing_outcomes.additional_properties = d
-        return drawing_outcomes
+        modeling_cmd_req_batch.additional_properties = d
+        return modeling_cmd_req_batch
 
     @property
     def additional_keys(self) -> List[str]:

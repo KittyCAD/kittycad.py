@@ -25,7 +25,6 @@ from kittycad.api.apps import (
     apps_github_webhook,
 )
 from kittycad.api.constant import get_physics_constant
-from kittycad.api.drawing import cmd, cmd_batch
 from kittycad.api.executor import create_executor_term, create_file_execution
 from kittycad.api.file import (
     create_file_center_of_mass,
@@ -44,6 +43,7 @@ from kittycad.api.meta import (
     get_schema,
     ping,
 )
+from kittycad.api.modeling import cmd, cmd_batch, modeling_commands_ws
 from kittycad.api.payments import (
     create_payment_information_for_user,
     create_payment_intent_for_user,
@@ -113,7 +113,6 @@ from kittycad.models import (
     CodeOutput,
     Customer,
     CustomerBalance,
-    DrawingOutcomes,
     Error,
     ExtendedUser,
     ExtendedUserResultsPage,
@@ -126,6 +125,7 @@ from kittycad.models import (
     Invoice,
     Mesh,
     Metadata,
+    ModelingOutcomes,
     Onboarding,
     PaymentIntent,
     PaymentMethod,
@@ -170,15 +170,16 @@ from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
-from kittycad.models.drawing_cmd import DrawCircle
-from kittycad.models.drawing_cmd_id import DrawingCmdId
-from kittycad.models.drawing_cmd_req import DrawingCmdReq
-from kittycad.models.drawing_cmd_req_batch import DrawingCmdReqBatch
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.image_type import ImageType
+from kittycad.models.line3d import Line3d
+from kittycad.models.modeling_cmd_id import ModelingCmdId
+from kittycad.models.modeling_cmd_req import ModelingCmdReq
+from kittycad.models.modeling_cmd_req_batch import ModelingCmdReqBatch
 from kittycad.models.physics_constant_name import PhysicsConstantName
+from kittycad.models.point3d import Point3d
 from kittycad.models.unit_acceleration_format import UnitAccelerationFormat
 from kittycad.models.unit_angle_format import UnitAngleFormat
 from kittycad.models.unit_angular_velocity_format import UnitAngularVelocityFormat
@@ -1023,189 +1024,6 @@ async def test_get_physics_constant_async():
 
 
 @pytest.mark.skip
-def test_cmd():
-    # Create our client.
-    client = ClientFromEnv()
-
-    cmd.sync(
-        client=client,
-        body=DrawingCmdReq(
-            cmd=DrawCircle(
-                center=[
-                    3.14,
-                    3.14,
-                ],
-                radius=3.14,
-            ),
-            cmd_id=DrawingCmdId("<uuid>"),
-            file_id="<string>",
-        ),
-    )
-
-    # OR if you need more info (e.g. status_code)
-    cmd.sync_detailed(
-        client=client,
-        body=DrawingCmdReq(
-            cmd=DrawCircle(
-                center=[
-                    3.14,
-                    3.14,
-                ],
-                radius=3.14,
-            ),
-            cmd_id=DrawingCmdId("<uuid>"),
-            file_id="<string>",
-        ),
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_cmd_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    await cmd.asyncio(
-        client=client,
-        body=DrawingCmdReq(
-            cmd=DrawCircle(
-                center=[
-                    3.14,
-                    3.14,
-                ],
-                radius=3.14,
-            ),
-            cmd_id=DrawingCmdId("<uuid>"),
-            file_id="<string>",
-        ),
-    )
-
-    # OR run async with more info
-    await cmd.asyncio_detailed(
-        client=client,
-        body=DrawingCmdReq(
-            cmd=DrawCircle(
-                center=[
-                    3.14,
-                    3.14,
-                ],
-                radius=3.14,
-            ),
-            cmd_id=DrawingCmdId("<uuid>"),
-            file_id="<string>",
-        ),
-    )
-
-
-@pytest.mark.skip
-def test_cmd_batch():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[DrawingOutcomes, Error]] = cmd_batch.sync(
-        client=client,
-        body=DrawingCmdReqBatch(
-            cmds={
-                "<string>": DrawingCmdReq(
-                    cmd=DrawCircle(
-                        center=[
-                            3.14,
-                            3.14,
-                        ],
-                        radius=3.14,
-                    ),
-                    cmd_id=DrawingCmdId("<uuid>"),
-                    file_id="<string>",
-                )
-            },
-            file_id="<string>",
-        ),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: DrawingOutcomes = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[DrawingOutcomes, Error]]
-    ] = cmd_batch.sync_detailed(
-        client=client,
-        body=DrawingCmdReqBatch(
-            cmds={
-                "<string>": DrawingCmdReq(
-                    cmd=DrawCircle(
-                        center=[
-                            3.14,
-                            3.14,
-                        ],
-                        radius=3.14,
-                    ),
-                    cmd_id=DrawingCmdId("<uuid>"),
-                    file_id="<string>",
-                )
-            },
-            file_id="<string>",
-        ),
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_cmd_batch_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[DrawingOutcomes, Error]] = await cmd_batch.asyncio(
-        client=client,
-        body=DrawingCmdReqBatch(
-            cmds={
-                "<string>": DrawingCmdReq(
-                    cmd=DrawCircle(
-                        center=[
-                            3.14,
-                            3.14,
-                        ],
-                        radius=3.14,
-                    ),
-                    cmd_id=DrawingCmdId("<uuid>"),
-                    file_id="<string>",
-                )
-            },
-            file_id="<string>",
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[DrawingOutcomes, Error]]
-    ] = await cmd_batch.asyncio_detailed(
-        client=client,
-        body=DrawingCmdReqBatch(
-            cmds={
-                "<string>": DrawingCmdReq(
-                    cmd=DrawCircle(
-                        center=[
-                            3.14,
-                            3.14,
-                        ],
-                        radius=3.14,
-                    ),
-                    cmd_id=DrawingCmdId("<uuid>"),
-                    file_id="<string>",
-                )
-            },
-            file_id="<string>",
-        ),
-    )
-
-
-@pytest.mark.skip
 def test_create_file_center_of_mass():
     # Create our client.
     client = ClientFromEnv()
@@ -1622,6 +1440,229 @@ async def test_logout_async():
     # OR run async with more info
     response: Response[Optional[Error]] = await logout.asyncio_detailed(
         client=client,
+    )
+
+
+@pytest.mark.skip
+def test_cmd():
+    # Create our client.
+    client = ClientFromEnv()
+
+    cmd.sync(
+        client=client,
+        body=ModelingCmdReq(
+            cmd=Line3d(
+                from_=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
+            cmd_id=ModelingCmdId("<uuid>"),
+            file_id="<string>",
+        ),
+    )
+
+    # OR if you need more info (e.g. status_code)
+    cmd.sync_detailed(
+        client=client,
+        body=ModelingCmdReq(
+            cmd=Line3d(
+                from_=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
+            cmd_id=ModelingCmdId("<uuid>"),
+            file_id="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_cmd_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    await cmd.asyncio(
+        client=client,
+        body=ModelingCmdReq(
+            cmd=Line3d(
+                from_=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
+            cmd_id=ModelingCmdId("<uuid>"),
+            file_id="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    await cmd.asyncio_detailed(
+        client=client,
+        body=ModelingCmdReq(
+            cmd=Line3d(
+                from_=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
+            cmd_id=ModelingCmdId("<uuid>"),
+            file_id="<string>",
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_cmd_batch():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ModelingOutcomes, Error]] = cmd_batch.sync(
+        client=client,
+        body=ModelingCmdReqBatch(
+            cmds={
+                "<string>": ModelingCmdReq(
+                    cmd=Line3d(
+                        from_=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
+                    cmd_id=ModelingCmdId("<uuid>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ModelingOutcomes = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[ModelingOutcomes, Error]]
+    ] = cmd_batch.sync_detailed(
+        client=client,
+        body=ModelingCmdReqBatch(
+            cmds={
+                "<string>": ModelingCmdReq(
+                    cmd=Line3d(
+                        from_=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
+                    cmd_id=ModelingCmdId("<uuid>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_cmd_batch_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ModelingOutcomes, Error]] = await cmd_batch.asyncio(
+        client=client,
+        body=ModelingCmdReqBatch(
+            cmds={
+                "<string>": ModelingCmdReq(
+                    cmd=Line3d(
+                        from_=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
+                    cmd_id=ModelingCmdId("<uuid>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ModelingOutcomes, Error]]
+    ] = await cmd_batch.asyncio_detailed(
+        client=client,
+        body=ModelingCmdReqBatch(
+            cmds={
+                "<string>": ModelingCmdReq(
+                    cmd=Line3d(
+                        from_=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
+                    cmd_id=ModelingCmdId("<uuid>"),
+                    file_id="<string>",
+                )
+            },
+            file_id="<string>",
+        ),
     )
 
 
@@ -4790,5 +4831,37 @@ async def test_create_executor_term_async():
 
     # OR run async with more info
     await create_executor_term.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_modeling_commands_ws():
+    # Create our client.
+    client = ClientFromEnv()
+
+    modeling_commands_ws.sync(
+        client=client,
+    )
+
+    # OR if you need more info (e.g. status_code)
+    modeling_commands_ws.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_modeling_commands_ws_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    await modeling_commands_ws.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    await modeling_commands_ws.asyncio_detailed(
         client=client,
     )

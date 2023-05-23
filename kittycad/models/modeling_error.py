@@ -4,12 +4,12 @@ import attr
 
 from ..types import UNSET, Unset
 
-Y = TypeVar("Y", bound="DrawingError")
+H = TypeVar("H", bound="ModelingError")
 
 
 @attr.s(auto_attribs=True)
-class DrawingError:
-    """Why a command submitted to the Drawing API failed."""  # noqa: E501
+class ModelingError:
+    """Why a command submitted to the Modeling API failed."""  # noqa: E501
 
     error_code: Union[Unset, str] = UNSET
     external_message: Union[Unset, str] = UNSET
@@ -39,7 +39,7 @@ class DrawingError:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 
@@ -49,15 +49,15 @@ class DrawingError:
 
         status_code = d.pop("status_code", UNSET)
 
-        drawing_error = cls(
+        modeling_error = cls(
             error_code=error_code,
             external_message=external_message,
             internal_message=internal_message,
             status_code=status_code,
         )
 
-        drawing_error.additional_properties = d
-        return drawing_error
+        modeling_error.additional_properties = d
+        return modeling_error
 
     @property
     def additional_keys(self) -> List[str]:
