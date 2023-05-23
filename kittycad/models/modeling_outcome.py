@@ -2,22 +2,22 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.drawing_cmd_id import DrawingCmdId
+from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
-from .drawing_error import DrawingError
+from .modeling_error import ModelingError
 
 Success = Any
 
 
-Error = DrawingError
+Error = ModelingError
 
 
-H = TypeVar("H", bound="Cancelled")
+N = TypeVar("N", bound="Cancelled")
 
 
 @attr.s(auto_attribs=True)
 class Cancelled:
-    what_failed: Union[Unset, DrawingCmdId] = UNSET
+    what_failed: Union[Unset, ModelingCmdId] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -34,14 +34,14 @@ class Cancelled:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         _what_failed = d.pop("what_failed", UNSET)
-        what_failed: Union[Unset, DrawingCmdId]
+        what_failed: Union[Unset, ModelingCmdId]
         if isinstance(_what_failed, Unset):
             what_failed = UNSET
         else:
-            what_failed = DrawingCmdId(_what_failed)
+            what_failed = ModelingCmdId(_what_failed)
 
         cancelled = cls(
             what_failed=what_failed,
@@ -67,4 +67,4 @@ class Cancelled:
         return key in self.additional_properties
 
 
-DrawingOutcome = Union[Success, Error, Cancelled]
+ModelingOutcome = Union[Success, Error, Cancelled]

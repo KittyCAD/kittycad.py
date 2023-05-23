@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 G = TypeVar("G", bound="ApiToken")
@@ -68,7 +69,12 @@ class ApiToken:
 
         is_valid = d.pop("is_valid", UNSET)
 
-        token = d.pop("token", UNSET)
+        _token = d.pop("token", UNSET)
+        token: Union[Unset, Uuid]
+        if isinstance(_token, Unset):
+            token = UNSET
+        else:
+            token = Uuid(_token)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

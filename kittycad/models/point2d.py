@@ -4,39 +4,46 @@ import attr
 
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="Pong")
+E = TypeVar("E", bound="Point2d")
 
 
 @attr.s(auto_attribs=True)
-class Pong:
-    """The response from the `/ping` endpoint."""  # noqa: E501
+class Point2d:
+    """A point in 2D space"""  # noqa: E501
 
-    message: Union[Unset, str] = UNSET
+    x: Union[Unset, float] = UNSET
+    y: Union[Unset, float] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        message = self.message
+        x = self.x
+        y = self.y
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if message is not UNSET:
-            field_dict["message"] = message
+        if x is not UNSET:
+            field_dict["x"] = x
+        if y is not UNSET:
+            field_dict["y"] = y
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
-        message = d.pop("message", UNSET)
+        x = d.pop("x", UNSET)
 
-        pong = cls(
-            message=message,
+        y = d.pop("y", UNSET)
+
+        point2d = cls(
+            x=x,
+            y=y,
         )
 
-        pong.additional_properties = d
-        return pong
+        point2d.additional_properties = d
+        return point2d
 
     @property
     def additional_keys(self) -> List[str]:

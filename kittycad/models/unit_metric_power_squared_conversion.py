@@ -6,9 +6,10 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_metric_power import UnitMetricPower
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-J = TypeVar("J", bound="UnitMetricPowerSquaredConversion")
+U = TypeVar("U", bound="UnitMetricPowerSquaredConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +87,7 @@ class UnitMetricPowerSquaredConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -104,7 +105,12 @@ class UnitMetricPowerSquaredConversion:
 
         error = d.pop("error", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         input = d.pop("input", UNSET)
 

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-U = TypeVar("U", bound="JetstreamApiStats")
+K = TypeVar("K", bound="JetstreamApiStats")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class JetstreamApiStats:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[U], src_dict: Dict[str, Any]) -> U:
+    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
         d = src_dict.copy()
         errors = d.pop("errors", UNSET)
 

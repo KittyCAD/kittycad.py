@@ -4,9 +4,10 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="Session")
+D = TypeVar("D", bound="Session")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +58,7 @@ class Session:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[D], src_dict: Dict[str, Any]) -> D:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
@@ -75,7 +76,12 @@ class Session:
 
         id = d.pop("id", UNSET)
 
-        session_token = d.pop("session_token", UNSET)
+        _session_token = d.pop("session_token", UNSET)
+        session_token: Union[Unset, Uuid]
+        if isinstance(_session_token, Unset):
+            session_token = UNSET
+        else:
+            session_token = Uuid(_session_token)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

@@ -4,45 +4,53 @@ import attr
 
 from ..types import UNSET, Unset
 
-E = TypeVar("E", bound="DrawingCmdReqBatch")
+M = TypeVar("M", bound="Point3d")
 
 
 @attr.s(auto_attribs=True)
-class DrawingCmdReqBatch:
-    """A batch set of graphics commands submitted to the KittyCAD engine via the Drawing API."""  # noqa: E501
+class Point3d:
+    """A point in 3D space"""  # noqa: E501
 
-    cmds: Union[Unset, Any] = UNSET
-    file_id: Union[Unset, str] = UNSET
+    x: Union[Unset, float] = UNSET
+    y: Union[Unset, float] = UNSET
+    z: Union[Unset, float] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        cmds = self.cmds
-        file_id = self.file_id
+        x = self.x
+        y = self.y
+        z = self.z
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if cmds is not UNSET:
-            field_dict["cmds"] = cmds
-        if file_id is not UNSET:
-            field_dict["file_id"] = file_id
+        if x is not UNSET:
+            field_dict["x"] = x
+        if y is not UNSET:
+            field_dict["y"] = y
+        if z is not UNSET:
+            field_dict["z"] = z
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
+    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
         d = src_dict.copy()
-        cmds = d.pop("cmds", UNSET)
-        file_id = d.pop("file_id", UNSET)
+        x = d.pop("x", UNSET)
 
-        drawing_cmd_req_batch = cls(
-            cmds=cmds,
-            file_id=file_id,
+        y = d.pop("y", UNSET)
+
+        z = d.pop("z", UNSET)
+
+        point3d = cls(
+            x=x,
+            y=y,
+            z=z,
         )
 
-        drawing_cmd_req_batch.additional_properties = d
-        return drawing_cmd_req_batch
+        point3d.additional_properties = d
+        return point3d
 
     @property
     def additional_keys(self) -> List[str]:

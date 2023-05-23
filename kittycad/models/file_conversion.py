@@ -7,9 +7,10 @@ from dateutil.parser import isoparse
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-J = TypeVar("J", bound="FileConversion")
+B = TypeVar("B", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -83,7 +84,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -101,7 +102,12 @@ class FileConversion:
 
         error = d.pop("error", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         output = d.pop("output", UNSET)
 

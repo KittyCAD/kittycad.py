@@ -3,17 +3,17 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.drawing_cmd_req import DrawingCmdReq
 from ...models.error import Error
+from ...models.modeling_cmd_req import ModelingCmdReq
 from ...types import Response
 
 
 def _get_kwargs(
-    body: DrawingCmdReq,
+    body: ModelingCmdReq,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/drawing/cmd".format(client.base_url)  # noqa: E501
+    url = "{}/modeling/cmd".format(client.base_url)  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -52,7 +52,7 @@ def _build_response(
 
 
 def sync_detailed(
-    body: DrawingCmdReq,
+    body: ModelingCmdReq,
     *,
     client: Client,
 ) -> Response[Optional[Union[dict, Error]]]:
@@ -70,7 +70,7 @@ def sync_detailed(
 
 
 def sync(
-    body: DrawingCmdReq,
+    body: ModelingCmdReq,
     *,
     client: Client,
 ) -> Optional[Union[dict, Error]]:
@@ -83,7 +83,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    body: DrawingCmdReq,
+    body: ModelingCmdReq,
     *,
     client: Client,
 ) -> Response[Optional[Union[dict, Error]]]:
@@ -99,7 +99,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    body: DrawingCmdReq,
+    body: ModelingCmdReq,
     *,
     client: Client,
 ) -> Optional[Union[dict, Error]]:

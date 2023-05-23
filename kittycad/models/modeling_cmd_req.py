@@ -2,19 +2,19 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.drawing_cmd import DrawingCmd
-from ..models.drawing_cmd_id import DrawingCmdId
+from ..models.modeling_cmd import ModelingCmd
+from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="DrawingCmdReq")
+Q = TypeVar("Q", bound="ModelingCmdReq")
 
 
 @attr.s(auto_attribs=True)
-class DrawingCmdReq:
-    """A graphics command submitted to the KittyCAD engine via the Drawing API."""  # noqa: E501
+class ModelingCmdReq:
+    """A graphics command submitted to the KittyCAD engine via the Modeling API."""  # noqa: E501
 
-    cmd: Union[Unset, DrawingCmd] = UNSET
-    cmd_id: Union[Unset, DrawingCmdId] = UNSET
+    cmd: Union[Unset, ModelingCmd] = UNSET
+    cmd_id: Union[Unset, ModelingCmdId] = UNSET
     file_id: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -39,32 +39,32 @@ class DrawingCmdReq:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
-        cmd: Union[Unset, DrawingCmd]
+        cmd: Union[Unset, ModelingCmd]
         if isinstance(_cmd, Unset):
             cmd = UNSET
         else:
             cmd = _cmd  # type: ignore[arg-type]
 
         _cmd_id = d.pop("cmd_id", UNSET)
-        cmd_id: Union[Unset, DrawingCmdId]
+        cmd_id: Union[Unset, ModelingCmdId]
         if isinstance(_cmd_id, Unset):
             cmd_id = UNSET
         else:
-            cmd_id = DrawingCmdId(_cmd_id)
+            cmd_id = ModelingCmdId(_cmd_id)
 
         file_id = d.pop("file_id", UNSET)
 
-        drawing_cmd_req = cls(
+        modeling_cmd_req = cls(
             cmd=cmd,
             cmd_id=cmd_id,
             file_id=file_id,
         )
 
-        drawing_cmd_req.additional_properties = d
-        return drawing_cmd_req
+        modeling_cmd_req.additional_properties = d
+        return modeling_cmd_req
 
     @property
     def additional_keys(self) -> List[str]:

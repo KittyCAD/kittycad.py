@@ -6,9 +6,10 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_pressure_format import UnitPressureFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-V = TypeVar("V", bound="UnitPressureConversion")
+Y = TypeVar("Y", bound="UnitPressureConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +87,7 @@ class UnitPressureConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -104,7 +105,12 @@ class UnitPressureConversion:
 
         error = d.pop("error", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         input = d.pop("input", UNSET)
 

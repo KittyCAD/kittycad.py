@@ -6,9 +6,10 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="FileMass")
+A = TypeVar("A", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
@@ -81,7 +82,7 @@ class FileMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[A], src_dict: Dict[str, Any]) -> A:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -99,7 +100,12 @@ class FileMass:
 
         error = d.pop("error", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         mass = d.pop("mass", UNSET)
 
