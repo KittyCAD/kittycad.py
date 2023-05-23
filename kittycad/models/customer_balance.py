@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 N = TypeVar("N", bound="CustomerBalance")
@@ -72,7 +73,12 @@ class CustomerBalance:
         else:
             created_at = isoparse(_created_at)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         monthly_credits_remaining = d.pop("monthly_credits_remaining", UNSET)
 

@@ -1964,15 +1964,8 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
         )
         f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
         f.write("\t\telse:\n")
-        nested_objects = False
-        if "oneOf" in ref_schema and len(ref_schema["oneOf"]) > 0:
-            # Check if the nested_object is a object.
-            for one_of in ref_schema["oneOf"]:
-                if "type" in one_of and one_of["type"] == "object":
-                    nested_objects = True
-                    break
 
-        if nested_objects:
+        if isNestedObjectOneOf(ref_schema):
             f.write(
                 "\t\t\t"
                 + clean_parameter_name(property_name)
@@ -1992,49 +1985,11 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             )
         f.write("\n")
     elif "allOf" in property_schema:
+        if len(property_schema["allOf"]) != 1:
+            print(property_schema)
+            raise Exception("Unknown allOf")
         thing = property_schema["allOf"][0]
-        if "$ref" in thing:
-            ref = thing["$ref"].replace("#/components/schemas/", "")
-            if ref == "Uuid":
-                return renderTypeFromDict(
-                    f,
-                    clean_parameter_name(property_name),
-                    data["components"]["schemas"][ref],
-                    data,
-                )
-            f.write(
-                "\t\t_"
-                + clean_parameter_name(property_name)
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
-            )
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + ": Union[Unset, "
-                + ref
-                + "]\n"
-            )
-            f.write(
-                "\t\tif isinstance(_"
-                + clean_parameter_name(property_name)
-                + ", Unset):\n"
-            )
-            f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
-            f.write("\t\telse:\n")
-            f.write(
-                "\t\t\t"
-                + clean_parameter_name(property_name)
-                + " = "
-                + ref
-                + "(_"
-                + clean_parameter_name(property_name)
-                + ")\n"
-            )
-            f.write("\n")
-        else:
-            raise Exception("unknown allOf type: ", property_schema)
+        renderTypeFromDict(f, property_name, thing, data)
     else:
         f.write(
             "\t\t"

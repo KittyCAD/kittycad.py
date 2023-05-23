@@ -6,6 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_radioactivity_format import UnitRadioactivityFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 P = TypeVar("P", bound="UnitRadioactivityConversion")
@@ -104,7 +105,12 @@ class UnitRadioactivityConversion:
 
         error = d.pop("error", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         input = d.pop("input", UNSET)
 

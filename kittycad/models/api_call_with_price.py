@@ -5,6 +5,7 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.method import Method
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 S = TypeVar("S", bound="ApiCallWithPrice")
@@ -147,7 +148,12 @@ class ApiCallWithPrice:
 
         endpoint = d.pop("endpoint", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         ip_address = d.pop("ip_address", UNSET)
 
@@ -183,7 +189,12 @@ class ApiCallWithPrice:
 
         stripe_invoice_item_id = d.pop("stripe_invoice_item_id", UNSET)
 
-        token = d.pop("token", UNSET)
+        _token = d.pop("token", UNSET)
+        token: Union[Unset, Uuid]
+        if isinstance(_token, Unset):
+            token = UNSET
+        else:
+            token = Uuid(_token)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

@@ -6,6 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_volume_format import UnitVolumeFormat
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 A = TypeVar("A", bound="UnitVolumeConversion")
@@ -104,7 +105,12 @@ class UnitVolumeConversion:
 
         error = d.pop("error", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         input = d.pop("input", UNSET)
 

@@ -6,6 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.physics_constant_name import PhysicsConstantName
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 R = TypeVar("R", bound="PhysicsConstant")
@@ -102,7 +103,12 @@ class PhysicsConstant:
 
         error = d.pop("error", UNSET)
 
-        id = d.pop("id", UNSET)
+        _id = d.pop("id", UNSET)
+        id: Union[Unset, Uuid]
+        if isinstance(_id, Unset):
+            id = UNSET
+        else:
+            id = Uuid(_id)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]

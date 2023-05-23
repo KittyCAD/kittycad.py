@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
 D = TypeVar("D", bound="Session")
@@ -75,7 +76,12 @@ class Session:
 
         id = d.pop("id", UNSET)
 
-        session_token = d.pop("session_token", UNSET)
+        _session_token = d.pop("session_token", UNSET)
+        session_token: Union[Unset, Uuid]
+        if isinstance(_session_token, Unset):
+            session_token = UNSET
+        else:
+            session_token = Uuid(_session_token)
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
