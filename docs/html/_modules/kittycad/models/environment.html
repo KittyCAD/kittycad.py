@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.environment &mdash; kittycad v0.4.1 documentation</title>
+  <title>kittycad.models.environment &mdash; kittycad v0.4.2 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.1
+                v0.4.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -85,8 +85,11 @@
 <div class="viewcode-block" id="Environment"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.environment.Environment.html#kittycad.models.environment.Environment">[docs]</a><span class="k">class</span> <span class="nc">Environment</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The environment the server is running in.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# The development environment. This is for running locally. &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">DEVELOPMENT</span> <span class="o">=</span> <span class="s2">&quot;DEVELOPMENT&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# The preview environment. This is when PRs are created and a service is deployed for testing. &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">PREVIEW</span> <span class="o">=</span> <span class="s2">&quot;PREVIEW&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# The production environment. &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">PRODUCTION</span> <span class="o">=</span> <span class="s2">&quot;PRODUCTION&quot;</span>
 
 <div class="viewcode-block" id="Environment.__str__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.environment.Environment.html#kittycad.models.environment.Environment.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
