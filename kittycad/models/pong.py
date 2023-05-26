@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
@@ -6,49 +6,50 @@ from ..types import UNSET, Unset
 
 L = TypeVar("L", bound="Pong")
 
+
 @attr.s(auto_attribs=True)
 class Pong:
-	""" The response from the `/ping` endpoint. """ # noqa: E501
-	message: Union[Unset, str] = UNSET
+    """The response from the `/ping` endpoint."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    message: Union[Unset, str] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		message = self.message
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if message is not UNSET:
-			field_dict['message'] = message
+    def to_dict(self) -> Dict[str, Any]:
+        message = self.message
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if message is not UNSET:
+            field_dict["message"] = message
 
-	@classmethod
-	def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
-		d = src_dict.copy()
-		message = d.pop("message", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+        d = src_dict.copy()
+        message = d.pop("message", UNSET)
 
-		pong = cls(
-			message= message,
-		)
+        pong = cls(
+            message=message,
+        )
 
-		pong.additional_properties = d
-		return pong
+        pong.additional_properties = d
+        return pong
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

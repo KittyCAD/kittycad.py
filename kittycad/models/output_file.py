@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
@@ -6,56 +6,57 @@ from ..types import UNSET, Unset
 
 J = TypeVar("J", bound="OutputFile")
 
+
 @attr.s(auto_attribs=True)
 class OutputFile:
-	""" Output file contents. """ # noqa: E501
-	contents: Union[Unset, str] = UNSET
-	name: Union[Unset, str] = UNSET
+    """Output file contents."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    contents: Union[Unset, str] = UNSET
+    name: Union[Unset, str] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		contents = self.contents
-		name = self.name
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if contents is not UNSET:
-			field_dict['contents'] = contents
-		if name is not UNSET:
-			field_dict['name'] = name
+    def to_dict(self) -> Dict[str, Any]:
+        contents = self.contents
+        name = self.name
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if contents is not UNSET:
+            field_dict["contents"] = contents
+        if name is not UNSET:
+            field_dict["name"] = name
 
-	@classmethod
-	def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
-		d = src_dict.copy()
-		contents = d.pop("contents", UNSET)
+        return field_dict
 
-		name = d.pop("name", UNSET)
+    @classmethod
+    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+        d = src_dict.copy()
+        contents = d.pop("contents", UNSET)
 
+        name = d.pop("name", UNSET)
 
-		output_file = cls(
-			contents= contents,
-			name= name,
-		)
+        output_file = cls(
+            contents=contents,
+            name=name,
+        )
 
-		output_file.additional_properties = d
-		return output_file
+        output_file.additional_properties = d
+        return output_file
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
