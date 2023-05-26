@@ -5,25 +5,25 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
-from ..models.unit_energy_format import UnitEnergyFormat
+from ..models.unit_energy import UnitEnergy
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-V = TypeVar("V", bound="UnitEnergyConversion")
+Z = TypeVar("Z", bound="UnitEnergyConversion")
 
 
 @attr.s(auto_attribs=True)
 class UnitEnergyConversion:
-    """A unit conversion."""  # noqa: E501
+    """Result of converting between units."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     input: Union[Unset, float] = UNSET
+    input_unit: Union[Unset, UnitEnergy] = UNSET
     output: Union[Unset, float] = UNSET
-    output_format: Union[Unset, UnitEnergyFormat] = UNSET
-    src_format: Union[Unset, UnitEnergyFormat] = UNSET
+    output_unit: Union[Unset, UnitEnergy] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -41,11 +41,11 @@ class UnitEnergyConversion:
         error = self.error
         id = self.id
         input = self.input
+        if not isinstance(self.input_unit, Unset):
+            input_unit = self.input_unit
         output = self.output
-        if not isinstance(self.output_format, Unset):
-            output_format = self.output_format
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format
+        if not isinstance(self.output_unit, Unset):
+            output_unit = self.output_unit
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
@@ -69,12 +69,12 @@ class UnitEnergyConversion:
             field_dict["id"] = id
         if input is not UNSET:
             field_dict["input"] = input
+        if input_unit is not UNSET:
+            field_dict["input_unit"] = input_unit
         if output is not UNSET:
             field_dict["output"] = output
-        if output_format is not UNSET:
-            field_dict["output_format"] = output_format
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
+        if output_unit is not UNSET:
+            field_dict["output_unit"] = output_unit
         if started_at is not UNSET:
             field_dict["started_at"] = started_at
         if status is not UNSET:
@@ -87,7 +87,7 @@ class UnitEnergyConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[Z], src_dict: Dict[str, Any]) -> Z:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -114,21 +114,21 @@ class UnitEnergyConversion:
 
         input = d.pop("input", UNSET)
 
+        _input_unit = d.pop("input_unit", UNSET)
+        input_unit: Union[Unset, UnitEnergy]
+        if isinstance(_input_unit, Unset):
+            input_unit = UNSET
+        else:
+            input_unit = UnitEnergy(_input_unit)
+
         output = d.pop("output", UNSET)
 
-        _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, UnitEnergyFormat]
-        if isinstance(_output_format, Unset):
-            output_format = UNSET
+        _output_unit = d.pop("output_unit", UNSET)
+        output_unit: Union[Unset, UnitEnergy]
+        if isinstance(_output_unit, Unset):
+            output_unit = UNSET
         else:
-            output_format = UnitEnergyFormat(_output_format)
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, UnitEnergyFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        else:
-            src_format = UnitEnergyFormat(_src_format)
+            output_unit = UnitEnergy(_output_unit)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -159,9 +159,9 @@ class UnitEnergyConversion:
             error=error,
             id=id,
             input=input,
+            input_unit=input_unit,
             output=output,
-            output_format=output_format,
-            src_format=src_format,
+            output_unit=output_unit,
             started_at=started_at,
             status=status,
             updated_at=updated_at,

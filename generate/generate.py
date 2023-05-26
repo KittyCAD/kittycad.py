@@ -217,7 +217,7 @@ def generateTypeAndExamplePython(
         elif (
             schema["type"] == "number"
             and "format" in schema
-            and schema["format"] == "float"
+            and (schema["format"] == "float" or schema["format"] == "double")
         ):
             parameter_type = "float"
             parameter_example = "3.14"

@@ -4,20 +4,20 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
+from ...models.unit_temperature import UnitTemperature
 from ...models.unit_temperature_conversion import UnitTemperatureConversion
-from ...models.unit_temperature_format import UnitTemperatureFormat
 from ...types import Response
 
 
 def _get_kwargs(
-    output_format: UnitTemperatureFormat,
-    src_format: UnitTemperatureFormat,
+    input_unit: UnitTemperature,
+    output_unit: UnitTemperature,
     value: float,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/unit/conversion/temperature/{src_format}/{output_format}".format(
-        client.base_url, output_format=output_format, src_format=src_format
+    url = "{}/unit/conversion/temperature/{input_unit}/{output_unit}".format(
+        client.base_url, input_unit=input_unit, output_unit=output_unit
     )  # noqa: E501
     if value is not None:
         if "?" in url:
@@ -63,15 +63,15 @@ def _build_response(
 
 
 def sync_detailed(
-    output_format: UnitTemperatureFormat,
-    src_format: UnitTemperatureFormat,
+    input_unit: UnitTemperature,
+    output_unit: UnitTemperature,
     value: float,
     *,
     client: Client,
 ) -> Response[Optional[Union[UnitTemperatureConversion, Error]]]:
     kwargs = _get_kwargs(
-        output_format=output_format,
-        src_format=src_format,
+        input_unit=input_unit,
+        output_unit=output_unit,
         value=value,
         client=client,
     )
@@ -85,8 +85,8 @@ def sync_detailed(
 
 
 def sync(
-    output_format: UnitTemperatureFormat,
-    src_format: UnitTemperatureFormat,
+    input_unit: UnitTemperature,
+    output_unit: UnitTemperature,
     value: float,
     *,
     client: Client,
@@ -94,23 +94,23 @@ def sync(
     """Convert a temperature unit value to another temperature unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
-        output_format=output_format,
-        src_format=src_format,
+        input_unit=input_unit,
+        output_unit=output_unit,
         value=value,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    output_format: UnitTemperatureFormat,
-    src_format: UnitTemperatureFormat,
+    input_unit: UnitTemperature,
+    output_unit: UnitTemperature,
     value: float,
     *,
     client: Client,
 ) -> Response[Optional[Union[UnitTemperatureConversion, Error]]]:
     kwargs = _get_kwargs(
-        output_format=output_format,
-        src_format=src_format,
+        input_unit=input_unit,
+        output_unit=output_unit,
         value=value,
         client=client,
     )
@@ -122,8 +122,8 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    output_format: UnitTemperatureFormat,
-    src_format: UnitTemperatureFormat,
+    input_unit: UnitTemperature,
+    output_unit: UnitTemperature,
     value: float,
     *,
     client: Client,
@@ -132,8 +132,8 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
-            output_format=output_format,
-            src_format=src_format,
+            input_unit=input_unit,
+            output_unit=output_unit,
             value=value,
             client=client,
         )
