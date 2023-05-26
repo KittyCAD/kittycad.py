@@ -5,15 +5,15 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
-from ..models.unit_power import UnitPower
+from ..models.unit_torque import UnitTorque
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-H = TypeVar("H", bound="UnitPowerConversion")
+T = TypeVar("T", bound="UnitTorqueConversion")
 
 
 @attr.s(auto_attribs=True)
-class UnitPowerConversion:
+class UnitTorqueConversion:
     """Result of converting between units."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
@@ -21,9 +21,9 @@ class UnitPowerConversion:
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     input: Union[Unset, float] = UNSET
-    input_unit: Union[Unset, UnitPower] = UNSET
+    input_unit: Union[Unset, UnitTorque] = UNSET
     output: Union[Unset, float] = UNSET
-    output_unit: Union[Unset, UnitPower] = UNSET
+    output_unit: Union[Unset, UnitTorque] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -87,7 +87,7 @@ class UnitPowerConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -115,20 +115,20 @@ class UnitPowerConversion:
         input = d.pop("input", UNSET)
 
         _input_unit = d.pop("input_unit", UNSET)
-        input_unit: Union[Unset, UnitPower]
+        input_unit: Union[Unset, UnitTorque]
         if isinstance(_input_unit, Unset):
             input_unit = UNSET
         else:
-            input_unit = UnitPower(_input_unit)
+            input_unit = UnitTorque(_input_unit)
 
         output = d.pop("output", UNSET)
 
         _output_unit = d.pop("output_unit", UNSET)
-        output_unit: Union[Unset, UnitPower]
+        output_unit: Union[Unset, UnitTorque]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
         else:
-            output_unit = UnitPower(_output_unit)
+            output_unit = UnitTorque(_output_unit)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -153,7 +153,7 @@ class UnitPowerConversion:
 
         user_id = d.pop("user_id", UNSET)
 
-        unit_power_conversion = cls(
+        unit_torque_conversion = cls(
             completed_at=completed_at,
             created_at=created_at,
             error=error,
@@ -168,8 +168,8 @@ class UnitPowerConversion:
             user_id=user_id,
         )
 
-        unit_power_conversion.additional_properties = d
-        return unit_power_conversion
+        unit_torque_conversion.additional_properties = d
+        return unit_torque_conversion
 
     @property
     def additional_keys(self) -> List[str]:

@@ -4,19 +4,19 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...models.unit_volume import UnitVolume
-from ...models.unit_volume_conversion import UnitVolumeConversion
+from ...models.unit_current import UnitCurrent
+from ...models.unit_current_conversion import UnitCurrentConversion
 from ...types import Response
 
 
 def _get_kwargs(
-    input_unit: UnitVolume,
-    output_unit: UnitVolume,
+    input_unit: UnitCurrent,
+    output_unit: UnitCurrent,
     value: float,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/unit/conversion/volume/{input_unit}/{output_unit}".format(
+    url = "{}/unit/conversion/current/{input_unit}/{output_unit}".format(
         client.base_url, input_unit=input_unit, output_unit=output_unit
     )  # noqa: E501
     if value is not None:
@@ -38,9 +38,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[UnitVolumeConversion, Error]]:
+) -> Optional[Union[UnitCurrentConversion, Error]]:
     if response.status_code == 200:
-        response_200 = UnitVolumeConversion.from_dict(response.json())
+        response_200 = UnitCurrentConversion.from_dict(response.json())
         return response_200
     if response.status_code == 400:
         response_4XX = Error.from_dict(response.json())
@@ -53,7 +53,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[UnitVolumeConversion, Error]]]:
+) -> Response[Optional[Union[UnitCurrentConversion, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -63,12 +63,12 @@ def _build_response(
 
 
 def sync_detailed(
-    input_unit: UnitVolume,
-    output_unit: UnitVolume,
+    input_unit: UnitCurrent,
+    output_unit: UnitCurrent,
     value: float,
     *,
     client: Client,
-) -> Response[Optional[Union[UnitVolumeConversion, Error]]]:
+) -> Response[Optional[Union[UnitCurrentConversion, Error]]]:
     kwargs = _get_kwargs(
         input_unit=input_unit,
         output_unit=output_unit,
@@ -85,13 +85,13 @@ def sync_detailed(
 
 
 def sync(
-    input_unit: UnitVolume,
-    output_unit: UnitVolume,
+    input_unit: UnitCurrent,
+    output_unit: UnitCurrent,
     value: float,
     *,
     client: Client,
-) -> Optional[Union[UnitVolumeConversion, Error]]:
-    """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
+) -> Optional[Union[UnitCurrentConversion, Error]]:
+    """Convert a current unit value to another current unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
         input_unit=input_unit,
@@ -102,12 +102,12 @@ def sync(
 
 
 async def asyncio_detailed(
-    input_unit: UnitVolume,
-    output_unit: UnitVolume,
+    input_unit: UnitCurrent,
+    output_unit: UnitCurrent,
     value: float,
     *,
     client: Client,
-) -> Response[Optional[Union[UnitVolumeConversion, Error]]]:
+) -> Response[Optional[Union[UnitCurrentConversion, Error]]]:
     kwargs = _get_kwargs(
         input_unit=input_unit,
         output_unit=output_unit,
@@ -122,13 +122,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    input_unit: UnitVolume,
-    output_unit: UnitVolume,
+    input_unit: UnitCurrent,
+    output_unit: UnitCurrent,
     value: float,
     *,
     client: Client,
-) -> Optional[Union[UnitVolumeConversion, Error]]:
-    """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
+) -> Optional[Union[UnitCurrentConversion, Error]]:
+    """Convert a current unit value to another current unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return (
         await asyncio_detailed(

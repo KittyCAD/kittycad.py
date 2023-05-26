@@ -4,20 +4,20 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
+from ...models.unit_length import UnitLength
 from ...models.unit_length_conversion import UnitLengthConversion
-from ...models.unit_length_format import UnitLengthFormat
 from ...types import Response
 
 
 def _get_kwargs(
-    output_format: UnitLengthFormat,
-    src_format: UnitLengthFormat,
+    input_unit: UnitLength,
+    output_unit: UnitLength,
     value: float,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/unit/conversion/length/{src_format}/{output_format}".format(
-        client.base_url, output_format=output_format, src_format=src_format
+    url = "{}/unit/conversion/length/{input_unit}/{output_unit}".format(
+        client.base_url, input_unit=input_unit, output_unit=output_unit
     )  # noqa: E501
     if value is not None:
         if "?" in url:
@@ -63,15 +63,15 @@ def _build_response(
 
 
 def sync_detailed(
-    output_format: UnitLengthFormat,
-    src_format: UnitLengthFormat,
+    input_unit: UnitLength,
+    output_unit: UnitLength,
     value: float,
     *,
     client: Client,
 ) -> Response[Optional[Union[UnitLengthConversion, Error]]]:
     kwargs = _get_kwargs(
-        output_format=output_format,
-        src_format=src_format,
+        input_unit=input_unit,
+        output_unit=output_unit,
         value=value,
         client=client,
     )
@@ -85,8 +85,8 @@ def sync_detailed(
 
 
 def sync(
-    output_format: UnitLengthFormat,
-    src_format: UnitLengthFormat,
+    input_unit: UnitLength,
+    output_unit: UnitLength,
     value: float,
     *,
     client: Client,
@@ -94,23 +94,23 @@ def sync(
     """Convert a length unit value to another length unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
     return sync_detailed(
-        output_format=output_format,
-        src_format=src_format,
+        input_unit=input_unit,
+        output_unit=output_unit,
         value=value,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    output_format: UnitLengthFormat,
-    src_format: UnitLengthFormat,
+    input_unit: UnitLength,
+    output_unit: UnitLength,
     value: float,
     *,
     client: Client,
 ) -> Response[Optional[Union[UnitLengthConversion, Error]]]:
     kwargs = _get_kwargs(
-        output_format=output_format,
-        src_format=src_format,
+        input_unit=input_unit,
+        output_unit=output_unit,
         value=value,
         client=client,
     )
@@ -122,8 +122,8 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    output_format: UnitLengthFormat,
-    src_format: UnitLengthFormat,
+    input_unit: UnitLength,
+    output_unit: UnitLength,
     value: float,
     *,
     client: Client,
@@ -132,8 +132,8 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
-            output_format=output_format,
-            src_format=src_format,
+            input_unit=input_unit,
+            output_unit=output_unit,
             value=value,
             client=client,
         )

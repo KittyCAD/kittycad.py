@@ -57,34 +57,18 @@ from kittycad.api.payments import (
     validate_customer_tax_information_for_user,
 )
 from kittycad.api.unit import (
-    get_acceleration_unit_conversion,
     get_angle_unit_conversion,
-    get_angular_velocity_unit_conversion,
     get_area_unit_conversion,
-    get_charge_unit_conversion,
-    get_concentration_unit_conversion,
-    get_data_transfer_rate_unit_conversion,
-    get_data_unit_conversion,
-    get_density_unit_conversion,
+    get_current_unit_conversion,
     get_energy_unit_conversion,
     get_force_unit_conversion,
-    get_illuminance_unit_conversion,
+    get_frequency_unit_conversion,
     get_length_unit_conversion,
-    get_magnetic_field_strength_unit_conversion,
-    get_magnetic_flux_unit_conversion,
     get_mass_unit_conversion,
-    get_metric_power_cubed_unit_conversion,
-    get_metric_power_squared_unit_conversion,
-    get_metric_power_unit_conversion,
     get_power_unit_conversion,
     get_pressure_unit_conversion,
-    get_radiation_unit_conversion,
-    get_radioactivity_unit_conversion,
-    get_solid_angle_unit_conversion,
     get_temperature_unit_conversion,
-    get_time_unit_conversion,
-    get_velocity_unit_conversion,
-    get_voltage_unit_conversion,
+    get_torque_unit_conversion,
     get_volume_unit_conversion,
 )
 from kittycad.api.users import (
@@ -132,34 +116,18 @@ from kittycad.models import (
     PhysicsConstant,
     Pong,
     Session,
-    UnitAccelerationConversion,
     UnitAngleConversion,
-    UnitAngularVelocityConversion,
     UnitAreaConversion,
-    UnitChargeConversion,
-    UnitConcentrationConversion,
-    UnitDataConversion,
-    UnitDataTransferRateConversion,
-    UnitDensityConversion,
+    UnitCurrentConversion,
     UnitEnergyConversion,
     UnitForceConversion,
-    UnitIlluminanceConversion,
+    UnitFrequencyConversion,
     UnitLengthConversion,
-    UnitMagneticFieldStrengthConversion,
-    UnitMagneticFluxConversion,
     UnitMassConversion,
-    UnitMetricPowerConversion,
-    UnitMetricPowerCubedConversion,
-    UnitMetricPowerSquaredConversion,
     UnitPowerConversion,
     UnitPressureConversion,
-    UnitRadiationConversion,
-    UnitRadioactivityConversion,
-    UnitSolidAngleConversion,
     UnitTemperatureConversion,
-    UnitTimeConversion,
-    UnitVelocityConversion,
-    UnitVoltageConversion,
+    UnitTorqueConversion,
     UnitVolumeConversion,
     User,
     UserResultsPage,
@@ -180,35 +148,19 @@ from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.modeling_cmd_req_batch import ModelingCmdReqBatch
 from kittycad.models.physics_constant_name import PhysicsConstantName
 from kittycad.models.point3d import Point3d
-from kittycad.models.unit_acceleration_format import UnitAccelerationFormat
-from kittycad.models.unit_angle_format import UnitAngleFormat
-from kittycad.models.unit_angular_velocity_format import UnitAngularVelocityFormat
-from kittycad.models.unit_area_format import UnitAreaFormat
-from kittycad.models.unit_charge_format import UnitChargeFormat
-from kittycad.models.unit_concentration_format import UnitConcentrationFormat
-from kittycad.models.unit_data_format import UnitDataFormat
-from kittycad.models.unit_data_transfer_rate_format import UnitDataTransferRateFormat
-from kittycad.models.unit_density_format import UnitDensityFormat
-from kittycad.models.unit_energy_format import UnitEnergyFormat
-from kittycad.models.unit_force_format import UnitForceFormat
-from kittycad.models.unit_illuminance_format import UnitIlluminanceFormat
-from kittycad.models.unit_length_format import UnitLengthFormat
-from kittycad.models.unit_magnetic_field_strength_format import (
-    UnitMagneticFieldStrengthFormat,
-)
-from kittycad.models.unit_magnetic_flux_format import UnitMagneticFluxFormat
-from kittycad.models.unit_mass_format import UnitMassFormat
-from kittycad.models.unit_metric_power import UnitMetricPower
-from kittycad.models.unit_power_format import UnitPowerFormat
-from kittycad.models.unit_pressure_format import UnitPressureFormat
-from kittycad.models.unit_radiation_format import UnitRadiationFormat
-from kittycad.models.unit_radioactivity_format import UnitRadioactivityFormat
-from kittycad.models.unit_solid_angle_format import UnitSolidAngleFormat
-from kittycad.models.unit_temperature_format import UnitTemperatureFormat
-from kittycad.models.unit_time_format import UnitTimeFormat
-from kittycad.models.unit_velocity_format import UnitVelocityFormat
-from kittycad.models.unit_voltage_format import UnitVoltageFormat
-from kittycad.models.unit_volume_format import UnitVolumeFormat
+from kittycad.models.unit_angle import UnitAngle
+from kittycad.models.unit_area import UnitArea
+from kittycad.models.unit_current import UnitCurrent
+from kittycad.models.unit_energy import UnitEnergy
+from kittycad.models.unit_force import UnitForce
+from kittycad.models.unit_frequency import UnitFrequency
+from kittycad.models.unit_length import UnitLength
+from kittycad.models.unit_mass import UnitMass
+from kittycad.models.unit_power import UnitPower
+from kittycad.models.unit_pressure import UnitPressure
+from kittycad.models.unit_temperature import UnitTemperature
+from kittycad.models.unit_torque import UnitTorque
+from kittycad.models.unit_volume import UnitVolume
 from kittycad.models.update_user import UpdateUser
 from kittycad.types import Response
 
@@ -1738,65 +1690,6 @@ async def test_ping_async():
 
 
 @pytest.mark.skip
-def test_get_acceleration_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitAccelerationConversion, Error]
-    ] = get_acceleration_unit_conversion.sync(
-        client=client,
-        output_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        src_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitAccelerationConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitAccelerationConversion, Error]]
-    ] = get_acceleration_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        src_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_acceleration_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitAccelerationConversion, Error]
-    ] = await get_acceleration_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        src_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitAccelerationConversion, Error]]
-    ] = await get_acceleration_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        src_format=UnitAccelerationFormat.METERS_PER_SECOND_SQUARED,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
 def test_get_angle_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
@@ -1805,8 +1698,8 @@ def test_get_angle_unit_conversion():
         Union[UnitAngleConversion, Error]
     ] = get_angle_unit_conversion.sync(
         client=client,
-        output_format=UnitAngleFormat.RADIAN,
-        src_format=UnitAngleFormat.RADIAN,
+        input_unit=UnitAngle.DEGREES,
+        output_unit=UnitAngle.DEGREES,
         value=3.14,
     )
 
@@ -1822,8 +1715,8 @@ def test_get_angle_unit_conversion():
         Optional[Union[UnitAngleConversion, Error]]
     ] = get_angle_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitAngleFormat.RADIAN,
-        src_format=UnitAngleFormat.RADIAN,
+        input_unit=UnitAngle.DEGREES,
+        output_unit=UnitAngle.DEGREES,
         value=3.14,
     )
 
@@ -1839,8 +1732,8 @@ async def test_get_angle_unit_conversion_async():
         Union[UnitAngleConversion, Error]
     ] = await get_angle_unit_conversion.asyncio(
         client=client,
-        output_format=UnitAngleFormat.RADIAN,
-        src_format=UnitAngleFormat.RADIAN,
+        input_unit=UnitAngle.DEGREES,
+        output_unit=UnitAngle.DEGREES,
         value=3.14,
     )
 
@@ -1849,67 +1742,8 @@ async def test_get_angle_unit_conversion_async():
         Optional[Union[UnitAngleConversion, Error]]
     ] = await get_angle_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitAngleFormat.RADIAN,
-        src_format=UnitAngleFormat.RADIAN,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_angular_velocity_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitAngularVelocityConversion, Error]
-    ] = get_angular_velocity_unit_conversion.sync(
-        client=client,
-        output_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
-        src_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitAngularVelocityConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitAngularVelocityConversion, Error]]
-    ] = get_angular_velocity_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
-        src_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_angular_velocity_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitAngularVelocityConversion, Error]
-    ] = await get_angular_velocity_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
-        src_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitAngularVelocityConversion, Error]]
-    ] = await get_angular_velocity_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
-        src_format=UnitAngularVelocityFormat.RADIANS_PER_SECOND,
+        input_unit=UnitAngle.DEGREES,
+        output_unit=UnitAngle.DEGREES,
         value=3.14,
     )
 
@@ -1921,8 +1755,8 @@ def test_get_area_unit_conversion():
 
     result: Optional[Union[UnitAreaConversion, Error]] = get_area_unit_conversion.sync(
         client=client,
-        output_format=UnitAreaFormat.SQUARE_METER,
-        src_format=UnitAreaFormat.SQUARE_METER,
+        input_unit=UnitArea.ACRES,
+        output_unit=UnitArea.ACRES,
         value=3.14,
     )
 
@@ -1938,8 +1772,8 @@ def test_get_area_unit_conversion():
         Optional[Union[UnitAreaConversion, Error]]
     ] = get_area_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitAreaFormat.SQUARE_METER,
-        src_format=UnitAreaFormat.SQUARE_METER,
+        input_unit=UnitArea.ACRES,
+        output_unit=UnitArea.ACRES,
         value=3.14,
     )
 
@@ -1955,8 +1789,8 @@ async def test_get_area_unit_conversion_async():
         Union[UnitAreaConversion, Error]
     ] = await get_area_unit_conversion.asyncio(
         client=client,
-        output_format=UnitAreaFormat.SQUARE_METER,
-        src_format=UnitAreaFormat.SQUARE_METER,
+        input_unit=UnitArea.ACRES,
+        output_unit=UnitArea.ACRES,
         value=3.14,
     )
 
@@ -1965,23 +1799,23 @@ async def test_get_area_unit_conversion_async():
         Optional[Union[UnitAreaConversion, Error]]
     ] = await get_area_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitAreaFormat.SQUARE_METER,
-        src_format=UnitAreaFormat.SQUARE_METER,
+        input_unit=UnitArea.ACRES,
+        output_unit=UnitArea.ACRES,
         value=3.14,
     )
 
 
 @pytest.mark.skip
-def test_get_charge_unit_conversion():
+def test_get_current_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
 
     result: Optional[
-        Union[UnitChargeConversion, Error]
-    ] = get_charge_unit_conversion.sync(
+        Union[UnitCurrentConversion, Error]
+    ] = get_current_unit_conversion.sync(
         client=client,
-        output_format=UnitChargeFormat.COULOMB,
-        src_format=UnitChargeFormat.COULOMB,
+        input_unit=UnitCurrent.AMPERES,
+        output_unit=UnitCurrent.AMPERES,
         value=3.14,
     )
 
@@ -1989,16 +1823,16 @@ def test_get_charge_unit_conversion():
         print(result)
         raise Exception("Error in response")
 
-    body: UnitChargeConversion = result
+    body: UnitCurrentConversion = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
     response: Response[
-        Optional[Union[UnitChargeConversion, Error]]
-    ] = get_charge_unit_conversion.sync_detailed(
+        Optional[Union[UnitCurrentConversion, Error]]
+    ] = get_current_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitChargeFormat.COULOMB,
-        src_format=UnitChargeFormat.COULOMB,
+        input_unit=UnitCurrent.AMPERES,
+        output_unit=UnitCurrent.AMPERES,
         value=3.14,
     )
 
@@ -2006,260 +1840,26 @@ def test_get_charge_unit_conversion():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_get_charge_unit_conversion_async():
+async def test_get_current_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
     result: Optional[
-        Union[UnitChargeConversion, Error]
-    ] = await get_charge_unit_conversion.asyncio(
+        Union[UnitCurrentConversion, Error]
+    ] = await get_current_unit_conversion.asyncio(
         client=client,
-        output_format=UnitChargeFormat.COULOMB,
-        src_format=UnitChargeFormat.COULOMB,
+        input_unit=UnitCurrent.AMPERES,
+        output_unit=UnitCurrent.AMPERES,
         value=3.14,
     )
 
     # OR run async with more info
     response: Response[
-        Optional[Union[UnitChargeConversion, Error]]
-    ] = await get_charge_unit_conversion.asyncio_detailed(
+        Optional[Union[UnitCurrentConversion, Error]]
+    ] = await get_current_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitChargeFormat.COULOMB,
-        src_format=UnitChargeFormat.COULOMB,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_concentration_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitConcentrationConversion, Error]
-    ] = get_concentration_unit_conversion.sync(
-        client=client,
-        output_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        src_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitConcentrationConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitConcentrationConversion, Error]]
-    ] = get_concentration_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        src_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_concentration_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitConcentrationConversion, Error]
-    ] = await get_concentration_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        src_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitConcentrationConversion, Error]]
-    ] = await get_concentration_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        src_format=UnitConcentrationFormat.PARTS_PER_MILLION,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_data_transfer_rate_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitDataTransferRateConversion, Error]
-    ] = get_data_transfer_rate_unit_conversion.sync(
-        client=client,
-        output_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        src_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitDataTransferRateConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitDataTransferRateConversion, Error]]
-    ] = get_data_transfer_rate_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        src_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_data_transfer_rate_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitDataTransferRateConversion, Error]
-    ] = await get_data_transfer_rate_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        src_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitDataTransferRateConversion, Error]]
-    ] = await get_data_transfer_rate_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        src_format=UnitDataTransferRateFormat.BYTES_PER_SECOND,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_data_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[UnitDataConversion, Error]] = get_data_unit_conversion.sync(
-        client=client,
-        output_format=UnitDataFormat.BYTE,
-        src_format=UnitDataFormat.BYTE,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitDataConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitDataConversion, Error]]
-    ] = get_data_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitDataFormat.BYTE,
-        src_format=UnitDataFormat.BYTE,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_data_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitDataConversion, Error]
-    ] = await get_data_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitDataFormat.BYTE,
-        src_format=UnitDataFormat.BYTE,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitDataConversion, Error]]
-    ] = await get_data_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitDataFormat.BYTE,
-        src_format=UnitDataFormat.BYTE,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_density_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitDensityConversion, Error]
-    ] = get_density_unit_conversion.sync(
-        client=client,
-        output_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
-        src_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitDensityConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitDensityConversion, Error]]
-    ] = get_density_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
-        src_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_density_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitDensityConversion, Error]
-    ] = await get_density_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
-        src_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitDensityConversion, Error]]
-    ] = await get_density_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
-        src_format=UnitDensityFormat.KILOGRAMS_PER_CUBIC_METER,
+        input_unit=UnitCurrent.AMPERES,
+        output_unit=UnitCurrent.AMPERES,
         value=3.14,
     )
 
@@ -2273,8 +1873,8 @@ def test_get_energy_unit_conversion():
         Union[UnitEnergyConversion, Error]
     ] = get_energy_unit_conversion.sync(
         client=client,
-        output_format=UnitEnergyFormat.JOULE,
-        src_format=UnitEnergyFormat.JOULE,
+        input_unit=UnitEnergy.BTU,
+        output_unit=UnitEnergy.BTU,
         value=3.14,
     )
 
@@ -2290,8 +1890,8 @@ def test_get_energy_unit_conversion():
         Optional[Union[UnitEnergyConversion, Error]]
     ] = get_energy_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitEnergyFormat.JOULE,
-        src_format=UnitEnergyFormat.JOULE,
+        input_unit=UnitEnergy.BTU,
+        output_unit=UnitEnergy.BTU,
         value=3.14,
     )
 
@@ -2307,8 +1907,8 @@ async def test_get_energy_unit_conversion_async():
         Union[UnitEnergyConversion, Error]
     ] = await get_energy_unit_conversion.asyncio(
         client=client,
-        output_format=UnitEnergyFormat.JOULE,
-        src_format=UnitEnergyFormat.JOULE,
+        input_unit=UnitEnergy.BTU,
+        output_unit=UnitEnergy.BTU,
         value=3.14,
     )
 
@@ -2317,8 +1917,8 @@ async def test_get_energy_unit_conversion_async():
         Optional[Union[UnitEnergyConversion, Error]]
     ] = await get_energy_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitEnergyFormat.JOULE,
-        src_format=UnitEnergyFormat.JOULE,
+        input_unit=UnitEnergy.BTU,
+        output_unit=UnitEnergy.BTU,
         value=3.14,
     )
 
@@ -2332,8 +1932,8 @@ def test_get_force_unit_conversion():
         Union[UnitForceConversion, Error]
     ] = get_force_unit_conversion.sync(
         client=client,
-        output_format=UnitForceFormat.NEWTON,
-        src_format=UnitForceFormat.NEWTON,
+        input_unit=UnitForce.DYNES,
+        output_unit=UnitForce.DYNES,
         value=3.14,
     )
 
@@ -2349,8 +1949,8 @@ def test_get_force_unit_conversion():
         Optional[Union[UnitForceConversion, Error]]
     ] = get_force_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitForceFormat.NEWTON,
-        src_format=UnitForceFormat.NEWTON,
+        input_unit=UnitForce.DYNES,
+        output_unit=UnitForce.DYNES,
         value=3.14,
     )
 
@@ -2366,8 +1966,8 @@ async def test_get_force_unit_conversion_async():
         Union[UnitForceConversion, Error]
     ] = await get_force_unit_conversion.asyncio(
         client=client,
-        output_format=UnitForceFormat.NEWTON,
-        src_format=UnitForceFormat.NEWTON,
+        input_unit=UnitForce.DYNES,
+        output_unit=UnitForce.DYNES,
         value=3.14,
     )
 
@@ -2376,23 +1976,23 @@ async def test_get_force_unit_conversion_async():
         Optional[Union[UnitForceConversion, Error]]
     ] = await get_force_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitForceFormat.NEWTON,
-        src_format=UnitForceFormat.NEWTON,
+        input_unit=UnitForce.DYNES,
+        output_unit=UnitForce.DYNES,
         value=3.14,
     )
 
 
 @pytest.mark.skip
-def test_get_illuminance_unit_conversion():
+def test_get_frequency_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
 
     result: Optional[
-        Union[UnitIlluminanceConversion, Error]
-    ] = get_illuminance_unit_conversion.sync(
+        Union[UnitFrequencyConversion, Error]
+    ] = get_frequency_unit_conversion.sync(
         client=client,
-        output_format=UnitIlluminanceFormat.LUX,
-        src_format=UnitIlluminanceFormat.LUX,
+        input_unit=UnitFrequency.GIGAHERTZ,
+        output_unit=UnitFrequency.GIGAHERTZ,
         value=3.14,
     )
 
@@ -2400,16 +2000,16 @@ def test_get_illuminance_unit_conversion():
         print(result)
         raise Exception("Error in response")
 
-    body: UnitIlluminanceConversion = result
+    body: UnitFrequencyConversion = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
     response: Response[
-        Optional[Union[UnitIlluminanceConversion, Error]]
-    ] = get_illuminance_unit_conversion.sync_detailed(
+        Optional[Union[UnitFrequencyConversion, Error]]
+    ] = get_frequency_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitIlluminanceFormat.LUX,
-        src_format=UnitIlluminanceFormat.LUX,
+        input_unit=UnitFrequency.GIGAHERTZ,
+        output_unit=UnitFrequency.GIGAHERTZ,
         value=3.14,
     )
 
@@ -2417,26 +2017,26 @@ def test_get_illuminance_unit_conversion():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_get_illuminance_unit_conversion_async():
+async def test_get_frequency_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
     result: Optional[
-        Union[UnitIlluminanceConversion, Error]
-    ] = await get_illuminance_unit_conversion.asyncio(
+        Union[UnitFrequencyConversion, Error]
+    ] = await get_frequency_unit_conversion.asyncio(
         client=client,
-        output_format=UnitIlluminanceFormat.LUX,
-        src_format=UnitIlluminanceFormat.LUX,
+        input_unit=UnitFrequency.GIGAHERTZ,
+        output_unit=UnitFrequency.GIGAHERTZ,
         value=3.14,
     )
 
     # OR run async with more info
     response: Response[
-        Optional[Union[UnitIlluminanceConversion, Error]]
-    ] = await get_illuminance_unit_conversion.asyncio_detailed(
+        Optional[Union[UnitFrequencyConversion, Error]]
+    ] = await get_frequency_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitIlluminanceFormat.LUX,
-        src_format=UnitIlluminanceFormat.LUX,
+        input_unit=UnitFrequency.GIGAHERTZ,
+        output_unit=UnitFrequency.GIGAHERTZ,
         value=3.14,
     )
 
@@ -2450,8 +2050,8 @@ def test_get_length_unit_conversion():
         Union[UnitLengthConversion, Error]
     ] = get_length_unit_conversion.sync(
         client=client,
-        output_format=UnitLengthFormat.METER,
-        src_format=UnitLengthFormat.METER,
+        input_unit=UnitLength.CENTIMETRES,
+        output_unit=UnitLength.CENTIMETRES,
         value=3.14,
     )
 
@@ -2467,8 +2067,8 @@ def test_get_length_unit_conversion():
         Optional[Union[UnitLengthConversion, Error]]
     ] = get_length_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitLengthFormat.METER,
-        src_format=UnitLengthFormat.METER,
+        input_unit=UnitLength.CENTIMETRES,
+        output_unit=UnitLength.CENTIMETRES,
         value=3.14,
     )
 
@@ -2484,8 +2084,8 @@ async def test_get_length_unit_conversion_async():
         Union[UnitLengthConversion, Error]
     ] = await get_length_unit_conversion.asyncio(
         client=client,
-        output_format=UnitLengthFormat.METER,
-        src_format=UnitLengthFormat.METER,
+        input_unit=UnitLength.CENTIMETRES,
+        output_unit=UnitLength.CENTIMETRES,
         value=3.14,
     )
 
@@ -2494,126 +2094,8 @@ async def test_get_length_unit_conversion_async():
         Optional[Union[UnitLengthConversion, Error]]
     ] = await get_length_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitLengthFormat.METER,
-        src_format=UnitLengthFormat.METER,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_magnetic_field_strength_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMagneticFieldStrengthConversion, Error]
-    ] = get_magnetic_field_strength_unit_conversion.sync(
-        client=client,
-        output_format=UnitMagneticFieldStrengthFormat.TESLA,
-        src_format=UnitMagneticFieldStrengthFormat.TESLA,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitMagneticFieldStrengthConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitMagneticFieldStrengthConversion, Error]]
-    ] = get_magnetic_field_strength_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitMagneticFieldStrengthFormat.TESLA,
-        src_format=UnitMagneticFieldStrengthFormat.TESLA,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_magnetic_field_strength_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMagneticFieldStrengthConversion, Error]
-    ] = await get_magnetic_field_strength_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitMagneticFieldStrengthFormat.TESLA,
-        src_format=UnitMagneticFieldStrengthFormat.TESLA,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitMagneticFieldStrengthConversion, Error]]
-    ] = await get_magnetic_field_strength_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitMagneticFieldStrengthFormat.TESLA,
-        src_format=UnitMagneticFieldStrengthFormat.TESLA,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_magnetic_flux_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMagneticFluxConversion, Error]
-    ] = get_magnetic_flux_unit_conversion.sync(
-        client=client,
-        output_format=UnitMagneticFluxFormat.WEBER,
-        src_format=UnitMagneticFluxFormat.WEBER,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitMagneticFluxConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitMagneticFluxConversion, Error]]
-    ] = get_magnetic_flux_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitMagneticFluxFormat.WEBER,
-        src_format=UnitMagneticFluxFormat.WEBER,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_magnetic_flux_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMagneticFluxConversion, Error]
-    ] = await get_magnetic_flux_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitMagneticFluxFormat.WEBER,
-        src_format=UnitMagneticFluxFormat.WEBER,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitMagneticFluxConversion, Error]]
-    ] = await get_magnetic_flux_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitMagneticFluxFormat.WEBER,
-        src_format=UnitMagneticFluxFormat.WEBER,
+        input_unit=UnitLength.CENTIMETRES,
+        output_unit=UnitLength.CENTIMETRES,
         value=3.14,
     )
 
@@ -2625,8 +2107,8 @@ def test_get_mass_unit_conversion():
 
     result: Optional[Union[UnitMassConversion, Error]] = get_mass_unit_conversion.sync(
         client=client,
-        output_format=UnitMassFormat.GRAM,
-        src_format=UnitMassFormat.GRAM,
+        input_unit=UnitMass.CARATS,
+        output_unit=UnitMass.CARATS,
         value=3.14,
     )
 
@@ -2642,8 +2124,8 @@ def test_get_mass_unit_conversion():
         Optional[Union[UnitMassConversion, Error]]
     ] = get_mass_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitMassFormat.GRAM,
-        src_format=UnitMassFormat.GRAM,
+        input_unit=UnitMass.CARATS,
+        output_unit=UnitMass.CARATS,
         value=3.14,
     )
 
@@ -2659,8 +2141,8 @@ async def test_get_mass_unit_conversion_async():
         Union[UnitMassConversion, Error]
     ] = await get_mass_unit_conversion.asyncio(
         client=client,
-        output_format=UnitMassFormat.GRAM,
-        src_format=UnitMassFormat.GRAM,
+        input_unit=UnitMass.CARATS,
+        output_unit=UnitMass.CARATS,
         value=3.14,
     )
 
@@ -2669,185 +2151,8 @@ async def test_get_mass_unit_conversion_async():
         Optional[Union[UnitMassConversion, Error]]
     ] = await get_mass_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitMassFormat.GRAM,
-        src_format=UnitMassFormat.GRAM,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_metric_power_cubed_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMetricPowerCubedConversion, Error]
-    ] = get_metric_power_cubed_unit_conversion.sync(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitMetricPowerCubedConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitMetricPowerCubedConversion, Error]]
-    ] = get_metric_power_cubed_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_metric_power_cubed_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMetricPowerCubedConversion, Error]
-    ] = await get_metric_power_cubed_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitMetricPowerCubedConversion, Error]]
-    ] = await get_metric_power_cubed_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_metric_power_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMetricPowerConversion, Error]
-    ] = get_metric_power_unit_conversion.sync(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitMetricPowerConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitMetricPowerConversion, Error]]
-    ] = get_metric_power_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_metric_power_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMetricPowerConversion, Error]
-    ] = await get_metric_power_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitMetricPowerConversion, Error]]
-    ] = await get_metric_power_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_metric_power_squared_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMetricPowerSquaredConversion, Error]
-    ] = get_metric_power_squared_unit_conversion.sync(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitMetricPowerSquaredConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitMetricPowerSquaredConversion, Error]]
-    ] = get_metric_power_squared_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_metric_power_squared_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitMetricPowerSquaredConversion, Error]
-    ] = await get_metric_power_squared_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitMetricPowerSquaredConversion, Error]]
-    ] = await get_metric_power_squared_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitMetricPower.ATTO,
-        src_format=UnitMetricPower.ATTO,
+        input_unit=UnitMass.CARATS,
+        output_unit=UnitMass.CARATS,
         value=3.14,
     )
 
@@ -2861,8 +2166,8 @@ def test_get_power_unit_conversion():
         Union[UnitPowerConversion, Error]
     ] = get_power_unit_conversion.sync(
         client=client,
-        output_format=UnitPowerFormat.WATT,
-        src_format=UnitPowerFormat.WATT,
+        input_unit=UnitPower.BTU_PER_MINUTE,
+        output_unit=UnitPower.BTU_PER_MINUTE,
         value=3.14,
     )
 
@@ -2878,8 +2183,8 @@ def test_get_power_unit_conversion():
         Optional[Union[UnitPowerConversion, Error]]
     ] = get_power_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitPowerFormat.WATT,
-        src_format=UnitPowerFormat.WATT,
+        input_unit=UnitPower.BTU_PER_MINUTE,
+        output_unit=UnitPower.BTU_PER_MINUTE,
         value=3.14,
     )
 
@@ -2895,8 +2200,8 @@ async def test_get_power_unit_conversion_async():
         Union[UnitPowerConversion, Error]
     ] = await get_power_unit_conversion.asyncio(
         client=client,
-        output_format=UnitPowerFormat.WATT,
-        src_format=UnitPowerFormat.WATT,
+        input_unit=UnitPower.BTU_PER_MINUTE,
+        output_unit=UnitPower.BTU_PER_MINUTE,
         value=3.14,
     )
 
@@ -2905,8 +2210,8 @@ async def test_get_power_unit_conversion_async():
         Optional[Union[UnitPowerConversion, Error]]
     ] = await get_power_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitPowerFormat.WATT,
-        src_format=UnitPowerFormat.WATT,
+        input_unit=UnitPower.BTU_PER_MINUTE,
+        output_unit=UnitPower.BTU_PER_MINUTE,
         value=3.14,
     )
 
@@ -2920,8 +2225,8 @@ def test_get_pressure_unit_conversion():
         Union[UnitPressureConversion, Error]
     ] = get_pressure_unit_conversion.sync(
         client=client,
-        output_format=UnitPressureFormat.PASCAL,
-        src_format=UnitPressureFormat.PASCAL,
+        input_unit=UnitPressure.ATMOSPHERES,
+        output_unit=UnitPressure.ATMOSPHERES,
         value=3.14,
     )
 
@@ -2937,8 +2242,8 @@ def test_get_pressure_unit_conversion():
         Optional[Union[UnitPressureConversion, Error]]
     ] = get_pressure_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitPressureFormat.PASCAL,
-        src_format=UnitPressureFormat.PASCAL,
+        input_unit=UnitPressure.ATMOSPHERES,
+        output_unit=UnitPressure.ATMOSPHERES,
         value=3.14,
     )
 
@@ -2954,8 +2259,8 @@ async def test_get_pressure_unit_conversion_async():
         Union[UnitPressureConversion, Error]
     ] = await get_pressure_unit_conversion.asyncio(
         client=client,
-        output_format=UnitPressureFormat.PASCAL,
-        src_format=UnitPressureFormat.PASCAL,
+        input_unit=UnitPressure.ATMOSPHERES,
+        output_unit=UnitPressure.ATMOSPHERES,
         value=3.14,
     )
 
@@ -2964,185 +2269,8 @@ async def test_get_pressure_unit_conversion_async():
         Optional[Union[UnitPressureConversion, Error]]
     ] = await get_pressure_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitPressureFormat.PASCAL,
-        src_format=UnitPressureFormat.PASCAL,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_radiation_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitRadiationConversion, Error]
-    ] = get_radiation_unit_conversion.sync(
-        client=client,
-        output_format=UnitRadiationFormat.GRAY,
-        src_format=UnitRadiationFormat.GRAY,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitRadiationConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitRadiationConversion, Error]]
-    ] = get_radiation_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitRadiationFormat.GRAY,
-        src_format=UnitRadiationFormat.GRAY,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_radiation_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitRadiationConversion, Error]
-    ] = await get_radiation_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitRadiationFormat.GRAY,
-        src_format=UnitRadiationFormat.GRAY,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitRadiationConversion, Error]]
-    ] = await get_radiation_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitRadiationFormat.GRAY,
-        src_format=UnitRadiationFormat.GRAY,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_radioactivity_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitRadioactivityConversion, Error]
-    ] = get_radioactivity_unit_conversion.sync(
-        client=client,
-        output_format=UnitRadioactivityFormat.BECQUEREL,
-        src_format=UnitRadioactivityFormat.BECQUEREL,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitRadioactivityConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitRadioactivityConversion, Error]]
-    ] = get_radioactivity_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitRadioactivityFormat.BECQUEREL,
-        src_format=UnitRadioactivityFormat.BECQUEREL,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_radioactivity_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitRadioactivityConversion, Error]
-    ] = await get_radioactivity_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitRadioactivityFormat.BECQUEREL,
-        src_format=UnitRadioactivityFormat.BECQUEREL,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitRadioactivityConversion, Error]]
-    ] = await get_radioactivity_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitRadioactivityFormat.BECQUEREL,
-        src_format=UnitRadioactivityFormat.BECQUEREL,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_solid_angle_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitSolidAngleConversion, Error]
-    ] = get_solid_angle_unit_conversion.sync(
-        client=client,
-        output_format=UnitSolidAngleFormat.STERADIAN,
-        src_format=UnitSolidAngleFormat.STERADIAN,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitSolidAngleConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitSolidAngleConversion, Error]]
-    ] = get_solid_angle_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitSolidAngleFormat.STERADIAN,
-        src_format=UnitSolidAngleFormat.STERADIAN,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_solid_angle_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitSolidAngleConversion, Error]
-    ] = await get_solid_angle_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitSolidAngleFormat.STERADIAN,
-        src_format=UnitSolidAngleFormat.STERADIAN,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitSolidAngleConversion, Error]]
-    ] = await get_solid_angle_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitSolidAngleFormat.STERADIAN,
-        src_format=UnitSolidAngleFormat.STERADIAN,
+        input_unit=UnitPressure.ATMOSPHERES,
+        output_unit=UnitPressure.ATMOSPHERES,
         value=3.14,
     )
 
@@ -3156,8 +2284,8 @@ def test_get_temperature_unit_conversion():
         Union[UnitTemperatureConversion, Error]
     ] = get_temperature_unit_conversion.sync(
         client=client,
-        output_format=UnitTemperatureFormat.KELVIN,
-        src_format=UnitTemperatureFormat.KELVIN,
+        input_unit=UnitTemperature.CELSIUS,
+        output_unit=UnitTemperature.CELSIUS,
         value=3.14,
     )
 
@@ -3173,8 +2301,8 @@ def test_get_temperature_unit_conversion():
         Optional[Union[UnitTemperatureConversion, Error]]
     ] = get_temperature_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitTemperatureFormat.KELVIN,
-        src_format=UnitTemperatureFormat.KELVIN,
+        input_unit=UnitTemperature.CELSIUS,
+        output_unit=UnitTemperature.CELSIUS,
         value=3.14,
     )
 
@@ -3190,8 +2318,8 @@ async def test_get_temperature_unit_conversion_async():
         Union[UnitTemperatureConversion, Error]
     ] = await get_temperature_unit_conversion.asyncio(
         client=client,
-        output_format=UnitTemperatureFormat.KELVIN,
-        src_format=UnitTemperatureFormat.KELVIN,
+        input_unit=UnitTemperature.CELSIUS,
+        output_unit=UnitTemperature.CELSIUS,
         value=3.14,
     )
 
@@ -3200,21 +2328,23 @@ async def test_get_temperature_unit_conversion_async():
         Optional[Union[UnitTemperatureConversion, Error]]
     ] = await get_temperature_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitTemperatureFormat.KELVIN,
-        src_format=UnitTemperatureFormat.KELVIN,
+        input_unit=UnitTemperature.CELSIUS,
+        output_unit=UnitTemperature.CELSIUS,
         value=3.14,
     )
 
 
 @pytest.mark.skip
-def test_get_time_unit_conversion():
+def test_get_torque_unit_conversion():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitTimeConversion, Error]] = get_time_unit_conversion.sync(
+    result: Optional[
+        Union[UnitTorqueConversion, Error]
+    ] = get_torque_unit_conversion.sync(
         client=client,
-        output_format=UnitTimeFormat.SECOND,
-        src_format=UnitTimeFormat.SECOND,
+        input_unit=UnitTorque.NEWTON_METRES,
+        output_unit=UnitTorque.NEWTON_METRES,
         value=3.14,
     )
 
@@ -3222,16 +2352,16 @@ def test_get_time_unit_conversion():
         print(result)
         raise Exception("Error in response")
 
-    body: UnitTimeConversion = result
+    body: UnitTorqueConversion = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
     response: Response[
-        Optional[Union[UnitTimeConversion, Error]]
-    ] = get_time_unit_conversion.sync_detailed(
+        Optional[Union[UnitTorqueConversion, Error]]
+    ] = get_torque_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitTimeFormat.SECOND,
-        src_format=UnitTimeFormat.SECOND,
+        input_unit=UnitTorque.NEWTON_METRES,
+        output_unit=UnitTorque.NEWTON_METRES,
         value=3.14,
     )
 
@@ -3239,144 +2369,26 @@ def test_get_time_unit_conversion():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_get_time_unit_conversion_async():
+async def test_get_torque_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
     result: Optional[
-        Union[UnitTimeConversion, Error]
-    ] = await get_time_unit_conversion.asyncio(
+        Union[UnitTorqueConversion, Error]
+    ] = await get_torque_unit_conversion.asyncio(
         client=client,
-        output_format=UnitTimeFormat.SECOND,
-        src_format=UnitTimeFormat.SECOND,
+        input_unit=UnitTorque.NEWTON_METRES,
+        output_unit=UnitTorque.NEWTON_METRES,
         value=3.14,
     )
 
     # OR run async with more info
     response: Response[
-        Optional[Union[UnitTimeConversion, Error]]
-    ] = await get_time_unit_conversion.asyncio_detailed(
+        Optional[Union[UnitTorqueConversion, Error]]
+    ] = await get_torque_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitTimeFormat.SECOND,
-        src_format=UnitTimeFormat.SECOND,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_velocity_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitVelocityConversion, Error]
-    ] = get_velocity_unit_conversion.sync(
-        client=client,
-        output_format=UnitVelocityFormat.METERS_PER_SECOND,
-        src_format=UnitVelocityFormat.METERS_PER_SECOND,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitVelocityConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitVelocityConversion, Error]]
-    ] = get_velocity_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitVelocityFormat.METERS_PER_SECOND,
-        src_format=UnitVelocityFormat.METERS_PER_SECOND,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_velocity_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitVelocityConversion, Error]
-    ] = await get_velocity_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitVelocityFormat.METERS_PER_SECOND,
-        src_format=UnitVelocityFormat.METERS_PER_SECOND,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitVelocityConversion, Error]]
-    ] = await get_velocity_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitVelocityFormat.METERS_PER_SECOND,
-        src_format=UnitVelocityFormat.METERS_PER_SECOND,
-        value=3.14,
-    )
-
-
-@pytest.mark.skip
-def test_get_voltage_unit_conversion():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitVoltageConversion, Error]
-    ] = get_voltage_unit_conversion.sync(
-        client=client,
-        output_format=UnitVoltageFormat.VOLT,
-        src_format=UnitVoltageFormat.VOLT,
-        value=3.14,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: UnitVoltageConversion = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[UnitVoltageConversion, Error]]
-    ] = get_voltage_unit_conversion.sync_detailed(
-        client=client,
-        output_format=UnitVoltageFormat.VOLT,
-        src_format=UnitVoltageFormat.VOLT,
-        value=3.14,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_voltage_unit_conversion_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[UnitVoltageConversion, Error]
-    ] = await get_voltage_unit_conversion.asyncio(
-        client=client,
-        output_format=UnitVoltageFormat.VOLT,
-        src_format=UnitVoltageFormat.VOLT,
-        value=3.14,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[UnitVoltageConversion, Error]]
-    ] = await get_voltage_unit_conversion.asyncio_detailed(
-        client=client,
-        output_format=UnitVoltageFormat.VOLT,
-        src_format=UnitVoltageFormat.VOLT,
+        input_unit=UnitTorque.NEWTON_METRES,
+        output_unit=UnitTorque.NEWTON_METRES,
         value=3.14,
     )
 
@@ -3390,8 +2402,8 @@ def test_get_volume_unit_conversion():
         Union[UnitVolumeConversion, Error]
     ] = get_volume_unit_conversion.sync(
         client=client,
-        output_format=UnitVolumeFormat.CUBIC_METER,
-        src_format=UnitVolumeFormat.CUBIC_METER,
+        input_unit=UnitVolume.CUBIC_CENTIMETRES,
+        output_unit=UnitVolume.CUBIC_CENTIMETRES,
         value=3.14,
     )
 
@@ -3407,8 +2419,8 @@ def test_get_volume_unit_conversion():
         Optional[Union[UnitVolumeConversion, Error]]
     ] = get_volume_unit_conversion.sync_detailed(
         client=client,
-        output_format=UnitVolumeFormat.CUBIC_METER,
-        src_format=UnitVolumeFormat.CUBIC_METER,
+        input_unit=UnitVolume.CUBIC_CENTIMETRES,
+        output_unit=UnitVolume.CUBIC_CENTIMETRES,
         value=3.14,
     )
 
@@ -3424,8 +2436,8 @@ async def test_get_volume_unit_conversion_async():
         Union[UnitVolumeConversion, Error]
     ] = await get_volume_unit_conversion.asyncio(
         client=client,
-        output_format=UnitVolumeFormat.CUBIC_METER,
-        src_format=UnitVolumeFormat.CUBIC_METER,
+        input_unit=UnitVolume.CUBIC_CENTIMETRES,
+        output_unit=UnitVolume.CUBIC_CENTIMETRES,
         value=3.14,
     )
 
@@ -3434,8 +2446,8 @@ async def test_get_volume_unit_conversion_async():
         Optional[Union[UnitVolumeConversion, Error]]
     ] = await get_volume_unit_conversion.asyncio_detailed(
         client=client,
-        output_format=UnitVolumeFormat.CUBIC_METER,
-        src_format=UnitVolumeFormat.CUBIC_METER,
+        input_unit=UnitVolume.CUBIC_CENTIMETRES,
+        output_unit=UnitVolume.CUBIC_CENTIMETRES,
         value=3.14,
     )
 
