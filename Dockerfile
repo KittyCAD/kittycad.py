@@ -1,7 +1,7 @@
 FROM python:3.9
 
 RUN pip install \
-	poetry==1.4.2
+	poetry
 
 WORKDIR /home/user/src/
 

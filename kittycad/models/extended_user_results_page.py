@@ -6,65 +6,61 @@ from ..types import UNSET, Unset
 
 H = TypeVar("H", bound="ExtendedUserResultsPage")
 
-
 @attr.s(auto_attribs=True)
 class ExtendedUserResultsPage:
-    """A single page of results"""  # noqa: E501
+	""" A single page of results """ # noqa: E501
+	from ..models.extended_user import ExtendedUser
+	items: Union[Unset, List[ExtendedUser]] = UNSET
+	next_page: Union[Unset, str] = UNSET
 
-    from ..models.extended_user import ExtendedUser
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    items: Union[Unset, List[ExtendedUser]] = UNSET
-    next_page: Union[Unset, str] = UNSET
+	def to_dict(self) -> Dict[str, Any]:
+		from ..models.extended_user import ExtendedUser
+		items: Union[Unset, List[ExtendedUser]] = UNSET
+		if not isinstance(self.items, Unset):
+			items = self.items
+		next_page = self.next_page
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		if items is not UNSET:
+			field_dict['items'] = items
+		if next_page is not UNSET:
+			field_dict['next_page'] = next_page
 
-    def to_dict(self) -> Dict[str, Any]:
-        from ..models.extended_user import ExtendedUser
+		return field_dict
 
-        items: Union[Unset, List[ExtendedUser]] = UNSET
-        if not isinstance(self.items, Unset):
-            items = self.items
-        next_page = self.next_page
+	@classmethod
+	def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+		d = src_dict.copy()
+		from ..models.extended_user import ExtendedUser
+		items = cast(List[ExtendedUser], d.pop("items", UNSET))
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if items is not UNSET:
-            field_dict["items"] = items
-        if next_page is not UNSET:
-            field_dict["next_page"] = next_page
+		next_page = d.pop("next_page", UNSET)
 
-        return field_dict
 
-    @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
-        d = src_dict.copy()
-        from ..models.extended_user import ExtendedUser
+		extended_user_results_page = cls(
+			items= items,
+			next_page= next_page,
+		)
 
-        items = cast(List[ExtendedUser], d.pop("items", UNSET))
+		extended_user_results_page.additional_properties = d
+		return extended_user_results_page
 
-        next_page = d.pop("next_page", UNSET)
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
 
-        extended_user_results_page = cls(
-            items=items,
-            next_page=next_page,
-        )
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
 
-        extended_user_results_page.additional_properties = d
-        return extended_user_results_page
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
 
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
 
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties
