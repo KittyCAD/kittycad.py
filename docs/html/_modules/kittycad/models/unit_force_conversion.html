@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.unit_force_conversion &mdash; kittycad v0.4.2 documentation</title>
+  <title>kittycad.models.unit_force_conversion &mdash; kittycad v0.4.3 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.2
+                v0.4.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -86,25 +86,25 @@
 <span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">isoparse</span>
 
 <span class="kn">from</span> <span class="nn">..models.api_call_status</span> <span class="kn">import</span> <span class="n">ApiCallStatus</span>
-<span class="kn">from</span> <span class="nn">..models.unit_force_format</span> <span class="kn">import</span> <span class="n">UnitForceFormat</span>
+<span class="kn">from</span> <span class="nn">..models.unit_force</span> <span class="kn">import</span> <span class="n">UnitForce</span>
 <span class="kn">from</span> <span class="nn">..models.uuid</span> <span class="kn">import</span> <span class="n">Uuid</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">E</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;UnitForceConversion&quot;</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;UnitForceConversion&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="UnitForceConversion"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_force_conversion.UnitForceConversion.html#kittycad.models.unit_force_conversion.UnitForceConversion">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">UnitForceConversion</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A unit conversion.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of converting between units.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">completed_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">error</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">input_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForce</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">output_format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForceFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">src_format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForceFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForce</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ApiCallStatus</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">updated_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
@@ -122,11 +122,11 @@
         <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span>
         <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
         <span class="nb">input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">input_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_unit</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">output_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_format</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_format</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">output_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_unit</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">started_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">started_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">started_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
@@ -150,12 +150,12 @@
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="k">if</span> <span class="nb">input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span>
+        <span class="k">if</span> <span class="n">input_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;input_unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_unit</span>
         <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
-        <span class="k">if</span> <span class="n">output_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;output_format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_format</span>
-        <span class="k">if</span> <span class="n">src_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;src_format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_format</span>
+        <span class="k">if</span> <span class="n">output_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;output_unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_unit</span>
         <span class="k">if</span> <span class="n">started_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;started_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">started_at</span>
         <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
@@ -168,7 +168,7 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="UnitForceConversion.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_force_conversion.UnitForceConversion.html#kittycad.models.unit_force_conversion.UnitForceConversion.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">E</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">E</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">G</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">G</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">_completed_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;completed_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">completed_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -195,21 +195,21 @@
 
         <span class="nb">input</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
+        <span class="n">_input_unit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;input_unit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">input_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForce</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_input_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">input_unit</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">input_unit</span> <span class="o">=</span> <span class="n">UnitForce</span><span class="p">(</span><span class="n">_input_unit</span><span class="p">)</span>
+
         <span class="n">output</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
-        <span class="n">_output_format</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;output_format&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">output_format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForceFormat</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_output_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">output_format</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="n">_output_unit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;output_unit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">output_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForce</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_output_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">output_unit</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">output_format</span> <span class="o">=</span> <span class="n">UnitForceFormat</span><span class="p">(</span><span class="n">_output_format</span><span class="p">)</span>
-
-        <span class="n">_src_format</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;src_format&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">src_format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitForceFormat</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">UnitForceFormat</span><span class="p">(</span><span class="n">_src_format</span><span class="p">)</span>
+            <span class="n">output_unit</span> <span class="o">=</span> <span class="n">UnitForce</span><span class="p">(</span><span class="n">_output_unit</span><span class="p">)</span>
 
         <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -240,9 +240,9 @@
             <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
             <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
             <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+            <span class="n">input_unit</span><span class="o">=</span><span class="n">input_unit</span><span class="p">,</span>
             <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
-            <span class="n">output_format</span><span class="o">=</span><span class="n">output_format</span><span class="p">,</span>
-            <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span>
+            <span class="n">output_unit</span><span class="o">=</span><span class="n">output_unit</span><span class="p">,</span>
             <span class="n">started_at</span><span class="o">=</span><span class="n">started_at</span><span class="p">,</span>
             <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
             <span class="n">updated_at</span><span class="o">=</span><span class="n">updated_at</span><span class="p">,</span>

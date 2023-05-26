@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.unit_pressure" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.unit_pressure.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:description" content="Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.unit_pressure_9040c1ab.png" />
+<meta property="og:image:alt" content="Classes" />
+<meta name="description" content="Classes" />
+<meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.models.unit_pressure &mdash; kittycad v0.4.3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="kittycad.models.unit_pressure.UnitPressure" href="kittycad.models.unit_pressure.UnitPressure.html" />
+    <link rel="prev" title="kittycad.models.unit_power_conversion.UnitPowerConversion" href="kittycad.models.unit_power_conversion.UnitPowerConversion.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.4.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kittycad.models.html">kittycad.models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.account_provider.html">kittycad.models.account_provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api.html">kittycad.models.ai_plugin_api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api_type.html">kittycad.models.ai_plugin_api_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth.html">kittycad.models.ai_plugin_auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth_type.html">kittycad.models.ai_plugin_auth_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_http_auth_type.html">kittycad.models.ai_plugin_http_auth_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_manifest.html">kittycad.models.ai_plugin_manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group.html">kittycad.models.api_call_query_group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group_by.html">kittycad.models.api_call_query_group_by</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_status.html">kittycad.models.api_call_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_with_price.html">kittycad.models.api_call_with_price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_with_price_results_page.html">kittycad.models.api_call_with_price_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_token.html">kittycad.models.api_token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_token_results_page.html">kittycad.models.api_token_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.app_client_info.html">kittycad.models.app_client_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call.html">kittycad.models.async_api_call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_output.html">kittycad.models.async_api_call_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_results_page.html">kittycad.models.async_api_call_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_type.html">kittycad.models.async_api_call_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.billing_info.html">kittycad.models.billing_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.cache_metadata.html">kittycad.models.cache_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.card_details.html">kittycad.models.card_details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_language.html">kittycad.models.code_language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_output.html">kittycad.models.code_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.commit.html">kittycad.models.commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.connection.html">kittycad.models.connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.country_code.html">kittycad.models.country_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.currency.html">kittycad.models.currency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer.html">kittycad.models.customer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer_balance.html">kittycad.models.customer_balance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_access_token_request_form.html">kittycad.models.device_access_token_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_request_form.html">kittycad.models.device_auth_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_verify_params.html">kittycad.models.device_auth_verify_params</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.docker_system_info.html">kittycad.models.docker_system_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.email_authentication_form.html">kittycad.models.email_authentication_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.engine_metadata.html">kittycad.models.engine_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.environment.html">kittycad.models.environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.error.html">kittycad.models.error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.executor_metadata.html">kittycad.models.executor_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user.html">kittycad.models.extended_user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user_results_page.html">kittycad.models.extended_user_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extrude.html">kittycad.models.extrude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_center_of_mass.html">kittycad.models.file_center_of_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_conversion.html">kittycad.models.file_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_density.html">kittycad.models.file_density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_export_format.html">kittycad.models.file_export_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_import_format.html">kittycad.models.file_import_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_mass.html">kittycad.models.file_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_surface_area.html">kittycad.models.file_surface_area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_system_metadata.html">kittycad.models.file_system_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_volume.html">kittycad.models.file_volume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.gateway.html">kittycad.models.gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.image_type.html">kittycad.models.image_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.index_info.html">kittycad.models.index_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice.html">kittycad.models.invoice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_line_item.html">kittycad.models.invoice_line_item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_status.html">kittycad.models.invoice_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream.html">kittycad.models.jetstream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_api_stats.html">kittycad.models.jetstream_api_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_config.html">kittycad.models.jetstream_config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_stats.html">kittycad.models.jetstream_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.leaf_node.html">kittycad.models.leaf_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.line3d.html">kittycad.models.line3d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.mesh.html">kittycad.models.mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.meta_cluster_info.html">kittycad.models.meta_cluster_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.metadata.html">kittycad.models.metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.method.html">kittycad.models.method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd.html">kittycad.models.modeling_cmd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd_id.html">kittycad.models.modeling_cmd_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd_req.html">kittycad.models.modeling_cmd_req</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd_req_batch.html">kittycad.models.modeling_cmd_req_batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_error.html">kittycad.models.modeling_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_outcome.html">kittycad.models.modeling_outcome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_outcomes.html">kittycad.models.modeling_outcomes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.new_address.html">kittycad.models.new_address</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_client_info.html">kittycad.models.o_auth2_client_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_grant_type.html">kittycad.models.o_auth2_grant_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.onboarding.html">kittycad.models.onboarding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_file.html">kittycad.models.output_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_intent.html">kittycad.models.payment_intent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method.html">kittycad.models.payment_method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_card_checks.html">kittycad.models.payment_method_card_checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_type.html">kittycad.models.payment_method_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.physics_constant.html">kittycad.models.physics_constant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.physics_constant_name.html">kittycad.models.physics_constant_name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.plugins_info.html">kittycad.models.plugins_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.point2d.html">kittycad.models.point2d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.point3d.html">kittycad.models.point3d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.point_e_metadata.html">kittycad.models.point_e_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.pong.html">kittycad.models.pong</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.registry_service_config.html">kittycad.models.registry_service_config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.runtime.html">kittycad.models.runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.session.html">kittycad.models.session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_cgroup_driver_enum.html">kittycad.models.system_info_cgroup_driver_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_cgroup_version_enum.html">kittycad.models.system_info_cgroup_version_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_default_address_pools.html">kittycad.models.system_info_default_address_pools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system_info_isolation_enum.html">kittycad.models.system_info_isolation_enum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angle.html">kittycad.models.unit_angle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angle_conversion.html">kittycad.models.unit_angle_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_area.html">kittycad.models.unit_area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_area_conversion.html">kittycad.models.unit_area_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_current.html">kittycad.models.unit_current</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_current_conversion.html">kittycad.models.unit_current_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy.html">kittycad.models.unit_energy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy_conversion.html">kittycad.models.unit_energy_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force.html">kittycad.models.unit_force</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force_conversion.html">kittycad.models.unit_force_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_frequency.html">kittycad.models.unit_frequency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_frequency_conversion.html">kittycad.models.unit_frequency_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_length.html">kittycad.models.unit_length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_length_conversion.html">kittycad.models.unit_length_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_mass.html">kittycad.models.unit_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_mass_conversion.html">kittycad.models.unit_mass_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_power.html">kittycad.models.unit_power</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_power_conversion.html">kittycad.models.unit_power_conversion</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.unit_pressure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.models.unit_pressure.UnitPressure.html">kittycad.models.unit_pressure.UnitPressure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure"><code class="docutils literal notranslate"><span class="pre">UnitPressure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.ATMOSPHERES"><code class="docutils literal notranslate"><span class="pre">UnitPressure.ATMOSPHERES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.BARS"><code class="docutils literal notranslate"><span class="pre">UnitPressure.BARS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.HECTOPASCALS"><code class="docutils literal notranslate"><span class="pre">UnitPressure.HECTOPASCALS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.KILOPASCALS"><code class="docutils literal notranslate"><span class="pre">UnitPressure.KILOPASCALS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.MILLIBARS"><code class="docutils literal notranslate"><span class="pre">UnitPressure.MILLIBARS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.PASCALS"><code class="docutils literal notranslate"><span class="pre">UnitPressure.PASCALS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.PSI"><code class="docutils literal notranslate"><span class="pre">UnitPressure.PSI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__add__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__annotations__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__contains__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__contains__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__dict__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__dir__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__dir__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__eq__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__format__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__format__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__ge__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__ge__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__getattribute__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__getitem__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__getnewargs__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__getnewargs__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__gt__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__hash__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__init__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__iter__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__iter__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__le__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__len__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__lt__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__mod__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__mod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__module__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__module__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__mul__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__ne__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__new__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__reduce_ex__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__repr__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__rmod__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__rmod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__rmul__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__sizeof__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.__str__"><code class="docutils literal notranslate"><span class="pre">UnitPressure.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._generate_next_value_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._generate_next_value_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._member_map_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._member_names_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._member_names_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._member_type_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._member_type_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._new_member_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._new_member_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._unhashable_values_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._unhashable_values_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._use_args_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._use_args_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._value2member_map_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._value2member_map_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure._value_repr_"><code class="docutils literal notranslate"><span class="pre">UnitPressure._value_repr_()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.capitalize"><code class="docutils literal notranslate"><span class="pre">UnitPressure.capitalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.casefold"><code class="docutils literal notranslate"><span class="pre">UnitPressure.casefold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.center"><code class="docutils literal notranslate"><span class="pre">UnitPressure.center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.count"><code class="docutils literal notranslate"><span class="pre">UnitPressure.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.encode"><code class="docutils literal notranslate"><span class="pre">UnitPressure.encode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.endswith"><code class="docutils literal notranslate"><span class="pre">UnitPressure.endswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.expandtabs"><code class="docutils literal notranslate"><span class="pre">UnitPressure.expandtabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.find"><code class="docutils literal notranslate"><span class="pre">UnitPressure.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.format"><code class="docutils literal notranslate"><span class="pre">UnitPressure.format()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.format_map"><code class="docutils literal notranslate"><span class="pre">UnitPressure.format_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.index"><code class="docutils literal notranslate"><span class="pre">UnitPressure.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isalnum"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isalnum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isalpha"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isalpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isascii"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isascii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isdecimal"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isdecimal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isdigit"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isdigit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isidentifier"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isidentifier()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.islower"><code class="docutils literal notranslate"><span class="pre">UnitPressure.islower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isnumeric"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isnumeric()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isprintable"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isprintable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isspace"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.istitle"><code class="docutils literal notranslate"><span class="pre">UnitPressure.istitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.isupper"><code class="docutils literal notranslate"><span class="pre">UnitPressure.isupper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.join"><code class="docutils literal notranslate"><span class="pre">UnitPressure.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.ljust"><code class="docutils literal notranslate"><span class="pre">UnitPressure.ljust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.lower"><code class="docutils literal notranslate"><span class="pre">UnitPressure.lower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.lstrip"><code class="docutils literal notranslate"><span class="pre">UnitPressure.lstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.maketrans"><code class="docutils literal notranslate"><span class="pre">UnitPressure.maketrans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.partition"><code class="docutils literal notranslate"><span class="pre">UnitPressure.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.removeprefix"><code class="docutils literal notranslate"><span class="pre">UnitPressure.removeprefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.removesuffix"><code class="docutils literal notranslate"><span class="pre">UnitPressure.removesuffix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.replace"><code class="docutils literal notranslate"><span class="pre">UnitPressure.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.rfind"><code class="docutils literal notranslate"><span class="pre">UnitPressure.rfind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.rindex"><code class="docutils literal notranslate"><span class="pre">UnitPressure.rindex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.rjust"><code class="docutils literal notranslate"><span class="pre">UnitPressure.rjust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.rpartition"><code class="docutils literal notranslate"><span class="pre">UnitPressure.rpartition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.rsplit"><code class="docutils literal notranslate"><span class="pre">UnitPressure.rsplit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.rstrip"><code class="docutils literal notranslate"><span class="pre">UnitPressure.rstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.split"><code class="docutils literal notranslate"><span class="pre">UnitPressure.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.splitlines"><code class="docutils literal notranslate"><span class="pre">UnitPressure.splitlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.startswith"><code class="docutils literal notranslate"><span class="pre">UnitPressure.startswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.strip"><code class="docutils literal notranslate"><span class="pre">UnitPressure.strip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.swapcase"><code class="docutils literal notranslate"><span class="pre">UnitPressure.swapcase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.title"><code class="docutils literal notranslate"><span class="pre">UnitPressure.title()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.translate"><code class="docutils literal notranslate"><span class="pre">UnitPressure.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.upper"><code class="docutils literal notranslate"><span class="pre">UnitPressure.upper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.unit_pressure.UnitPressure.zfill"><code class="docutils literal notranslate"><span class="pre">UnitPressure.zfill()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_pressure_conversion.html">kittycad.models.unit_pressure_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_temperature.html">kittycad.models.unit_temperature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_temperature_conversion.html">kittycad.models.unit_temperature_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_torque.html">kittycad.models.unit_torque</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_torque_conversion.html">kittycad.models.unit_torque_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume.html">kittycad.models.unit_volume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume_conversion.html">kittycad.models.unit_volume_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.update_user.html">kittycad.models.update_user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user.html">kittycad.models.user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user_results_page.html">kittycad.models.user_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.uuid.html">kittycad.models.uuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.verification_token.html">kittycad.models.verification_token</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="kittycad.models.html">kittycad.models</a></li>
+      <li class="breadcrumb-item active">kittycad.models.unit_pressure</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-kittycad.models.unit_pressure">
+<span id="kittycad-models-unit-pressure"></span><h1>kittycad.models.unit_pressure<a class="headerlink" href="#module-kittycad.models.unit_pressure" title="Permalink to this heading"></a></h1>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.unit_pressure.UnitPressure.html#kittycad.models.unit_pressure.UnitPressure" title="kittycad.models.unit_pressure.UnitPressure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitPressure</span></code></a>(value[, names, module, ...])</p></td>
+<td><p>The valid types of pressure units.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.unit_pressure.</span></span><span class="sig-name descname"><span class="pre">UnitPressure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/unit_pressure.html#UnitPressure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure" title="Permalink to this definition"></a></dt>
+<dd><p>The valid types of pressure units.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.ATMOSPHERES">
+<span class="sig-name descname"><span class="pre">ATMOSPHERES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'atmospheres'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.ATMOSPHERES" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Bar_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p># Bars &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.BARS">
+<span class="sig-name descname"><span class="pre">BARS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bars'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.BARS" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Hectopascal&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p># Hectopascals &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.HECTOPASCALS">
+<span class="sig-name descname"><span class="pre">HECTOPASCALS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hectopascals'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.HECTOPASCALS" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Kilopascal&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p># Kilopascals &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.KILOPASCALS">
+<span class="sig-name descname"><span class="pre">KILOPASCALS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kilopascals'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.KILOPASCALS" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Bar_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p># Millibars &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.MILLIBARS">
+<span class="sig-name descname"><span class="pre">MILLIBARS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'millibars'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.MILLIBARS" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Pascal_(unit)&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p># Pascals &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.PASCALS">
+<span class="sig-name descname"><span class="pre">PASCALS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pascals'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.PASCALS" title="Permalink to this definition"></a></dt>
+<dd><p>//en.wikipedia.org/wiki/Pound_per_square_inch&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p># Pounds per square inch (PSI) - &lt;https</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.PSI">
+<span class="sig-name descname"><span class="pre">PSI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'psi'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.PSI" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__add__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self+value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__annotations__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__contains__">
+<span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__contains__" title="Permalink to this definition"></a></dt>
+<dd><p>Return key in self.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'_generate_next_value_':</span> <span class="pre">&lt;function</span> <span class="pre">Enum._generate_next_value_&gt;,</span> <span class="pre">'__module__':</span> <span class="pre">'kittycad.models.unit_pressure',</span> <span class="pre">'__doc__':</span> <span class="pre">'The</span> <span class="pre">valid</span> <span class="pre">types</span> <span class="pre">of</span> <span class="pre">pressure</span> <span class="pre">units.',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">UnitPressure.__str__&gt;,</span> <span class="pre">'_new_member_':</span> <span class="pre">&lt;built-in</span> <span class="pre">method</span> <span class="pre">__new__</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">object&gt;,</span> <span class="pre">'_use_args_':</span> <span class="pre">True,</span> <span class="pre">'_member_names_':</span> <span class="pre">['ATMOSPHERES',</span> <span class="pre">'BARS',</span> <span class="pre">'HECTOPASCALS',</span> <span class="pre">'KILOPASCALS',</span> <span class="pre">'MILLIBARS',</span> <span class="pre">'PASCALS',</span> <span class="pre">'PSI'],</span> <span class="pre">'_member_map_':</span> <span class="pre">{'ATMOSPHERES':</span> <span class="pre">&lt;UnitPressure.ATMOSPHERES:</span> <span class="pre">'atmospheres'&gt;,</span> <span class="pre">'BARS':</span> <span class="pre">&lt;UnitPressure.BARS:</span> <span class="pre">'bars'&gt;,</span> <span class="pre">'HECTOPASCALS':</span> <span class="pre">&lt;UnitPressure.HECTOPASCALS:</span> <span class="pre">'hectopascals'&gt;,</span> <span class="pre">'KILOPASCALS':</span> <span class="pre">&lt;UnitPressure.KILOPASCALS:</span> <span class="pre">'kilopascals'&gt;,</span> <span class="pre">'MILLIBARS':</span> <span class="pre">&lt;UnitPressure.MILLIBARS:</span> <span class="pre">'millibars'&gt;,</span> <span class="pre">'PASCALS':</span> <span class="pre">&lt;UnitPressure.PASCALS:</span> <span class="pre">'pascals'&gt;,</span> <span class="pre">'PSI':</span> <span class="pre">&lt;UnitPressure.PSI:</span> <span class="pre">'psi'&gt;},</span> <span class="pre">'_value2member_map_':</span> <span class="pre">{'atmospheres':</span> <span class="pre">&lt;UnitPressure.ATMOSPHERES:</span> <span class="pre">'atmospheres'&gt;,</span> <span class="pre">'bars':</span> <span class="pre">&lt;UnitPressure.BARS:</span> <span class="pre">'bars'&gt;,</span> <span class="pre">'hectopascals':</span> <span class="pre">&lt;UnitPressure.HECTOPASCALS:</span> <span class="pre">'hectopascals'&gt;,</span> <span class="pre">'kilopascals':</span> <span class="pre">&lt;UnitPressure.KILOPASCALS:</span> <span class="pre">'kilopascals'&gt;,</span> <span class="pre">'millibars':</span> <span class="pre">&lt;UnitPressure.MILLIBARS:</span> <span class="pre">'millibars'&gt;,</span> <span class="pre">'pascals':</span> <span class="pre">&lt;UnitPressure.PASCALS:</span> <span class="pre">'pascals'&gt;,</span> <span class="pre">'psi':</span> <span class="pre">&lt;UnitPressure.PSI:</span> <span class="pre">'psi'&gt;},</span> <span class="pre">'_unhashable_values_':</span> <span class="pre">[],</span> <span class="pre">'_member_type_':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'_value_repr_':</span> <span class="pre">&lt;slot</span> <span class="pre">wrapper</span> <span class="pre">'__repr__'</span> <span class="pre">of</span> <span class="pre">'str'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'UnitPressure'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'UnitPressure'</span> <span class="pre">objects&gt;,</span> <span class="pre">'ATMOSPHERES':</span> <span class="pre">&lt;UnitPressure.ATMOSPHERES:</span> <span class="pre">'atmospheres'&gt;,</span> <span class="pre">'BARS':</span> <span class="pre">&lt;UnitPressure.BARS:</span> <span class="pre">'bars'&gt;,</span> <span class="pre">'HECTOPASCALS':</span> <span class="pre">&lt;UnitPressure.HECTOPASCALS:</span> <span class="pre">'hectopascals'&gt;,</span> <span class="pre">'KILOPASCALS':</span> <span class="pre">&lt;UnitPressure.KILOPASCALS:</span> <span class="pre">'kilopascals'&gt;,</span> <span class="pre">'MILLIBARS':</span> <span class="pre">&lt;UnitPressure.MILLIBARS:</span> <span class="pre">'millibars'&gt;,</span> <span class="pre">'PASCALS':</span> <span class="pre">&lt;UnitPressure.PASCALS:</span> <span class="pre">'pascals'&gt;,</span> <span class="pre">'PSI':</span> <span class="pre">&lt;UnitPressure.PSI:</span> <span class="pre">'psi'&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__repr__&gt;,</span> <span class="pre">'__format__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__format__&gt;,</span> <span class="pre">'__new__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__new__&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__dir__">
+<span class="sig-name descname"><span class="pre">__dir__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__dir__" title="Permalink to this definition"></a></dt>
+<dd><p>Returns all members and all public methods</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__eq__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self==value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__format__" title="Permalink to this definition"></a></dt>
+<dd><p>Return a formatted version of the string as described by format_spec.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__ge__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self&gt;=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__getattribute__">
+<span class="sig-name descname"><span class="pre">__getattribute__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__getattribute__" title="Permalink to this definition"></a></dt>
+<dd><p>Return getattr(self, name).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__getitem__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self[key].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__getnewargs__">
+<span class="sig-name descname"><span class="pre">__getnewargs__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__getnewargs__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__gt__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self&gt;value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__hash__" title="Permalink to this definition"></a></dt>
+<dd><p>Return hash(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__iter__" title="Permalink to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__le__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self&lt;=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__len__" title="Permalink to this definition"></a></dt>
+<dd><p>Return len(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__lt__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self&lt;value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__mod__">
+<span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__mod__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self%value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.unit_pressure'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__mul__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self*value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__ne__" title="Permalink to this definition"></a></dt>
+<dd><p>Return self!=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__new__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__reduce_ex__">
+<span class="sig-name descname"><span class="pre">__reduce_ex__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__reduce_ex__" title="Permalink to this definition"></a></dt>
+<dd><p>Helper for pickle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__repr__" title="Permalink to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__rmod__">
+<span class="sig-name descname"><span class="pre">__rmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__rmod__" title="Permalink to this definition"></a></dt>
+<dd><p>Return value%self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__rmul__">
+<span class="sig-name descname"><span class="pre">__rmul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__rmul__" title="Permalink to this definition"></a></dt>
+<dd><p>Return value*self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__sizeof__">
+<span class="sig-name descname"><span class="pre">__sizeof__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__sizeof__" title="Permalink to this definition"></a></dt>
+<dd><p>Return the size of the string in memory, in bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/unit_pressure.html#UnitPressure.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.__str__" title="Permalink to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._generate_next_value_">
+<span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._generate_next_value_" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the next value when not given.</p>
+<p>name: the name of the member
+start: the initial start value or None
+count: the number of existing members
+last_values: the list of values assigned</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._member_map_">
+<span class="sig-name descname"><span class="pre">_member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ATMOSPHERES':</span> <span class="pre">UnitPressure.ATMOSPHERES,</span> <span class="pre">'BARS':</span> <span class="pre">UnitPressure.BARS,</span> <span class="pre">'HECTOPASCALS':</span> <span class="pre">UnitPressure.HECTOPASCALS,</span> <span class="pre">'KILOPASCALS':</span> <span class="pre">UnitPressure.KILOPASCALS,</span> <span class="pre">'MILLIBARS':</span> <span class="pre">UnitPressure.MILLIBARS,</span> <span class="pre">'PASCALS':</span> <span class="pre">UnitPressure.PASCALS,</span> <span class="pre">'PSI':</span> <span class="pre">UnitPressure.PSI}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._member_names_">
+<span class="sig-name descname"><span class="pre">_member_names_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['ATMOSPHERES',</span> <span class="pre">'BARS',</span> <span class="pre">'HECTOPASCALS',</span> <span class="pre">'KILOPASCALS',</span> <span class="pre">'MILLIBARS',</span> <span class="pre">'PASCALS',</span> <span class="pre">'PSI']</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._member_names_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._member_type_">
+<span class="sig-name descname"><span class="pre">_member_type_</span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._member_type_" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._new_member_">
+<span class="sig-name descname"><span class="pre">_new_member_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._new_member_" title="Permalink to this definition"></a></dt>
+<dd><p>Create and return a new object.  See help(type) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._unhashable_values_">
+<span class="sig-name descname"><span class="pre">_unhashable_values_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._unhashable_values_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._use_args_">
+<span class="sig-name descname"><span class="pre">_use_args_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._use_args_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._value2member_map_">
+<span class="sig-name descname"><span class="pre">_value2member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'atmospheres':</span> <span class="pre">UnitPressure.ATMOSPHERES,</span> <span class="pre">'bars':</span> <span class="pre">UnitPressure.BARS,</span> <span class="pre">'hectopascals':</span> <span class="pre">UnitPressure.HECTOPASCALS,</span> <span class="pre">'kilopascals':</span> <span class="pre">UnitPressure.KILOPASCALS,</span> <span class="pre">'millibars':</span> <span class="pre">UnitPressure.MILLIBARS,</span> <span class="pre">'pascals':</span> <span class="pre">UnitPressure.PASCALS,</span> <span class="pre">'psi':</span> <span class="pre">UnitPressure.PSI}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._value2member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure._value_repr_">
+<span class="sig-name descname"><span class="pre">_value_repr_</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure._value_repr_" title="Permalink to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.capitalize">
+<span class="sig-name descname"><span class="pre">capitalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.capitalize" title="Permalink to this definition"></a></dt>
+<dd><p>Return a capitalized version of the string.</p>
+<p>More specifically, make the first character have upper case and the rest lower
+case.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.casefold">
+<span class="sig-name descname"><span class="pre">casefold</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.casefold" title="Permalink to this definition"></a></dt>
+<dd><p>Return a version of the string suitable for caseless comparisons.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.center">
+<span class="sig-name descname"><span class="pre">center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.center" title="Permalink to this definition"></a></dt>
+<dd><p>Return a centered string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.count" title="Permalink to this definition"></a></dt>
+<dd><p>Return the number of non-overlapping occurrences of substring sub in
+string S[start:end].  Optional arguments start and end are
+interpreted as in slice notation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strict'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.encode" title="Permalink to this definition"></a></dt>
+<dd><p>Encode the string using the codec registered for encoding.</p>
+<dl class="simple">
+<dt>encoding</dt><dd><p>The encoding in which to encode the string.</p>
+</dd>
+<dt>errors</dt><dd><p>The error handling scheme to use for encoding errors.
+The default is ‘strict’ meaning that encoding errors raise a
+UnicodeEncodeError.  Other possible values are ‘ignore’, ‘replace’ and
+‘xmlcharrefreplace’ as well as any other name registered with
+codecs.register_error that can handle UnicodeEncodeErrors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.endswith">
+<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.endswith" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if S ends with the specified suffix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+suffix can also be a tuple of strings to try.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.expandtabs">
+<span class="sig-name descname"><span class="pre">expandtabs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tabsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.expandtabs" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy where all tab characters are expanded using spaces.</p>
+<p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.find">
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.find" title="Permalink to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.format" title="Permalink to this definition"></a></dt>
+<dd><p>Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces (‘{’ and ‘}’).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.format_map">
+<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.format_map" title="Permalink to this definition"></a></dt>
+<dd><p>Return a formatted version of S, using substitutions from mapping.
+The substitutions are identified by braces (‘{’ and ‘}’).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.index" title="Permalink to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isalnum">
+<span class="sig-name descname"><span class="pre">isalnum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isalnum" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is an alpha-numeric string, False otherwise.</p>
+<p>A string is alpha-numeric if all characters in the string are alpha-numeric and
+there is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isalpha">
+<span class="sig-name descname"><span class="pre">isalpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isalpha" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is an alphabetic string, False otherwise.</p>
+<p>A string is alphabetic if all characters in the string are alphabetic and there
+is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isascii">
+<span class="sig-name descname"><span class="pre">isascii</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isascii" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if all characters in the string are ASCII, False otherwise.</p>
+<p>ASCII characters have code points in the range U+0000-U+007F.
+Empty string is ASCII too.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isdecimal">
+<span class="sig-name descname"><span class="pre">isdecimal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isdecimal" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is a decimal string, False otherwise.</p>
+<p>A string is a decimal string if all characters in the string are decimal and
+there is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isdigit">
+<span class="sig-name descname"><span class="pre">isdigit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isdigit" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is a digit string, False otherwise.</p>
+<p>A string is a digit string if all characters in the string are digits and there
+is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isidentifier">
+<span class="sig-name descname"><span class="pre">isidentifier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isidentifier" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is a valid Python identifier, False otherwise.</p>
+<p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+such as “def” or “class”.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.islower">
+<span class="sig-name descname"><span class="pre">islower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.islower" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is a lowercase string, False otherwise.</p>
+<p>A string is lowercase if all cased characters in the string are lowercase and
+there is at least one cased character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isnumeric">
+<span class="sig-name descname"><span class="pre">isnumeric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isnumeric" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is a numeric string, False otherwise.</p>
+<p>A string is numeric if all characters in the string are numeric and there is at
+least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isprintable">
+<span class="sig-name descname"><span class="pre">isprintable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isprintable" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is printable, False otherwise.</p>
+<p>A string is printable if all of its characters are considered printable in
+repr() or if it is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isspace">
+<span class="sig-name descname"><span class="pre">isspace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isspace" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is a whitespace string, False otherwise.</p>
+<p>A string is whitespace if all characters in the string are whitespace and there
+is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.istitle">
+<span class="sig-name descname"><span class="pre">istitle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.istitle" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is a title-cased string, False otherwise.</p>
+<p>In a title-cased string, upper- and title-case characters may only
+follow uncased characters and lowercase characters only cased ones.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.isupper">
+<span class="sig-name descname"><span class="pre">isupper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.isupper" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if the string is an uppercase string, False otherwise.</p>
+<p>A string is uppercase if all cased characters in the string are uppercase and
+there is at least one cased character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.join" title="Permalink to this definition"></a></dt>
+<dd><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: ‘.’.join([‘ab’, ‘pq’, ‘rs’]) -&gt; ‘ab.pq.rs’</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.ljust">
+<span class="sig-name descname"><span class="pre">ljust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.ljust" title="Permalink to this definition"></a></dt>
+<dd><p>Return a left-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.lower">
+<span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.lower" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy of the string converted to lowercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.lstrip">
+<span class="sig-name descname"><span class="pre">lstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.lstrip" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy of the string with leading whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.maketrans">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maketrans</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.maketrans" title="Permalink to this definition"></a></dt>
+<dd><p>Return a translation table usable for str.translate().</p>
+<p>If there is only one argument, it must be a dictionary mapping Unicode
+ordinals (integers) or characters to Unicode ordinals, strings or None.
+Character keys will be then converted to ordinals.
+If there are two arguments, they must be strings of equal length, and
+in the resulting dictionary, each character in x will be mapped to the
+character at the same position in y. If there is a third argument, it
+must be a string, whose characters will be mapped to None in the result.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.partition">
+<span class="sig-name descname"><span class="pre">partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.partition" title="Permalink to this definition"></a></dt>
+<dd><p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string.  If the separator is found,
+returns a 3-tuple containing the part before the separator, the separator
+itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing the original string
+and two empty strings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.removeprefix">
+<span class="sig-name descname"><span class="pre">removeprefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.removeprefix" title="Permalink to this definition"></a></dt>
+<dd><p>Return a str with the given prefix string removed if present.</p>
+<p>If the string starts with the prefix string, return string[len(prefix):].
+Otherwise, return a copy of the original string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.removesuffix">
+<span class="sig-name descname"><span class="pre">removesuffix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.removesuffix" title="Permalink to this definition"></a></dt>
+<dd><p>Return a str with the given suffix string removed if present.</p>
+<p>If the string ends with the suffix string and that suffix is not empty,
+return string[:-len(suffix)]. Otherwise, return a copy of the original
+string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.replace">
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.replace" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>count</dt><dd><p>Maximum number of occurrences to replace.
+-1 (the default value) means replace all occurrences.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>If the optional argument count is given, only the first count occurrences are
+replaced.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.rfind">
+<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.rfind" title="Permalink to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.rindex">
+<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.rindex" title="Permalink to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.rjust">
+<span class="sig-name descname"><span class="pre">rjust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.rjust" title="Permalink to this definition"></a></dt>
+<dd><p>Return a right-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.rpartition">
+<span class="sig-name descname"><span class="pre">rpartition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.rpartition" title="Permalink to this definition"></a></dt>
+<dd><p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string, starting at the end. If
+the separator is found, returns a 3-tuple containing the part before the
+separator, the separator itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing two empty strings
+and the original string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.rsplit">
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.rsplit" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<blockquote>
+<div><dl>
+<dt>sep</dt><dd><p>The separator used to split the string.</p>
+<p>When set to None (the default value), will split on any whitespace
+character (including \n \r \t \f and spaces) and will discard
+empty strings from the result.</p>
+</dd>
+<dt>maxsplit</dt><dd><p>Maximum number of splits (starting from the left).
+-1 (the default value) means no limit.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Splitting starts at the end of the string and works to the front.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.rstrip">
+<span class="sig-name descname"><span class="pre">rstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.rstrip" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy of the string with trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.split" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<blockquote>
+<div><dl>
+<dt>sep</dt><dd><p>The separator used to split the string.</p>
+<p>When set to None (the default value), will split on any whitespace
+character (including \n \r \t \f and spaces) and will discard
+empty strings from the result.</p>
+</dd>
+<dt>maxsplit</dt><dd><p>Maximum number of splits (starting from the left).
+-1 (the default value) means no limit.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Note, str.split() is mainly useful for data that has been intentionally
+delimited.  With natural text that includes punctuation, consider using
+the regular expression module.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.splitlines">
+<span class="sig-name descname"><span class="pre">splitlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keepends</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.splitlines" title="Permalink to this definition"></a></dt>
+<dd><p>Return a list of the lines in the string, breaking at line boundaries.</p>
+<p>Line breaks are not included in the resulting list unless keepends is given and
+true.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.startswith">
+<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.startswith" title="Permalink to this definition"></a></dt>
+<dd><p>Return True if S starts with the specified prefix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+prefix can also be a tuple of strings to try.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.strip">
+<span class="sig-name descname"><span class="pre">strip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.strip" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy of the string with leading and trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.swapcase">
+<span class="sig-name descname"><span class="pre">swapcase</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.swapcase" title="Permalink to this definition"></a></dt>
+<dd><p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.title">
+<span class="sig-name descname"><span class="pre">title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.title" title="Permalink to this definition"></a></dt>
+<dd><p>Return a version of the string where each word is titlecased.</p>
+<p>More specifically, words start with uppercased characters and all remaining
+cased characters have lower case.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.translate" title="Permalink to this definition"></a></dt>
+<dd><p>Replace each character in the string using the given translation table.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>table</dt><dd><p>Translation table, which must be a mapping of Unicode ordinals to
+Unicode ordinals, strings, or None.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>The table must implement lookup/indexing via __getitem__, for instance a
+dictionary or list.  If this operation raises LookupError, the character is
+left untouched.  Characters mapped to None are deleted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.upper">
+<span class="sig-name descname"><span class="pre">upper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.upper" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy of the string converted to uppercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.unit_pressure.UnitPressure.zfill">
+<span class="sig-name descname"><span class="pre">zfill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/unit_pressure.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.unit_pressure.UnitPressure.zfill" title="Permalink to this definition"></a></dt>
+<dd><p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
+<p>The string is never truncated.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kittycad.models.unit_power_conversion.UnitPowerConversion.html" class="btn btn-neutral float-left" title="kittycad.models.unit_power_conversion.UnitPowerConversion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.models.unit_pressure.UnitPressure.html" class="btn btn-neutral float-right" title="kittycad.models.unit_pressure.UnitPressure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
