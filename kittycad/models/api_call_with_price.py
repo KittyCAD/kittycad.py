@@ -164,7 +164,7 @@ class ApiCallWithPrice:
         if isinstance(_method, Unset):
             method = UNSET
         else:
-            method = Method(_method)
+            method = _method  # type: ignore[arg-type]
 
         minutes = d.pop("minutes", UNSET)
 

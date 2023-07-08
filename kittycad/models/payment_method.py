@@ -9,7 +9,7 @@ from ..models.card_details import CardDetails
 from ..models.payment_method_type import PaymentMethodType
 from ..types import UNSET, Unset
 
-V = TypeVar("V", bound="PaymentMethod")
+E = TypeVar("E", bound="PaymentMethod")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +57,7 @@ class PaymentMethod:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         _billing_info = d.pop("billing_info", UNSET)
         billing_info: Union[Unset, BillingInfo]
@@ -88,7 +88,7 @@ class PaymentMethod:
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = PaymentMethodType(_type)
+            type = _type  # type: ignore[arg-type]
 
         payment_method = cls(
             billing_info=billing_info,

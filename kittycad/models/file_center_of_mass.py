@@ -9,7 +9,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="FileCenterOfMass")
+S = TypeVar("S", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
@@ -80,7 +80,7 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         center_of_mass = cast(List[float], d.pop("center_of_mass", UNSET))
 
@@ -112,7 +112,7 @@ class FileCenterOfMass:
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = FileImportFormat(_src_format)
+            src_format = _src_format  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -126,7 +126,7 @@ class FileCenterOfMass:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = ApiCallStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

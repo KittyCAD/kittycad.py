@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-E = TypeVar("E", bound="Runtime")
+N = TypeVar("N", bound="Runtime")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class Runtime:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
+    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
         d = src_dict.copy()
         path = d.pop("path", UNSET)
 

@@ -8,7 +8,7 @@ from ..models.currency import Currency
 from ..models.invoice_status import InvoiceStatus
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="Invoice")
+H = TypeVar("H", bound="Invoice")
 
 
 @attr.s(auto_attribs=True)
@@ -26,6 +26,9 @@ class Invoice:
     customer_id: Union[Unset, str] = UNSET
     default_payment_method: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
+    from ..models.discount import Discount
+
+    discounts: Union[Unset, List[Discount]] = UNSET
     id: Union[Unset, str] = UNSET
     from ..models.invoice_line_item import InvoiceLineItem
 
@@ -59,6 +62,11 @@ class Invoice:
         customer_id = self.customer_id
         default_payment_method = self.default_payment_method
         description = self.description
+        from ..models.discount import Discount
+
+        discounts: Union[Unset, List[Discount]] = UNSET
+        if not isinstance(self.discounts, Unset):
+            discounts = self.discounts
         id = self.id
         from ..models.invoice_line_item import InvoiceLineItem
 
@@ -103,6 +111,8 @@ class Invoice:
             field_dict["default_payment_method"] = default_payment_method
         if description is not UNSET:
             field_dict["description"] = description
+        if discounts is not UNSET:
+            field_dict["discounts"] = discounts
         if id is not UNSET:
             field_dict["id"] = id
         if lines is not UNSET:
@@ -133,7 +143,7 @@ class Invoice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         amount_due = d.pop("amount_due", UNSET)
 
@@ -157,7 +167,7 @@ class Invoice:
         if isinstance(_currency, Unset):
             currency = UNSET
         else:
-            currency = Currency(_currency)
+            currency = _currency  # type: ignore[arg-type]
 
         customer_email = d.pop("customer_email", UNSET)
 
@@ -166,6 +176,10 @@ class Invoice:
         default_payment_method = d.pop("default_payment_method", UNSET)
 
         description = d.pop("description", UNSET)
+
+        from ..models.discount import Discount
+
+        discounts = cast(List[Discount], d.pop("discounts", UNSET))
 
         id = d.pop("id", UNSET)
 
@@ -189,7 +203,7 @@ class Invoice:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = InvoiceStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         subtotal = d.pop("subtotal", UNSET)
 
@@ -211,6 +225,7 @@ class Invoice:
             customer_id=customer_id,
             default_payment_method=default_payment_method,
             description=description,
+            discounts=discounts,
             id=id,
             lines=lines,
             metadata=metadata,

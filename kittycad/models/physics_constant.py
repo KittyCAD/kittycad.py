@@ -9,7 +9,7 @@ from ..models.physics_constant_name import PhysicsConstantName
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-R = TypeVar("R", bound="PhysicsConstant")
+Y = TypeVar("Y", bound="PhysicsConstant")
 
 
 @attr.s(auto_attribs=True)
@@ -78,7 +78,7 @@ class PhysicsConstant:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
+    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -92,7 +92,7 @@ class PhysicsConstant:
         if isinstance(_constant, Unset):
             constant = UNSET
         else:
-            constant = PhysicsConstantName(_constant)
+            constant = _constant  # type: ignore[arg-type]
 
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
@@ -122,7 +122,7 @@ class PhysicsConstant:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = ApiCallStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

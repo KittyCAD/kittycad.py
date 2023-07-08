@@ -11,7 +11,7 @@ from ..models.file_system_metadata import FileSystemMetadata
 from ..models.point_e_metadata import PointEMetadata
 from ..types import UNSET, Unset
 
-S = TypeVar("S", bound="Metadata")
+K = TypeVar("K", bound="Metadata")
 
 
 @attr.s(auto_attribs=True)
@@ -71,7 +71,7 @@ class Metadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
+    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
         d = src_dict.copy()
         _cache = d.pop("cache", UNSET)
         cache: Union[Unset, CacheMetadata]
@@ -92,7 +92,7 @@ class Metadata:
         if isinstance(_environment, Unset):
             environment = UNSET
         else:
-            environment = Environment(_environment)
+            environment = _environment  # type: ignore[arg-type]
 
         _executor = d.pop("executor", UNSET)
         executor: Union[Unset, ExecutorMetadata]

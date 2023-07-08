@@ -292,14 +292,20 @@ def generateTypeAndExamplePython(
             logging.error("schema: %s", json.dumps(schema, indent=4))
             raise Exception("Unknown parameter type")
     elif "oneOf" in schema and len(schema["oneOf"]) > 0:
+        one_of = schema["oneOf"][0]
         # Check if each of these only has a object w 1 property.
         if isNestedObjectOneOf(schema):
-            properties = schema["oneOf"][0]["properties"]
-            for prop in properties:
+            if "properties" in one_of:
+                properties = one_of["properties"]
+                for prop in properties:
+                    return generateTypeAndExamplePython(
+                        prop, properties[prop], data, camel_to_snake(name)
+                    )
+                    break
+            elif "type" in one_of and one_of["type"] == "string":
                 return generateTypeAndExamplePython(
-                    prop, properties[prop], data, camel_to_snake(name)
+                    name, one_of, data, camel_to_snake(name)
                 )
-                break
 
         return generateTypeAndExamplePython(name, schema["oneOf"][0], data, None)
     elif "allOf" in schema and len(schema["allOf"]) == 1:
@@ -1249,6 +1255,21 @@ def generateEnumType(
     logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
+    code = generateEnumTypeCode(name, schema, type_name, additional_docs)
+    f.write(code)
+
+    # Close the file.
+    f.close()
+
+
+def generateEnumTypeCode(
+    name: str,
+    schema: dict,
+    type_name: str,
+    additional_docs: List[str],
+) -> str:
+    f = io.StringIO()
+
     f.write("from enum import Enum\n")
     f.write("\n")
     f.write("class " + name + "(str, Enum):\n")
@@ -1276,8 +1297,12 @@ def generateEnumType(
     f.write("\tdef __str__(self) -> str:\n")
     f.write("\t\treturn str(self.value)\n")
 
+    value = f.getvalue()
+
     # Close the file.
     f.close()
+
+    return value
 
 
 def generateOneOfType(path: str, name: str, schema: dict, data: dict):
@@ -1316,35 +1341,43 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         # We want to write each of the nested objects.
         for one_of in schema["oneOf"]:
             # Get the nested object.
-            for prop_name in one_of["properties"]:
-                nested_object = one_of["properties"][prop_name]
-                if nested_object == {}:
-                    f.write("from typing import Any\n")
-                    f.write(prop_name + " = Any\n")
-                    f.write("\n")
-                    all_options.append(prop_name)
-                elif "$ref" in nested_object:
-                    ref = nested_object["$ref"]
-                    ref_name = ref[ref.rfind("/") + 1 :]
-                    f.write(
-                        "from ."
-                        + camel_to_snake(ref_name)
-                        + " import "
-                        + ref_name
-                        + "\n"
-                    )
-                    f.write("\n")
-                    if prop_name != ref_name:
-                        f.write(prop_name + " = " + ref_name + "\n")
+            if "properties" in one_of:
+                for prop_name in one_of["properties"]:
+                    nested_object = one_of["properties"][prop_name]
+                    if nested_object == {}:
+                        f.write("from typing import Any\n")
+                        f.write(prop_name + " = Any\n")
                         f.write("\n")
-                    all_options.append(prop_name)
-                else:
-                    object_code = generateObjectTypeCode(
-                        prop_name, nested_object, "object", data
-                    )
-                    f.write(object_code)
-                    f.write("\n")
-                    all_options.append(prop_name)
+                        all_options.append(prop_name)
+                    elif "$ref" in nested_object:
+                        ref = nested_object["$ref"]
+                        ref_name = ref[ref.rfind("/") + 1 :]
+                        f.write(
+                            "from ."
+                            + camel_to_snake(ref_name)
+                            + " import "
+                            + ref_name
+                            + "\n"
+                        )
+                        f.write("\n")
+                        if prop_name != ref_name:
+                            f.write(prop_name + " = " + ref_name + "\n")
+                            f.write("\n")
+                        all_options.append(prop_name)
+                    else:
+                        object_code = generateObjectTypeCode(
+                            prop_name, nested_object, "object", data
+                        )
+                        f.write(object_code)
+                        f.write("\n")
+                        all_options.append(prop_name)
+            elif "type" in one_of and one_of["type"] == "string":
+                enum_code = generateEnumTypeCode(
+                    one_of["enum"][0], one_of, "string", []
+                )
+                f.write(enum_code)
+                f.write("\n")
+                all_options.append(one_of["enum"][0])
 
     # Check if each one_of has the same enum of one.
     tag = None
@@ -2290,6 +2323,10 @@ def isNestedObjectOneOf(schema: dict) -> bool:
                 else:
                     is_nested_object = False
                     break
+        elif (
+            one_of["type"] == "string" and "enum" in one_of and len(one_of["enum"]) == 1
+        ):
+            is_nested_object = True
         else:
             is_nested_object = False
             break

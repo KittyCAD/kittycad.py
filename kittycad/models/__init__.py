@@ -21,6 +21,7 @@ from .async_api_call_results_page import AsyncApiCallResultsPage
 from .async_api_call_type import AsyncApiCallType
 from .billing_info import BillingInfo
 from .cache_metadata import CacheMetadata
+from .camera_drag_interaction_type import CameraDragInteractionType
 from .card_details import CardDetails
 from .cluster import Cluster
 from .code_language import CodeLanguage
@@ -28,6 +29,7 @@ from .code_output import CodeOutput
 from .commit import Commit
 from .connection import Connection
 from .country_code import CountryCode
+from .coupon import Coupon
 from .created_at_sort_mode import CreatedAtSortMode
 from .currency import Currency
 from .customer import Customer
@@ -35,6 +37,7 @@ from .customer_balance import CustomerBalance
 from .device_access_token_request_form import DeviceAccessTokenRequestForm
 from .device_auth_request_form import DeviceAuthRequestForm
 from .device_auth_verify_params import DeviceAuthVerifyParams
+from .discount import Discount
 from .docker_system_info import DockerSystemInfo
 from .email_authentication_form import EmailAuthenticationForm
 from .engine_metadata import EngineMetadata
@@ -64,7 +67,6 @@ from .jetstream_api_stats import JetstreamApiStats
 from .jetstream_config import JetstreamConfig
 from .jetstream_stats import JetstreamStats
 from .leaf_node import LeafNode
-from .line3d import Line3d
 from .mesh import Mesh
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
@@ -81,6 +83,7 @@ from .o_auth2_client_info import OAuth2ClientInfo
 from .o_auth2_grant_type import OAuth2GrantType
 from .onboarding import Onboarding
 from .output_file import OutputFile
+from .path_segment import PathSegment
 from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
 from .payment_method_card_checks import PaymentMethodCardChecks

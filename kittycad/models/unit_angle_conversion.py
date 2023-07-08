@@ -9,7 +9,7 @@ from ..models.unit_angle import UnitAngle
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-Y = TypeVar("Y", bound="UnitAngleConversion")
+V = TypeVar("V", bound="UnitAngleConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitAngleConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -119,7 +119,7 @@ class UnitAngleConversion:
         if isinstance(_input_unit, Unset):
             input_unit = UNSET
         else:
-            input_unit = UnitAngle(_input_unit)
+            input_unit = _input_unit  # type: ignore[arg-type]
 
         output = d.pop("output", UNSET)
 
@@ -128,7 +128,7 @@ class UnitAngleConversion:
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
         else:
-            output_unit = UnitAngle(_output_unit)
+            output_unit = _output_unit  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -142,7 +142,7 @@ class UnitAngleConversion:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = ApiCallStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
