@@ -21,7 +21,7 @@ class StartPath(str, Enum):
         return str(self.value)
 
 
-Q = TypeVar("Q", bound="MovePathPen")
+B = TypeVar("B", bound="MovePathPen")
 
 
 @attr.s(auto_attribs=True)
@@ -48,7 +48,7 @@ class MovePathPen:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         _path = d.pop("path", UNSET)
         path: Union[Unset, ModelingCmdId]
@@ -89,7 +89,7 @@ class MovePathPen:
         return key in self.additional_properties
 
 
-F = TypeVar("F", bound="ExtendPath")
+B = TypeVar("B", bound="ExtendPath")
 
 
 @attr.s(auto_attribs=True)
@@ -116,7 +116,7 @@ class ExtendPath:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         _path = d.pop("path", UNSET)
         path: Union[Unset, ModelingCmdId]
@@ -157,7 +157,7 @@ class ExtendPath:
         return key in self.additional_properties
 
 
-H = TypeVar("H", bound="ClosePath")
+P = TypeVar("P", bound="ClosePath")
 
 
 @attr.s(auto_attribs=True)
@@ -178,7 +178,7 @@ class ClosePath:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
         d = src_dict.copy()
         path_id = d.pop("path_id", UNSET)
 
@@ -206,7 +206,7 @@ class ClosePath:
         return key in self.additional_properties
 
 
-N = TypeVar("N", bound="CameraDragStart")
+J = TypeVar("J", bound="CameraDragStart")
 
 
 @attr.s(auto_attribs=True)
@@ -233,7 +233,7 @@ class CameraDragStart:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
         d = src_dict.copy()
         _interaction = d.pop("interaction", UNSET)
         interaction: Union[Unset, CameraDragInteractionType]
@@ -274,7 +274,7 @@ class CameraDragStart:
         return key in self.additional_properties
 
 
-H = TypeVar("H", bound="CameraDragMove")
+T = TypeVar("T", bound="CameraDragMove")
 
 
 @attr.s(auto_attribs=True)
@@ -305,7 +305,7 @@ class CameraDragMove:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _interaction = d.pop("interaction", UNSET)
         interaction: Union[Unset, CameraDragInteractionType]
@@ -349,7 +349,7 @@ class CameraDragMove:
         return key in self.additional_properties
 
 
-B = TypeVar("B", bound="CameraDragEnd")
+V = TypeVar("V", bound="CameraDragEnd")
 
 
 @attr.s(auto_attribs=True)
@@ -376,7 +376,7 @@ class CameraDragEnd:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         _interaction = d.pop("interaction", UNSET)
         interaction: Union[Unset, CameraDragInteractionType]

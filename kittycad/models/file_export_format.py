@@ -12,7 +12,9 @@ class FileExportFormat(str, Enum):
     FBX = "fbx"
     """# The FBX file format (in binary). <https://en.wikipedia.org/wiki/FBX> """  # noqa: E501
     FBXB = "fbxb"
-    """# The OBJ file format. A zip file containing both the obj file itself and its associated mtl file for full processing. <https://en.wikipedia.org/wiki/Wavefront_.obj_file>> The OBJ file format. <https://en.wikipedia.org/wiki/Wavefront_.obj_file> It may or may not have an an attached material (mtl // mtllib) within the file, but we interact with it as if it does not. """  # noqa: E501
+    """# glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). """  # noqa: E501
+    GLTF = "gltf"
+    """# The OBJ file format. <https://en.wikipedia.org/wiki/Wavefront_.obj_file> It may or may not have an an attached material (mtl // mtllib) within the file, but we interact with it as if it does not. """  # noqa: E501
     OBJ = "obj"
     """# The PLY file format. <https://en.wikipedia.org/wiki/PLY_(file_format)> """  # noqa: E501
     PLY = "ply"

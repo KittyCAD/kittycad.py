@@ -10,8 +10,8 @@ class FileImportFormat(str, Enum):
     DXF = "dxf"
     """# The FBX file format. <https://en.wikipedia.org/wiki/FBX> """  # noqa: E501
     FBX = "fbx"
-    """# The OBJ file format. A zip file containing both the obj file itself and its associated mtl file for full processing. <https://en.wikipedia.org/wiki/Wavefront_.obj_file>> """  # noqa: E501
-    OBJ_ZIP = "obj_zip"
+    """# glTF 2.0. """  # noqa: E501
+    GLTF = "gltf"
     """# The OBJ file format. <https://en.wikipedia.org/wiki/Wavefront_.obj_file> It may or may not have an an attached material (mtl // mtllib) within the file, but we interact with it as if it does not. """  # noqa: E501
     OBJ = "obj"
     """# The PLY file format. <https://en.wikipedia.org/wiki/PLY_(file_format)> """  # noqa: E501

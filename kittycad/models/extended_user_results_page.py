@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="ExtendedUserResultsPage")
+B = TypeVar("B", bound="ExtendedUserResultsPage")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class ExtendedUserResultsPage:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
         from ..models.extended_user import ExtendedUser
 
