@@ -9,7 +9,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-S = TypeVar("S", bound="FileCenterOfMass")
+A = TypeVar("A", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
@@ -80,7 +80,7 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
+    def from_dict(cls: Type[A], src_dict: Dict[str, Any]) -> A:
         d = src_dict.copy()
         center_of_mass = cast(List[float], d.pop("center_of_mass", UNSET))
 

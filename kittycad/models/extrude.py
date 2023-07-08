@@ -5,7 +5,7 @@ import attr
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 
-B = TypeVar("B", bound="Extrude")
+S = TypeVar("S", bound="Extrude")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class Extrude:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
+    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
         d = src_dict.copy()
         cap = d.pop("cap", UNSET)
 
