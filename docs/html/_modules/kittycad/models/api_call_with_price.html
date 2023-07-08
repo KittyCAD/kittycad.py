@@ -245,7 +245,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_method</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">method</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">method</span> <span class="o">=</span> <span class="n">Method</span><span class="p">(</span><span class="n">_method</span><span class="p">)</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="n">_method</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">minutes</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;minutes&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 

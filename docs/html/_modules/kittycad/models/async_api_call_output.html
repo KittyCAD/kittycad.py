@@ -201,14 +201,14 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_output_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">output_format</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">output_format</span> <span class="o">=</span> <span class="n">FileExportFormat</span><span class="p">(</span><span class="n">_output_format</span><span class="p">)</span>
+            <span class="n">output_format</span> <span class="o">=</span> <span class="n">_output_format</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_src_format</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;src_format&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">src_format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">FileImportFormat</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">src_format</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">FileImportFormat</span><span class="p">(</span><span class="n">_src_format</span><span class="p">)</span>
+            <span class="n">src_format</span> <span class="o">=</span> <span class="n">_src_format</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -222,7 +222,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">ApiCallStatus</span><span class="p">(</span><span class="n">_status</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -377,7 +377,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">src_format</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">FileImportFormat</span><span class="p">(</span><span class="n">_src_format</span><span class="p">)</span>
+            <span class="n">src_format</span> <span class="o">=</span> <span class="n">_src_format</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -391,7 +391,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">ApiCallStatus</span><span class="p">(</span><span class="n">_status</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -549,7 +549,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">src_format</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">FileImportFormat</span><span class="p">(</span><span class="n">_src_format</span><span class="p">)</span>
+            <span class="n">src_format</span> <span class="o">=</span> <span class="n">_src_format</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -563,7 +563,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">ApiCallStatus</span><span class="p">(</span><span class="n">_status</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -714,7 +714,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">src_format</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">FileImportFormat</span><span class="p">(</span><span class="n">_src_format</span><span class="p">)</span>
+            <span class="n">src_format</span> <span class="o">=</span> <span class="n">_src_format</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -728,7 +728,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">ApiCallStatus</span><span class="p">(</span><span class="n">_status</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -888,7 +888,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">src_format</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">FileImportFormat</span><span class="p">(</span><span class="n">_src_format</span><span class="p">)</span>
+            <span class="n">src_format</span> <span class="o">=</span> <span class="n">_src_format</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -902,7 +902,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">ApiCallStatus</span><span class="p">(</span><span class="n">_status</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -1053,7 +1053,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">src_format</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">src_format</span> <span class="o">=</span> <span class="n">FileImportFormat</span><span class="p">(</span><span class="n">_src_format</span><span class="p">)</span>
+            <span class="n">src_format</span> <span class="o">=</span> <span class="n">_src_format</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -1067,7 +1067,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">ApiCallStatus</span><span class="p">(</span><span class="n">_status</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">surface_area</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;surface_area&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 

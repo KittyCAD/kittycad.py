@@ -87,7 +87,7 @@
 <span class="kn">from</span> <span class="nn">..models.modeling_cmd_id</span> <span class="kn">import</span> <span class="n">ModelingCmdId</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">Q</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;ModelingCmdReq&quot;</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;ModelingCmdReq&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ModelingCmdReq"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd_req.ModelingCmdReq.html#kittycad.models.modeling_cmd_req.ModelingCmdReq">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -120,7 +120,7 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="ModelingCmdReq.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd_req.ModelingCmdReq.html#kittycad.models.modeling_cmd_req.ModelingCmdReq.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Q</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Q</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">B</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">B</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">_cmd</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cmd&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">cmd</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ModelingCmd</span><span class="p">]</span>

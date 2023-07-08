@@ -123,14 +123,14 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_authorization_type</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">authorization_type</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">authorization_type</span> <span class="o">=</span> <span class="n">AiPluginHttpAuthType</span><span class="p">(</span><span class="n">_authorization_type</span><span class="p">)</span>
+            <span class="n">authorization_type</span> <span class="o">=</span> <span class="n">_authorization_type</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="nb">type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">AiPluginAuthType</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="nb">type</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">type</span> <span class="o">=</span> <span class="n">AiPluginAuthType</span><span class="p">(</span><span class="n">_type</span><span class="p">)</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">_type</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">ai_plugin_auth</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">authorization_type</span><span class="o">=</span><span class="n">authorization_type</span><span class="p">,</span>

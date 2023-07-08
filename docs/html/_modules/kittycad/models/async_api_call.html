@@ -206,14 +206,14 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">ApiCallStatus</span><span class="p">(</span><span class="n">_status</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="nb">type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">AsyncApiCallType</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="nb">type</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">type</span> <span class="o">=</span> <span class="n">AsyncApiCallType</span><span class="p">(</span><span class="n">_type</span><span class="p">)</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="n">_type</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_updated_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">updated_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>

@@ -86,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_type.html">kittycad.models.async_api_call_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.billing_info.html">kittycad.models.billing_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cache_metadata.html">kittycad.models.cache_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.camera_drag_interaction_type.html">kittycad.models.camera_drag_interaction_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.card_details.html">kittycad.models.card_details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_language.html">kittycad.models.code_language</a></li>
@@ -93,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.commit.html">kittycad.models.commit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.connection.html">kittycad.models.connection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.country_code.html">kittycad.models.country_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.coupon.html">kittycad.models.coupon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.currency.html">kittycad.models.currency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer.html">kittycad.models.customer</a></li>
@@ -136,6 +138,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_access_token_request_form.html">kittycad.models.device_access_token_request_form</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_request_form.html">kittycad.models.device_auth_request_form</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_verify_params.html">kittycad.models.device_auth_verify_params</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.discount.html">kittycad.models.discount</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.docker_system_info.html">kittycad.models.docker_system_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.email_authentication_form.html">kittycad.models.email_authentication_form</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.engine_metadata.html">kittycad.models.engine_metadata</a></li>
@@ -165,7 +168,6 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_config.html">kittycad.models.jetstream_config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_stats.html">kittycad.models.jetstream_stats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.leaf_node.html">kittycad.models.leaf_node</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.line3d.html">kittycad.models.line3d</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.mesh.html">kittycad.models.mesh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.meta_cluster_info.html">kittycad.models.meta_cluster_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.metadata.html">kittycad.models.metadata</a></li>
@@ -182,6 +184,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_grant_type.html">kittycad.models.o_auth2_grant_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.onboarding.html">kittycad.models.onboarding</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_file.html">kittycad.models.output_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_segment.html">kittycad.models.path_segment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_intent.html">kittycad.models.payment_intent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method.html">kittycad.models.payment_method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_card_checks.html">kittycad.models.payment_method_card_checks</a></li>
@@ -414,7 +417,7 @@
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/customer_balance.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/customer_balance.html#CustomerBalance.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.customer_balance.CustomerBalance.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">N</span></code>, bound= CustomerBalance)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">J</span></code>, bound= CustomerBalance)</p>
 </dd>
 </dl>
 </dd></dl>

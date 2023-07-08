@@ -79,74 +79,435 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.modeling_cmd</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">attr</span>
 
+<span class="kn">from</span> <span class="nn">..models.camera_drag_interaction_type</span> <span class="kn">import</span> <span class="n">CameraDragInteractionType</span>
+<span class="kn">from</span> <span class="nn">..models.modeling_cmd_id</span> <span class="kn">import</span> <span class="n">ModelingCmdId</span>
+<span class="kn">from</span> <span class="nn">..models.path_segment</span> <span class="kn">import</span> <span class="n">PathSegment</span>
 <span class="kn">from</span> <span class="nn">..models.point2d</span> <span class="kn">import</span> <span class="n">Point2d</span>
+<span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 <span class="kn">from</span> <span class="nn">.extrude</span> <span class="kn">import</span> <span class="n">Extrude</span>
-<span class="kn">from</span> <span class="nn">.line3d</span> <span class="kn">import</span> <span class="n">Line3d</span>
-
-<span class="n">AddLine</span> <span class="o">=</span> <span class="n">Line3d</span>
 
 
-<span class="n">K</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;SelectionClick&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="StartPath"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.StartPath.html#kittycad.models.modeling_cmd.StartPath">[docs]</a><span class="k">class</span> <span class="nc">StartPath</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Start a path.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="n">START_PATH</span> <span class="o">=</span> <span class="s2">&quot;StartPath&quot;</span>
+
+<div class="viewcode-block" id="StartPath.__str__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.StartPath.html#kittycad.models.modeling_cmd.StartPath.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="SelectionClick"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.SelectionClick.html#kittycad.models.modeling_cmd.SelectionClick">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">SelectionClick</span><span class="p">:</span>
-    <span class="n">at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;MovePathPen&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MovePathPen"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.MovePathPen.html#kittycad.models.modeling_cmd.MovePathPen">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MovePathPen</span><span class="p">:</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ModelingCmdId</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">to</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
 
     <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SelectionClick.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.SelectionClick.html#kittycad.models.modeling_cmd.SelectionClick.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">at</span>
+<div class="viewcode-block" id="MovePathPen.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.MovePathPen.html#kittycad.models.modeling_cmd.MovePathPen.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to</span>
 
         <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
         <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
-        <span class="k">if</span> <span class="n">at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">at</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="k">if</span> <span class="n">to</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;to&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">to</span>
 
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
-<div class="viewcode-block" id="SelectionClick.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.SelectionClick.html#kittycad.models.modeling_cmd.SelectionClick.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">K</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">K</span><span class="p">:</span>
+<div class="viewcode-block" id="MovePathPen.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.MovePathPen.html#kittycad.models.modeling_cmd.MovePathPen.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Q</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Q</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">at</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="n">_path</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ModelingCmdId</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_path</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">at</span> <span class="o">=</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">_at</span><span class="p">)</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">ModelingCmdId</span><span class="p">(</span><span class="n">_path</span><span class="p">)</span>
 
-        <span class="n">selection_click</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">at</span><span class="o">=</span><span class="n">at</span><span class="p">,</span>
+        <span class="n">_to</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">to</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_to</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">to</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">to</span> <span class="o">=</span> <span class="n">Point3d</span><span class="p">(</span><span class="n">_to</span><span class="p">)</span>
+
+        <span class="n">move_path_pen</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+            <span class="n">to</span><span class="o">=</span><span class="n">to</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">selection_click</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
-        <span class="k">return</span> <span class="n">selection_click</span></div>
+        <span class="n">move_path_pen</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">move_path_pen</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-<div class="viewcode-block" id="SelectionClick.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.SelectionClick.html#kittycad.models.modeling_cmd.SelectionClick.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<div class="viewcode-block" id="MovePathPen.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.MovePathPen.html#kittycad.models.modeling_cmd.MovePathPen.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SelectionClick.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.SelectionClick.html#kittycad.models.modeling_cmd.SelectionClick.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="MovePathPen.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.MovePathPen.html#kittycad.models.modeling_cmd.MovePathPen.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
 
-<div class="viewcode-block" id="SelectionClick.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.SelectionClick.html#kittycad.models.modeling_cmd.SelectionClick.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="MovePathPen.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.MovePathPen.html#kittycad.models.modeling_cmd.MovePathPen.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SelectionClick.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.SelectionClick.html#kittycad.models.modeling_cmd.SelectionClick.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="MovePathPen.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.MovePathPen.html#kittycad.models.modeling_cmd.MovePathPen.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
 
 
-<span class="n">ModelingCmd</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">AddLine</span><span class="p">,</span> <span class="n">Extrude</span><span class="p">,</span> <span class="n">SelectionClick</span><span class="p">]</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;ExtendPath&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ExtendPath"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ExtendPath.html#kittycad.models.modeling_cmd.ExtendPath">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ExtendPath</span><span class="p">:</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ModelingCmdId</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">segment</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">PathSegment</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+
+    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ExtendPath.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ExtendPath.html#kittycad.models.modeling_cmd.ExtendPath.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">segment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment</span>
+
+        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="k">if</span> <span class="n">segment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;segment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">segment</span>
+
+        <span class="k">return</span> <span class="n">field_dict</span></div>
+
+<div class="viewcode-block" id="ExtendPath.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ExtendPath.html#kittycad.models.modeling_cmd.ExtendPath.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">F</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">F</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">_path</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ModelingCmdId</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_path</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">ModelingCmdId</span><span class="p">(</span><span class="n">_path</span><span class="p">)</span>
+
+        <span class="n">_segment</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;segment&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">segment</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">PathSegment</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_segment</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">segment</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">segment</span> <span class="o">=</span> <span class="n">_segment</span>  <span class="c1"># type: ignore[arg-type]</span>
+
+        <span class="n">extend_path</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+            <span class="n">segment</span><span class="o">=</span><span class="n">segment</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">extend_path</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">extend_path</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="ExtendPath.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ExtendPath.html#kittycad.models.modeling_cmd.ExtendPath.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ExtendPath.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ExtendPath.html#kittycad.models.modeling_cmd.ExtendPath.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="ExtendPath.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ExtendPath.html#kittycad.models.modeling_cmd.ExtendPath.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ExtendPath.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ExtendPath.html#kittycad.models.modeling_cmd.ExtendPath.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;ClosePath&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ClosePath"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ClosePath.html#kittycad.models.modeling_cmd.ClosePath">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ClosePath</span><span class="p">:</span>
+    <span class="n">path_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+
+    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ClosePath.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ClosePath.html#kittycad.models.modeling_cmd.ClosePath.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">path_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_id</span>
+
+        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
+        <span class="k">if</span> <span class="n">path_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;path_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_id</span>
+
+        <span class="k">return</span> <span class="n">field_dict</span></div>
+
+<div class="viewcode-block" id="ClosePath.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ClosePath.html#kittycad.models.modeling_cmd.ClosePath.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">H</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">H</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">path_id</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;path_id&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">close_path</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">path_id</span><span class="o">=</span><span class="n">path_id</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">close_path</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">close_path</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="ClosePath.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ClosePath.html#kittycad.models.modeling_cmd.ClosePath.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ClosePath.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ClosePath.html#kittycad.models.modeling_cmd.ClosePath.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="ClosePath.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ClosePath.html#kittycad.models.modeling_cmd.ClosePath.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ClosePath.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.ClosePath.html#kittycad.models.modeling_cmd.ClosePath.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+
+
+<span class="n">N</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;CameraDragStart&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CameraDragStart"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragStart.html#kittycad.models.modeling_cmd.CameraDragStart">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CameraDragStart</span><span class="p">:</span>
+    <span class="n">interaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">CameraDragInteractionType</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">window</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+
+    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CameraDragStart.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragStart.html#kittycad.models.modeling_cmd.CameraDragStart.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interaction</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interaction</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span>
+
+        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
+        <span class="k">if</span> <span class="n">interaction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;interaction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interaction</span>
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;window&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">window</span>
+
+        <span class="k">return</span> <span class="n">field_dict</span></div>
+
+<div class="viewcode-block" id="CameraDragStart.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragStart.html#kittycad.models.modeling_cmd.CameraDragStart.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">N</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">_interaction</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;interaction&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">interaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">CameraDragInteractionType</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_interaction</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="n">_interaction</span>  <span class="c1"># type: ignore[arg-type]</span>
+
+        <span class="n">_window</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;window&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">window</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_window</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">_window</span><span class="p">)</span>
+
+        <span class="n">camera_drag_start</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">interaction</span><span class="o">=</span><span class="n">interaction</span><span class="p">,</span>
+            <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">camera_drag_start</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">camera_drag_start</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="CameraDragStart.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragStart.html#kittycad.models.modeling_cmd.CameraDragStart.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CameraDragStart.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragStart.html#kittycad.models.modeling_cmd.CameraDragStart.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="CameraDragStart.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragStart.html#kittycad.models.modeling_cmd.CameraDragStart.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CameraDragStart.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragStart.html#kittycad.models.modeling_cmd.CameraDragStart.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;CameraDragMove&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CameraDragMove"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragMove.html#kittycad.models.modeling_cmd.CameraDragMove">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CameraDragMove</span><span class="p">:</span>
+    <span class="n">interaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">CameraDragInteractionType</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">sequence</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">window</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+
+    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CameraDragMove.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragMove.html#kittycad.models.modeling_cmd.CameraDragMove.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interaction</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interaction</span>
+        <span class="n">sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sequence</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span>
+
+        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
+        <span class="k">if</span> <span class="n">interaction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;interaction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interaction</span>
+        <span class="k">if</span> <span class="n">sequence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;sequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sequence</span>
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;window&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">window</span>
+
+        <span class="k">return</span> <span class="n">field_dict</span></div>
+
+<div class="viewcode-block" id="CameraDragMove.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragMove.html#kittycad.models.modeling_cmd.CameraDragMove.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">H</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">H</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">_interaction</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;interaction&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">interaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">CameraDragInteractionType</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_interaction</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="n">_interaction</span>  <span class="c1"># type: ignore[arg-type]</span>
+
+        <span class="n">sequence</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;sequence&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_window</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;window&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">window</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_window</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">_window</span><span class="p">)</span>
+
+        <span class="n">camera_drag_move</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">interaction</span><span class="o">=</span><span class="n">interaction</span><span class="p">,</span>
+            <span class="n">sequence</span><span class="o">=</span><span class="n">sequence</span><span class="p">,</span>
+            <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">camera_drag_move</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">camera_drag_move</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="CameraDragMove.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragMove.html#kittycad.models.modeling_cmd.CameraDragMove.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CameraDragMove.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragMove.html#kittycad.models.modeling_cmd.CameraDragMove.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="CameraDragMove.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragMove.html#kittycad.models.modeling_cmd.CameraDragMove.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CameraDragMove.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragMove.html#kittycad.models.modeling_cmd.CameraDragMove.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+
+
+<span class="n">B</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;CameraDragEnd&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CameraDragEnd"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragEnd.html#kittycad.models.modeling_cmd.CameraDragEnd">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CameraDragEnd</span><span class="p">:</span>
+    <span class="n">interaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">CameraDragInteractionType</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">window</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+
+    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CameraDragEnd.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragEnd.html#kittycad.models.modeling_cmd.CameraDragEnd.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interaction</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interaction</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span>
+
+        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
+        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
+        <span class="k">if</span> <span class="n">interaction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;interaction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">interaction</span>
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;window&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">window</span>
+
+        <span class="k">return</span> <span class="n">field_dict</span></div>
+
+<div class="viewcode-block" id="CameraDragEnd.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragEnd.html#kittycad.models.modeling_cmd.CameraDragEnd.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">B</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">B</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">_interaction</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;interaction&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">interaction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">CameraDragInteractionType</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_interaction</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">interaction</span> <span class="o">=</span> <span class="n">_interaction</span>  <span class="c1"># type: ignore[arg-type]</span>
+
+        <span class="n">_window</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;window&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">window</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_window</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">_window</span><span class="p">)</span>
+
+        <span class="n">camera_drag_end</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">interaction</span><span class="o">=</span><span class="n">interaction</span><span class="p">,</span>
+            <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">camera_drag_end</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="n">camera_drag_end</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="CameraDragEnd.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragEnd.html#kittycad.models.modeling_cmd.CameraDragEnd.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CameraDragEnd.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragEnd.html#kittycad.models.modeling_cmd.CameraDragEnd.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="CameraDragEnd.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragEnd.html#kittycad.models.modeling_cmd.CameraDragEnd.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CameraDragEnd.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.CameraDragEnd.html#kittycad.models.modeling_cmd.CameraDragEnd.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+
+
+<span class="n">ModelingCmd</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
+    <span class="n">StartPath</span><span class="p">,</span>
+    <span class="n">MovePathPen</span><span class="p">,</span>
+    <span class="n">ExtendPath</span><span class="p">,</span>
+    <span class="n">Extrude</span><span class="p">,</span>
+    <span class="n">ClosePath</span><span class="p">,</span>
+    <span class="n">CameraDragStart</span><span class="p">,</span>
+    <span class="n">CameraDragMove</span><span class="p">,</span>
+    <span class="n">CameraDragEnd</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 
            </div>
