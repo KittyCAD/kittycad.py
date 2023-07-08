@@ -5,7 +5,7 @@ import attr
 from ..models.currency import Currency
 from ..types import UNSET, Unset
 
-Y = TypeVar("Y", bound="InvoiceLineItem")
+K = TypeVar("K", bound="InvoiceLineItem")
 
 
 @attr.s(auto_attribs=True)
@@ -49,7 +49,7 @@ class InvoiceLineItem:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
+    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
         d = src_dict.copy()
         amount = d.pop("amount", UNSET)
 
@@ -58,7 +58,7 @@ class InvoiceLineItem:
         if isinstance(_currency, Unset):
             currency = UNSET
         else:
-            currency = Currency(_currency)
+            currency = _currency  # type: ignore[arg-type]
 
         description = d.pop("description", UNSET)
 

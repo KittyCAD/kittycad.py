@@ -2,55 +2,48 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
+from ..models.coupon import Coupon
 from ..types import UNSET, Unset
 
-R = TypeVar("R", bound="JetstreamApiStats")
+J = TypeVar("J", bound="Discount")
 
 
 @attr.s(auto_attribs=True)
-class JetstreamApiStats:
-    """Jetstream API statistics."""  # noqa: E501
+class Discount:
+    """The resource representing a Discount."""  # noqa: E501
 
-    errors: Union[Unset, int] = UNSET
-    inflight: Union[Unset, int] = UNSET
-    total: Union[Unset, int] = UNSET
+    coupon: Union[Unset, Coupon] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        errors = self.errors
-        inflight = self.inflight
-        total = self.total
+        if not isinstance(self.coupon, Unset):
+            coupon = self.coupon
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if errors is not UNSET:
-            field_dict["errors"] = errors
-        if inflight is not UNSET:
-            field_dict["inflight"] = inflight
-        if total is not UNSET:
-            field_dict["total"] = total
+        if coupon is not UNSET:
+            field_dict["coupon"] = coupon
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
+    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
         d = src_dict.copy()
-        errors = d.pop("errors", UNSET)
+        _coupon = d.pop("coupon", UNSET)
+        coupon: Union[Unset, Coupon]
+        if isinstance(_coupon, Unset):
+            coupon = UNSET
+        else:
+            coupon = Coupon(_coupon)
 
-        inflight = d.pop("inflight", UNSET)
-
-        total = d.pop("total", UNSET)
-
-        jetstream_api_stats = cls(
-            errors=errors,
-            inflight=inflight,
-            total=total,
+        discount = cls(
+            coupon=coupon,
         )
 
-        jetstream_api_stats.additional_properties = d
-        return jetstream_api_stats
+        discount.additional_properties = d
+        return discount
 
     @property
     def additional_keys(self) -> List[str]:

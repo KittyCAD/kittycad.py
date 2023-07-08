@@ -5,19 +5,21 @@ import attr
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="Extrude")
+B = TypeVar("B", bound="Extrude")
 
 
 @attr.s(auto_attribs=True)
 class Extrude:
     """Command for extruding a solid."""  # noqa: E501
 
+    cap: Union[Unset, bool] = False
     distance: Union[Unset, float] = UNSET
     target: Union[Unset, ModelingCmdId] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        cap = self.cap
         distance = self.distance
         if not isinstance(self.target, Unset):
             target = self.target
@@ -25,6 +27,8 @@ class Extrude:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if cap is not UNSET:
+            field_dict["cap"] = cap
         if distance is not UNSET:
             field_dict["distance"] = distance
         if target is not UNSET:
@@ -33,8 +37,10 @@ class Extrude:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
         d = src_dict.copy()
+        cap = d.pop("cap", UNSET)
+
         distance = d.pop("distance", UNSET)
 
         _target = d.pop("target", UNSET)
@@ -45,6 +51,7 @@ class Extrude:
             target = ModelingCmdId(_target)
 
         extrude = cls(
+            cap=cap,
             distance=distance,
             target=target,
         )

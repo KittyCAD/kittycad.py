@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-E = TypeVar("E", bound="FileSystemMetadata")
+J = TypeVar("J", bound="FileSystemMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class FileSystemMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
+    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
         d = src_dict.copy()
         ok = d.pop("ok", UNSET)
 
