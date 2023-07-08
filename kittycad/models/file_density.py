@@ -9,7 +9,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-S = TypeVar("S", bound="FileDensity")
+H = TypeVar("H", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -82,7 +82,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -116,7 +116,7 @@ class FileDensity:
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = FileImportFormat(_src_format)
+            src_format = _src_format  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -130,7 +130,7 @@ class FileDensity:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = ApiCallStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

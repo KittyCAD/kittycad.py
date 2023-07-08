@@ -10,7 +10,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-B = TypeVar("B", bound="FileConversion")
+A = TypeVar("A", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -84,7 +84,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
+    def from_dict(cls: Type[A], src_dict: Dict[str, Any]) -> A:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -116,14 +116,14 @@ class FileConversion:
         if isinstance(_output_format, Unset):
             output_format = UNSET
         else:
-            output_format = FileExportFormat(_output_format)
+            output_format = _output_format  # type: ignore[arg-type]
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
-            src_format = FileImportFormat(_src_format)
+            src_format = _src_format  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -137,7 +137,7 @@ class FileConversion:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = ApiCallStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

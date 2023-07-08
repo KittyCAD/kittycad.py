@@ -9,7 +9,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="UnitMassConversion")
+F = TypeVar("F", bound="UnitMassConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitMassConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -119,7 +119,7 @@ class UnitMassConversion:
         if isinstance(_input_unit, Unset):
             input_unit = UNSET
         else:
-            input_unit = UnitMass(_input_unit)
+            input_unit = _input_unit  # type: ignore[arg-type]
 
         output = d.pop("output", UNSET)
 
@@ -128,7 +128,7 @@ class UnitMassConversion:
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
         else:
-            output_unit = UnitMass(_output_unit)
+            output_unit = _output_unit  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -142,7 +142,7 @@ class UnitMassConversion:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = ApiCallStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

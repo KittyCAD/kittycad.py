@@ -5,7 +5,7 @@ import attr
 from ..models.o_auth2_grant_type import OAuth2GrantType
 from ..types import UNSET, Unset
 
-J = TypeVar("J", bound="DeviceAccessTokenRequestForm")
+V = TypeVar("V", bound="DeviceAccessTokenRequestForm")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class DeviceAccessTokenRequestForm:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         client_id = d.pop("client_id", UNSET)
 
@@ -48,7 +48,7 @@ class DeviceAccessTokenRequestForm:
         if isinstance(_grant_type, Unset):
             grant_type = UNSET
         else:
-            grant_type = OAuth2GrantType(_grant_type)
+            grant_type = _grant_type  # type: ignore[arg-type]
 
         device_access_token_request_form = cls(
             client_id=client_id,

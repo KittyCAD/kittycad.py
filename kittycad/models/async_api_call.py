@@ -125,14 +125,14 @@ class AsyncApiCall:
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = ApiCallStatus(_status)
+            status = _status  # type: ignore[arg-type]
 
         _type = d.pop("type", UNSET)
         type: Union[Unset, AsyncApiCallType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = AsyncApiCallType(_type)
+            type = _type  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

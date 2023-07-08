@@ -6,7 +6,7 @@ from ..models.docker_system_info import DockerSystemInfo
 from ..models.environment import Environment
 from ..types import UNSET, Unset
 
-E = TypeVar("E", bound="ExecutorMetadata")
+H = TypeVar("H", bound="ExecutorMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -41,7 +41,7 @@ class ExecutorMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
+    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
         d = src_dict.copy()
         _docker_info = d.pop("docker_info", UNSET)
         docker_info: Union[Unset, DockerSystemInfo]
@@ -55,7 +55,7 @@ class ExecutorMetadata:
         if isinstance(_environment, Unset):
             environment = UNSET
         else:
-            environment = Environment(_environment)
+            environment = _environment  # type: ignore[arg-type]
 
         git_hash = d.pop("git_hash", UNSET)
 
