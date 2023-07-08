@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.file.create_file_conversion.sync &mdash; kittycad v0.4.3 documentation</title>
+  <title>kittycad.api.file.create_file_conversion.sync &mdash; kittycad v0.4.4 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -49,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.3
+                v0.4.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -137,7 +137,8 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.file.create_file_conversion.sync">
 <span class="sig-prename descclassname"><span class="pre">kittycad.api.file.create_file_conversion.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/file/create_file_conversion.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/file/create_file_conversion.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.file.create_file_conversion.sync" title="Permalink to this definition"></a></dt>
-<dd><p>Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
+<dd><p>If you wish to specify the conversion options, use the <cite>/file/conversion</cite> endpoint instead.
+Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
 If the conversion is performed synchronously, the contents of the converted file (<cite>output</cite>) will be returned as a base64 encoded string.
 If the operation is performed asynchronously, the <cite>id</cite> of the operation will be returned. You can use the <cite>id</cite> returned from the request to get status information about the async operation from the <cite>/async/operations/{id}</cite> endpoint.</p>
 <dl class="field-list simple">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.file.create_file_conversion &mdash; kittycad v0.4.3 documentation</title>
+  <title>kittycad.api.file.create_file_conversion &mdash; kittycad v0.4.4 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.3
+                v0.4.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -169,7 +169,8 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">FileConversion</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.</span>
+<span class="sd">    Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.</span>
 <span class="sd">    If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.</span>
 <span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
@@ -208,7 +209,8 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">FileConversion</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.</span>
+<span class="sd">    Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.</span>
 <span class="sd">    If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.</span>
 <span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
