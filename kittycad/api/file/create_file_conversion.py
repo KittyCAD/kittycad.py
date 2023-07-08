@@ -88,7 +88,8 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[FileConversion, Error]]:
-    """Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
+    """If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.
+    Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
     If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
@@ -127,7 +128,8 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[FileConversion, Error]]:
-    """Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
+    """If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.
+    Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
     If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 

@@ -7,6 +7,8 @@ from dateutil.parser import isoparse
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
+from ..models.input_format import InputFormat
+from ..models.output_format import OutputFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
@@ -23,7 +25,10 @@ class FileConversion:
     id: Union[Unset, str] = UNSET
     output: Union[Unset, str] = UNSET
     output_format: Union[Unset, FileExportFormat] = UNSET
+    output_format_options: Union[Unset, OutputFormat] = UNSET
+    outputs: Union[Unset, Any] = UNSET
     src_format: Union[Unset, FileImportFormat] = UNSET
+    src_format_options: Union[Unset, InputFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     type: Union[Unset, str] = UNSET
@@ -44,8 +49,13 @@ class FileConversion:
         output = self.output
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
+        if not isinstance(self.output_format_options, Unset):
+            output_format_options = self.output_format_options
+        outputs = self.outputs
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
+        if not isinstance(self.src_format_options, Unset):
+            src_format_options = self.src_format_options
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
@@ -72,8 +82,14 @@ class FileConversion:
             field_dict["output"] = output
         if output_format is not UNSET:
             field_dict["output_format"] = output_format
+        if output_format_options is not UNSET:
+            field_dict["output_format_options"] = output_format_options
+        if outputs is not UNSET:
+            field_dict["outputs"] = outputs
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
+        if src_format_options is not UNSET:
+            field_dict["src_format_options"] = src_format_options
         if started_at is not UNSET:
             field_dict["started_at"] = started_at
         if status is not UNSET:
@@ -122,12 +138,27 @@ class FileConversion:
         else:
             output_format = _output_format  # type: ignore[arg-type]
 
+        _output_format_options = d.pop("output_format_options", UNSET)
+        output_format_options: Union[Unset, OutputFormat]
+        if isinstance(_output_format_options, Unset):
+            output_format_options = UNSET
+        else:
+            output_format_options = OutputFormat(_output_format_options)
+
+        outputs = d.pop("outputs", UNSET)
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
         else:
             src_format = _src_format  # type: ignore[arg-type]
+
+        _src_format_options = d.pop("src_format_options", UNSET)
+        src_format_options: Union[Unset, InputFormat]
+        if isinstance(_src_format_options, Unset):
+            src_format_options = UNSET
+        else:
+            src_format_options = InputFormat(_src_format_options)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -161,7 +192,10 @@ class FileConversion:
             id=id,
             output=output,
             output_format=output_format,
+            output_format_options=output_format_options,
+            outputs=outputs,
             src_format=src_format,
+            src_format_options=src_format_options,
             started_at=started_at,
             status=status,
             type=type,

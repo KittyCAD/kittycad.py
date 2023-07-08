@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-Y = TypeVar("Y", bound="PluginsInfo")
+V = TypeVar("V", bound="PluginsInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -49,7 +49,7 @@ class PluginsInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
+    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
         d = src_dict.copy()
         authorization = cast(List[str], d.pop("authorization", UNSET))
 

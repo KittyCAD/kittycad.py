@@ -19,6 +19,8 @@ from .async_api_call import AsyncApiCall
 from .async_api_call_output import AsyncApiCallOutput
 from .async_api_call_results_page import AsyncApiCallResultsPage
 from .async_api_call_type import AsyncApiCallType
+from .axis import Axis
+from .axis_direction_pair import AxisDirectionPair
 from .billing_info import BillingInfo
 from .cache_metadata import CacheMetadata
 from .camera_drag_interaction_type import CameraDragInteractionType
@@ -37,6 +39,7 @@ from .customer_balance import CustomerBalance
 from .device_access_token_request_form import DeviceAccessTokenRequestForm
 from .device_auth_request_form import DeviceAuthRequestForm
 from .device_auth_verify_params import DeviceAuthVerifyParams
+from .direction import Direction
 from .discount import Discount
 from .docker_system_info import DockerSystemInfo
 from .email_authentication_form import EmailAuthenticationForm
@@ -59,6 +62,7 @@ from .file_volume import FileVolume
 from .gateway import Gateway
 from .image_type import ImageType
 from .index_info import IndexInfo
+from .input_format import InputFormat
 from .invoice import Invoice
 from .invoice_line_item import InvoiceLineItem
 from .invoice_status import InvoiceStatus
@@ -83,6 +87,7 @@ from .o_auth2_client_info import OAuth2ClientInfo
 from .o_auth2_grant_type import OAuth2GrantType
 from .onboarding import Onboarding
 from .output_file import OutputFile
+from .output_format import OutputFormat
 from .path_segment import PathSegment
 from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
@@ -98,6 +103,8 @@ from .pong import Pong
 from .registry_service_config import RegistryServiceConfig
 from .runtime import Runtime
 from .session import Session
+from .storage import Storage
+from .system import System
 from .system_info_cgroup_driver_enum import SystemInfoCgroupDriverEnum
 from .system_info_cgroup_version_enum import SystemInfoCgroupVersionEnum
 from .system_info_default_address_pools import SystemInfoDefaultAddressPools

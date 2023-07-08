@@ -9,7 +9,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-E = TypeVar("E", bound="FileMass")
+G = TypeVar("G", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
@@ -82,7 +82,7 @@ class FileMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
+    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

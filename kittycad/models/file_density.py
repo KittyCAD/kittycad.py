@@ -9,7 +9,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-H = TypeVar("H", bound="FileDensity")
+E = TypeVar("E", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -82,7 +82,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

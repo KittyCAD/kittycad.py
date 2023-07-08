@@ -8,7 +8,7 @@ from ..models.environment import Environment
 from ..models.file_system_metadata import FileSystemMetadata
 from ..types import UNSET, Unset
 
-E = TypeVar("E", bound="EngineMetadata")
+Y = TypeVar("Y", bound="EngineMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +57,7 @@ class EngineMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
+    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
         d = src_dict.copy()
         async_jobs_running = d.pop("async_jobs_running", UNSET)
 
