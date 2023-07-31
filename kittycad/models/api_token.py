@@ -7,7 +7,7 @@ from dateutil.parser import isoparse
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-G = TypeVar("G", bound="ApiToken")
+FB = TypeVar("FB", bound="ApiToken")
 
 
 @attr.s(auto_attribs=True)
@@ -56,7 +56,7 @@ class ApiToken:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
+    def from_dict(cls: Type[FB], src_dict: Dict[str, Any]) -> FB:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
@@ -74,7 +74,7 @@ class ApiToken:
         if isinstance(_token, Unset):
             token = UNSET
         else:
-            token = Uuid(_token)
+            token = _token  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

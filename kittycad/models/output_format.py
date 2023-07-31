@@ -6,7 +6,7 @@ from ..models.storage import Storage
 from ..models.system import System
 from ..types import UNSET, Unset
 
-D = TypeVar("D", bound="Gltf")
+QO = TypeVar("QO", bound="Gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -34,7 +34,7 @@ class Gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[D], src_dict: Dict[str, Any]) -> D:
+    def from_dict(cls: Type[QO], src_dict: Dict[str, Any]) -> QO:
         d = src_dict.copy()
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, Storage]
@@ -70,7 +70,7 @@ class Gltf:
         return key in self.additional_properties
 
 
-Y = TypeVar("Y", bound="Obj")
+KX = TypeVar("KX", bound="Obj")
 
 
 @attr.s(auto_attribs=True)
@@ -98,14 +98,14 @@ class Obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
+    def from_dict(cls: Type[KX], src_dict: Dict[str, Any]) -> KX:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 
@@ -134,7 +134,84 @@ class Obj:
         return key in self.additional_properties
 
 
-Y = TypeVar("Y", bound="Step")
+IZ = TypeVar("IZ", bound="Ply")
+
+
+@attr.s(auto_attribs=True)
+class Ply:
+    """The PLY Polygon File Format."""  # noqa: E501
+
+    coords: Union[Unset, System] = UNSET
+    storage: Union[Unset, Storage] = UNSET
+    type: Union[Unset, str] = UNSET
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        if not isinstance(self.coords, Unset):
+            coords = self.coords
+        if not isinstance(self.storage, Unset):
+            storage = self.storage
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if coords is not UNSET:
+            field_dict["coords"] = coords
+        if storage is not UNSET:
+            field_dict["storage"] = storage
+        if type is not UNSET:
+            field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[IZ], src_dict: Dict[str, Any]) -> IZ:
+        d = src_dict.copy()
+        _coords = d.pop("coords", UNSET)
+        coords: Union[Unset, System]
+        if isinstance(_coords, Unset):
+            coords = UNSET
+        else:
+            coords = _coords  # type: ignore[arg-type]
+
+        _storage = d.pop("storage", UNSET)
+        storage: Union[Unset, Storage]
+        if isinstance(_storage, Unset):
+            storage = UNSET
+        else:
+            storage = _storage  # type: ignore[arg-type]
+
+        type = d.pop("type", UNSET)
+
+        ply = cls(
+            coords=coords,
+            storage=storage,
+            type=type,
+        )
+
+        ply.additional_properties = d
+        return ply
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
+WO = TypeVar("WO", bound="Step")
 
 
 @attr.s(auto_attribs=True)
@@ -162,14 +239,14 @@ class Step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
+    def from_dict(cls: Type[WO], src_dict: Dict[str, Any]) -> WO:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 
@@ -198,7 +275,7 @@ class Step:
         return key in self.additional_properties
 
 
-D = TypeVar("D", bound="Stl")
+NK = TypeVar("NK", bound="Stl")
 
 
 @attr.s(auto_attribs=True)
@@ -231,14 +308,14 @@ class Stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[D], src_dict: Dict[str, Any]) -> D:
+    def from_dict(cls: Type[NK], src_dict: Dict[str, Any]) -> NK:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, Storage]
@@ -275,4 +352,4 @@ class Stl:
         return key in self.additional_properties
 
 
-OutputFormat = Union[Gltf, Obj, Step, Stl]
+OutputFormat = Union[Gltf, Obj, Ply, Step, Stl]

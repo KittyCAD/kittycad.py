@@ -71,7 +71,8 @@ def sync(
     client: Client,
 ) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. It deletes the requested API token for the user.
-    This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""  # noqa: E501
+    This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes.
+    """  # noqa: E501
 
     return sync_detailed(
         token=token,
@@ -101,7 +102,8 @@ async def asyncio(
     client: Client,
 ) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. It deletes the requested API token for the user.
-    This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""  # noqa: E501
+    This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes.
+    """  # noqa: E501
 
     return (
         await asyncio_detailed(

@@ -5,7 +5,7 @@ import attr
 from ..models.coupon import Coupon
 from ..types import UNSET, Unset
 
-V = TypeVar("V", bound="Discount")
+KQ = TypeVar("KQ", bound="Discount")
 
 
 @attr.s(auto_attribs=True)
@@ -29,14 +29,14 @@ class Discount:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[KQ], src_dict: Dict[str, Any]) -> KQ:
         d = src_dict.copy()
         _coupon = d.pop("coupon", UNSET)
         coupon: Union[Unset, Coupon]
         if isinstance(_coupon, Unset):
             coupon = UNSET
         else:
-            coupon = Coupon(_coupon)
+            coupon = _coupon  # type: ignore[arg-type]
 
         discount = cls(
             coupon=coupon,

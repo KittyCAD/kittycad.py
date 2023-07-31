@@ -6,14 +6,15 @@ from ..models.ai_plugin_api import AiPluginApi
 from ..models.ai_plugin_auth import AiPluginAuth
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="AiPluginManifest")
+SA = TypeVar("SA", bound="AiPluginManifest")
 
 
 @attr.s(auto_attribs=True)
 class AiPluginManifest:
     """AI plugin manifest.
 
-    This is used for OpenAI's ChatGPT plugins. You can read more about them [here](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)."""  # noqa: E501
+    This is used for OpenAI's ChatGPT plugins. You can read more about them [here](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest).
+    """  # noqa: E501
 
     api: Union[Unset, AiPluginApi] = UNSET
     auth: Union[Unset, AiPluginAuth] = UNSET
@@ -69,21 +70,21 @@ class AiPluginManifest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[SA], src_dict: Dict[str, Any]) -> SA:
         d = src_dict.copy()
         _api = d.pop("api", UNSET)
         api: Union[Unset, AiPluginApi]
         if isinstance(_api, Unset):
             api = UNSET
         else:
-            api = AiPluginApi(_api)
+            api = _api  # type: ignore[arg-type]
 
         _auth = d.pop("auth", UNSET)
         auth: Union[Unset, AiPluginAuth]
         if isinstance(_auth, Unset):
             auth = UNSET
         else:
-            auth = AiPluginAuth(_auth)
+            auth = _auth  # type: ignore[arg-type]
 
         contact_email = d.pop("contact_email", UNSET)
 

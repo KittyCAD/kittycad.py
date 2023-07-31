@@ -77,7 +77,6 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[ModelingOutcomes, Error]]:
-
     return sync_detailed(
         body=body,
         client=client,
@@ -105,7 +104,6 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[ModelingOutcomes, Error]]:
-
     return (
         await asyncio_detailed(
             body=body,

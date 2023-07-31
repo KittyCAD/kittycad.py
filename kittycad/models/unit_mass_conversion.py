@@ -9,7 +9,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="UnitMassConversion")
+QX = TypeVar("QX", bound="UnitMassConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitMassConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[QX], src_dict: Dict[str, Any]) -> QX:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -110,7 +110,7 @@ class UnitMassConversion:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         input = d.pop("input", UNSET)
 

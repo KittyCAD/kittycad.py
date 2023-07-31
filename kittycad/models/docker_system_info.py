@@ -10,7 +10,7 @@ from ..models.system_info_cgroup_version_enum import SystemInfoCgroupVersionEnum
 from ..models.system_info_isolation_enum import SystemInfoIsolationEnum
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="DockerSystemInfo")
+FH = TypeVar("FH", bound="DockerSystemInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -293,7 +293,7 @@ class DockerSystemInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[FH], src_dict: Dict[str, Any]) -> FH:
         d = src_dict.copy()
         architecture = d.pop("architecture", UNSET)
 
@@ -306,14 +306,14 @@ class DockerSystemInfo:
         if isinstance(_cgroup_driver, Unset):
             cgroup_driver = UNSET
         else:
-            cgroup_driver = SystemInfoCgroupDriverEnum(_cgroup_driver)
+            cgroup_driver = _cgroup_driver  # type: ignore[arg-type]
 
         _cgroup_version = d.pop("cgroup_version", UNSET)
         cgroup_version: Union[Unset, SystemInfoCgroupVersionEnum]
         if isinstance(_cgroup_version, Unset):
             cgroup_version = UNSET
         else:
-            cgroup_version = SystemInfoCgroupVersionEnum(_cgroup_version)
+            cgroup_version = _cgroup_version  # type: ignore[arg-type]
 
         cluster_advertise = d.pop("cluster_advertise", UNSET)
 
@@ -324,7 +324,7 @@ class DockerSystemInfo:
         if isinstance(_containerd_commit, Unset):
             containerd_commit = UNSET
         else:
-            containerd_commit = Commit(_containerd_commit)
+            containerd_commit = _containerd_commit  # type: ignore[arg-type]
 
         containers = d.pop("containers", UNSET)
 
@@ -379,7 +379,7 @@ class DockerSystemInfo:
         if isinstance(_init_commit, Unset):
             init_commit = UNSET
         else:
-            init_commit = Commit(_init_commit)
+            init_commit = _init_commit  # type: ignore[arg-type]
 
         ipv4_forwarding = d.pop("ipv4_forwarding", UNSET)
 
@@ -388,7 +388,7 @@ class DockerSystemInfo:
         if isinstance(_isolation, Unset):
             isolation = UNSET
         else:
-            isolation = SystemInfoIsolationEnum(_isolation)
+            isolation = _isolation  # type: ignore[arg-type]
 
         kernel_memory = d.pop("kernel_memory", UNSET)
 
@@ -431,7 +431,7 @@ class DockerSystemInfo:
         if isinstance(_plugins, Unset):
             plugins = UNSET
         else:
-            plugins = PluginsInfo(_plugins)
+            plugins = _plugins  # type: ignore[arg-type]
 
         product_license = d.pop("product_license", UNSET)
 
@@ -440,14 +440,14 @@ class DockerSystemInfo:
         if isinstance(_registry_config, Unset):
             registry_config = UNSET
         else:
-            registry_config = RegistryServiceConfig(_registry_config)
+            registry_config = _registry_config  # type: ignore[arg-type]
 
         _runc_commit = d.pop("runc_commit", UNSET)
         runc_commit: Union[Unset, Commit]
         if isinstance(_runc_commit, Unset):
             runc_commit = UNSET
         else:
-            runc_commit = Commit(_runc_commit)
+            runc_commit = _runc_commit  # type: ignore[arg-type]
 
         runtimes = d.pop("runtimes", UNSET)
         security_options = cast(List[str], d.pop("security_options", UNSET))

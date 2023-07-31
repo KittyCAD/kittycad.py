@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-J = TypeVar("J", bound="DeviceAuthVerifyParams")
+US = TypeVar("US", bound="DeviceAuthVerifyParams")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class DeviceAuthVerifyParams:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+    def from_dict(cls: Type[US], src_dict: Dict[str, Any]) -> US:
         d = src_dict.copy()
         user_code = d.pop("user_code", UNSET)
 

@@ -6,14 +6,15 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="ExtendedUser")
+CR = TypeVar("CR", bound="ExtendedUser")
 
 
 @attr.s(auto_attribs=True)
 class ExtendedUser:
     """Extended user information.
 
-    This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: MailChimp, Stripe, and Front"""  # noqa: E501
+    This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: MailChimp, Stripe, and Front
+    """  # noqa: E501
 
     company: Union[Unset, str] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
@@ -97,7 +98,7 @@ class ExtendedUser:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[CR], src_dict: Dict[str, Any]) -> CR:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

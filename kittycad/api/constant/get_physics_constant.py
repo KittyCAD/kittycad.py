@@ -78,7 +78,6 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[PhysicsConstant, Error]]:
-
     return sync_detailed(
         constant=constant,
         client=client,
@@ -106,7 +105,6 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[PhysicsConstant, Error]]:
-
     return (
         await asyncio_detailed(
             constant=constant,

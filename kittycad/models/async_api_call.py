@@ -9,7 +9,7 @@ from ..models.async_api_call_type import AsyncApiCallType
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-Z = TypeVar("Z", bound="AsyncApiCall")
+HX = TypeVar("HX", bound="AsyncApiCall")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class AsyncApiCall:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Z], src_dict: Dict[str, Any]) -> Z:
+    def from_dict(cls: Type[HX], src_dict: Dict[str, Any]) -> HX:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -109,7 +109,7 @@ class AsyncApiCall:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         input = d.pop("input", UNSET)
         output = d.pop("output", UNSET)

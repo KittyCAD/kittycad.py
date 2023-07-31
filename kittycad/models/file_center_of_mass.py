@@ -1,26 +1,30 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
+from ..models.point3d import Point3d
+from ..models.unit_length import UnitLength
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-A = TypeVar("A", bound="FileCenterOfMass")
+LT = TypeVar("LT", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
 class FileCenterOfMass:
     """A file center of mass result."""  # noqa: E501
 
-    center_of_mass: Union[Unset, List[float]] = UNSET
+    center_of_mass: Union[Unset, Point3d] = UNSET
+    centers_of_mass: Union[Unset, Any] = UNSET
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
+    output_unit: Union[Unset, UnitLength] = UNSET
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
@@ -30,9 +34,9 @@ class FileCenterOfMass:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        center_of_mass: Union[Unset, List[float]] = UNSET
         if not isinstance(self.center_of_mass, Unset):
             center_of_mass = self.center_of_mass
+        centers_of_mass = self.centers_of_mass
         completed_at: Union[Unset, str] = UNSET
         if not isinstance(self.completed_at, Unset):
             completed_at = self.completed_at.isoformat()
@@ -41,6 +45,8 @@ class FileCenterOfMass:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        if not isinstance(self.output_unit, Unset):
+            output_unit = self.output_unit
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
@@ -58,6 +64,8 @@ class FileCenterOfMass:
         field_dict.update({})
         if center_of_mass is not UNSET:
             field_dict["center_of_mass"] = center_of_mass
+        if centers_of_mass is not UNSET:
+            field_dict["centers_of_mass"] = centers_of_mass
         if completed_at is not UNSET:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
@@ -66,6 +74,8 @@ class FileCenterOfMass:
             field_dict["error"] = error
         if id is not UNSET:
             field_dict["id"] = id
+        if output_unit is not UNSET:
+            field_dict["output_unit"] = output_unit
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
         if started_at is not UNSET:
@@ -80,10 +90,16 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[A], src_dict: Dict[str, Any]) -> A:
+    def from_dict(cls: Type[LT], src_dict: Dict[str, Any]) -> LT:
         d = src_dict.copy()
-        center_of_mass = cast(List[float], d.pop("center_of_mass", UNSET))
+        _center_of_mass = d.pop("center_of_mass", UNSET)
+        center_of_mass: Union[Unset, Point3d]
+        if isinstance(_center_of_mass, Unset):
+            center_of_mass = UNSET
+        else:
+            center_of_mass = _center_of_mass  # type: ignore[arg-type]
 
+        centers_of_mass = d.pop("centers_of_mass", UNSET)
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
         if isinstance(_completed_at, Unset):
@@ -105,7 +121,14 @@ class FileCenterOfMass:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
+
+        _output_unit = d.pop("output_unit", UNSET)
+        output_unit: Union[Unset, UnitLength]
+        if isinstance(_output_unit, Unset):
+            output_unit = UNSET
+        else:
+            output_unit = _output_unit  # type: ignore[arg-type]
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
@@ -139,10 +162,12 @@ class FileCenterOfMass:
 
         file_center_of_mass = cls(
             center_of_mass=center_of_mass,
+            centers_of_mass=centers_of_mass,
             completed_at=completed_at,
             created_at=created_at,
             error=error,
             id=id,
+            output_unit=output_unit,
             src_format=src_format,
             started_at=started_at,
             status=status,

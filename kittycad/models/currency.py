@@ -4,7 +4,8 @@ from enum import Enum
 class Currency(str, Enum):
     """Currency is the list of supported currencies.
 
-    This comes from the Stripe API docs: For more details see <https://support.stripe.com/questions/which-currencies-does-stripe-support>."""  # noqa: E501
+    This comes from the Stripe API docs: For more details see <https://support.stripe.com/questions/which-currencies-does-stripe-support>.
+    """  # noqa: E501
 
     """# United Arab Emirates Dirham """  # noqa: E501
     AED = "aed"

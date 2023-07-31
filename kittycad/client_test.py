@@ -24,6 +24,9 @@ from .models import (
     FileMass,
     FileVolume,
     Pong,
+    UnitDensity,
+    UnitMass,
+    UnitVolume,
     User,
 )
 
@@ -171,6 +174,8 @@ def test_file_mass():
         body=content,
         src_format=FileImportFormat.OBJ,
         material_density=1.0,
+        material_density_unit=UnitDensity.KG_M3,
+        output_unit=UnitMass.G,
     )
 
     assert isinstance(result, FileMass)
@@ -198,7 +203,10 @@ def test_file_volume():
 
     # Get the fc.
     result: Union[FileVolume, Error, None] = create_file_volume.sync(
-        client=client, body=content, src_format=FileImportFormat.OBJ
+        client=client,
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_unit=UnitVolume.CM3,
     )
 
     assert isinstance(result, FileVolume)
