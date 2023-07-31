@@ -93,7 +93,7 @@
 <span class="n">Error</span> <span class="o">=</span> <span class="n">ModelingError</span>
 
 
-<span class="n">E</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Cancelled&quot;</span><span class="p">)</span>
+<span class="n">CB</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;CB&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Cancelled&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Cancelled"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_outcome.Cancelled.html#kittycad.models.modeling_outcome.Cancelled">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -115,14 +115,14 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="Cancelled.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_outcome.Cancelled.html#kittycad.models.modeling_outcome.Cancelled.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">E</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">E</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">CB</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">CB</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">_what_failed</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;what_failed&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">what_failed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ModelingCmdId</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_what_failed</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">what_failed</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">what_failed</span> <span class="o">=</span> <span class="n">ModelingCmdId</span><span class="p">(</span><span class="n">_what_failed</span><span class="p">)</span>
+            <span class="n">what_failed</span> <span class="o">=</span> <span class="n">_what_failed</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">cancelled</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">what_failed</span><span class="o">=</span><span class="n">what_failed</span><span class="p">,</span>

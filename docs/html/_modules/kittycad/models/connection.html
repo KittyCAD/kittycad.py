@@ -91,7 +91,7 @@
 <span class="kn">from</span> <span class="nn">..models.leaf_node</span> <span class="kn">import</span> <span class="n">LeafNode</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">M</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Connection&quot;</span><span class="p">)</span>
+<span class="n">JR</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;JR&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Connection&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Connection"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.connection.Connection.html#kittycad.models.connection.Connection">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -306,7 +306,7 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="Connection.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.connection.Connection.html#kittycad.models.connection.Connection.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">M</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">M</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">JR</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">JR</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">auth_timeout</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;auth_timeout&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -315,7 +315,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_cluster</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">cluster</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">(</span><span class="n">_cluster</span><span class="p">)</span>
+            <span class="n">cluster</span> <span class="o">=</span> <span class="n">_cluster</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_config_load_time</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;config_load_time&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">config_load_time</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -335,7 +335,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_gateway</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">gateway</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">gateway</span> <span class="o">=</span> <span class="n">Gateway</span><span class="p">(</span><span class="n">_gateway</span><span class="p">)</span>
+            <span class="n">gateway</span> <span class="o">=</span> <span class="n">_gateway</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">git_commit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;git_commit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -363,14 +363,14 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_jetstream</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">jetstream</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">jetstream</span> <span class="o">=</span> <span class="n">Jetstream</span><span class="p">(</span><span class="n">_jetstream</span><span class="p">)</span>
+            <span class="n">jetstream</span> <span class="o">=</span> <span class="n">_jetstream</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_leaf</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;leaf&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">leaf</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">LeafNode</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_leaf</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">leaf</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">leaf</span> <span class="o">=</span> <span class="n">LeafNode</span><span class="p">(</span><span class="n">_leaf</span><span class="p">)</span>
+            <span class="n">leaf</span> <span class="o">=</span> <span class="n">_leaf</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">leafnodes</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;leafnodes&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 

@@ -85,34 +85,22 @@
 <div class="viewcode-block" id="UnitArea"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_area.UnitArea.html#kittycad.models.unit_area.UnitArea">[docs]</a><span class="k">class</span> <span class="nc">UnitArea</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The valid types of area units.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Acres &lt;https://en.wikipedia.org/wiki/Acre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">ACRES</span> <span class="o">=</span> <span class="s2">&quot;acres&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Hectares &lt;https://en.wikipedia.org/wiki/Hectare&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">HECTARES</span> <span class="o">=</span> <span class="s2">&quot;hectares&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square centimetres &lt;https://en.wikipedia.org/wiki/Square_centimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_CENTIMETRES</span> <span class="o">=</span> <span class="s2">&quot;square_centimetres&quot;</span>
+    <span class="n">CM2</span> <span class="o">=</span> <span class="s2">&quot;cm2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square decimetres &lt;https://en.wikipedia.org/wiki/Square_decimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_DECIMETRES</span> <span class="o">=</span> <span class="s2">&quot;square_decimetres&quot;</span>
+    <span class="n">DM2</span> <span class="o">=</span> <span class="s2">&quot;dm2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square feet &lt;https://en.wikipedia.org/wiki/Square_foot&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_FEET</span> <span class="o">=</span> <span class="s2">&quot;square_feet&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square hectometres &lt;https://en.wikipedia.org/wiki/Square_hectometre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_HECTOMETRES</span> <span class="o">=</span> <span class="s2">&quot;square_hectometres&quot;</span>
+    <span class="n">FT2</span> <span class="o">=</span> <span class="s2">&quot;ft2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square inches &lt;https://en.wikipedia.org/wiki/Square_inch&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_INCHES</span> <span class="o">=</span> <span class="s2">&quot;square_inches&quot;</span>
+    <span class="n">IN2</span> <span class="o">=</span> <span class="s2">&quot;in2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square kilometres &lt;https://en.wikipedia.org/wiki/Square_kilometre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_KILOMETRES</span> <span class="o">=</span> <span class="s2">&quot;square_kilometres&quot;</span>
+    <span class="n">KM2</span> <span class="o">=</span> <span class="s2">&quot;km2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square metres &lt;https://en.wikipedia.org/wiki/Square_metre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_METRES</span> <span class="o">=</span> <span class="s2">&quot;square_metres&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square micrometres &lt;https://en.wikipedia.org/wiki/Square_micrometre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_MICROMETRES</span> <span class="o">=</span> <span class="s2">&quot;square_micrometres&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square miles &lt;https://en.wikipedia.org/wiki/Square_mile&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_MILES</span> <span class="o">=</span> <span class="s2">&quot;square_miles&quot;</span>
+    <span class="n">M2</span> <span class="o">=</span> <span class="s2">&quot;m2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square millimetres &lt;https://en.wikipedia.org/wiki/Square_millimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_MILLIMETRES</span> <span class="o">=</span> <span class="s2">&quot;square_millimetres&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square nanometres &lt;https://en.wikipedia.org/wiki/Square_nanometre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_NANOMETRES</span> <span class="o">=</span> <span class="s2">&quot;square_nanometres&quot;</span>
+    <span class="n">MM2</span> <span class="o">=</span> <span class="s2">&quot;mm2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square yards &lt;https://en.wikipedia.org/wiki/Square_mile&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SQUARE_YARDS</span> <span class="o">=</span> <span class="s2">&quot;square_yards&quot;</span>
+    <span class="n">YD2</span> <span class="o">=</span> <span class="s2">&quot;yd2&quot;</span>
 
 <div class="viewcode-block" id="UnitArea.__str__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_area.UnitArea.html#kittycad.models.unit_area.UnitArea.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>

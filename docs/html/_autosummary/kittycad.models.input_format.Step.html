@@ -34,7 +34,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="kittycad.models.input_format.Stl" href="kittycad.models.input_format.Stl.html" />
-    <link rel="prev" title="kittycad.models.input_format.Obj" href="kittycad.models.input_format.Obj.html" /> 
+    <link rel="prev" title="kittycad.models.input_format.Ply" href="kittycad.models.input_format.Ply.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -128,6 +128,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="kittycad.models.input_format.html">kittycad.models.input_format</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.Gltf.html">kittycad.models.input_format.Gltf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.Obj.html">kittycad.models.input_format.Obj</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.Ply.html">kittycad.models.input_format.Ply</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.input_format.Step</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.input_format.Step"><code class="docutils literal notranslate"><span class="pre">Step</span></code></a></li>
 </ul>
@@ -135,6 +136,7 @@
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.Stl.html">kittycad.models.input_format.Stl</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.html#kittycad.models.input_format.Gltf"><code class="docutils literal notranslate"><span class="pre">Gltf</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.html#kittycad.models.input_format.Obj"><code class="docutils literal notranslate"><span class="pre">Obj</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.html#kittycad.models.input_format.Ply"><code class="docutils literal notranslate"><span class="pre">Ply</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.html#kittycad.models.input_format.Step"><code class="docutils literal notranslate"><span class="pre">Step</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.input_format.html#kittycad.models.input_format.Stl"><code class="docutils literal notranslate"><span class="pre">Stl</span></code></a></li>
 </ul>
@@ -191,6 +193,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_area_conversion.html">kittycad.models.unit_area_conversion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_current.html">kittycad.models.unit_current</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_current_conversion.html">kittycad.models.unit_current_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_density.html">kittycad.models.unit_density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy.html">kittycad.models.unit_energy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy_conversion.html">kittycad.models.unit_energy_conversion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force.html">kittycad.models.unit_force</a></li>
@@ -269,7 +272,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.input_format.Step.from_dict" title="kittycad.models.input_format.Step.from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dict</span></code></a>(src_dict)</p></td>
 <td><p><dl class="field-list simple">
 <dt class="field-odd">rtype<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">V</span></code>, bound= Step)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">QF</span></code>, bound= Step)</p>
 </dd>
 </dl>
 </p></td>
@@ -439,7 +442,7 @@
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_dict</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/input_format.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/input_format.html#Step.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.input_format.Step.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">V</span></code>, bound= Step)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">QF</span></code>, bound= Step)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -467,7 +470,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kittycad.models.input_format.Obj.html" class="btn btn-neutral float-left" title="kittycad.models.input_format.Obj" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.models.input_format.Ply.html" class="btn btn-neutral float-left" title="kittycad.models.input_format.Ply" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="kittycad.models.input_format.Stl.html" class="btn btn-neutral float-right" title="kittycad.models.input_format.Stl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

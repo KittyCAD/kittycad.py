@@ -87,16 +87,23 @@
 <span class="kn">from</span> <span class="nn">...models.error</span> <span class="kn">import</span> <span class="n">Error</span>
 <span class="kn">from</span> <span class="nn">...models.file_import_format</span> <span class="kn">import</span> <span class="n">FileImportFormat</span>
 <span class="kn">from</span> <span class="nn">...models.file_surface_area</span> <span class="kn">import</span> <span class="n">FileSurfaceArea</span>
+<span class="kn">from</span> <span class="nn">...models.unit_area</span> <span class="kn">import</span> <span class="n">UnitArea</span>
 <span class="kn">from</span> <span class="nn">...types</span> <span class="kn">import</span> <span class="n">Response</span>
 
 
 <div class="viewcode-block" id="_get_kwargs"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.file.create_file_surface_area.html#kittycad.api.file.create_file_surface_area._get_kwargs">[docs]</a><span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">UnitArea</span><span class="p">,</span>
     <span class="n">src_format</span><span class="p">:</span> <span class="n">FileImportFormat</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/file/surface-area&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>  <span class="c1"># noqa: E501</span>
+    <span class="k">if</span> <span class="n">output_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;output_unit=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?output_unit=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_unit</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">src_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;src_format=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">src_format</span><span class="p">)</span>
@@ -142,12 +149,14 @@
 
 
 <div class="viewcode-block" id="sync_detailed"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.file.create_file_surface_area.sync_detailed.html#kittycad.api.file.create_file_surface_area.sync_detailed">[docs]</a><span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">UnitArea</span><span class="p">,</span>
     <span class="n">src_format</span><span class="p">:</span> <span class="n">FileImportFormat</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">FileSurfaceArea</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">output_unit</span><span class="o">=</span><span class="n">output_unit</span><span class="p">,</span>
         <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span>
         <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
@@ -162,6 +171,7 @@
 
 
 <div class="viewcode-block" id="sync"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.file.create_file_surface_area.sync.html#kittycad.api.file.create_file_surface_area.sync">[docs]</a><span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">UnitArea</span><span class="p">,</span>
     <span class="n">src_format</span><span class="p">:</span> <span class="n">FileImportFormat</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -171,9 +181,11 @@
 <span class="sd">    Currently, this endpoint returns the square measure units.</span>
 <span class="sd">    In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.</span>
 <span class="sd">    Get the surface area of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.</span>
-<span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
+        <span class="n">output_unit</span><span class="o">=</span><span class="n">output_unit</span><span class="p">,</span>
         <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span>
         <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
@@ -181,12 +193,14 @@
 
 
 <div class="viewcode-block" id="asyncio_detailed"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.file.create_file_surface_area.asyncio_detailed.html#kittycad.api.file.create_file_surface_area.asyncio_detailed">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">UnitArea</span><span class="p">,</span>
     <span class="n">src_format</span><span class="p">:</span> <span class="n">FileImportFormat</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">FileSurfaceArea</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">output_unit</span><span class="o">=</span><span class="n">output_unit</span><span class="p">,</span>
         <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span>
         <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
@@ -199,6 +213,7 @@
 
 
 <div class="viewcode-block" id="asyncio"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.file.create_file_surface_area.asyncio.html#kittycad.api.file.create_file_surface_area.asyncio">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">UnitArea</span><span class="p">,</span>
     <span class="n">src_format</span><span class="p">:</span> <span class="n">FileImportFormat</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -208,10 +223,12 @@
 <span class="sd">    Currently, this endpoint returns the square measure units.</span>
 <span class="sd">    In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.</span>
 <span class="sd">    Get the surface area of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.</span>
-<span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>
         <span class="k">await</span> <span class="n">asyncio_detailed</span><span class="p">(</span>
+            <span class="n">output_unit</span><span class="o">=</span><span class="n">output_unit</span><span class="p">,</span>
             <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span>
             <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
             <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>

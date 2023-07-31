@@ -87,7 +87,7 @@
 <span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">F</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Line&quot;</span><span class="p">)</span>
+<span class="n">UQ</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;UQ&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Line&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Line"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.Line.html#kittycad.models.path_segment.Line">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -109,14 +109,14 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="Line.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.Line.html#kittycad.models.path_segment.Line.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">F</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">F</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">UQ</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">UQ</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">_end</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">end</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_end</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">end</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">Point3d</span><span class="p">(</span><span class="n">_end</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">_end</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">line</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
@@ -142,7 +142,7 @@
         <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
 
 
-<span class="n">Z</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Arc&quot;</span><span class="p">)</span>
+<span class="n">QE</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;QE&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Arc&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Arc"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.Arc.html#kittycad.models.path_segment.Arc">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -176,7 +176,7 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="Arc.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.Arc.html#kittycad.models.path_segment.Arc.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Z</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Z</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">QE</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">QE</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">angle_end</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;angle_end&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -187,7 +187,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_center</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">center</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">center</span> <span class="o">=</span> <span class="n">Point2d</span><span class="p">(</span><span class="n">_center</span><span class="p">)</span>
+            <span class="n">center</span> <span class="o">=</span> <span class="n">_center</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">radius</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -218,7 +218,7 @@
         <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
 
 
-<span class="n">G</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Bezier&quot;</span><span class="p">)</span>
+<span class="n">XH</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;XH&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Bezier&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Bezier"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.Bezier.html#kittycad.models.path_segment.Bezier">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -250,28 +250,28 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="Bezier.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.Bezier.html#kittycad.models.path_segment.Bezier.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">G</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">G</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">XH</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">XH</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">_control1</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;control1&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">control1</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_control1</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">control1</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">control1</span> <span class="o">=</span> <span class="n">Point3d</span><span class="p">(</span><span class="n">_control1</span><span class="p">)</span>
+            <span class="n">control1</span> <span class="o">=</span> <span class="n">_control1</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_control2</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;control2&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">control2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_control2</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">control2</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">control2</span> <span class="o">=</span> <span class="n">Point3d</span><span class="p">(</span><span class="n">_control2</span><span class="p">)</span>
+            <span class="n">control2</span> <span class="o">=</span> <span class="n">_control2</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_end</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">end</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_end</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">end</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">Point3d</span><span class="p">(</span><span class="n">_end</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">_end</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">bezier</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">control1</span><span class="o">=</span><span class="n">control1</span><span class="p">,</span>

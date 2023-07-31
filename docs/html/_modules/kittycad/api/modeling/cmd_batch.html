@@ -158,7 +158,6 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ModelingOutcomes</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
-
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
         <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
@@ -186,7 +185,6 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ModelingOutcomes</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
-
     <span class="k">return</span> <span class="p">(</span>
         <span class="k">await</span> <span class="n">asyncio_detailed</span><span class="p">(</span>
             <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>

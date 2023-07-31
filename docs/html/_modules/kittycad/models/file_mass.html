@@ -87,10 +87,12 @@
 
 <span class="kn">from</span> <span class="nn">..models.api_call_status</span> <span class="kn">import</span> <span class="n">ApiCallStatus</span>
 <span class="kn">from</span> <span class="nn">..models.file_import_format</span> <span class="kn">import</span> <span class="n">FileImportFormat</span>
+<span class="kn">from</span> <span class="nn">..models.unit_density</span> <span class="kn">import</span> <span class="n">UnitDensity</span>
+<span class="kn">from</span> <span class="nn">..models.unit_mass</span> <span class="kn">import</span> <span class="n">UnitMass</span>
 <span class="kn">from</span> <span class="nn">..models.uuid</span> <span class="kn">import</span> <span class="n">Uuid</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">G</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;FileMass&quot;</span><span class="p">)</span>
+<span class="n">DO</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;DO&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;FileMass&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="FileMass"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.file_mass.FileMass.html#kittycad.models.file_mass.FileMass">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -102,7 +104,10 @@
     <span class="n">error</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">mass</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">masses</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">material_density</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">material_density_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitDensity</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitMass</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">src_format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">FileImportFormat</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ApiCallStatus</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
@@ -121,7 +126,12 @@
         <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span>
         <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
         <span class="n">mass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mass</span>
+        <span class="n">masses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">masses</span>
         <span class="n">material_density</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">material_density</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">material_density_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">material_density_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">material_density_unit</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">output_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_unit</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">src_format</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">src_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_format</span>
         <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
@@ -147,8 +157,14 @@
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="k">if</span> <span class="n">mass</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;mass&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mass</span>
+        <span class="k">if</span> <span class="n">masses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;masses&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">masses</span>
         <span class="k">if</span> <span class="n">material_density</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;material_density&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">material_density</span>
+        <span class="k">if</span> <span class="n">material_density_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;material_density_unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">material_density_unit</span>
+        <span class="k">if</span> <span class="n">output_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
+            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;output_unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_unit</span>
         <span class="k">if</span> <span class="n">src_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
             <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;src_format&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">src_format</span>
         <span class="k">if</span> <span class="n">started_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
@@ -163,7 +179,7 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="FileMass.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.file_mass.FileMass.html#kittycad.models.file_mass.FileMass.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">G</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">G</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">DO</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">DO</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">_completed_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;completed_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">completed_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
@@ -186,11 +202,26 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_id</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="nb">id</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">id</span> <span class="o">=</span> <span class="n">Uuid</span><span class="p">(</span><span class="n">_id</span><span class="p">)</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">_id</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">mass</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mass&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
+        <span class="n">masses</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;masses&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">material_density</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;material_density&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+
+        <span class="n">_material_density_unit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;material_density_unit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">material_density_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitDensity</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_material_density_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">material_density_unit</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">material_density_unit</span> <span class="o">=</span> <span class="n">_material_density_unit</span>  <span class="c1"># type: ignore[arg-type]</span>
+
+        <span class="n">_output_unit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;output_unit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+        <span class="n">output_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitMass</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_output_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
+            <span class="n">output_unit</span> <span class="o">=</span> <span class="n">UNSET</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_unit</span> <span class="o">=</span> <span class="n">_output_unit</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_src_format</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;src_format&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">src_format</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">FileImportFormat</span><span class="p">]</span>
@@ -228,7 +259,10 @@
             <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
             <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
             <span class="n">mass</span><span class="o">=</span><span class="n">mass</span><span class="p">,</span>
+            <span class="n">masses</span><span class="o">=</span><span class="n">masses</span><span class="p">,</span>
             <span class="n">material_density</span><span class="o">=</span><span class="n">material_density</span><span class="p">,</span>
+            <span class="n">material_density_unit</span><span class="o">=</span><span class="n">material_density_unit</span><span class="p">,</span>
+            <span class="n">output_unit</span><span class="o">=</span><span class="n">output_unit</span><span class="p">,</span>
             <span class="n">src_format</span><span class="o">=</span><span class="n">src_format</span><span class="p">,</span>
             <span class="n">started_at</span><span class="o">=</span><span class="n">started_at</span><span class="p">,</span>
             <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>

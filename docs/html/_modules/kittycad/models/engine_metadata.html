@@ -89,7 +89,7 @@
 <span class="kn">from</span> <span class="nn">..models.file_system_metadata</span> <span class="kn">import</span> <span class="n">FileSystemMetadata</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">Y</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;EngineMetadata&quot;</span><span class="p">)</span>
+<span class="n">BB</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;BB&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;EngineMetadata&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="EngineMetadata"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.engine_metadata.EngineMetadata.html#kittycad.models.engine_metadata.EngineMetadata">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -138,7 +138,7 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="EngineMetadata.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.engine_metadata.EngineMetadata.html#kittycad.models.engine_metadata.EngineMetadata.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Y</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Y</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">BB</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">BB</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">async_jobs_running</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;async_jobs_running&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -147,7 +147,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_cache</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">cache</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="n">CacheMetadata</span><span class="p">(</span><span class="n">_cache</span><span class="p">)</span>
+            <span class="n">cache</span> <span class="o">=</span> <span class="n">_cache</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_environment</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;environment&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">environment</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Environment</span><span class="p">]</span>
@@ -161,7 +161,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_fs</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">fs</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">fs</span> <span class="o">=</span> <span class="n">FileSystemMetadata</span><span class="p">(</span><span class="n">_fs</span><span class="p">)</span>
+            <span class="n">fs</span> <span class="o">=</span> <span class="n">_fs</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">git_hash</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;git_hash&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -170,7 +170,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_pubsub</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">pubsub</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">pubsub</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="n">_pubsub</span><span class="p">)</span>
+            <span class="n">pubsub</span> <span class="o">=</span> <span class="n">_pubsub</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">engine_metadata</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">async_jobs_running</span><span class="o">=</span><span class="n">async_jobs_running</span><span class="p">,</span>

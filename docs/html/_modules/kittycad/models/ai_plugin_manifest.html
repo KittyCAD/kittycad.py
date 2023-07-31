@@ -87,14 +87,15 @@
 <span class="kn">from</span> <span class="nn">..models.ai_plugin_auth</span> <span class="kn">import</span> <span class="n">AiPluginAuth</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">N</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;AiPluginManifest&quot;</span><span class="p">)</span>
+<span class="n">SA</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;SA&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;AiPluginManifest&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="AiPluginManifest"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ai_plugin_manifest.AiPluginManifest.html#kittycad.models.ai_plugin_manifest.AiPluginManifest">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">AiPluginManifest</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;AI plugin manifest.</span>
 
-<span class="sd">    This is used for OpenAI&#39;s ChatGPT plugins. You can read more about them [here](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest).&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="sd">    This is used for OpenAI&#39;s ChatGPT plugins. You can read more about them [here](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest).</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">api</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">AiPluginApi</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
     <span class="n">auth</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">AiPluginAuth</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
@@ -150,21 +151,21 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="AiPluginManifest.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ai_plugin_manifest.AiPluginManifest.html#kittycad.models.ai_plugin_manifest.AiPluginManifest.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">N</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">SA</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">SA</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">_api</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">api</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">AiPluginApi</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_api</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">api</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">api</span> <span class="o">=</span> <span class="n">AiPluginApi</span><span class="p">(</span><span class="n">_api</span><span class="p">)</span>
+            <span class="n">api</span> <span class="o">=</span> <span class="n">_api</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_auth</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;auth&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">auth</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">AiPluginAuth</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_auth</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">auth</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">auth</span> <span class="o">=</span> <span class="n">AiPluginAuth</span><span class="p">(</span><span class="n">_auth</span><span class="p">)</span>
+            <span class="n">auth</span> <span class="o">=</span> <span class="n">_auth</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">contact_email</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;contact_email&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 

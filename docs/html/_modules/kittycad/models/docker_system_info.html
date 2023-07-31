@@ -91,7 +91,7 @@
 <span class="kn">from</span> <span class="nn">..models.system_info_isolation_enum</span> <span class="kn">import</span> <span class="n">SystemInfoIsolationEnum</span>
 <span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
 
-<span class="n">L</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;DockerSystemInfo&quot;</span><span class="p">)</span>
+<span class="n">FH</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;FH&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;DockerSystemInfo&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="DockerSystemInfo"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -374,7 +374,7 @@
         <span class="k">return</span> <span class="n">field_dict</span></div>
 
 <div class="viewcode-block" id="DockerSystemInfo.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.docker_system_info.DockerSystemInfo.html#kittycad.models.docker_system_info.DockerSystemInfo.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">L</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">L</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">FH</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">FH</span><span class="p">:</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">architecture</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;architecture&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -387,14 +387,14 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_cgroup_driver</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">cgroup_driver</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">cgroup_driver</span> <span class="o">=</span> <span class="n">SystemInfoCgroupDriverEnum</span><span class="p">(</span><span class="n">_cgroup_driver</span><span class="p">)</span>
+            <span class="n">cgroup_driver</span> <span class="o">=</span> <span class="n">_cgroup_driver</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_cgroup_version</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cgroup_version&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">cgroup_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">SystemInfoCgroupVersionEnum</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_cgroup_version</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">cgroup_version</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">cgroup_version</span> <span class="o">=</span> <span class="n">SystemInfoCgroupVersionEnum</span><span class="p">(</span><span class="n">_cgroup_version</span><span class="p">)</span>
+            <span class="n">cgroup_version</span> <span class="o">=</span> <span class="n">_cgroup_version</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">cluster_advertise</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cluster_advertise&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -405,7 +405,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_containerd_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">containerd_commit</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">containerd_commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">_containerd_commit</span><span class="p">)</span>
+            <span class="n">containerd_commit</span> <span class="o">=</span> <span class="n">_containerd_commit</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">containers</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;containers&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -460,7 +460,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_init_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">init_commit</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">init_commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">_init_commit</span><span class="p">)</span>
+            <span class="n">init_commit</span> <span class="o">=</span> <span class="n">_init_commit</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">ipv4_forwarding</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;ipv4_forwarding&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -469,7 +469,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_isolation</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">isolation</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">isolation</span> <span class="o">=</span> <span class="n">SystemInfoIsolationEnum</span><span class="p">(</span><span class="n">_isolation</span><span class="p">)</span>
+            <span class="n">isolation</span> <span class="o">=</span> <span class="n">_isolation</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">kernel_memory</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;kernel_memory&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -512,7 +512,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_plugins</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">plugins</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">plugins</span> <span class="o">=</span> <span class="n">PluginsInfo</span><span class="p">(</span><span class="n">_plugins</span><span class="p">)</span>
+            <span class="n">plugins</span> <span class="o">=</span> <span class="n">_plugins</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">product_license</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;product_license&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
 
@@ -521,14 +521,14 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_registry_config</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">registry_config</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">registry_config</span> <span class="o">=</span> <span class="n">RegistryServiceConfig</span><span class="p">(</span><span class="n">_registry_config</span><span class="p">)</span>
+            <span class="n">registry_config</span> <span class="o">=</span> <span class="n">_registry_config</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">_runc_commit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;runc_commit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">runc_commit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Commit</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_runc_commit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
             <span class="n">runc_commit</span> <span class="o">=</span> <span class="n">UNSET</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">runc_commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">_runc_commit</span><span class="p">)</span>
+            <span class="n">runc_commit</span> <span class="o">=</span> <span class="n">_runc_commit</span>  <span class="c1"># type: ignore[arg-type]</span>
 
         <span class="n">runtimes</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;runtimes&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
         <span class="n">security_options</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;security_options&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">))</span>

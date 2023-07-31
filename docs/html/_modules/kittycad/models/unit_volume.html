@@ -85,44 +85,24 @@
 <div class="viewcode-block" id="UnitVolume"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_volume.UnitVolume.html#kittycad.models.unit_volume.UnitVolume">[docs]</a><span class="k">class</span> <span class="nc">UnitVolume</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The valid types of volume units.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic centimeters (cc or cm³) &lt;https://en.wikipedia.org/wiki/Cubic_centimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">CUBIC_CENTIMETRES</span> <span class="o">=</span> <span class="s2">&quot;cubic_centimetres&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic centimetres (cc or cm³) &lt;https://en.wikipedia.org/wiki/Cubic_centimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">CM3</span> <span class="o">=</span> <span class="s2">&quot;cm3&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic feet (ft³) &lt;https://en.wikipedia.org/wiki/Cubic_foot&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">CUBIC_FEET</span> <span class="o">=</span> <span class="s2">&quot;cubic_feet&quot;</span>
+    <span class="n">FT3</span> <span class="o">=</span> <span class="s2">&quot;ft3&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic inches (cu in or in³) &lt;https://en.wikipedia.org/wiki/Cubic_inch&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">CUBIC_INCHES</span> <span class="o">=</span> <span class="s2">&quot;cubic_inches&quot;</span>
+    <span class="n">IN3</span> <span class="o">=</span> <span class="s2">&quot;in3&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic metres (m³) &lt;https://en.wikipedia.org/wiki/Cubic_metre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">CUBIC_METRES</span> <span class="o">=</span> <span class="s2">&quot;cubic_metres&quot;</span>
+    <span class="n">M3</span> <span class="o">=</span> <span class="s2">&quot;m3&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cubic yards (yd³) &lt;https://en.wikipedia.org/wiki/Cubic_yard&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">CUBIC_YARDS</span> <span class="o">=</span> <span class="s2">&quot;cubic_yards&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Cups &lt;https://en.wikipedia.org/wiki/Cup_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">CUPS</span> <span class="o">=</span> <span class="s2">&quot;cups&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Drams &lt;https://en.wikipedia.org/wiki/Fluid_dram&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">DRAMS</span> <span class="o">=</span> <span class="s2">&quot;drams&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Drops &lt;https://en.wikipedia.org/wiki/Minim_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">DROPS</span> <span class="o">=</span> <span class="s2">&quot;drops&quot;</span>
+    <span class="n">YD3</span> <span class="o">=</span> <span class="s2">&quot;yd3&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# US Fluid Ounces (fl oz) &lt;https://en.wikipedia.org/wiki/Fluid_ounce&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">FLUID_OUNCES</span> <span class="o">=</span> <span class="s2">&quot;fluid_ounces&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# UK Fluid Ounces (fl oz) &lt;https://en.wikipedia.org/wiki/Fluid_ounce&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">FLUID_OUNCES_UK</span> <span class="o">=</span> <span class="s2">&quot;fluid_ounces_uk&quot;</span>
+    <span class="n">USFLOZ</span> <span class="o">=</span> <span class="s2">&quot;usfloz&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# US Gallons (gal US) &lt;https://en.wikipedia.org/wiki/Gallon&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">GALLONS</span> <span class="o">=</span> <span class="s2">&quot;gallons&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# UK/Imperial Gallons (gal) &lt;https://en.wikipedia.org/wiki/Gallon&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">GALLONS_UK</span> <span class="o">=</span> <span class="s2">&quot;gallons_uk&quot;</span>
+    <span class="n">USGAL</span> <span class="o">=</span> <span class="s2">&quot;usgal&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Liters (l) &lt;https://en.wikipedia.org/wiki/Litre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">LITRES</span> <span class="o">=</span> <span class="s2">&quot;litres&quot;</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="s2">&quot;l&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Milliliters (ml) &lt;https://en.wikipedia.org/wiki/Litre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">MILLILITRES</span> <span class="o">=</span> <span class="s2">&quot;millilitres&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Pints &lt;https://en.wikipedia.org/wiki/Pint&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">PINTS</span> <span class="o">=</span> <span class="s2">&quot;pints&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Pints in the United Kingdom (UK) &lt;https://en.wikipedia.org/wiki/Pint&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">PINTS_UK</span> <span class="o">=</span> <span class="s2">&quot;pints_uk&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Quarts &lt;https://en.wikipedia.org/wiki/Quart&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">QUARTS</span> <span class="o">=</span> <span class="s2">&quot;quarts&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Tablespoons (tbsp) &lt;https://en.wikipedia.org/wiki/Tablespoon&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">TABLESPOONS</span> <span class="o">=</span> <span class="s2">&quot;tablespoons&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Teaspoons (tsp) &lt;https://en.wikipedia.org/wiki/Teaspoon&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">TEASPOONS</span> <span class="o">=</span> <span class="s2">&quot;teaspoons&quot;</span>
+    <span class="n">ML</span> <span class="o">=</span> <span class="s2">&quot;ml&quot;</span>
 
 <div class="viewcode-block" id="UnitVolume.__str__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_volume.UnitVolume.html#kittycad.models.unit_volume.UnitVolume.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>

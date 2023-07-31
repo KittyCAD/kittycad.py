@@ -85,36 +85,12 @@
 <div class="viewcode-block" id="UnitMass"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_mass.UnitMass.html#kittycad.models.unit_mass.UnitMass">[docs]</a><span class="k">class</span> <span class="nc">UnitMass</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The valid types of mass units.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Carats &lt;https://en.wikipedia.org/wiki/Carat_(mass)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">CARATS</span> <span class="o">=</span> <span class="s2">&quot;carats&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Grains &lt;https://en.wikipedia.org/wiki/Grain_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">GRAINS</span> <span class="o">=</span> <span class="s2">&quot;grains&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Grams &lt;https://en.wikipedia.org/wiki/Gram&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">GRAMS</span> <span class="o">=</span> <span class="s2">&quot;grams&quot;</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="s2">&quot;g&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Kilograms &lt;https://en.wikipedia.org/wiki/Kilogram&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">KILOGRAMS</span> <span class="o">=</span> <span class="s2">&quot;kilograms&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Long tons &lt;https://en.wikipedia.org/wiki/Long_ton&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">LONG_TONS</span> <span class="o">=</span> <span class="s2">&quot;long_tons&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Metric tons &lt;https://en.wikipedia.org/wiki/Tonne&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">METRIC_TONS</span> <span class="o">=</span> <span class="s2">&quot;metric_tons&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Micrograms &lt;https://en.wikipedia.org/wiki/Microgram&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">MICROGRAMS</span> <span class="o">=</span> <span class="s2">&quot;micrograms&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Milligrams &lt;https://en.wikipedia.org/wiki/Milligram&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">MILLIGRAMS</span> <span class="o">=</span> <span class="s2">&quot;milligrams&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Ounces &lt;https://en.wikipedia.org/wiki/Ounce&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">OUNCES</span> <span class="o">=</span> <span class="s2">&quot;ounces&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Pennyweights &lt;https://en.wikipedia.org/wiki/Pennyweight&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">PENNYWEIGHTS</span> <span class="o">=</span> <span class="s2">&quot;pennyweights&quot;</span>
+    <span class="n">KG</span> <span class="o">=</span> <span class="s2">&quot;kg&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Pounds &lt;https://en.wikipedia.org/wiki/Pound_(mass)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">POUNDS</span> <span class="o">=</span> <span class="s2">&quot;pounds&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Short tons &lt;https://en.wikipedia.org/wiki/Short_ton&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">SHORT_TONS</span> <span class="o">=</span> <span class="s2">&quot;short_tons&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Stones &lt;https://en.wikipedia.org/wiki/Stone_(unit)&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">STONES</span> <span class="o">=</span> <span class="s2">&quot;stones&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Troy ounces &lt;https://en.wikipedia.org/wiki/Troy_ounce&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">TROY_OUNCES</span> <span class="o">=</span> <span class="s2">&quot;troy_ounces&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Troy pounds &lt;https://en.wikipedia.org/wiki/Troy_pound&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
-    <span class="n">TROY_POUNDS</span> <span class="o">=</span> <span class="s2">&quot;troy_pounds&quot;</span>
+    <span class="n">LB</span> <span class="o">=</span> <span class="s2">&quot;lb&quot;</span>
 
 <div class="viewcode-block" id="UnitMass.__str__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_mass.UnitMass.html#kittycad.models.unit_mass.UnitMass.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>

@@ -181,7 +181,8 @@
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiTokenResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.</span>
-<span class="sd">    The API tokens are returned in order of creation, with the most recently created API tokens first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="sd">    The API tokens are returned in order of creation, with the most recently created API tokens first.</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
         <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
@@ -219,7 +220,8 @@
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiTokenResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any KittyCAD user. It returns the API tokens for the authenticated user.</span>
-<span class="sd">    The API tokens are returned in order of creation, with the most recently created API tokens first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="sd">    The API tokens are returned in order of creation, with the most recently created API tokens first.</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>
         <span class="k">await</span> <span class="n">asyncio_detailed</span><span class="p">(</span>
