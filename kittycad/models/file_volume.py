@@ -6,6 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
+from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
@@ -20,12 +21,14 @@ class FileVolume:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
+    output_unit: Union[Unset, UnitVolume] = UNSET
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
     volume: Union[Unset, float] = UNSET
+    volumes: Union[Unset, Any] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -38,6 +41,8 @@ class FileVolume:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        if not isinstance(self.output_unit, Unset):
+            output_unit = self.output_unit
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
@@ -50,6 +55,7 @@ class FileVolume:
             updated_at = self.updated_at.isoformat()
         user_id = self.user_id
         volume = self.volume
+        volumes = self.volumes
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -62,6 +68,8 @@ class FileVolume:
             field_dict["error"] = error
         if id is not UNSET:
             field_dict["id"] = id
+        if output_unit is not UNSET:
+            field_dict["output_unit"] = output_unit
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
         if started_at is not UNSET:
@@ -74,6 +82,8 @@ class FileVolume:
             field_dict["user_id"] = user_id
         if volume is not UNSET:
             field_dict["volume"] = volume
+        if volumes is not UNSET:
+            field_dict["volumes"] = volumes
 
         return field_dict
 
@@ -102,6 +112,13 @@ class FileVolume:
             id = UNSET
         else:
             id = Uuid(_id)
+
+        _output_unit = d.pop("output_unit", UNSET)
+        output_unit: Union[Unset, UnitVolume]
+        if isinstance(_output_unit, Unset):
+            output_unit = UNSET
+        else:
+            output_unit = _output_unit  # type: ignore[arg-type]
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
@@ -135,17 +152,21 @@ class FileVolume:
 
         volume = d.pop("volume", UNSET)
 
+        volumes = d.pop("volumes", UNSET)
+
         file_volume = cls(
             completed_at=completed_at,
             created_at=created_at,
             error=error,
             id=id,
+            output_unit=output_unit,
             src_format=src_format,
             started_at=started_at,
             status=status,
             updated_at=updated_at,
             user_id=user_id,
             volume=volume,
+            volumes=volumes,
         )
 
         file_volume.additional_properties = d

@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.system import System
+from ..models.unit_length import UnitLength
 from ..types import UNSET, Unset
 
 K = TypeVar("K", bound="Gltf")
@@ -129,6 +130,7 @@ class Obj:
 
     coords: Union[Unset, System] = UNSET
     type: Union[Unset, str] = UNSET
+    units: Union[Unset, UnitLength] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -136,6 +138,8 @@ class Obj:
         if not isinstance(self.coords, Unset):
             coords = self.coords
         type = self.type
+        if not isinstance(self.units, Unset):
+            units = self.units
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -144,6 +148,8 @@ class Obj:
             field_dict["coords"] = coords
         if type is not UNSET:
             field_dict["type"] = type
+        if units is not UNSET:
+            field_dict["units"] = units
 
         return field_dict
 
@@ -159,9 +165,17 @@ class Obj:
 
         type = d.pop("type", UNSET)
 
+        _units = d.pop("units", UNSET)
+        units: Union[Unset, UnitLength]
+        if isinstance(_units, Unset):
+            units = UNSET
+        else:
+            units = _units  # type: ignore[arg-type]
+
         obj = cls(
             coords=coords,
             type=type,
+            units=units,
         )
 
         obj.additional_properties = d
@@ -184,15 +198,16 @@ class Obj:
         return key in self.additional_properties
 
 
-N = TypeVar("N", bound="Stl")
+N = TypeVar("N", bound="Ply")
 
 
 @attr.s(auto_attribs=True)
-class Stl:
-    """*ST**ereo**L**ithography format."""  # noqa: E501
+class Ply:
+    """The PLY Polygon File Format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
     type: Union[Unset, str] = UNSET
+    units: Union[Unset, UnitLength] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -200,6 +215,8 @@ class Stl:
         if not isinstance(self.coords, Unset):
             coords = self.coords
         type = self.type
+        if not isinstance(self.units, Unset):
+            units = self.units
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -208,6 +225,8 @@ class Stl:
             field_dict["coords"] = coords
         if type is not UNSET:
             field_dict["type"] = type
+        if units is not UNSET:
+            field_dict["units"] = units
 
         return field_dict
 
@@ -223,9 +242,94 @@ class Stl:
 
         type = d.pop("type", UNSET)
 
+        _units = d.pop("units", UNSET)
+        units: Union[Unset, UnitLength]
+        if isinstance(_units, Unset):
+            units = UNSET
+        else:
+            units = _units  # type: ignore[arg-type]
+
+        ply = cls(
+            coords=coords,
+            type=type,
+            units=units,
+        )
+
+        ply.additional_properties = d
+        return ply
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
+P = TypeVar("P", bound="Stl")
+
+
+@attr.s(auto_attribs=True)
+class Stl:
+    """*ST**ereo**L**ithography format."""  # noqa: E501
+
+    coords: Union[Unset, System] = UNSET
+    type: Union[Unset, str] = UNSET
+    units: Union[Unset, UnitLength] = UNSET
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        if not isinstance(self.coords, Unset):
+            coords = self.coords
+        type = self.type
+        if not isinstance(self.units, Unset):
+            units = self.units
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if coords is not UNSET:
+            field_dict["coords"] = coords
+        if type is not UNSET:
+            field_dict["type"] = type
+        if units is not UNSET:
+            field_dict["units"] = units
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
+        d = src_dict.copy()
+        _coords = d.pop("coords", UNSET)
+        coords: Union[Unset, System]
+        if isinstance(_coords, Unset):
+            coords = UNSET
+        else:
+            coords = System(_coords)
+
+        type = d.pop("type", UNSET)
+
+        _units = d.pop("units", UNSET)
+        units: Union[Unset, UnitLength]
+        if isinstance(_units, Unset):
+            units = UNSET
+        else:
+            units = _units  # type: ignore[arg-type]
+
         stl = cls(
             coords=coords,
             type=type,
+            units=units,
         )
 
         stl.additional_properties = d
@@ -248,4 +352,4 @@ class Stl:
         return key in self.additional_properties
 
 
-InputFormat = Union[Gltf, Step, Obj, Stl]
+InputFormat = Union[Gltf, Step, Obj, Ply, Stl]

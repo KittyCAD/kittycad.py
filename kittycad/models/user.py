@@ -6,7 +6,7 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-K = TypeVar("K", bound="User")
+F = TypeVar("F", bound="User")
 
 
 @attr.s(auto_attribs=True)
@@ -83,7 +83,7 @@ class User:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
+    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

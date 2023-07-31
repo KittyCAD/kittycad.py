@@ -6,6 +6,8 @@ from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
+from ..models.unit_density import UnitDensity
+from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
@@ -21,7 +23,10 @@ class FileMass:
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     mass: Union[Unset, float] = UNSET
+    masses: Union[Unset, Any] = UNSET
     material_density: Union[Unset, float] = UNSET
+    material_density_unit: Union[Unset, UnitDensity] = UNSET
+    output_unit: Union[Unset, UnitMass] = UNSET
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
@@ -40,7 +45,12 @@ class FileMass:
         error = self.error
         id = self.id
         mass = self.mass
+        masses = self.masses
         material_density = self.material_density
+        if not isinstance(self.material_density_unit, Unset):
+            material_density_unit = self.material_density_unit
+        if not isinstance(self.output_unit, Unset):
+            output_unit = self.output_unit
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
@@ -66,8 +76,14 @@ class FileMass:
             field_dict["id"] = id
         if mass is not UNSET:
             field_dict["mass"] = mass
+        if masses is not UNSET:
+            field_dict["masses"] = masses
         if material_density is not UNSET:
             field_dict["material_density"] = material_density
+        if material_density_unit is not UNSET:
+            field_dict["material_density_unit"] = material_density_unit
+        if output_unit is not UNSET:
+            field_dict["output_unit"] = output_unit
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
         if started_at is not UNSET:
@@ -109,7 +125,22 @@ class FileMass:
 
         mass = d.pop("mass", UNSET)
 
+        masses = d.pop("masses", UNSET)
         material_density = d.pop("material_density", UNSET)
+
+        _material_density_unit = d.pop("material_density_unit", UNSET)
+        material_density_unit: Union[Unset, UnitDensity]
+        if isinstance(_material_density_unit, Unset):
+            material_density_unit = UNSET
+        else:
+            material_density_unit = _material_density_unit  # type: ignore[arg-type]
+
+        _output_unit = d.pop("output_unit", UNSET)
+        output_unit: Union[Unset, UnitMass]
+        if isinstance(_output_unit, Unset):
+            output_unit = UNSET
+        else:
+            output_unit = _output_unit  # type: ignore[arg-type]
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
@@ -147,7 +178,10 @@ class FileMass:
             error=error,
             id=id,
             mass=mass,
+            masses=masses,
             material_density=material_density,
+            material_density_unit=material_density_unit,
+            output_unit=output_unit,
             src_format=src_format,
             started_at=started_at,
             status=status,

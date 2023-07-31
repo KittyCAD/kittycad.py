@@ -65,7 +65,8 @@ def sync(
     client: Client,
 ) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.
-    This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""  # noqa: E501
+    This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance.
+    """  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -91,7 +92,8 @@ async def asyncio(
     client: Client,
 ) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. It deletes the authenticated user from KittyCAD's database.
-    This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""  # noqa: E501
+    This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance.
+    """  # noqa: E501
 
     return (
         await asyncio_detailed(

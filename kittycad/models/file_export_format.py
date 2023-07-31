@@ -6,8 +6,6 @@ class FileExportFormat(str, Enum):
 
     """# The COLLADA/DAE file format. <https://en.wikipedia.org/wiki/COLLADA> """  # noqa: E501
     DAE = "dae"
-    """# The DXF file format. <https://en.wikipedia.org/wiki/AutoCAD_DXF> """  # noqa: E501
-    DXF = "dxf"
     """# The FBX file format. <https://en.wikipedia.org/wiki/FBX> """  # noqa: E501
     FBX = "fbx"
     """# The FBX file format (in binary). <https://en.wikipedia.org/wiki/FBX> """  # noqa: E501

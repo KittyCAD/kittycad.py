@@ -9,7 +9,7 @@ from ..models.unit_length import UnitLength
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-K = TypeVar("K", bound="UnitLengthConversion")
+W = TypeVar("W", bound="UnitLengthConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitLengthConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
+    def from_dict(cls: Type[W], src_dict: Dict[str, Any]) -> W:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

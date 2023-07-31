@@ -150,6 +150,7 @@ from kittycad.models.physics_constant_name import PhysicsConstantName
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
+from kittycad.models.unit_density import UnitDensity
 from kittycad.models.unit_energy import UnitEnergy
 from kittycad.models.unit_force import UnitForce
 from kittycad.models.unit_frequency import UnitFrequency
@@ -981,6 +982,7 @@ def test_create_file_center_of_mass():
 
     result: Optional[Union[FileCenterOfMass, Error]] = create_file_center_of_mass.sync(
         client=client,
+        output_unit=UnitLength.CM,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -997,6 +999,7 @@ def test_create_file_center_of_mass():
         Optional[Union[FileCenterOfMass, Error]]
     ] = create_file_center_of_mass.sync_detailed(
         client=client,
+        output_unit=UnitLength.CM,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1013,6 +1016,7 @@ async def test_create_file_center_of_mass_async():
         Union[FileCenterOfMass, Error]
     ] = await create_file_center_of_mass.asyncio(
         client=client,
+        output_unit=UnitLength.CM,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1022,6 +1026,7 @@ async def test_create_file_center_of_mass_async():
         Optional[Union[FileCenterOfMass, Error]]
     ] = await create_file_center_of_mass.asyncio_detailed(
         client=client,
+        output_unit=UnitLength.CM,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1094,6 +1099,8 @@ def test_create_file_density():
     result: Optional[Union[FileDensity, Error]] = create_file_density.sync(
         client=client,
         material_mass=3.14,
+        material_mass_unit=UnitMass.G,
+        output_unit=UnitDensity.LB_FT3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1111,6 +1118,8 @@ def test_create_file_density():
     ] = create_file_density.sync_detailed(
         client=client,
         material_mass=3.14,
+        material_mass_unit=UnitMass.G,
+        output_unit=UnitDensity.LB_FT3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1126,6 +1135,8 @@ async def test_create_file_density_async():
     result: Optional[Union[FileDensity, Error]] = await create_file_density.asyncio(
         client=client,
         material_mass=3.14,
+        material_mass_unit=UnitMass.G,
+        output_unit=UnitDensity.LB_FT3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1136,6 +1147,8 @@ async def test_create_file_density_async():
     ] = await create_file_density.asyncio_detailed(
         client=client,
         material_mass=3.14,
+        material_mass_unit=UnitMass.G,
+        output_unit=UnitDensity.LB_FT3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1204,6 +1217,8 @@ def test_create_file_mass():
     result: Optional[Union[FileMass, Error]] = create_file_mass.sync(
         client=client,
         material_density=3.14,
+        material_density_unit=UnitDensity.LB_FT3,
+        output_unit=UnitMass.G,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1221,6 +1236,8 @@ def test_create_file_mass():
     ] = create_file_mass.sync_detailed(
         client=client,
         material_density=3.14,
+        material_density_unit=UnitDensity.LB_FT3,
+        output_unit=UnitMass.G,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1236,6 +1253,8 @@ async def test_create_file_mass_async():
     result: Optional[Union[FileMass, Error]] = await create_file_mass.asyncio(
         client=client,
         material_density=3.14,
+        material_density_unit=UnitDensity.LB_FT3,
+        output_unit=UnitMass.G,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1246,6 +1265,8 @@ async def test_create_file_mass_async():
     ] = await create_file_mass.asyncio_detailed(
         client=client,
         material_density=3.14,
+        material_density_unit=UnitDensity.LB_FT3,
+        output_unit=UnitMass.G,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1258,6 +1279,7 @@ def test_create_file_surface_area():
 
     result: Optional[Union[FileSurfaceArea, Error]] = create_file_surface_area.sync(
         client=client,
+        output_unit=UnitArea.CM2,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1274,6 +1296,7 @@ def test_create_file_surface_area():
         Optional[Union[FileSurfaceArea, Error]]
     ] = create_file_surface_area.sync_detailed(
         client=client,
+        output_unit=UnitArea.CM2,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1290,6 +1313,7 @@ async def test_create_file_surface_area_async():
         Union[FileSurfaceArea, Error]
     ] = await create_file_surface_area.asyncio(
         client=client,
+        output_unit=UnitArea.CM2,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1299,6 +1323,7 @@ async def test_create_file_surface_area_async():
         Optional[Union[FileSurfaceArea, Error]]
     ] = await create_file_surface_area.asyncio_detailed(
         client=client,
+        output_unit=UnitArea.CM2,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1311,6 +1336,7 @@ def test_create_file_volume():
 
     result: Optional[Union[FileVolume, Error]] = create_file_volume.sync(
         client=client,
+        output_unit=UnitVolume.CM3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1327,6 +1353,7 @@ def test_create_file_volume():
         Optional[Union[FileVolume, Error]]
     ] = create_file_volume.sync_detailed(
         client=client,
+        output_unit=UnitVolume.CM3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1341,6 +1368,7 @@ async def test_create_file_volume_async():
 
     result: Optional[Union[FileVolume, Error]] = await create_file_volume.asyncio(
         client=client,
+        output_unit=UnitVolume.CM3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1350,6 +1378,7 @@ async def test_create_file_volume_async():
         Optional[Union[FileVolume, Error]]
     ] = await create_file_volume.asyncio_detailed(
         client=client,
+        output_unit=UnitVolume.CM3,
         src_format=FileImportFormat.DAE,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1666,8 +1695,8 @@ def test_get_area_unit_conversion():
 
     result: Optional[Union[UnitAreaConversion, Error]] = get_area_unit_conversion.sync(
         client=client,
-        input_unit=UnitArea.ACRES,
-        output_unit=UnitArea.ACRES,
+        input_unit=UnitArea.CM2,
+        output_unit=UnitArea.CM2,
         value=3.14,
     )
 
@@ -1683,8 +1712,8 @@ def test_get_area_unit_conversion():
         Optional[Union[UnitAreaConversion, Error]]
     ] = get_area_unit_conversion.sync_detailed(
         client=client,
-        input_unit=UnitArea.ACRES,
-        output_unit=UnitArea.ACRES,
+        input_unit=UnitArea.CM2,
+        output_unit=UnitArea.CM2,
         value=3.14,
     )
 
@@ -1700,8 +1729,8 @@ async def test_get_area_unit_conversion_async():
         Union[UnitAreaConversion, Error]
     ] = await get_area_unit_conversion.asyncio(
         client=client,
-        input_unit=UnitArea.ACRES,
-        output_unit=UnitArea.ACRES,
+        input_unit=UnitArea.CM2,
+        output_unit=UnitArea.CM2,
         value=3.14,
     )
 
@@ -1710,8 +1739,8 @@ async def test_get_area_unit_conversion_async():
         Optional[Union[UnitAreaConversion, Error]]
     ] = await get_area_unit_conversion.asyncio_detailed(
         client=client,
-        input_unit=UnitArea.ACRES,
-        output_unit=UnitArea.ACRES,
+        input_unit=UnitArea.CM2,
+        output_unit=UnitArea.CM2,
         value=3.14,
     )
 
@@ -1961,8 +1990,8 @@ def test_get_length_unit_conversion():
         Union[UnitLengthConversion, Error]
     ] = get_length_unit_conversion.sync(
         client=client,
-        input_unit=UnitLength.CENTIMETRES,
-        output_unit=UnitLength.CENTIMETRES,
+        input_unit=UnitLength.CM,
+        output_unit=UnitLength.CM,
         value=3.14,
     )
 
@@ -1978,8 +2007,8 @@ def test_get_length_unit_conversion():
         Optional[Union[UnitLengthConversion, Error]]
     ] = get_length_unit_conversion.sync_detailed(
         client=client,
-        input_unit=UnitLength.CENTIMETRES,
-        output_unit=UnitLength.CENTIMETRES,
+        input_unit=UnitLength.CM,
+        output_unit=UnitLength.CM,
         value=3.14,
     )
 
@@ -1995,8 +2024,8 @@ async def test_get_length_unit_conversion_async():
         Union[UnitLengthConversion, Error]
     ] = await get_length_unit_conversion.asyncio(
         client=client,
-        input_unit=UnitLength.CENTIMETRES,
-        output_unit=UnitLength.CENTIMETRES,
+        input_unit=UnitLength.CM,
+        output_unit=UnitLength.CM,
         value=3.14,
     )
 
@@ -2005,8 +2034,8 @@ async def test_get_length_unit_conversion_async():
         Optional[Union[UnitLengthConversion, Error]]
     ] = await get_length_unit_conversion.asyncio_detailed(
         client=client,
-        input_unit=UnitLength.CENTIMETRES,
-        output_unit=UnitLength.CENTIMETRES,
+        input_unit=UnitLength.CM,
+        output_unit=UnitLength.CM,
         value=3.14,
     )
 
@@ -2018,8 +2047,8 @@ def test_get_mass_unit_conversion():
 
     result: Optional[Union[UnitMassConversion, Error]] = get_mass_unit_conversion.sync(
         client=client,
-        input_unit=UnitMass.CARATS,
-        output_unit=UnitMass.CARATS,
+        input_unit=UnitMass.G,
+        output_unit=UnitMass.G,
         value=3.14,
     )
 
@@ -2035,8 +2064,8 @@ def test_get_mass_unit_conversion():
         Optional[Union[UnitMassConversion, Error]]
     ] = get_mass_unit_conversion.sync_detailed(
         client=client,
-        input_unit=UnitMass.CARATS,
-        output_unit=UnitMass.CARATS,
+        input_unit=UnitMass.G,
+        output_unit=UnitMass.G,
         value=3.14,
     )
 
@@ -2052,8 +2081,8 @@ async def test_get_mass_unit_conversion_async():
         Union[UnitMassConversion, Error]
     ] = await get_mass_unit_conversion.asyncio(
         client=client,
-        input_unit=UnitMass.CARATS,
-        output_unit=UnitMass.CARATS,
+        input_unit=UnitMass.G,
+        output_unit=UnitMass.G,
         value=3.14,
     )
 
@@ -2062,8 +2091,8 @@ async def test_get_mass_unit_conversion_async():
         Optional[Union[UnitMassConversion, Error]]
     ] = await get_mass_unit_conversion.asyncio_detailed(
         client=client,
-        input_unit=UnitMass.CARATS,
-        output_unit=UnitMass.CARATS,
+        input_unit=UnitMass.G,
+        output_unit=UnitMass.G,
         value=3.14,
     )
 
@@ -2313,8 +2342,8 @@ def test_get_volume_unit_conversion():
         Union[UnitVolumeConversion, Error]
     ] = get_volume_unit_conversion.sync(
         client=client,
-        input_unit=UnitVolume.CUBIC_CENTIMETRES,
-        output_unit=UnitVolume.CUBIC_CENTIMETRES,
+        input_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.CM3,
         value=3.14,
     )
 
@@ -2330,8 +2359,8 @@ def test_get_volume_unit_conversion():
         Optional[Union[UnitVolumeConversion, Error]]
     ] = get_volume_unit_conversion.sync_detailed(
         client=client,
-        input_unit=UnitVolume.CUBIC_CENTIMETRES,
-        output_unit=UnitVolume.CUBIC_CENTIMETRES,
+        input_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.CM3,
         value=3.14,
     )
 
@@ -2347,8 +2376,8 @@ async def test_get_volume_unit_conversion_async():
         Union[UnitVolumeConversion, Error]
     ] = await get_volume_unit_conversion.asyncio(
         client=client,
-        input_unit=UnitVolume.CUBIC_CENTIMETRES,
-        output_unit=UnitVolume.CUBIC_CENTIMETRES,
+        input_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.CM3,
         value=3.14,
     )
 
@@ -2357,8 +2386,8 @@ async def test_get_volume_unit_conversion_async():
         Optional[Union[UnitVolumeConversion, Error]]
     ] = await get_volume_unit_conversion.asyncio_detailed(
         client=client,
-        input_unit=UnitVolume.CUBIC_CENTIMETRES,
-        output_unit=UnitVolume.CUBIC_CENTIMETRES,
+        input_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.CM3,
         value=3.14,
     )
 

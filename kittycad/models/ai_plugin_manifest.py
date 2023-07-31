@@ -13,7 +13,8 @@ N = TypeVar("N", bound="AiPluginManifest")
 class AiPluginManifest:
     """AI plugin manifest.
 
-    This is used for OpenAI's ChatGPT plugins. You can read more about them [here](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest)."""  # noqa: E501
+    This is used for OpenAI's ChatGPT plugins. You can read more about them [here](https://platform.openai.com/docs/plugins/getting-started/plugin-manifest).
+    """  # noqa: E501
 
     api: Union[Unset, AiPluginApi] = UNSET
     auth: Union[Unset, AiPluginAuth] = UNSET

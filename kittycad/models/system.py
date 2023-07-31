@@ -5,7 +5,7 @@ import attr
 from ..models.axis_direction_pair import AxisDirectionPair
 from ..types import UNSET, Unset
 
-V = TypeVar("V", bound="System")
+P = TypeVar("P", bound="System")
 
 
 @attr.s(auto_attribs=True)
@@ -16,7 +16,8 @@ class System:
 
     See [cglearn.eu] for background reading.
 
-    [cglearn.eu](https://cglearn.eu/pub/computer-graphics/introduction-to-geometry#material-coordinate-systems-1)"""  # noqa: E501
+    [cglearn.eu](https://cglearn.eu/pub/computer-graphics/introduction-to-geometry#material-coordinate-systems-1)
+    """  # noqa: E501
 
     forward: Union[Unset, AxisDirectionPair] = UNSET
     up: Union[Unset, AxisDirectionPair] = UNSET
@@ -40,7 +41,7 @@ class System:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
         d = src_dict.copy()
         _forward = d.pop("forward", UNSET)
         forward: Union[Unset, AxisDirectionPair]

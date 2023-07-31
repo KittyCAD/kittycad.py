@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-C = TypeVar("C", bound="ModelingError")
+L = TypeVar("L", bound="ModelingError")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class ModelingError:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
+    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 
