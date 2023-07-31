@@ -142,11 +142,12 @@ from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.image_type import ImageType
-from kittycad.models.modeling_cmd import ModelingCmd
+from kittycad.models.modeling_cmd import MovePathPen
 from kittycad.models.modeling_cmd_id import ModelingCmdId
 from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.modeling_cmd_req_batch import ModelingCmdReqBatch
 from kittycad.models.physics_constant_name import PhysicsConstantName
+from kittycad.models.point3d import Point3d
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -1431,7 +1432,14 @@ def test_cmd():
     cmd.sync(
         client=client,
         body=ModelingCmdReq(
-            cmd=ModelingCmd.START_PATH,
+            cmd=MovePathPen(
+                path=ModelingCmdId("<uuid>"),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
             cmd_id=ModelingCmdId("<uuid>"),
             file_id="<string>",
         ),
@@ -1441,7 +1449,14 @@ def test_cmd():
     cmd.sync_detailed(
         client=client,
         body=ModelingCmdReq(
-            cmd=ModelingCmd.START_PATH,
+            cmd=MovePathPen(
+                path=ModelingCmdId("<uuid>"),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
             cmd_id=ModelingCmdId("<uuid>"),
             file_id="<string>",
         ),
@@ -1458,7 +1473,14 @@ async def test_cmd_async():
     await cmd.asyncio(
         client=client,
         body=ModelingCmdReq(
-            cmd=ModelingCmd.START_PATH,
+            cmd=MovePathPen(
+                path=ModelingCmdId("<uuid>"),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
             cmd_id=ModelingCmdId("<uuid>"),
             file_id="<string>",
         ),
@@ -1468,7 +1490,14 @@ async def test_cmd_async():
     await cmd.asyncio_detailed(
         client=client,
         body=ModelingCmdReq(
-            cmd=ModelingCmd.START_PATH,
+            cmd=MovePathPen(
+                path=ModelingCmdId("<uuid>"),
+                to=Point3d(
+                    x=3.14,
+                    y=3.14,
+                    z=3.14,
+                ),
+            ),
             cmd_id=ModelingCmdId("<uuid>"),
             file_id="<string>",
         ),
@@ -1485,7 +1514,14 @@ def test_cmd_batch():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=ModelingCmd.START_PATH,
+                    cmd=MovePathPen(
+                        path=ModelingCmdId("<uuid>"),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
                     cmd_id=ModelingCmdId("<uuid>"),
                     file_id="<string>",
                 )
@@ -1509,7 +1545,14 @@ def test_cmd_batch():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=ModelingCmd.START_PATH,
+                    cmd=MovePathPen(
+                        path=ModelingCmdId("<uuid>"),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
                     cmd_id=ModelingCmdId("<uuid>"),
                     file_id="<string>",
                 )
@@ -1531,7 +1574,14 @@ async def test_cmd_batch_async():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=ModelingCmd.START_PATH,
+                    cmd=MovePathPen(
+                        path=ModelingCmdId("<uuid>"),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
                     cmd_id=ModelingCmdId("<uuid>"),
                     file_id="<string>",
                 )
@@ -1548,7 +1598,14 @@ async def test_cmd_batch_async():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=ModelingCmd.START_PATH,
+                    cmd=MovePathPen(
+                        path=ModelingCmdId("<uuid>"),
+                        to=Point3d(
+                            x=3.14,
+                            y=3.14,
+                            z=3.14,
+                        ),
+                    ),
                     cmd_id=ModelingCmdId("<uuid>"),
                     file_id="<string>",
                 )

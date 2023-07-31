@@ -293,6 +293,17 @@ def generateTypeAndExamplePython(
             raise Exception("Unknown parameter type")
     elif "oneOf" in schema and len(schema["oneOf"]) > 0:
         one_of = schema["oneOf"][0]
+        # Start Path is a weird one, let's skip it.
+        # Technically we should be able to handle it, but it's not worth the effort.
+        # We should also have a more algorithmic way of handling this for any other weird cases.
+        # But for now, let's just skip it.
+        if (
+            "enum" in one_of
+            and len(one_of["enum"]) > 0
+            and one_of["enum"][0] == "StartPath"
+        ):
+            one_of = schema["oneOf"][1]
+
         # Check if each of these only has a object w 1 property.
         if isNestedObjectOneOf(schema):
             if "properties" in one_of:
@@ -307,7 +318,7 @@ def generateTypeAndExamplePython(
                     name, one_of, data, camel_to_snake(name)
                 )
 
-        return generateTypeAndExamplePython(name, schema["oneOf"][0], data, None)
+        return generateTypeAndExamplePython(name, one_of, data, None)
     elif "allOf" in schema and len(schema["allOf"]) == 1:
         return generateTypeAndExamplePython(name, schema["allOf"][0], data, None)
     elif "$ref" in schema:
@@ -1998,7 +2009,6 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
         f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
         f.write("\t\telse:\n")
 
-        # if isNestedObjectOneOf(ref_schema):
         f.write(
             "\t\t\t"
             + clean_parameter_name(property_name)
@@ -2006,16 +2016,7 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             + clean_parameter_name(property_name)
             + " # type: ignore[arg-type]\n"
         )
-        # else:
-        #    f.write(
-        #        "\t\t\t"
-        #        + clean_parameter_name(property_name)
-        #        + " = "
-        #        + ref
-        #       + "(_"
-        #        + clean_parameter_name(property_name)
-        #        + ")\n"
-        #     )
+
         f.write("\n")
     elif "allOf" in property_schema:
         if len(property_schema["allOf"]) != 1:
