@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-V = TypeVar("V", bound="PointEMetadata")
+WJ = TypeVar("WJ", bound="PointEMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class PointEMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[WJ], src_dict: Dict[str, Any]) -> WJ:
         d = src_dict.copy()
         ok = d.pop("ok", UNSET)
 

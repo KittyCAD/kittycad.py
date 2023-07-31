@@ -9,7 +9,7 @@ from ..models.physics_constant_name import PhysicsConstantName
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-F = TypeVar("F", bound="PhysicsConstant")
+SS = TypeVar("SS", bound="PhysicsConstant")
 
 
 @attr.s(auto_attribs=True)
@@ -78,7 +78,7 @@ class PhysicsConstant:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
+    def from_dict(cls: Type[SS], src_dict: Dict[str, Any]) -> SS:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -108,7 +108,7 @@ class PhysicsConstant:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]

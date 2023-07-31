@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-P = TypeVar("P", bound="ApiCallQueryGroup")
+GO = TypeVar("GO", bound="ApiCallQueryGroup")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class ApiCallQueryGroup:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
+    def from_dict(cls: Type[GO], src_dict: Dict[str, Any]) -> GO:
         d = src_dict.copy()
         count = d.pop("count", UNSET)
 

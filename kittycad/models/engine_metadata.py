@@ -8,7 +8,7 @@ from ..models.environment import Environment
 from ..models.file_system_metadata import FileSystemMetadata
 from ..types import UNSET, Unset
 
-Y = TypeVar("Y", bound="EngineMetadata")
+BB = TypeVar("BB", bound="EngineMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +57,7 @@ class EngineMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Y], src_dict: Dict[str, Any]) -> Y:
+    def from_dict(cls: Type[BB], src_dict: Dict[str, Any]) -> BB:
         d = src_dict.copy()
         async_jobs_running = d.pop("async_jobs_running", UNSET)
 
@@ -66,7 +66,7 @@ class EngineMetadata:
         if isinstance(_cache, Unset):
             cache = UNSET
         else:
-            cache = CacheMetadata(_cache)
+            cache = _cache  # type: ignore[arg-type]
 
         _environment = d.pop("environment", UNSET)
         environment: Union[Unset, Environment]
@@ -80,7 +80,7 @@ class EngineMetadata:
         if isinstance(_fs, Unset):
             fs = UNSET
         else:
-            fs = FileSystemMetadata(_fs)
+            fs = _fs  # type: ignore[arg-type]
 
         git_hash = d.pop("git_hash", UNSET)
 
@@ -89,7 +89,7 @@ class EngineMetadata:
         if isinstance(_pubsub, Unset):
             pubsub = UNSET
         else:
-            pubsub = Connection(_pubsub)
+            pubsub = _pubsub  # type: ignore[arg-type]
 
         engine_metadata = cls(
             async_jobs_running=async_jobs_running,

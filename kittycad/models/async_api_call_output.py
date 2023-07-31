@@ -18,7 +18,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-F = TypeVar("F", bound="FileConversion")
+LB = TypeVar("LB", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -110,7 +110,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
+    def from_dict(cls: Type[LB], src_dict: Dict[str, Any]) -> LB:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -133,7 +133,7 @@ class FileConversion:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         output = d.pop("output", UNSET)
 
@@ -149,7 +149,7 @@ class FileConversion:
         if isinstance(_output_format_options, Unset):
             output_format_options = UNSET
         else:
-            output_format_options = OutputFormat(_output_format_options)
+            output_format_options = _output_format_options  # type: ignore[arg-type]
 
         outputs = d.pop("outputs", UNSET)
         _src_format = d.pop("src_format", UNSET)
@@ -164,7 +164,7 @@ class FileConversion:
         if isinstance(_src_format_options, Unset):
             src_format_options = UNSET
         else:
-            src_format_options = InputFormat(_src_format_options)
+            src_format_options = _src_format_options  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -229,7 +229,7 @@ class FileConversion:
         return key in self.additional_properties
 
 
-B = TypeVar("B", bound="FileCenterOfMass")
+NE = TypeVar("NE", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
@@ -312,14 +312,14 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
+    def from_dict(cls: Type[NE], src_dict: Dict[str, Any]) -> NE:
         d = src_dict.copy()
         _center_of_mass = d.pop("center_of_mass", UNSET)
         center_of_mass: Union[Unset, Point3d]
         if isinstance(_center_of_mass, Unset):
             center_of_mass = UNSET
         else:
-            center_of_mass = Point3d(_center_of_mass)
+            center_of_mass = _center_of_mass  # type: ignore[arg-type]
 
         centers_of_mass = d.pop("centers_of_mass", UNSET)
         _completed_at = d.pop("completed_at", UNSET)
@@ -343,7 +343,7 @@ class FileCenterOfMass:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitLength]
@@ -420,7 +420,7 @@ class FileCenterOfMass:
         return key in self.additional_properties
 
 
-Q = TypeVar("Q", bound="FileMass")
+TL = TypeVar("TL", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
@@ -511,7 +511,7 @@ class FileMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Q], src_dict: Dict[str, Any]) -> Q:
+    def from_dict(cls: Type[TL], src_dict: Dict[str, Any]) -> TL:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -534,7 +534,7 @@ class FileMass:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         mass = d.pop("mass", UNSET)
 
@@ -625,7 +625,7 @@ class FileMass:
         return key in self.additional_properties
 
 
-P = TypeVar("P", bound="FileVolume")
+MN = TypeVar("MN", bound="FileVolume")
 
 
 @attr.s(auto_attribs=True)
@@ -707,7 +707,7 @@ class FileVolume:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
+    def from_dict(cls: Type[MN], src_dict: Dict[str, Any]) -> MN:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -730,7 +730,7 @@ class FileVolume:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitVolume]
@@ -811,7 +811,7 @@ class FileVolume:
         return key in self.additional_properties
 
 
-K = TypeVar("K", bound="FileDensity")
+JV = TypeVar("JV", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -902,7 +902,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
+    def from_dict(cls: Type[JV], src_dict: Dict[str, Any]) -> JV:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -928,7 +928,7 @@ class FileDensity:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         material_mass = d.pop("material_mass", UNSET)
 
@@ -1016,7 +1016,7 @@ class FileDensity:
         return key in self.additional_properties
 
 
-C = TypeVar("C", bound="FileSurfaceArea")
+IO = TypeVar("IO", bound="FileSurfaceArea")
 
 
 @attr.s(auto_attribs=True)
@@ -1098,7 +1098,7 @@ class FileSurfaceArea:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
+    def from_dict(cls: Type[IO], src_dict: Dict[str, Any]) -> IO:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -1121,7 +1121,7 @@ class FileSurfaceArea:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitArea]

@@ -10,7 +10,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-L = TypeVar("L", bound="FileVolume")
+NN = TypeVar("NN", bound="FileVolume")
 
 
 @attr.s(auto_attribs=True)
@@ -88,7 +88,7 @@ class FileVolume:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[NN], src_dict: Dict[str, Any]) -> NN:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -111,7 +111,7 @@ class FileVolume:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitVolume]

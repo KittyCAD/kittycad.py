@@ -12,7 +12,7 @@ Success = Any
 Error = ModelingError
 
 
-T = TypeVar("T", bound="Cancelled")
+CB = TypeVar("CB", bound="Cancelled")
 
 
 @attr.s(auto_attribs=True)
@@ -34,14 +34,14 @@ class Cancelled:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[CB], src_dict: Dict[str, Any]) -> CB:
         d = src_dict.copy()
         _what_failed = d.pop("what_failed", UNSET)
         what_failed: Union[Unset, ModelingCmdId]
         if isinstance(_what_failed, Unset):
             what_failed = UNSET
         else:
-            what_failed = ModelingCmdId(_what_failed)
+            what_failed = _what_failed  # type: ignore[arg-type]
 
         cancelled = cls(
             what_failed=what_failed,

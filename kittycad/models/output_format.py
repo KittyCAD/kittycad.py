@@ -6,7 +6,7 @@ from ..models.storage import Storage
 from ..models.system import System
 from ..types import UNSET, Unset
 
-F = TypeVar("F", bound="Gltf")
+QO = TypeVar("QO", bound="Gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -34,7 +34,7 @@ class Gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
+    def from_dict(cls: Type[QO], src_dict: Dict[str, Any]) -> QO:
         d = src_dict.copy()
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, Storage]
@@ -70,7 +70,7 @@ class Gltf:
         return key in self.additional_properties
 
 
-Z = TypeVar("Z", bound="Obj")
+KX = TypeVar("KX", bound="Obj")
 
 
 @attr.s(auto_attribs=True)
@@ -98,14 +98,14 @@ class Obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Z], src_dict: Dict[str, Any]) -> Z:
+    def from_dict(cls: Type[KX], src_dict: Dict[str, Any]) -> KX:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 
@@ -134,7 +134,7 @@ class Obj:
         return key in self.additional_properties
 
 
-G = TypeVar("G", bound="Ply")
+IZ = TypeVar("IZ", bound="Ply")
 
 
 @attr.s(auto_attribs=True)
@@ -167,14 +167,14 @@ class Ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
+    def from_dict(cls: Type[IZ], src_dict: Dict[str, Any]) -> IZ:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, Storage]
@@ -211,7 +211,7 @@ class Ply:
         return key in self.additional_properties
 
 
-L = TypeVar("L", bound="Step")
+WO = TypeVar("WO", bound="Step")
 
 
 @attr.s(auto_attribs=True)
@@ -239,14 +239,14 @@ class Step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[L], src_dict: Dict[str, Any]) -> L:
+    def from_dict(cls: Type[WO], src_dict: Dict[str, Any]) -> WO:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 
@@ -275,7 +275,7 @@ class Step:
         return key in self.additional_properties
 
 
-N = TypeVar("N", bound="Stl")
+NK = TypeVar("NK", bound="Stl")
 
 
 @attr.s(auto_attribs=True)
@@ -308,14 +308,14 @@ class Stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[NK], src_dict: Dict[str, Any]) -> NK:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, Storage]

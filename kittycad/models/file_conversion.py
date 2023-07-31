@@ -12,7 +12,7 @@ from ..models.output_format import OutputFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-H = TypeVar("H", bound="FileConversion")
+ED = TypeVar("ED", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -100,7 +100,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[ED], src_dict: Dict[str, Any]) -> ED:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -123,7 +123,7 @@ class FileConversion:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         output = d.pop("output", UNSET)
 
@@ -139,7 +139,7 @@ class FileConversion:
         if isinstance(_output_format_options, Unset):
             output_format_options = UNSET
         else:
-            output_format_options = OutputFormat(_output_format_options)
+            output_format_options = _output_format_options  # type: ignore[arg-type]
 
         outputs = d.pop("outputs", UNSET)
         _src_format = d.pop("src_format", UNSET)
@@ -154,7 +154,7 @@ class FileConversion:
         if isinstance(_src_format_options, Unset):
             src_format_options = UNSET
         else:
-            src_format_options = InputFormat(_src_format_options)
+            src_format_options = _src_format_options  # type: ignore[arg-type]
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]

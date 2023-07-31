@@ -22,7 +22,7 @@ class StartPath(str, Enum):
         return str(self.value)
 
 
-B = TypeVar("B", bound="MovePathPen")
+TP = TypeVar("TP", bound="MovePathPen")
 
 
 @attr.s(auto_attribs=True)
@@ -49,21 +49,21 @@ class MovePathPen:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[B], src_dict: Dict[str, Any]) -> B:
+    def from_dict(cls: Type[TP], src_dict: Dict[str, Any]) -> TP:
         d = src_dict.copy()
         _path = d.pop("path", UNSET)
         path: Union[Unset, ModelingCmdId]
         if isinstance(_path, Unset):
             path = UNSET
         else:
-            path = ModelingCmdId(_path)
+            path = _path  # type: ignore[arg-type]
 
         _to = d.pop("to", UNSET)
         to: Union[Unset, Point3d]
         if isinstance(_to, Unset):
             to = UNSET
         else:
-            to = Point3d(_to)
+            to = _to  # type: ignore[arg-type]
 
         move_path_pen = cls(
             path=path,
@@ -90,7 +90,7 @@ class MovePathPen:
         return key in self.additional_properties
 
 
-P = TypeVar("P", bound="ExtendPath")
+CF = TypeVar("CF", bound="ExtendPath")
 
 
 @attr.s(auto_attribs=True)
@@ -117,14 +117,14 @@ class ExtendPath:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
+    def from_dict(cls: Type[CF], src_dict: Dict[str, Any]) -> CF:
         d = src_dict.copy()
         _path = d.pop("path", UNSET)
         path: Union[Unset, ModelingCmdId]
         if isinstance(_path, Unset):
             path = UNSET
         else:
-            path = ModelingCmdId(_path)
+            path = _path  # type: ignore[arg-type]
 
         _segment = d.pop("segment", UNSET)
         segment: Union[Unset, PathSegment]
@@ -158,7 +158,7 @@ class ExtendPath:
         return key in self.additional_properties
 
 
-J = TypeVar("J", bound="ClosePath")
+OM = TypeVar("OM", bound="ClosePath")
 
 
 @attr.s(auto_attribs=True)
@@ -179,7 +179,7 @@ class ClosePath:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[J], src_dict: Dict[str, Any]) -> J:
+    def from_dict(cls: Type[OM], src_dict: Dict[str, Any]) -> OM:
         d = src_dict.copy()
         path_id = d.pop("path_id", UNSET)
 
@@ -207,7 +207,7 @@ class ClosePath:
         return key in self.additional_properties
 
 
-T = TypeVar("T", bound="CameraDragStart")
+EN = TypeVar("EN", bound="CameraDragStart")
 
 
 @attr.s(auto_attribs=True)
@@ -234,7 +234,7 @@ class CameraDragStart:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: Type[EN], src_dict: Dict[str, Any]) -> EN:
         d = src_dict.copy()
         _interaction = d.pop("interaction", UNSET)
         interaction: Union[Unset, CameraDragInteractionType]
@@ -248,7 +248,7 @@ class CameraDragStart:
         if isinstance(_window, Unset):
             window = UNSET
         else:
-            window = Point2d(_window)
+            window = _window  # type: ignore[arg-type]
 
         camera_drag_start = cls(
             interaction=interaction,
@@ -275,7 +275,7 @@ class CameraDragStart:
         return key in self.additional_properties
 
 
-V = TypeVar("V", bound="CameraDragMove")
+RS = TypeVar("RS", bound="CameraDragMove")
 
 
 @attr.s(auto_attribs=True)
@@ -306,7 +306,7 @@ class CameraDragMove:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[RS], src_dict: Dict[str, Any]) -> RS:
         d = src_dict.copy()
         _interaction = d.pop("interaction", UNSET)
         interaction: Union[Unset, CameraDragInteractionType]
@@ -322,7 +322,7 @@ class CameraDragMove:
         if isinstance(_window, Unset):
             window = UNSET
         else:
-            window = Point2d(_window)
+            window = _window  # type: ignore[arg-type]
 
         camera_drag_move = cls(
             interaction=interaction,
@@ -350,7 +350,7 @@ class CameraDragMove:
         return key in self.additional_properties
 
 
-C = TypeVar("C", bound="CameraDragEnd")
+LR = TypeVar("LR", bound="CameraDragEnd")
 
 
 @attr.s(auto_attribs=True)
@@ -377,7 +377,7 @@ class CameraDragEnd:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
+    def from_dict(cls: Type[LR], src_dict: Dict[str, Any]) -> LR:
         d = src_dict.copy()
         _interaction = d.pop("interaction", UNSET)
         interaction: Union[Unset, CameraDragInteractionType]
@@ -391,7 +391,7 @@ class CameraDragEnd:
         if isinstance(_window, Unset):
             window = UNSET
         else:
-            window = Point2d(_window)
+            window = _window  # type: ignore[arg-type]
 
         camera_drag_end = cls(
             interaction=interaction,
@@ -418,7 +418,7 @@ class CameraDragEnd:
         return key in self.additional_properties
 
 
-R = TypeVar("R", bound="DefaultCameraLookAt")
+MP = TypeVar("MP", bound="DefaultCameraLookAt")
 
 
 @attr.s(auto_attribs=True)
@@ -450,28 +450,28 @@ class DefaultCameraLookAt:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
+    def from_dict(cls: Type[MP], src_dict: Dict[str, Any]) -> MP:
         d = src_dict.copy()
         _center = d.pop("center", UNSET)
         center: Union[Unset, Point3d]
         if isinstance(_center, Unset):
             center = UNSET
         else:
-            center = Point3d(_center)
+            center = _center  # type: ignore[arg-type]
 
         _up = d.pop("up", UNSET)
         up: Union[Unset, Point3d]
         if isinstance(_up, Unset):
             up = UNSET
         else:
-            up = Point3d(_up)
+            up = _up  # type: ignore[arg-type]
 
         _vantage = d.pop("vantage", UNSET)
         vantage: Union[Unset, Point3d]
         if isinstance(_vantage, Unset):
             vantage = UNSET
         else:
-            vantage = Point3d(_vantage)
+            vantage = _vantage  # type: ignore[arg-type]
 
         default_camera_look_at = cls(
             center=center,
@@ -499,7 +499,7 @@ class DefaultCameraLookAt:
         return key in self.additional_properties
 
 
-C = TypeVar("C", bound="DefaultCameraEnableSketchMode")
+WF = TypeVar("WF", bound="DefaultCameraEnableSketchMode")
 
 
 @attr.s(auto_attribs=True)
@@ -539,7 +539,7 @@ class DefaultCameraEnableSketchMode:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[C], src_dict: Dict[str, Any]) -> C:
+    def from_dict(cls: Type[WF], src_dict: Dict[str, Any]) -> WF:
         d = src_dict.copy()
         distance_to_plane = d.pop("distance_to_plane", UNSET)
 
@@ -548,7 +548,7 @@ class DefaultCameraEnableSketchMode:
         if isinstance(_origin, Unset):
             origin = UNSET
         else:
-            origin = Point3d(_origin)
+            origin = _origin  # type: ignore[arg-type]
 
         ortho = d.pop("ortho", UNSET)
 
@@ -557,14 +557,14 @@ class DefaultCameraEnableSketchMode:
         if isinstance(_x_axis, Unset):
             x_axis = UNSET
         else:
-            x_axis = Point3d(_x_axis)
+            x_axis = _x_axis  # type: ignore[arg-type]
 
         _y_axis = d.pop("y_axis", UNSET)
         y_axis: Union[Unset, Point3d]
         if isinstance(_y_axis, Unset):
             y_axis = UNSET
         else:
-            y_axis = Point3d(_y_axis)
+            y_axis = _y_axis  # type: ignore[arg-type]
 
         default_camera_enable_sketch_mode = cls(
             distance_to_plane=distance_to_plane,
@@ -603,7 +603,7 @@ class DefaultCameraDisableSketchMode(str, Enum):
         return str(self.value)
 
 
-E = TypeVar("E", bound="Export")
+RO = TypeVar("RO", bound="Export")
 
 
 @attr.s(auto_attribs=True)
@@ -625,14 +625,14 @@ class Export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[E], src_dict: Dict[str, Any]) -> E:
+    def from_dict(cls: Type[RO], src_dict: Dict[str, Any]) -> RO:
         d = src_dict.copy()
         _format = d.pop("format", UNSET)
         format: Union[Unset, OutputFormat]
         if isinstance(_format, Unset):
             format = UNSET
         else:
-            format = OutputFormat(_format)
+            format = _format  # type: ignore[arg-type]
 
         export = cls(
             format=format,

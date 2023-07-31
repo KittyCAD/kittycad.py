@@ -6,7 +6,7 @@ from ..models.modeling_cmd import ModelingCmd
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="ModelingCmdReq")
+DN = TypeVar("DN", bound="ModelingCmdReq")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class ModelingCmdReq:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[DN], src_dict: Dict[str, Any]) -> DN:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]
@@ -53,7 +53,7 @@ class ModelingCmdReq:
         if isinstance(_cmd_id, Unset):
             cmd_id = UNSET
         else:
-            cmd_id = ModelingCmdId(_cmd_id)
+            cmd_id = _cmd_id  # type: ignore[arg-type]
 
         file_id = d.pop("file_id", UNSET)
 

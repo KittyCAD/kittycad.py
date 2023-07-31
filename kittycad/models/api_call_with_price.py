@@ -8,7 +8,7 @@ from ..models.method import Method
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-S = TypeVar("S", bound="ApiCallWithPrice")
+PI = TypeVar("PI", bound="ApiCallWithPrice")
 
 
 @attr.s(auto_attribs=True)
@@ -126,7 +126,7 @@ class ApiCallWithPrice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
+    def from_dict(cls: Type[PI], src_dict: Dict[str, Any]) -> PI:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -153,7 +153,7 @@ class ApiCallWithPrice:
         if isinstance(_id, Unset):
             id = UNSET
         else:
-            id = Uuid(_id)
+            id = _id  # type: ignore[arg-type]
 
         ip_address = d.pop("ip_address", UNSET)
 
@@ -194,7 +194,7 @@ class ApiCallWithPrice:
         if isinstance(_token, Unset):
             token = UNSET
         else:
-            token = Uuid(_token)
+            token = _token  # type: ignore[arg-type]
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]

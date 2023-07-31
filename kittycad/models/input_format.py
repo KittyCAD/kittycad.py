@@ -6,7 +6,7 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 from ..types import UNSET, Unset
 
-K = TypeVar("K", bound="Gltf")
+ET = TypeVar("ET", bound="Gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class Gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[K], src_dict: Dict[str, Any]) -> K:
+    def from_dict(cls: Type[ET], src_dict: Dict[str, Any]) -> ET:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -57,7 +57,7 @@ class Gltf:
         return key in self.additional_properties
 
 
-V = TypeVar("V", bound="Step")
+QF = TypeVar("QF", bound="Step")
 
 
 @attr.s(auto_attribs=True)
@@ -85,14 +85,14 @@ class Step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[QF], src_dict: Dict[str, Any]) -> QF:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 
@@ -121,7 +121,7 @@ class Step:
         return key in self.additional_properties
 
 
-R = TypeVar("R", bound="Obj")
+DI = TypeVar("DI", bound="Obj")
 
 
 @attr.s(auto_attribs=True)
@@ -154,14 +154,14 @@ class Obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[R], src_dict: Dict[str, Any]) -> R:
+    def from_dict(cls: Type[DI], src_dict: Dict[str, Any]) -> DI:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 
@@ -198,7 +198,7 @@ class Obj:
         return key in self.additional_properties
 
 
-N = TypeVar("N", bound="Ply")
+OJ = TypeVar("OJ", bound="Ply")
 
 
 @attr.s(auto_attribs=True)
@@ -231,14 +231,14 @@ class Ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[OJ], src_dict: Dict[str, Any]) -> OJ:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 
@@ -275,7 +275,7 @@ class Ply:
         return key in self.additional_properties
 
 
-P = TypeVar("P", bound="Stl")
+UF = TypeVar("UF", bound="Stl")
 
 
 @attr.s(auto_attribs=True)
@@ -308,14 +308,14 @@ class Stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[P], src_dict: Dict[str, Any]) -> P:
+    def from_dict(cls: Type[UF], src_dict: Dict[str, Any]) -> UF:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
         else:
-            coords = System(_coords)
+            coords = _coords  # type: ignore[arg-type]
 
         type = d.pop("type", UNSET)
 

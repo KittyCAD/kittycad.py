@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-S = TypeVar("S", bound="UpdateUser")
+UA = TypeVar("UA", bound="UpdateUser")
 
 
 @attr.s(auto_attribs=True)
@@ -47,7 +47,7 @@ class UpdateUser:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
+    def from_dict(cls: Type[UA], src_dict: Dict[str, Any]) -> UA:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

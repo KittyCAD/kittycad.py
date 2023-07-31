@@ -7,7 +7,7 @@ from ..models.jetstream_stats import JetstreamStats
 from ..models.meta_cluster_info import MetaClusterInfo
 from ..types import UNSET, Unset
 
-S = TypeVar("S", bound="Jetstream")
+LK = TypeVar("LK", bound="Jetstream")
 
 
 @attr.s(auto_attribs=True)
@@ -41,28 +41,28 @@ class Jetstream:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[S], src_dict: Dict[str, Any]) -> S:
+    def from_dict(cls: Type[LK], src_dict: Dict[str, Any]) -> LK:
         d = src_dict.copy()
         _config = d.pop("config", UNSET)
         config: Union[Unset, JetstreamConfig]
         if isinstance(_config, Unset):
             config = UNSET
         else:
-            config = JetstreamConfig(_config)
+            config = _config  # type: ignore[arg-type]
 
         _meta = d.pop("meta", UNSET)
         meta: Union[Unset, MetaClusterInfo]
         if isinstance(_meta, Unset):
             meta = UNSET
         else:
-            meta = MetaClusterInfo(_meta)
+            meta = _meta  # type: ignore[arg-type]
 
         _stats = d.pop("stats", UNSET)
         stats: Union[Unset, JetstreamStats]
         if isinstance(_stats, Unset):
             stats = UNSET
         else:
-            stats = JetstreamStats(_stats)
+            stats = _stats  # type: ignore[arg-type]
 
         jetstream = cls(
             config=config,
