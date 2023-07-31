@@ -91,7 +91,6 @@ def sync(
     client: Client,
     callback_url: Optional[str] = None,
 ) -> Optional[Error]:
-
     return sync_detailed(
         callback_url=callback_url,
         email=email,
@@ -127,7 +126,6 @@ async def asyncio(
     client: Client,
     callback_url: Optional[str] = None,
 ) -> Optional[Error]:
-
     return (
         await asyncio_detailed(
             callback_url=callback_url,

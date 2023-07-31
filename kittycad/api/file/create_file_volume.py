@@ -6,16 +6,23 @@ from ...client import Client
 from ...models.error import Error
 from ...models.file_import_format import FileImportFormat
 from ...models.file_volume import FileVolume
+from ...models.unit_volume import UnitVolume
 from ...types import Response
 
 
 def _get_kwargs(
+    output_unit: UnitVolume,
     src_format: FileImportFormat,
     body: bytes,
     *,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/file/volume".format(client.base_url)  # noqa: E501
+    if output_unit is not None:
+        if "?" in url:
+            url = url + "&output_unit=" + str(output_unit)
+        else:
+            url = url + "?output_unit=" + str(output_unit)
     if src_format is not None:
         if "?" in url:
             url = url + "&src_format=" + str(src_format)
@@ -59,12 +66,14 @@ def _build_response(
 
 
 def sync_detailed(
+    output_unit: UnitVolume,
     src_format: FileImportFormat,
     body: bytes,
     *,
     client: Client,
 ) -> Response[Optional[Union[FileVolume, Error]]]:
     kwargs = _get_kwargs(
+        output_unit=output_unit,
         src_format=src_format,
         body=body,
         client=client,
@@ -79,6 +88,7 @@ def sync_detailed(
 
 
 def sync(
+    output_unit: UnitVolume,
     src_format: FileImportFormat,
     body: bytes,
     *,
@@ -88,9 +98,11 @@ def sync(
     Currently, this endpoint returns the cubic measure units.
     In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
     Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
+    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+    """  # noqa: E501
 
     return sync_detailed(
+        output_unit=output_unit,
         src_format=src_format,
         body=body,
         client=client,
@@ -98,12 +110,14 @@ def sync(
 
 
 async def asyncio_detailed(
+    output_unit: UnitVolume,
     src_format: FileImportFormat,
     body: bytes,
     *,
     client: Client,
 ) -> Response[Optional[Union[FileVolume, Error]]]:
     kwargs = _get_kwargs(
+        output_unit=output_unit,
         src_format=src_format,
         body=body,
         client=client,
@@ -116,6 +130,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    output_unit: UnitVolume,
     src_format: FileImportFormat,
     body: bytes,
     *,
@@ -125,10 +140,12 @@ async def asyncio(
     Currently, this endpoint returns the cubic measure units.
     In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
     Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
+    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+    """  # noqa: E501
 
     return (
         await asyncio_detailed(
+            output_unit=output_unit,
             src_format=src_format,
             body=body,
             client=client,

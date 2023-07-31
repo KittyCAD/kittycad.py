@@ -6,11 +6,15 @@ from ...client import Client
 from ...models.error import Error
 from ...models.file_import_format import FileImportFormat
 from ...models.file_mass import FileMass
+from ...models.unit_density import UnitDensity
+from ...models.unit_mass import UnitMass
 from ...types import Response
 
 
 def _get_kwargs(
     material_density: float,
+    material_density_unit: UnitDensity,
+    output_unit: UnitMass,
     src_format: FileImportFormat,
     body: bytes,
     *,
@@ -22,6 +26,16 @@ def _get_kwargs(
             url = url + "&material_density=" + str(material_density)
         else:
             url = url + "?material_density=" + str(material_density)
+    if material_density_unit is not None:
+        if "?" in url:
+            url = url + "&material_density_unit=" + str(material_density_unit)
+        else:
+            url = url + "?material_density_unit=" + str(material_density_unit)
+    if output_unit is not None:
+        if "?" in url:
+            url = url + "&output_unit=" + str(output_unit)
+        else:
+            url = url + "?output_unit=" + str(output_unit)
     if src_format is not None:
         if "?" in url:
             url = url + "&src_format=" + str(src_format)
@@ -66,6 +80,8 @@ def _build_response(
 
 def sync_detailed(
     material_density: float,
+    material_density_unit: UnitDensity,
+    output_unit: UnitMass,
     src_format: FileImportFormat,
     body: bytes,
     *,
@@ -73,6 +89,8 @@ def sync_detailed(
 ) -> Response[Optional[Union[FileMass, Error]]]:
     kwargs = _get_kwargs(
         material_density=material_density,
+        material_density_unit=material_density_unit,
+        output_unit=output_unit,
         src_format=src_format,
         body=body,
         client=client,
@@ -88,6 +106,8 @@ def sync_detailed(
 
 def sync(
     material_density: float,
+    material_density_unit: UnitDensity,
+    output_unit: UnitMass,
     src_format: FileImportFormat,
     body: bytes,
     *,
@@ -97,10 +117,13 @@ def sync(
     Currently, this endpoint assumes if you are giving a material density in a specific mass unit per cubic measure unit, we return a mass in mass units. The same mass units as passed in the material density.
     In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
     Get the mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
+    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+    """  # noqa: E501
 
     return sync_detailed(
         material_density=material_density,
+        material_density_unit=material_density_unit,
+        output_unit=output_unit,
         src_format=src_format,
         body=body,
         client=client,
@@ -109,6 +132,8 @@ def sync(
 
 async def asyncio_detailed(
     material_density: float,
+    material_density_unit: UnitDensity,
+    output_unit: UnitMass,
     src_format: FileImportFormat,
     body: bytes,
     *,
@@ -116,6 +141,8 @@ async def asyncio_detailed(
 ) -> Response[Optional[Union[FileMass, Error]]]:
     kwargs = _get_kwargs(
         material_density=material_density,
+        material_density_unit=material_density_unit,
+        output_unit=output_unit,
         src_format=src_format,
         body=body,
         client=client,
@@ -129,6 +156,8 @@ async def asyncio_detailed(
 
 async def asyncio(
     material_density: float,
+    material_density_unit: UnitDensity,
+    output_unit: UnitMass,
     src_format: FileImportFormat,
     body: bytes,
     *,
@@ -138,11 +167,14 @@ async def asyncio(
     Currently, this endpoint assumes if you are giving a material density in a specific mass unit per cubic measure unit, we return a mass in mass units. The same mass units as passed in the material density.
     In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
     Get the mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
+    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+    """  # noqa: E501
 
     return (
         await asyncio_detailed(
             material_density=material_density,
+            material_density_unit=material_density_unit,
+            output_unit=output_unit,
             src_format=src_format,
             body=body,
             client=client,

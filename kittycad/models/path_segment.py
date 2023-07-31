@@ -6,7 +6,7 @@ from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-F = TypeVar("F", bound="Line")
+UQ = TypeVar("UQ", bound="Line")
 
 
 @attr.s(auto_attribs=True)
@@ -28,14 +28,14 @@ class Line:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[F], src_dict: Dict[str, Any]) -> F:
+    def from_dict(cls: Type[UQ], src_dict: Dict[str, Any]) -> UQ:
         d = src_dict.copy()
         _end = d.pop("end", UNSET)
         end: Union[Unset, Point3d]
         if isinstance(_end, Unset):
             end = UNSET
         else:
-            end = Point3d(_end)
+            end = _end  # type: ignore[arg-type]
 
         line = cls(
             end=end,
@@ -61,7 +61,7 @@ class Line:
         return key in self.additional_properties
 
 
-Z = TypeVar("Z", bound="Arc")
+QE = TypeVar("QE", bound="Arc")
 
 
 @attr.s(auto_attribs=True)
@@ -95,7 +95,7 @@ class Arc:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[Z], src_dict: Dict[str, Any]) -> Z:
+    def from_dict(cls: Type[QE], src_dict: Dict[str, Any]) -> QE:
         d = src_dict.copy()
         angle_end = d.pop("angle_end", UNSET)
 
@@ -106,7 +106,7 @@ class Arc:
         if isinstance(_center, Unset):
             center = UNSET
         else:
-            center = Point2d(_center)
+            center = _center  # type: ignore[arg-type]
 
         radius = d.pop("radius", UNSET)
 
@@ -137,7 +137,7 @@ class Arc:
         return key in self.additional_properties
 
 
-G = TypeVar("G", bound="Bezier")
+XH = TypeVar("XH", bound="Bezier")
 
 
 @attr.s(auto_attribs=True)
@@ -169,28 +169,28 @@ class Bezier:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[G], src_dict: Dict[str, Any]) -> G:
+    def from_dict(cls: Type[XH], src_dict: Dict[str, Any]) -> XH:
         d = src_dict.copy()
         _control1 = d.pop("control1", UNSET)
         control1: Union[Unset, Point3d]
         if isinstance(_control1, Unset):
             control1 = UNSET
         else:
-            control1 = Point3d(_control1)
+            control1 = _control1  # type: ignore[arg-type]
 
         _control2 = d.pop("control2", UNSET)
         control2: Union[Unset, Point3d]
         if isinstance(_control2, Unset):
             control2 = UNSET
         else:
-            control2 = Point3d(_control2)
+            control2 = _control2  # type: ignore[arg-type]
 
         _end = d.pop("end", UNSET)
         end: Union[Unset, Point3d]
         if isinstance(_end, Unset):
             end = UNSET
         else:
-            end = Point3d(_end)
+            end = _end  # type: ignore[arg-type]
 
         bezier = cls(
             control1=control1,

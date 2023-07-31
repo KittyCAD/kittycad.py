@@ -115,6 +115,7 @@ from .unit_area import UnitArea
 from .unit_area_conversion import UnitAreaConversion
 from .unit_current import UnitCurrent
 from .unit_current_conversion import UnitCurrentConversion
+from .unit_density import UnitDensity
 from .unit_energy import UnitEnergy
 from .unit_energy_conversion import UnitEnergyConversion
 from .unit_force import UnitForce

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="ModelingOutcomes")
+LC = TypeVar("LC", bound="ModelingOutcomes")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class ModelingOutcomes:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[LC], src_dict: Dict[str, Any]) -> LC:
         d = src_dict.copy()
         outcomes = d.pop("outcomes", UNSET)
 

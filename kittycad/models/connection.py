@@ -10,7 +10,7 @@ from ..models.jetstream import Jetstream
 from ..models.leaf_node import LeafNode
 from ..types import UNSET, Unset
 
-M = TypeVar("M", bound="Connection")
+JR = TypeVar("JR", bound="Connection")
 
 
 @attr.s(auto_attribs=True)
@@ -225,7 +225,7 @@ class Connection:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[M], src_dict: Dict[str, Any]) -> M:
+    def from_dict(cls: Type[JR], src_dict: Dict[str, Any]) -> JR:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 
@@ -234,7 +234,7 @@ class Connection:
         if isinstance(_cluster, Unset):
             cluster = UNSET
         else:
-            cluster = Cluster(_cluster)
+            cluster = _cluster  # type: ignore[arg-type]
 
         _config_load_time = d.pop("config_load_time", UNSET)
         config_load_time: Union[Unset, datetime.datetime]
@@ -254,7 +254,7 @@ class Connection:
         if isinstance(_gateway, Unset):
             gateway = UNSET
         else:
-            gateway = Gateway(_gateway)
+            gateway = _gateway  # type: ignore[arg-type]
 
         git_commit = d.pop("git_commit", UNSET)
 
@@ -282,14 +282,14 @@ class Connection:
         if isinstance(_jetstream, Unset):
             jetstream = UNSET
         else:
-            jetstream = Jetstream(_jetstream)
+            jetstream = _jetstream  # type: ignore[arg-type]
 
         _leaf = d.pop("leaf", UNSET)
         leaf: Union[Unset, LeafNode]
         if isinstance(_leaf, Unset):
             leaf = UNSET
         else:
-            leaf = LeafNode(_leaf)
+            leaf = _leaf  # type: ignore[arg-type]
 
         leafnodes = d.pop("leafnodes", UNSET)
 

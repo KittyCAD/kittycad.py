@@ -11,7 +11,7 @@ from ..models.file_system_metadata import FileSystemMetadata
 from ..models.point_e_metadata import PointEMetadata
 from ..types import UNSET, Unset
 
-H = TypeVar("H", bound="Metadata")
+QI = TypeVar("QI", bound="Metadata")
 
 
 @attr.s(auto_attribs=True)
@@ -71,21 +71,21 @@ class Metadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[H], src_dict: Dict[str, Any]) -> H:
+    def from_dict(cls: Type[QI], src_dict: Dict[str, Any]) -> QI:
         d = src_dict.copy()
         _cache = d.pop("cache", UNSET)
         cache: Union[Unset, CacheMetadata]
         if isinstance(_cache, Unset):
             cache = UNSET
         else:
-            cache = CacheMetadata(_cache)
+            cache = _cache  # type: ignore[arg-type]
 
         _engine = d.pop("engine", UNSET)
         engine: Union[Unset, EngineMetadata]
         if isinstance(_engine, Unset):
             engine = UNSET
         else:
-            engine = EngineMetadata(_engine)
+            engine = _engine  # type: ignore[arg-type]
 
         _environment = d.pop("environment", UNSET)
         environment: Union[Unset, Environment]
@@ -99,14 +99,14 @@ class Metadata:
         if isinstance(_executor, Unset):
             executor = UNSET
         else:
-            executor = ExecutorMetadata(_executor)
+            executor = _executor  # type: ignore[arg-type]
 
         _fs = d.pop("fs", UNSET)
         fs: Union[Unset, FileSystemMetadata]
         if isinstance(_fs, Unset):
             fs = UNSET
         else:
-            fs = FileSystemMetadata(_fs)
+            fs = _fs  # type: ignore[arg-type]
 
         git_hash = d.pop("git_hash", UNSET)
 
@@ -115,14 +115,14 @@ class Metadata:
         if isinstance(_point_e, Unset):
             point_e = UNSET
         else:
-            point_e = PointEMetadata(_point_e)
+            point_e = _point_e  # type: ignore[arg-type]
 
         _pubsub = d.pop("pubsub", UNSET)
         pubsub: Union[Unset, Connection]
         if isinstance(_pubsub, Unset):
             pubsub = UNSET
         else:
-            pubsub = Connection(_pubsub)
+            pubsub = _pubsub  # type: ignore[arg-type]
 
         metadata = cls(
             cache=cache,

@@ -88,7 +88,6 @@ def sync(
     client: Client,
     output: Optional[str] = None,
 ) -> Optional[Union[CodeOutput, Error]]:
-
     return sync_detailed(
         lang=lang,
         output=output,
@@ -124,7 +123,6 @@ async def asyncio(
     client: Client,
     output: Optional[str] = None,
 ) -> Optional[Union[CodeOutput, Error]]:
-
     return (
         await asyncio_detailed(
             lang=lang,

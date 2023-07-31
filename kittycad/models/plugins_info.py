@@ -4,14 +4,15 @@ import attr
 
 from ..types import UNSET, Unset
 
-V = TypeVar("V", bound="PluginsInfo")
+UP = TypeVar("UP", bound="PluginsInfo")
 
 
 @attr.s(auto_attribs=True)
 class PluginsInfo:
     """Available plugins per type.
 
-    **Note**: Only unmanaged (V1) plugins are included in this list. V1 plugins are \"lazily\" loaded, and are not returned in this list if there is no resource using the plugin."""  # noqa: E501
+    **Note**: Only unmanaged (V1) plugins are included in this list. V1 plugins are \"lazily\" loaded, and are not returned in this list if there is no resource using the plugin.
+    """  # noqa: E501
 
     authorization: Union[Unset, List[str]] = UNSET
     log: Union[Unset, List[str]] = UNSET
@@ -49,7 +50,7 @@ class PluginsInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[V], src_dict: Dict[str, Any]) -> V:
+    def from_dict(cls: Type[UP], src_dict: Dict[str, Any]) -> UP:
         d = src_dict.copy()
         authorization = cast(List[str], d.pop("authorization", UNSET))
 

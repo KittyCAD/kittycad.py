@@ -17,8 +17,7 @@ poetry run python generate/generate.py
 poetry run isort .
 poetry run black . generate/generate.py docs/conf.py kittycad/client_test.py kittycad/examples_test.py
 poetry run ruff check --fix .
-# We ignore errors here but we should eventually fix them.
-poetry run mypy . || true
+poetry run mypy .
 
 
 # Run the tests.

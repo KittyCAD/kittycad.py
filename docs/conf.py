@@ -126,6 +126,7 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
 }
 
+
 # This is a function linkcode_resolve(domain, info), which should return the URL
 # to source code corresponding to the object in given domain with given information.
 # FROM: https://www.sphinx-doc.org/en/master/usage/extensions/linkcode.html

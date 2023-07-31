@@ -9,7 +9,7 @@ from ..models.card_details import CardDetails
 from ..models.payment_method_type import PaymentMethodType
 from ..types import UNSET, Unset
 
-N = TypeVar("N", bound="PaymentMethod")
+BV = TypeVar("BV", bound="PaymentMethod")
 
 
 @attr.s(auto_attribs=True)
@@ -57,21 +57,21 @@ class PaymentMethod:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[N], src_dict: Dict[str, Any]) -> N:
+    def from_dict(cls: Type[BV], src_dict: Dict[str, Any]) -> BV:
         d = src_dict.copy()
         _billing_info = d.pop("billing_info", UNSET)
         billing_info: Union[Unset, BillingInfo]
         if isinstance(_billing_info, Unset):
             billing_info = UNSET
         else:
-            billing_info = BillingInfo(_billing_info)
+            billing_info = _billing_info  # type: ignore[arg-type]
 
         _card = d.pop("card", UNSET)
         card: Union[Unset, CardDetails]
         if isinstance(_card, Unset):
             card = UNSET
         else:
-            card = CardDetails(_card)
+            card = _card  # type: ignore[arg-type]
 
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
