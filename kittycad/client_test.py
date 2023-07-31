@@ -23,11 +23,11 @@ from .models import (
     FileImportFormat,
     FileMass,
     FileVolume,
-    UnitVolume,
-    UnitMass,
     Pong,
-    User,
     UnitDensity,
+    UnitMass,
+    UnitVolume,
+    User,
 )
 
 
@@ -203,7 +203,10 @@ def test_file_volume():
 
     # Get the fc.
     result: Union[FileVolume, Error, None] = create_file_volume.sync(
-        client=client, body=content, src_format=FileImportFormat.OBJ, output_unit=UnitVolume.CM3
+        client=client,
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_unit=UnitVolume.CM3,
     )
 
     assert isinstance(result, FileVolume)
