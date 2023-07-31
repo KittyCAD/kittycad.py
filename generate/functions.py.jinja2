@@ -1,0 +1,169 @@
+from typing import Any, Dict, Optional, Union, List
+
+import httpx
+
+from ...client import Client
+from ...models.error import Error
+from ...types import Response
+{% for import in imports %}
+{{import}}
+{% endfor %}
+
+
+def _get_kwargs(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+) -> Dict[str, Any]:
+    url = "{{url_template}}".format(client.base_url, {% for arg in args %}{% if arg.in_url %}{{arg.name}}={{arg.name}},{% endif %}{% endfor %})  # noqa: E501
+    {% for arg in args %}
+    {% if arg.in_query %}
+    if {{arg.name}} is not None:
+        if "?" in url:
+            url = url + "&{{arg.name}}=" + str({{arg.name}})
+        else:
+            url = url + "?{{arg.name}}=" + str({{arg.name}})
+    {% endif %}
+    {% endfor %}
+
+
+    headers: Dict[str, Any] = client.get_headers()
+    cookies: Dict[str, Any] = client.get_cookies()
+
+    return {
+        "url": url,
+        "headers": headers,
+        "cookies": cookies,
+        "timeout": client.get_timeout(),
+        {% if has_request_body %}"content": body,{% endif %}
+    }
+
+
+def _parse_response(*, response: httpx.Response){% if response_type != "" %} -> {{response_type}} {% endif %}:
+{{parse_response}}
+
+
+def _build_response(
+    *, response: httpx.Response
+)  -> Response[{% if response_type != "" %}{{response_type}}{% else %}Any{% endif %}]:
+    return Response(
+        status_code=response.status_code,
+        content=response.content,
+        headers=response.headers,
+        parsed=_parse_response(response=response),
+    )
+
+
+def sync_detailed(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+)  -> Response[{% if response_type != "" %}{{response_type}}{% else %}Any{% endif %}]:
+    kwargs = _get_kwargs(
+        {% for arg in args %}
+        {{arg.name}}={{arg.name}},
+        {% endfor %}
+        client=client,
+    )
+
+    response = httpx.{{method}}(
+        verify=client.verify_ssl,
+        **kwargs,
+    )
+
+    return _build_response(response=response)
+
+
+def sync(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+) {% if response_type != "" %} -> {{response_type}} {% endif %}:
+    {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
+
+    return sync_detailed(
+        {% for arg in args %}
+        {{arg.name}}={{arg.name}},
+        {% endfor %}
+        client=client,
+    ).parsed
+
+
+async def asyncio_detailed(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+)  -> Response[{% if response_type != "" %}{{response_type}}{% else %}Any{% endif %}]:
+    kwargs = _get_kwargs(
+        {% for arg in args %}
+        {{arg.name}}={{arg.name}},
+        {% endfor %}
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.{{method}}(**kwargs)
+
+    return _build_response(response=response)
+
+
+async def asyncio(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+) {% if response_type != "" %} -> {{response_type}} {% endif %}:
+    {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
+
+    return (
+        await asyncio_detailed(
+            {% for arg in args %}
+            {{arg.name}}={{arg.name}},
+            {% endfor %}
+            client=client,
+        )
+    ).parsed

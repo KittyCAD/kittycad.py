@@ -13,7 +13,8 @@ def _get_kwargs(
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/user/api-tokens/{token}".format(
-        client.base_url, token=token
+        client.base_url,
+        token=token,
     )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
