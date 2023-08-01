@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.executor.create_executor_term &mdash; kittycad v0.4.4 documentation</title>
+  <title>kittycad.api.executor.create_executor_term &mdash; kittycad v0.4.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -51,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.4
+                v0.4.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -72,16 +72,10 @@
 <li class="toctree-l2 current"><a class="reference internal" href="kittycad.api.executor.html">kittycad.api.executor</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.api.executor.create_executor_term</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.executor.create_executor_term.asyncio.html">kittycad.api.executor.create_executor_term.asyncio</a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.executor.create_executor_term.asyncio_detailed.html">kittycad.api.executor.create_executor_term.asyncio_detailed</a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.executor.create_executor_term.sync.html">kittycad.api.executor.create_executor_term.sync</a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.executor.create_executor_term.sync_detailed.html">kittycad.api.executor.create_executor_term.sync_detailed</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.api.executor.create_executor_term._build_response"><code class="docutils literal notranslate"><span class="pre">_build_response()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.api.executor.create_executor_term._get_kwargs"><code class="docutils literal notranslate"><span class="pre">_get_kwargs()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.api.executor.create_executor_term._parse_response"><code class="docutils literal notranslate"><span class="pre">_parse_response()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.api.executor.create_executor_term.asyncio"><code class="docutils literal notranslate"><span class="pre">asyncio()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.api.executor.create_executor_term.asyncio_detailed"><code class="docutils literal notranslate"><span class="pre">asyncio_detailed()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.api.executor.create_executor_term.sync"><code class="docutils literal notranslate"><span class="pre">sync()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.api.executor.create_executor_term.sync_detailed"><code class="docutils literal notranslate"><span class="pre">sync_detailed()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.executor.create_file_execution.html">kittycad.api.executor.create_file_execution</a></li>
@@ -135,37 +129,11 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.executor.create_executor_term.asyncio.html#kittycad.api.executor.create_executor_term.asyncio" title="kittycad.api.executor.create_executor_term.asyncio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio</span></code></a>(*, client)</p></td>
 <td><p>Attach to a docker container to create an interactive terminal.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.executor.create_executor_term.asyncio_detailed.html#kittycad.api.executor.create_executor_term.asyncio_detailed" title="kittycad.api.executor.create_executor_term.asyncio_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio_detailed</span></code></a>(*, client)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.Response.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
-</dd>
-</dl>
-</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.executor.create_executor_term.sync.html#kittycad.api.executor.create_executor_term.sync" title="kittycad.api.executor.create_executor_term.sync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code></a>(*, client)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.executor.create_executor_term.sync.html#kittycad.api.executor.create_executor_term.sync" title="kittycad.api.executor.create_executor_term.sync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code></a>(*, client)</p></td>
 <td><p>Attach to a docker container to create an interactive terminal.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.executor.create_executor_term.sync_detailed.html#kittycad.api.executor.create_executor_term.sync_detailed" title="kittycad.api.executor.create_executor_term.sync_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_detailed</span></code></a>(*, client)</p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">rtype<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.Response.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
-</dd>
-</dl>
-</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py function">
-<dt class="sig sig-object py" id="kittycad.api.executor.create_executor_term._build_response">
-<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_executor_term.</span></span><span class="sig-name descname"><span class="pre">_build_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_executor_term.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_executor_term.html#_build_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_executor_term._build_response" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.Response.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.executor.create_executor_term._get_kwargs">
 <span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_executor_term.</span></span><span class="sig-name descname"><span class="pre">_get_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_executor_term.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_executor_term.html#_get_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_executor_term._get_kwargs" title="Permalink to this definition"></a></dt>
@@ -177,22 +145,12 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="kittycad.api.executor.create_executor_term._parse_response">
-<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_executor_term.</span></span><span class="sig-name descname"><span class="pre">_parse_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_executor_term.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_executor_term.html#_parse_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_executor_term._parse_response" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.executor.create_executor_term.asyncio">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_executor_term.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_executor_term.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_executor_term.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_executor_term.asyncio" title="Permalink to this definition"></a></dt>
 <dd><p>Attach to a docker container to create an interactive terminal.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="kittycad.api.executor.create_executor_term.asyncio_detailed">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_executor_term.</span></span><span class="sig-name descname"><span class="pre">asyncio_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_executor_term.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_executor_term.html#asyncio_detailed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_executor_term.asyncio_detailed" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.Response.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">WebSocketClientProtocol</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -201,14 +159,9 @@
 <dt class="sig sig-object py" id="kittycad.api.executor.create_executor_term.sync">
 <span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_executor_term.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_executor_term.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_executor_term.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_executor_term.sync" title="Permalink to this definition"></a></dt>
 <dd><p>Attach to a docker container to create an interactive terminal.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="kittycad.api.executor.create_executor_term.sync_detailed">
-<span class="sig-prename descclassname"><span class="pre">kittycad.api.executor.create_executor_term.</span></span><span class="sig-name descname"><span class="pre">sync_detailed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/executor/create_executor_term.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/executor/create_executor_term.html#sync_detailed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.executor.create_executor_term.sync_detailed" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="kittycad.types.Response.html#kittycad.types.Response" title="kittycad.types.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ClientConnection</span></code></p>
 </dd>
 </dl>
 </dd></dl>

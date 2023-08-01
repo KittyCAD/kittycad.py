@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.hidden.auth_email_callback &mdash; kittycad v0.4.4 documentation</title>
+  <title>kittycad.api.hidden.auth_email_callback &mdash; kittycad v0.4.5 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.4
+                v0.4.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -95,17 +95,22 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">callback_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/auth/email/callback&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>  <span class="c1"># noqa: E501</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/auth/email/callback&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
+    <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+
     <span class="k">if</span> <span class="n">callback_url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;callback_url=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">callback_url</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?callback_url=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">callback_url</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;email=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?email=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">email</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;token=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>

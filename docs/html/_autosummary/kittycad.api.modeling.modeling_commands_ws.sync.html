@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.modeling.modeling_commands_ws.sync &mdash; kittycad v0.4.4 documentation</title>
+  <title>kittycad.api.modeling.modeling_commands_ws.sync &mdash; kittycad v0.4.5 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -33,8 +33,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.api.modeling.modeling_commands_ws.sync_detailed" href="kittycad.api.modeling.modeling_commands_ws.sync_detailed.html" />
-    <link rel="prev" title="kittycad.api.modeling.modeling_commands_ws.asyncio_detailed" href="kittycad.api.modeling.modeling_commands_ws.asyncio_detailed.html" /> 
+    <link rel="next" title="kittycad.api.oauth2" href="kittycad.api.oauth2.html" />
+    <link rel="prev" title="kittycad.api.modeling.modeling_commands_ws.asyncio" href="kittycad.api.modeling.modeling_commands_ws.asyncio.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.4
+                v0.4.5
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -76,16 +76,10 @@
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.modeling.cmd_batch.html">kittycad.api.modeling.cmd_batch</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html">kittycad.api.modeling.modeling_commands_ws</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.asyncio.html">kittycad.api.modeling.modeling_commands_ws.asyncio</a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.asyncio_detailed.html">kittycad.api.modeling.modeling_commands_ws.asyncio_detailed</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">kittycad.api.modeling.modeling_commands_ws.sync</a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.sync_detailed.html">kittycad.api.modeling.modeling_commands_ws.sync_detailed</a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws._build_response"><code class="docutils literal notranslate"><span class="pre">_build_response()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws._get_kwargs"><code class="docutils literal notranslate"><span class="pre">_get_kwargs()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws._parse_response"><code class="docutils literal notranslate"><span class="pre">_parse_response()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws.asyncio"><code class="docutils literal notranslate"><span class="pre">asyncio()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws.asyncio_detailed"><code class="docutils literal notranslate"><span class="pre">asyncio_detailed()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws.sync"><code class="docutils literal notranslate"><span class="pre">sync()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws.sync_detailed"><code class="docutils literal notranslate"><span class="pre">sync_detailed()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -133,6 +127,11 @@
 <dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.sync">
 <span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.sync" title="Permalink to this definition"></a></dt>
 <dd><p>Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ClientConnection</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -141,8 +140,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kittycad.api.modeling.modeling_commands_ws.asyncio_detailed.html" class="btn btn-neutral float-left" title="kittycad.api.modeling.modeling_commands_ws.asyncio_detailed" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.api.modeling.modeling_commands_ws.sync_detailed.html" class="btn btn-neutral float-right" title="kittycad.api.modeling.modeling_commands_ws.sync_detailed" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.api.modeling.modeling_commands_ws.asyncio.html" class="btn btn-neutral float-left" title="kittycad.api.modeling.modeling_commands_ws.asyncio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.api.oauth2.html" class="btn btn-neutral float-right" title="kittycad.api.oauth2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
