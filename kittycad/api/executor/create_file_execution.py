@@ -16,7 +16,11 @@ def _get_kwargs(
     client: Client,
     output: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/file/execute/{lang}".format(client.base_url, lang=lang)  # noqa: E501
+    url = "{}/file/execute/{lang}".format(
+        client.base_url,
+        lang=lang,
+    )  # noqa: E501
+
     if output is not None:
         if "?" in url:
             url = url + "&output=" + str(output)

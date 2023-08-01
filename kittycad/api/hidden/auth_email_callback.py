@@ -14,17 +14,22 @@ def _get_kwargs(
     client: Client,
     callback_url: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/auth/email/callback".format(client.base_url)  # noqa: E501
+    url = "{}/auth/email/callback".format(
+        client.base_url,
+    )  # noqa: E501
+
     if callback_url is not None:
         if "?" in url:
             url = url + "&callback_url=" + str(callback_url)
         else:
             url = url + "?callback_url=" + str(callback_url)
+
     if email is not None:
         if "?" in url:
             url = url + "&email=" + str(email)
         else:
             url = url + "?email=" + str(email)
+
     if token is not None:
         if "?" in url:
             url = url + "&token=" + str(token)

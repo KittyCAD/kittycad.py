@@ -1,0 +1,113 @@
+from typing import Any, Dict, Optional, Union, List
+
+from websockets.sync.client import connect as ws_connect
+from websockets.client import connect as ws_connect_async
+from websockets.sync.client import ClientConnection
+from websockets.client import WebSocketClientProtocol
+
+
+from ...client import Client
+from ...models.error import Error
+from ...types import Response
+{% for import in imports %}
+{{import}}
+{% endfor %}
+
+
+def _get_kwargs(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+) -> Dict[str, Any]:
+    url = "{{url_template}}".format(client.base_url{% for arg in args %}{% if arg.in_url %}, {{arg.name}}={{arg.name}}{% endif %}{% endfor %}) # noqa: E501
+    {% for arg in args %}
+    {% if arg.in_query %}
+    if {{arg.name}} is not None:
+        if "?" in url:
+            url = url + "&{{arg.name}}=" + str({{arg.name}})
+        else:
+            url = url + "?{{arg.name}}=" + str({{arg.name}})
+    {% endif %}
+    {% endfor %}
+
+
+    headers: Dict[str, Any] = client.get_headers()
+    cookies: Dict[str, Any] = client.get_cookies()
+
+    return {
+        "url": url,
+        "headers": headers,
+        "cookies": cookies,
+        "timeout": client.get_timeout(),
+        {% if has_request_body %}"content": body,{% endif %}
+    }
+
+
+def sync(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+) -> ClientConnection:
+    {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
+
+    kwargs = _get_kwargs(
+        {% for arg in args %}
+        {{arg.name}}={{arg.name}},
+        {% endfor %}
+        client=client,
+    )
+
+    with ws_connect(kwargs["url"].replace("https://", "wss://"), additional_headers=kwargs["headers"]) as websocket:
+        return websocket # type: ignore
+
+    # Return an error if we got here.
+    return Error(message="An error occurred while connecting to the websocket.")
+
+
+
+async def asyncio(
+    {% for arg in args %}
+    {% if arg.is_optional == False %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+    *,
+    client: Client,
+    {% for arg in args %}
+    {% if arg.is_optional %}
+    {{arg.name}}: {{arg.type}},
+    {% endif %}
+    {% endfor %}
+) -> WebSocketClientProtocol:
+    {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
+
+    kwargs = _get_kwargs(
+        {% for arg in args %}
+        {{arg.name}}={{arg.name}},
+        {% endfor %}
+        client=client,
+    )
+
+    async with ws_connect_async(kwargs["url"].replace("https://", "wss://"), extra_headers=kwargs["headers"]) as websocket:
+        return websocket
+
+    # Return an error if we got here.
+    return Error(message="An error occurred while connecting to the websocket.")

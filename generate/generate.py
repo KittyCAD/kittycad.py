@@ -5,10 +5,11 @@ import logging
 import os
 import random
 import re
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, TypedDict
 
 import black
 import isort
+import jinja2
 import jsonpatch
 from prance import BaseParser
 
@@ -344,10 +345,7 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
         tag_name = endpoint["tags"][0].replace("-", "_")
         path = os.path.join(path, tag_name)
     file_path = os.path.join(path, file_name)
-    logging.info("generating type: ", name, " at: ", file_path)
-    f = open(file_path, "w")
-
-    f.write("from typing import List\n\n")
+    logging.info("generating path functions: ", name, " at: ", file_path)
 
     endpoint_refs = getEndpointRefs(endpoint, data)
     parameter_refs = getParameterRefs(endpoint)
@@ -503,16 +501,8 @@ from kittycad.types import Response
 """
         )
 
-    # This longer example we use for generating tests.
-    # We only show the short example in the docs since it is much more intuitive to MEs
-    example = (
-        example_imports
-        + """
-
-@pytest.mark.skip
-"""
-        + short_sync_example
-        + """
+    long_example = (
+        """
 
     # OR if you need more info (e.g. status_code)
     """
@@ -549,6 +539,72 @@ async def test_"""
         + """)"""
     )
 
+    # Generate the websocket examples.
+    if "x-dropshot-websocket" in endpoint:
+        short_sync_example = (
+            """def test_"""
+            + fn_name
+            + """():
+        # Create our client.
+        client = ClientFromEnv()
+
+        # Connect to the websocket.
+        websocket = """
+            + fn_name
+            + """.sync(client=client,"""
+            + params_str
+            + """)
+
+        # Send a message.
+        websocket.send("{}")
+
+        # Get the messages.
+        for message in websocket:
+            print(message)
+
+    """
+        )
+
+        long_example = (
+            """
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_"""
+            + fn_name
+            + """_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    websocket = await """
+            + fn_name
+            + """.asyncio(client=client,"""
+            + params_str
+            + """)
+
+    # Send a message.
+    await websocket.send("{}")
+
+    # Get the messages.
+    async for message in websocket:
+        print(message)
+    """
+        )
+
+    # This longer example we use for generating tests.
+    # We only show the short example in the docs since it is much more intuitive to MEs
+    example = (
+        example_imports
+        + """
+
+@pytest.mark.skip
+"""
+        + short_sync_example
+        + long_example
+    )
+
     # Make pretty.
     line_length = 82
     short_sync_example = example_imports + short_sync_example
@@ -571,156 +627,78 @@ async def test_"""
         + ".html",
     }
 
-    # Add our imports.
-    f.write("from typing import Any, Dict, Optional, Union, cast\n")
-    f.write("\n")
-    f.write("import httpx\n")
-    f.write("\n")
-    f.write("from ...client import Client\n")
+    # Start defining the template info.
+    ArgType = TypedDict(
+        "ArgType",
+        {
+            "name": str,
+            "type": str,
+            "in_url": bool,
+            "in_query": bool,
+            "is_optional": bool,
+        },
+    )
+    TemplateType = TypedDict(
+        "TemplateType",
+        {
+            "imports": List[str],
+            "response_type": str,
+            "args": List[ArgType],
+            "url_template": str,
+            "method": str,
+            "docs": str,
+            "parse_response": str,
+            "has_request_body": bool,
+        },
+    )
+    template_info: TemplateType = {
+        "imports": [],
+        "response_type": response_type,
+        "args": [],
+        "url_template": "{}" + name,
+        "method": method,
+        "docs": "",
+        "parse_response": "",
+        "has_request_body": False,
+    }
+
+    if len(endpoint_refs) == 0:
+        template_info["response_type"] = ""
+
+    if "description" in endpoint:
+        template_info["docs"] = endpoint["description"]
+
     # Import our references for responses.
     for ref in endpoint_refs:
         if ref.startswith("List[") and ref.endswith("]"):
             ref = ref.replace("List[", "").replace("]", "")
         if ref != "str" and ref != "dict":
-            f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
+            template_info["imports"].append(
+                "from ...models." + camel_to_snake(ref) + " import " + ref
+            )
     for ref in parameter_refs:
-        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
-    for ref in request_body_refs:
-        f.write("from ...models." + camel_to_snake(ref) + " import " + ref + "\n")
-    f.write("from ...types import Response\n")
-    f.write("\n")
-
-    # Define the method.
-    f.write("def _get_kwargs(\n")
-    # Iterate over the parameters.
-    optional_args = []
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-                else:
-                    f.write(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-            else:
-                f.write(
-                    "\t"
-                    + camel_to_snake(parameter_name)
-                    + ": "
-                    + parameter_type
-                    + ",\n"
-                )
-    if request_body_type:
-        f.write("\tbody: " + request_body_type + ",\n")
-    f.write("\t*,\n")
-    f.write("\tclient: Client,\n")
-    for optional_arg in optional_args:
-        f.write(optional_arg)
-    f.write(") -> Dict[str, Any]:\n")
-    templateUrl = "{}" + name
-    formatTemplate = ".format(client.base_url"
-    query_params: List[str] = []
-    # Iterate over the parameters.
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = parameter["schema"]["type"].replace("string", "str")
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            if parameter["in"] == "path":
-                formatTemplate = (
-                    formatTemplate
-                    + ", "
-                    + clean_parameter_name(parameter_name)
-                    + "="
-                    + camel_to_snake(parameter_name)
-                )
-            elif parameter["in"] == "query":
-                query_params.append(parameter_name)
-
-    f.write('\turl = "' + templateUrl + '"' + formatTemplate + ") # noqa: E501\n")
-    for query_param in query_params:
-        f.write("\tif " + query_param + " is not None:\n")
-        f.write("\t\tif '?' in url:\n")
-        f.write("\t\t\turl = url + '&" + query_param + "='+str(" + query_param + ")\n")
-        f.write("\t\telse:\n")
-        f.write("\t\t\turl = url + '?" + query_param + "='+str(" + query_param + ")\n")
-
-    f.write("\n")
-    f.write("\theaders: Dict[str, Any] = client.get_headers()\n")
-    f.write("\tcookies: Dict[str, Any] = client.get_cookies()\n")
-    f.write("\n")
-
-    f.write("\treturn {\n")
-    f.write('\t\t"url": url,\n')
-    f.write('\t\t"headers": headers,\n')
-    f.write('\t\t"cookies": cookies,\n')
-    f.write('\t\t"timeout": client.get_timeout(),\n')
-    if request_body_type:
-        f.write('\t\t"content": body,\n')
-    f.write("\t}\n")
-
-    # Define the parse reponse.
-    f.write("\n")
-    f.write("\n")
-
-    if len(endpoint_refs) > 0:
-        f.write(
-            "def _parse_response(*, response: httpx.Response) -> "
-            + response_type
-            + ":\n"
+        template_info["imports"].append(
+            "from ...models." + camel_to_snake(ref) + " import " + ref
         )
-    else:
-        f.write("def _parse_response(*, response: httpx.Response):\n")
+    for ref in request_body_refs:
+        template_info["imports"].append(
+            "from ...models." + camel_to_snake(ref) + " import " + ref
+        )
 
     # Iterate over the responses.
+    parse_response = io.StringIO()
     if len(endpoint_refs) > 0:
         responses = endpoint["responses"]
         for response_code in responses:
             response = responses[response_code]
             if response_code == "default":
                 # This is no content.
-                f.write("\treturn None\n")
+                parse_response.write("\treturn None\n")
             elif response_code == "204" or response_code == "302":
                 # This is no content.
-                f.write("\treturn None\n")
+                parse_response.write("\treturn None\n")
             else:
-                f.write(
+                parse_response.write(
                     "\tif response.status_code == "
                     + response_code.replace("XX", "00")
                     + ":\n"
@@ -734,41 +712,45 @@ async def test_"""
                             if "$ref" in json:
                                 ref = json["$ref"].replace("#/components/schemas/", "")
                                 schema = data["components"]["schemas"][ref]
-                                # Let's check if it is a oneOf.
+                                # Let's check if it is a oneOparse_response.
                                 if "oneOf" in schema:
                                     is_one_of = True
                                     # We want to parse each of the possible types.
-                                    f.write("\t\tdata = response.json()\n")
+                                    parse_response.write("\t\tdata = response.json()\n")
                                     for index, one_of in enumerate(schema["oneOf"]):
                                         ref = getOneOfRefType(one_of)
-                                        f.write("\t\ttry:\n")
-                                        f.write(
+                                        parse_response.write("\t\ttry:\n")
+                                        parse_response.write(
                                             "\t\t\tif not isinstance(data, dict):\n"
                                         )
-                                        f.write("\t\t\t\traise TypeError()\n")
+                                        parse_response.write(
+                                            "\t\t\t\traise TypeError()\n"
+                                        )
                                         option_name = "option_" + camel_to_snake(ref)
-                                        f.write(
+                                        parse_response.write(
                                             "\t\t\t"
                                             + option_name
                                             + " = "
                                             + ref
                                             + ".from_dict(data)\n"
                                         )
-                                        f.write("\t\t\treturn " + option_name + "\n")
-                                        f.write("\t\texcept ValueError:\n")
+                                        parse_response.write(
+                                            "\t\t\treturn " + option_name + "\n"
+                                        )
+                                        parse_response.write("\t\texcept ValueError:\n")
                                         if index == len(schema["oneOf"]) - 1:
                                             # On the last one raise the error.
-                                            f.write("\t\t\traise\n")
+                                            parse_response.write("\t\t\traise\n")
                                         else:
-                                            f.write("\t\t\tpass\n")
-                                        f.write("\t\texcept TypeError:\n")
+                                            parse_response.write("\t\t\tpass\n")
+                                        parse_response.write("\t\texcept TypeError:\n")
                                         if index == len(schema["oneOf"]) - 1:
                                             # On the last one raise the error.
-                                            f.write("\t\t\traise\n")
+                                            parse_response.write("\t\t\traise\n")
                                         else:
-                                            f.write("\t\t\tpass\n")
+                                            parse_response.write("\t\t\tpass\n")
                                 else:
-                                    f.write(
+                                    parse_response.write(
                                         "\t\tresponse_"
                                         + response_code
                                         + " = "
@@ -782,16 +764,20 @@ async def test_"""
                                         ref = items["$ref"].replace(
                                             "#/components/schemas/", ""
                                         )
-                                        f.write(
+                                        parse_response.write(
                                             "\t\tresponse_" + response_code + " = [\n"
                                         )
-                                        f.write("\t\t\t" + ref + ".from_dict(item)\n")
-                                        f.write("\t\t\tfor item in response.json()\n")
-                                        f.write("\t\t]\n")
+                                        parse_response.write(
+                                            "\t\t\t" + ref + ".from_dict(item)\n"
+                                        )
+                                        parse_response.write(
+                                            "\t\t\tfor item in response.json()\n"
+                                        )
+                                        parse_response.write("\t\t]\n")
                                     else:
                                         raise Exception("Unknown array type")
                                 elif json["type"] == "string":
-                                    f.write(
+                                    parse_response.write(
                                         "\t\tresponse_"
                                         + response_code
                                         + " = response.text\n"
@@ -799,7 +785,7 @@ async def test_"""
                                 else:
                                     raise Exception("Unknown type", json["type"])
                             else:
-                                f.write(
+                                parse_response.write(
                                     "\t\tresponse_"
                                     + response_code
                                     + " = response.json()\n"
@@ -819,7 +805,7 @@ async def test_"""
                                     ref = json["$ref"].replace(
                                         "#/components/schemas/", ""
                                     )
-                                    f.write(
+                                    parse_response.write(
                                         "\t\tresponse_"
                                         + response_code
                                         + " = "
@@ -831,330 +817,92 @@ async def test_"""
                     raise Exception("response not supported")
 
                 if not is_one_of:
-                    f.write("\t\treturn response_" + response_code + "\n")
+                    parse_response.write("\t\treturn response_" + response_code + "\n")
 
         # End the method.
-        f.write("\treturn Error.from_dict(response.json())\n")
+        parse_response.write("\treturn Error.from_dict(response.json())\n")
     else:
-        f.write("\treturn\n")
+        parse_response.write("\treturn\n")
 
-    # Define the build response method.
-    f.write("\n")
-    f.write("\n")
-    if len(endpoint_refs) > 0:
-        f.write(
-            "def _build_response(*, response: httpx.Response) -> "
-            + detailed_response_type
-            + ":\n"
+    template_info["parse_response"] = parse_response.getvalue()
+
+    # Iterate over the parameters.
+    optional_args = []
+    if "parameters" in endpoint:
+        parameters = endpoint["parameters"]
+        for parameter in parameters:
+            parameter_name = parameter["name"]
+            if "type" in parameter["schema"]:
+                parameter_type = (
+                    parameter["schema"]["type"]
+                    .replace("string", "str")
+                    .replace("integer", "int")
+                    .replace("number", "float")
+                )
+            elif "$ref" in parameter["schema"]:
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+            else:
+                logging.error("parameter: ", parameter)
+                raise Exception("Unknown parameter type")
+            if "nullable" in parameter["schema"]:
+                if parameter["schema"]["nullable"]:
+                    parameter_type = "Optional[" + parameter_type + "] = None"
+                    template_info["args"].append(
+                        {
+                            "name": camel_to_snake(parameter_name),
+                            "type": parameter_type,
+                            "in_url": "in" in parameter and (parameter["in"] == "path"),
+                            "in_query": "in" in parameter
+                            and (parameter["in"] == "query"),
+                            "is_optional": True,
+                        }
+                    )
+                else:
+                    template_info["args"].append(
+                        {
+                            "name": camel_to_snake(parameter_name),
+                            "type": parameter_type,
+                            "in_url": "in" in parameter and (parameter["in"] == "path"),
+                            "in_query": "in" in parameter
+                            and (parameter["in"] == "query"),
+                            "is_optional": False,
+                        }
+                    )
+            else:
+                template_info["args"].append(
+                    {
+                        "name": camel_to_snake(parameter_name),
+                        "type": parameter_type,
+                        "in_url": "in" in parameter and (parameter["in"] == "path"),
+                        "in_query": "in" in parameter and (parameter["in"] == "query"),
+                        "is_optional": False,
+                    }
+                )
+
+    if request_body_type:
+        template_info["args"].append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "in_url": False,
+                "in_query": False,
+                "is_optional": False,
+            }
         )
-    else:
-        f.write("def _build_response(*, response: httpx.Response) -> Response[Any]:\n")
+        template_info["has_request_body"] = True
 
-    f.write("\treturn Response(\n")
-    f.write("\t\tstatus_code=response.status_code,\n")
-    f.write("\t\tcontent=response.content,\n")
-    f.write("\t\theaders=response.headers,\n")
-    f.write("\t\tparsed=_parse_response(response=response),\n")
-    f.write("\t)\n")
-
-    # Define the sync_detailed method.
-    f.write("\n")
-    f.write("\n")
-    f.write("def sync_detailed(\n")
-    optional_args = []
-    # Iterate over the parameters.
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-                else:
-                    f.write(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-            else:
-                f.write(
-                    "\t"
-                    + camel_to_snake(parameter_name)
-                    + ": "
-                    + parameter_type
-                    + ",\n"
-                )
-    if request_body_type:
-        f.write("\tbody: " + request_body_type + ",\n")
-    f.write("\t*,\n")
-    f.write("\tclient: Client,\n")
-    for optional_arg in optional_args:
-        f.write(optional_arg)
-
-    if len(endpoint_refs) > 0:
-        f.write(") -> " + detailed_response_type + ":\n")
-    else:
-        f.write(") -> Response[Any]:\n")
-
-    f.write("\tkwargs = _get_kwargs(\n")
-    params = get_function_parameters(endpoint, request_body_type)
-    for param in params:
-        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
-    f.write("\t\tclient=client,\n")
-    f.write("\t)\n")
-    f.write("\n")
-    f.write("\tresponse = httpx." + method + "(\n")
-    f.write("\t\tverify=client.verify_ssl,\n")
-    f.write("\t\t**kwargs,\n")
-    f.write("\t)\n")
-    f.write("\n")
-    f.write("\treturn _build_response(response=response)\n")
-
-    # Define the sync method.
-    f.write("\n")
-    f.write("\n")
-    f.write("def sync(\n")
-    optional_args = []
-    # Iterate over the parameters.
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-                else:
-                    f.write(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-            else:
-                f.write(
-                    "\t"
-                    + camel_to_snake(parameter_name)
-                    + ": "
-                    + parameter_type
-                    + ",\n"
-                )
-    if request_body_type:
-        f.write("\tbody: " + request_body_type + ",\n")
-    f.write("\t*,\n")
-    f.write("\tclient: Client,\n")
-    for optional_arg in optional_args:
-        f.write(optional_arg)
-
-    if len(endpoint_refs) > 0:
-        f.write(") -> " + response_type + ":\n")
-    else:
-        f.write("):\n")
-
-    if "description" in endpoint:
-        f.write('\t""" ' + endpoint["description"] + ' """ # noqa: E501\n')
-    f.write("\n")
-    f.write("\treturn sync_detailed(\n")
-    params = get_function_parameters(endpoint, request_body_type)
-    for param in params:
-        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
-    f.write("\t\tclient=client,\n")
-    f.write("\t).parsed\n")
-
-    # Define the asyncio_detailed method.
-    f.write("\n")
-    f.write("\n")
-    f.write("async def asyncio_detailed(\n")
-    optional_args = []
-    # Iterate over the parameters.
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-                else:
-                    f.write(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-            else:
-                f.write(
-                    "\t"
-                    + camel_to_snake(parameter_name)
-                    + ": "
-                    + parameter_type
-                    + ",\n"
-                )
-    if request_body_type is not None:
-        f.write("\tbody: " + request_body_type + ",\n")
-    f.write("\t*,\n")
-    f.write("\tclient: Client,\n")
-    for optional_arg in optional_args:
-        f.write(optional_arg)
-
-    if len(endpoint_refs) > 0:
-        f.write(") -> " + detailed_response_type + ":\n")
-    else:
-        f.write(") -> Response[Any]:\n")
-
-    f.write("\tkwargs = _get_kwargs(\n")
-    params = get_function_parameters(endpoint, request_body_type)
-    for param in params:
-        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
-    f.write("\t\tclient=client,\n")
-    f.write("\t)\n")
-    f.write("\n")
-    f.write("\tasync with httpx.AsyncClient(verify=client.verify_ssl) as _client:\n")
-    f.write("\t\tresponse = await _client." + method + "(**kwargs)\n")
-    f.write("\n")
-    f.write("\treturn _build_response(response=response)\n")
-
-    # Define the asyncio method.
-    f.write("\n")
-    f.write("\n")
-    f.write("async def asyncio(\n")
-    optional_args = []
-    # Iterate over the parameters.
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: ", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "] = None"
-                    optional_args.append(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-                else:
-                    f.write(
-                        "\t"
-                        + camel_to_snake(parameter_name)
-                        + ": "
-                        + parameter_type
-                        + ",\n"
-                    )
-            else:
-                f.write(
-                    "\t"
-                    + camel_to_snake(parameter_name)
-                    + ": "
-                    + parameter_type
-                    + ",\n"
-                )
-    if request_body_type:
-        f.write("\tbody: " + request_body_type + ",\n")
-    f.write("\t*,\n")
-    f.write("\tclient: Client,\n")
-    for optional_arg in optional_args:
-        f.write(optional_arg)
-
-    if len(endpoint_refs) > 0:
-        f.write(") -> " + response_type + ":\n")
-    else:
-        f.write("):\n")
-
-    if "description" in endpoint:
-        f.write('\t""" ' + endpoint["description"] + ' """ # noqa: E501\n')
-    f.write("\n")
-    f.write("\treturn (\n")
-    f.write("\t\tawait asyncio_detailed(\n")
-    params = get_function_parameters(endpoint, request_body_type)
-    for param in params:
-        f.write("\t\t" + clean_parameter_name(param) + "=" + param + ",\n")
-    f.write("\t\t\tclient=client,\n")
-    f.write("\t\t)\n")
-    f.write("\t).parsed\n")
-
-    # Close the file.
-    f.close()
+    # Generate the template for the functions.
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    template_file = "functions.py.jinja2"
+    if "x-dropshot-websocket" in endpoint:
+        template_file = "functions-ws.py.jinja2"
+    template = environment.get_template(template_file)
+    content = template.render(**template_info)
+    with open(file_path, mode="w", encoding="utf-8") as message:
+        message.write(content)
+        logging.info(f"... wrote {file_path}")
 
     return data
 
@@ -1444,7 +1192,9 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     has_date_time = hasDateTime(schema)
     if has_date_time:
         f.write("import datetime\n")
-    f.write("from typing import Any, Dict, List, Type, TypeVar, Union, cast\n")
+    f.write(
+        "from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated\n"
+    )
     f.write("\n")
     f.write("import attr\n")
     if has_date_time:
@@ -1755,6 +1505,9 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
 
 def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
     property_name = clean_parameter_name(property_name)
+    # if "deprecated" in property_schema and property_schema["deprecated"]:
+    # TODO some properties are deprecated, but we still need to support them
+    # we should show some kind of warning here
     if "type" in property_schema:
         property_type = property_schema["type"]
 

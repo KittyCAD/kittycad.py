@@ -17,17 +17,23 @@ def _get_kwargs(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/users/{id}/api-calls".format(client.base_url, id=id)  # noqa: E501
+    url = "{}/users/{id}/api-calls".format(
+        client.base_url,
+        id=id,
+    )  # noqa: E501
+
     if limit is not None:
         if "?" in url:
             url = url + "&limit=" + str(limit)
         else:
             url = url + "?limit=" + str(limit)
+
     if page_token is not None:
         if "?" in url:
             url = url + "&page_token=" + str(page_token)
         else:
             url = url + "?page_token=" + str(page_token)
+
     if sort_by is not None:
         if "?" in url:
             url = url + "&sort_by=" + str(sort_by)

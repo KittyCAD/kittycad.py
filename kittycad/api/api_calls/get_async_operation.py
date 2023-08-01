@@ -18,7 +18,10 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/async/operations/{id}".format(client.base_url, id=id)  # noqa: E501
+    url = "{}/async/operations/{id}".format(
+        client.base_url,
+        id=id,
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
