@@ -20,22 +20,28 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/file/density".format(client.base_url)  # noqa: E501
+    url = "{}/file/density".format(
+        client.base_url,
+    )  # noqa: E501
+
     if material_mass is not None:
         if "?" in url:
             url = url + "&material_mass=" + str(material_mass)
         else:
             url = url + "?material_mass=" + str(material_mass)
+
     if material_mass_unit is not None:
         if "?" in url:
             url = url + "&material_mass_unit=" + str(material_mass_unit)
         else:
             url = url + "?material_mass_unit=" + str(material_mass_unit)
+
     if output_unit is not None:
         if "?" in url:
             url = url + "&output_unit=" + str(output_unit)
         else:
             url = url + "?output_unit=" + str(output_unit)
+
     if src_format is not None:
         if "?" in url:
             url = url + "&src_format=" + str(src_format)

@@ -1,9 +1,10 @@
 from typing import Any, Dict
 
-import httpx
+from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
+from websockets.sync.client import ClientConnection, connect as ws_connect
 
 from ...client import Client
-from ...types import Response
+from ...models.error import Error
 
 
 def _get_kwargs(
@@ -23,68 +24,40 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response):
-    return
-
-
-def _build_response(*, response: httpx.Response) -> Response[Any]:
-    return Response(
-        status_code=response.status_code,
-        content=response.content,
-        headers=response.headers,
-        parsed=_parse_response(response=response),
-    )
-
-
-def sync_detailed(
-    *,
-    client: Client,
-) -> Response[Any]:
-    kwargs = _get_kwargs(
-        client=client,
-    )
-
-    response = httpx.get(
-        verify=client.verify_ssl,
-        **kwargs,
-    )
-
-    return _build_response(response=response)
-
-
 def sync(
     *,
     client: Client,
-):
+) -> ClientConnection:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
-    return sync_detailed(
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: Client,
-) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+    with ws_connect(
+        kwargs["url"].replace("https://", "wss://"),
+        additional_headers=kwargs["headers"],
+    ) as websocket:
+        return websocket  # type: ignore
 
-    return _build_response(response=response)
+    # Return an error if we got here.
+    return Error(message="An error occurred while connecting to the websocket.")
 
 
 async def asyncio(
     *,
     client: Client,
-):
+) -> WebSocketClientProtocol:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        client=client,
+    )
+
+    async with ws_connect_async(
+        kwargs["url"].replace("https://", "wss://"), extra_headers=kwargs["headers"]
+    ) as websocket:
+        return websocket
+
+    # Return an error if we got here.
+    return Error(message="An error occurred while connecting to the websocket.")

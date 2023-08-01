@@ -3817,14 +3817,17 @@ def test_create_executor_term():
     # Create our client.
     client = ClientFromEnv()
 
-    create_executor_term.sync(
+    # Connect to the websocket.
+    websocket = create_executor_term.sync(
         client=client,
     )
 
-    # OR if you need more info (e.g. status_code)
-    create_executor_term.sync_detailed(
-        client=client,
-    )
+    # Send a message.
+    websocket.send("{}")
+
+    # Get the messages.
+    for message in websocket:
+        print(message)
 
 
 # OR run async
@@ -3834,14 +3837,17 @@ async def test_create_executor_term_async():
     # Create our client.
     client = ClientFromEnv()
 
-    await create_executor_term.asyncio(
+    # Connect to the websocket.
+    websocket = await create_executor_term.asyncio(
         client=client,
     )
 
-    # OR run async with more info
-    await create_executor_term.asyncio_detailed(
-        client=client,
-    )
+    # Send a message.
+    await websocket.send("{}")
+
+    # Get the messages.
+    async for message in websocket:
+        print(message)
 
 
 @pytest.mark.skip
@@ -3849,14 +3855,17 @@ def test_modeling_commands_ws():
     # Create our client.
     client = ClientFromEnv()
 
-    modeling_commands_ws.sync(
+    # Connect to the websocket.
+    websocket = modeling_commands_ws.sync(
         client=client,
     )
 
-    # OR if you need more info (e.g. status_code)
-    modeling_commands_ws.sync_detailed(
-        client=client,
-    )
+    # Send a message.
+    websocket.send("{}")
+
+    # Get the messages.
+    for message in websocket:
+        print(message)
 
 
 # OR run async
@@ -3866,11 +3875,14 @@ async def test_modeling_commands_ws_async():
     # Create our client.
     client = ClientFromEnv()
 
-    await modeling_commands_ws.asyncio(
+    # Connect to the websocket.
+    websocket = await modeling_commands_ws.asyncio(
         client=client,
     )
 
-    # OR run async with more info
-    await modeling_commands_ws.asyncio_detailed(
-        client=client,
-    )
+    # Send a message.
+    await websocket.send("{}")
+
+    # Get the messages.
+    async for message in websocket:
+        print(message)

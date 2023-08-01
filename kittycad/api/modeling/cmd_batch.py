@@ -14,7 +14,9 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/modeling/cmd_batch".format(client.base_url)  # noqa: E501
+    url = "{}/modeling/cmd_batch".format(
+        client.base_url,
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

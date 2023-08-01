@@ -17,8 +17,11 @@ def _get_kwargs(
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/unit/conversion/angle/{input_unit}/{output_unit}".format(
-        client.base_url, input_unit=input_unit, output_unit=output_unit
+        client.base_url,
+        input_unit=input_unit,
+        output_unit=output_unit,
     )  # noqa: E501
+
     if value is not None:
         if "?" in url:
             url = url + "&value=" + str(value)

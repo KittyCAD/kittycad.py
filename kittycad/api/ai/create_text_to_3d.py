@@ -16,8 +16,10 @@ def _get_kwargs(
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/ai/text-to-3d/{output_format}".format(
-        client.base_url, output_format=output_format
+        client.base_url,
+        output_format=output_format,
     )  # noqa: E501
+
     if prompt is not None:
         if "?" in url:
             url = url + "&prompt=" + str(prompt)
