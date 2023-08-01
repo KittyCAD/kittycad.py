@@ -501,16 +501,8 @@ from kittycad.types import Response
 """
         )
 
-    # This longer example we use for generating tests.
-    # We only show the short example in the docs since it is much more intuitive to MEs
-    example = (
-        example_imports
-        + """
-
-@pytest.mark.skip
-"""
-        + short_sync_example
-        + """
+    long_example = (
+        """
 
     # OR if you need more info (e.g. status_code)
     """
@@ -545,6 +537,72 @@ async def test_"""
         + """.asyncio_detailed(client=client,\n"""
         + params_str
         + """)"""
+    )
+
+    # Generate the websocket examples.
+    if "x-dropshot-websocket" in endpoint:
+        short_sync_example = (
+            """def test_"""
+            + fn_name
+            + """():
+        # Create our client.
+        client = ClientFromEnv()
+
+        # Connect to the websocket.
+        websocket = """
+            + fn_name
+            + """.sync(client=client,"""
+            + params_str
+            + """)
+
+        # Send a message.
+        websocket.send("{}")
+
+        # Get the messages.
+        for message in websocket:
+            print(message)
+
+    """
+        )
+
+        long_example = (
+            """
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_"""
+            + fn_name
+            + """_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    websocket = await """
+            + fn_name
+            + """.asyncio(client=client,"""
+            + params_str
+            + """)
+
+    # Send a message.
+    await websocket.send("{}")
+
+    # Get the messages.
+    async for message in websocket:
+        print(message)
+    """
+        )
+
+    # This longer example we use for generating tests.
+    # We only show the short example in the docs since it is much more intuitive to MEs
+    example = (
+        example_imports
+        + """
+
+@pytest.mark.skip
+"""
+        + short_sync_example
+        + long_example
     )
 
     # Make pretty.
@@ -837,17 +895,11 @@ async def test_"""
 
     # Generate the template for the functions.
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
-    template = environment.get_template("functions.py.jinja2")
-    content = template.render(
-        args=template_info["args"],
-        imports=template_info["imports"],
-        response_type=template_info["response_type"],
-        url_template=template_info["url_template"],
-        method=template_info["method"],
-        docs=template_info["docs"],
-        parse_response=template_info["parse_response"],
-        has_request_body=template_info["has_request_body"],
-    )
+    template_file = "functions.py.jinja2"
+    if "x-dropshot-websocket" in endpoint:
+        template_file = "functions-ws.py.jinja2"
+    template = environment.get_template(template_file)
+    content = template.render(**template_info)
     with open(file_path, mode="w", encoding="utf-8") as message:
         message.write(content)
         logging.info(f"... wrote {file_path}")
@@ -1140,7 +1192,9 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     has_date_time = hasDateTime(schema)
     if has_date_time:
         f.write("import datetime\n")
-    f.write("from typing import Any, Dict, List, Type, TypeVar, Union, cast\n")
+    f.write(
+        "from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated\n"
+    )
     f.write("\n")
     f.write("import attr\n")
     if has_date_time:
@@ -1451,6 +1505,9 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
 
 def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
     property_name = clean_parameter_name(property_name)
+    # if "deprecated" in property_schema and property_schema["deprecated"]:
+    # TODO some properties are deprecated, but we still need to support them
+    # we should show some kind of warning here
     if "type" in property_schema:
         property_type = property_schema["type"]
 
