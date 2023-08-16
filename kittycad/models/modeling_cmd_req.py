@@ -6,7 +6,7 @@ from ..models.modeling_cmd import ModelingCmd
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 
-DN = TypeVar("DN", bound="ModelingCmdReq")
+ZG = TypeVar("ZG", bound="ModelingCmdReq")
 
 
 @attr.s(auto_attribs=True)
@@ -15,7 +15,6 @@ class ModelingCmdReq:
 
     cmd: Union[Unset, ModelingCmd] = UNSET
     cmd_id: Union[Unset, ModelingCmdId] = UNSET
-    file_id: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -24,7 +23,6 @@ class ModelingCmdReq:
             cmd = self.cmd
         if not isinstance(self.cmd_id, Unset):
             cmd_id = self.cmd_id
-        file_id = self.file_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -33,13 +31,11 @@ class ModelingCmdReq:
             field_dict["cmd"] = cmd
         if cmd_id is not UNSET:
             field_dict["cmd_id"] = cmd_id
-        if file_id is not UNSET:
-            field_dict["file_id"] = file_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DN], src_dict: Dict[str, Any]) -> DN:
+    def from_dict(cls: Type[ZG], src_dict: Dict[str, Any]) -> ZG:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]
@@ -55,12 +51,9 @@ class ModelingCmdReq:
         else:
             cmd_id = _cmd_id  # type: ignore[arg-type]
 
-        file_id = d.pop("file_id", UNSET)
-
         modeling_cmd_req = cls(
             cmd=cmd,
             cmd_id=cmd_id,
-            file_id=file_id,
         )
 
         modeling_cmd_req.additional_properties = d

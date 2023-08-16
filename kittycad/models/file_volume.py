@@ -10,7 +10,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-NN = TypeVar("NN", bound="FileVolume")
+QF = TypeVar("QF", bound="FileVolume")
 
 
 @attr.s(auto_attribs=True)
@@ -28,7 +28,6 @@ class FileVolume:
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
     volume: Union[Unset, float] = UNSET
-    volumes: Union[Unset, Any] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -55,7 +54,6 @@ class FileVolume:
             updated_at = self.updated_at.isoformat()
         user_id = self.user_id
         volume = self.volume
-        volumes = self.volumes
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -82,13 +80,11 @@ class FileVolume:
             field_dict["user_id"] = user_id
         if volume is not UNSET:
             field_dict["volume"] = volume
-        if volumes is not UNSET:
-            field_dict["volumes"] = volumes
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NN], src_dict: Dict[str, Any]) -> NN:
+    def from_dict(cls: Type[QF], src_dict: Dict[str, Any]) -> QF:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -152,8 +148,6 @@ class FileVolume:
 
         volume = d.pop("volume", UNSET)
 
-        volumes = d.pop("volumes", UNSET)
-
         file_volume = cls(
             completed_at=completed_at,
             created_at=created_at,
@@ -166,7 +160,6 @@ class FileVolume:
             updated_at=updated_at,
             user_id=user_id,
             volume=volume,
-            volumes=volumes,
         )
 
         file_volume.additional_properties = d

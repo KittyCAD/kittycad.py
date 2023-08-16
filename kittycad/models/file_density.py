@@ -11,7 +11,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-YY = TypeVar("YY", bound="FileDensity")
+NN = TypeVar("NN", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -20,7 +20,6 @@ class FileDensity:
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
-    densities: Union[Unset, Any] = UNSET
     density: Union[Unset, float] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
@@ -42,7 +41,6 @@ class FileDensity:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        densities = self.densities
         density = self.density
         error = self.error
         id = self.id
@@ -70,8 +68,6 @@ class FileDensity:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
             field_dict["created_at"] = created_at
-        if densities is not UNSET:
-            field_dict["densities"] = densities
         if density is not UNSET:
             field_dict["density"] = density
         if error is not UNSET:
@@ -98,7 +94,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YY], src_dict: Dict[str, Any]) -> YY:
+    def from_dict(cls: Type[NN], src_dict: Dict[str, Any]) -> NN:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -114,7 +110,6 @@ class FileDensity:
         else:
             created_at = isoparse(_created_at)
 
-        densities = d.pop("densities", UNSET)
         density = d.pop("density", UNSET)
 
         error = d.pop("error", UNSET)
@@ -175,7 +170,6 @@ class FileDensity:
         file_density = cls(
             completed_at=completed_at,
             created_at=created_at,
-            densities=densities,
             density=density,
             error=error,
             id=id,

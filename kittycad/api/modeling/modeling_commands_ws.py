@@ -8,10 +8,38 @@ from ...models.error import Error
 
 
 def _get_kwargs(
+    fps: int,
+    unlocked_framerate: bool,
+    video_res_height: int,
+    video_res_width: int,
     *,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/ws/modeling/commands".format(client.base_url)  # noqa: E501
+
+    if fps is not None:
+        if "?" in url:
+            url = url + "&fps=" + str(fps)
+        else:
+            url = url + "?fps=" + str(fps)
+
+    if unlocked_framerate is not None:
+        if "?" in url:
+            url = url + "&unlocked_framerate=" + str(unlocked_framerate)
+        else:
+            url = url + "?unlocked_framerate=" + str(unlocked_framerate)
+
+    if video_res_height is not None:
+        if "?" in url:
+            url = url + "&video_res_height=" + str(video_res_height)
+        else:
+            url = url + "?video_res_height=" + str(video_res_height)
+
+    if video_res_width is not None:
+        if "?" in url:
+            url = url + "&video_res_width=" + str(video_res_width)
+        else:
+            url = url + "?video_res_width=" + str(video_res_width)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -25,12 +53,20 @@ def _get_kwargs(
 
 
 def sync(
+    fps: int,
+    unlocked_framerate: bool,
+    video_res_height: int,
+    video_res_width: int,
     *,
     client: Client,
 ) -> ClientConnection:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
+        fps=fps,
+        unlocked_framerate=unlocked_framerate,
+        video_res_height=video_res_height,
+        video_res_width=video_res_width,
         client=client,
     )
 
@@ -45,12 +81,20 @@ def sync(
 
 
 async def asyncio(
+    fps: int,
+    unlocked_framerate: bool,
+    video_res_height: int,
+    video_res_width: int,
     *,
     client: Client,
 ) -> WebSocketClientProtocol:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
+        fps=fps,
+        unlocked_framerate=unlocked_framerate,
+        video_res_height=video_res_height,
+        video_res_width=video_res_width,
         client=client,
     )
 

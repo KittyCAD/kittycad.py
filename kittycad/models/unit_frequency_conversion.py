@@ -9,7 +9,7 @@ from ..models.unit_frequency import UnitFrequency
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-OX = TypeVar("OX", bound="UnitFrequencyConversion")
+SX = TypeVar("SX", bound="UnitFrequencyConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitFrequencyConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OX], src_dict: Dict[str, Any]) -> OX:
+    def from_dict(cls: Type[SX], src_dict: Dict[str, Any]) -> SX:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

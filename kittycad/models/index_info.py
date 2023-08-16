@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-VI = TypeVar("VI", bound="IndexInfo")
+OJ = TypeVar("OJ", bound="IndexInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -41,7 +41,7 @@ class IndexInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[VI], src_dict: Dict[str, Any]) -> VI:
+    def from_dict(cls: Type[OJ], src_dict: Dict[str, Any]) -> OJ:
         d = src_dict.copy()
         mirrors = cast(List[str], d.pop("mirrors", UNSET))
 

@@ -9,7 +9,7 @@ from ..models.unit_power import UnitPower
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-NO = TypeVar("NO", bound="UnitPowerConversion")
+SO = TypeVar("SO", bound="UnitPowerConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitPowerConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NO], src_dict: Dict[str, Any]) -> NO:
+    def from_dict(cls: Type[SO], src_dict: Dict[str, Any]) -> SO:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

@@ -7,6 +7,13 @@ from .ai_plugin_auth import AiPluginAuth
 from .ai_plugin_auth_type import AiPluginAuthType
 from .ai_plugin_http_auth_type import AiPluginHttpAuthType
 from .ai_plugin_manifest import AiPluginManifest
+from .annotation_line_end import AnnotationLineEnd
+from .annotation_line_end_options import AnnotationLineEndOptions
+from .annotation_options import AnnotationOptions
+from .annotation_text_alignment_x import AnnotationTextAlignmentX
+from .annotation_text_alignment_y import AnnotationTextAlignmentY
+from .annotation_text_options import AnnotationTextOptions
+from .annotation_type import AnnotationType
 from .api_call_query_group import ApiCallQueryGroup
 from .api_call_query_group_by import ApiCallQueryGroupBy
 from .api_call_status import ApiCallStatus
@@ -28,6 +35,7 @@ from .card_details import CardDetails
 from .cluster import Cluster
 from .code_language import CodeLanguage
 from .code_output import CodeOutput
+from .color import Color
 from .commit import Commit
 from .connection import Connection
 from .country_code import CountryCode
@@ -44,12 +52,13 @@ from .discount import Discount
 from .docker_system_info import DockerSystemInfo
 from .email_authentication_form import EmailAuthenticationForm
 from .engine_metadata import EngineMetadata
+from .entity_type import EntityType
 from .environment import Environment
 from .error import Error
 from .executor_metadata import ExecutorMetadata
+from .export_file import ExportFile
 from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
-from .extrude import Extrude
 from .file_center_of_mass import FileCenterOfMass
 from .file_conversion import FileConversion
 from .file_density import FileDensity
@@ -85,6 +94,7 @@ from .modeling_outcomes import ModelingOutcomes
 from .new_address import NewAddress
 from .o_auth2_client_info import OAuth2ClientInfo
 from .o_auth2_grant_type import OAuth2GrantType
+from .ok_modeling_cmd_response import OkModelingCmdResponse
 from .onboarding import Onboarding
 from .output_file import OutputFile
 from .output_format import OutputFormat
@@ -93,8 +103,6 @@ from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
 from .payment_method_card_checks import PaymentMethodCardChecks
 from .payment_method_type import PaymentMethodType
-from .physics_constant import PhysicsConstant
-from .physics_constant_name import PhysicsConstantName
 from .plugins_info import PluginsInfo
 from .point2d import Point2d
 from .point3d import Point3d
@@ -102,6 +110,7 @@ from .point_e_metadata import PointEMetadata
 from .pong import Pong
 from .registry_service_config import RegistryServiceConfig
 from .runtime import Runtime
+from .scene_selection_type import SceneSelectionType
 from .session import Session
 from .storage import Storage
 from .system import System
