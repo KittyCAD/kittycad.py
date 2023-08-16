@@ -4,12 +4,6 @@ from enum import Enum
 class FileExportFormat(str, Enum):
     """The valid types of output file formats."""  # noqa: E501
 
-    """# The COLLADA/DAE file format. <https://en.wikipedia.org/wiki/COLLADA> """  # noqa: E501
-    DAE = "dae"
-    """# The FBX file format. <https://en.wikipedia.org/wiki/FBX> """  # noqa: E501
-    FBX = "fbx"
-    """# The FBX file format (in binary). <https://en.wikipedia.org/wiki/FBX> """  # noqa: E501
-    FBXB = "fbxb"
     """# glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). """  # noqa: E501
     GLTF = "gltf"
     """# The OBJ file format. <https://en.wikipedia.org/wiki/Wavefront_.obj_file> It may or may not have an an attached material (mtl // mtllib) within the file, but we interact with it as if it does not. """  # noqa: E501

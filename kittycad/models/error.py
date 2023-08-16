@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-PJ = TypeVar("PJ", bound="Error")
+MS = TypeVar("MS", bound="Error")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class Error:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PJ], src_dict: Dict[str, Any]) -> PJ:
+    def from_dict(cls: Type[MS], src_dict: Dict[str, Any]) -> MS:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 

@@ -6,7 +6,7 @@ from ..models.axis import Axis
 from ..models.direction import Direction
 from ..types import UNSET, Unset
 
-LE = TypeVar("LE", bound="AxisDirectionPair")
+TM = TypeVar("TM", bound="AxisDirectionPair")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class AxisDirectionPair:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LE], src_dict: Dict[str, Any]) -> LE:
+    def from_dict(cls: Type[TM], src_dict: Dict[str, Any]) -> TM:
         d = src_dict.copy()
         _axis = d.pop("axis", UNSET)
         axis: Union[Unset, Axis]

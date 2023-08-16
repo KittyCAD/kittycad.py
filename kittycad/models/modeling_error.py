@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-OR = TypeVar("OR", bound="ModelingError")
+CS = TypeVar("CS", bound="ModelingError")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class ModelingError:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OR], src_dict: Dict[str, Any]) -> OR:
+    def from_dict(cls: Type[CS], src_dict: Dict[str, Any]) -> CS:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 

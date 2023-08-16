@@ -6,15 +6,15 @@ from ..models.storage import Storage
 from ..models.system import System
 from ..types import UNSET, Unset
 
-QO = TypeVar("QO", bound="Gltf")
+JQ = TypeVar("JQ", bound="gltf")
 
 
 @attr.s(auto_attribs=True)
-class Gltf:
+class gltf:
     """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ascii output, you can set that option for the export."""  # noqa: E501
 
     storage: Union[Unset, Storage] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "gltf"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -28,13 +28,12 @@ class Gltf:
         field_dict.update({})
         if storage is not UNSET:
             field_dict["storage"] = storage
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[QO], src_dict: Dict[str, Any]) -> QO:
+    def from_dict(cls: Type[JQ], src_dict: Dict[str, Any]) -> JQ:
         d = src_dict.copy()
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, Storage]
@@ -70,15 +69,15 @@ class Gltf:
         return key in self.additional_properties
 
 
-KX = TypeVar("KX", bound="Obj")
+PQ = TypeVar("PQ", bound="obj")
 
 
 @attr.s(auto_attribs=True)
-class Obj:
+class obj:
     """Wavefront OBJ format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "obj"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -92,13 +91,12 @@ class Obj:
         field_dict.update({})
         if coords is not UNSET:
             field_dict["coords"] = coords
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[KX], src_dict: Dict[str, Any]) -> KX:
+    def from_dict(cls: Type[PQ], src_dict: Dict[str, Any]) -> PQ:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -134,16 +132,16 @@ class Obj:
         return key in self.additional_properties
 
 
-IZ = TypeVar("IZ", bound="Ply")
+IM = TypeVar("IM", bound="ply")
 
 
 @attr.s(auto_attribs=True)
-class Ply:
+class ply:
     """The PLY Polygon File Format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
     storage: Union[Unset, Storage] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "ply"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -161,13 +159,12 @@ class Ply:
             field_dict["coords"] = coords
         if storage is not UNSET:
             field_dict["storage"] = storage
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[IZ], src_dict: Dict[str, Any]) -> IZ:
+    def from_dict(cls: Type[IM], src_dict: Dict[str, Any]) -> IM:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -211,15 +208,15 @@ class Ply:
         return key in self.additional_properties
 
 
-WO = TypeVar("WO", bound="Step")
+OU = TypeVar("OU", bound="step")
 
 
 @attr.s(auto_attribs=True)
-class Step:
+class step:
     """ISO 10303-21 (STEP) format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "step"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -233,13 +230,12 @@ class Step:
         field_dict.update({})
         if coords is not UNSET:
             field_dict["coords"] = coords
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WO], src_dict: Dict[str, Any]) -> WO:
+    def from_dict(cls: Type[OU], src_dict: Dict[str, Any]) -> OU:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -275,16 +271,16 @@ class Step:
         return key in self.additional_properties
 
 
-NK = TypeVar("NK", bound="Stl")
+KL = TypeVar("KL", bound="stl")
 
 
 @attr.s(auto_attribs=True)
-class Stl:
+class stl:
     """*ST**ereo**L**ithography format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
     storage: Union[Unset, Storage] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "stl"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -302,13 +298,12 @@ class Stl:
             field_dict["coords"] = coords
         if storage is not UNSET:
             field_dict["storage"] = storage
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NK], src_dict: Dict[str, Any]) -> NK:
+    def from_dict(cls: Type[KL], src_dict: Dict[str, Any]) -> KL:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -352,4 +347,4 @@ class Stl:
         return key in self.additional_properties
 
 
-OutputFormat = Union[Gltf, Obj, Ply, Step, Stl]
+OutputFormat = Union[gltf, obj, ply, step, stl]

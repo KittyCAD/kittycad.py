@@ -11,7 +11,7 @@ from ..models.unit_length import UnitLength
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-LT = TypeVar("LT", bound="FileCenterOfMass")
+FZ = TypeVar("FZ", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
@@ -19,7 +19,6 @@ class FileCenterOfMass:
     """A file center of mass result."""  # noqa: E501
 
     center_of_mass: Union[Unset, Point3d] = UNSET
-    centers_of_mass: Union[Unset, Any] = UNSET
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
@@ -36,7 +35,6 @@ class FileCenterOfMass:
     def to_dict(self) -> Dict[str, Any]:
         if not isinstance(self.center_of_mass, Unset):
             center_of_mass = self.center_of_mass
-        centers_of_mass = self.centers_of_mass
         completed_at: Union[Unset, str] = UNSET
         if not isinstance(self.completed_at, Unset):
             completed_at = self.completed_at.isoformat()
@@ -64,8 +62,6 @@ class FileCenterOfMass:
         field_dict.update({})
         if center_of_mass is not UNSET:
             field_dict["center_of_mass"] = center_of_mass
-        if centers_of_mass is not UNSET:
-            field_dict["centers_of_mass"] = centers_of_mass
         if completed_at is not UNSET:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
@@ -90,7 +86,7 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LT], src_dict: Dict[str, Any]) -> LT:
+    def from_dict(cls: Type[FZ], src_dict: Dict[str, Any]) -> FZ:
         d = src_dict.copy()
         _center_of_mass = d.pop("center_of_mass", UNSET)
         center_of_mass: Union[Unset, Point3d]
@@ -99,7 +95,6 @@ class FileCenterOfMass:
         else:
             center_of_mass = _center_of_mass  # type: ignore[arg-type]
 
-        centers_of_mass = d.pop("centers_of_mass", UNSET)
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
         if isinstance(_completed_at, Unset):
@@ -162,7 +157,6 @@ class FileCenterOfMass:
 
         file_center_of_mass = cls(
             center_of_mass=center_of_mass,
-            centers_of_mass=centers_of_mass,
             completed_at=completed_at,
             created_at=created_at,
             error=error,

@@ -24,7 +24,6 @@ from kittycad.api.apps import (
     apps_github_consent,
     apps_github_webhook,
 )
-from kittycad.api.constant import get_physics_constant
 from kittycad.api.executor import create_executor_term, create_file_execution
 from kittycad.api.file import (
     create_file_center_of_mass,
@@ -113,7 +112,6 @@ from kittycad.models import (
     Onboarding,
     PaymentIntent,
     PaymentMethod,
-    PhysicsConstant,
     Pong,
     Session,
     UnitAngleConversion,
@@ -142,11 +140,10 @@ from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.image_type import ImageType
-from kittycad.models.modeling_cmd import MovePathPen
+from kittycad.models.modeling_cmd import move_path_pen
 from kittycad.models.modeling_cmd_id import ModelingCmdId
 from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.modeling_cmd_req_batch import ModelingCmdReqBatch
-from kittycad.models.physics_constant_name import PhysicsConstantName
 from kittycad.models.point3d import Point3d
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
@@ -292,7 +289,7 @@ def test_create_image_to_3d():
     result: Optional[Union[Mesh, Error]] = create_image_to_3d.sync(
         client=client,
         input_format=ImageType.PNG,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -307,7 +304,7 @@ def test_create_image_to_3d():
     response: Response[Optional[Union[Mesh, Error]]] = create_image_to_3d.sync_detailed(
         client=client,
         input_format=ImageType.PNG,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -322,7 +319,7 @@ async def test_create_image_to_3d_async():
     result: Optional[Union[Mesh, Error]] = await create_image_to_3d.asyncio(
         client=client,
         input_format=ImageType.PNG,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -332,7 +329,7 @@ async def test_create_image_to_3d_async():
     ] = await create_image_to_3d.asyncio_detailed(
         client=client,
         input_format=ImageType.PNG,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -344,7 +341,7 @@ def test_create_text_to_3d():
 
     result: Optional[Union[Mesh, Error]] = create_text_to_3d.sync(
         client=client,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         prompt="<string>",
     )
 
@@ -358,7 +355,7 @@ def test_create_text_to_3d():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Union[Mesh, Error]]] = create_text_to_3d.sync_detailed(
         client=client,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         prompt="<string>",
     )
 
@@ -372,7 +369,7 @@ async def test_create_text_to_3d_async():
 
     result: Optional[Union[Mesh, Error]] = await create_text_to_3d.asyncio(
         client=client,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         prompt="<string>",
     )
 
@@ -381,7 +378,7 @@ async def test_create_text_to_3d_async():
         Optional[Union[Mesh, Error]]
     ] = await create_text_to_3d.asyncio_detailed(
         client=client,
-        output_format=FileExportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
         prompt="<string>",
     )
 
@@ -928,55 +925,6 @@ async def test_auth_email_callback_async():
 
 
 @pytest.mark.skip
-def test_get_physics_constant():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[PhysicsConstant, Error]] = get_physics_constant.sync(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: PhysicsConstant = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[PhysicsConstant, Error]]
-    ] = get_physics_constant.sync_detailed(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_physics_constant_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[PhysicsConstant, Error]
-    ] = await get_physics_constant.asyncio(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[PhysicsConstant, Error]]
-    ] = await get_physics_constant.asyncio_detailed(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-
-@pytest.mark.skip
 def test_create_file_center_of_mass():
     # Create our client.
     client = ClientFromEnv()
@@ -984,7 +932,7 @@ def test_create_file_center_of_mass():
     result: Optional[Union[FileCenterOfMass, Error]] = create_file_center_of_mass.sync(
         client=client,
         output_unit=UnitLength.CM,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1001,7 +949,7 @@ def test_create_file_center_of_mass():
     ] = create_file_center_of_mass.sync_detailed(
         client=client,
         output_unit=UnitLength.CM,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1018,7 +966,7 @@ async def test_create_file_center_of_mass_async():
     ] = await create_file_center_of_mass.asyncio(
         client=client,
         output_unit=UnitLength.CM,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1028,7 +976,7 @@ async def test_create_file_center_of_mass_async():
     ] = await create_file_center_of_mass.asyncio_detailed(
         client=client,
         output_unit=UnitLength.CM,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1042,8 +990,8 @@ def test_create_file_conversion_with_base64_helper():
         Union[FileConversion, Error]
     ] = create_file_conversion_with_base64_helper.sync(
         client=client,
-        output_format=FileExportFormat.DAE,
-        src_format=FileImportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1059,8 +1007,8 @@ def test_create_file_conversion_with_base64_helper():
         Optional[Union[FileConversion, Error]]
     ] = create_file_conversion.sync_detailed(
         client=client,
-        output_format=FileExportFormat.DAE,
-        src_format=FileImportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1076,8 +1024,8 @@ async def test_create_file_conversion_with_base64_helper_async():
         Union[FileConversion, Error]
     ] = await create_file_conversion_with_base64_helper.asyncio(
         client=client,
-        output_format=FileExportFormat.DAE,
-        src_format=FileImportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1086,8 +1034,8 @@ async def test_create_file_conversion_with_base64_helper_async():
         Optional[Union[FileConversion, Error]]
     ] = await create_file_conversion.asyncio_detailed(
         client=client,
-        output_format=FileExportFormat.DAE,
-        src_format=FileImportFormat.DAE,
+        output_format=FileExportFormat.GLTF,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1102,7 +1050,7 @@ def test_create_file_density():
         material_mass=3.14,
         material_mass_unit=UnitMass.G,
         output_unit=UnitDensity.LB_FT3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1121,7 +1069,7 @@ def test_create_file_density():
         material_mass=3.14,
         material_mass_unit=UnitMass.G,
         output_unit=UnitDensity.LB_FT3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1138,7 +1086,7 @@ async def test_create_file_density_async():
         material_mass=3.14,
         material_mass_unit=UnitMass.G,
         output_unit=UnitDensity.LB_FT3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1150,7 +1098,7 @@ async def test_create_file_density_async():
         material_mass=3.14,
         material_mass_unit=UnitMass.G,
         output_unit=UnitDensity.LB_FT3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1220,7 +1168,7 @@ def test_create_file_mass():
         material_density=3.14,
         material_density_unit=UnitDensity.LB_FT3,
         output_unit=UnitMass.G,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1239,7 +1187,7 @@ def test_create_file_mass():
         material_density=3.14,
         material_density_unit=UnitDensity.LB_FT3,
         output_unit=UnitMass.G,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1256,7 +1204,7 @@ async def test_create_file_mass_async():
         material_density=3.14,
         material_density_unit=UnitDensity.LB_FT3,
         output_unit=UnitMass.G,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1268,7 +1216,7 @@ async def test_create_file_mass_async():
         material_density=3.14,
         material_density_unit=UnitDensity.LB_FT3,
         output_unit=UnitMass.G,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1281,7 +1229,7 @@ def test_create_file_surface_area():
     result: Optional[Union[FileSurfaceArea, Error]] = create_file_surface_area.sync(
         client=client,
         output_unit=UnitArea.CM2,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1298,7 +1246,7 @@ def test_create_file_surface_area():
     ] = create_file_surface_area.sync_detailed(
         client=client,
         output_unit=UnitArea.CM2,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1315,7 +1263,7 @@ async def test_create_file_surface_area_async():
     ] = await create_file_surface_area.asyncio(
         client=client,
         output_unit=UnitArea.CM2,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1325,7 +1273,7 @@ async def test_create_file_surface_area_async():
     ] = await create_file_surface_area.asyncio_detailed(
         client=client,
         output_unit=UnitArea.CM2,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1338,7 +1286,7 @@ def test_create_file_volume():
     result: Optional[Union[FileVolume, Error]] = create_file_volume.sync(
         client=client,
         output_unit=UnitVolume.CM3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1355,7 +1303,7 @@ def test_create_file_volume():
     ] = create_file_volume.sync_detailed(
         client=client,
         output_unit=UnitVolume.CM3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1370,7 +1318,7 @@ async def test_create_file_volume_async():
     result: Optional[Union[FileVolume, Error]] = await create_file_volume.asyncio(
         client=client,
         output_unit=UnitVolume.CM3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1380,7 +1328,7 @@ async def test_create_file_volume_async():
     ] = await create_file_volume.asyncio_detailed(
         client=client,
         output_unit=UnitVolume.CM3,
-        src_format=FileImportFormat.DAE,
+        src_format=FileImportFormat.GLTF,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1432,7 +1380,7 @@ def test_cmd():
     cmd.sync(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
+            cmd=move_path_pen(
                 path=ModelingCmdId("<uuid>"),
                 to=Point3d(
                     x=3.14,
@@ -1441,7 +1389,6 @@ def test_cmd():
                 ),
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1449,7 +1396,7 @@ def test_cmd():
     cmd.sync_detailed(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
+            cmd=move_path_pen(
                 path=ModelingCmdId("<uuid>"),
                 to=Point3d(
                     x=3.14,
@@ -1458,7 +1405,6 @@ def test_cmd():
                 ),
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1473,7 +1419,7 @@ async def test_cmd_async():
     await cmd.asyncio(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
+            cmd=move_path_pen(
                 path=ModelingCmdId("<uuid>"),
                 to=Point3d(
                     x=3.14,
@@ -1482,7 +1428,6 @@ async def test_cmd_async():
                 ),
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1490,7 +1435,7 @@ async def test_cmd_async():
     await cmd.asyncio_detailed(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
+            cmd=move_path_pen(
                 path=ModelingCmdId("<uuid>"),
                 to=Point3d(
                     x=3.14,
@@ -1499,7 +1444,6 @@ async def test_cmd_async():
                 ),
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1514,7 +1458,7 @@ def test_cmd_batch():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
+                    cmd=move_path_pen(
                         path=ModelingCmdId("<uuid>"),
                         to=Point3d(
                             x=3.14,
@@ -1523,10 +1467,8 @@ def test_cmd_batch():
                         ),
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -1545,7 +1487,7 @@ def test_cmd_batch():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
+                    cmd=move_path_pen(
                         path=ModelingCmdId("<uuid>"),
                         to=Point3d(
                             x=3.14,
@@ -1554,10 +1496,8 @@ def test_cmd_batch():
                         ),
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -1574,7 +1514,7 @@ async def test_cmd_batch_async():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
+                    cmd=move_path_pen(
                         path=ModelingCmdId("<uuid>"),
                         to=Point3d(
                             x=3.14,
@@ -1583,10 +1523,8 @@ async def test_cmd_batch_async():
                         ),
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -1598,7 +1536,7 @@ async def test_cmd_batch_async():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
+                    cmd=move_path_pen(
                         path=ModelingCmdId("<uuid>"),
                         to=Point3d(
                             x=3.14,
@@ -1607,10 +1545,8 @@ async def test_cmd_batch_async():
                         ),
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -3858,6 +3794,10 @@ def test_modeling_commands_ws():
     # Connect to the websocket.
     websocket = modeling_commands_ws.sync(
         client=client,
+        fps=10,
+        unlocked_framerate=False,
+        video_res_height=10,
+        video_res_width=10,
     )
 
     # Send a message.
@@ -3878,6 +3818,10 @@ async def test_modeling_commands_ws_async():
     # Connect to the websocket.
     websocket = await modeling_commands_ws.asyncio(
         client=client,
+        fps=10,
+        unlocked_framerate=False,
+        video_res_height=10,
+        video_res_width=10,
     )
 
     # Send a message.

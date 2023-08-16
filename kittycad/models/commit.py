@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-EG = TypeVar("EG", bound="Commit")
+VR = TypeVar("VR", bound="Commit")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class Commit:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[EG], src_dict: Dict[str, Any]) -> EG:
+    def from_dict(cls: Type[VR], src_dict: Dict[str, Any]) -> VR:
         d = src_dict.copy()
         expected = d.pop("expected", UNSET)
 

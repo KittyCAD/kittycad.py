@@ -10,7 +10,7 @@ from ..models.unit_area import UnitArea
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-FZ = TypeVar("FZ", bound="FileSurfaceArea")
+VI = TypeVar("VI", bound="FileSurfaceArea")
 
 
 @attr.s(auto_attribs=True)
@@ -26,7 +26,6 @@ class FileSurfaceArea:
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     surface_area: Union[Unset, float] = UNSET
-    surface_areas: Union[Unset, Any] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -51,7 +50,6 @@ class FileSurfaceArea:
         if not isinstance(self.status, Unset):
             status = self.status
         surface_area = self.surface_area
-        surface_areas = self.surface_areas
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
             updated_at = self.updated_at.isoformat()
@@ -78,8 +76,6 @@ class FileSurfaceArea:
             field_dict["status"] = status
         if surface_area is not UNSET:
             field_dict["surface_area"] = surface_area
-        if surface_areas is not UNSET:
-            field_dict["surface_areas"] = surface_areas
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
@@ -88,7 +84,7 @@ class FileSurfaceArea:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FZ], src_dict: Dict[str, Any]) -> FZ:
+    def from_dict(cls: Type[VI], src_dict: Dict[str, Any]) -> VI:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -143,7 +139,6 @@ class FileSurfaceArea:
 
         surface_area = d.pop("surface_area", UNSET)
 
-        surface_areas = d.pop("surface_areas", UNSET)
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
         if isinstance(_updated_at, Unset):
@@ -163,7 +158,6 @@ class FileSurfaceArea:
             started_at=started_at,
             status=status,
             surface_area=surface_area,
-            surface_areas=surface_areas,
             updated_at=updated_at,
             user_id=user_id,
         )
