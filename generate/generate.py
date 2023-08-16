@@ -307,7 +307,7 @@ def generateTypeAndExamplePython(
         if (
             "enum" in one_of
             and len(one_of["enum"]) > 0
-            and one_of["enum"][0] == "StartPath"
+            and one_of["enum"][0] == "start_path"
         ):
             one_of = schema["oneOf"][1]
 
