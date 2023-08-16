@@ -12,7 +12,7 @@ YW = TypeVar("YW", bound="empty")
 class empty:
     """An empty response, used for any command that does not explicitly have a response defined here."""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "empty"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -22,8 +22,7 @@ class empty:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -66,7 +65,7 @@ class export:
     from ..models.export_file import ExportFile
 
     files: Union[Unset, List[ExportFile]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "export"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -83,8 +82,7 @@ class export:
         field_dict.update({})
         if files is not UNSET:
             field_dict["files"] = files
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -130,7 +128,7 @@ class select_with_point:
     """The response from the `SelectWithPoint` command."""  # noqa: E501
 
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "select_with_point"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -143,8 +141,7 @@ class select_with_point:
         field_dict.update({})
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -189,7 +186,7 @@ class highlight_set_entity:
 
     entity_id: Union[Unset, str] = UNSET
     sequence: Union[Unset, int] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "highlight_set_entity"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -205,8 +202,7 @@ class highlight_set_entity:
             field_dict["entity_id"] = entity_id
         if sequence is not UNSET:
             field_dict["sequence"] = sequence
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -253,7 +249,7 @@ class entity_get_child_uuid:
     """The response from the `EntityGetChildUuid` command."""  # noqa: E501
 
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_child_uuid"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -266,8 +262,7 @@ class entity_get_child_uuid:
         field_dict.update({})
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -311,7 +306,7 @@ class entity_get_num_children:
     """The response from the `EntityGetNumChildren` command."""  # noqa: E501
 
     num: Union[Unset, int] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_num_children"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -324,8 +319,7 @@ class entity_get_num_children:
         field_dict.update({})
         if num is not UNSET:
             field_dict["num"] = num
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -369,7 +363,7 @@ class entity_get_parent_id:
     """The response from the `EntityGetParentId` command."""  # noqa: E501
 
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_parent_id"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -382,8 +376,7 @@ class entity_get_parent_id:
         field_dict.update({})
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -427,7 +420,7 @@ class entity_get_all_child_uuids:
     """The response from the `EntityGetAllChildUuids` command."""  # noqa: E501
 
     entity_ids: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_all_child_uuids"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -442,8 +435,7 @@ class entity_get_all_child_uuids:
         field_dict.update({})
         if entity_ids is not UNSET:
             field_dict["entity_ids"] = entity_ids
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -487,7 +479,7 @@ class select_get:
     """The response from the `SelectGet` command."""  # noqa: E501
 
     entity_ids: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "select_get"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -502,8 +494,7 @@ class select_get:
         field_dict.update({})
         if entity_ids is not UNSET:
             field_dict["entity_ids"] = entity_ids
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -547,7 +538,7 @@ class get_entity_type:
     """The response from the `GetEntityType` command."""  # noqa: E501
 
     entity_type: Union[Unset, EntityType] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "get_entity_type"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -561,8 +552,7 @@ class get_entity_type:
         field_dict.update({})
         if entity_type is not UNSET:
             field_dict["entity_type"] = entity_type
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -611,7 +601,7 @@ class solid3d_get_all_edge_faces:
     """The response from the `Solid3dGetAllEdgeFaces` command."""  # noqa: E501
 
     faces: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_all_edge_faces"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -626,8 +616,7 @@ class solid3d_get_all_edge_faces:
         field_dict.update({})
         if faces is not UNSET:
             field_dict["faces"] = faces
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -671,7 +660,7 @@ class solid3d_get_all_opposite_edges:
     """The response from the `Solid3dGetAllOppositeEdges` command."""  # noqa: E501
 
     edges: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_all_opposite_edges"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -686,8 +675,7 @@ class solid3d_get_all_opposite_edges:
         field_dict.update({})
         if edges is not UNSET:
             field_dict["edges"] = edges
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -731,7 +719,7 @@ class solid3d_get_opposite_edge:
     """The response from the `Solid3dGetOppositeEdge` command."""  # noqa: E501
 
     edge: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_opposite_edge"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -744,8 +732,7 @@ class solid3d_get_opposite_edge:
         field_dict.update({})
         if edge is not UNSET:
             field_dict["edge"] = edge
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -789,7 +776,7 @@ class solid3d_get_prev_adjacent_edge:
     """The response from the `Solid3dGetPrevAdjacentEdge` command."""  # noqa: E501
 
     edge: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_prev_adjacent_edge"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -802,8 +789,7 @@ class solid3d_get_prev_adjacent_edge:
         field_dict.update({})
         if edge is not UNSET:
             field_dict["edge"] = edge
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -847,7 +833,7 @@ class solid3d_get_next_adjacent_edge:
     """The response from the `Solid3dGetNextAdjacentEdge` command."""  # noqa: E501
 
     edge: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_next_adjacent_edge"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -860,8 +846,7 @@ class solid3d_get_next_adjacent_edge:
         field_dict.update({})
         if edge is not UNSET:
             field_dict["edge"] = edge
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 

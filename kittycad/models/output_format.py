@@ -14,7 +14,7 @@ class gltf:
     """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ascii output, you can set that option for the export."""  # noqa: E501
 
     storage: Union[Unset, Storage] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "gltf"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -28,8 +28,7 @@ class gltf:
         field_dict.update({})
         if storage is not UNSET:
             field_dict["storage"] = storage
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -78,7 +77,7 @@ class obj:
     """Wavefront OBJ format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "obj"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -92,8 +91,7 @@ class obj:
         field_dict.update({})
         if coords is not UNSET:
             field_dict["coords"] = coords
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -143,7 +141,7 @@ class ply:
 
     coords: Union[Unset, System] = UNSET
     storage: Union[Unset, Storage] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "ply"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -161,8 +159,7 @@ class ply:
             field_dict["coords"] = coords
         if storage is not UNSET:
             field_dict["storage"] = storage
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -219,7 +216,7 @@ class step:
     """ISO 10303-21 (STEP) format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "step"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -233,8 +230,7 @@ class step:
         field_dict.update({})
         if coords is not UNSET:
             field_dict["coords"] = coords
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -284,7 +280,7 @@ class stl:
 
     coords: Union[Unset, System] = UNSET
     storage: Union[Unset, Storage] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "stl"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -302,8 +298,7 @@ class stl:
             field_dict["coords"] = coords
         if storage is not UNSET:
             field_dict["storage"] = storage
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 

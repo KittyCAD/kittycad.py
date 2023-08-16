@@ -14,7 +14,7 @@ class line:
     """A straight line segment. Goes from the current path "pen" to the given endpoint."""  # noqa: E501
 
     end: Union[Unset, Point3d] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "line"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -28,8 +28,7 @@ class line:
         field_dict.update({})
         if end is not UNSET:
             field_dict["end"] = end
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -81,7 +80,7 @@ class arc:
     angle_start: Union[Unset, float] = UNSET
     center: Union[Unset, Point2d] = UNSET
     radius: Union[Unset, float] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "arc"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -104,8 +103,7 @@ class arc:
             field_dict["center"] = center
         if radius is not UNSET:
             field_dict["radius"] = radius
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -165,7 +163,7 @@ class bezier:
     control1: Union[Unset, Point3d] = UNSET
     control2: Union[Unset, Point3d] = UNSET
     end: Union[Unset, Point3d] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "bezier"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -187,8 +185,7 @@ class bezier:
             field_dict["control2"] = control2
         if end is not UNSET:
             field_dict["end"] = end
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 

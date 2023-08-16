@@ -20,7 +20,7 @@ RS = TypeVar("RS", bound="start_path")
 class start_path:
     """Start a path."""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "start_path"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -30,8 +30,7 @@ class start_path:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -73,7 +72,7 @@ class move_path_pen:
 
     path: Union[Unset, ModelingCmdId] = UNSET
     to: Union[Unset, Point3d] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "move_path_pen"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -91,8 +90,7 @@ class move_path_pen:
             field_dict["path"] = path
         if to is not UNSET:
             field_dict["to"] = to
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -150,7 +148,7 @@ class extend_path:
 
     path: Union[Unset, ModelingCmdId] = UNSET
     segment: Union[Unset, PathSegment] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "extend_path"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -168,8 +166,7 @@ class extend_path:
             field_dict["path"] = path
         if segment is not UNSET:
             field_dict["segment"] = segment
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -228,7 +225,7 @@ class extrude:
     cap: Union[Unset, bool] = False
     distance: Union[Unset, float] = UNSET
     target: Union[Unset, ModelingCmdId] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "extrude"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -248,8 +245,7 @@ class extrude:
             field_dict["distance"] = distance
         if target is not UNSET:
             field_dict["target"] = target
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -304,7 +300,7 @@ class close_path:
     """Closes a path, converting it to a 2D solid."""  # noqa: E501
 
     path_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "close_path"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -317,8 +313,7 @@ class close_path:
         field_dict.update({})
         if path_id is not UNSET:
             field_dict["path_id"] = path_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -362,7 +357,7 @@ class camera_drag_start:
     """Camera drag started."""  # noqa: E501
 
     interaction: Union[Unset, CameraDragInteractionType] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "camera_drag_start"
     window: Union[Unset, Point2d] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -379,8 +374,7 @@ class camera_drag_start:
         field_dict.update({})
         if interaction is not UNSET:
             field_dict["interaction"] = interaction
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if window is not UNSET:
             field_dict["window"] = window
 
@@ -440,7 +434,7 @@ class camera_drag_move:
 
     interaction: Union[Unset, CameraDragInteractionType] = UNSET
     sequence: Union[Unset, int] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "camera_drag_move"
     window: Union[Unset, Point2d] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -460,8 +454,7 @@ class camera_drag_move:
             field_dict["interaction"] = interaction
         if sequence is not UNSET:
             field_dict["sequence"] = sequence
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if window is not UNSET:
             field_dict["window"] = window
 
@@ -523,7 +516,7 @@ class camera_drag_end:
     """Camera drag ended."""  # noqa: E501
 
     interaction: Union[Unset, CameraDragInteractionType] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "camera_drag_end"
     window: Union[Unset, Point2d] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -540,8 +533,7 @@ class camera_drag_end:
         field_dict.update({})
         if interaction is not UNSET:
             field_dict["interaction"] = interaction
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if window is not UNSET:
             field_dict["window"] = window
 
@@ -600,7 +592,7 @@ class default_camera_look_at:
     """Change what the default camera is looking at."""  # noqa: E501
 
     center: Union[Unset, Point3d] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "default_camera_look_at"
     up: Union[Unset, Point3d] = UNSET
     vantage: Union[Unset, Point3d] = UNSET
 
@@ -620,8 +612,7 @@ class default_camera_look_at:
         field_dict.update({})
         if center is not UNSET:
             field_dict["center"] = center
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if up is not UNSET:
             field_dict["up"] = up
         if vantage is not UNSET:
@@ -693,7 +684,7 @@ class default_camera_enable_sketch_mode:
     distance_to_plane: Union[Unset, float] = UNSET
     origin: Union[Unset, Point3d] = UNSET
     ortho: Union[Unset, bool] = False
-    type: Union[Unset, str] = UNSET
+    type: str = "default_camera_enable_sketch_mode"
     x_axis: Union[Unset, Point3d] = UNSET
     y_axis: Union[Unset, Point3d] = UNSET
 
@@ -722,8 +713,7 @@ class default_camera_enable_sketch_mode:
             field_dict["origin"] = origin
         if ortho is not UNSET:
             field_dict["ortho"] = ortho
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if x_axis is not UNSET:
             field_dict["x_axis"] = x_axis
         if y_axis is not UNSET:
@@ -800,7 +790,7 @@ TO = TypeVar("TO", bound="default_camera_disable_sketch_mode")
 class default_camera_disable_sketch_mode:
     """Disable sketch mode, from the default camera."""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "default_camera_disable_sketch_mode"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -810,8 +800,7 @@ class default_camera_disable_sketch_mode:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -853,7 +842,7 @@ class export:
 
     entity_ids: Union[Unset, List[str]] = UNSET
     format: Union[Unset, OutputFormat] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "export"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -872,8 +861,7 @@ class export:
             field_dict["entity_ids"] = entity_ids
         if format is not UNSET:
             field_dict["format"] = format
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -925,7 +913,7 @@ class entity_get_parent_id:
     """What is this entity's parent?"""  # noqa: E501
 
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_parent_id"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -938,8 +926,7 @@ class entity_get_parent_id:
         field_dict.update({})
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -983,7 +970,7 @@ class entity_get_num_children:
     """How many children does the entity have?"""  # noqa: E501
 
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_num_children"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -996,8 +983,7 @@ class entity_get_num_children:
         field_dict.update({})
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1042,7 +1028,7 @@ class entity_get_child_uuid:
 
     child_index: Union[Unset, int] = UNSET
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_child_uuid"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1058,8 +1044,7 @@ class entity_get_child_uuid:
             field_dict["child_index"] = child_index
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1106,7 +1091,7 @@ class entity_get_all_child_uuids:
     """What are all UUIDs of this entity's children?"""  # noqa: E501
 
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "entity_get_all_child_uuids"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1119,8 +1104,7 @@ class entity_get_all_child_uuids:
         field_dict.update({})
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1164,7 +1148,7 @@ class edit_mode_enter:
     """Enter edit mode"""  # noqa: E501
 
     target: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "edit_mode_enter"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1177,8 +1161,7 @@ class edit_mode_enter:
         field_dict.update({})
         if target is not UNSET:
             field_dict["target"] = target
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1221,7 +1204,7 @@ WO = TypeVar("WO", bound="edit_mode_exit")
 class edit_mode_exit:
     """Exit edit mode"""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "edit_mode_exit"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1231,8 +1214,7 @@ class edit_mode_exit:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1274,7 +1256,7 @@ class select_with_point:
 
     selected_at_window: Union[Unset, Point2d] = UNSET
     selection_type: Union[Unset, SceneSelectionType] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "select_with_point"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1292,8 +1274,7 @@ class select_with_point:
             field_dict["selected_at_window"] = selected_at_window
         if selection_type is not UNSET:
             field_dict["selection_type"] = selection_type
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1349,7 +1330,7 @@ UQ = TypeVar("UQ", bound="select_clear")
 class select_clear:
     """Clear the selection"""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "select_clear"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1359,8 +1340,7 @@ class select_clear:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1401,7 +1381,7 @@ class select_add:
     """Adds one or more entities (by UUID) to the selection."""  # noqa: E501
 
     entities: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "select_add"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1416,8 +1396,7 @@ class select_add:
         field_dict.update({})
         if entities is not UNSET:
             field_dict["entities"] = entities
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1461,7 +1440,7 @@ class select_remove:
     """Removes one or more entities (by UUID) from the selection."""  # noqa: E501
 
     entities: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "select_remove"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1476,8 +1455,7 @@ class select_remove:
         field_dict.update({})
         if entities is not UNSET:
             field_dict["entities"] = entities
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1521,7 +1499,7 @@ class select_replace:
     """Replaces the current selection with these new entities (by UUID). Equivalent to doing SelectClear then SelectAdd."""  # noqa: E501
 
     entities: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "select_replace"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1536,8 +1514,7 @@ class select_replace:
         field_dict.update({})
         if entities is not UNSET:
             field_dict["entities"] = entities
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1580,7 +1557,7 @@ BV = TypeVar("BV", bound="select_get")
 class select_get:
     """Find all IDs of selected entities"""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "select_get"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1590,8 +1567,7 @@ class select_get:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1633,7 +1609,7 @@ class highlight_set_entity:
 
     selected_at_window: Union[Unset, Point2d] = UNSET
     sequence: Union[Unset, int] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "highlight_set_entity"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1650,8 +1626,7 @@ class highlight_set_entity:
             field_dict["selected_at_window"] = selected_at_window
         if sequence is not UNSET:
             field_dict["sequence"] = sequence
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1703,7 +1678,7 @@ class highlight_set_entities:
     """Changes the current highlighted entity to these entities."""  # noqa: E501
 
     entities: Union[Unset, List[str]] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "highlight_set_entities"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1718,8 +1693,7 @@ class highlight_set_entities:
         field_dict.update({})
         if entities is not UNSET:
             field_dict["entities"] = entities
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1765,7 +1739,7 @@ class new_annotation:
     annotation_type: Union[Unset, AnnotationType] = UNSET
     clobber: Union[Unset, bool] = False
     options: Union[Unset, AnnotationOptions] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "new_annotation"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1786,8 +1760,7 @@ class new_annotation:
             field_dict["clobber"] = clobber
         if options is not UNSET:
             field_dict["options"] = options
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1848,7 +1821,7 @@ class update_annotation:
 
     annotation_id: Union[Unset, str] = UNSET
     options: Union[Unset, AnnotationOptions] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "update_annotation"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1865,8 +1838,7 @@ class update_annotation:
             field_dict["annotation_id"] = annotation_id
         if options is not UNSET:
             field_dict["options"] = options
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1919,7 +1891,7 @@ class object_visible:
 
     hidden: Union[Unset, bool] = False
     object_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "object_visible"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1935,8 +1907,7 @@ class object_visible:
             field_dict["hidden"] = hidden
         if object_id is not UNSET:
             field_dict["object_id"] = object_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -1983,7 +1954,7 @@ class get_entity_type:
     """What type of entity is this?"""  # noqa: E501
 
     entity_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "get_entity_type"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -1996,8 +1967,7 @@ class get_entity_type:
         field_dict.update({})
         if entity_id is not UNSET:
             field_dict["entity_id"] = entity_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -2042,7 +2012,7 @@ class solid3d_get_all_edge_faces:
 
     edge_id: Union[Unset, str] = UNSET
     object_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_all_edge_faces"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -2058,8 +2028,7 @@ class solid3d_get_all_edge_faces:
             field_dict["edge_id"] = edge_id
         if object_id is not UNSET:
             field_dict["object_id"] = object_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -2108,7 +2077,7 @@ class solid3d_get_all_opposite_edges:
     along_vector: Union[Unset, Point3d] = UNSET
     edge_id: Union[Unset, str] = UNSET
     object_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_all_opposite_edges"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -2128,8 +2097,7 @@ class solid3d_get_all_opposite_edges:
             field_dict["edge_id"] = edge_id
         if object_id is not UNSET:
             field_dict["object_id"] = object_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -2186,7 +2154,7 @@ class solid3d_get_opposite_edge:
     edge_id: Union[Unset, str] = UNSET
     face_uuid: Union[Unset, str] = UNSET
     object_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_opposite_edge"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -2205,8 +2173,7 @@ class solid3d_get_opposite_edge:
             field_dict["face_uuid"] = face_uuid
         if object_id is not UNSET:
             field_dict["object_id"] = object_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -2258,7 +2225,7 @@ class solid3d_get_next_adjacent_edge:
     edge_id: Union[Unset, str] = UNSET
     face_uuid: Union[Unset, str] = UNSET
     object_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_next_adjacent_edge"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -2277,8 +2244,7 @@ class solid3d_get_next_adjacent_edge:
             field_dict["face_uuid"] = face_uuid
         if object_id is not UNSET:
             field_dict["object_id"] = object_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -2330,7 +2296,7 @@ class solid3d_get_prev_adjacent_edge:
     edge_id: Union[Unset, str] = UNSET
     face_uuid: Union[Unset, str] = UNSET
     object_id: Union[Unset, str] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "solid3d_get_prev_adjacent_edge"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -2349,8 +2315,7 @@ class solid3d_get_prev_adjacent_edge:
             field_dict["face_uuid"] = face_uuid
         if object_id is not UNSET:
             field_dict["object_id"] = object_id
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 

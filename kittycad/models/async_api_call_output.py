@@ -37,7 +37,7 @@ class FileConversion:
     src_format_options: Union[Unset, InputFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "FileConversion"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -100,8 +100,7 @@ class FileConversion:
             field_dict["started_at"] = started_at
         if status is not UNSET:
             field_dict["status"] = status
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
@@ -245,7 +244,7 @@ class FileCenterOfMass:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "FileCenterOfMass"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -298,8 +297,7 @@ class FileCenterOfMass:
             field_dict["started_at"] = started_at
         if status is not UNSET:
             field_dict["status"] = status
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
@@ -432,7 +430,7 @@ class FileMass:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "FileMass"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -491,8 +489,7 @@ class FileMass:
             field_dict["started_at"] = started_at
         if status is not UNSET:
             field_dict["status"] = status
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
@@ -628,7 +625,7 @@ class FileVolume:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "FileVolume"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
     volume: Union[Unset, float] = UNSET
@@ -679,8 +676,7 @@ class FileVolume:
             field_dict["started_at"] = started_at
         if status is not UNSET:
             field_dict["status"] = status
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
@@ -810,7 +806,7 @@ class FileDensity:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "FileDensity"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -869,8 +865,7 @@ class FileDensity:
             field_dict["started_at"] = started_at
         if status is not UNSET:
             field_dict["status"] = status
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
         if user_id is not UNSET:
@@ -1007,7 +1002,7 @@ class FileSurfaceArea:
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     surface_area: Union[Unset, float] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "FileSurfaceArea"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -1059,8 +1054,7 @@ class FileSurfaceArea:
             field_dict["status"] = status
         if surface_area is not UNSET:
             field_dict["surface_area"] = surface_area
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if updated_at is not UNSET:
             field_dict["updated_at"] = updated_at
         if user_id is not UNSET:

@@ -131,7 +131,7 @@ def generatePaths(cwd: str, parser: dict) -> dict:
 
 
 def generateTypeAndExamplePython(
-    name: str, schema: dict, data: dict, import_path: Optional[str]
+    name: str, schema: dict, data: dict, import_path: Optional[str], tag: Optional[str]
 ) -> Tuple[str, str, str]:
     parameter_type = ""
     parameter_example = ""
@@ -230,7 +230,7 @@ def generateTypeAndExamplePython(
             parameter_example = "3.14"
         elif schema["type"] == "array" and "items" in schema:
             items_type, items_example, items_imports = generateTypeAndExamplePython(
-                "", schema["items"], data, None
+                "", schema["items"], data, None, None
             )
             example_imports = example_imports + items_imports
             parameter_type = "List[" + items_type + "]"
@@ -268,12 +268,15 @@ def generateTypeAndExamplePython(
                 if "nullable" in prop:
                     # We don't care if it's nullable
                     continue
+                elif property_name == tag:
+                    # We don't care if it's the tag, since we already have it.
+                    continue
                 else:
                     (
                         prop_type,
                         prop_example,
                         prop_imports,
-                    ) = generateTypeAndExamplePython("", prop, data, None)
+                    ) = generateTypeAndExamplePython("", prop, data, import_path, tag)
                     example_imports = example_imports + prop_imports
                     parameter_example = parameter_example + (
                         "\n"
@@ -290,7 +293,7 @@ def generateTypeAndExamplePython(
             and schema["additionalProperties"] is not False
         ):
             items_type, items_example, items_imports = generateTypeAndExamplePython(
-                "", schema["additionalProperties"], data, None
+                "", schema["additionalProperties"], data, None, None
             )
             example_imports = example_imports + items_imports
             parameter_type = "Dict[str, " + items_type + "]"
@@ -300,40 +303,49 @@ def generateTypeAndExamplePython(
             raise Exception("Unknown parameter type")
     elif "oneOf" in schema and len(schema["oneOf"]) > 0:
         one_of = schema["oneOf"][0]
-        # Start Path is a weird one, let's skip it.
-        # Technically we should be able to handle it, but it's not worth the effort.
-        # We should also have a more algorithmic way of handling this for any other weird cases.
-        # But for now, let's just skip it.
-        if (
-            "enum" in one_of
-            and len(one_of["enum"]) > 0
-            and one_of["enum"][0] == "start_path"
-        ):
+        if len(schema["oneOf"]) > 1:
             one_of = schema["oneOf"][1]
 
-        # Check if each of these only has a object w 1 property.
+        # Check if this is a nested object.
         if isNestedObjectOneOf(schema):
             if "properties" in one_of:
                 properties = one_of["properties"]
                 for prop in properties:
                     return generateTypeAndExamplePython(
-                        prop, properties[prop], data, camel_to_snake(name)
+                        prop, properties[prop], data, camel_to_snake(name), None
                     )
                     break
             elif "type" in one_of and one_of["type"] == "string":
                 return generateTypeAndExamplePython(
-                    name, one_of, data, camel_to_snake(name)
+                    name, one_of, data, camel_to_snake(name), None
                 )
 
-        return generateTypeAndExamplePython(name, one_of, data, None)
+        tag = getTagOneOf(schema)
+
+        if (
+            "properties" in one_of
+            and "type" in one_of["properties"]
+            and "enum" in one_of["properties"]["type"]
+        ):
+            return generateTypeAndExamplePython(
+                one_of["properties"]["type"]["enum"][0],
+                one_of,
+                data,
+                camel_to_snake(name),
+                tag,
+            )
+        else:
+            return generateTypeAndExamplePython(name, one_of, data, None, None)
     elif "allOf" in schema and len(schema["allOf"]) == 1:
-        return generateTypeAndExamplePython(name, schema["allOf"][0], data, None)
+        return generateTypeAndExamplePython(name, schema["allOf"][0], data, None, None)
     elif "$ref" in schema:
         parameter_type = schema["$ref"].replace("#/components/schemas/", "")
         # Get the schema for the reference.
         ref_schema = data["components"]["schemas"][parameter_type]
 
-        return generateTypeAndExamplePython(parameter_type, ref_schema, data, None)
+        return generateTypeAndExamplePython(
+            parameter_type, ref_schema, data, None, None
+        )
     else:
         logging.error("schema: %s", json.dumps(schema, indent=4))
         raise Exception("Unknown parameter type")
@@ -402,7 +414,7 @@ from kittycad.types import Response
                 parameter_type,
                 parameter_example,
                 more_example_imports,
-            ) = generateTypeAndExamplePython("", parameter["schema"], data, None)
+            ) = generateTypeAndExamplePython("", parameter["schema"], data, None, None)
             example_imports = example_imports + more_example_imports
 
             if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
@@ -436,7 +448,7 @@ from kittycad.types import Response
                 body_type,
                 body_example,
                 more_example_imports,
-            ) = generateTypeAndExamplePython(request_body_type, rbs, data, None)
+            ) = generateTypeAndExamplePython(request_body_type, rbs, data, None, None)
             params_str += "body=" + body_example + ",\n"
             example_imports = example_imports + more_example_imports
 
@@ -1132,7 +1144,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                         all_options.append(prop_name)
                     else:
                         object_code = generateObjectTypeCode(
-                            prop_name, nested_object, "object", data
+                            prop_name, nested_object, "object", data, None
                         )
                         f.write(object_code)
                         f.write("\n")
@@ -1146,36 +1158,16 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                 all_options.append(one_of["enum"][0])
 
     # Check if each one_of has the same enum of one.
-    tag = None
-    for one_of in schema["oneOf"]:
-        has_tag = False
-        # Check if each are an object w 1 property in it.
-        if one_of["type"] == "object" and "properties" in one_of:
-            for prop_name in one_of["properties"]:
-                prop = one_of["properties"][prop_name]
-                if (
-                    "type" in prop
-                    and prop["type"] == "string"
-                    and "enum" in prop
-                    and len(prop["enum"]) == 1
-                ):
-                    if tag is not None and tag != prop_name:
-                        has_tag = False
-                        break
-                    else:
-                        has_tag = True
-                        tag = prop_name
-
-        if has_tag is False:
-            tag = None
-            break
+    tag = getTagOneOf(schema)
 
     if tag is not None:
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
             object_name = one_of["properties"][tag]["enum"][0]
-            object_code = generateObjectTypeCode(object_name, one_of, "object", data)
+            object_code = generateObjectTypeCode(
+                object_name, one_of, "object", data, tag
+            )
             f.write(object_code)
             f.write("\n")
             all_options.append(object_name)
@@ -1193,7 +1185,9 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
     f.close()
 
 
-def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) -> str:
+def generateObjectTypeCode(
+    name: str, schema: dict, type_name: str, data: dict, tag: Optional[str]
+) -> str:
     f = io.StringIO()
 
     has_date_time = hasDateTime(schema)
@@ -1226,7 +1220,10 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     # Iterate over the properties.
     for property_name in schema["properties"]:
         property_schema = schema["properties"][property_name]
-        renderTypeInit(f, property_name, property_schema, data)
+        if property_name == tag:
+            f.write("\t" + property_name + ': str = "' + name + '"\n')
+        else:
+            renderTypeInit(f, property_name, property_schema, data)
 
     # Finish writing the class.
     f.write("\n")
@@ -1240,7 +1237,10 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
     # Iternate over the properties.
     for property_name in schema["properties"]:
         property_schema = schema["properties"][property_name]
-        renderTypeToDict(f, property_name, property_schema, data)
+        if property_name == tag:
+            renderTypeToDict(f, property_name, property_schema, data)
+        else:
+            renderTypeToDict(f, property_name, property_schema, data)
 
     # Finish writing the to_dict method.
     f.write("\n")
@@ -1250,15 +1250,26 @@ def generateObjectTypeCode(name: str, schema: dict, type_name: str, data: dict) 
 
     # Iternate over the properties.
     for property_name in schema["properties"]:
-        # Write the property.
-        f.write("\t\tif " + clean_parameter_name(property_name) + " is not UNSET:\n")
-        f.write(
-            "\t\t\tfield_dict['"
-            + property_name
-            + "'] = "
-            + clean_parameter_name(property_name)
-            + "\n"
-        )
+        if property_name == tag:
+            f.write(
+                "\t\tfield_dict['"
+                + property_name
+                + "'] = "
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
+        else:
+            # Write the property.
+            f.write(
+                "\t\tif " + clean_parameter_name(property_name) + " is not UNSET:\n"
+            )
+            f.write(
+                "\t\t\tfield_dict['"
+                + property_name
+                + "'] = "
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
 
     f.write("\n")
     f.write("\t\treturn field_dict\n")
@@ -1335,7 +1346,7 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str, data:
 
     f = open(path, "w")
 
-    code = generateObjectTypeCode(name, schema, type_name, data)
+    code = generateObjectTypeCode(name, schema, type_name, data, None)
     f.write(code)
 
     # Close the file.
@@ -2071,12 +2082,8 @@ def isNestedObjectOneOf(schema: dict) -> bool:
 
     is_nested_object = False
     for one_of in schema["oneOf"]:
-        # Check if each are an object w 1 property in it.
-        if (
-            one_of["type"] == "object"
-            and "properties" in one_of
-            and len(one_of["properties"]) == 1
-        ):
+        # Check if each are an object with properties.
+        if one_of["type"] == "object" and "properties" in one_of:
             for prop_name in one_of["properties"]:
                 nested_object = one_of["properties"][prop_name]
                 if "type" in nested_object and nested_object["type"] == "object":
@@ -2093,6 +2100,34 @@ def isNestedObjectOneOf(schema: dict) -> bool:
             break
 
     return is_nested_object
+
+
+def getTagOneOf(schema: dict) -> Optional[str]:
+    tag = None
+    for one_of in schema["oneOf"]:
+        has_tag = False
+        # Check if each are an object w 1 property in it.
+        if one_of["type"] == "object" and "properties" in one_of:
+            for prop_name in one_of["properties"]:
+                prop = one_of["properties"][prop_name]
+                if (
+                    "type" in prop
+                    and prop["type"] == "string"
+                    and "enum" in prop
+                    and len(prop["enum"]) == 1
+                ):
+                    if tag is not None and tag != prop_name:
+                        has_tag = False
+                        break
+                    else:
+                        has_tag = True
+                        tag = prop_name
+
+        if has_tag is False:
+            tag = None
+            break
+
+    return tag
 
 
 def isEnumWithDocsOneOf(schema: dict) -> bool:

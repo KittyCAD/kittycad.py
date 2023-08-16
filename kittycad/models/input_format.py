@@ -13,7 +13,7 @@ UF = TypeVar("UF", bound="gltf")
 class gltf:
     """Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb)."""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "gltf"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -23,8 +23,7 @@ class gltf:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -64,7 +63,7 @@ YF = TypeVar("YF", bound="step")
 class step:
     """ISO 10303-21 (STEP) format."""  # noqa: E501
 
-    type: Union[Unset, str] = UNSET
+    type: str = "step"
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -74,8 +73,7 @@ class step:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
 
         return field_dict
 
@@ -116,7 +114,7 @@ class obj:
     """Wavefront OBJ format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "obj"
     units: Union[Unset, UnitLength] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -133,8 +131,7 @@ class obj:
         field_dict.update({})
         if coords is not UNSET:
             field_dict["coords"] = coords
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units
 
@@ -193,7 +190,7 @@ class ply:
     """The PLY Polygon File Format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "ply"
     units: Union[Unset, UnitLength] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -210,8 +207,7 @@ class ply:
         field_dict.update({})
         if coords is not UNSET:
             field_dict["coords"] = coords
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units
 
@@ -270,7 +266,7 @@ class stl:
     """*ST**ereo**L**ithography format."""  # noqa: E501
 
     coords: Union[Unset, System] = UNSET
-    type: Union[Unset, str] = UNSET
+    type: str = "stl"
     units: Union[Unset, UnitLength] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -287,8 +283,7 @@ class stl:
         field_dict.update({})
         if coords is not UNSET:
             field_dict["coords"] = coords
-        if type is not UNSET:
-            field_dict["type"] = type
+        field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units
 
