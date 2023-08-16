@@ -11,7 +11,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-DO = TypeVar("DO", bound="FileMass")
+OH = TypeVar("OH", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
@@ -23,7 +23,6 @@ class FileMass:
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     mass: Union[Unset, float] = UNSET
-    masses: Union[Unset, Any] = UNSET
     material_density: Union[Unset, float] = UNSET
     material_density_unit: Union[Unset, UnitDensity] = UNSET
     output_unit: Union[Unset, UnitMass] = UNSET
@@ -45,7 +44,6 @@ class FileMass:
         error = self.error
         id = self.id
         mass = self.mass
-        masses = self.masses
         material_density = self.material_density
         if not isinstance(self.material_density_unit, Unset):
             material_density_unit = self.material_density_unit
@@ -76,8 +74,6 @@ class FileMass:
             field_dict["id"] = id
         if mass is not UNSET:
             field_dict["mass"] = mass
-        if masses is not UNSET:
-            field_dict["masses"] = masses
         if material_density is not UNSET:
             field_dict["material_density"] = material_density
         if material_density_unit is not UNSET:
@@ -98,7 +94,7 @@ class FileMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DO], src_dict: Dict[str, Any]) -> DO:
+    def from_dict(cls: Type[OH], src_dict: Dict[str, Any]) -> OH:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -125,7 +121,6 @@ class FileMass:
 
         mass = d.pop("mass", UNSET)
 
-        masses = d.pop("masses", UNSET)
         material_density = d.pop("material_density", UNSET)
 
         _material_density_unit = d.pop("material_density_unit", UNSET)
@@ -178,7 +173,6 @@ class FileMass:
             error=error,
             id=id,
             mass=mass,
-            masses=masses,
             material_density=material_density,
             material_density_unit=material_density_unit,
             output_unit=output_unit,

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-BA = TypeVar("BA", bound="ModelingCmdReqBatch")
+LF = TypeVar("LF", bound="ModelingCmdReqBatch")
 
 
 @attr.s(auto_attribs=True)
@@ -12,33 +12,27 @@ class ModelingCmdReqBatch:
     """A batch set of graphics commands submitted to the KittyCAD engine via the Modeling API."""  # noqa: E501
 
     cmds: Union[Unset, Any] = UNSET
-    file_id: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         cmds = self.cmds
-        file_id = self.file_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cmds is not UNSET:
             field_dict["cmds"] = cmds
-        if file_id is not UNSET:
-            field_dict["file_id"] = file_id
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BA], src_dict: Dict[str, Any]) -> BA:
+    def from_dict(cls: Type[LF], src_dict: Dict[str, Any]) -> LF:
         d = src_dict.copy()
         cmds = d.pop("cmds", UNSET)
-        file_id = d.pop("file_id", UNSET)
 
         modeling_cmd_req_batch = cls(
             cmds=cmds,
-            file_id=file_id,
         )
 
         modeling_cmd_req_batch.additional_properties = d

@@ -5,7 +5,7 @@ import attr
 from ..models.new_address import NewAddress
 from ..types import UNSET, Unset
 
-OY = TypeVar("OY", bound="BillingInfo")
+BS = TypeVar("BS", bound="BillingInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class BillingInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OY], src_dict: Dict[str, Any]) -> OY:
+    def from_dict(cls: Type[BS], src_dict: Dict[str, Any]) -> BS:
         d = src_dict.copy()
         _address = d.pop("address", UNSET)
         address: Union[Unset, NewAddress]

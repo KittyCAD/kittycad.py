@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-ZG = TypeVar("ZG", bound="SystemInfoDefaultAddressPools")
+LJ = TypeVar("LJ", bound="SystemInfoDefaultAddressPools")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class SystemInfoDefaultAddressPools:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZG], src_dict: Dict[str, Any]) -> ZG:
+    def from_dict(cls: Type[LJ], src_dict: Dict[str, Any]) -> LJ:
         d = src_dict.copy()
         base = d.pop("base", UNSET)
 

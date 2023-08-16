@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-YD = TypeVar("YD", bound="RegistryServiceConfig")
+SK = TypeVar("SK", bound="RegistryServiceConfig")
 
 
 @attr.s(auto_attribs=True)
@@ -59,7 +59,7 @@ class RegistryServiceConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YD], src_dict: Dict[str, Any]) -> YD:
+    def from_dict(cls: Type[SK], src_dict: Dict[str, Any]) -> SK:
         d = src_dict.copy()
         allow_nondistributable_artifacts_cid_rs = cast(
             List[str], d.pop("allow_nondistributable_artifacts_cid_rs", UNSET)

@@ -24,7 +24,6 @@ from kittycad.api.apps import (
     apps_github_consent,
     apps_github_webhook,
 )
-from kittycad.api.constant import get_physics_constant
 from kittycad.api.executor import create_executor_term, create_file_execution
 from kittycad.api.file import (
     create_file_center_of_mass,
@@ -113,7 +112,6 @@ from kittycad.models import (
     Onboarding,
     PaymentIntent,
     PaymentMethod,
-    PhysicsConstant,
     Pong,
     Session,
     UnitAngleConversion,
@@ -142,12 +140,11 @@ from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.image_type import ImageType
-from kittycad.models.modeling_cmd import MovePathPen
+from kittycad.models.modeling_cmd import ModelingCmd
 from kittycad.models.modeling_cmd_id import ModelingCmdId
 from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.modeling_cmd_req_batch import ModelingCmdReqBatch
-from kittycad.models.physics_constant_name import PhysicsConstantName
-from kittycad.models.point3d import Point3d
+from kittycad.models.start_path import start_path
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -928,55 +925,6 @@ async def test_auth_email_callback_async():
 
 
 @pytest.mark.skip
-def test_get_physics_constant():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[PhysicsConstant, Error]] = get_physics_constant.sync(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: PhysicsConstant = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[PhysicsConstant, Error]]
-    ] = get_physics_constant.sync_detailed(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_physics_constant_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[PhysicsConstant, Error]
-    ] = await get_physics_constant.asyncio(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[PhysicsConstant, Error]]
-    ] = await get_physics_constant.asyncio_detailed(
-        client=client,
-        constant=PhysicsConstantName.PI,
-    )
-
-
-@pytest.mark.skip
 def test_create_file_center_of_mass():
     # Create our client.
     client = ClientFromEnv()
@@ -1432,16 +1380,10 @@ def test_cmd():
     cmd.sync(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
+            cmd=ModelingCmd(
+                type=start_path.START_PATH,
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1449,16 +1391,10 @@ def test_cmd():
     cmd.sync_detailed(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
+            cmd=ModelingCmd(
+                type=start_path.START_PATH,
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1473,16 +1409,10 @@ async def test_cmd_async():
     await cmd.asyncio(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
+            cmd=ModelingCmd(
+                type=start_path.START_PATH,
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1490,16 +1420,10 @@ async def test_cmd_async():
     await cmd.asyncio_detailed(
         client=client,
         body=ModelingCmdReq(
-            cmd=MovePathPen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
+            cmd=ModelingCmd(
+                type=start_path.START_PATH,
             ),
             cmd_id=ModelingCmdId("<uuid>"),
-            file_id="<string>",
         ),
     )
 
@@ -1514,19 +1438,12 @@ def test_cmd_batch():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
+                    cmd=ModelingCmd(
+                        type=start_path.START_PATH,
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -1545,19 +1462,12 @@ def test_cmd_batch():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
+                    cmd=ModelingCmd(
+                        type=start_path.START_PATH,
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -1574,19 +1484,12 @@ async def test_cmd_batch_async():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
+                    cmd=ModelingCmd(
+                        type=start_path.START_PATH,
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -1598,19 +1501,12 @@ async def test_cmd_batch_async():
         body=ModelingCmdReqBatch(
             cmds={
                 "<string>": ModelingCmdReq(
-                    cmd=MovePathPen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
+                    cmd=ModelingCmd(
+                        type=start_path.START_PATH,
                     ),
                     cmd_id=ModelingCmdId("<uuid>"),
-                    file_id="<string>",
                 )
             },
-            file_id="<string>",
         ),
     )
 
@@ -3858,6 +3754,10 @@ def test_modeling_commands_ws():
     # Connect to the websocket.
     websocket = modeling_commands_ws.sync(
         client=client,
+        fps=10,
+        unlocked_framerate=False,
+        video_res_height=10,
+        video_res_width=10,
     )
 
     # Send a message.
@@ -3878,6 +3778,10 @@ async def test_modeling_commands_ws_async():
     # Connect to the websocket.
     websocket = await modeling_commands_ws.asyncio(
         client=client,
+        fps=10,
+        unlocked_framerate=False,
+        video_res_height=10,
+        video_res_width=10,
     )
 
     # Send a message.

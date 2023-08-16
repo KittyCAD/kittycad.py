@@ -18,7 +18,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-LB = TypeVar("LB", bound="FileConversion")
+MN = TypeVar("MN", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -110,7 +110,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LB], src_dict: Dict[str, Any]) -> LB:
+    def from_dict(cls: Type[MN], src_dict: Dict[str, Any]) -> MN:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -229,7 +229,7 @@ class FileConversion:
         return key in self.additional_properties
 
 
-NE = TypeVar("NE", bound="FileCenterOfMass")
+JV = TypeVar("JV", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
@@ -237,7 +237,6 @@ class FileCenterOfMass:
     """File center of mass."""  # noqa: E501
 
     center_of_mass: Union[Unset, Point3d] = UNSET
-    centers_of_mass: Union[Unset, Any] = UNSET
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
@@ -255,7 +254,6 @@ class FileCenterOfMass:
     def to_dict(self) -> Dict[str, Any]:
         if not isinstance(self.center_of_mass, Unset):
             center_of_mass = self.center_of_mass
-        centers_of_mass = self.centers_of_mass
         completed_at: Union[Unset, str] = UNSET
         if not isinstance(self.completed_at, Unset):
             completed_at = self.completed_at.isoformat()
@@ -284,8 +282,6 @@ class FileCenterOfMass:
         field_dict.update({})
         if center_of_mass is not UNSET:
             field_dict["center_of_mass"] = center_of_mass
-        if centers_of_mass is not UNSET:
-            field_dict["centers_of_mass"] = centers_of_mass
         if completed_at is not UNSET:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
@@ -312,7 +308,7 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NE], src_dict: Dict[str, Any]) -> NE:
+    def from_dict(cls: Type[JV], src_dict: Dict[str, Any]) -> JV:
         d = src_dict.copy()
         _center_of_mass = d.pop("center_of_mass", UNSET)
         center_of_mass: Union[Unset, Point3d]
@@ -321,7 +317,6 @@ class FileCenterOfMass:
         else:
             center_of_mass = _center_of_mass  # type: ignore[arg-type]
 
-        centers_of_mass = d.pop("centers_of_mass", UNSET)
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
         if isinstance(_completed_at, Unset):
@@ -386,7 +381,6 @@ class FileCenterOfMass:
 
         file_center_of_mass = cls(
             center_of_mass=center_of_mass,
-            centers_of_mass=centers_of_mass,
             completed_at=completed_at,
             created_at=created_at,
             error=error,
@@ -420,7 +414,7 @@ class FileCenterOfMass:
         return key in self.additional_properties
 
 
-TL = TypeVar("TL", bound="FileMass")
+IO = TypeVar("IO", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
@@ -432,7 +426,6 @@ class FileMass:
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     mass: Union[Unset, float] = UNSET
-    masses: Union[Unset, Any] = UNSET
     material_density: Union[Unset, float] = UNSET
     material_density_unit: Union[Unset, UnitDensity] = UNSET
     output_unit: Union[Unset, UnitMass] = UNSET
@@ -455,7 +448,6 @@ class FileMass:
         error = self.error
         id = self.id
         mass = self.mass
-        masses = self.masses
         material_density = self.material_density
         if not isinstance(self.material_density_unit, Unset):
             material_density_unit = self.material_density_unit
@@ -487,8 +479,6 @@ class FileMass:
             field_dict["id"] = id
         if mass is not UNSET:
             field_dict["mass"] = mass
-        if masses is not UNSET:
-            field_dict["masses"] = masses
         if material_density is not UNSET:
             field_dict["material_density"] = material_density
         if material_density_unit is not UNSET:
@@ -511,7 +501,7 @@ class FileMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TL], src_dict: Dict[str, Any]) -> TL:
+    def from_dict(cls: Type[IO], src_dict: Dict[str, Any]) -> IO:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -538,7 +528,6 @@ class FileMass:
 
         mass = d.pop("mass", UNSET)
 
-        masses = d.pop("masses", UNSET)
         material_density = d.pop("material_density", UNSET)
 
         _material_density_unit = d.pop("material_density_unit", UNSET)
@@ -593,7 +582,6 @@ class FileMass:
             error=error,
             id=id,
             mass=mass,
-            masses=masses,
             material_density=material_density,
             material_density_unit=material_density_unit,
             output_unit=output_unit,
@@ -625,7 +613,7 @@ class FileMass:
         return key in self.additional_properties
 
 
-MN = TypeVar("MN", bound="FileVolume")
+FV = TypeVar("FV", bound="FileVolume")
 
 
 @attr.s(auto_attribs=True)
@@ -644,7 +632,6 @@ class FileVolume:
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
     volume: Union[Unset, float] = UNSET
-    volumes: Union[Unset, Any] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -672,7 +659,6 @@ class FileVolume:
             updated_at = self.updated_at.isoformat()
         user_id = self.user_id
         volume = self.volume
-        volumes = self.volumes
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -701,13 +687,11 @@ class FileVolume:
             field_dict["user_id"] = user_id
         if volume is not UNSET:
             field_dict["volume"] = volume
-        if volumes is not UNSET:
-            field_dict["volumes"] = volumes
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MN], src_dict: Dict[str, Any]) -> MN:
+    def from_dict(cls: Type[FV], src_dict: Dict[str, Any]) -> FV:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -773,8 +757,6 @@ class FileVolume:
 
         volume = d.pop("volume", UNSET)
 
-        volumes = d.pop("volumes", UNSET)
-
         file_volume = cls(
             completed_at=completed_at,
             created_at=created_at,
@@ -788,7 +770,6 @@ class FileVolume:
             updated_at=updated_at,
             user_id=user_id,
             volume=volume,
-            volumes=volumes,
         )
 
         file_volume.additional_properties = d
@@ -811,7 +792,7 @@ class FileVolume:
         return key in self.additional_properties
 
 
-JV = TypeVar("JV", bound="FileDensity")
+LE = TypeVar("LE", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -820,7 +801,6 @@ class FileDensity:
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
-    densities: Union[Unset, Any] = UNSET
     density: Union[Unset, float] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
@@ -843,7 +823,6 @@ class FileDensity:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
-        densities = self.densities
         density = self.density
         error = self.error
         id = self.id
@@ -872,8 +851,6 @@ class FileDensity:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
             field_dict["created_at"] = created_at
-        if densities is not UNSET:
-            field_dict["densities"] = densities
         if density is not UNSET:
             field_dict["density"] = density
         if error is not UNSET:
@@ -902,7 +879,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JV], src_dict: Dict[str, Any]) -> JV:
+    def from_dict(cls: Type[LE], src_dict: Dict[str, Any]) -> LE:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -918,7 +895,6 @@ class FileDensity:
         else:
             created_at = isoparse(_created_at)
 
-        densities = d.pop("densities", UNSET)
         density = d.pop("density", UNSET)
 
         error = d.pop("error", UNSET)
@@ -981,7 +957,6 @@ class FileDensity:
         file_density = cls(
             completed_at=completed_at,
             created_at=created_at,
-            densities=densities,
             density=density,
             error=error,
             id=id,
@@ -1016,7 +991,7 @@ class FileDensity:
         return key in self.additional_properties
 
 
-IO = TypeVar("IO", bound="FileSurfaceArea")
+OY = TypeVar("OY", bound="FileSurfaceArea")
 
 
 @attr.s(auto_attribs=True)
@@ -1032,7 +1007,6 @@ class FileSurfaceArea:
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     surface_area: Union[Unset, float] = UNSET
-    surface_areas: Union[Unset, Any] = UNSET
     type: Union[Unset, str] = UNSET
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
@@ -1058,7 +1032,6 @@ class FileSurfaceArea:
         if not isinstance(self.status, Unset):
             status = self.status
         surface_area = self.surface_area
-        surface_areas = self.surface_areas
         type = self.type
         updated_at: Union[Unset, str] = UNSET
         if not isinstance(self.updated_at, Unset):
@@ -1086,8 +1059,6 @@ class FileSurfaceArea:
             field_dict["status"] = status
         if surface_area is not UNSET:
             field_dict["surface_area"] = surface_area
-        if surface_areas is not UNSET:
-            field_dict["surface_areas"] = surface_areas
         if type is not UNSET:
             field_dict["type"] = type
         if updated_at is not UNSET:
@@ -1098,7 +1069,7 @@ class FileSurfaceArea:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[IO], src_dict: Dict[str, Any]) -> IO:
+    def from_dict(cls: Type[OY], src_dict: Dict[str, Any]) -> OY:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -1153,7 +1124,6 @@ class FileSurfaceArea:
 
         surface_area = d.pop("surface_area", UNSET)
 
-        surface_areas = d.pop("surface_areas", UNSET)
         type = d.pop("type", UNSET)
 
         _updated_at = d.pop("updated_at", UNSET)
@@ -1175,7 +1145,6 @@ class FileSurfaceArea:
             started_at=started_at,
             status=status,
             surface_area=surface_area,
-            surface_areas=surface_areas,
             type=type,
             updated_at=updated_at,
             user_id=user_id,

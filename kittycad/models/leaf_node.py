@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-HC = TypeVar("HC", bound="LeafNode")
+TP = TypeVar("TP", bound="LeafNode")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class LeafNode:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HC], src_dict: Dict[str, Any]) -> HC:
+    def from_dict(cls: Type[TP], src_dict: Dict[str, Any]) -> TP:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 

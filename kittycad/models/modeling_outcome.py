@@ -5,18 +5,19 @@ import attr
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 from .modeling_error import ModelingError
+from .ok_modeling_cmd_response import OkModelingCmdResponse
 
-Success = Any
-
-
-Error = ModelingError
+success = OkModelingCmdResponse
 
 
-CB = TypeVar("CB", bound="Cancelled")
+error = ModelingError
+
+
+GN = TypeVar("GN", bound="cancelled")
 
 
 @attr.s(auto_attribs=True)
-class Cancelled:
+class cancelled:
     what_failed: Union[Unset, ModelingCmdId] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -34,7 +35,7 @@ class Cancelled:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CB], src_dict: Dict[str, Any]) -> CB:
+    def from_dict(cls: Type[GN], src_dict: Dict[str, Any]) -> GN:
         d = src_dict.copy()
         _what_failed = d.pop("what_failed", UNSET)
         what_failed: Union[Unset, ModelingCmdId]
@@ -67,4 +68,4 @@ class Cancelled:
         return key in self.additional_properties
 
 
-ModelingOutcome = Union[Success, Error, Cancelled]
+ModelingOutcome = Union[success, error, cancelled]

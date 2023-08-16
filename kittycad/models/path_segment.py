@@ -6,29 +6,35 @@ from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-UQ = TypeVar("UQ", bound="Line")
+XI = TypeVar("XI", bound="line")
 
 
 @attr.s(auto_attribs=True)
-class Line:
+class line:
+    """A straight line segment. Goes from the current path "pen" to the given endpoint."""  # noqa: E501
+
     end: Union[Unset, Point3d] = UNSET
+    type: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         if not isinstance(self.end, Unset):
             end = self.end
+        type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if end is not UNSET:
             field_dict["end"] = end
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UQ], src_dict: Dict[str, Any]) -> UQ:
+    def from_dict(cls: Type[XI], src_dict: Dict[str, Any]) -> XI:
         d = src_dict.copy()
         _end = d.pop("end", UNSET)
         end: Union[Unset, Point3d]
@@ -37,8 +43,11 @@ class Line:
         else:
             end = _end  # type: ignore[arg-type]
 
+        type = d.pop("type", UNSET)
+
         line = cls(
             end=end,
+            type=type,
         )
 
         line.additional_properties = d
@@ -61,15 +70,18 @@ class Line:
         return key in self.additional_properties
 
 
-QE = TypeVar("QE", bound="Arc")
+PO = TypeVar("PO", bound="arc")
 
 
 @attr.s(auto_attribs=True)
-class Arc:
+class arc:
+    """A circular arc segment."""  # noqa: E501
+
     angle_end: Union[Unset, float] = UNSET
     angle_start: Union[Unset, float] = UNSET
     center: Union[Unset, Point2d] = UNSET
     radius: Union[Unset, float] = UNSET
+    type: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -79,6 +91,7 @@ class Arc:
         if not isinstance(self.center, Unset):
             center = self.center
         radius = self.radius
+        type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -91,11 +104,13 @@ class Arc:
             field_dict["center"] = center
         if radius is not UNSET:
             field_dict["radius"] = radius
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[QE], src_dict: Dict[str, Any]) -> QE:
+    def from_dict(cls: Type[PO], src_dict: Dict[str, Any]) -> PO:
         d = src_dict.copy()
         angle_end = d.pop("angle_end", UNSET)
 
@@ -110,11 +125,14 @@ class Arc:
 
         radius = d.pop("radius", UNSET)
 
+        type = d.pop("type", UNSET)
+
         arc = cls(
             angle_end=angle_end,
             angle_start=angle_start,
             center=center,
             radius=radius,
+            type=type,
         )
 
         arc.additional_properties = d
@@ -137,14 +155,17 @@ class Arc:
         return key in self.additional_properties
 
 
-XH = TypeVar("XH", bound="Bezier")
+PS = TypeVar("PS", bound="bezier")
 
 
 @attr.s(auto_attribs=True)
-class Bezier:
+class bezier:
+    """A cubic bezier curve segment. Start at the end of the current line, go through control point 1 and 2, then end at a given point."""  # noqa: E501
+
     control1: Union[Unset, Point3d] = UNSET
     control2: Union[Unset, Point3d] = UNSET
     end: Union[Unset, Point3d] = UNSET
+    type: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -155,6 +176,7 @@ class Bezier:
             control2 = self.control2
         if not isinstance(self.end, Unset):
             end = self.end
+        type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -165,11 +187,13 @@ class Bezier:
             field_dict["control2"] = control2
         if end is not UNSET:
             field_dict["end"] = end
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[XH], src_dict: Dict[str, Any]) -> XH:
+    def from_dict(cls: Type[PS], src_dict: Dict[str, Any]) -> PS:
         d = src_dict.copy()
         _control1 = d.pop("control1", UNSET)
         control1: Union[Unset, Point3d]
@@ -192,10 +216,13 @@ class Bezier:
         else:
             end = _end  # type: ignore[arg-type]
 
+        type = d.pop("type", UNSET)
+
         bezier = cls(
             control1=control1,
             control2=control2,
             end=end,
+            type=type,
         )
 
         bezier.additional_properties = d
@@ -218,4 +245,4 @@ class Bezier:
         return key in self.additional_properties
 
 
-PathSegment = Union[Line, Arc, Bezier]
+PathSegment = Union[line, arc, bezier]

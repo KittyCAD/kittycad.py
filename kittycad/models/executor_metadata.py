@@ -6,7 +6,7 @@ from ..models.docker_system_info import DockerSystemInfo
 from ..models.environment import Environment
 from ..types import UNSET, Unset
 
-TV = TypeVar("TV", bound="ExecutorMetadata")
+LT = TypeVar("LT", bound="ExecutorMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -41,7 +41,7 @@ class ExecutorMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TV], src_dict: Dict[str, Any]) -> TV:
+    def from_dict(cls: Type[LT], src_dict: Dict[str, Any]) -> LT:
         d = src_dict.copy()
         _docker_info = d.pop("docker_info", UNSET)
         docker_info: Union[Unset, DockerSystemInfo]

@@ -168,8 +168,11 @@ def generateTypeAndExamplePython(
             schema["type"] == "string" and "enum" in schema and len(schema["enum"]) > 0
         ):
             if name == "":
-                logging.error("schema: %s", json.dumps(schema, indent=4))
-                raise Exception("Unknown type name for enum")
+                if len(schema["enum"]) == 1:
+                    name = schema["enum"][0]
+                else:
+                    logging.error("schema: %s", json.dumps(schema, indent=4))
+                    raise Exception("Unknown type name for enum")
 
             parameter_type = name
 
@@ -215,6 +218,9 @@ def generateTypeAndExamplePython(
         elif schema["type"] == "integer":
             parameter_type = "int"
             parameter_example = "10"
+        elif schema["type"] == "boolean":
+            parameter_type = "bool"
+            parameter_example = "False"
         elif (
             schema["type"] == "number"
             and "format" in schema
@@ -838,6 +844,7 @@ async def test_"""
                     .replace("string", "str")
                     .replace("integer", "int")
                     .replace("number", "float")
+                    .replace("boolean", "bool")
                 )
             elif "$ref" in parameter["schema"]:
                 parameter_type = parameter["schema"]["$ref"].replace(
