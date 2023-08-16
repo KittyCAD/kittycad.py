@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.modeling.modeling_commands_ws &mdash; kittycad v0.4.5 documentation</title>
+  <title>kittycad.api.modeling.modeling_commands_ws &mdash; kittycad v0.4.6 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -13,13 +13,13 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
-        <script src="../../../../_static/clipboard.min.js"></script>
-        <script src="../../../../_static/copybutton.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=80626fd4"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.5
+                v0.4.6
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -89,10 +89,38 @@
 
 
 <div class="viewcode-block" id="_get_kwargs"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.modeling.modeling_commands_ws.html#kittycad.api.modeling.modeling_commands_ws._get_kwargs">[docs]</a><span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
+    <span class="n">fps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">unlocked_framerate</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">video_res_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">video_res_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/ws/modeling/commands&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="k">if</span> <span class="n">fps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;fps=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fps</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?fps=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fps</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">unlocked_framerate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;unlocked_framerate=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">unlocked_framerate</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?unlocked_framerate=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">unlocked_framerate</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">video_res_height</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;video_res_height=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">video_res_height</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?video_res_height=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">video_res_height</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">video_res_width</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;video_res_width=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">video_res_width</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?video_res_width=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">video_res_width</span><span class="p">)</span>
 
     <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_headers</span><span class="p">()</span>
     <span class="n">cookies</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_cookies</span><span class="p">()</span>
@@ -106,12 +134,20 @@
 
 
 <div class="viewcode-block" id="sync"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.modeling.modeling_commands_ws.sync.html#kittycad.api.modeling.modeling_commands_ws.sync">[docs]</a><span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
+    <span class="n">fps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">unlocked_framerate</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">video_res_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">video_res_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientConnection</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span>
+        <span class="n">unlocked_framerate</span><span class="o">=</span><span class="n">unlocked_framerate</span><span class="p">,</span>
+        <span class="n">video_res_height</span><span class="o">=</span><span class="n">video_res_height</span><span class="p">,</span>
+        <span class="n">video_res_width</span><span class="o">=</span><span class="n">video_res_width</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -126,12 +162,20 @@
 
 
 <div class="viewcode-block" id="asyncio"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.modeling.modeling_commands_ws.asyncio.html#kittycad.api.modeling.modeling_commands_ws.asyncio">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
+    <span class="n">fps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">unlocked_framerate</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="n">video_res_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">video_res_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WebSocketClientProtocol</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span>
+        <span class="n">unlocked_framerate</span><span class="o">=</span><span class="n">unlocked_framerate</span><span class="p">,</span>
+        <span class="n">video_res_height</span><span class="o">=</span><span class="n">video_res_height</span><span class="p">,</span>
+        <span class="n">video_res_width</span><span class="o">=</span><span class="n">video_res_width</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
     <span class="p">)</span>
 
