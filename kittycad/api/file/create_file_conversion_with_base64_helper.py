@@ -1,5 +1,5 @@
 import base64
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, Tuple
 
 from ...api.file.create_file_conversion import asyncio as fc_asyncio, sync as fc_sync
 from ...client import Client
@@ -12,7 +12,7 @@ def sync(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversion, Error]]:
+) -> Optional[Union[Any, Tuple[FileConversion, bytes], Error]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
     encoded = base64.b64encode(body)
@@ -27,8 +27,7 @@ def sync(
     if isinstance(fc, FileConversion) and fc.output != "":
         if isinstance(fc.output, str):
             b = base64.b64decode(fc.output + "===")
-            # decode the bytes to a string
-            fc.output = b.decode("utf-8")
+            return Tuple[FileConversion, bytes](fc, b)
 
     return fc
 
@@ -39,7 +38,7 @@ async def asyncio(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[Any, FileConversion, Error]]:
+) -> Optional[Union[Any, Tuple[FileConversion, bytes], Error]]:
     """Convert a CAD file from one format to another. If the file being converted is larger than a certain size it will be performed asynchronously. This function automatically base64 encodes the request body and base64 decodes the request output."""
 
     encoded = base64.b64encode(body)
@@ -54,7 +53,6 @@ async def asyncio(
     if isinstance(fc, FileConversion) and fc.output != "":
         if isinstance(fc.output, str):
             b = base64.b64decode(fc.output + "===")
-            # decode the bytes to a string
-            fc.output = b.decode("utf-8")
+            return Tuple[FileConversion, bytes](fc, b)
 
     return fc
