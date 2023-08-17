@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -9,7 +9,7 @@ from ..models.unit_frequency import UnitFrequency
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-SX = TypeVar("SX", bound="UnitFrequencyConversion")
+GK = TypeVar("GK", bound="UnitFrequencyConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitFrequencyConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SX], src_dict: Dict[str, Any]) -> SX:
+    def from_dict(cls: Type[GK], src_dict: Dict[str, Any]) -> GK:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

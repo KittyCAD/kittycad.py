@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-TP = TypeVar("TP", bound="LeafNode")
+OM = TypeVar("OM", bound="LeafNode")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class LeafNode:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TP], src_dict: Dict[str, Any]) -> TP:
+    def from_dict(cls: Type[OM], src_dict: Dict[str, Any]) -> OM:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 

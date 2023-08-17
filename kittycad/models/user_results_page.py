@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-YK = TypeVar("YK", bound="UserResultsPage")
+FD = TypeVar("FD", bound="UserResultsPage")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class UserResultsPage:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YK], src_dict: Dict[str, Any]) -> YK:
+    def from_dict(cls: Type[FD], src_dict: Dict[str, Any]) -> FD:
         d = src_dict.copy()
         from ..models.user import User
 

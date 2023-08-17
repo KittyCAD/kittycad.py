@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-OW = TypeVar("OW", bound="OutputFile")
+PQ = TypeVar("PQ", bound="OutputFile")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class OutputFile:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OW], src_dict: Dict[str, Any]) -> OW:
+    def from_dict(cls: Type[PQ], src_dict: Dict[str, Any]) -> PQ:
         d = src_dict.copy()
         contents = d.pop("contents", UNSET)
 

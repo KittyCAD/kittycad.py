@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-OX = TypeVar("OX", bound="OAuth2ClientInfo")
+QX = TypeVar("QX", bound="OAuth2ClientInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class OAuth2ClientInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OX], src_dict: Dict[str, Any]) -> OX:
+    def from_dict(cls: Type[QX], src_dict: Dict[str, Any]) -> QX:
         d = src_dict.copy()
         csrf_token = d.pop("csrf_token", UNSET)
 

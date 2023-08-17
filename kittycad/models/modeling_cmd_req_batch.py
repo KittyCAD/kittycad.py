@@ -1,10 +1,11 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
+from ..models.modeling_cmd_req import ModelingCmdReq
 from ..types import UNSET, Unset
 
-LF = TypeVar("LF", bound="ModelingCmdReqBatch")
+GN = TypeVar("GN", bound="ModelingCmdReqBatch")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +28,7 @@ class ModelingCmdReqBatch:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LF], src_dict: Dict[str, Any]) -> LF:
+    def from_dict(cls: Type[GN], src_dict: Dict[str, Any]) -> GN:
         d = src_dict.copy()
         cmds = d.pop("cmds", UNSET)
 

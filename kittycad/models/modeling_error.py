@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-CS = TypeVar("CS", bound="ModelingError")
+GD = TypeVar("GD", bound="ModelingError")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class ModelingError:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CS], src_dict: Dict[str, Any]) -> CS:
+    def from_dict(cls: Type[GD], src_dict: Dict[str, Any]) -> GD:
         d = src_dict.copy()
         error_code = d.pop("error_code", UNSET)
 

@@ -1426,6 +1426,8 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 elif "type" in property_schema["items"]:
                     if property_schema["items"]["type"] == "string":
                         property_type = "str"
+                    elif property_schema["items"]["type"] == "integer":
+                        property_type = "int"
                     elif property_schema["items"]["type"] == "number":
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
@@ -1441,7 +1443,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                             logging.error("property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
-                        logging.error("property: ", property_schema)
+                        print("property: ", property_schema)
                         raise Exception("Unknown property type")
                 else:
                     logging.error("array: ", [property_schema])
@@ -1570,6 +1572,8 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                         property_type = "str"
                     elif property_schema["items"]["type"] == "number":
                         property_type = "float"
+                    elif property_schema["items"]["type"] == "integer":
+                        property_type = "int"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
                             if property_schema["items"]["items"]["type"] == "string":
@@ -1583,7 +1587,7 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                             logging.error("property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
-                        logging.error("property: ", property_schema)
+                        print("property: ", property_schema)
                         raise Exception("Unknown property type")
                 else:
                     logging.error("array: ", [property_schema])
@@ -1600,7 +1604,7 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
             else:
                 raise Exception("Unknown array type")
         else:
-            logging.error("property type: ", property_type)
+            logging.error("property type: ", property_schema)
             raise Exception("unknown type: ", property_type)
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
@@ -1715,6 +1719,8 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                         property_type = "str"
                     elif property_schema["items"]["type"] == "number":
                         property_type = "float"
+                    elif property_schema["items"]["type"] == "integer":
+                        property_type = "int"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
                             if property_schema["items"]["items"]["type"] == "string":

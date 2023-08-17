@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
@@ -13,7 +13,7 @@ success = OkModelingCmdResponse
 error = ModelingError
 
 
-GN = TypeVar("GN", bound="cancelled")
+VJ = TypeVar("VJ", bound="cancelled")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class cancelled:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GN], src_dict: Dict[str, Any]) -> GN:
+    def from_dict(cls: Type[VJ], src_dict: Dict[str, Any]) -> VJ:
         d = src_dict.copy()
         _what_failed = d.pop("what_failed", UNSET)
         what_failed: Union[Unset, ModelingCmdId]

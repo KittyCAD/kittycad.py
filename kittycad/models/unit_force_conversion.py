@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -9,7 +9,7 @@ from ..models.unit_force import UnitForce
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-BH = TypeVar("BH", bound="UnitForceConversion")
+AM = TypeVar("AM", bound="UnitForceConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitForceConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BH], src_dict: Dict[str, Any]) -> BH:
+    def from_dict(cls: Type[AM], src_dict: Dict[str, Any]) -> AM:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -11,7 +11,7 @@ from ..models.unit_length import UnitLength
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-FZ = TypeVar("FZ", bound="FileCenterOfMass")
+GL = TypeVar("GL", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FZ], src_dict: Dict[str, Any]) -> FZ:
+    def from_dict(cls: Type[GL], src_dict: Dict[str, Any]) -> GL:
         d = src_dict.copy()
         _center_of_mass = d.pop("center_of_mass", UNSET)
         center_of_mass: Union[Unset, Point3d]

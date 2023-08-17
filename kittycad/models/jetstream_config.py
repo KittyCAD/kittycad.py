@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-PV = TypeVar("PV", bound="JetstreamConfig")
+TP = TypeVar("TP", bound="JetstreamConfig")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class JetstreamConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PV], src_dict: Dict[str, Any]) -> PV:
+    def from_dict(cls: Type[TP], src_dict: Dict[str, Any]) -> TP:
         d = src_dict.copy()
         domain = d.pop("domain", UNSET)
 

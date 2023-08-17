@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-NX = TypeVar("NX", bound="Point2d")
+TX = TypeVar("TX", bound="Point2d")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class Point2d:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
+    def from_dict(cls: Type[TX], src_dict: Dict[str, Any]) -> TX:
         d = src_dict.copy()
         x = d.pop("x", UNSET)
 

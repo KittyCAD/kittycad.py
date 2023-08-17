@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
@@ -6,7 +6,7 @@ from ..models.modeling_cmd import ModelingCmd
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 
-ZG = TypeVar("ZG", bound="ModelingCmdReq")
+CS = TypeVar("CS", bound="ModelingCmdReq")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class ModelingCmdReq:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZG], src_dict: Dict[str, Any]) -> ZG:
+    def from_dict(cls: Type[CS], src_dict: Dict[str, Any]) -> CS:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]

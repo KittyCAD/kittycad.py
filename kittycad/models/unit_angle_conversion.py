@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -9,7 +9,7 @@ from ..models.unit_angle import UnitAngle
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-TF = TypeVar("TF", bound="UnitAngleConversion")
+CN = TypeVar("CN", bound="UnitAngleConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitAngleConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TF], src_dict: Dict[str, Any]) -> TF:
+    def from_dict(cls: Type[CN], src_dict: Dict[str, Any]) -> CN:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

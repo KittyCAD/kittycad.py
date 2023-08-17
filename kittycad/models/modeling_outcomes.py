@@ -1,10 +1,11 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
+from ..models.modeling_outcome import ModelingOutcome
 from ..types import UNSET, Unset
 
-GD = TypeVar("GD", bound="ModelingOutcomes")
+OX = TypeVar("OX", bound="ModelingOutcomes")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +28,7 @@ class ModelingOutcomes:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GD], src_dict: Dict[str, Any]) -> GD:
+    def from_dict(cls: Type[OX], src_dict: Dict[str, Any]) -> OX:
         d = src_dict.copy()
         outcomes = d.pop("outcomes", UNSET)
 

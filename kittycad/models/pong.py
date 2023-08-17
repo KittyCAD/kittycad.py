@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-JA = TypeVar("JA", bound="Pong")
+UK = TypeVar("UK", bound="Pong")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class Pong:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JA], src_dict: Dict[str, Any]) -> JA:
+    def from_dict(cls: Type[UK], src_dict: Dict[str, Any]) -> UK:
         d = src_dict.copy()
         message = d.pop("message", UNSET)
 

@@ -5,17 +5,17 @@ class AsyncApiCallType(str, Enum):
     """The type of async API call."""  # noqa: E501
 
     """# File conversion. """  # noqa: E501
-    FILE_CONVERSION = "FileConversion"
+    FILE_CONVERSION = "file_conversion"
     """# File volume. """  # noqa: E501
-    FILE_VOLUME = "FileVolume"
+    FILE_VOLUME = "file_volume"
     """# File center of mass. """  # noqa: E501
-    FILE_CENTER_OF_MASS = "FileCenterOfMass"
+    FILE_CENTER_OF_MASS = "file_center_of_mass"
     """# File mass. """  # noqa: E501
-    FILE_MASS = "FileMass"
+    FILE_MASS = "file_mass"
     """# File density. """  # noqa: E501
-    FILE_DENSITY = "FileDensity"
+    FILE_DENSITY = "file_density"
     """# File surface area. """  # noqa: E501
-    FILE_SURFACE_AREA = "FileSurfaceArea"
+    FILE_SURFACE_AREA = "file_surface_area"
 
     def __str__(self) -> str:
         return str(self.value)

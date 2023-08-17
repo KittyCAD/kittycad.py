@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-TX = TypeVar("TX", bound="PointEMetadata")
+SK = TypeVar("SK", bound="PointEMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class PointEMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TX], src_dict: Dict[str, Any]) -> TX:
+    def from_dict(cls: Type[SK], src_dict: Dict[str, Any]) -> SK:
         d = src_dict.copy()
         ok = d.pop("ok", UNSET)
 

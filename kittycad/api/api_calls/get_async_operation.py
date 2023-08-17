@@ -1,15 +1,15 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...models.file_center_of_mass import FileCenterOfMass
-from ...models.file_conversion import FileConversion
-from ...models.file_density import FileDensity
-from ...models.file_mass import FileMass
-from ...models.file_surface_area import FileSurfaceArea
-from ...models.file_volume import FileVolume
+from ...models.file_center_of_mass import file_center_of_mass
+from ...models.file_conversion import file_conversion
+from ...models.file_density import file_density
+from ...models.file_mass import file_mass
+from ...models.file_surface_area import file_surface_area
+from ...models.file_volume import file_volume
 from ...types import Response
 
 
@@ -38,12 +38,12 @@ def _parse_response(
     *, response: httpx.Response
 ) -> Optional[
     Union[
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
+        file_conversion,
+        file_center_of_mass,
+        file_mass,
+        file_volume,
+        file_density,
+        file_surface_area,
         Error,
     ]
 ]:
@@ -52,7 +52,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_conversion = FileConversion.from_dict(data)
+            option_file_conversion = file_conversion.from_dict(data)
             return option_file_conversion
         except ValueError:
             pass
@@ -61,7 +61,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_center_of_mass = FileCenterOfMass.from_dict(data)
+            option_file_center_of_mass = file_center_of_mass.from_dict(data)
             return option_file_center_of_mass
         except ValueError:
             pass
@@ -70,7 +70,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_mass = FileMass.from_dict(data)
+            option_file_mass = file_mass.from_dict(data)
             return option_file_mass
         except ValueError:
             pass
@@ -79,7 +79,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_volume = FileVolume.from_dict(data)
+            option_file_volume = file_volume.from_dict(data)
             return option_file_volume
         except ValueError:
             pass
@@ -88,7 +88,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_density = FileDensity.from_dict(data)
+            option_file_density = file_density.from_dict(data)
             return option_file_density
         except ValueError:
             pass
@@ -97,7 +97,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_surface_area = FileSurfaceArea.from_dict(data)
+            option_file_surface_area = file_surface_area.from_dict(data)
             return option_file_surface_area
         except ValueError:
             raise
@@ -117,12 +117,12 @@ def _build_response(
 ) -> Response[
     Optional[
         Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
+            file_conversion,
+            file_center_of_mass,
+            file_mass,
+            file_volume,
+            file_density,
+            file_surface_area,
             Error,
         ]
     ]
@@ -142,12 +142,12 @@ def sync_detailed(
 ) -> Response[
     Optional[
         Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
+            file_conversion,
+            file_center_of_mass,
+            file_mass,
+            file_volume,
+            file_density,
+            file_surface_area,
             Error,
         ]
     ]
@@ -171,12 +171,12 @@ def sync(
     client: Client,
 ) -> Optional[
     Union[
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
+        file_conversion,
+        file_center_of_mass,
+        file_mass,
+        file_volume,
+        file_density,
+        file_surface_area,
         Error,
     ]
 ]:
@@ -199,12 +199,12 @@ async def asyncio_detailed(
 ) -> Response[
     Optional[
         Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
+            file_conversion,
+            file_center_of_mass,
+            file_mass,
+            file_volume,
+            file_density,
+            file_surface_area,
             Error,
         ]
     ]
@@ -226,12 +226,12 @@ async def asyncio(
     client: Client,
 ) -> Optional[
     Union[
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
+        file_conversion,
+        file_center_of_mass,
+        file_mass,
+        file_volume,
+        file_density,
+        file_surface_area,
         Error,
     ]
 ]:

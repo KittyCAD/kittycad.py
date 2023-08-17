@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-OM = TypeVar("OM", bound="MetaClusterInfo")
+RS = TypeVar("RS", bound="MetaClusterInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class MetaClusterInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OM], src_dict: Dict[str, Any]) -> OM:
+    def from_dict(cls: Type[RS], src_dict: Dict[str, Any]) -> RS:
         d = src_dict.copy()
         cluster_size = d.pop("cluster_size", UNSET)
 

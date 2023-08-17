@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
@@ -6,7 +6,7 @@ from ..models.docker_system_info import DockerSystemInfo
 from ..models.environment import Environment
 from ..types import UNSET, Unset
 
-LT = TypeVar("LT", bound="ExecutorMetadata")
+ED = TypeVar("ED", bound="ExecutorMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -41,7 +41,7 @@ class ExecutorMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LT], src_dict: Dict[str, Any]) -> LT:
+    def from_dict(cls: Type[ED], src_dict: Dict[str, Any]) -> ED:
         d = src_dict.copy()
         _docker_info = d.pop("docker_info", UNSET)
         docker_info: Union[Unset, DockerSystemInfo]

@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-ED = TypeVar("ED", bound="ExportFile")
+YY = TypeVar("YY", bound="ExportFile")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class ExportFile:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ED], src_dict: Dict[str, Any]) -> ED:
+    def from_dict(cls: Type[YY], src_dict: Dict[str, Any]) -> YY:
         d = src_dict.copy()
         contents = d.pop("contents", UNSET)
 

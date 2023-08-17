@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Union
 
 import pytest
 
@@ -130,6 +130,12 @@ from kittycad.models import (
     User,
     UserResultsPage,
     VerificationToken,
+    file_center_of_mass,
+    file_conversion,
+    file_density,
+    file_mass,
+    file_surface_area,
+    file_volume,
 )
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
@@ -204,7 +210,7 @@ def test_get_ai_plugin_manifest():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -249,7 +255,7 @@ def test_get_metadata():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -293,7 +299,7 @@ def test_create_image_to_3d():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -345,7 +351,7 @@ def test_create_text_to_3d():
         prompt="<string>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -393,7 +399,7 @@ def test_get_api_call_metrics():
         group_by=ApiCallQueryGroupBy.EMAIL,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -444,7 +450,7 @@ def test_list_api_calls():
         page_token=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -499,7 +505,7 @@ def test_get_api_call():
         id="<string>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -545,7 +551,7 @@ def test_apps_github_callback():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -584,7 +590,7 @@ def test_apps_github_consent():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -628,7 +634,7 @@ def test_apps_github_webhook():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -676,7 +682,7 @@ def test_list_async_operations():
         page_token=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -731,12 +737,12 @@ def test_get_async_operation():
 
     result: Optional[
         Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
+            file_conversion,
+            file_center_of_mass,
+            file_mass,
+            file_volume,
+            file_density,
+            file_surface_area,
             Error,
         ]
     ] = get_async_operation.sync(
@@ -744,17 +750,17 @@ def test_get_async_operation():
         id="<string>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
     body: Union[
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
+        file_conversion,
+        file_center_of_mass,
+        file_mass,
+        file_volume,
+        file_density,
+        file_surface_area,
     ] = result
     print(body)
 
@@ -762,12 +768,12 @@ def test_get_async_operation():
     response: Response[
         Optional[
             Union[
-                FileConversion,
-                FileCenterOfMass,
-                FileMass,
-                FileVolume,
-                FileDensity,
-                FileSurfaceArea,
+                file_conversion,
+                file_center_of_mass,
+                file_mass,
+                file_volume,
+                file_density,
+                file_surface_area,
                 Error,
             ]
         ]
@@ -786,12 +792,12 @@ async def test_get_async_operation_async():
 
     result: Optional[
         Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
+            file_conversion,
+            file_center_of_mass,
+            file_mass,
+            file_volume,
+            file_density,
+            file_surface_area,
             Error,
         ]
     ] = await get_async_operation.asyncio(
@@ -803,12 +809,12 @@ async def test_get_async_operation_async():
     response: Response[
         Optional[
             Union[
-                FileConversion,
-                FileCenterOfMass,
-                FileMass,
-                FileVolume,
-                FileDensity,
-                FileSurfaceArea,
+                file_conversion,
+                file_center_of_mass,
+                file_mass,
+                file_volume,
+                file_density,
+                file_surface_area,
                 Error,
             ]
         ]
@@ -830,7 +836,7 @@ def test_auth_email():
         ),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -885,7 +891,7 @@ def test_auth_email_callback():
         callback_url=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -936,7 +942,7 @@ def test_create_file_center_of_mass():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -995,7 +1001,7 @@ def test_create_file_conversion_with_base64_helper():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1054,7 +1060,7 @@ def test_create_file_density():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1115,7 +1121,7 @@ def test_create_file_execution():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1172,7 +1178,7 @@ def test_create_file_mass():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1233,7 +1239,7 @@ def test_create_file_surface_area():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1290,7 +1296,7 @@ def test_create_file_volume():
         body=bytes("some bytes", "utf-8"),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1342,7 +1348,7 @@ def test_logout():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1472,7 +1478,7 @@ def test_cmd_batch():
         ),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1592,7 +1598,7 @@ def test_ping():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1636,7 +1642,7 @@ def test_get_angle_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1693,7 +1699,7 @@ def test_get_area_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1752,7 +1758,7 @@ def test_get_current_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1811,7 +1817,7 @@ def test_get_energy_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1870,7 +1876,7 @@ def test_get_force_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1929,7 +1935,7 @@ def test_get_frequency_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -1988,7 +1994,7 @@ def test_get_length_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2045,7 +2051,7 @@ def test_get_mass_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2104,7 +2110,7 @@ def test_get_power_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2163,7 +2169,7 @@ def test_get_pressure_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2222,7 +2228,7 @@ def test_get_temperature_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2281,7 +2287,7 @@ def test_get_torque_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2340,7 +2346,7 @@ def test_get_volume_unit_conversion():
         value=3.14,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2394,7 +2400,7 @@ def test_delete_user_self():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2433,7 +2439,7 @@ def test_get_user_self():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2482,7 +2488,7 @@ def test_update_user_self():
         ),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2552,7 +2558,7 @@ def test_user_list_api_calls():
         page_token=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2607,7 +2613,7 @@ def test_get_api_call_for_user():
         id="<string>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2658,7 +2664,7 @@ def test_list_api_tokens_for_user():
         page_token=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2712,7 +2718,7 @@ def test_create_api_token_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2756,7 +2762,7 @@ def test_delete_api_token_for_user():
         token="<uuid>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2801,7 +2807,7 @@ def test_get_api_token_for_user():
         token="<uuid>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2847,7 +2853,7 @@ def test_get_user_self_extended():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2922,7 +2928,7 @@ def test_get_user_onboarding_self():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -2965,7 +2971,7 @@ def test_delete_payment_information_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3008,7 +3014,7 @@ def test_get_payment_information_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3057,7 +3063,7 @@ def test_create_payment_information_for_user():
         ),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3118,7 +3124,7 @@ def test_update_payment_information_for_user():
         ),
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3175,7 +3181,7 @@ def test_get_payment_balance_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3220,7 +3226,7 @@ def test_create_payment_intent_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3265,7 +3271,7 @@ def test_list_invoices_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3312,7 +3318,7 @@ def test_list_payment_methods_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3358,7 +3364,7 @@ def test_delete_payment_method_for_user():
         id="<string>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3402,7 +3408,7 @@ def test_validate_customer_tax_information_for_user():
         client=client,
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3446,7 +3452,7 @@ def test_get_session_for_user():
         token="<uuid>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3495,7 +3501,7 @@ def test_list_users():
         page_token=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3550,7 +3556,7 @@ def test_list_users_extended():
         page_token=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3605,7 +3611,7 @@ def test_get_user_extended():
         id="<string>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3652,7 +3658,7 @@ def test_get_user():
         id="<string>",
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 
@@ -3700,7 +3706,7 @@ def test_list_api_calls_for_user():
         page_token=None,  # Optional[str]
     )
 
-    if isinstance(result, Error) or result is None:
+    if isinstance(result, Error) or result == None:
         print(result)
         raise Exception("Error in response")
 

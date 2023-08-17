@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -9,7 +9,7 @@ from ..models.unit_temperature import UnitTemperature
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-AM = TypeVar("AM", bound="UnitTemperatureConversion")
+WS = TypeVar("WS", bound="UnitTemperatureConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitTemperatureConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AM], src_dict: Dict[str, Any]) -> AM:
+    def from_dict(cls: Type[WS], src_dict: Dict[str, Any]) -> WS:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

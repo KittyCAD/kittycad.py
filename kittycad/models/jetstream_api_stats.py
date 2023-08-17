@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-FM = TypeVar("FM", bound="JetstreamApiStats")
+QI = TypeVar("QI", bound="JetstreamApiStats")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class JetstreamApiStats:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FM], src_dict: Dict[str, Any]) -> FM:
+    def from_dict(cls: Type[QI], src_dict: Dict[str, Any]) -> QI:
         d = src_dict.copy()
         errors = d.pop("errors", UNSET)
 

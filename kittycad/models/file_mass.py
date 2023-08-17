@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -11,7 +11,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-OH = TypeVar("OH", bound="FileMass")
+VI = TypeVar("VI", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
@@ -94,7 +94,7 @@ class FileMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OH], src_dict: Dict[str, Any]) -> OH:
+    def from_dict(cls: Type[VI], src_dict: Dict[str, Any]) -> VI:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

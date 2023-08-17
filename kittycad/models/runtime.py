@@ -1,10 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
 from ..types import UNSET, Unset
 
-UK = TypeVar("UK", bound="Runtime")
+JD = TypeVar("JD", bound="Runtime")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class Runtime:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UK], src_dict: Dict[str, Any]) -> UK:
+    def from_dict(cls: Type[JD], src_dict: Dict[str, Any]) -> JD:
         d = src_dict.copy()
         path = d.pop("path", UNSET)
 
