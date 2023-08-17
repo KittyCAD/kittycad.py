@@ -167,6 +167,42 @@ async def test_file_convert_stl_async():
     assert len(b) > 0
 
 
+@pytest.mark.asyncio
+async def test_file_convert_obj_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../assets/ORIGINALVOXEL-3.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the fc.
+    result: Union[
+        Tuple[FileConversion, bytes], Error, None
+    ] = await create_file_conversion_with_base64_helper.asyncio(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_format=FileExportFormat.STL,
+    )
+
+    r: Tuple[FileConversion, bytes] = result  # type: ignore
+
+    b: bytes = r[1]
+    fc: FileConversion = r[0]
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
+    # Make sure the bytes are not empty.
+    assert len(b) > 0
+
+
 def test_file_mass():
     # Create our client.
     client = ClientFromEnv()
