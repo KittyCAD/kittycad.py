@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-CF = TypeVar("CF", bound="Mesh")
+EN = TypeVar("EN", bound="Mesh")
 
 
 @attr.s(auto_attribs=True)
@@ -25,7 +25,7 @@ class Mesh:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CF], src_dict: Dict[str, Any]) -> CF:
+    def from_dict(cls: Type[EN], src_dict: Dict[str, Any]) -> EN:
         d = src_dict.copy()
         mesh = d.pop("mesh", UNSET)
 

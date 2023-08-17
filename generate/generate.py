@@ -472,9 +472,19 @@ from kittycad.types import Response
                 + "\n"
             )
         example_imports = (
-            example_imports + "from typing import Union, Any, Optional, List\n"
+            example_imports + "from typing import Union, Any, Optional, List, Tuple\n"
         )
-        example_variable = "result: " + response_type + " = "
+
+        if fn_name.endswith("_with_base64_helper"):
+            example_variable = (
+                "result: "
+                + response_type.replace(
+                    "FileConversion", "Tuple[FileConversion, bytes]"
+                )
+                + " = "
+            )
+        else:
+            example_variable = "result: " + response_type + " = "
 
         example_imports = example_imports + "from kittycad.types import Response\n"
         example_imports = example_imports + "from kittycad.models import Error\n"
@@ -505,6 +515,12 @@ from kittycad.types import Response
         and success_type != "None"
         and success_type != ""
     ):
+        example_success_type = success_type
+        if fn_name.endswith("_with_base64_helper"):
+            example_success_type = example_success_type.replace(
+                "FileConversion", "Tuple[FileConversion, bytes]"
+            )
+
         short_sync_example = short_sync_example + (
             """
     if isinstance(result, Error) or result == None:
@@ -512,7 +528,7 @@ from kittycad.types import Response
         raise Exception("Error in response")
 
     body: """
-            + success_type
+            + example_success_type
             + """ = result
     print(body)
 
@@ -749,7 +765,7 @@ async def test_"""
                                             "\t\t\t"
                                             + option_name
                                             + " = "
-                                            + ref
+                                            + snake_to_title(ref)
                                             + ".from_dict(data)\n"
                                         )
                                         parse_response.write(
@@ -1112,8 +1128,14 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         if "$ref" in one_of:
             ref = one_of["$ref"]
             ref_name = ref[ref.rfind("/") + 1 :]
-            f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
-            all_options.append(ref_name)
+            f.write(
+                "from ."
+                + camel_to_snake(ref_name)
+                + " import "
+                + snake_to_title(ref_name)
+                + "\n"
+            )
+            all_options.append(snake_to_title(ref_name))
 
     if isNestedObjectOneOf(schema):
         # We want to write each of the nested objects.
@@ -1173,13 +1195,19 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             all_options.append(object_name)
 
     # Write the sum type.
-    f.write(name + " = Union[")
-    for num, option in enumerate(all_options, start=0):
-        if num == 0:
-            f.write(option)
-        else:
-            f.write(", " + option + "")
-    f.write("]\n")
+    if name == "SnakeCaseResult":
+        f.write("from typing import Any\n")
+        f.write(name + " = Any")
+    else:
+        f.write("from typing import Union\n")
+        f.write(name + " = Union[")
+
+        for num, option in enumerate(all_options, start=0):
+            if num == 0:
+                f.write(option)
+            else:
+                f.write(", " + option + "")
+        f.write("]\n")
 
     # Close the file.
     f.close()
@@ -1426,6 +1454,8 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 elif "type" in property_schema["items"]:
                     if property_schema["items"]["type"] == "string":
                         property_type = "str"
+                    elif property_schema["items"]["type"] == "integer":
+                        property_type = "int"
                     elif property_schema["items"]["type"] == "number":
                         property_type = "float"
                     elif property_schema["items"]["type"] == "array":
@@ -1441,7 +1471,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                             logging.error("property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
-                        logging.error("property: ", property_schema)
+                        print("property: ", property_schema)
                         raise Exception("Unknown property type")
                 else:
                     logging.error("array: ", [property_schema])
@@ -1570,6 +1600,8 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                         property_type = "str"
                     elif property_schema["items"]["type"] == "number":
                         property_type = "float"
+                    elif property_schema["items"]["type"] == "integer":
+                        property_type = "int"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
                             if property_schema["items"]["items"]["type"] == "string":
@@ -1583,7 +1615,7 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                             logging.error("property: ", property_schema)
                             raise Exception("Unknown property type")
                     else:
-                        logging.error("property: ", property_schema)
+                        print("property: ", property_schema)
                         raise Exception("Unknown property type")
                 else:
                     logging.error("array: ", [property_schema])
@@ -1600,7 +1632,7 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
             else:
                 raise Exception("Unknown array type")
         else:
-            logging.error("property type: ", property_type)
+            logging.error("property type: ", property_schema)
             raise Exception("unknown type: ", property_type)
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
@@ -1715,6 +1747,8 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                         property_type = "str"
                     elif property_schema["items"]["type"] == "number":
                         property_type = "float"
+                    elif property_schema["items"]["type"] == "integer":
+                        property_type = "int"
                     elif property_schema["items"]["type"] == "array":
                         if "items" in property_schema["items"]:
                             if property_schema["items"]["items"]["type"] == "string":
@@ -1878,13 +1912,13 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                         ref = json["$ref"].replace("#/components/schemas/", "")
                         schema = data["components"]["schemas"][ref]
                         if isNestedObjectOneOf(schema) or isEnumWithDocsOneOf(schema):
-                            if ref not in refs:
-                                refs.append(ref)
+                            if snake_to_title(ref) not in refs:
+                                refs.append(snake_to_title(ref))
                         elif isTypedObjectOneOf(schema):
                             for t in schema["oneOf"]:
                                 ref = getOneOfRefType(t)
-                                if ref not in refs:
-                                    refs.append(ref)
+                                if snake_to_title(ref) not in refs:
+                                    refs.append(snake_to_title(ref))
                         else:
                             if ref not in refs:
                                 refs.append(ref)
@@ -1925,8 +1959,8 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                         json = content[content_type]["schema"]
                         if "$ref" in json:
                             ref = json["$ref"].replace("#/components/schemas/", "")
-                            if ref not in refs:
-                                refs.append(ref)
+                            if snake_to_title(ref) not in refs:
+                                refs.append(snake_to_title(ref))
 
     return refs
 
@@ -2038,6 +2072,11 @@ def camel_to_screaming_snake(name: str):
     )
 
 
+# Change `file_conversion` to `FileConversion`
+def snake_to_title(name: str):
+    return name.title().replace("_", "")
+
+
 def get_function_parameters(
     endpoint: dict, request_body_type: Optional[str]
 ) -> List[str]:
@@ -2082,8 +2121,12 @@ def isNestedObjectOneOf(schema: dict) -> bool:
 
     is_nested_object = False
     for one_of in schema["oneOf"]:
-        # Check if each are an object with properties.
-        if one_of["type"] == "object" and "properties" in one_of:
+        # Check if each are an object w 1 property in it.
+        if (
+            one_of["type"] == "object"
+            and "properties" in one_of
+            and len(one_of["properties"]) == 1
+        ):
             for prop_name in one_of["properties"]:
                 nested_object = one_of["properties"][prop_name]
                 if "type" in nested_object and nested_object["type"] == "object":

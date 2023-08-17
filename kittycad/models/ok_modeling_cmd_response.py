@@ -5,7 +5,7 @@ import attr
 from ..models.entity_type import EntityType
 from ..types import UNSET, Unset
 
-YW = TypeVar("YW", bound="empty")
+NO = TypeVar("NO", bound="empty")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class empty:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YW], src_dict: Dict[str, Any]) -> YW:
+    def from_dict(cls: Type[NO], src_dict: Dict[str, Any]) -> NO:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -55,7 +55,7 @@ class empty:
         return key in self.additional_properties
 
 
-QX = TypeVar("QX", bound="export")
+VX = TypeVar("VX", bound="export")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[QX], src_dict: Dict[str, Any]) -> QX:
+    def from_dict(cls: Type[VX], src_dict: Dict[str, Any]) -> VX:
         d = src_dict.copy()
         from ..models.export_file import ExportFile
 
@@ -120,7 +120,7 @@ class export:
         return key in self.additional_properties
 
 
-NO = TypeVar("NO", bound="select_with_point")
+RG = TypeVar("RG", bound="select_with_point")
 
 
 @attr.s(auto_attribs=True)
@@ -146,7 +146,7 @@ class select_with_point:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NO], src_dict: Dict[str, Any]) -> NO:
+    def from_dict(cls: Type[RG], src_dict: Dict[str, Any]) -> RG:
         d = src_dict.copy()
         entity_id = d.pop("entity_id", UNSET)
 
@@ -177,7 +177,7 @@ class select_with_point:
         return key in self.additional_properties
 
 
-VX = TypeVar("VX", bound="highlight_set_entity")
+IT = TypeVar("IT", bound="highlight_set_entity")
 
 
 @attr.s(auto_attribs=True)
@@ -207,7 +207,7 @@ class highlight_set_entity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[VX], src_dict: Dict[str, Any]) -> VX:
+    def from_dict(cls: Type[IT], src_dict: Dict[str, Any]) -> IT:
         d = src_dict.copy()
         entity_id = d.pop("entity_id", UNSET)
 
@@ -241,7 +241,7 @@ class highlight_set_entity:
         return key in self.additional_properties
 
 
-RG = TypeVar("RG", bound="entity_get_child_uuid")
+LD = TypeVar("LD", bound="entity_get_child_uuid")
 
 
 @attr.s(auto_attribs=True)
@@ -267,7 +267,7 @@ class entity_get_child_uuid:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RG], src_dict: Dict[str, Any]) -> RG:
+    def from_dict(cls: Type[LD], src_dict: Dict[str, Any]) -> LD:
         d = src_dict.copy()
         entity_id = d.pop("entity_id", UNSET)
 
@@ -298,7 +298,7 @@ class entity_get_child_uuid:
         return key in self.additional_properties
 
 
-IT = TypeVar("IT", bound="entity_get_num_children")
+UA = TypeVar("UA", bound="entity_get_num_children")
 
 
 @attr.s(auto_attribs=True)
@@ -324,7 +324,7 @@ class entity_get_num_children:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[IT], src_dict: Dict[str, Any]) -> IT:
+    def from_dict(cls: Type[UA], src_dict: Dict[str, Any]) -> UA:
         d = src_dict.copy()
         num = d.pop("num", UNSET)
 
@@ -355,7 +355,7 @@ class entity_get_num_children:
         return key in self.additional_properties
 
 
-LD = TypeVar("LD", bound="entity_get_parent_id")
+TN = TypeVar("TN", bound="entity_get_parent_id")
 
 
 @attr.s(auto_attribs=True)
@@ -381,7 +381,7 @@ class entity_get_parent_id:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LD], src_dict: Dict[str, Any]) -> LD:
+    def from_dict(cls: Type[TN], src_dict: Dict[str, Any]) -> TN:
         d = src_dict.copy()
         entity_id = d.pop("entity_id", UNSET)
 
@@ -412,7 +412,7 @@ class entity_get_parent_id:
         return key in self.additional_properties
 
 
-UA = TypeVar("UA", bound="entity_get_all_child_uuids")
+MZ = TypeVar("MZ", bound="entity_get_all_child_uuids")
 
 
 @attr.s(auto_attribs=True)
@@ -440,7 +440,7 @@ class entity_get_all_child_uuids:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UA], src_dict: Dict[str, Any]) -> UA:
+    def from_dict(cls: Type[MZ], src_dict: Dict[str, Any]) -> MZ:
         d = src_dict.copy()
         entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -471,7 +471,7 @@ class entity_get_all_child_uuids:
         return key in self.additional_properties
 
 
-TN = TypeVar("TN", bound="select_get")
+UG = TypeVar("UG", bound="select_get")
 
 
 @attr.s(auto_attribs=True)
@@ -499,7 +499,7 @@ class select_get:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TN], src_dict: Dict[str, Any]) -> TN:
+    def from_dict(cls: Type[UG], src_dict: Dict[str, Any]) -> UG:
         d = src_dict.copy()
         entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -530,7 +530,7 @@ class select_get:
         return key in self.additional_properties
 
 
-MZ = TypeVar("MZ", bound="get_entity_type")
+CY = TypeVar("CY", bound="get_entity_type")
 
 
 @attr.s(auto_attribs=True)
@@ -557,7 +557,7 @@ class get_entity_type:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MZ], src_dict: Dict[str, Any]) -> MZ:
+    def from_dict(cls: Type[CY], src_dict: Dict[str, Any]) -> CY:
         d = src_dict.copy()
         _entity_type = d.pop("entity_type", UNSET)
         entity_type: Union[Unset, EntityType]
@@ -593,7 +593,7 @@ class get_entity_type:
         return key in self.additional_properties
 
 
-UG = TypeVar("UG", bound="solid3d_get_all_edge_faces")
+NZ = TypeVar("NZ", bound="solid3d_get_all_edge_faces")
 
 
 @attr.s(auto_attribs=True)
@@ -621,7 +621,7 @@ class solid3d_get_all_edge_faces:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UG], src_dict: Dict[str, Any]) -> UG:
+    def from_dict(cls: Type[NZ], src_dict: Dict[str, Any]) -> NZ:
         d = src_dict.copy()
         faces = cast(List[str], d.pop("faces", UNSET))
 
@@ -652,7 +652,7 @@ class solid3d_get_all_edge_faces:
         return key in self.additional_properties
 
 
-CY = TypeVar("CY", bound="solid3d_get_all_opposite_edges")
+LI = TypeVar("LI", bound="solid3d_get_all_opposite_edges")
 
 
 @attr.s(auto_attribs=True)
@@ -680,7 +680,7 @@ class solid3d_get_all_opposite_edges:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CY], src_dict: Dict[str, Any]) -> CY:
+    def from_dict(cls: Type[LI], src_dict: Dict[str, Any]) -> LI:
         d = src_dict.copy()
         edges = cast(List[str], d.pop("edges", UNSET))
 
@@ -711,7 +711,7 @@ class solid3d_get_all_opposite_edges:
         return key in self.additional_properties
 
 
-NZ = TypeVar("NZ", bound="solid3d_get_opposite_edge")
+LO = TypeVar("LO", bound="solid3d_get_opposite_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -737,7 +737,7 @@ class solid3d_get_opposite_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NZ], src_dict: Dict[str, Any]) -> NZ:
+    def from_dict(cls: Type[LO], src_dict: Dict[str, Any]) -> LO:
         d = src_dict.copy()
         edge = d.pop("edge", UNSET)
 
@@ -768,7 +768,7 @@ class solid3d_get_opposite_edge:
         return key in self.additional_properties
 
 
-LI = TypeVar("LI", bound="solid3d_get_prev_adjacent_edge")
+XJ = TypeVar("XJ", bound="solid3d_get_prev_adjacent_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -794,7 +794,7 @@ class solid3d_get_prev_adjacent_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LI], src_dict: Dict[str, Any]) -> LI:
+    def from_dict(cls: Type[XJ], src_dict: Dict[str, Any]) -> XJ:
         d = src_dict.copy()
         edge = d.pop("edge", UNSET)
 
@@ -825,7 +825,7 @@ class solid3d_get_prev_adjacent_edge:
         return key in self.additional_properties
 
 
-LO = TypeVar("LO", bound="solid3d_get_next_adjacent_edge")
+OW = TypeVar("OW", bound="solid3d_get_next_adjacent_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -851,7 +851,7 @@ class solid3d_get_next_adjacent_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LO], src_dict: Dict[str, Any]) -> LO:
+    def from_dict(cls: Type[OW], src_dict: Dict[str, Any]) -> OW:
         d = src_dict.copy()
         edge = d.pop("edge", UNSET)
 

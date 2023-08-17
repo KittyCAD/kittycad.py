@@ -18,11 +18,11 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-MN = TypeVar("MN", bound="FileConversion")
+MN = TypeVar("MN", bound="file_conversion")
 
 
 @attr.s(auto_attribs=True)
-class FileConversion:
+class file_conversion:
     """A file conversion."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
@@ -37,7 +37,7 @@ class FileConversion:
     src_format_options: Union[Unset, InputFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: str = "FileConversion"
+    type: str = "file_conversion"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -228,11 +228,11 @@ class FileConversion:
         return key in self.additional_properties
 
 
-JV = TypeVar("JV", bound="FileCenterOfMass")
+JV = TypeVar("JV", bound="file_center_of_mass")
 
 
 @attr.s(auto_attribs=True)
-class FileCenterOfMass:
+class file_center_of_mass:
     """File center of mass."""  # noqa: E501
 
     center_of_mass: Union[Unset, Point3d] = UNSET
@@ -244,7 +244,7 @@ class FileCenterOfMass:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: str = "FileCenterOfMass"
+    type: str = "file_center_of_mass"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -412,11 +412,11 @@ class FileCenterOfMass:
         return key in self.additional_properties
 
 
-IO = TypeVar("IO", bound="FileMass")
+IO = TypeVar("IO", bound="file_mass")
 
 
 @attr.s(auto_attribs=True)
-class FileMass:
+class file_mass:
     """A file mass."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
@@ -430,7 +430,7 @@ class FileMass:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: str = "FileMass"
+    type: str = "file_mass"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -610,11 +610,11 @@ class FileMass:
         return key in self.additional_properties
 
 
-FV = TypeVar("FV", bound="FileVolume")
+FV = TypeVar("FV", bound="file_volume")
 
 
 @attr.s(auto_attribs=True)
-class FileVolume:
+class file_volume:
     """A file volume."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
@@ -625,7 +625,7 @@ class FileVolume:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: str = "FileVolume"
+    type: str = "file_volume"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
     volume: Union[Unset, float] = UNSET
@@ -788,11 +788,11 @@ class FileVolume:
         return key in self.additional_properties
 
 
-LE = TypeVar("LE", bound="FileDensity")
+LE = TypeVar("LE", bound="file_density")
 
 
 @attr.s(auto_attribs=True)
-class FileDensity:
+class file_density:
     """A file density."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
@@ -806,7 +806,7 @@ class FileDensity:
     src_format: Union[Unset, FileImportFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
-    type: str = "FileDensity"
+    type: str = "file_density"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -986,11 +986,11 @@ class FileDensity:
         return key in self.additional_properties
 
 
-OY = TypeVar("OY", bound="FileSurfaceArea")
+OY = TypeVar("OY", bound="file_surface_area")
 
 
 @attr.s(auto_attribs=True)
-class FileSurfaceArea:
+class file_surface_area:
     """A file surface area."""  # noqa: E501
 
     completed_at: Union[Unset, datetime.datetime] = UNSET
@@ -1002,7 +1002,7 @@ class FileSurfaceArea:
     started_at: Union[Unset, datetime.datetime] = UNSET
     status: Union[Unset, ApiCallStatus] = UNSET
     surface_area: Union[Unset, float] = UNSET
-    type: str = "FileSurfaceArea"
+    type: str = "file_surface_area"
     updated_at: Union[Unset, datetime.datetime] = UNSET
     user_id: Union[Unset, str] = UNSET
 
@@ -1165,5 +1165,10 @@ class FileSurfaceArea:
 
 
 AsyncApiCallOutput = Union[
-    FileConversion, FileCenterOfMass, FileMass, FileVolume, FileDensity, FileSurfaceArea
+    file_conversion,
+    file_center_of_mass,
+    file_mass,
+    file_volume,
+    file_density,
+    file_surface_area,
 ]
