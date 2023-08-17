@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-RS = TypeVar("RS", bound="MetaClusterInfo")
+LR = TypeVar("LR", bound="MetaClusterInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class MetaClusterInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RS], src_dict: Dict[str, Any]) -> RS:
+    def from_dict(cls: Type[LR], src_dict: Dict[str, Any]) -> LR:
         d = src_dict.copy()
         cluster_size = d.pop("cluster_size", UNSET)
 

@@ -9,7 +9,7 @@ from ..models.unit_torque import UnitTorque
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-SL = TypeVar("SL", bound="UnitTorqueConversion")
+MK = TypeVar("MK", bound="UnitTorqueConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitTorqueConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SL], src_dict: Dict[str, Any]) -> SL:
+    def from_dict(cls: Type[MK], src_dict: Dict[str, Any]) -> MK:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

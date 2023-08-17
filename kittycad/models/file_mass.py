@@ -11,7 +11,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-VI = TypeVar("VI", bound="FileMass")
+ET = TypeVar("ET", bound="FileMass")
 
 
 @attr.s(auto_attribs=True)
@@ -94,7 +94,7 @@ class FileMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[VI], src_dict: Dict[str, Any]) -> VI:
+    def from_dict(cls: Type[ET], src_dict: Dict[str, Any]) -> ET:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
