@@ -472,9 +472,19 @@ from kittycad.types import Response
                 + "\n"
             )
         example_imports = (
-            example_imports + "from typing import Union, Any, Optional, List\n"
+            example_imports + "from typing import Union, Any, Optional, List, Tuple\n"
         )
-        example_variable = "result: " + response_type + " = "
+
+        if fn_name.endswith("_with_base64_helper"):
+            example_variable = (
+                "result: "
+                + response_type.replace(
+                    "FileConversion", "Tuple[FileConversion, bytes]"
+                )
+                + " = "
+            )
+        else:
+            example_variable = "result: " + response_type + " = "
 
         example_imports = example_imports + "from kittycad.types import Response\n"
         example_imports = example_imports + "from kittycad.models import Error\n"
@@ -505,6 +515,12 @@ from kittycad.types import Response
         and success_type != "None"
         and success_type != ""
     ):
+        example_success_type = success_type
+        if fn_name.endswith("_with_base64_helper"):
+            example_success_type = example_success_type.replace(
+                "FileConversion", "Tuple[FileConversion, bytes]"
+            )
+
         short_sync_example = short_sync_example + (
             """
     if isinstance(result, Error) or result == None:
@@ -512,7 +528,7 @@ from kittycad.types import Response
         raise Exception("Error in response")
 
     body: """
-            + success_type
+            + example_success_type
             + """ = result
     print(body)
 

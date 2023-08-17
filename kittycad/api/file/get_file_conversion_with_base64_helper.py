@@ -1,5 +1,5 @@
 import base64
-from typing import Any, Optional, Union, Tuple
+from typing import Any, Optional, Tuple, Union
 
 from ...api.api_calls.get_async_operation import asyncio as fc_asyncio, sync as fc_sync
 from ...client import Client
@@ -22,7 +22,7 @@ def sync(
     if isinstance(fc, FileConversion) and fc.output != "":
         if isinstance(fc.output, str):
             b = base64.b64decode(fc.output + "===")
-            return Tuple[FileConversion, bytes](fc, b)
+            return (fc, b)
 
     return fc
 
@@ -42,6 +42,6 @@ async def asyncio(
     if isinstance(fc, FileConversion) and fc.output != "":
         if isinstance(fc.output, str):
             b = base64.b64decode(fc.output + "===")
-            return Tuple[FileConversion, bytes](fc, b)
+            return (fc, b)
 
     return fc

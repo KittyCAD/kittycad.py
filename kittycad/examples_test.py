@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import List, Optional, Tuple, Union
 
 import pytest
 
@@ -987,7 +987,7 @@ def test_create_file_conversion_with_base64_helper():
     client = ClientFromEnv()
 
     result: Optional[
-        Union[FileConversion, Error]
+        Union[Tuple[FileConversion, bytes], Error]
     ] = create_file_conversion_with_base64_helper.sync(
         client=client,
         output_format=FileExportFormat.GLTF,
@@ -999,7 +999,7 @@ def test_create_file_conversion_with_base64_helper():
         print(result)
         raise Exception("Error in response")
 
-    body: FileConversion = result
+    body: Tuple[FileConversion, bytes] = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
@@ -1021,7 +1021,7 @@ async def test_create_file_conversion_with_base64_helper_async():
     client = ClientFromEnv()
 
     result: Optional[
-        Union[FileConversion, Error]
+        Union[Tuple[FileConversion, bytes], Error]
     ] = await create_file_conversion_with_base64_helper.asyncio(
         client=client,
         output_format=FileExportFormat.GLTF,

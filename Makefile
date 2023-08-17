@@ -26,7 +26,6 @@ shell: docker-image ## Pop into a shell in the docker image.
 		-e KITTYCAD_API_TOKEN \
 		--disable-content-trust \
 		-v $(CURDIR):/home/user/src \
-		-v $(CURDIR)/../litterbox:/home/user/litterbox \
 		--workdir /home/user/src \
 		$(DOCKER_IMAGE_NAME) /bin/bash
 
