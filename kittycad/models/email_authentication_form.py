@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 

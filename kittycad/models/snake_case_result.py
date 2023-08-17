@@ -1,1 +1,3 @@
-SnakeCaseResult = Union[]
+from typing import Any
+
+SnakeCaseResult = Any

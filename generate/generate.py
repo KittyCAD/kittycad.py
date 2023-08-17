@@ -749,7 +749,7 @@ async def test_"""
                                             "\t\t\t"
                                             + option_name
                                             + " = "
-                                            + ref
+                                            + snake_to_title(ref)
                                             + ".from_dict(data)\n"
                                         )
                                         parse_response.write(
@@ -1112,8 +1112,14 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         if "$ref" in one_of:
             ref = one_of["$ref"]
             ref_name = ref[ref.rfind("/") + 1 :]
-            f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
-            all_options.append(ref_name)
+            f.write(
+                "from ."
+                + camel_to_snake(ref_name)
+                + " import "
+                + snake_to_title(ref_name)
+                + "\n"
+            )
+            all_options.append(snake_to_title(ref_name))
 
     if isNestedObjectOneOf(schema):
         # We want to write each of the nested objects.
@@ -1173,13 +1179,19 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             all_options.append(object_name)
 
     # Write the sum type.
-    f.write(name + " = Union[")
-    for num, option in enumerate(all_options, start=0):
-        if num == 0:
-            f.write(option)
-        else:
-            f.write(", " + option + "")
-    f.write("]\n")
+    if name == "SnakeCaseResult":
+        f.write("from typing import Any\n")
+        f.write(name + " = Any")
+    else:
+        f.write("from typing import Union\n")
+        f.write(name + " = Union[")
+
+        for num, option in enumerate(all_options, start=0):
+            if num == 0:
+                f.write(option)
+            else:
+                f.write(", " + option + "")
+        f.write("]\n")
 
     # Close the file.
     f.close()
@@ -1884,13 +1896,13 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                         ref = json["$ref"].replace("#/components/schemas/", "")
                         schema = data["components"]["schemas"][ref]
                         if isNestedObjectOneOf(schema) or isEnumWithDocsOneOf(schema):
-                            if ref not in refs:
-                                refs.append(ref)
+                            if snake_to_title(ref) not in refs:
+                                refs.append(snake_to_title(ref))
                         elif isTypedObjectOneOf(schema):
                             for t in schema["oneOf"]:
                                 ref = getOneOfRefType(t)
-                                if ref not in refs:
-                                    refs.append(ref)
+                                if snake_to_title(ref) not in refs:
+                                    refs.append(snake_to_title(ref))
                         else:
                             if ref not in refs:
                                 refs.append(ref)
@@ -1931,8 +1943,8 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                         json = content[content_type]["schema"]
                         if "$ref" in json:
                             ref = json["$ref"].replace("#/components/schemas/", "")
-                            if ref not in refs:
-                                refs.append(ref)
+                            if snake_to_title(ref) not in refs:
+                                refs.append(snake_to_title(ref))
 
     return refs
 
@@ -2044,6 +2056,11 @@ def camel_to_screaming_snake(name: str):
     )
 
 
+# Change `file_conversion` to `FileConversion`
+def snake_to_title(name: str):
+    return name.title().replace("_", "")
+
+
 def get_function_parameters(
     endpoint: dict, request_body_type: Optional[str]
 ) -> List[str]:
@@ -2088,8 +2105,12 @@ def isNestedObjectOneOf(schema: dict) -> bool:
 
     is_nested_object = False
     for one_of in schema["oneOf"]:
-        # Check if each are an object with properties.
-        if one_of["type"] == "object" and "properties" in one_of:
+        # Check if each are an object w 1 property in it.
+        if (
+            one_of["type"] == "object"
+            and "properties" in one_of
+            and len(one_of["properties"]) == 1
+        ):
             for prop_name in one_of["properties"]:
                 nested_object = one_of["properties"][prop_name]
                 if "type" in nested_object and nested_object["type"] == "object":

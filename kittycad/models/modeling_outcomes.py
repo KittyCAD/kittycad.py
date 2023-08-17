@@ -1,8 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.modeling_outcome import ModelingOutcome
 from ..types import UNSET, Unset
 
 OX = TypeVar("OX", bound="ModelingOutcomes")

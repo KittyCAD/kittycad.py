@@ -1,8 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.modeling_cmd_req import ModelingCmdReq
 from ..types import UNSET, Unset
 
 GN = TypeVar("GN", bound="ModelingCmdReqBatch")

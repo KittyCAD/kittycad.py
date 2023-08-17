@@ -1,8 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.index_info import IndexInfo
 from ..types import UNSET, Unset
 
 MT = TypeVar("MT", bound="RegistryServiceConfig")

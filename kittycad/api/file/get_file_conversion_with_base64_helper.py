@@ -42,7 +42,7 @@ async def asyncio(
 
     if isinstance(fc, FileConversion) and fc.output != "":
         if isinstance(fc.output, str):
-            b = base64.b64decode(fc.output + "===" )
+            b = base64.b64decode(fc.output + "===")
             # decode the bytes to a string
             fc.output = b.decode("utf-8")
 
