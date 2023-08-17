@@ -26,7 +26,7 @@ def sync(
 
     if isinstance(fc, FileConversion) and fc.output != "":
         if isinstance(fc.output, str):
-            b = base64.b64decode(fc.output + "===")
+            b = base64.b64decode(fc.output, validate=False)
             return (fc, b)
 
     return fc
@@ -52,7 +52,7 @@ async def asyncio(
 
     if isinstance(fc, FileConversion) and fc.output != "":
         if isinstance(fc.output, str):
-            b = base64.b64decode(fc.output + "===")
+            b = base64.b64decode(fc.output, validate=False)
             return (fc, b)
 
     return fc
