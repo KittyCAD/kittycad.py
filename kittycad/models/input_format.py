@@ -6,7 +6,7 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 from ..types import UNSET, Unset
 
-PY = TypeVar("PY", bound="gltf")
+LK = TypeVar("LK", bound="gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -28,7 +28,7 @@ class gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PY], src_dict: Dict[str, Any]) -> PY:
+    def from_dict(cls: Type[LK], src_dict: Dict[str, Any]) -> LK:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -56,7 +56,7 @@ class gltf:
         return key in self.additional_properties
 
 
-LK = TypeVar("LK", bound="step")
+AR = TypeVar("AR", bound="step")
 
 
 @attr.s(auto_attribs=True)
@@ -78,7 +78,7 @@ class step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LK], src_dict: Dict[str, Any]) -> LK:
+    def from_dict(cls: Type[AR], src_dict: Dict[str, Any]) -> AR:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -106,7 +106,7 @@ class step:
         return key in self.additional_properties
 
 
-AR = TypeVar("AR", bound="obj")
+WB = TypeVar("WB", bound="obj")
 
 
 @attr.s(auto_attribs=True)
@@ -138,7 +138,7 @@ class obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AR], src_dict: Dict[str, Any]) -> AR:
+    def from_dict(cls: Type[WB], src_dict: Dict[str, Any]) -> WB:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -182,7 +182,7 @@ class obj:
         return key in self.additional_properties
 
 
-WB = TypeVar("WB", bound="ply")
+KK = TypeVar("KK", bound="ply")
 
 
 @attr.s(auto_attribs=True)
@@ -214,7 +214,7 @@ class ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WB], src_dict: Dict[str, Any]) -> WB:
+    def from_dict(cls: Type[KK], src_dict: Dict[str, Any]) -> KK:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -258,7 +258,7 @@ class ply:
         return key in self.additional_properties
 
 
-KK = TypeVar("KK", bound="stl")
+HC = TypeVar("HC", bound="stl")
 
 
 @attr.s(auto_attribs=True)
@@ -290,7 +290,7 @@ class stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[KK], src_dict: Dict[str, Any]) -> KK:
+    def from_dict(cls: Type[HC], src_dict: Dict[str, Any]) -> HC:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]

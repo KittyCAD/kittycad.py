@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-OJ = TypeVar("OJ", bound="Gateway")
+UF = TypeVar("UF", bound="Gateway")
 
 
 @attr.s(auto_attribs=True)
@@ -43,7 +43,7 @@ class Gateway:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OJ], src_dict: Dict[str, Any]) -> OJ:
+    def from_dict(cls: Type[UF], src_dict: Dict[str, Any]) -> UF:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 

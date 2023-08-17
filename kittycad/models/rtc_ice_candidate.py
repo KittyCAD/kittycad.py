@@ -6,7 +6,7 @@ from ..models.rtc_ice_candidate_type import RtcIceCandidateType
 from ..models.rtc_ice_protocol import RtcIceProtocol
 from ..types import UNSET, Unset
 
-LJ = TypeVar("LJ", bound="RtcIceCandidate")
+TF = TypeVar("TF", bound="RtcIceCandidate")
 
 
 @attr.s(auto_attribs=True)
@@ -71,7 +71,7 @@ class RtcIceCandidate:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LJ], src_dict: Dict[str, Any]) -> LJ:
+    def from_dict(cls: Type[TF], src_dict: Dict[str, Any]) -> TF:
         d = src_dict.copy()
         address = d.pop("address", UNSET)
 

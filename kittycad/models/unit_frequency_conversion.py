@@ -9,7 +9,7 @@ from ..models.unit_frequency import UnitFrequency
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-GK = TypeVar("GK", bound="UnitFrequencyConversion")
+SG = TypeVar("SG", bound="UnitFrequencyConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitFrequencyConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GK], src_dict: Dict[str, Any]) -> GK:
+    def from_dict(cls: Type[SG], src_dict: Dict[str, Any]) -> SG:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

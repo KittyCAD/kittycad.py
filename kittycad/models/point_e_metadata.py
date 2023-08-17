@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-SK = TypeVar("SK", bound="PointEMetadata")
+UK = TypeVar("UK", bound="PointEMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class PointEMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SK], src_dict: Dict[str, Any]) -> SK:
+    def from_dict(cls: Type[UK], src_dict: Dict[str, Any]) -> UK:
         d = src_dict.copy()
         ok = d.pop("ok", UNSET)
 

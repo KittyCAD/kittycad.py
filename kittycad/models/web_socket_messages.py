@@ -8,7 +8,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 from ..types import UNSET, Unset
 
-AX = TypeVar("AX", bound="trickle_ice")
+RQ = TypeVar("RQ", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AX], src_dict: Dict[str, Any]) -> AX:
+    def from_dict(cls: Type[RQ], src_dict: Dict[str, Any]) -> RQ:
         d = src_dict.copy()
         _candidate = d.pop("candidate", UNSET)
         candidate: Union[Unset, RtcIceCandidateInit]
@@ -71,7 +71,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-RQ = TypeVar("RQ", bound="sdp_offer")
+ZL = TypeVar("ZL", bound="sdp_offer")
 
 
 @attr.s(auto_attribs=True)
@@ -98,7 +98,7 @@ class sdp_offer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RQ], src_dict: Dict[str, Any]) -> RQ:
+    def from_dict(cls: Type[ZL], src_dict: Dict[str, Any]) -> ZL:
         d = src_dict.copy()
         _offer = d.pop("offer", UNSET)
         offer: Union[Unset, RtcSessionDescription]
@@ -134,7 +134,7 @@ class sdp_offer:
         return key in self.additional_properties
 
 
-ZL = TypeVar("ZL", bound="modeling_cmd_req")
+CM = TypeVar("CM", bound="modeling_cmd_req")
 
 
 @attr.s(auto_attribs=True)
@@ -166,7 +166,7 @@ class modeling_cmd_req:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZL], src_dict: Dict[str, Any]) -> ZL:
+    def from_dict(cls: Type[CM], src_dict: Dict[str, Any]) -> CM:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]

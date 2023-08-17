@@ -9,7 +9,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-MK = TypeVar("MK", bound="UnitVolumeConversion")
+TU = TypeVar("TU", bound="UnitVolumeConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitVolumeConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MK], src_dict: Dict[str, Any]) -> MK:
+    def from_dict(cls: Type[TU], src_dict: Dict[str, Any]) -> TU:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

@@ -4,23 +4,23 @@ import attr
 
 from ..types import UNSET, Unset
 
-LT = TypeVar("LT", bound="ErrorResponse")
+ED = TypeVar("ED", bound="ErrorResponse")
 
 
 @attr.s(auto_attribs=True)
 class ErrorResponse:
     """The error response."""  # noqa: E501
 
-    from ..models.error import Error
+    from ..models.engine_error import EngineError
 
-    errors: Union[Unset, List[Error]] = UNSET
+    errors: Union[Unset, List[EngineError]] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.error import Error
+        from ..models.engine_error import EngineError
 
-        errors: Union[Unset, List[Error]] = UNSET
+        errors: Union[Unset, List[EngineError]] = UNSET
         if not isinstance(self.errors, Unset):
             errors = self.errors
 
@@ -33,11 +33,11 @@ class ErrorResponse:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LT], src_dict: Dict[str, Any]) -> LT:
+    def from_dict(cls: Type[ED], src_dict: Dict[str, Any]) -> ED:
         d = src_dict.copy()
-        from ..models.error import Error
+        from ..models.engine_error import EngineError
 
-        errors = cast(List[Error], d.pop("errors", UNSET))
+        errors = cast(List[EngineError], d.pop("errors", UNSET))
 
         error_response = cls(
             errors=errors,
