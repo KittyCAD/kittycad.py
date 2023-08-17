@@ -8,7 +8,7 @@ from ..models.rtc_session_description import RtcSessionDescription
 from ..models.snake_case_result import SnakeCaseResult
 from ..types import UNSET, Unset
 
-CM = TypeVar("CM", bound="trickle_ice")
+OS = TypeVar("OS", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CM], src_dict: Dict[str, Any]) -> CM:
+    def from_dict(cls: Type[OS], src_dict: Dict[str, Any]) -> OS:
         d = src_dict.copy()
         _candidate = d.pop("candidate", UNSET)
         candidate: Union[Unset, RtcIceCandidate]
@@ -71,7 +71,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-OS = TypeVar("OS", bound="sdp_answer")
+WP = TypeVar("WP", bound="sdp_answer")
 
 
 @attr.s(auto_attribs=True)
@@ -98,7 +98,7 @@ class sdp_answer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OS], src_dict: Dict[str, Any]) -> OS:
+    def from_dict(cls: Type[WP], src_dict: Dict[str, Any]) -> WP:
         d = src_dict.copy()
         _answer = d.pop("answer", UNSET)
         answer: Union[Unset, RtcSessionDescription]
@@ -134,7 +134,7 @@ class sdp_answer:
         return key in self.additional_properties
 
 
-WP = TypeVar("WP", bound="ice_server_info")
+XO = TypeVar("XO", bound="ice_server_info")
 
 
 @attr.s(auto_attribs=True)
@@ -166,7 +166,7 @@ class ice_server_info:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WP], src_dict: Dict[str, Any]) -> WP:
+    def from_dict(cls: Type[XO], src_dict: Dict[str, Any]) -> XO:
         d = src_dict.copy()
         from ..models.ice_server import IceServer
 
@@ -199,7 +199,7 @@ class ice_server_info:
         return key in self.additional_properties
 
 
-XO = TypeVar("XO", bound="modeling")
+LN = TypeVar("LN", bound="modeling")
 
 
 @attr.s(auto_attribs=True)
@@ -231,7 +231,7 @@ class modeling:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[XO], src_dict: Dict[str, Any]) -> XO:
+    def from_dict(cls: Type[LN], src_dict: Dict[str, Any]) -> LN:
         d = src_dict.copy()
         _cmd_id = d.pop("cmd_id", UNSET)
         cmd_id: Union[Unset, ModelingCmdId]
@@ -275,7 +275,7 @@ class modeling:
         return key in self.additional_properties
 
 
-LN = TypeVar("LN", bound="export")
+KR = TypeVar("KR", bound="export")
 
 
 @attr.s(auto_attribs=True)
@@ -307,7 +307,7 @@ class export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LN], src_dict: Dict[str, Any]) -> LN:
+    def from_dict(cls: Type[KR], src_dict: Dict[str, Any]) -> KR:
         d = src_dict.copy()
         from ..models.raw_file import RawFile
 

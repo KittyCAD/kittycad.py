@@ -51,6 +51,7 @@ from .direction import Direction
 from .discount import Discount
 from .docker_system_info import DockerSystemInfo
 from .email_authentication_form import EmailAuthenticationForm
+from .engine_error import EngineError
 from .engine_metadata import EngineMetadata
 from .entity_type import EntityType
 from .environment import Environment
