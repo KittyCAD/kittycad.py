@@ -1,5 +1,5 @@
 import os
-from typing import Union
+from typing import Tuple, Union
 
 import pytest
 
@@ -107,7 +107,7 @@ def test_file_convert_stl():
 
     # Get the fc.
     result: Union[
-        FileConversion, Error, None
+        Tuple[FileConversion, bytes], Error, None
     ] = create_file_conversion_with_base64_helper.sync(
         client=client,
         body=content,
@@ -115,17 +115,20 @@ def test_file_convert_stl():
         output_format=FileExportFormat.OBJ,
     )
 
-    assert isinstance(result, FileConversion)
+    r: Tuple[FileConversion, bytes] = result  # type: ignore
 
-    fc: FileConversion = result
+    b: bytes = r[1]
+    fc: FileConversion = r[0]
 
     print(f"FileConversion: {fc}")
 
     assert fc.id is not None
-
     assert fc.status == ApiCallStatus.COMPLETED
 
     print(f"FileConversion: {fc}")
+
+    # Make sure the bytes are not empty.
+    assert len(b) > 0
 
 
 @pytest.mark.asyncio
@@ -140,7 +143,7 @@ async def test_file_convert_stl_async():
 
     # Get the fc.
     result: Union[
-        FileConversion, Error, None
+        Tuple[FileConversion, bytes], Error, None
     ] = await create_file_conversion_with_base64_helper.asyncio(
         client=client,
         body=content,
@@ -148,15 +151,20 @@ async def test_file_convert_stl_async():
         output_format=FileExportFormat.OBJ,
     )
 
-    assert isinstance(result, FileConversion)
+    r: Tuple[FileConversion, bytes] = result  # type: ignore
 
-    fc: FileConversion = result
+    b: bytes = r[1]
+    fc: FileConversion = r[0]
 
     print(f"FileConversion: {fc}")
 
     assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
 
     print(f"FileConversion: {fc}")
+
+    # Make sure the bytes are not empty.
+    assert len(b) > 0
 
 
 def test_file_mass():

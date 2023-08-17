@@ -12,7 +12,7 @@ from ..models.output_format import OutputFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-GL = TypeVar("GL", bound="FileConversion")
+NN = TypeVar("NN", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -100,7 +100,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GL], src_dict: Dict[str, Any]) -> GL:
+    def from_dict(cls: Type[NN], src_dict: Dict[str, Any]) -> NN:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

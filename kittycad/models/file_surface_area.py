@@ -10,7 +10,7 @@ from ..models.unit_area import UnitArea
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-VI = TypeVar("VI", bound="FileSurfaceArea")
+ET = TypeVar("ET", bound="FileSurfaceArea")
 
 
 @attr.s(auto_attribs=True)
@@ -84,7 +84,7 @@ class FileSurfaceArea:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[VI], src_dict: Dict[str, Any]) -> VI:
+    def from_dict(cls: Type[ET], src_dict: Dict[str, Any]) -> ET:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

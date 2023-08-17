@@ -55,6 +55,8 @@ from .engine_metadata import EngineMetadata
 from .entity_type import EntityType
 from .environment import Environment
 from .error import Error
+from .error_code import ErrorCode
+from .error_response import ErrorResponse
 from .executor_metadata import ExecutorMetadata
 from .export_file import ExportFile
 from .extended_user import ExtendedUser
@@ -69,6 +71,7 @@ from .file_surface_area import FileSurfaceArea
 from .file_system_metadata import FileSystemMetadata
 from .file_volume import FileVolume
 from .gateway import Gateway
+from .ice_server import IceServer
 from .image_type import ImageType
 from .index_info import IndexInfo
 from .input_format import InputFormat
@@ -108,10 +111,18 @@ from .point2d import Point2d
 from .point3d import Point3d
 from .point_e_metadata import PointEMetadata
 from .pong import Pong
+from .raw_file import RawFile
 from .registry_service_config import RegistryServiceConfig
+from .rtc_ice_candidate import RtcIceCandidate
+from .rtc_ice_candidate_init import RtcIceCandidateInit
+from .rtc_ice_candidate_type import RtcIceCandidateType
+from .rtc_ice_protocol import RtcIceProtocol
+from .rtc_sdp_type import RtcSdpType
+from .rtc_session_description import RtcSessionDescription
 from .runtime import Runtime
 from .scene_selection_type import SceneSelectionType
 from .session import Session
+from .snake_case_result import SnakeCaseResult
 from .storage import Storage
 from .system import System
 from .system_info_cgroup_driver_enum import SystemInfoCgroupDriverEnum
@@ -150,3 +161,5 @@ from .user import User
 from .user_results_page import UserResultsPage
 from .uuid import Uuid
 from .verification_token import VerificationToken
+from .web_socket_messages import WebSocketMessages
+from .web_socket_responses import WebSocketResponses

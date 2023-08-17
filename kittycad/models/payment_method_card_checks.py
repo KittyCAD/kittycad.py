@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-ZX = TypeVar("ZX", bound="PaymentMethodCardChecks")
+NX = TypeVar("NX", bound="PaymentMethodCardChecks")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class PaymentMethodCardChecks:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZX], src_dict: Dict[str, Any]) -> ZX:
+    def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
         d = src_dict.copy()
         address_line1_check = d.pop("address_line1_check", UNSET)
 
