@@ -8,7 +8,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 from ..types import UNSET, Unset
 
-RQ = TypeVar("RQ", bound="trickle_ice")
+PZ = TypeVar("PZ", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RQ], src_dict: Dict[str, Any]) -> RQ:
+    def from_dict(cls: Type[PZ], src_dict: Dict[str, Any]) -> PZ:
         d = src_dict.copy()
         _candidate = d.pop("candidate", UNSET)
         candidate: Union[Unset, RtcIceCandidateInit]
@@ -71,7 +71,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-ZL = TypeVar("ZL", bound="sdp_offer")
+FA = TypeVar("FA", bound="sdp_offer")
 
 
 @attr.s(auto_attribs=True)
@@ -98,7 +98,7 @@ class sdp_offer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZL], src_dict: Dict[str, Any]) -> ZL:
+    def from_dict(cls: Type[FA], src_dict: Dict[str, Any]) -> FA:
         d = src_dict.copy()
         _offer = d.pop("offer", UNSET)
         offer: Union[Unset, RtcSessionDescription]
@@ -134,7 +134,7 @@ class sdp_offer:
         return key in self.additional_properties
 
 
-CM = TypeVar("CM", bound="modeling_cmd_req")
+GE = TypeVar("GE", bound="modeling_cmd_req")
 
 
 @attr.s(auto_attribs=True)
@@ -166,7 +166,7 @@ class modeling_cmd_req:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CM], src_dict: Dict[str, Any]) -> CM:
+    def from_dict(cls: Type[GE], src_dict: Dict[str, Any]) -> GE:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]
@@ -210,4 +210,54 @@ class modeling_cmd_req:
         return key in self.additional_properties
 
 
-WebSocketMessages = Union[trickle_ice, sdp_offer, modeling_cmd_req]
+JG = TypeVar("JG", bound="ping")
+
+
+@attr.s(auto_attribs=True)
+class ping:
+    """The client-to-server Ping to ensure the WebSocket stays alive."""  # noqa: E501
+
+    type: str = "ping"
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[JG], src_dict: Dict[str, Any]) -> JG:
+        d = src_dict.copy()
+        type = d.pop("type", UNSET)
+
+        ping = cls(
+            type=type,
+        )
+
+        ping.additional_properties = d
+        return ping
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
+WebSocketRequest = Union[trickle_ice, sdp_offer, modeling_cmd_req, ping]

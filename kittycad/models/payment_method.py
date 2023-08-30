@@ -9,7 +9,7 @@ from ..models.card_details import CardDetails
 from ..models.payment_method_type import PaymentMethodType
 from ..types import UNSET, Unset
 
-NX = TypeVar("NX", bound="PaymentMethod")
+BF = TypeVar("BF", bound="PaymentMethod")
 
 
 @attr.s(auto_attribs=True)
@@ -20,7 +20,7 @@ class PaymentMethod:
     card: Union[Unset, CardDetails] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
-    metadata: Union[Unset, Any] = UNSET
+    metadata: Union[Unset, Dict[str, str]] = UNSET
     type: Union[Unset, PaymentMethodType] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -35,6 +35,7 @@ class PaymentMethod:
             created_at = self.created_at.isoformat()
         id = self.id
         metadata = self.metadata
+
         if not isinstance(self.type, Unset):
             type = self.type
 
@@ -57,7 +58,7 @@ class PaymentMethod:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
+    def from_dict(cls: Type[BF], src_dict: Dict[str, Any]) -> BF:
         d = src_dict.copy()
         _billing_info = d.pop("billing_info", UNSET)
         billing_info: Union[Unset, BillingInfo]
@@ -83,6 +84,7 @@ class PaymentMethod:
         id = d.pop("id", UNSET)
 
         metadata = d.pop("metadata", UNSET)
+
         _type = d.pop("type", UNSET)
         type: Union[Unset, PaymentMethodType]
         if isinstance(_type, Unset):

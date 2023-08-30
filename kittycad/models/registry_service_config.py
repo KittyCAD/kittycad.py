@@ -2,9 +2,10 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.index_info import IndexInfo
 from ..types import UNSET, Unset
 
-LJ = TypeVar("LJ", bound="RegistryServiceConfig")
+BM = TypeVar("BM", bound="RegistryServiceConfig")
 
 
 @attr.s(auto_attribs=True)
@@ -13,7 +14,9 @@ class RegistryServiceConfig:
 
     allow_nondistributable_artifacts_cid_rs: Union[Unset, List[str]] = UNSET
     allow_nondistributable_artifacts_hostnames: Union[Unset, List[str]] = UNSET
-    index_configs: Union[Unset, Any] = UNSET
+    from ..models.index_info import IndexInfo
+
+    index_configs: Union[Unset, Dict[str, IndexInfo]] = UNSET
     insecure_registry_cid_rs: Union[Unset, List[str]] = UNSET
     mirrors: Union[Unset, List[str]] = UNSET
 
@@ -30,7 +33,12 @@ class RegistryServiceConfig:
             allow_nondistributable_artifacts_hostnames = (
                 self.allow_nondistributable_artifacts_hostnames
             )
-        index_configs = self.index_configs
+        index_configs: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.index_configs, Unset):
+            new_dict: Dict[str, Any] = {}
+            for key, value in self.index_configs.items():
+                new_dict[key] = value.to_dict()
+            index_configs = new_dict
         insecure_registry_cid_rs: Union[Unset, List[str]] = UNSET
         if not isinstance(self.insecure_registry_cid_rs, Unset):
             insecure_registry_cid_rs = self.insecure_registry_cid_rs
@@ -59,7 +67,7 @@ class RegistryServiceConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LJ], src_dict: Dict[str, Any]) -> LJ:
+    def from_dict(cls: Type[BM], src_dict: Dict[str, Any]) -> BM:
         d = src_dict.copy()
         allow_nondistributable_artifacts_cid_rs = cast(
             List[str], d.pop("allow_nondistributable_artifacts_cid_rs", UNSET)
@@ -69,7 +77,15 @@ class RegistryServiceConfig:
             List[str], d.pop("allow_nondistributable_artifacts_hostnames", UNSET)
         )
 
-        index_configs = d.pop("index_configs", UNSET)
+        _index_configs = d.pop("index_configs", UNSET)
+        if isinstance(_index_configs, Unset):
+            index_configs = UNSET
+        else:
+            new_map: Dict[str, IndexInfo] = {}
+            for k, v in _index_configs.items():
+                new_map[k] = IndexInfo.from_dict(v)  # type: ignore
+            index_configs = new_map  # type: ignore
+
         insecure_registry_cid_rs = cast(
             List[str], d.pop("insecure_registry_cid_rs", UNSET)
         )

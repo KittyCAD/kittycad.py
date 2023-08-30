@@ -1,20 +1,17 @@
 import os
-from typing import Tuple, Union
+from typing import Dict, Optional, Union
 
 import pytest
 
 from .api.api_tokens import list_api_tokens_for_user
-from .api.file import (
-    create_file_conversion_with_base64_helper,
-    create_file_mass,
-    create_file_volume,
-)
+from .api.file import create_file_conversion, create_file_mass, create_file_volume
 from .api.meta import ping
 from .api.users import get_user_self, list_users_extended
 from .client import ClientFromEnv
 from .models import (
     ApiCallStatus,
     ApiTokenResultsPage,
+    Base64Data,
     CreatedAtSortMode,
     Error,
     ExtendedUserResultsPage,
@@ -29,6 +26,7 @@ from .models import (
     UnitVolume,
     User,
 )
+from .types import Unset
 
 
 def test_get_session():
@@ -106,19 +104,16 @@ def test_file_convert_stl():
     file.close()
 
     # Get the fc.
-    result: Union[
-        Tuple[FileConversion, bytes], Error, None
-    ] = create_file_conversion_with_base64_helper.sync(
+    result: Optional[Union[FileConversion, Error]] = create_file_conversion.sync(
         client=client,
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
     )
 
-    r: Tuple[FileConversion, bytes] = result  # type: ignore
+    assert isinstance(result, FileConversion)
 
-    b: bytes = r[1]
-    fc: FileConversion = r[0]
+    fc: FileConversion = result
 
     print(f"FileConversion: {fc}")
 
@@ -127,8 +122,12 @@ def test_file_convert_stl():
 
     print(f"FileConversion: {fc}")
 
+    assert not isinstance(fc.outputs, Unset)
+
+    outputs: Dict[str, Base64Data] = fc.outputs
     # Make sure the bytes are not empty.
-    assert len(b) > 0
+    for key, value in outputs.items():
+        assert len(value.get_decoded()) > 0
 
 
 @pytest.mark.asyncio
@@ -142,19 +141,18 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    result: Union[
-        Tuple[FileConversion, bytes], Error, None
-    ] = await create_file_conversion_with_base64_helper.asyncio(
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
         client=client,
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
     )
 
-    r: Tuple[FileConversion, bytes] = result  # type: ignore
+    assert isinstance(result, FileConversion)
 
-    b: bytes = r[1]
-    fc: FileConversion = r[0]
+    fc: FileConversion = result
 
     print(f"FileConversion: {fc}")
 
@@ -163,8 +161,12 @@ async def test_file_convert_stl_async():
 
     print(f"FileConversion: {fc}")
 
+    assert not isinstance(fc.outputs, Unset)
+
+    outputs: Dict[str, Base64Data] = fc.outputs
     # Make sure the bytes are not empty.
-    assert len(b) > 0
+    for key, value in outputs.items():
+        assert len(value.get_decoded()) > 0
 
 
 @pytest.mark.asyncio
@@ -178,19 +180,18 @@ async def test_file_convert_obj_async():
     file.close()
 
     # Get the fc.
-    result: Union[
-        Tuple[FileConversion, bytes], Error, None
-    ] = await create_file_conversion_with_base64_helper.asyncio(
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
         client=client,
         body=content,
         src_format=FileImportFormat.OBJ,
         output_format=FileExportFormat.STL,
     )
 
-    r: Tuple[FileConversion, bytes] = result  # type: ignore
+    assert isinstance(result, FileConversion)
 
-    b: bytes = r[1]
-    fc: FileConversion = r[0]
+    fc: FileConversion = result
 
     print(f"FileConversion: {fc}")
 
@@ -199,8 +200,12 @@ async def test_file_convert_obj_async():
 
     print(f"FileConversion: {fc}")
 
+    assert not isinstance(fc.outputs, Unset)
+
+    outputs: Dict[str, Base64Data] = fc.outputs
     # Make sure the bytes are not empty.
-    assert len(b) > 0
+    for key, value in outputs.items():
+        assert len(value.get_decoded()) > 0
 
 
 def test_file_mass():

@@ -12,6 +12,7 @@ class EntityType(str, Enum):
     SOLID3D = "solid3d"
     EDGE = "edge"
     FACE = "face"
+    PLANE = "plane"
 
     def __str__(self) -> str:
         return str(self.value)
