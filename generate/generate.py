@@ -61,10 +61,19 @@ client = ClientFromEnv()
     # Create the json patch document.
     patch = jsonpatch.make_patch(original, data)
 
+    # Convert this to a dict.
+    patch = json.loads(patch.to_string())
+
+    new_patch = []
+    # Make sure we aren't changing any components/schemas.
+    for index, p in enumerate(patch):
+        if not p["path"].startswith("/components"):
+            new_patch.append(p)
+
     # Rewrite the spec back out.
     patch_file = os.path.join(cwd, "kittycad.py.patch.json")
     f = open(patch_file, "w")
-    f.write(patch.to_string())
+    f.write(json.dumps(new_patch, indent=2))
     f.close()
 
     # Write all the examples to a file.
