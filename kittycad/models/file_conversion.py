@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
@@ -54,9 +54,9 @@ class FileConversion:
         if not isinstance(self.output_format_options, Unset):
             output_format_options = self.output_format_options
         outputs: Union[Unset, Dict[str, str]] = UNSET
-        if not isinstance(_outputs, Unset):
+        if not isinstance(self.outputs, Unset):
             new_dict: Dict[str, str] = {}
-            for key, value in _outputs.items():
+            for key, value in self.outputs.items():
                 new_dict[key] = value.get_encoded()
             outputs = new_dict
         if not isinstance(self.src_format, Unset):
@@ -154,13 +154,14 @@ class FileConversion:
         else:
             output_format_options = _output_format_options  # type: ignore[arg-type]
 
+        _outputs = d.pop("outputs", UNSET)
         if isinstance(_outputs, Unset):
             outputs = UNSET
         else:
             new_map: Dict[str, Base64Data] = {}
             for k, v in _outputs.items():
                 new_map[k] = Base64Data(v)
-            outputs = new_map
+            outputs = new_map  # type: ignore
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]

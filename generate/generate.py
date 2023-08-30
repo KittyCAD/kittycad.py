@@ -1568,12 +1568,16 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                     "\t\t" + property_name + ": Union[Unset, Dict[str, Any]] = UNSET\n"
                 )
                 f.write(
-                    "\t\tif not isinstance(_"
+                    "\t\tif not isinstance(self."
                     + clean_parameter_name(property_name)
                     + ", Unset):\n"
                 )
                 f.write("\t\t\tnew_dict: Dict[str, Any] = {}\n")
-                f.write("\t\t\tfor key, value in _"+clean_parameter_name(property_name)+".items():\n")
+                f.write(
+                    "\t\t\tfor key, value in self."
+                    + clean_parameter_name(property_name)
+                    + ".items():\n"
+                )
                 f.write("\t\t\t\tnew_dict[key] = value.to_dict()\n")
                 f.write(
                     "\t\t\t" + clean_parameter_name(property_name) + " = new_dict\n"
@@ -1598,12 +1602,16 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                     "\t\t" + property_name + ": Union[Unset, Dict[str, str]] = UNSET\n"
                 )
                 f.write(
-                    "\t\tif not isinstance(_"
+                    "\t\tif not isinstance(self."
                     + clean_parameter_name(property_name)
                     + ", Unset):\n"
                 )
                 f.write("\t\t\tnew_dict: Dict[str, str] = {}\n")
-                f.write("\t\t\tfor key, value in _"+clean_parameter_name(property_name)+".items():\n")
+                f.write(
+                    "\t\t\tfor key, value in self."
+                    + clean_parameter_name(property_name)
+                    + ".items():\n"
+                )
                 f.write("\t\t\t\tnew_dict[key] = value.get_encoded()\n")
                 f.write(
                     "\t\t\t" + clean_parameter_name(property_name) + " = new_dict\n"
@@ -2003,6 +2011,13 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                     "#/components/schemas/", ""
                 )
                 f.write(
+                    "\t\t_"
+                    + clean_parameter_name(property_name)
+                    + ' = d.pop("'
+                    + property_name
+                    + '", UNSET)\n'
+                )
+                f.write(
                     "\t\tif isinstance(_"
                     + clean_parameter_name(property_name)
                     + ", Unset):\n"
@@ -2010,15 +2025,15 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                 f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
                 f.write("\t\telse:\n")
                 f.write(
-                    "\t\telse:\n\t\t\tnew_map: Dict[str, "
+                    "\t\t\tnew_map: Dict[str, "
                     + ref
                     + "] = {}\n\t\t\tfor k, v in _"
                     + clean_parameter_name(property_name)
                     + ".items():\n\t\t\t\tnew_map[k] = "
                     + ref
-                    + ".from_dict(v)\n\t\t\t"
+                    + ".from_dict(v) # type: ignore\n\t\t\t"
                     + clean_parameter_name(property_name)
-                    + " = new_map\n"
+                    + " = new_map # type: ignore\n"
                 )
                 f.write("\n")
             elif (
@@ -2038,6 +2053,13 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                 and property_schema["additionalProperties"]["format"] == "byte"
             ):
                 f.write(
+                    "\t\t_"
+                    + clean_parameter_name(property_name)
+                    + ' = d.pop("'
+                    + property_name
+                    + '", UNSET)\n'
+                )
+                f.write(
                     "\t\tif isinstance(_"
                     + clean_parameter_name(property_name)
                     + ", Unset):\n"
@@ -2048,7 +2070,7 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                     + clean_parameter_name(property_name)
                     + ".items():\n\t\t\t\tnew_map[k] = Base64Data(v)\n\t\t\t"
                     + clean_parameter_name(property_name)
-                    + " = new_map\n"
+                    + " = new_map # type: ignore\n"
                 )
                 f.write("\n")
             elif (
