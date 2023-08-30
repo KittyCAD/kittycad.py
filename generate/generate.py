@@ -1962,9 +1962,9 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                     f.write(
                         "\t\t\t"
                         + clean_parameter_name(property_name)
-                        + " = Base64Data(_"
+                        + " = Base64Data(bytes(_"
                         + clean_parameter_name(property_name)
-                        + ")\n"
+                        + ", 'utf-8'))\n"
                     )
                     f.write("\n")
                     # Return early.
@@ -2068,7 +2068,7 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
                 f.write(
                     "\t\telse:\n\t\t\tnew_map: Dict[str, Base64Data] = {}\n\t\t\tfor k, v in _"
                     + clean_parameter_name(property_name)
-                    + ".items():\n\t\t\t\tnew_map[k] = Base64Data(v)\n\t\t\t"
+                    + ".items():\n\t\t\t\tnew_map[k] = Base64Data(bytes(v, 'utf-8'))\n\t\t\t"
                     + clean_parameter_name(property_name)
                     + " = new_map # type: ignore\n"
                 )

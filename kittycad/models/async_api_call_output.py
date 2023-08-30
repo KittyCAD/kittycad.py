@@ -147,7 +147,7 @@ class file_conversion:
         if isinstance(_output, Unset):
             output = UNSET
         else:
-            output = Base64Data(_output)
+            output = Base64Data(bytes(_output, "utf-8"))
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileExportFormat]
@@ -169,7 +169,7 @@ class file_conversion:
         else:
             new_map: Dict[str, Base64Data] = {}
             for k, v in _outputs.items():
-                new_map[k] = Base64Data(v)
+                new_map[k] = Base64Data(bytes(v, "utf-8"))
             outputs = new_map  # type: ignore
 
         _src_format = d.pop("src_format", UNSET)

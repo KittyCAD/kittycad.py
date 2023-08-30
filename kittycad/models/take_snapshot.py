@@ -37,7 +37,7 @@ class TakeSnapshot:
         if isinstance(_contents, Unset):
             contents = UNSET
         else:
-            contents = Base64Data(_contents)
+            contents = Base64Data(bytes(_contents, "utf-8"))
 
         take_snapshot = cls(
             contents=contents,

@@ -41,7 +41,7 @@ class ExportFile:
         if isinstance(_contents, Unset):
             contents = UNSET
         else:
-            contents = Base64Data(_contents)
+            contents = Base64Data(bytes(_contents, "utf-8"))
 
         name = d.pop("name", UNSET)
 
