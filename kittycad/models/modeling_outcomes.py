@@ -2,21 +2,29 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
+from ..models.modeling_outcome import ModelingOutcome
 from ..types import UNSET, Unset
 
-YW = TypeVar("YW", bound="ModelingOutcomes")
+NX = TypeVar("NX", bound="ModelingOutcomes")
 
 
 @attr.s(auto_attribs=True)
 class ModelingOutcomes:
     """The result from a batch of modeling commands."""  # noqa: E501
 
-    outcomes: Union[Unset, Any] = UNSET
+    from ..models.modeling_outcome import ModelingOutcome
+
+    outcomes: Union[Unset, Dict[str, ModelingOutcome]] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        outcomes = self.outcomes
+        outcomes: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.outcomes, Unset):
+            new_dict: Dict[str, Any] = {}
+            for key, value in self.outcomes.items():
+                new_dict[key] = value.to_dict()
+            outcomes = new_dict
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -27,9 +35,16 @@ class ModelingOutcomes:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YW], src_dict: Dict[str, Any]) -> YW:
+    def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
         d = src_dict.copy()
-        outcomes = d.pop("outcomes", UNSET)
+        _outcomes = d.pop("outcomes", UNSET)
+        if isinstance(_outcomes, Unset):
+            outcomes = UNSET
+        else:
+            new_map: Dict[str, ModelingOutcome] = {}
+            for k, v in _outcomes.items():
+                new_map[k] = ModelingOutcome.from_dict(v)  # type: ignore
+            outcomes = new_map  # type: ignore
 
         modeling_outcomes = cls(
             outcomes=outcomes,

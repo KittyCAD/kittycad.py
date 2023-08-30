@@ -5,12 +5,13 @@ import attr
 from ..models.commit import Commit
 from ..models.plugins_info import PluginsInfo
 from ..models.registry_service_config import RegistryServiceConfig
+from ..models.runtime import Runtime
 from ..models.system_info_cgroup_driver_enum import SystemInfoCgroupDriverEnum
 from ..models.system_info_cgroup_version_enum import SystemInfoCgroupVersionEnum
 from ..models.system_info_isolation_enum import SystemInfoIsolationEnum
 from ..types import UNSET, Unset
 
-TV = TypeVar("TV", bound="DockerSystemInfo")
+MS = TypeVar("MS", bound="DockerSystemInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -73,7 +74,9 @@ class DockerSystemInfo:
     product_license: Union[Unset, str] = UNSET
     registry_config: Union[Unset, RegistryServiceConfig] = UNSET
     runc_commit: Union[Unset, Commit] = UNSET
-    runtimes: Union[Unset, Any] = UNSET
+    from ..models.runtime import Runtime
+
+    runtimes: Union[Unset, Dict[str, Runtime]] = UNSET
     security_options: Union[Unset, List[str]] = UNSET
     server_version: Union[Unset, str] = UNSET
     swap_limit: Union[Unset, bool] = False
@@ -155,7 +158,12 @@ class DockerSystemInfo:
             registry_config = self.registry_config
         if not isinstance(self.runc_commit, Unset):
             runc_commit = self.runc_commit
-        runtimes = self.runtimes
+        runtimes: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.runtimes, Unset):
+            new_dict: Dict[str, Any] = {}
+            for key, value in self.runtimes.items():
+                new_dict[key] = value.to_dict()
+            runtimes = new_dict
         security_options: Union[Unset, List[str]] = UNSET
         if not isinstance(self.security_options, Unset):
             security_options = self.security_options
@@ -293,7 +301,7 @@ class DockerSystemInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TV], src_dict: Dict[str, Any]) -> TV:
+    def from_dict(cls: Type[MS], src_dict: Dict[str, Any]) -> MS:
         d = src_dict.copy()
         architecture = d.pop("architecture", UNSET)
 
@@ -449,7 +457,15 @@ class DockerSystemInfo:
         else:
             runc_commit = _runc_commit  # type: ignore[arg-type]
 
-        runtimes = d.pop("runtimes", UNSET)
+        _runtimes = d.pop("runtimes", UNSET)
+        if isinstance(_runtimes, Unset):
+            runtimes = UNSET
+        else:
+            new_map: Dict[str, Runtime] = {}
+            for k, v in _runtimes.items():
+                new_map[k] = Runtime.from_dict(v)  # type: ignore
+            runtimes = new_map  # type: ignore
+
         security_options = cast(List[str], d.pop("security_options", UNSET))
 
         server_version = d.pop("server_version", UNSET)

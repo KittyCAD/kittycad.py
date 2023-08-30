@@ -8,7 +8,7 @@ from ..models.currency import Currency
 from ..models.new_address import NewAddress
 from ..types import UNSET, Unset
 
-US = TypeVar("US", bound="Customer")
+NH = TypeVar("NH", bound="Customer")
 
 
 @attr.s(auto_attribs=True)
@@ -22,7 +22,7 @@ class Customer:
     delinquent: Union[Unset, bool] = False
     email: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    metadata: Union[Unset, Any] = UNSET
+    metadata: Union[Unset, Dict[str, str]] = UNSET
     name: Union[Unset, str] = UNSET
     phone: Union[Unset, str] = UNSET
 
@@ -41,6 +41,7 @@ class Customer:
         email = self.email
         id = self.id
         metadata = self.metadata
+
         name = self.name
         phone = self.phone
 
@@ -71,7 +72,7 @@ class Customer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[US], src_dict: Dict[str, Any]) -> US:
+    def from_dict(cls: Type[NH], src_dict: Dict[str, Any]) -> NH:
         d = src_dict.copy()
         _address = d.pop("address", UNSET)
         address: Union[Unset, NewAddress]
@@ -103,6 +104,7 @@ class Customer:
         id = d.pop("id", UNSET)
 
         metadata = d.pop("metadata", UNSET)
+
         name = d.pop("name", UNSET)
 
         phone = d.pop("phone", UNSET)

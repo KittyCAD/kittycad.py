@@ -5,11 +5,11 @@ import attr
 from ..models.error_code import ErrorCode
 from ..types import UNSET, Unset
 
-CE = TypeVar("CE", bound="EngineError")
+HX = TypeVar("HX", bound="ApiError")
 
 
 @attr.s(auto_attribs=True)
-class EngineError:
+class ApiError:
     """An error."""  # noqa: E501
 
     error_code: Union[Unset, ErrorCode] = UNSET
@@ -33,7 +33,7 @@ class EngineError:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CE], src_dict: Dict[str, Any]) -> CE:
+    def from_dict(cls: Type[HX], src_dict: Dict[str, Any]) -> HX:
         d = src_dict.copy()
         _error_code = d.pop("error_code", UNSET)
         error_code: Union[Unset, ErrorCode]
@@ -44,13 +44,13 @@ class EngineError:
 
         message = d.pop("message", UNSET)
 
-        engine_error = cls(
+        api_error = cls(
             error_code=error_code,
             message=message,
         )
 
-        engine_error.additional_properties = d
-        return engine_error
+        api_error.additional_properties = d
+        return api_error
 
     @property
     def additional_keys(self) -> List[str]:

@@ -10,7 +10,7 @@ from ..models.jetstream import Jetstream
 from ..models.leaf_node import LeafNode
 from ..types import UNSET, Unset
 
-ON = TypeVar("ON", bound="Connection")
+PC = TypeVar("PC", bound="Connection")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class Connection:
     http_base_path: Union[Unset, str] = UNSET
     http_host: Union[Unset, str] = UNSET
     http_port: Union[Unset, int] = UNSET
-    http_req_stats: Union[Unset, Any] = UNSET
+    http_req_stats: Union[Unset, Dict[str, int]] = UNSET
     https_port: Union[Unset, int] = UNSET
     in_bytes: Union[Unset, int] = UNSET
     in_msgs: Union[Unset, int] = UNSET
@@ -88,6 +88,7 @@ class Connection:
         http_host = self.http_host
         http_port = self.http_port
         http_req_stats = self.http_req_stats
+
         https_port = self.https_port
         in_bytes = self.in_bytes
         in_msgs = self.in_msgs
@@ -225,7 +226,7 @@ class Connection:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ON], src_dict: Dict[str, Any]) -> ON:
+    def from_dict(cls: Type[PC], src_dict: Dict[str, Any]) -> PC:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 
@@ -271,6 +272,7 @@ class Connection:
         http_port = d.pop("http_port", UNSET)
 
         http_req_stats = d.pop("http_req_stats", UNSET)
+
         https_port = d.pop("https_port", UNSET)
 
         in_bytes = d.pop("in_bytes", UNSET)

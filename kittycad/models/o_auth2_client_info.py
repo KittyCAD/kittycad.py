@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-NO = TypeVar("NO", bound="OAuth2ClientInfo")
+JA = TypeVar("JA", bound="OAuth2ClientInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class OAuth2ClientInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NO], src_dict: Dict[str, Any]) -> NO:
+    def from_dict(cls: Type[JA], src_dict: Dict[str, Any]) -> JA:
         d = src_dict.copy()
         csrf_token = d.pop("csrf_token", UNSET)
 

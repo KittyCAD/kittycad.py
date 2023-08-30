@@ -5,6 +5,7 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.api_call_status import ApiCallStatus
+from ..models.base64data import Base64Data
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
 from ..models.input_format import InputFormat
@@ -12,7 +13,7 @@ from ..models.output_format import OutputFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-OH = TypeVar("OH", bound="FileConversion")
+YF = TypeVar("YF", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -23,10 +24,10 @@ class FileConversion:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    output: Union[Unset, str] = UNSET
+    output: Union[Unset, Base64Data] = UNSET
     output_format: Union[Unset, FileExportFormat] = UNSET
     output_format_options: Union[Unset, OutputFormat] = UNSET
-    outputs: Union[Unset, Any] = UNSET
+    outputs: Union[Unset, Dict[str, Base64Data]] = UNSET
     src_format: Union[Unset, FileImportFormat] = UNSET
     src_format_options: Union[Unset, InputFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
@@ -45,12 +46,19 @@ class FileConversion:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        output = self.output
+        output: Union[Unset, str] = UNSET
+        if not isinstance(self.output, Unset):
+            output = self.output.get_encoded()
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
         if not isinstance(self.output_format_options, Unset):
             output_format_options = self.output_format_options
-        outputs = self.outputs
+        outputs: Union[Unset, Dict[str, str]] = UNSET
+        if not isinstance(self.outputs, Unset):
+            new_dict: Dict[str, str] = {}
+            for key, value in self.outputs.items():
+                new_dict[key] = value.get_encoded()
+            outputs = new_dict
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         if not isinstance(self.src_format_options, Unset):
@@ -100,7 +108,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OH], src_dict: Dict[str, Any]) -> OH:
+    def from_dict(cls: Type[YF], src_dict: Dict[str, Any]) -> YF:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -125,7 +133,12 @@ class FileConversion:
         else:
             id = _id  # type: ignore[arg-type]
 
-        output = d.pop("output", UNSET)
+        _output = d.pop("output", UNSET)
+        output: Union[Unset, Base64Data]
+        if isinstance(_output, Unset):
+            output = UNSET
+        else:
+            output = Base64Data(bytes(_output, "utf-8"))
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileExportFormat]
@@ -141,7 +154,15 @@ class FileConversion:
         else:
             output_format_options = _output_format_options  # type: ignore[arg-type]
 
-        outputs = d.pop("outputs", UNSET)
+        _outputs = d.pop("outputs", UNSET)
+        if isinstance(_outputs, Unset):
+            outputs = UNSET
+        else:
+            new_map: Dict[str, Base64Data] = {}
+            for k, v in _outputs.items():
+                new_map[k] = Base64Data(bytes(v, "utf-8"))
+            outputs = new_map  # type: ignore
+
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):

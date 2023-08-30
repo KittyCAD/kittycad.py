@@ -6,7 +6,57 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 from ..types import UNSET, Unset
 
-LK = TypeVar("LK", bound="gltf")
+CF = TypeVar("CF", bound="fbx")
+
+
+@attr.s(auto_attribs=True)
+class fbx:
+    """Autodesk Filmbox (FBX) format."""  # noqa: E501
+
+    type: str = "fbx"
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[CF], src_dict: Dict[str, Any]) -> CF:
+        d = src_dict.copy()
+        type = d.pop("type", UNSET)
+
+        fbx = cls(
+            type=type,
+        )
+
+        fbx.additional_properties = d
+        return fbx
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
+OM = TypeVar("OM", bound="gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -28,7 +78,7 @@ class gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LK], src_dict: Dict[str, Any]) -> LK:
+    def from_dict(cls: Type[OM], src_dict: Dict[str, Any]) -> OM:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -56,7 +106,7 @@ class gltf:
         return key in self.additional_properties
 
 
-AR = TypeVar("AR", bound="step")
+EN = TypeVar("EN", bound="step")
 
 
 @attr.s(auto_attribs=True)
@@ -78,7 +128,7 @@ class step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AR], src_dict: Dict[str, Any]) -> AR:
+    def from_dict(cls: Type[EN], src_dict: Dict[str, Any]) -> EN:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -106,7 +156,7 @@ class step:
         return key in self.additional_properties
 
 
-WB = TypeVar("WB", bound="obj")
+RS = TypeVar("RS", bound="obj")
 
 
 @attr.s(auto_attribs=True)
@@ -138,7 +188,7 @@ class obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WB], src_dict: Dict[str, Any]) -> WB:
+    def from_dict(cls: Type[RS], src_dict: Dict[str, Any]) -> RS:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -182,7 +232,7 @@ class obj:
         return key in self.additional_properties
 
 
-KK = TypeVar("KK", bound="ply")
+LR = TypeVar("LR", bound="ply")
 
 
 @attr.s(auto_attribs=True)
@@ -214,7 +264,7 @@ class ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[KK], src_dict: Dict[str, Any]) -> KK:
+    def from_dict(cls: Type[LR], src_dict: Dict[str, Any]) -> LR:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -258,7 +308,7 @@ class ply:
         return key in self.additional_properties
 
 
-HC = TypeVar("HC", bound="stl")
+MP = TypeVar("MP", bound="stl")
 
 
 @attr.s(auto_attribs=True)
@@ -290,7 +340,7 @@ class stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HC], src_dict: Dict[str, Any]) -> HC:
+    def from_dict(cls: Type[MP], src_dict: Dict[str, Any]) -> MP:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -334,4 +384,4 @@ class stl:
         return key in self.additional_properties
 
 
-InputFormat = Union[gltf, step, obj, ply, stl]
+InputFormat = Union[fbx, gltf, step, obj, ply, stl]

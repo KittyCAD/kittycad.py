@@ -8,7 +8,7 @@ from ..models.currency import Currency
 from ..models.invoice_status import InvoiceStatus
 from ..types import UNSET, Unset
 
-FM = TypeVar("FM", bound="Invoice")
+WF = TypeVar("WF", bound="Invoice")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class Invoice:
     from ..models.invoice_line_item import InvoiceLineItem
 
     lines: Union[Unset, List[InvoiceLineItem]] = UNSET
-    metadata: Union[Unset, Any] = UNSET
+    metadata: Union[Unset, Dict[str, str]] = UNSET
     number: Union[Unset, str] = UNSET
     paid: Union[Unset, bool] = False
     pdf: Union[Unset, str] = UNSET
@@ -74,6 +74,7 @@ class Invoice:
         if not isinstance(self.lines, Unset):
             lines = self.lines
         metadata = self.metadata
+
         number = self.number
         paid = self.paid
         pdf = self.pdf
@@ -143,7 +144,7 @@ class Invoice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FM], src_dict: Dict[str, Any]) -> FM:
+    def from_dict(cls: Type[WF], src_dict: Dict[str, Any]) -> WF:
         d = src_dict.copy()
         amount_due = d.pop("amount_due", UNSET)
 
@@ -188,6 +189,7 @@ class Invoice:
         lines = cast(List[InvoiceLineItem], d.pop("lines", UNSET))
 
         metadata = d.pop("metadata", UNSET)
+
         number = d.pop("number", UNSET)
 
         paid = d.pop("paid", UNSET)
