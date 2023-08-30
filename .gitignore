@@ -22,7 +22,6 @@ dmypy.json
 /coverage.xml
 /.coverage
 
-poetry.lock
 testing
 
 # Sphinx documentation
