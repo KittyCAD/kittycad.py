@@ -2,16 +2,17 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
+from ..models import Base64Data
 from ..types import UNSET, Unset
 
-DO = TypeVar("DO", bound="ExportFile")
+ET = TypeVar("ET", bound="ExportFile")
 
 
 @attr.s(auto_attribs=True)
 class ExportFile:
     """A file to be exported to the client."""  # noqa: E501
 
-    contents: Union[Unset, str] = UNSET
+    contents: Union[Unset, Base64Data] = UNSET
     name: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -31,9 +32,14 @@ class ExportFile:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DO], src_dict: Dict[str, Any]) -> DO:
+    def from_dict(cls: Type[ET], src_dict: Dict[str, Any]) -> ET:
         d = src_dict.copy()
-        contents = d.pop("contents", UNSET)
+        _contents = d.pop("contents", UNSET)
+        contents: Union[Unset, Base64Data]
+        if isinstance(_contents, Unset):
+            contents = UNSET
+        else:
+            contents = Base64Data(_contents)
 
         name = d.pop("name", UNSET)
 

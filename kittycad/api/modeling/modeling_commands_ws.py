@@ -12,6 +12,7 @@ def _get_kwargs(
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
+    webrtc: bool,
     *,
     client: Client,
 ) -> Dict[str, Any]:
@@ -41,6 +42,12 @@ def _get_kwargs(
         else:
             url = url + "?video_res_width=" + str(video_res_width)
 
+    if webrtc is not None:
+        if "?" in url:
+            url = url + "&webrtc=" + str(webrtc)
+        else:
+            url = url + "?webrtc=" + str(webrtc)
+
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
@@ -57,6 +64,7 @@ def sync(
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
+    webrtc: bool,
     *,
     client: Client,
 ) -> ClientConnection:
@@ -67,6 +75,7 @@ def sync(
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
         video_res_width=video_res_width,
+        webrtc=webrtc,
         client=client,
     )
 
@@ -85,6 +94,7 @@ async def asyncio(
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
+    webrtc: bool,
     *,
     client: Client,
 ) -> WebSocketClientProtocol:
@@ -95,6 +105,7 @@ async def asyncio(
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
         video_res_width=video_res_width,
+        webrtc=webrtc,
         client=client,
     )
 

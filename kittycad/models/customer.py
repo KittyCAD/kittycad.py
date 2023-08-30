@@ -8,7 +8,7 @@ from ..models.currency import Currency
 from ..models.new_address import NewAddress
 from ..types import UNSET, Unset
 
-US = TypeVar("US", bound="Customer")
+NH = TypeVar("NH", bound="Customer")
 
 
 @attr.s(auto_attribs=True)
@@ -71,7 +71,7 @@ class Customer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[US], src_dict: Dict[str, Any]) -> US:
+    def from_dict(cls: Type[NH], src_dict: Dict[str, Any]) -> NH:
         d = src_dict.copy()
         _address = d.pop("address", UNSET)
         address: Union[Unset, NewAddress]

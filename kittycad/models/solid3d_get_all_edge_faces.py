@@ -4,47 +4,41 @@ import attr
 
 from ..types import UNSET, Unset
 
-ED = TypeVar("ED", bound="ErrorResponse")
+WN = TypeVar("WN", bound="Solid3dGetAllEdgeFaces")
 
 
 @attr.s(auto_attribs=True)
-class ErrorResponse:
-    """The error response."""  # noqa: E501
+class Solid3dGetAllEdgeFaces:
+    """The response from the `Solid3dGetAllEdgeFaces` command."""  # noqa: E501
 
-    from ..models.engine_error import EngineError
-
-    errors: Union[Unset, List[EngineError]] = UNSET
+    faces: Union[Unset, List[str]] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.engine_error import EngineError
-
-        errors: Union[Unset, List[EngineError]] = UNSET
-        if not isinstance(self.errors, Unset):
-            errors = self.errors
+        faces: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.faces, Unset):
+            faces = self.faces
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if errors is not UNSET:
-            field_dict["errors"] = errors
+        if faces is not UNSET:
+            field_dict["faces"] = faces
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ED], src_dict: Dict[str, Any]) -> ED:
+    def from_dict(cls: Type[WN], src_dict: Dict[str, Any]) -> WN:
         d = src_dict.copy()
-        from ..models.engine_error import EngineError
+        faces = cast(List[str], d.pop("faces", UNSET))
 
-        errors = cast(List[EngineError], d.pop("errors", UNSET))
-
-        error_response = cls(
-            errors=errors,
+        solid3d_get_all_edge_faces = cls(
+            faces=faces,
         )
 
-        error_response.additional_properties = d
-        return error_response
+        solid3d_get_all_edge_faces.additional_properties = d
+        return solid3d_get_all_edge_faces
 
     @property
     def additional_keys(self) -> List[str]:

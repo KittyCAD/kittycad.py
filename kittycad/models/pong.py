@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-CX = TypeVar("CX", bound="Pong")
+SF = TypeVar("SF", bound="Pong")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class Pong:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CX], src_dict: Dict[str, Any]) -> CX:
+    def from_dict(cls: Type[SF], src_dict: Dict[str, Any]) -> SF:
         d = src_dict.copy()
         message = d.pop("message", UNSET)
 

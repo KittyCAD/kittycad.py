@@ -5,7 +5,7 @@ import attr
 from ..models.rtc_sdp_type import RtcSdpType
 from ..types import UNSET, Unset
 
-JD = TypeVar("JD", bound="RtcSessionDescription")
+NC = TypeVar("NC", bound="RtcSessionDescription")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class RtcSessionDescription:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JD], src_dict: Dict[str, Any]) -> JD:
+    def from_dict(cls: Type[NC], src_dict: Dict[str, Any]) -> NC:
         d = src_dict.copy()
         sdp = d.pop("sdp", UNSET)
 

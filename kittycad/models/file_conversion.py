@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models import Base64Data
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
@@ -12,7 +13,7 @@ from ..models.output_format import OutputFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-OH = TypeVar("OH", bound="FileConversion")
+YF = TypeVar("YF", bound="FileConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -23,7 +24,7 @@ class FileConversion:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    output: Union[Unset, str] = UNSET
+    output: Union[Unset, Base64Data] = UNSET
     output_format: Union[Unset, FileExportFormat] = UNSET
     output_format_options: Union[Unset, OutputFormat] = UNSET
     outputs: Union[Unset, Any] = UNSET
@@ -100,7 +101,7 @@ class FileConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OH], src_dict: Dict[str, Any]) -> OH:
+    def from_dict(cls: Type[YF], src_dict: Dict[str, Any]) -> YF:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -125,7 +126,12 @@ class FileConversion:
         else:
             id = _id  # type: ignore[arg-type]
 
-        output = d.pop("output", UNSET)
+        _output = d.pop("output", UNSET)
+        output: Union[Unset, Base64Data]
+        if isinstance(_output, Unset):
+            output = UNSET
+        else:
+            output = Base64Data(_output)
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileExportFormat]

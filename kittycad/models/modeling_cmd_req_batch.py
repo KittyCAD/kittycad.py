@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-GD = TypeVar("GD", bound="ModelingCmdReqBatch")
+XL = TypeVar("XL", bound="ModelingCmdReqBatch")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class ModelingCmdReqBatch:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GD], src_dict: Dict[str, Any]) -> GD:
+    def from_dict(cls: Type[XL], src_dict: Dict[str, Any]) -> XL:
         d = src_dict.copy()
         cmds = d.pop("cmds", UNSET)
 
