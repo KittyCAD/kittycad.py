@@ -4,8 +4,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models import Base64Data
 from ..models.api_call_status import ApiCallStatus
+from ..models.base64data import Base64Data
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
 from ..models.input_format import InputFormat

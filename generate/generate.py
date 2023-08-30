@@ -1324,7 +1324,7 @@ def generateObjectTypeCode(
     if has_date_time:
         f.write("import datetime\n")
     if has_base_64:
-        f.write("from ..models import Base64Data\n")
+        f.write("from ..models.base64data import Base64Data\n")
     f.write(
         "from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated\n"
     )

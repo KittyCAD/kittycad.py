@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models import Base64Data
+from ..models.base64data import Base64Data
 from ..types import UNSET, Unset
 
 ET = TypeVar("ET", bound="ExportFile")
