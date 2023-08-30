@@ -83,6 +83,7 @@ class PaymentMethod:
         id = d.pop("id", UNSET)
 
         metadata = d.pop("metadata", UNSET)
+
         _type = d.pop("type", UNSET)
         type: Union[Unset, PaymentMethodType]
         if isinstance(_type, Unset):

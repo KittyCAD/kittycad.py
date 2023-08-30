@@ -1511,7 +1511,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                     )
                     # return early
                     return
-            elif property_schema["format"] == "byte":
+                elif property_schema["format"] == "byte":
                     f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
                     f.write(
                         "\t\tif not isinstance(self."
@@ -1521,9 +1521,9 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                     f.write(
                         "\t\t\t"
                         + clean_parameter_name(property_name)
-                        + " = Base64Data(selfz."
+                        + " = self."
                         + clean_parameter_name(property_name)
-                        + ")\n"
+                        + ".get_encoded()\n"
                     )
                     # return early
                     return
@@ -1718,8 +1718,15 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
         elif property_type == "boolean":
             f.write("\t" + property_name + ": Union[Unset, bool] = False\n")
         elif "additionalProperties" in property_schema and property_type == "object":
-            if 'format' in property_schema["additionalProperties"] and property_schema["additionalProperties"]["format"] == "byte":
-                f.write("\t" + property_name + ": Union[Unset, Dict[str, Base64Data]] = UNSET\n")
+            if (
+                "format" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["format"] == "byte"
+            ):
+                f.write(
+                    "\t"
+                    + property_name
+                    + ": Union[Unset, Dict[str, Base64Data]] = UNSET\n"
+                )
             else:
                 # Throw an error.
                 print("property: ", property_schema)

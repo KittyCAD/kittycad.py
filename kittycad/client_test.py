@@ -1,14 +1,10 @@
 import os
-from typing import Tuple, Union, Optional
+from typing import Optional, Union
 
 import pytest
 
 from .api.api_tokens import list_api_tokens_for_user
-from .api.file import (
-    create_file_conversion,
-    create_file_mass,
-    create_file_volume,
-)
+from .api.file import create_file_conversion, create_file_mass, create_file_volume
 from .api.meta import ping
 from .api.users import get_user_self, list_users_extended
 from .client import ClientFromEnv
@@ -140,7 +136,9 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    result: Optional[Union[FileConversion, Error]] = await create_file_conversion.asyncio(
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
         client=client,
         body=content,
         src_format=FileImportFormat.STL,
@@ -170,7 +168,9 @@ async def test_file_convert_obj_async():
     file.close()
 
     # Get the fc.
-    result: Optional[Union[FileConversion, Error]] = await create_file_conversion.asyncio(
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
         client=client,
         body=content,
         src_format=FileImportFormat.OBJ,

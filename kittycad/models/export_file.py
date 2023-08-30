@@ -18,7 +18,9 @@ class ExportFile:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        contents = self.contents
+        contents: Union[Unset, str] = UNSET
+        if not isinstance(self.contents, Unset):
+            contents = self.contents.get_encoded()
         name = self.name
 
         field_dict: Dict[str, Any] = {}

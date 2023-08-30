@@ -1,10 +1,9 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, Type, TypeVar
 
 import attr
 
-from ..types import UNSET, Unset
-
 VI = TypeVar("VI", bound="Empty")
+
 
 @attr.s(auto_attribs=True)
 class Empty:

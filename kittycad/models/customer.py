@@ -103,6 +103,7 @@ class Customer:
         id = d.pop("id", UNSET)
 
         metadata = d.pop("metadata", UNSET)
+
         name = d.pop("name", UNSET)
 
         phone = d.pop("phone", UNSET)

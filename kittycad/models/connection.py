@@ -271,6 +271,7 @@ class Connection:
         http_port = d.pop("http_port", UNSET)
 
         http_req_stats = d.pop("http_req_stats", UNSET)
+
         https_port = d.pop("https_port", UNSET)
 
         in_bytes = d.pop("in_bytes", UNSET)

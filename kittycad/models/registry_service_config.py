@@ -70,6 +70,7 @@ class RegistryServiceConfig:
         )
 
         index_configs = d.pop("index_configs", UNSET)
+
         insecure_registry_cid_rs = cast(
             List[str], d.pop("insecure_registry_cid_rs", UNSET)
         )

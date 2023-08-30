@@ -1,4 +1,5 @@
 import base64
+import binascii
 
 
 class Base64Data:
@@ -10,19 +11,19 @@ class Base64Data:
         If the data is a regular byte string, it will encode and then store it.
         """
         if self.is_base64(data):
-            self._data = str(data, 'utf-8')
+            self._data = str(data, "utf-8")
         else:
             encoded = base64.b64encode(data)
-            self._data = str(encoded, 'utf-8')
+            self._data = str(encoded, "utf-8")
 
     @staticmethod
     def is_base64(data: bytes) -> bool:
         """Checks if given data is base64 encoded."""
         try:
-            str_data = str(data, 'utf-8')
+            str_data = str(data, "utf-8")
             _ = base64.urlsafe_b64decode(str_data.strip("=") + "===")
             return True
-        except:
+        except binascii.Error:
             return False
 
     def get_encoded(self) -> str:

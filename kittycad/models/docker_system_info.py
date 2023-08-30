@@ -450,6 +450,7 @@ class DockerSystemInfo:
             runc_commit = _runc_commit  # type: ignore[arg-type]
 
         runtimes = d.pop("runtimes", UNSET)
+
         security_options = cast(List[str], d.pop("security_options", UNSET))
 
         server_version = d.pop("server_version", UNSET)

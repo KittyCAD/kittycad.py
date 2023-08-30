@@ -188,6 +188,7 @@ class Invoice:
         lines = cast(List[InvoiceLineItem], d.pop("lines", UNSET))
 
         metadata = d.pop("metadata", UNSET)
+
         number = d.pop("number", UNSET)
 
         paid = d.pop("paid", UNSET)

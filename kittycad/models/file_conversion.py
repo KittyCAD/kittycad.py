@@ -46,7 +46,9 @@ class FileConversion:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        output = self.output
+        output: Union[Unset, str] = UNSET
+        if not isinstance(self.output, Unset):
+            output = self.output.get_encoded()
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
         if not isinstance(self.output_format_options, Unset):
@@ -148,6 +150,7 @@ class FileConversion:
             output_format_options = _output_format_options  # type: ignore[arg-type]
 
         outputs = d.pop("outputs", UNSET)
+
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
