@@ -1560,13 +1560,70 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 + "\n"
             )
         elif "additionalProperties" in property_schema and property_type == "object":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
+            if "$ref" in property_schema["additionalProperties"]:
+                ref = property_schema["additionalProperties"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+                f.write(
+                    "\t\t" + property_name + ": Union[Unset, Dict[str, Any]] = UNSET\n"
+                )
+                f.write(
+                    "\t\tif not isinstance(_"
+                    + clean_parameter_name(property_name)
+                    + ", Unset):\n"
+                )
+                f.write("\t\t\tnew_dict: Dict[str, Any] = {}\n")
+                f.write("\t\t\tfor key, value in _"+clean_parameter_name(property_name)+".items():\n")
+                f.write("\t\t\t\tnew_dict[key] = value.to_dict()\n")
+                f.write(
+                    "\t\t\t" + clean_parameter_name(property_name) + " = new_dict\n"
+                )
+            elif (
+                "type" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["type"] == "integer"
+            ):
+                f.write(
+                    "\t\t"
+                    + clean_parameter_name(property_name)
+                    + " = self."
+                    + clean_parameter_name(property_name)
+                    + "\n"
+                )
+                f.write("\n")
+            elif (
+                "format" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["format"] == "byte"
+            ):
+                f.write(
+                    "\t\t" + property_name + ": Union[Unset, Dict[str, str]] = UNSET\n"
+                )
+                f.write(
+                    "\t\tif not isinstance(_"
+                    + clean_parameter_name(property_name)
+                    + ", Unset):\n"
+                )
+                f.write("\t\t\tnew_dict: Dict[str, str] = {}\n")
+                f.write("\t\t\tfor key, value in _"+clean_parameter_name(property_name)+".items():\n")
+                f.write("\t\t\t\tnew_dict[key] = value.get_encoded()\n")
+                f.write(
+                    "\t\t\t" + clean_parameter_name(property_name) + " = new_dict\n"
+                )
+            elif (
+                "type" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["type"] == "string"
+            ):
+                f.write(
+                    "\t\t"
+                    + clean_parameter_name(property_name)
+                    + " = self."
+                    + clean_parameter_name(property_name)
+                    + "\n"
+                )
+                f.write("\n")
+            else:
+                # Throw an error.
+                print("property: ", property_schema)
+                raise Exception("Unknown property type")
         elif property_type == "array":
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
@@ -1709,16 +1766,30 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                     return
 
             f.write("\t" + property_name + ": Union[Unset, str] = UNSET\n")
-        elif property_type == "object":
-            f.write("\t" + property_name + ": Union[Unset, Any] = UNSET\n")
-        elif property_type == "integer":
-            f.write("\t" + property_name + ":  Union[Unset, int] = UNSET\n")
-        elif property_type == "number":
-            f.write("\t" + property_name + ":  Union[Unset, float] = UNSET\n")
-        elif property_type == "boolean":
-            f.write("\t" + property_name + ": Union[Unset, bool] = False\n")
         elif "additionalProperties" in property_schema and property_type == "object":
-            if (
+            if "$ref" in property_schema["additionalProperties"]:
+                ref = property_schema["additionalProperties"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+                # Make sure we import the model.
+                f.write(
+                    "\tfrom ..models." + camel_to_snake(ref) + " import " + ref + "\n"
+                )
+                f.write(
+                    "\t"
+                    + property_name
+                    + ": Union[Unset, Dict[str, "
+                    + ref
+                    + "]] = UNSET\n"
+                )
+            elif (
+                "type" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["type"] == "integer"
+            ):
+                f.write(
+                    "\t" + property_name + ": Union[Unset, Dict[str, int]] = UNSET\n"
+                )
+            elif (
                 "format" in property_schema["additionalProperties"]
                 and property_schema["additionalProperties"]["format"] == "byte"
             ):
@@ -1727,10 +1798,26 @@ def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
                     + property_name
                     + ": Union[Unset, Dict[str, Base64Data]] = UNSET\n"
                 )
+            elif (
+                "type" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["type"] == "string"
+            ):
+                f.write(
+                    "\t" + property_name + ": Union[Unset, Dict[str, str]] = UNSET\n"
+                )
             else:
                 # Throw an error.
                 print("property: ", property_schema)
                 raise Exception("Unknown property type")
+        elif property_type == "object":
+            # TODO: we need to get the name of the object
+            f.write("\t" + property_name + ": Union[Unset, Any] = UNSET\n")
+        elif property_type == "integer":
+            f.write("\t" + property_name + ":  Union[Unset, int] = UNSET\n")
+        elif property_type == "number":
+            f.write("\t" + property_name + ":  Union[Unset, float] = UNSET\n")
+        elif property_type == "boolean":
+            f.write("\t" + property_name + ": Union[Unset, bool] = False\n")
         elif property_type == "array":
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:
@@ -1911,14 +1998,75 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             )
             f.write("\n")
         elif "additionalProperties" in property_schema and property_type == "object":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
-            )
-            f.write("\n")
+            if "$ref" in property_schema["additionalProperties"]:
+                ref = property_schema["additionalProperties"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+                f.write(
+                    "\t\tif isinstance(_"
+                    + clean_parameter_name(property_name)
+                    + ", Unset):\n"
+                )
+                f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
+                f.write("\t\telse:\n")
+                f.write(
+                    "\t\telse:\n\t\t\tnew_map: Dict[str, "
+                    + ref
+                    + "] = {}\n\t\t\tfor k, v in _"
+                    + clean_parameter_name(property_name)
+                    + ".items():\n\t\t\t\tnew_map[k] = "
+                    + ref
+                    + ".from_dict(v)\n\t\t\t"
+                    + clean_parameter_name(property_name)
+                    + " = new_map\n"
+                )
+                f.write("\n")
+            elif (
+                "type" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["type"] == "integer"
+            ):
+                f.write(
+                    "\t\t"
+                    + clean_parameter_name(property_name)
+                    + ' = d.pop("'
+                    + property_name
+                    + '", UNSET)\n'
+                )
+                f.write("\n")
+            elif (
+                "format" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["format"] == "byte"
+            ):
+                f.write(
+                    "\t\tif isinstance(_"
+                    + clean_parameter_name(property_name)
+                    + ", Unset):\n"
+                )
+                f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
+                f.write(
+                    "\t\telse:\n\t\t\tnew_map: Dict[str, Base64Data] = {}\n\t\t\tfor k, v in _"
+                    + clean_parameter_name(property_name)
+                    + ".items():\n\t\t\t\tnew_map[k] = Base64Data(v)\n\t\t\t"
+                    + clean_parameter_name(property_name)
+                    + " = new_map\n"
+                )
+                f.write("\n")
+            elif (
+                "type" in property_schema["additionalProperties"]
+                and property_schema["additionalProperties"]["type"] == "string"
+            ):
+                f.write(
+                    "\t\t"
+                    + clean_parameter_name(property_name)
+                    + ' = d.pop("'
+                    + property_name
+                    + '", UNSET)\n'
+                )
+                f.write("\n")
+            else:
+                # Throw an error.
+                print("property: ", property_schema)
+                raise Exception("Unknown property type")
         elif property_type == "array":
             if "items" in property_schema:
                 if "$ref" in property_schema["items"]:

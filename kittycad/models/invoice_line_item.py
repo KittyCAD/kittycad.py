@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
@@ -17,7 +17,7 @@ class InvoiceLineItem:
     description: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     invoice_item: Union[Unset, str] = UNSET
-    metadata: Union[Unset, Any] = UNSET
+    metadata: Union[Unset, Dict[str, str]] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

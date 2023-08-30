@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -33,7 +33,7 @@ class Invoice:
     from ..models.invoice_line_item import InvoiceLineItem
 
     lines: Union[Unset, List[InvoiceLineItem]] = UNSET
-    metadata: Union[Unset, Any] = UNSET
+    metadata: Union[Unset, Dict[str, str]] = UNSET
     number: Union[Unset, str] = UNSET
     paid: Union[Unset, bool] = False
     pdf: Union[Unset, str] = UNSET
@@ -74,6 +74,7 @@ class Invoice:
         if not isinstance(self.lines, Unset):
             lines = self.lines
         metadata = self.metadata
+
         number = self.number
         paid = self.paid
         pdf = self.pdf

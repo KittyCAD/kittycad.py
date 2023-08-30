@@ -1,10 +1,11 @@
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional, Union
 
 from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
 from websockets.sync.client import ClientConnection, connect as ws_connect
 
 from ...client import Client
 from ...models.error import Error
+from ...types import Response
 
 
 def _get_kwargs(

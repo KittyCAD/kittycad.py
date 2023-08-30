@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -27,7 +27,7 @@ class FileConversion:
     output: Union[Unset, Base64Data] = UNSET
     output_format: Union[Unset, FileExportFormat] = UNSET
     output_format_options: Union[Unset, OutputFormat] = UNSET
-    outputs: Union[Unset, Any] = UNSET
+    outputs: Union[Unset, Dict[str, Base64Data]] = UNSET
     src_format: Union[Unset, FileImportFormat] = UNSET
     src_format_options: Union[Unset, InputFormat] = UNSET
     started_at: Union[Unset, datetime.datetime] = UNSET
@@ -53,7 +53,12 @@ class FileConversion:
             output_format = self.output_format
         if not isinstance(self.output_format_options, Unset):
             output_format_options = self.output_format_options
-        outputs = self.outputs
+        outputs: Union[Unset, Dict[str, str]] = UNSET
+        if not isinstance(_outputs, Unset):
+            new_dict: Dict[str, str] = {}
+            for key, value in _outputs.items():
+                new_dict[key] = value.get_encoded()
+            outputs = new_dict
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         if not isinstance(self.src_format_options, Unset):
@@ -149,7 +154,13 @@ class FileConversion:
         else:
             output_format_options = _output_format_options  # type: ignore[arg-type]
 
-        outputs = d.pop("outputs", UNSET)
+        if isinstance(_outputs, Unset):
+            outputs = UNSET
+        else:
+            new_map: Dict[str, Base64Data] = {}
+            for k, v in _outputs.items():
+                new_map[k] = Base64Data(v)
+            outputs = new_map
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]

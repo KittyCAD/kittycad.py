@@ -1,55 +1,68 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 
+from ..models.modeling_outcome import ModelingOutcome
 from ..types import UNSET, Unset
 
 NX = TypeVar("NX", bound="ModelingOutcomes")
 
-
 @attr.s(auto_attribs=True)
 class ModelingOutcomes:
-    """The result from a batch of modeling commands."""  # noqa: E501
+	""" The result from a batch of modeling commands. """ # noqa: E501
+	from ..models.modeling_outcome import ModelingOutcome
+	outcomes: Union[Unset, Dict[str, ModelingOutcome]] = UNSET
 
-    outcomes: Union[Unset, Any] = UNSET
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+	def to_dict(self) -> Dict[str, Any]:
+		outcomes: Union[Unset, Dict[str, Any]] = UNSET
+		if not isinstance(_outcomes, Unset):
+			new_dict: Dict[str, Any] = {}
+			for key, value in _outcomes.items():
+				new_dict[key] = value.to_dict()
+			outcomes = new_dict
 
-    def to_dict(self) -> Dict[str, Any]:
-        outcomes = self.outcomes
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		if outcomes is not UNSET:
+			field_dict['outcomes'] = outcomes
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if outcomes is not UNSET:
-            field_dict["outcomes"] = outcomes
+		return field_dict
 
-        return field_dict
+	@classmethod
+	def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
+		d = src_dict.copy()
+		if isinstance(_outcomes, Unset):
+			outcomes = UNSET
+		else:
+		else:
+			new_map: Dict[str, ModelingOutcome] = {}
+			for k, v in _outcomes.items():
+				new_map[k] = ModelingOutcome.from_dict(v)
+			outcomes = new_map
 
-    @classmethod
-    def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
-        d = src_dict.copy()
-        outcomes = d.pop("outcomes", UNSET)
 
-        modeling_outcomes = cls(
-            outcomes=outcomes,
-        )
+		modeling_outcomes = cls(
+			outcomes= outcomes,
+		)
 
-        modeling_outcomes.additional_properties = d
-        return modeling_outcomes
+		modeling_outcomes.additional_properties = d
+		return modeling_outcomes
 
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
 
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
 
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
 
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
 
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties

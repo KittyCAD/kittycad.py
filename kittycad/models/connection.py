@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -33,7 +33,7 @@ class Connection:
     http_base_path: Union[Unset, str] = UNSET
     http_host: Union[Unset, str] = UNSET
     http_port: Union[Unset, int] = UNSET
-    http_req_stats: Union[Unset, Any] = UNSET
+    http_req_stats: Union[Unset, Dict[str, int]] = UNSET
     https_port: Union[Unset, int] = UNSET
     in_bytes: Union[Unset, int] = UNSET
     in_msgs: Union[Unset, int] = UNSET
@@ -88,6 +88,7 @@ class Connection:
         http_host = self.http_host
         http_port = self.http_port
         http_req_stats = self.http_req_stats
+
         https_port = self.https_port
         in_bytes = self.in_bytes
         in_msgs = self.in_msgs

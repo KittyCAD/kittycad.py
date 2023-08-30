@@ -1,5 +1,5 @@
 import os
-from typing import Optional, Union
+from typing import Dict, Optional, Union
 
 import pytest
 
@@ -11,6 +11,7 @@ from .client import ClientFromEnv
 from .models import (
     ApiCallStatus,
     ApiTokenResultsPage,
+    Base64Data,
     CreatedAtSortMode,
     Error,
     ExtendedUserResultsPage,
@@ -25,6 +26,7 @@ from .models import (
     UnitVolume,
     User,
 )
+from .types import Unset
 
 
 def test_get_session():
@@ -120,9 +122,12 @@ def test_file_convert_stl():
 
     print(f"FileConversion: {fc}")
 
+    assert not isinstance(fc.outputs, Unset)
+
+    outputs: Dict[str, Base64Data] = fc.outputs
     # Make sure the bytes are not empty.
-    for file in fc.outputs:
-        assert len(file.contents.get_decoded()) > 0
+    for key, value in outputs.items():
+        assert len(value.get_decoded()) > 0
 
 
 @pytest.mark.asyncio
@@ -156,6 +161,13 @@ async def test_file_convert_stl_async():
 
     print(f"FileConversion: {fc}")
 
+    assert not isinstance(fc.outputs, Unset)
+
+    outputs: Dict[str, Base64Data] = fc.outputs
+    # Make sure the bytes are not empty.
+    for key, value in outputs.items():
+        assert len(value.get_decoded()) > 0
+
 
 @pytest.mark.asyncio
 async def test_file_convert_obj_async():
@@ -187,6 +199,13 @@ async def test_file_convert_obj_async():
     assert fc.status == ApiCallStatus.COMPLETED
 
     print(f"FileConversion: {fc}")
+
+    assert not isinstance(fc.outputs, Unset)
+
+    outputs: Dict[str, Base64Data] = fc.outputs
+    # Make sure the bytes are not empty.
+    for key, value in outputs.items():
+        assert len(value.get_decoded()) > 0
 
 
 def test_file_mass():

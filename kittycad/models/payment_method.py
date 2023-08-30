@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated
 
 import attr
 from dateutil.parser import isoparse
@@ -20,7 +20,7 @@ class PaymentMethod:
     card: Union[Unset, CardDetails] = UNSET
     created_at: Union[Unset, datetime.datetime] = UNSET
     id: Union[Unset, str] = UNSET
-    metadata: Union[Unset, Any] = UNSET
+    metadata: Union[Unset, Dict[str, str]] = UNSET
     type: Union[Unset, PaymentMethodType] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -35,6 +35,7 @@ class PaymentMethod:
             created_at = self.created_at.isoformat()
         id = self.id
         metadata = self.metadata
+
         if not isinstance(self.type, Unset):
             type = self.type
 
