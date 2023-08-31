@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-WP = TypeVar("WP", bound="PathGetInfo")
+XO = TypeVar("XO", bound="PathGetInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class PathGetInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WP], src_dict: Dict[str, Any]) -> WP:
+    def from_dict(cls: Type[XO], src_dict: Dict[str, Any]) -> XO:
         d = src_dict.copy()
         from ..models.path_segment_info import PathSegmentInfo
 

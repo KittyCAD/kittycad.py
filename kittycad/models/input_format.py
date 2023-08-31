@@ -106,57 +106,7 @@ class gltf:
         return key in self.additional_properties
 
 
-EN = TypeVar("EN", bound="step")
-
-
-@attr.s(auto_attribs=True)
-class step:
-    """ISO 10303-21 (STEP) format."""  # noqa: E501
-
-    type: str = "step"
-
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
-    def to_dict(self) -> Dict[str, Any]:
-        type = self.type
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        field_dict["type"] = type
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[EN], src_dict: Dict[str, Any]) -> EN:
-        d = src_dict.copy()
-        type = d.pop("type", UNSET)
-
-        step = cls(
-            type=type,
-        )
-
-        step.additional_properties = d
-        return step
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-RS = TypeVar("RS", bound="obj")
+EN = TypeVar("EN", bound="obj")
 
 
 @attr.s(auto_attribs=True)
@@ -188,7 +138,7 @@ class obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RS], src_dict: Dict[str, Any]) -> RS:
+    def from_dict(cls: Type[EN], src_dict: Dict[str, Any]) -> EN:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -232,7 +182,7 @@ class obj:
         return key in self.additional_properties
 
 
-LR = TypeVar("LR", bound="ply")
+RS = TypeVar("RS", bound="ply")
 
 
 @attr.s(auto_attribs=True)
@@ -264,7 +214,7 @@ class ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LR], src_dict: Dict[str, Any]) -> LR:
+    def from_dict(cls: Type[RS], src_dict: Dict[str, Any]) -> RS:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -308,7 +258,107 @@ class ply:
         return key in self.additional_properties
 
 
-MP = TypeVar("MP", bound="stl")
+LR = TypeVar("LR", bound="sldprt")
+
+
+@attr.s(auto_attribs=True)
+class sldprt:
+    """SolidWorks part (SLDPRT) format."""  # noqa: E501
+
+    type: str = "sldprt"
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[LR], src_dict: Dict[str, Any]) -> LR:
+        d = src_dict.copy()
+        type = d.pop("type", UNSET)
+
+        sldprt = cls(
+            type=type,
+        )
+
+        sldprt.additional_properties = d
+        return sldprt
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
+MP = TypeVar("MP", bound="step")
+
+
+@attr.s(auto_attribs=True)
+class step:
+    """ISO 10303-21 (STEP) format."""  # noqa: E501
+
+    type: str = "step"
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[MP], src_dict: Dict[str, Any]) -> MP:
+        d = src_dict.copy()
+        type = d.pop("type", UNSET)
+
+        step = cls(
+            type=type,
+        )
+
+        step.additional_properties = d
+        return step
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
+WF = TypeVar("WF", bound="stl")
 
 
 @attr.s(auto_attribs=True)
@@ -340,7 +390,7 @@ class stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MP], src_dict: Dict[str, Any]) -> MP:
+    def from_dict(cls: Type[WF], src_dict: Dict[str, Any]) -> WF:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -384,4 +434,4 @@ class stl:
         return key in self.additional_properties
 
 
-InputFormat = Union[fbx, gltf, step, obj, ply, stl]
+InputFormat = Union[fbx, gltf, obj, ply, sldprt, step, stl]

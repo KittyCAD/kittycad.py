@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-UE = TypeVar("UE", bound="PaymentIntent")
+BF = TypeVar("BF", bound="PaymentIntent")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class PaymentIntent:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UE], src_dict: Dict[str, Any]) -> UE:
+    def from_dict(cls: Type[BF], src_dict: Dict[str, Any]) -> BF:
         d = src_dict.copy()
         client_secret = d.pop("client_secret", UNSET)
 

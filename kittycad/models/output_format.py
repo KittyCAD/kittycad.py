@@ -10,7 +10,7 @@ from ..models.stl_storage import StlStorage
 from ..models.system import System
 from ..types import UNSET, Unset
 
-TZ = TypeVar("TZ", bound="fbx")
+AX = TypeVar("AX", bound="fbx")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class fbx:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TZ], src_dict: Dict[str, Any]) -> TZ:
+    def from_dict(cls: Type[AX], src_dict: Dict[str, Any]) -> AX:
         d = src_dict.copy()
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, FbxStorage]
@@ -73,7 +73,7 @@ class fbx:
         return key in self.additional_properties
 
 
-AX = TypeVar("AX", bound="gltf")
+RQ = TypeVar("RQ", bound="gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -105,7 +105,7 @@ class gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AX], src_dict: Dict[str, Any]) -> AX:
+    def from_dict(cls: Type[RQ], src_dict: Dict[str, Any]) -> RQ:
         d = src_dict.copy()
         _presentation = d.pop("presentation", UNSET)
         presentation: Union[Unset, GltfPresentation]
@@ -149,7 +149,7 @@ class gltf:
         return key in self.additional_properties
 
 
-RQ = TypeVar("RQ", bound="obj")
+ZL = TypeVar("ZL", bound="obj")
 
 
 @attr.s(auto_attribs=True)
@@ -176,7 +176,7 @@ class obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RQ], src_dict: Dict[str, Any]) -> RQ:
+    def from_dict(cls: Type[ZL], src_dict: Dict[str, Any]) -> ZL:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -212,7 +212,7 @@ class obj:
         return key in self.additional_properties
 
 
-ZL = TypeVar("ZL", bound="ply")
+CM = TypeVar("CM", bound="ply")
 
 
 @attr.s(auto_attribs=True)
@@ -244,7 +244,7 @@ class ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZL], src_dict: Dict[str, Any]) -> ZL:
+    def from_dict(cls: Type[CM], src_dict: Dict[str, Any]) -> CM:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -288,7 +288,7 @@ class ply:
         return key in self.additional_properties
 
 
-CM = TypeVar("CM", bound="step")
+OS = TypeVar("OS", bound="step")
 
 
 @attr.s(auto_attribs=True)
@@ -315,7 +315,7 @@ class step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CM], src_dict: Dict[str, Any]) -> CM:
+    def from_dict(cls: Type[OS], src_dict: Dict[str, Any]) -> OS:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -351,7 +351,7 @@ class step:
         return key in self.additional_properties
 
 
-OS = TypeVar("OS", bound="stl")
+WP = TypeVar("WP", bound="stl")
 
 
 @attr.s(auto_attribs=True)
@@ -383,7 +383,7 @@ class stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OS], src_dict: Dict[str, Any]) -> OS:
+    def from_dict(cls: Type[WP], src_dict: Dict[str, Any]) -> WP:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]

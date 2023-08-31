@@ -6,7 +6,7 @@ from ..models.modeling_cmd import ModelingCmd
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..types import UNSET, Unset
 
-WR = TypeVar("WR", bound="ModelingCmdReq")
+XL = TypeVar("XL", bound="ModelingCmdReq")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class ModelingCmdReq:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WR], src_dict: Dict[str, Any]) -> WR:
+    def from_dict(cls: Type[XL], src_dict: Dict[str, Any]) -> XL:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]
