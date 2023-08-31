@@ -8,7 +8,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 from ..types import UNSET, Unset
 
-PZ = TypeVar("PZ", bound="trickle_ice")
+FA = TypeVar("FA", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PZ], src_dict: Dict[str, Any]) -> PZ:
+    def from_dict(cls: Type[FA], src_dict: Dict[str, Any]) -> FA:
         d = src_dict.copy()
         _candidate = d.pop("candidate", UNSET)
         candidate: Union[Unset, RtcIceCandidateInit]
@@ -71,7 +71,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-FA = TypeVar("FA", bound="sdp_offer")
+GE = TypeVar("GE", bound="sdp_offer")
 
 
 @attr.s(auto_attribs=True)
@@ -98,7 +98,7 @@ class sdp_offer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FA], src_dict: Dict[str, Any]) -> FA:
+    def from_dict(cls: Type[GE], src_dict: Dict[str, Any]) -> GE:
         d = src_dict.copy()
         _offer = d.pop("offer", UNSET)
         offer: Union[Unset, RtcSessionDescription]
@@ -134,7 +134,7 @@ class sdp_offer:
         return key in self.additional_properties
 
 
-GE = TypeVar("GE", bound="modeling_cmd_req")
+JG = TypeVar("JG", bound="modeling_cmd_req")
 
 
 @attr.s(auto_attribs=True)
@@ -166,7 +166,7 @@ class modeling_cmd_req:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GE], src_dict: Dict[str, Any]) -> GE:
+    def from_dict(cls: Type[JG], src_dict: Dict[str, Any]) -> JG:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]
@@ -210,7 +210,7 @@ class modeling_cmd_req:
         return key in self.additional_properties
 
 
-JG = TypeVar("JG", bound="ping")
+HH = TypeVar("HH", bound="ping")
 
 
 @attr.s(auto_attribs=True)
@@ -232,7 +232,7 @@ class ping:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JG], src_dict: Dict[str, Any]) -> JG:
+    def from_dict(cls: Type[HH], src_dict: Dict[str, Any]) -> HH:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 

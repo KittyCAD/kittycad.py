@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-SC = TypeVar("SC", bound="MouseClick")
+TX = TypeVar("TX", bound="MouseClick")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class MouseClick:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SC], src_dict: Dict[str, Any]) -> SC:
+    def from_dict(cls: Type[TX], src_dict: Dict[str, Any]) -> TX:
         d = src_dict.copy()
         entities_modified = cast(List[str], d.pop("entities_modified", UNSET))
 

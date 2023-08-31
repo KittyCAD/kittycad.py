@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-DL = TypeVar("DL", bound="SystemInfoDefaultAddressPools")
+QT = TypeVar("QT", bound="SystemInfoDefaultAddressPools")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class SystemInfoDefaultAddressPools:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DL], src_dict: Dict[str, Any]) -> DL:
+    def from_dict(cls: Type[QT], src_dict: Dict[str, Any]) -> QT:
         d = src_dict.copy()
         base = d.pop("base", UNSET)
 

@@ -12,6 +12,8 @@ class FileImportFormat(str, Enum):
     OBJ = "obj"
     """# The PLY file format. <https://en.wikipedia.org/wiki/PLY_(file_format)> """  # noqa: E501
     PLY = "ply"
+    """# SolidWorks part (SLDPRT) format. """  # noqa: E501
+    SLDPRT = "sldprt"
     """# The STEP file format. <https://en.wikipedia.org/wiki/ISO_10303-21> """  # noqa: E501
     STEP = "step"
     """# The STL file format. <https://en.wikipedia.org/wiki/STL_(file_format)> """  # noqa: E501
