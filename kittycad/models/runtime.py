@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-GP = TypeVar("GP", bound="Runtime")
+FF = TypeVar("FF", bound="Runtime")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class Runtime:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GP], src_dict: Dict[str, Any]) -> GP:
+    def from_dict(cls: Type[FF], src_dict: Dict[str, Any]) -> FF:
         d = src_dict.copy()
         path = d.pop("path", UNSET)
 

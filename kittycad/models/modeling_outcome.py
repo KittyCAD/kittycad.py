@@ -13,7 +13,7 @@ success = OkModelingCmdResponse
 error = ModelingError
 
 
-FT = TypeVar("FT", bound="cancelled")
+NX = TypeVar("NX", bound="cancelled")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class cancelled:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FT], src_dict: Dict[str, Any]) -> FT:
+    def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
         d = src_dict.copy()
         _what_failed = d.pop("what_failed", UNSET)
         what_failed: Union[Unset, ModelingCmdId]
