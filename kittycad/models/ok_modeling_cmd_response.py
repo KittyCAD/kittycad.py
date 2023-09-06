@@ -23,7 +23,7 @@ from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from ..models.take_snapshot import TakeSnapshot
 from ..types import UNSET, Unset
 
-UK = TypeVar("UK", bound="empty")
+CX = TypeVar("CX", bound="empty")
 
 
 @attr.s(auto_attribs=True)
@@ -45,7 +45,7 @@ class empty:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UK], src_dict: Dict[str, Any]) -> UK:
+    def from_dict(cls: Type[CX], src_dict: Dict[str, Any]) -> CX:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -73,7 +73,7 @@ class empty:
         return key in self.additional_properties
 
 
-CX = TypeVar("CX", bound="export")
+MT = TypeVar("MT", bound="export")
 
 
 @attr.s(auto_attribs=True)
@@ -100,7 +100,7 @@ class export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CX], src_dict: Dict[str, Any]) -> CX:
+    def from_dict(cls: Type[MT], src_dict: Dict[str, Any]) -> MT:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Export]
@@ -136,7 +136,7 @@ class export:
         return key in self.additional_properties
 
 
-MT = TypeVar("MT", bound="select_with_point")
+LJ = TypeVar("LJ", bound="select_with_point")
 
 
 @attr.s(auto_attribs=True)
@@ -163,7 +163,7 @@ class select_with_point:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MT], src_dict: Dict[str, Any]) -> MT:
+    def from_dict(cls: Type[LJ], src_dict: Dict[str, Any]) -> LJ:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, SelectWithPoint]
@@ -199,7 +199,7 @@ class select_with_point:
         return key in self.additional_properties
 
 
-LJ = TypeVar("LJ", bound="highlight_set_entity")
+TF = TypeVar("TF", bound="highlight_set_entity")
 
 
 @attr.s(auto_attribs=True)
@@ -226,7 +226,7 @@ class highlight_set_entity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LJ], src_dict: Dict[str, Any]) -> LJ:
+    def from_dict(cls: Type[TF], src_dict: Dict[str, Any]) -> TF:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, HighlightSetEntity]
@@ -262,7 +262,7 @@ class highlight_set_entity:
         return key in self.additional_properties
 
 
-TF = TypeVar("TF", bound="entity_get_child_uuid")
+HF = TypeVar("HF", bound="entity_get_child_uuid")
 
 
 @attr.s(auto_attribs=True)
@@ -289,7 +289,7 @@ class entity_get_child_uuid:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TF], src_dict: Dict[str, Any]) -> TF:
+    def from_dict(cls: Type[HF], src_dict: Dict[str, Any]) -> HF:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetChildUuid]
@@ -325,7 +325,7 @@ class entity_get_child_uuid:
         return key in self.additional_properties
 
 
-HF = TypeVar("HF", bound="entity_get_num_children")
+JD = TypeVar("JD", bound="entity_get_num_children")
 
 
 @attr.s(auto_attribs=True)
@@ -352,7 +352,7 @@ class entity_get_num_children:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HF], src_dict: Dict[str, Any]) -> HF:
+    def from_dict(cls: Type[JD], src_dict: Dict[str, Any]) -> JD:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetNumChildren]
@@ -388,7 +388,7 @@ class entity_get_num_children:
         return key in self.additional_properties
 
 
-JD = TypeVar("JD", bound="entity_get_parent_id")
+RZ = TypeVar("RZ", bound="entity_get_parent_id")
 
 
 @attr.s(auto_attribs=True)
@@ -415,7 +415,7 @@ class entity_get_parent_id:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JD], src_dict: Dict[str, Any]) -> JD:
+    def from_dict(cls: Type[RZ], src_dict: Dict[str, Any]) -> RZ:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetParentId]
@@ -451,7 +451,7 @@ class entity_get_parent_id:
         return key in self.additional_properties
 
 
-RZ = TypeVar("RZ", bound="entity_get_all_child_uuids")
+BH = TypeVar("BH", bound="entity_get_all_child_uuids")
 
 
 @attr.s(auto_attribs=True)
@@ -478,7 +478,7 @@ class entity_get_all_child_uuids:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RZ], src_dict: Dict[str, Any]) -> RZ:
+    def from_dict(cls: Type[BH], src_dict: Dict[str, Any]) -> BH:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetAllChildUuids]
@@ -514,7 +514,7 @@ class entity_get_all_child_uuids:
         return key in self.additional_properties
 
 
-BH = TypeVar("BH", bound="select_get")
+SX = TypeVar("SX", bound="select_get")
 
 
 @attr.s(auto_attribs=True)
@@ -541,7 +541,7 @@ class select_get:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BH], src_dict: Dict[str, Any]) -> BH:
+    def from_dict(cls: Type[SX], src_dict: Dict[str, Any]) -> SX:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, SelectGet]
@@ -577,7 +577,7 @@ class select_get:
         return key in self.additional_properties
 
 
-SX = TypeVar("SX", bound="get_entity_type")
+CN = TypeVar("CN", bound="get_entity_type")
 
 
 @attr.s(auto_attribs=True)
@@ -604,7 +604,7 @@ class get_entity_type:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SX], src_dict: Dict[str, Any]) -> SX:
+    def from_dict(cls: Type[CN], src_dict: Dict[str, Any]) -> CN:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, GetEntityType]
@@ -640,7 +640,7 @@ class get_entity_type:
         return key in self.additional_properties
 
 
-CN = TypeVar("CN", bound="solid3d_get_all_edge_faces")
+GS = TypeVar("GS", bound="solid3d_get_all_edge_faces")
 
 
 @attr.s(auto_attribs=True)
@@ -667,7 +667,7 @@ class solid3d_get_all_edge_faces:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CN], src_dict: Dict[str, Any]) -> CN:
+    def from_dict(cls: Type[GS], src_dict: Dict[str, Any]) -> GS:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetAllEdgeFaces]
@@ -703,7 +703,7 @@ class solid3d_get_all_edge_faces:
         return key in self.additional_properties
 
 
-GS = TypeVar("GS", bound="solid3d_get_all_opposite_edges")
+SO = TypeVar("SO", bound="solid3d_get_all_opposite_edges")
 
 
 @attr.s(auto_attribs=True)
@@ -730,7 +730,7 @@ class solid3d_get_all_opposite_edges:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GS], src_dict: Dict[str, Any]) -> GS:
+    def from_dict(cls: Type[SO], src_dict: Dict[str, Any]) -> SO:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetAllOppositeEdges]
@@ -766,7 +766,7 @@ class solid3d_get_all_opposite_edges:
         return key in self.additional_properties
 
 
-SO = TypeVar("SO", bound="solid3d_get_opposite_edge")
+ZS = TypeVar("ZS", bound="solid3d_get_opposite_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -793,7 +793,7 @@ class solid3d_get_opposite_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SO], src_dict: Dict[str, Any]) -> SO:
+    def from_dict(cls: Type[ZS], src_dict: Dict[str, Any]) -> ZS:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetOppositeEdge]
@@ -829,7 +829,7 @@ class solid3d_get_opposite_edge:
         return key in self.additional_properties
 
 
-ZS = TypeVar("ZS", bound="solid3d_get_prev_adjacent_edge")
+AM = TypeVar("AM", bound="solid3d_get_prev_adjacent_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -856,7 +856,7 @@ class solid3d_get_prev_adjacent_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZS], src_dict: Dict[str, Any]) -> ZS:
+    def from_dict(cls: Type[AM], src_dict: Dict[str, Any]) -> AM:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetPrevAdjacentEdge]
@@ -892,7 +892,7 @@ class solid3d_get_prev_adjacent_edge:
         return key in self.additional_properties
 
 
-AM = TypeVar("AM", bound="solid3d_get_next_adjacent_edge")
+GK = TypeVar("GK", bound="solid3d_get_next_adjacent_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -919,7 +919,7 @@ class solid3d_get_next_adjacent_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AM], src_dict: Dict[str, Any]) -> AM:
+    def from_dict(cls: Type[GK], src_dict: Dict[str, Any]) -> GK:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetNextAdjacentEdge]
@@ -955,7 +955,7 @@ class solid3d_get_next_adjacent_edge:
         return key in self.additional_properties
 
 
-GK = TypeVar("GK", bound="mouse_click")
+SG = TypeVar("SG", bound="mouse_click")
 
 
 @attr.s(auto_attribs=True)
@@ -982,7 +982,7 @@ class mouse_click:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GK], src_dict: Dict[str, Any]) -> GK:
+    def from_dict(cls: Type[SG], src_dict: Dict[str, Any]) -> SG:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, MouseClick]
@@ -1018,7 +1018,7 @@ class mouse_click:
         return key in self.additional_properties
 
 
-SG = TypeVar("SG", bound="curve_get_type")
+QZ = TypeVar("QZ", bound="curve_get_type")
 
 
 @attr.s(auto_attribs=True)
@@ -1045,7 +1045,7 @@ class curve_get_type:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SG], src_dict: Dict[str, Any]) -> SG:
+    def from_dict(cls: Type[QZ], src_dict: Dict[str, Any]) -> QZ:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, CurveGetType]
@@ -1081,7 +1081,7 @@ class curve_get_type:
         return key in self.additional_properties
 
 
-QZ = TypeVar("QZ", bound="curve_get_control_points")
+SY = TypeVar("SY", bound="curve_get_control_points")
 
 
 @attr.s(auto_attribs=True)
@@ -1108,7 +1108,7 @@ class curve_get_control_points:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[QZ], src_dict: Dict[str, Any]) -> QZ:
+    def from_dict(cls: Type[SY], src_dict: Dict[str, Any]) -> SY:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, CurveGetControlPoints]
@@ -1144,7 +1144,7 @@ class curve_get_control_points:
         return key in self.additional_properties
 
 
-SY = TypeVar("SY", bound="take_snapshot")
+YK = TypeVar("YK", bound="take_snapshot")
 
 
 @attr.s(auto_attribs=True)
@@ -1171,7 +1171,7 @@ class take_snapshot:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SY], src_dict: Dict[str, Any]) -> SY:
+    def from_dict(cls: Type[YK], src_dict: Dict[str, Any]) -> YK:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, TakeSnapshot]
@@ -1207,7 +1207,7 @@ class take_snapshot:
         return key in self.additional_properties
 
 
-YK = TypeVar("YK", bound="path_get_info")
+WS = TypeVar("WS", bound="path_get_info")
 
 
 @attr.s(auto_attribs=True)
@@ -1234,7 +1234,7 @@ class path_get_info:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YK], src_dict: Dict[str, Any]) -> YK:
+    def from_dict(cls: Type[WS], src_dict: Dict[str, Any]) -> WS:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, PathGetInfo]

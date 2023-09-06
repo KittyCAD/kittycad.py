@@ -6,7 +6,7 @@ from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-LN = TypeVar("LN", bound="line")
+KR = TypeVar("KR", bound="line")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class line:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LN], src_dict: Dict[str, Any]) -> LN:
+    def from_dict(cls: Type[KR], src_dict: Dict[str, Any]) -> KR:
         d = src_dict.copy()
         _end = d.pop("end", UNSET)
         end: Union[Unset, Point3d]
@@ -69,7 +69,7 @@ class line:
         return key in self.additional_properties
 
 
-KR = TypeVar("KR", bound="arc")
+MG = TypeVar("MG", bound="arc")
 
 
 @attr.s(auto_attribs=True)
@@ -108,7 +108,7 @@ class arc:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[KR], src_dict: Dict[str, Any]) -> KR:
+    def from_dict(cls: Type[MG], src_dict: Dict[str, Any]) -> MG:
         d = src_dict.copy()
         angle_end = d.pop("angle_end", UNSET)
 
@@ -153,7 +153,7 @@ class arc:
         return key in self.additional_properties
 
 
-MG = TypeVar("MG", bound="bezier")
+UE = TypeVar("UE", bound="bezier")
 
 
 @attr.s(auto_attribs=True)
@@ -190,7 +190,7 @@ class bezier:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MG], src_dict: Dict[str, Any]) -> MG:
+    def from_dict(cls: Type[UE], src_dict: Dict[str, Any]) -> UE:
         d = src_dict.copy()
         _control1 = d.pop("control1", UNSET)
         control1: Union[Unset, Point3d]
