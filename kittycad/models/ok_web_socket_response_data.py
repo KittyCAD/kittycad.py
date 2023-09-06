@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-WS = TypeVar("WS", bound="ice_server_info")
+SL = TypeVar("SL", bound="ice_server_info")
 
 
 @attr.s(auto_attribs=True)
@@ -30,7 +30,7 @@ class ice_server_info:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WS], src_dict: Dict[str, Any]) -> WS:
+    def from_dict(cls: Type[SL], src_dict: Dict[str, Any]) -> SL:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -60,7 +60,7 @@ class ice_server_info:
         return key in self.additional_properties
 
 
-SL = TypeVar("SL", bound="trickle_ice")
+MK = TypeVar("MK", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SL], src_dict: Dict[str, Any]) -> SL:
+    def from_dict(cls: Type[MK], src_dict: Dict[str, Any]) -> MK:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -116,7 +116,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-MK = TypeVar("MK", bound="sdp_answer")
+TU = TypeVar("TU", bound="sdp_answer")
 
 
 @attr.s(auto_attribs=True)
@@ -142,7 +142,7 @@ class sdp_answer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MK], src_dict: Dict[str, Any]) -> MK:
+    def from_dict(cls: Type[TU], src_dict: Dict[str, Any]) -> TU:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -172,7 +172,7 @@ class sdp_answer:
         return key in self.additional_properties
 
 
-TU = TypeVar("TU", bound="modeling")
+FY = TypeVar("FY", bound="modeling")
 
 
 @attr.s(auto_attribs=True)
@@ -198,7 +198,7 @@ class modeling:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TU], src_dict: Dict[str, Any]) -> TU:
+    def from_dict(cls: Type[FY], src_dict: Dict[str, Any]) -> FY:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -228,7 +228,7 @@ class modeling:
         return key in self.additional_properties
 
 
-FY = TypeVar("FY", bound="export")
+FD = TypeVar("FD", bound="export")
 
 
 @attr.s(auto_attribs=True)
@@ -254,7 +254,7 @@ class export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FY], src_dict: Dict[str, Any]) -> FY:
+    def from_dict(cls: Type[FD], src_dict: Dict[str, Any]) -> FD:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)

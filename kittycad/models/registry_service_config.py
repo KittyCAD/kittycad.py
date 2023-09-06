@@ -5,7 +5,7 @@ import attr
 from ..models.index_info import IndexInfo
 from ..types import UNSET, Unset
 
-TY = TypeVar("TY", bound="RegistryServiceConfig")
+NC = TypeVar("NC", bound="RegistryServiceConfig")
 
 
 @attr.s(auto_attribs=True)
@@ -67,7 +67,7 @@ class RegistryServiceConfig:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TY], src_dict: Dict[str, Any]) -> TY:
+    def from_dict(cls: Type[NC], src_dict: Dict[str, Any]) -> NC:
         d = src_dict.copy()
         allow_nondistributable_artifacts_cid_rs = cast(
             List[str], d.pop("allow_nondistributable_artifacts_cid_rs", UNSET)

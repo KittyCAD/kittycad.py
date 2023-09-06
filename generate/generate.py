@@ -2234,6 +2234,8 @@ def hasBase64(schema: dict) -> bool:
     if "type" in schema:
         type_name = schema["type"]
         if type_name == "object":
+            if "additionalProperties" in schema:
+                return hasBase64(schema["additionalProperties"])
             # Iternate over the properties.
             if "properties" in schema:
                 for property_name in schema["properties"]:

@@ -5,7 +5,7 @@ import attr
 from ..models.modeling_outcome import ModelingOutcome
 from ..types import UNSET, Unset
 
-SC = TypeVar("SC", bound="ModelingOutcomes")
+TX = TypeVar("TX", bound="ModelingOutcomes")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class ModelingOutcomes:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SC], src_dict: Dict[str, Any]) -> SC:
+    def from_dict(cls: Type[TX], src_dict: Dict[str, Any]) -> TX:
         d = src_dict.copy()
         _outcomes = d.pop("outcomes", UNSET)
         if isinstance(_outcomes, Unset):
