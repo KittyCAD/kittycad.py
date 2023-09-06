@@ -3600,6 +3600,65 @@ class handle_mouse_drag_end:
         return key in self.additional_properties
 
 
+XL = TypeVar("XL", bound="remove_scene_objects")
+
+
+@attr.s(auto_attribs=True)
+class remove_scene_objects:
+    """Remove scene objects."""  # noqa: E501
+
+    object_ids: Union[Unset, List[str]] = UNSET
+    type: str = "remove_scene_objects"
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        object_ids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.object_ids, Unset):
+            object_ids = self.object_ids
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if object_ids is not UNSET:
+            field_dict["object_ids"] = object_ids
+        field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[XL], src_dict: Dict[str, Any]) -> XL:
+        d = src_dict.copy()
+        object_ids = cast(List[str], d.pop("object_ids", UNSET))
+
+        type = d.pop("type", UNSET)
+
+        remove_scene_objects = cls(
+            object_ids=object_ids,
+            type=type,
+        )
+
+        remove_scene_objects.additional_properties = d
+        return remove_scene_objects
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
 ModelingCmd = Union[
     start_path,
     move_path_pen,
@@ -3655,4 +3714,5 @@ ModelingCmd = Union[
     handle_mouse_drag_start,
     handle_mouse_drag_move,
     handle_mouse_drag_end,
+    remove_scene_objects,
 ]

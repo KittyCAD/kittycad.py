@@ -9,7 +9,7 @@ from ..models.unit_pressure import UnitPressure
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-CG = TypeVar("CG", bound="UnitPressureConversion")
+QA = TypeVar("QA", bound="UnitPressureConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitPressureConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CG], src_dict: Dict[str, Any]) -> CG:
+    def from_dict(cls: Type[QA], src_dict: Dict[str, Any]) -> QA:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

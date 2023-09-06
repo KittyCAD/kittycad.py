@@ -5,7 +5,7 @@ import attr
 from ..models.modeling_cmd_req import ModelingCmdReq
 from ..types import UNSET, Unset
 
-ZX = TypeVar("ZX", bound="ModelingCmdReqBatch")
+FT = TypeVar("FT", bound="ModelingCmdReqBatch")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class ModelingCmdReqBatch:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZX], src_dict: Dict[str, Any]) -> ZX:
+    def from_dict(cls: Type[FT], src_dict: Dict[str, Any]) -> FT:
         d = src_dict.copy()
         _cmds = d.pop("cmds", UNSET)
         if isinstance(_cmds, Unset):

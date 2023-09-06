@@ -30,7 +30,6 @@ class file_conversion:
     created_at: Union[Unset, datetime.datetime] = UNSET
     error: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
-    output: Union[Unset, Base64Data] = UNSET
     output_format: Union[Unset, FileExportFormat] = UNSET
     output_format_options: Union[Unset, OutputFormat] = UNSET
     outputs: Union[Unset, Dict[str, Base64Data]] = UNSET
@@ -53,9 +52,6 @@ class file_conversion:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
-        output: Union[Unset, str] = UNSET
-        if not isinstance(self.output, Unset):
-            output = self.output.get_encoded()
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
         if not isinstance(self.output_format_options, Unset):
@@ -92,8 +88,6 @@ class file_conversion:
             field_dict["error"] = error
         if id is not UNSET:
             field_dict["id"] = id
-        if output is not UNSET:
-            field_dict["output"] = output
         if output_format is not UNSET:
             field_dict["output_format"] = output_format
         if output_format_options is not UNSET:
@@ -141,13 +135,6 @@ class file_conversion:
             id = UNSET
         else:
             id = _id  # type: ignore[arg-type]
-
-        _output = d.pop("output", UNSET)
-        output: Union[Unset, Base64Data]
-        if isinstance(_output, Unset):
-            output = UNSET
-        else:
-            output = Base64Data(bytes(_output, "utf-8"))
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileExportFormat]
@@ -216,7 +203,6 @@ class file_conversion:
             created_at=created_at,
             error=error,
             id=id,
-            output=output,
             output_format=output_format,
             output_format_options=output_format_options,
             outputs=outputs,
