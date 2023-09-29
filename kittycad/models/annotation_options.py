@@ -8,7 +8,7 @@ from ..models.color import Color
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-PI = TypeVar("PI", bound="AnnotationOptions")
+UZ = TypeVar("UZ", bound="AnnotationOptions")
 
 
 @attr.s(auto_attribs=True)
@@ -51,7 +51,7 @@ class AnnotationOptions:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PI], src_dict: Dict[str, Any]) -> PI:
+    def from_dict(cls: Type[UZ], src_dict: Dict[str, Any]) -> UZ:
         d = src_dict.copy()
         _color = d.pop("color", UNSET)
         color: Union[Unset, Color]

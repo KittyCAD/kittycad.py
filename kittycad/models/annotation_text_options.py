@@ -6,7 +6,7 @@ from ..models.annotation_text_alignment_x import AnnotationTextAlignmentX
 from ..models.annotation_text_alignment_y import AnnotationTextAlignmentY
 from ..types import UNSET, Unset
 
-UZ = TypeVar("UZ", bound="AnnotationTextOptions")
+FB = TypeVar("FB", bound="AnnotationTextOptions")
 
 
 @attr.s(auto_attribs=True)
@@ -43,7 +43,7 @@ class AnnotationTextOptions:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UZ], src_dict: Dict[str, Any]) -> UZ:
+    def from_dict(cls: Type[FB], src_dict: Dict[str, Any]) -> FB:
         d = src_dict.copy()
         point_size = d.pop("point_size", UNSET)
 

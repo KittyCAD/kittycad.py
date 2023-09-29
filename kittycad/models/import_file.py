@@ -1,49 +1,51 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-ON = TypeVar("ON", bound="Commit")
+CF = TypeVar("CF", bound="ImportFile")
 
 
 @attr.s(auto_attribs=True)
-class Commit:
-    """Commit holds the Git-commit (SHA1) that a binary was built from, as reported in the version-string of external tools, such as `containerd`, or `runC`."""  # noqa: E501
+class ImportFile:
+    """File to import into the current model"""  # noqa: E501
 
-    expected: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
+    data: Union[Unset, List[int]] = UNSET
+    path: Union[Unset, str] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        expected = self.expected
-        id = self.id
+        data: Union[Unset, List[int]] = UNSET
+        if not isinstance(self.data, Unset):
+            data = self.data
+        path = self.path
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if expected is not UNSET:
-            field_dict["expected"] = expected
-        if id is not UNSET:
-            field_dict["id"] = id
+        if data is not UNSET:
+            field_dict["data"] = data
+        if path is not UNSET:
+            field_dict["path"] = path
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ON], src_dict: Dict[str, Any]) -> ON:
+    def from_dict(cls: Type[CF], src_dict: Dict[str, Any]) -> CF:
         d = src_dict.copy()
-        expected = d.pop("expected", UNSET)
+        data = cast(List[int], d.pop("data", UNSET))
 
-        id = d.pop("id", UNSET)
+        path = d.pop("path", UNSET)
 
-        commit = cls(
-            expected=expected,
-            id=id,
+        import_file = cls(
+            data=data,
+            path=path,
         )
 
-        commit.additional_properties = d
-        return commit
+        import_file.additional_properties = d
+        return import_file
 
     @property
     def additional_keys(self) -> List[str]:

@@ -8,9 +8,10 @@ from ..models.gltf_storage import GltfStorage
 from ..models.ply_storage import PlyStorage
 from ..models.stl_storage import StlStorage
 from ..models.system import System
+from ..models.unit_length import UnitLength
 from ..types import UNSET, Unset
 
-RQ = TypeVar("RQ", bound="fbx")
+BM = TypeVar("BM", bound="fbx")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +38,7 @@ class fbx:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RQ], src_dict: Dict[str, Any]) -> RQ:
+    def from_dict(cls: Type[BM], src_dict: Dict[str, Any]) -> BM:
         d = src_dict.copy()
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, FbxStorage]
@@ -73,7 +74,7 @@ class fbx:
         return key in self.additional_properties
 
 
-ZL = TypeVar("ZL", bound="gltf")
+TY = TypeVar("TY", bound="gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -105,7 +106,7 @@ class gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZL], src_dict: Dict[str, Any]) -> ZL:
+    def from_dict(cls: Type[TY], src_dict: Dict[str, Any]) -> TY:
         d = src_dict.copy()
         _presentation = d.pop("presentation", UNSET)
         presentation: Union[Unset, GltfPresentation]
@@ -149,7 +150,7 @@ class gltf:
         return key in self.additional_properties
 
 
-CM = TypeVar("CM", bound="obj")
+NC = TypeVar("NC", bound="obj")
 
 
 @attr.s(auto_attribs=True)
@@ -158,6 +159,7 @@ class obj:
 
     coords: Union[Unset, System] = UNSET
     type: str = "obj"
+    units: Union[Unset, UnitLength] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -165,6 +167,8 @@ class obj:
         if not isinstance(self.coords, Unset):
             coords = self.coords
         type = self.type
+        if not isinstance(self.units, Unset):
+            units = self.units
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -172,11 +176,13 @@ class obj:
         if coords is not UNSET:
             field_dict["coords"] = coords
         field_dict["type"] = type
+        if units is not UNSET:
+            field_dict["units"] = units
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CM], src_dict: Dict[str, Any]) -> CM:
+    def from_dict(cls: Type[NC], src_dict: Dict[str, Any]) -> NC:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -187,9 +193,17 @@ class obj:
 
         type = d.pop("type", UNSET)
 
+        _units = d.pop("units", UNSET)
+        units: Union[Unset, UnitLength]
+        if isinstance(_units, Unset):
+            units = UNSET
+        else:
+            units = _units  # type: ignore[arg-type]
+
         obj = cls(
             coords=coords,
             type=type,
+            units=units,
         )
 
         obj.additional_properties = d
@@ -212,7 +226,7 @@ class obj:
         return key in self.additional_properties
 
 
-OS = TypeVar("OS", bound="ply")
+GP = TypeVar("GP", bound="ply")
 
 
 @attr.s(auto_attribs=True)
@@ -244,7 +258,7 @@ class ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OS], src_dict: Dict[str, Any]) -> OS:
+    def from_dict(cls: Type[GP], src_dict: Dict[str, Any]) -> GP:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -288,7 +302,7 @@ class ply:
         return key in self.additional_properties
 
 
-WP = TypeVar("WP", bound="step")
+FF = TypeVar("FF", bound="step")
 
 
 @attr.s(auto_attribs=True)
@@ -315,7 +329,7 @@ class step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WP], src_dict: Dict[str, Any]) -> WP:
+    def from_dict(cls: Type[FF], src_dict: Dict[str, Any]) -> FF:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -351,7 +365,7 @@ class step:
         return key in self.additional_properties
 
 
-XO = TypeVar("XO", bound="stl")
+YO = TypeVar("YO", bound="stl")
 
 
 @attr.s(auto_attribs=True)
@@ -361,6 +375,7 @@ class stl:
     coords: Union[Unset, System] = UNSET
     storage: Union[Unset, StlStorage] = UNSET
     type: str = "stl"
+    units: Union[Unset, UnitLength] = UNSET
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -370,6 +385,8 @@ class stl:
         if not isinstance(self.storage, Unset):
             storage = self.storage
         type = self.type
+        if not isinstance(self.units, Unset):
+            units = self.units
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -379,11 +396,13 @@ class stl:
         if storage is not UNSET:
             field_dict["storage"] = storage
         field_dict["type"] = type
+        if units is not UNSET:
+            field_dict["units"] = units
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[XO], src_dict: Dict[str, Any]) -> XO:
+    def from_dict(cls: Type[YO], src_dict: Dict[str, Any]) -> YO:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -401,10 +420,18 @@ class stl:
 
         type = d.pop("type", UNSET)
 
+        _units = d.pop("units", UNSET)
+        units: Union[Unset, UnitLength]
+        if isinstance(_units, Unset):
+            units = UNSET
+        else:
+            units = _units  # type: ignore[arg-type]
+
         stl = cls(
             coords=coords,
             storage=storage,
             type=type,
+            units=units,
         )
 
         stl.additional_properties = d

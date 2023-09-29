@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-DO = TypeVar("DO", bound="EntityGetChildUuid")
+GL = TypeVar("GL", bound="EntityGetChildUuid")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class EntityGetChildUuid:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DO], src_dict: Dict[str, Any]) -> DO:
+    def from_dict(cls: Type[GL], src_dict: Dict[str, Any]) -> GL:
         d = src_dict.copy()
         entity_id = d.pop("entity_id", UNSET)
 

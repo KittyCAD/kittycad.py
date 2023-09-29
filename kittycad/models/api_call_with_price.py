@@ -8,7 +8,7 @@ from ..models.method import Method
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-QP = TypeVar("QP", bound="ApiCallWithPrice")
+KC = TypeVar("KC", bound="ApiCallWithPrice")
 
 
 @attr.s(auto_attribs=True)
@@ -126,7 +126,7 @@ class ApiCallWithPrice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[QP], src_dict: Dict[str, Any]) -> QP:
+    def from_dict(cls: Type[KC], src_dict: Dict[str, Any]) -> KC:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-RU = TypeVar("RU", bound="Solid3dGetPrevAdjacentEdge")
+KU = TypeVar("KU", bound="Solid3dGetPrevAdjacentEdge")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class Solid3dGetPrevAdjacentEdge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RU], src_dict: Dict[str, Any]) -> RU:
+    def from_dict(cls: Type[KU], src_dict: Dict[str, Any]) -> KU:
         d = src_dict.copy()
         edge = d.pop("edge", UNSET)
 

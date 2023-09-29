@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-GP = TypeVar("GP", bound="RtcIceCandidateInit")
+PD = TypeVar("PD", bound="RtcIceCandidateInit")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class RtcIceCandidateInit:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GP], src_dict: Dict[str, Any]) -> GP:
+    def from_dict(cls: Type[PD], src_dict: Dict[str, Any]) -> PD:
         d = src_dict.copy()
         candidate = d.pop("candidate", UNSET)
 

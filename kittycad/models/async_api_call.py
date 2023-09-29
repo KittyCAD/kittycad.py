@@ -9,7 +9,7 @@ from ..models.async_api_call_type import AsyncApiCallType
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-MN = TypeVar("MN", bound="AsyncApiCall")
+JV = TypeVar("JV", bound="AsyncApiCall")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class AsyncApiCall:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MN], src_dict: Dict[str, Any]) -> MN:
+    def from_dict(cls: Type[JV], src_dict: Dict[str, Any]) -> JV:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
