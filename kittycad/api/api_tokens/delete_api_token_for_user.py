@@ -8,14 +8,22 @@ from ...types import Response
 
 
 def _get_kwargs(
+    
+    
     token: str,
+    
+    
     *,
     client: Client,
+    
+    
+    
 ) -> Dict[str, Any]:
-    url = "{}/user/api-tokens/{token}".format(
-        client.base_url,
-        token=token,
-    )  # noqa: E501
+    url = "{}/user/api-tokens/{token}".format(client.base_url, token=token,)  # noqa: E501
+    
+    
+    
+
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -25,21 +33,25 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Error]:
-    return None
-    if response.status_code == 400:
-        response_4XX = Error.from_dict(response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error.from_dict(response.json())
-        return response_5XX
-    return Error.from_dict(response.json())
+def _parse_response(*, response: httpx.Response) -> Optional[Error] :
+	return None
+	if response.status_code == 400:
+		response_4XX = Error.from_dict(response.json())
+		return response_4XX
+	if response.status_code == 500:
+		response_5XX = Error.from_dict(response.json())
+		return response_5XX
+	return Error.from_dict(response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
+
+def _build_response(
+    *, response: httpx.Response
+)  -> Response[Optional[Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -49,12 +61,21 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 
 
 def sync_detailed(
+    
+    
     token: str,
+    
+    
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+    
+    
+    
+)  -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        
         token=token,
+        
         client=client,
     )
 
@@ -67,27 +88,44 @@ def sync_detailed(
 
 
 def sync(
+    
+    
     token: str,
+    
+    
     *,
     client: Client,
-) -> Optional[Error]:
+    
+    
+    
+)  -> Optional[Error] :
     """This endpoint requires authentication by any KittyCAD user. It deletes the requested API token for the user.
-    This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes.
-    """  # noqa: E501
+This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""  # noqa: E501
 
     return sync_detailed(
+        
         token=token,
+        
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    
+    
     token: str,
+    
+    
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+    
+    
+    
+)  -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        
         token=token,
+        
         client=client,
     )
 
@@ -98,17 +136,25 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    
+    
     token: str,
+    
+    
     *,
     client: Client,
-) -> Optional[Error]:
+    
+    
+    
+)  -> Optional[Error] :
     """This endpoint requires authentication by any KittyCAD user. It deletes the requested API token for the user.
-    This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes.
-    """  # noqa: E501
+This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""  # noqa: E501
 
     return (
         await asyncio_detailed(
+            
             token=token,
+            
             client=client,
         )
     ).parsed

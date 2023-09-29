@@ -8,69 +8,68 @@ from ..types import UNSET, Unset
 
 NP = TypeVar("NP", bound="AiPluginAuth")
 
-
 @attr.s(auto_attribs=True)
 class AiPluginAuth:
-    """AI plugin auth information."""  # noqa: E501
+	""" AI plugin auth information. """ # noqa: E501
+	authorization_type: Union[Unset, AiPluginHttpAuthType] = UNSET
+	type: Union[Unset, AiPluginAuthType] = UNSET
 
-    authorization_type: Union[Unset, AiPluginHttpAuthType] = UNSET
-    type: Union[Unset, AiPluginAuthType] = UNSET
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+	def to_dict(self) -> Dict[str, Any]:
+		if not isinstance(self.authorization_type, Unset):
+			authorization_type = self.authorization_type
+		if not isinstance(self.type, Unset):
+			type = self.type
 
-    def to_dict(self) -> Dict[str, Any]:
-        if not isinstance(self.authorization_type, Unset):
-            authorization_type = self.authorization_type
-        if not isinstance(self.type, Unset):
-            type = self.type
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		if authorization_type is not UNSET:
+			field_dict['authorization_type'] = authorization_type
+		if type is not UNSET:
+			field_dict['type'] = type
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if authorization_type is not UNSET:
-            field_dict["authorization_type"] = authorization_type
-        if type is not UNSET:
-            field_dict["type"] = type
+		return field_dict
 
-        return field_dict
+	@classmethod
+	def from_dict(cls: Type[NP], src_dict: Dict[str, Any]) -> NP:
+		d = src_dict.copy()
+		_authorization_type = d.pop("authorization_type", UNSET)
+		authorization_type: Union[Unset, AiPluginHttpAuthType]
+		if isinstance(_authorization_type, Unset):
+			authorization_type = UNSET
+		else:
+			authorization_type = _authorization_type # type: ignore[arg-type]
 
-    @classmethod
-    def from_dict(cls: Type[NP], src_dict: Dict[str, Any]) -> NP:
-        d = src_dict.copy()
-        _authorization_type = d.pop("authorization_type", UNSET)
-        authorization_type: Union[Unset, AiPluginHttpAuthType]
-        if isinstance(_authorization_type, Unset):
-            authorization_type = UNSET
-        else:
-            authorization_type = _authorization_type  # type: ignore[arg-type]
+		_type = d.pop("type", UNSET)
+		type: Union[Unset, AiPluginAuthType]
+		if isinstance(_type, Unset):
+			type = UNSET
+		else:
+			type = _type # type: ignore[arg-type]
 
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, AiPluginAuthType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = _type  # type: ignore[arg-type]
 
-        ai_plugin_auth = cls(
-            authorization_type=authorization_type,
-            type=type,
-        )
+		ai_plugin_auth = cls(
+			authorization_type= authorization_type,
+			type= type,
+		)
 
-        ai_plugin_auth.additional_properties = d
-        return ai_plugin_auth
+		ai_plugin_auth.additional_properties = d
+		return ai_plugin_auth
 
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
 
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
 
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
 
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
 
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties
