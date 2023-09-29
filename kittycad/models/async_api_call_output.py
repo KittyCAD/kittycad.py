@@ -19,7 +19,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-JV = TypeVar("JV", bound="file_conversion")
+IO = TypeVar("IO", bound="file_conversion")
 
 
 @attr.s(auto_attribs=True)
@@ -111,7 +111,7 @@ class file_conversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JV], src_dict: Dict[str, Any]) -> JV:
+    def from_dict(cls: Type[IO], src_dict: Dict[str, Any]) -> IO:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -235,7 +235,7 @@ class file_conversion:
         return key in self.additional_properties
 
 
-IO = TypeVar("IO", bound="file_center_of_mass")
+FV = TypeVar("FV", bound="file_center_of_mass")
 
 
 @attr.s(auto_attribs=True)
@@ -313,7 +313,7 @@ class file_center_of_mass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[IO], src_dict: Dict[str, Any]) -> IO:
+    def from_dict(cls: Type[FV], src_dict: Dict[str, Any]) -> FV:
         d = src_dict.copy()
         _center_of_mass = d.pop("center_of_mass", UNSET)
         center_of_mass: Union[Unset, Point3d]
@@ -419,7 +419,7 @@ class file_center_of_mass:
         return key in self.additional_properties
 
 
-FV = TypeVar("FV", bound="file_mass")
+LE = TypeVar("LE", bound="file_mass")
 
 
 @attr.s(auto_attribs=True)
@@ -505,7 +505,7 @@ class file_mass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FV], src_dict: Dict[str, Any]) -> FV:
+    def from_dict(cls: Type[LE], src_dict: Dict[str, Any]) -> LE:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -617,7 +617,7 @@ class file_mass:
         return key in self.additional_properties
 
 
-LE = TypeVar("LE", bound="file_volume")
+OY = TypeVar("OY", bound="file_volume")
 
 
 @attr.s(auto_attribs=True)
@@ -694,7 +694,7 @@ class file_volume:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LE], src_dict: Dict[str, Any]) -> LE:
+    def from_dict(cls: Type[OY], src_dict: Dict[str, Any]) -> OY:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -795,7 +795,7 @@ class file_volume:
         return key in self.additional_properties
 
 
-OY = TypeVar("OY", bound="file_density")
+HO = TypeVar("HO", bound="file_density")
 
 
 @attr.s(auto_attribs=True)
@@ -881,7 +881,7 @@ class file_density:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OY], src_dict: Dict[str, Any]) -> OY:
+    def from_dict(cls: Type[HO], src_dict: Dict[str, Any]) -> HO:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -993,7 +993,7 @@ class file_density:
         return key in self.additional_properties
 
 
-HO = TypeVar("HO", bound="file_surface_area")
+TM = TypeVar("TM", bound="file_surface_area")
 
 
 @attr.s(auto_attribs=True)
@@ -1070,7 +1070,7 @@ class file_surface_area:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HO], src_dict: Dict[str, Any]) -> HO:
+    def from_dict(cls: Type[TM], src_dict: Dict[str, Any]) -> TM:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

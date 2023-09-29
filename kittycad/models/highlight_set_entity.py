@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-PV = TypeVar("PV", bound="HighlightSetEntity")
+QI = TypeVar("QI", bound="HighlightSetEntity")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +31,7 @@ class HighlightSetEntity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PV], src_dict: Dict[str, Any]) -> PV:
+    def from_dict(cls: Type[QI], src_dict: Dict[str, Any]) -> QI:
         d = src_dict.copy()
         entity_id = d.pop("entity_id", UNSET)
 

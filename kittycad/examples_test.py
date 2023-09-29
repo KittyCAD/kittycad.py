@@ -41,7 +41,7 @@ from kittycad.api.meta import (
     get_schema,
     ping,
 )
-from kittycad.api.modeling import cmd, cmd_batch, modeling_commands_ws
+from kittycad.api.modeling import modeling_commands_ws
 from kittycad.api.payments import (
     create_payment_information_for_user,
     create_payment_intent_for_user,
@@ -93,17 +93,9 @@ from kittycad.models import (
     AppClientInfo,
     AsyncApiCallResultsPage,
     CodeOutput,
-    CurveGetControlPoints,
-    CurveGetType,
     Customer,
     CustomerBalance,
-    Empty,
-    EntityGetAllChildUuids,
-    EntityGetChildUuid,
-    EntityGetNumChildren,
-    EntityGetParentId,
     Error,
-    Export,
     ExtendedUser,
     ExtendedUserResultsPage,
     FileCenterOfMass,
@@ -112,27 +104,14 @@ from kittycad.models import (
     FileMass,
     FileSurfaceArea,
     FileVolume,
-    GetEntityType,
-    HighlightSetEntity,
     Invoice,
     Mesh,
     Metadata,
-    ModelingOutcomes,
-    MouseClick,
     Onboarding,
-    PathGetInfo,
     PaymentIntent,
     PaymentMethod,
     Pong,
-    SelectGet,
-    SelectWithPoint,
     Session,
-    Solid3dGetAllEdgeFaces,
-    Solid3dGetAllOppositeEdges,
-    Solid3dGetNextAdjacentEdge,
-    Solid3dGetOppositeEdge,
-    Solid3dGetPrevAdjacentEdge,
-    TakeSnapshot,
     UnitAngleConversion,
     UnitAreaConversion,
     UnitCurrentConversion,
@@ -159,11 +138,6 @@ from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.image_type import ImageType
-from kittycad.models.modeling_cmd import move_path_pen
-from kittycad.models.modeling_cmd_id import ModelingCmdId
-from kittycad.models.modeling_cmd_req import ModelingCmdReq
-from kittycad.models.modeling_cmd_req_batch import ModelingCmdReqBatch
-from kittycad.models.point3d import Point3d
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -1386,313 +1360,6 @@ async def test_logout_async():
     # OR run async with more info
     response: Response[Optional[Error]] = await logout.asyncio_detailed(
         client=client,
-    )
-
-
-@pytest.mark.skip
-def test_cmd():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[
-            Empty,
-            Export,
-            SelectWithPoint,
-            HighlightSetEntity,
-            EntityGetChildUuid,
-            EntityGetNumChildren,
-            EntityGetParentId,
-            EntityGetAllChildUuids,
-            SelectGet,
-            GetEntityType,
-            Solid3dGetAllEdgeFaces,
-            Solid3dGetAllOppositeEdges,
-            Solid3dGetOppositeEdge,
-            Solid3dGetPrevAdjacentEdge,
-            Solid3dGetNextAdjacentEdge,
-            MouseClick,
-            CurveGetType,
-            CurveGetControlPoints,
-            TakeSnapshot,
-            PathGetInfo,
-            Error,
-        ]
-    ] = cmd.sync(
-        client=client,
-        body=ModelingCmdReq(
-            cmd=move_path_pen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
-            ),
-            cmd_id=ModelingCmdId("<uuid>"),
-        ),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Union[
-        Empty,
-        Export,
-        SelectWithPoint,
-        HighlightSetEntity,
-        EntityGetChildUuid,
-        EntityGetNumChildren,
-        EntityGetParentId,
-        EntityGetAllChildUuids,
-        SelectGet,
-        GetEntityType,
-        Solid3dGetAllEdgeFaces,
-        Solid3dGetAllOppositeEdges,
-        Solid3dGetOppositeEdge,
-        Solid3dGetPrevAdjacentEdge,
-        Solid3dGetNextAdjacentEdge,
-        MouseClick,
-        CurveGetType,
-        CurveGetControlPoints,
-        TakeSnapshot,
-        PathGetInfo,
-    ] = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[
-            Union[
-                Empty,
-                Export,
-                SelectWithPoint,
-                HighlightSetEntity,
-                EntityGetChildUuid,
-                EntityGetNumChildren,
-                EntityGetParentId,
-                EntityGetAllChildUuids,
-                SelectGet,
-                GetEntityType,
-                Solid3dGetAllEdgeFaces,
-                Solid3dGetAllOppositeEdges,
-                Solid3dGetOppositeEdge,
-                Solid3dGetPrevAdjacentEdge,
-                Solid3dGetNextAdjacentEdge,
-                MouseClick,
-                CurveGetType,
-                CurveGetControlPoints,
-                TakeSnapshot,
-                PathGetInfo,
-                Error,
-            ]
-        ]
-    ] = cmd.sync_detailed(
-        client=client,
-        body=ModelingCmdReq(
-            cmd=move_path_pen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
-            ),
-            cmd_id=ModelingCmdId("<uuid>"),
-        ),
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_cmd_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[
-            Empty,
-            Export,
-            SelectWithPoint,
-            HighlightSetEntity,
-            EntityGetChildUuid,
-            EntityGetNumChildren,
-            EntityGetParentId,
-            EntityGetAllChildUuids,
-            SelectGet,
-            GetEntityType,
-            Solid3dGetAllEdgeFaces,
-            Solid3dGetAllOppositeEdges,
-            Solid3dGetOppositeEdge,
-            Solid3dGetPrevAdjacentEdge,
-            Solid3dGetNextAdjacentEdge,
-            MouseClick,
-            CurveGetType,
-            CurveGetControlPoints,
-            TakeSnapshot,
-            PathGetInfo,
-            Error,
-        ]
-    ] = await cmd.asyncio(
-        client=client,
-        body=ModelingCmdReq(
-            cmd=move_path_pen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
-            ),
-            cmd_id=ModelingCmdId("<uuid>"),
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[
-            Union[
-                Empty,
-                Export,
-                SelectWithPoint,
-                HighlightSetEntity,
-                EntityGetChildUuid,
-                EntityGetNumChildren,
-                EntityGetParentId,
-                EntityGetAllChildUuids,
-                SelectGet,
-                GetEntityType,
-                Solid3dGetAllEdgeFaces,
-                Solid3dGetAllOppositeEdges,
-                Solid3dGetOppositeEdge,
-                Solid3dGetPrevAdjacentEdge,
-                Solid3dGetNextAdjacentEdge,
-                MouseClick,
-                CurveGetType,
-                CurveGetControlPoints,
-                TakeSnapshot,
-                PathGetInfo,
-                Error,
-            ]
-        ]
-    ] = await cmd.asyncio_detailed(
-        client=client,
-        body=ModelingCmdReq(
-            cmd=move_path_pen(
-                path=ModelingCmdId("<uuid>"),
-                to=Point3d(
-                    x=3.14,
-                    y=3.14,
-                    z=3.14,
-                ),
-            ),
-            cmd_id=ModelingCmdId("<uuid>"),
-        ),
-    )
-
-
-@pytest.mark.skip
-def test_cmd_batch():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[ModelingOutcomes, Error]] = cmd_batch.sync(
-        client=client,
-        body=ModelingCmdReqBatch(
-            cmds={
-                "<string>": ModelingCmdReq(
-                    cmd=move_path_pen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
-                    ),
-                    cmd_id=ModelingCmdId("<uuid>"),
-                )
-            },
-        ),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: ModelingOutcomes = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[ModelingOutcomes, Error]]
-    ] = cmd_batch.sync_detailed(
-        client=client,
-        body=ModelingCmdReqBatch(
-            cmds={
-                "<string>": ModelingCmdReq(
-                    cmd=move_path_pen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
-                    ),
-                    cmd_id=ModelingCmdId("<uuid>"),
-                )
-            },
-        ),
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_cmd_batch_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[ModelingOutcomes, Error]] = await cmd_batch.asyncio(
-        client=client,
-        body=ModelingCmdReqBatch(
-            cmds={
-                "<string>": ModelingCmdReq(
-                    cmd=move_path_pen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
-                    ),
-                    cmd_id=ModelingCmdId("<uuid>"),
-                )
-            },
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[ModelingOutcomes, Error]]
-    ] = await cmd_batch.asyncio_detailed(
-        client=client,
-        body=ModelingCmdReqBatch(
-            cmds={
-                "<string>": ModelingCmdReq(
-                    cmd=move_path_pen(
-                        path=ModelingCmdId("<uuid>"),
-                        to=Point3d(
-                            x=3.14,
-                            y=3.14,
-                            z=3.14,
-                        ),
-                    ),
-                    cmd_id=ModelingCmdId("<uuid>"),
-                )
-            },
-        ),
     )
 
 

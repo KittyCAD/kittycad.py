@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-KC = TypeVar("KC", bound="ApiCallWithPriceResultsPage")
+HX = TypeVar("HX", bound="ApiCallWithPriceResultsPage")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class ApiCallWithPriceResultsPage:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[KC], src_dict: Dict[str, Any]) -> KC:
+    def from_dict(cls: Type[HX], src_dict: Dict[str, Any]) -> HX:
         d = src_dict.copy()
         from ..models.api_call_with_price import ApiCallWithPrice
 

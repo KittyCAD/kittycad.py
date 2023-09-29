@@ -12,6 +12,10 @@ class ErrorCode(str, Enum):
     BAD_REQUEST = "bad_request"
     """# Client sent invalid JSON. """  # noqa: E501
     INVALID_JSON = "invalid_json"
+    """# Client sent invalid BSON. """  # noqa: E501
+    INVALID_BSON = "invalid_bson"
+    """# Client sent a message which is not accepted over this protocol. """  # noqa: E501
+    WRONG_PROTOCOL = "wrong_protocol"
     """# Problem sending data between client and KittyCAD API. """  # noqa: E501
     CONNECTION_PROBLEM = "connection_problem"
     """# Client sent a Websocket message type which the KittyCAD API does not handle. """  # noqa: E501

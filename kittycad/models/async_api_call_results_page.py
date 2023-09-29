@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-TM = TypeVar("TM", bound="AsyncApiCallResultsPage")
+BS = TypeVar("BS", bound="AsyncApiCallResultsPage")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class AsyncApiCallResultsPage:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TM], src_dict: Dict[str, Any]) -> TM:
+    def from_dict(cls: Type[BS], src_dict: Dict[str, Any]) -> BS:
         d = src_dict.copy()
         from ..models.async_api_call import AsyncApiCall
 

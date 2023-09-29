@@ -11,7 +11,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-PY = TypeVar("PY", bound="FileDensity")
+LK = TypeVar("LK", bound="FileDensity")
 
 
 @attr.s(auto_attribs=True)
@@ -94,7 +94,7 @@ class FileDensity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PY], src_dict: Dict[str, Any]) -> PY:
+    def from_dict(cls: Type[LK], src_dict: Dict[str, Any]) -> LK:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

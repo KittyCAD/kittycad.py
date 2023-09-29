@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-NE = TypeVar("NE", bound="ApiTokenResultsPage")
+TL = TypeVar("TL", bound="ApiTokenResultsPage")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class ApiTokenResultsPage:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NE], src_dict: Dict[str, Any]) -> NE:
+    def from_dict(cls: Type[TL], src_dict: Dict[str, Any]) -> TL:
         d = src_dict.copy()
         from ..models.api_token import ApiToken
 

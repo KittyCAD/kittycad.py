@@ -6,7 +6,7 @@ from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.path_command import PathCommand
 from ..types import UNSET, Unset
 
-BF = TypeVar("BF", bound="PathSegmentInfo")
+RU = TypeVar("RU", bound="PathSegmentInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -15,6 +15,7 @@ class PathSegmentInfo:
 
     command: Union[Unset, PathCommand] = UNSET
     command_id: Union[Unset, ModelingCmdId] = UNSET
+    relative: Union[Unset, bool] = False
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -23,6 +24,7 @@ class PathSegmentInfo:
             command = self.command
         if not isinstance(self.command_id, Unset):
             command_id = self.command_id
+        relative = self.relative
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -31,11 +33,13 @@ class PathSegmentInfo:
             field_dict["command"] = command
         if command_id is not UNSET:
             field_dict["command_id"] = command_id
+        if relative is not UNSET:
+            field_dict["relative"] = relative
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BF], src_dict: Dict[str, Any]) -> BF:
+    def from_dict(cls: Type[RU], src_dict: Dict[str, Any]) -> RU:
         d = src_dict.copy()
         _command = d.pop("command", UNSET)
         command: Union[Unset, PathCommand]
@@ -51,9 +55,12 @@ class PathSegmentInfo:
         else:
             command_id = _command_id  # type: ignore[arg-type]
 
+        relative = d.pop("relative", UNSET)
+
         path_segment_info = cls(
             command=command,
             command_id=command_id,
+            relative=relative,
         )
 
         path_segment_info.additional_properties = d

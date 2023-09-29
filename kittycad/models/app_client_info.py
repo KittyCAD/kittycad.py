@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-TL = TypeVar("TL", bound="AppClientInfo")
+MN = TypeVar("MN", bound="AppClientInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class AppClientInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TL], src_dict: Dict[str, Any]) -> TL:
+    def from_dict(cls: Type[MN], src_dict: Dict[str, Any]) -> MN:
         d = src_dict.copy()
         url = d.pop("url", UNSET)
 

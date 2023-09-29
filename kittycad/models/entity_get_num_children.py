@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-FZ = TypeVar("FZ", bound="EntityGetNumChildren")
+NN = TypeVar("NN", bound="EntityGetNumChildren")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class EntityGetNumChildren:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FZ], src_dict: Dict[str, Any]) -> FZ:
+    def from_dict(cls: Type[NN], src_dict: Dict[str, Any]) -> NN:
         d = src_dict.copy()
         num = d.pop("num", UNSET)
 

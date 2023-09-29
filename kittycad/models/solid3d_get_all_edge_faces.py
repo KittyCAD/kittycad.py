@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-UW = TypeVar("UW", bound="Solid3dGetAllEdgeFaces")
+ZB = TypeVar("ZB", bound="Solid3dGetAllEdgeFaces")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class Solid3dGetAllEdgeFaces:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UW], src_dict: Dict[str, Any]) -> UW:
+    def from_dict(cls: Type[ZB], src_dict: Dict[str, Any]) -> ZB:
         d = src_dict.copy()
         faces = cast(List[str], d.pop("faces", UNSET))
 
