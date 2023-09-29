@@ -10,22 +10,44 @@ from ...types import Response
 
 
 def _get_kwargs(
+    
+    
     lang: CodeLanguage,
+    
+    
+    
+    
+    
     body: bytes,
+    
+    
     *,
     client: Client,
+    
+    
+    
+    
     output: Optional[str] = None,
+    
+    
+    
+    
 ) -> Dict[str, Any]:
-    url = "{}/file/execute/{lang}".format(
-        client.base_url,
-        lang=lang,
-    )  # noqa: E501
-
+    url = "{}/file/execute/{lang}".format(client.base_url, lang=lang,)  # noqa: E501
+    
+    
+    
+    
     if output is not None:
         if "?" in url:
             url = url + "&output=" + str(output)
         else:
             url = url + "?output=" + str(output)
+    
+    
+    
+    
+
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -39,22 +61,23 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[CodeOutput, Error]]:
-    if response.status_code == 200:
-        response_200 = CodeOutput.from_dict(response.json())
-        return response_200
-    if response.status_code == 400:
-        response_4XX = Error.from_dict(response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error.from_dict(response.json())
-        return response_5XX
-    return Error.from_dict(response.json())
+def _parse_response(*, response: httpx.Response) -> Optional[Union[CodeOutput, Error]] :
+	if response.status_code == 200:
+		response_200 = CodeOutput.from_dict(response.json())
+		return response_200
+	if response.status_code == 400:
+		response_4XX = Error.from_dict(response.json())
+		return response_4XX
+	if response.status_code == 500:
+		response_5XX = Error.from_dict(response.json())
+		return response_5XX
+	return Error.from_dict(response.json())
+
 
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+)  -> Response[Optional[Union[CodeOutput, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -64,16 +87,37 @@ def _build_response(
 
 
 def sync_detailed(
+    
+    
     lang: CodeLanguage,
+    
+    
+    
+    
+    
     body: bytes,
+    
+    
     *,
     client: Client,
+    
+    
+    
+    
     output: Optional[str] = None,
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+    
+    
+    
+    
+)  -> Response[Optional[Union[CodeOutput, Error]]]:
     kwargs = _get_kwargs(
+        
         lang=lang,
+        
         output=output,
+        
         body=body,
+        
         client=client,
     )
 
@@ -86,31 +130,75 @@ def sync_detailed(
 
 
 def sync(
+    
+    
     lang: CodeLanguage,
+    
+    
+    
+    
+    
     body: bytes,
+    
+    
     *,
     client: Client,
+    
+    
+    
+    
     output: Optional[str] = None,
-) -> Optional[Union[CodeOutput, Error]]:
+    
+    
+    
+    
+)  -> Optional[Union[CodeOutput, Error]] :
+    
+
     return sync_detailed(
+        
         lang=lang,
+        
         output=output,
+        
         body=body,
+        
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    
+    
     lang: CodeLanguage,
+    
+    
+    
+    
+    
     body: bytes,
+    
+    
     *,
     client: Client,
+    
+    
+    
+    
     output: Optional[str] = None,
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+    
+    
+    
+    
+)  -> Response[Optional[Union[CodeOutput, Error]]]:
     kwargs = _get_kwargs(
+        
         lang=lang,
+        
         output=output,
+        
         body=body,
+        
         client=client,
     )
 
@@ -121,17 +209,40 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    
+    
     lang: CodeLanguage,
+    
+    
+    
+    
+    
     body: bytes,
+    
+    
     *,
     client: Client,
+    
+    
+    
+    
     output: Optional[str] = None,
-) -> Optional[Union[CodeOutput, Error]]:
+    
+    
+    
+    
+)  -> Optional[Union[CodeOutput, Error]] :
+    
+
     return (
         await asyncio_detailed(
+            
             lang=lang,
+            
             output=output,
+            
             body=body,
+            
             client=client,
         )
     ).parsed
