@@ -5,7 +5,7 @@ import attr
 from ..models.error_code import ErrorCode
 from ..types import UNSET, Unset
 
-HX = TypeVar("HX", bound="ApiError")
+LB = TypeVar("LB", bound="ApiError")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class ApiError:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HX], src_dict: Dict[str, Any]) -> HX:
+    def from_dict(cls: Type[LB], src_dict: Dict[str, Any]) -> LB:
         d = src_dict.copy()
         _error_code = d.pop("error_code", UNSET)
         error_code: Union[Unset, ErrorCode]

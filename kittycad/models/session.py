@@ -7,7 +7,7 @@ from dateutil.parser import isoparse
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-EQ = TypeVar("EQ", bound="Session")
+QA = TypeVar("QA", bound="Session")
 
 
 @attr.s(auto_attribs=True)
@@ -58,7 +58,7 @@ class Session:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[EQ], src_dict: Dict[str, Any]) -> EQ:
+    def from_dict(cls: Type[QA], src_dict: Dict[str, Any]) -> QA:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]

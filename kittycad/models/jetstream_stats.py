@@ -5,7 +5,7 @@ import attr
 from ..models.jetstream_api_stats import JetstreamApiStats
 from ..types import UNSET, Unset
 
-LC = TypeVar("LC", bound="JetstreamStats")
+ZP = TypeVar("ZP", bound="JetstreamStats")
 
 
 @attr.s(auto_attribs=True)
@@ -53,7 +53,7 @@ class JetstreamStats:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LC], src_dict: Dict[str, Any]) -> LC:
+    def from_dict(cls: Type[ZP], src_dict: Dict[str, Any]) -> ZP:
         d = src_dict.copy()
         accounts = d.pop("accounts", UNSET)
 

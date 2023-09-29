@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-TZ = TypeVar("TZ", bound="Onboarding")
+SF = TypeVar("SF", bound="Onboarding")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class Onboarding:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TZ], src_dict: Dict[str, Any]) -> TZ:
+    def from_dict(cls: Type[SF], src_dict: Dict[str, Any]) -> SF:
         d = src_dict.copy()
         first_call_from__their_machine_date = d.pop(
             "first_call_from_their_machine_date", UNSET

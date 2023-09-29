@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-LY = TypeVar("LY", bound="Cluster")
+ON = TypeVar("ON", bound="Cluster")
 
 
 @attr.s(auto_attribs=True)
@@ -49,7 +49,7 @@ class Cluster:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LY], src_dict: Dict[str, Any]) -> LY:
+    def from_dict(cls: Type[ON], src_dict: Dict[str, Any]) -> ON:
         d = src_dict.copy()
         addr = d.pop("addr", UNSET)
 

@@ -5,7 +5,7 @@ import attr
 from ..models.annotation_line_end import AnnotationLineEnd
 from ..types import UNSET, Unset
 
-GO = TypeVar("GO", bound="AnnotationLineEndOptions")
+PI = TypeVar("PI", bound="AnnotationLineEndOptions")
 
 
 @attr.s(auto_attribs=True)
@@ -34,7 +34,7 @@ class AnnotationLineEndOptions:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GO], src_dict: Dict[str, Any]) -> GO:
+    def from_dict(cls: Type[PI], src_dict: Dict[str, Any]) -> PI:
         d = src_dict.copy()
         _end = d.pop("end", UNSET)
         end: Union[Unset, AnnotationLineEnd]

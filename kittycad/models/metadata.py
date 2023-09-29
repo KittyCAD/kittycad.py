@@ -4,14 +4,12 @@ import attr
 
 from ..models.cache_metadata import CacheMetadata
 from ..models.connection import Connection
-from ..models.engine_metadata import EngineMetadata
 from ..models.environment import Environment
-from ..models.executor_metadata import ExecutorMetadata
 from ..models.file_system_metadata import FileSystemMetadata
 from ..models.point_e_metadata import PointEMetadata
 from ..types import UNSET, Unset
 
-NY = TypeVar("NY", bound="Metadata")
+IZ = TypeVar("IZ", bound="Metadata")
 
 
 @attr.s(auto_attribs=True)
@@ -21,9 +19,7 @@ class Metadata:
     This is mostly used for internal purposes and debugging."""  # noqa: E501
 
     cache: Union[Unset, CacheMetadata] = UNSET
-    engine: Union[Unset, EngineMetadata] = UNSET
     environment: Union[Unset, Environment] = UNSET
-    executor: Union[Unset, ExecutorMetadata] = UNSET
     fs: Union[Unset, FileSystemMetadata] = UNSET
     git_hash: Union[Unset, str] = UNSET
     point_e: Union[Unset, PointEMetadata] = UNSET
@@ -34,12 +30,8 @@ class Metadata:
     def to_dict(self) -> Dict[str, Any]:
         if not isinstance(self.cache, Unset):
             cache = self.cache
-        if not isinstance(self.engine, Unset):
-            engine = self.engine
         if not isinstance(self.environment, Unset):
             environment = self.environment
-        if not isinstance(self.executor, Unset):
-            executor = self.executor
         if not isinstance(self.fs, Unset):
             fs = self.fs
         git_hash = self.git_hash
@@ -53,12 +45,8 @@ class Metadata:
         field_dict.update({})
         if cache is not UNSET:
             field_dict["cache"] = cache
-        if engine is not UNSET:
-            field_dict["engine"] = engine
         if environment is not UNSET:
             field_dict["environment"] = environment
-        if executor is not UNSET:
-            field_dict["executor"] = executor
         if fs is not UNSET:
             field_dict["fs"] = fs
         if git_hash is not UNSET:
@@ -71,7 +59,7 @@ class Metadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NY], src_dict: Dict[str, Any]) -> NY:
+    def from_dict(cls: Type[IZ], src_dict: Dict[str, Any]) -> IZ:
         d = src_dict.copy()
         _cache = d.pop("cache", UNSET)
         cache: Union[Unset, CacheMetadata]
@@ -80,26 +68,12 @@ class Metadata:
         else:
             cache = _cache  # type: ignore[arg-type]
 
-        _engine = d.pop("engine", UNSET)
-        engine: Union[Unset, EngineMetadata]
-        if isinstance(_engine, Unset):
-            engine = UNSET
-        else:
-            engine = _engine  # type: ignore[arg-type]
-
         _environment = d.pop("environment", UNSET)
         environment: Union[Unset, Environment]
         if isinstance(_environment, Unset):
             environment = UNSET
         else:
             environment = _environment  # type: ignore[arg-type]
-
-        _executor = d.pop("executor", UNSET)
-        executor: Union[Unset, ExecutorMetadata]
-        if isinstance(_executor, Unset):
-            executor = UNSET
-        else:
-            executor = _executor  # type: ignore[arg-type]
 
         _fs = d.pop("fs", UNSET)
         fs: Union[Unset, FileSystemMetadata]
@@ -126,9 +100,7 @@ class Metadata:
 
         metadata = cls(
             cache=cache,
-            engine=engine,
             environment=environment,
-            executor=executor,
             fs=fs,
             git_hash=git_hash,
             point_e=point_e,

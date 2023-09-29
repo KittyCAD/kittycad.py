@@ -5,7 +5,7 @@ import attr
 from ..models.curve_type import CurveType
 from ..types import UNSET, Unset
 
-FH = TypeVar("FH", bound="CurveGetType")
+PJ = TypeVar("PJ", bound="CurveGetType")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class CurveGetType:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FH], src_dict: Dict[str, Any]) -> FH:
+    def from_dict(cls: Type[PJ], src_dict: Dict[str, Any]) -> PJ:
         d = src_dict.copy()
         _curve_type = d.pop("curve_type", UNSET)
         curve_type: Union[Unset, CurveType]

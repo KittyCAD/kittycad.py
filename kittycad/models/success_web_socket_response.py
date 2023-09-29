@@ -5,7 +5,7 @@ import attr
 from ..models.ok_web_socket_response_data import OkWebSocketResponseData
 from ..types import UNSET, Unset
 
-DL = TypeVar("DL", bound="SuccessWebSocketResponse")
+PZ = TypeVar("PZ", bound="SuccessWebSocketResponse")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class SuccessWebSocketResponse:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DL], src_dict: Dict[str, Any]) -> DL:
+    def from_dict(cls: Type[PZ], src_dict: Dict[str, Any]) -> PZ:
         d = src_dict.copy()
         request_id = d.pop("request_id", UNSET)
 

@@ -2277,6 +2277,9 @@ def getRefs(schema: dict) -> List[str]:
                     for ref in schema_refs:
                         if ref not in refs:
                             refs.append(ref)
+                elif schema == {"type": "object"}:
+                    # do nothing
+                    pass
                 else:
                     logging.error("unsupported type: ", schema)
                     raise Exception("unsupported type: ", schema)

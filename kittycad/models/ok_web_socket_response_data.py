@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-SL = TypeVar("SL", bound="ice_server_info")
+BF = TypeVar("BF", bound="ice_server_info")
 
 
 @attr.s(auto_attribs=True)
@@ -30,7 +30,7 @@ class ice_server_info:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SL], src_dict: Dict[str, Any]) -> SL:
+    def from_dict(cls: Type[BF], src_dict: Dict[str, Any]) -> BF:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -60,7 +60,7 @@ class ice_server_info:
         return key in self.additional_properties
 
 
-MK = TypeVar("MK", bound="trickle_ice")
+UU = TypeVar("UU", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MK], src_dict: Dict[str, Any]) -> MK:
+    def from_dict(cls: Type[UU], src_dict: Dict[str, Any]) -> UU:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -116,7 +116,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-TU = TypeVar("TU", bound="sdp_answer")
+MB = TypeVar("MB", bound="sdp_answer")
 
 
 @attr.s(auto_attribs=True)
@@ -142,7 +142,7 @@ class sdp_answer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TU], src_dict: Dict[str, Any]) -> TU:
+    def from_dict(cls: Type[MB], src_dict: Dict[str, Any]) -> MB:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -172,7 +172,7 @@ class sdp_answer:
         return key in self.additional_properties
 
 
-FY = TypeVar("FY", bound="modeling")
+TB = TypeVar("TB", bound="modeling")
 
 
 @attr.s(auto_attribs=True)
@@ -198,7 +198,7 @@ class modeling:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FY], src_dict: Dict[str, Any]) -> FY:
+    def from_dict(cls: Type[TB], src_dict: Dict[str, Any]) -> TB:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -228,7 +228,7 @@ class modeling:
         return key in self.additional_properties
 
 
-FD = TypeVar("FD", bound="export")
+FJ = TypeVar("FJ", bound="export")
 
 
 @attr.s(auto_attribs=True)
@@ -254,7 +254,7 @@ class export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FD], src_dict: Dict[str, Any]) -> FD:
+    def from_dict(cls: Type[FJ], src_dict: Dict[str, Any]) -> FJ:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -284,6 +284,62 @@ class export:
         return key in self.additional_properties
 
 
+HB = TypeVar("HB", bound="metrics_request")
+
+
+@attr.s(auto_attribs=True)
+class metrics_request:
+    """Request a collection of metrics, to include WebRTC."""  # noqa: E501
+
+    data: Union[Unset, Any] = UNSET
+    type: str = "metrics_request"
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        data = self.data
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[HB], src_dict: Dict[str, Any]) -> HB:
+        d = src_dict.copy()
+        data = d.pop("data", UNSET)
+        type = d.pop("type", UNSET)
+
+        metrics_request = cls(
+            data=data,
+            type=type,
+        )
+
+        metrics_request.additional_properties = d
+        return metrics_request
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
 OkWebSocketResponseData = Union[
-    ice_server_info, trickle_ice, sdp_answer, modeling, export
+    ice_server_info, trickle_ice, sdp_answer, modeling, export, metrics_request
 ]

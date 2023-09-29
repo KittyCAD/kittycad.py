@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-SF = TypeVar("SF", bound="Point3d")
+VM = TypeVar("VM", bound="Point3d")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +35,7 @@ class Point3d:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SF], src_dict: Dict[str, Any]) -> SF:
+    def from_dict(cls: Type[VM], src_dict: Dict[str, Any]) -> VM:
         d = src_dict.copy()
         x = d.pop("x", UNSET)
 

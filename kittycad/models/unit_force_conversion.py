@@ -9,7 +9,7 @@ from ..models.unit_force import UnitForce
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-UY = TypeVar("UY", bound="UnitForceConversion")
+AB = TypeVar("AB", bound="UnitForceConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitForceConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UY], src_dict: Dict[str, Any]) -> UY:
+    def from_dict(cls: Type[AB], src_dict: Dict[str, Any]) -> AB:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

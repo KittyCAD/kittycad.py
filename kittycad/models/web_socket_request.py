@@ -2,13 +2,14 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
+from ..models.client_metrics import ClientMetrics
 from ..models.modeling_cmd import ModelingCmd
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 from ..types import UNSET, Unset
 
-GE = TypeVar("GE", bound="trickle_ice")
+OA = TypeVar("OA", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -35,7 +36,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GE], src_dict: Dict[str, Any]) -> GE:
+    def from_dict(cls: Type[OA], src_dict: Dict[str, Any]) -> OA:
         d = src_dict.copy()
         _candidate = d.pop("candidate", UNSET)
         candidate: Union[Unset, RtcIceCandidateInit]
@@ -71,7 +72,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-JG = TypeVar("JG", bound="sdp_offer")
+EI = TypeVar("EI", bound="sdp_offer")
 
 
 @attr.s(auto_attribs=True)
@@ -98,7 +99,7 @@ class sdp_offer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JG], src_dict: Dict[str, Any]) -> JG:
+    def from_dict(cls: Type[EI], src_dict: Dict[str, Any]) -> EI:
         d = src_dict.copy()
         _offer = d.pop("offer", UNSET)
         offer: Union[Unset, RtcSessionDescription]
@@ -134,7 +135,7 @@ class sdp_offer:
         return key in self.additional_properties
 
 
-HH = TypeVar("HH", bound="modeling_cmd_req")
+CQ = TypeVar("CQ", bound="modeling_cmd_req")
 
 
 @attr.s(auto_attribs=True)
@@ -166,7 +167,7 @@ class modeling_cmd_req:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HH], src_dict: Dict[str, Any]) -> HH:
+    def from_dict(cls: Type[CQ], src_dict: Dict[str, Any]) -> CQ:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]
@@ -210,7 +211,7 @@ class modeling_cmd_req:
         return key in self.additional_properties
 
 
-RY = TypeVar("RY", bound="ping")
+JE = TypeVar("JE", bound="ping")
 
 
 @attr.s(auto_attribs=True)
@@ -232,7 +233,7 @@ class ping:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RY], src_dict: Dict[str, Any]) -> RY:
+    def from_dict(cls: Type[JE], src_dict: Dict[str, Any]) -> JE:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -260,4 +261,69 @@ class ping:
         return key in self.additional_properties
 
 
-WebSocketRequest = Union[trickle_ice, sdp_offer, modeling_cmd_req, ping]
+RD = TypeVar("RD", bound="metrics_response")
+
+
+@attr.s(auto_attribs=True)
+class metrics_response:
+    """The response to a metrics collection request from the server."""  # noqa: E501
+
+    metrics: Union[Unset, ClientMetrics] = UNSET
+    type: str = "metrics_response"
+
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        if not isinstance(self.metrics, Unset):
+            metrics = self.metrics
+        type = self.type
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if metrics is not UNSET:
+            field_dict["metrics"] = metrics
+        field_dict["type"] = type
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[RD], src_dict: Dict[str, Any]) -> RD:
+        d = src_dict.copy()
+        _metrics = d.pop("metrics", UNSET)
+        metrics: Union[Unset, ClientMetrics]
+        if isinstance(_metrics, Unset):
+            metrics = UNSET
+        else:
+            metrics = _metrics  # type: ignore[arg-type]
+
+        type = d.pop("type", UNSET)
+
+        metrics_response = cls(
+            metrics=metrics,
+            type=type,
+        )
+
+        metrics_response.additional_properties = d
+        return metrics_response
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
+
+
+WebSocketRequest = Union[
+    trickle_ice, sdp_offer, modeling_cmd_req, ping, metrics_response
+]
