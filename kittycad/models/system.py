@@ -5,7 +5,7 @@ import attr
 from ..models.axis_direction_pair import AxisDirectionPair
 from ..types import UNSET, Unset
 
-GE = TypeVar("GE", bound="System")
+AE = TypeVar("AE", bound="System")
 
 @attr.s(auto_attribs=True)
 class System:
@@ -38,7 +38,7 @@ See [cglearn.eu] for background reading.
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[GE], src_dict: Dict[str, Any]) -> GE:
+	def from_dict(cls: Type[AE], src_dict: Dict[str, Any]) -> AE:
 		d = src_dict.copy()
 		_forward = d.pop("forward", UNSET)
 		forward: Union[Unset, AxisDirectionPair]

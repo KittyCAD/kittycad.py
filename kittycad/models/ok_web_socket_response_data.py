@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-BF = TypeVar("BF", bound="ice_server_info")
+FJ = TypeVar("FJ", bound="ice_server_info")
 
 @attr.s(auto_attribs=True)
 class ice_server_info:
@@ -28,7 +28,7 @@ class ice_server_info:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[BF], src_dict: Dict[str, Any]) -> BF:
+	def from_dict(cls: Type[FJ], src_dict: Dict[str, Any]) -> FJ:
 		d = src_dict.copy()
 		data = d.pop("data", UNSET)
 		type = d.pop("type", UNSET)
@@ -61,7 +61,7 @@ class ice_server_info:
 
 
 
-UU = TypeVar("UU", bound="trickle_ice")
+HB = TypeVar("HB", bound="trickle_ice")
 
 @attr.s(auto_attribs=True)
 class trickle_ice:
@@ -85,7 +85,7 @@ class trickle_ice:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UU], src_dict: Dict[str, Any]) -> UU:
+	def from_dict(cls: Type[HB], src_dict: Dict[str, Any]) -> HB:
 		d = src_dict.copy()
 		data = d.pop("data", UNSET)
 		type = d.pop("type", UNSET)
@@ -118,7 +118,7 @@ class trickle_ice:
 
 
 
-MB = TypeVar("MB", bound="sdp_answer")
+SF = TypeVar("SF", bound="sdp_answer")
 
 @attr.s(auto_attribs=True)
 class sdp_answer:
@@ -142,7 +142,7 @@ class sdp_answer:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[MB], src_dict: Dict[str, Any]) -> MB:
+	def from_dict(cls: Type[SF], src_dict: Dict[str, Any]) -> SF:
 		d = src_dict.copy()
 		data = d.pop("data", UNSET)
 		type = d.pop("type", UNSET)
@@ -175,7 +175,7 @@ class sdp_answer:
 
 
 
-TB = TypeVar("TB", bound="modeling")
+DU = TypeVar("DU", bound="modeling")
 
 @attr.s(auto_attribs=True)
 class modeling:
@@ -199,7 +199,7 @@ class modeling:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[TB], src_dict: Dict[str, Any]) -> TB:
+	def from_dict(cls: Type[DU], src_dict: Dict[str, Any]) -> DU:
 		d = src_dict.copy()
 		data = d.pop("data", UNSET)
 		type = d.pop("type", UNSET)
@@ -232,7 +232,7 @@ class modeling:
 
 
 
-FJ = TypeVar("FJ", bound="export")
+BM = TypeVar("BM", bound="export")
 
 @attr.s(auto_attribs=True)
 class export:
@@ -256,7 +256,7 @@ class export:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[FJ], src_dict: Dict[str, Any]) -> FJ:
+	def from_dict(cls: Type[BM], src_dict: Dict[str, Any]) -> BM:
 		d = src_dict.copy()
 		data = d.pop("data", UNSET)
 		type = d.pop("type", UNSET)
@@ -289,7 +289,7 @@ class export:
 
 
 
-HB = TypeVar("HB", bound="metrics_request")
+TY = TypeVar("TY", bound="metrics_request")
 
 @attr.s(auto_attribs=True)
 class metrics_request:
@@ -313,7 +313,7 @@ class metrics_request:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[HB], src_dict: Dict[str, Any]) -> HB:
+	def from_dict(cls: Type[TY], src_dict: Dict[str, Any]) -> TY:
 		d = src_dict.copy()
 		data = d.pop("data", UNSET)
 		type = d.pop("type", UNSET)

@@ -85,6 +85,7 @@ from .file_system_metadata import FileSystemMetadata
 from .file_volume import FileVolume
 from .gateway import Gateway
 from .get_entity_type import GetEntityType
+from .get_sketch_mode_plane import GetSketchModePlane
 from .gltf_presentation import GltfPresentation
 from .gltf_storage import GltfStorage
 from .highlight_set_entity import HighlightSetEntity

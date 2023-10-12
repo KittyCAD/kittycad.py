@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-FS = TypeVar("FS", bound="PathGetCurveUuidsForVertices")
+MD = TypeVar("MD", bound="PathGetCurveUuidsForVertices")
 
 @attr.s(auto_attribs=True)
 class PathGetCurveUuidsForVertices:
@@ -27,7 +27,7 @@ class PathGetCurveUuidsForVertices:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[FS], src_dict: Dict[str, Any]) -> FS:
+	def from_dict(cls: Type[MD], src_dict: Dict[str, Any]) -> MD:
 		d = src_dict.copy()
 		curve_ids = cast(List[str], d.pop("curve_ids", UNSET))
 

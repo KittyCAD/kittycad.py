@@ -9,7 +9,7 @@ from ..models.unit_temperature import UnitTemperature
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-WM = TypeVar("WM", bound="UnitTemperatureConversion")
+WW = TypeVar("WW", bound="UnitTemperatureConversion")
 
 @attr.s(auto_attribs=True)
 class UnitTemperatureConversion:
@@ -85,7 +85,7 @@ class UnitTemperatureConversion:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[WM], src_dict: Dict[str, Any]) -> WM:
+	def from_dict(cls: Type[WW], src_dict: Dict[str, Any]) -> WW:
 		d = src_dict.copy()
 		_completed_at = d.pop("completed_at", UNSET)
 		completed_at: Union[Unset, datetime.datetime]

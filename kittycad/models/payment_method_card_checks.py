@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-PT = TypeVar("PT", bound="PaymentMethodCardChecks")
+WH = TypeVar("WH", bound="PaymentMethodCardChecks")
 
 @attr.s(auto_attribs=True)
 class PaymentMethodCardChecks:
@@ -33,7 +33,7 @@ class PaymentMethodCardChecks:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[PT], src_dict: Dict[str, Any]) -> PT:
+	def from_dict(cls: Type[WH], src_dict: Dict[str, Any]) -> WH:
 		d = src_dict.copy()
 		address_line1_check = d.pop("address_line1_check", UNSET)
 

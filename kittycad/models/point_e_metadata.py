@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-WH = TypeVar("WH", bound="PointEMetadata")
+SM = TypeVar("SM", bound="PointEMetadata")
 
 @attr.s(auto_attribs=True)
 class PointEMetadata:
@@ -27,7 +27,7 @@ This is mostly used for internal purposes and debugging. """ # noqa: E501
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[WH], src_dict: Dict[str, Any]) -> WH:
+	def from_dict(cls: Type[SM], src_dict: Dict[str, Any]) -> SM:
 		d = src_dict.copy()
 		ok = d.pop("ok", UNSET)
 
