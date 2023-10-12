@@ -5,6 +5,7 @@ from websockets.sync.client import ClientConnection, connect as ws_connect
 
 from ...client import Client
 from ...models.error import Error
+from ...models.web_socket_request import WebSocketRequest
 
 
 def _get_kwargs(
@@ -29,8 +30,14 @@ def _get_kwargs(
     webrtc: bool,
     
     
+    
+    body: WebSocketRequest,
+    
+    
     *,
     client: Client,
+    
+    
     
     
     
@@ -85,6 +92,8 @@ def _get_kwargs(
             url = url + "?webrtc=" + str(webrtc)
     
     
+    
+    
 
 
     headers: Dict[str, Any] = client.get_headers()
@@ -95,7 +104,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        
+        "content": body,
     }
 
 
@@ -121,8 +130,14 @@ def sync(
     webrtc: bool,
     
     
+    
+    body: WebSocketRequest,
+    
+    
     *,
     client: Client,
+    
+    
     
     
     
@@ -148,6 +163,8 @@ def sync(
         video_res_width=video_res_width,
         
         webrtc=webrtc,
+        
+        body=body,
         
         client=client,
     )
@@ -182,8 +199,14 @@ async def asyncio(
     webrtc: bool,
     
     
+    
+    body: WebSocketRequest,
+    
+    
     *,
     client: Client,
+    
+    
     
     
     
@@ -209,6 +232,8 @@ async def asyncio(
         video_res_width=video_res_width,
         
         webrtc=webrtc,
+        
+        body=body,
         
         client=client,
     )

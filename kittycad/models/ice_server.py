@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-TP = TypeVar("TP", bound="IceServer")
+CF = TypeVar("CF", bound="IceServer")
 
 @attr.s(auto_attribs=True)
 class IceServer:
@@ -35,7 +35,7 @@ class IceServer:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[TP], src_dict: Dict[str, Any]) -> TP:
+	def from_dict(cls: Type[CF], src_dict: Dict[str, Any]) -> CF:
 		d = src_dict.copy()
 		credential = d.pop("credential", UNSET)
 

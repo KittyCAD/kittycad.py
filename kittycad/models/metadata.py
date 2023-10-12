@@ -9,7 +9,7 @@ from ..models.file_system_metadata import FileSystemMetadata
 from ..models.point_e_metadata import PointEMetadata
 from ..types import UNSET, Unset
 
-IZ = TypeVar("IZ", bound="Metadata")
+WO = TypeVar("WO", bound="Metadata")
 
 @attr.s(auto_attribs=True)
 class Metadata:
@@ -57,7 +57,7 @@ This is mostly used for internal purposes and debugging. """ # noqa: E501
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[IZ], src_dict: Dict[str, Any]) -> IZ:
+	def from_dict(cls: Type[WO], src_dict: Dict[str, Any]) -> WO:
 		d = src_dict.copy()
 		_cache = d.pop("cache", UNSET)
 		cache: Union[Unset, CacheMetadata]

@@ -9,7 +9,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 from ..types import UNSET, Unset
 
-OA = TypeVar("OA", bound="trickle_ice")
+RD = TypeVar("RD", bound="trickle_ice")
 
 @attr.s(auto_attribs=True)
 class trickle_ice:
@@ -34,7 +34,7 @@ class trickle_ice:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[OA], src_dict: Dict[str, Any]) -> OA:
+	def from_dict(cls: Type[RD], src_dict: Dict[str, Any]) -> RD:
 		d = src_dict.copy()
 		_candidate = d.pop("candidate", UNSET)
 		candidate: Union[Unset, RtcIceCandidateInit]
@@ -73,7 +73,7 @@ class trickle_ice:
 
 
 
-EI = TypeVar("EI", bound="sdp_offer")
+JW = TypeVar("JW", bound="sdp_offer")
 
 @attr.s(auto_attribs=True)
 class sdp_offer:
@@ -98,7 +98,7 @@ class sdp_offer:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[EI], src_dict: Dict[str, Any]) -> EI:
+	def from_dict(cls: Type[JW], src_dict: Dict[str, Any]) -> JW:
 		d = src_dict.copy()
 		_offer = d.pop("offer", UNSET)
 		offer: Union[Unset, RtcSessionDescription]
@@ -137,7 +137,7 @@ class sdp_offer:
 
 
 
-CQ = TypeVar("CQ", bound="modeling_cmd_req")
+KZ = TypeVar("KZ", bound="modeling_cmd_req")
 
 @attr.s(auto_attribs=True)
 class modeling_cmd_req:
@@ -167,7 +167,7 @@ class modeling_cmd_req:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[CQ], src_dict: Dict[str, Any]) -> CQ:
+	def from_dict(cls: Type[KZ], src_dict: Dict[str, Any]) -> KZ:
 		d = src_dict.copy()
 		_cmd = d.pop("cmd", UNSET)
 		cmd: Union[Unset, ModelingCmd]
@@ -214,7 +214,7 @@ class modeling_cmd_req:
 
 
 
-JE = TypeVar("JE", bound="ping")
+AS = TypeVar("AS", bound="ping")
 
 @attr.s(auto_attribs=True)
 class ping:
@@ -234,7 +234,7 @@ class ping:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JE], src_dict: Dict[str, Any]) -> JE:
+	def from_dict(cls: Type[AS], src_dict: Dict[str, Any]) -> AS:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -265,7 +265,7 @@ class ping:
 
 
 
-RD = TypeVar("RD", bound="metrics_response")
+IU = TypeVar("IU", bound="metrics_response")
 
 @attr.s(auto_attribs=True)
 class metrics_response:
@@ -290,7 +290,7 @@ class metrics_response:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[RD], src_dict: Dict[str, Any]) -> RD:
+	def from_dict(cls: Type[IU], src_dict: Dict[str, Any]) -> IU:
 		d = src_dict.copy()
 		_metrics = d.pop("metrics", UNSET)
 		metrics: Union[Unset, ClientMetrics]

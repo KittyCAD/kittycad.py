@@ -21,7 +21,7 @@ from ..models.unit_mass import UnitMass
 from ..models.unit_volume import UnitVolume
 from ..types import UNSET, Unset
 
-WO = TypeVar("WO", bound="start_path")
+NK = TypeVar("NK", bound="start_path")
 
 @attr.s(auto_attribs=True)
 class start_path:
@@ -41,7 +41,7 @@ class start_path:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[WO], src_dict: Dict[str, Any]) -> WO:
+	def from_dict(cls: Type[NK], src_dict: Dict[str, Any]) -> NK:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -72,7 +72,7 @@ class start_path:
 
 
 
-NK = TypeVar("NK", bound="move_path_pen")
+UQ = TypeVar("UQ", bound="move_path_pen")
 
 @attr.s(auto_attribs=True)
 class move_path_pen:
@@ -102,7 +102,7 @@ class move_path_pen:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[NK], src_dict: Dict[str, Any]) -> NK:
+	def from_dict(cls: Type[UQ], src_dict: Dict[str, Any]) -> UQ:
 		d = src_dict.copy()
 		_path = d.pop("path", UNSET)
 		path: Union[Unset, ModelingCmdId]
@@ -149,7 +149,7 @@ class move_path_pen:
 
 
 
-UQ = TypeVar("UQ", bound="extend_path")
+QE = TypeVar("QE", bound="extend_path")
 
 @attr.s(auto_attribs=True)
 class extend_path:
@@ -179,7 +179,7 @@ class extend_path:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UQ], src_dict: Dict[str, Any]) -> UQ:
+	def from_dict(cls: Type[QE], src_dict: Dict[str, Any]) -> QE:
 		d = src_dict.copy()
 		_path = d.pop("path", UNSET)
 		path: Union[Unset, ModelingCmdId]
@@ -226,7 +226,7 @@ class extend_path:
 
 
 
-QE = TypeVar("QE", bound="extrude")
+XH = TypeVar("XH", bound="extrude")
 
 @attr.s(auto_attribs=True)
 class extrude:
@@ -259,7 +259,7 @@ class extrude:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[QE], src_dict: Dict[str, Any]) -> QE:
+	def from_dict(cls: Type[XH], src_dict: Dict[str, Any]) -> XH:
 		d = src_dict.copy()
 		cap = d.pop("cap", UNSET)
 
@@ -304,7 +304,7 @@ class extrude:
 
 
 
-XH = TypeVar("XH", bound="close_path")
+KT = TypeVar("KT", bound="close_path")
 
 @attr.s(auto_attribs=True)
 class close_path:
@@ -328,7 +328,7 @@ class close_path:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[XH], src_dict: Dict[str, Any]) -> XH:
+	def from_dict(cls: Type[KT], src_dict: Dict[str, Any]) -> KT:
 		d = src_dict.copy()
 		path_id = d.pop("path_id", UNSET)
 
@@ -362,7 +362,7 @@ class close_path:
 
 
 
-KT = TypeVar("KT", bound="camera_drag_start")
+BV = TypeVar("BV", bound="camera_drag_start")
 
 @attr.s(auto_attribs=True)
 class camera_drag_start:
@@ -392,7 +392,7 @@ class camera_drag_start:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[KT], src_dict: Dict[str, Any]) -> KT:
+	def from_dict(cls: Type[BV], src_dict: Dict[str, Any]) -> BV:
 		d = src_dict.copy()
 		_interaction = d.pop("interaction", UNSET)
 		interaction: Union[Unset, CameraDragInteractionType]
@@ -439,7 +439,7 @@ class camera_drag_start:
 
 
 
-BV = TypeVar("BV", bound="camera_drag_move")
+GU = TypeVar("GU", bound="camera_drag_move")
 
 @attr.s(auto_attribs=True)
 class camera_drag_move:
@@ -473,7 +473,7 @@ class camera_drag_move:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[BV], src_dict: Dict[str, Any]) -> BV:
+	def from_dict(cls: Type[GU], src_dict: Dict[str, Any]) -> GU:
 		d = src_dict.copy()
 		_interaction = d.pop("interaction", UNSET)
 		interaction: Union[Unset, CameraDragInteractionType]
@@ -523,7 +523,7 @@ class camera_drag_move:
 
 
 
-GU = TypeVar("GU", bound="camera_drag_end")
+SS = TypeVar("SS", bound="camera_drag_end")
 
 @attr.s(auto_attribs=True)
 class camera_drag_end:
@@ -553,7 +553,7 @@ class camera_drag_end:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[GU], src_dict: Dict[str, Any]) -> GU:
+	def from_dict(cls: Type[SS], src_dict: Dict[str, Any]) -> SS:
 		d = src_dict.copy()
 		_interaction = d.pop("interaction", UNSET)
 		interaction: Union[Unset, CameraDragInteractionType]
@@ -600,7 +600,7 @@ class camera_drag_end:
 
 
 
-SS = TypeVar("SS", bound="default_camera_look_at")
+UP = TypeVar("UP", bound="default_camera_look_at")
 
 @attr.s(auto_attribs=True)
 class default_camera_look_at:
@@ -635,7 +635,7 @@ class default_camera_look_at:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[SS], src_dict: Dict[str, Any]) -> SS:
+	def from_dict(cls: Type[UP], src_dict: Dict[str, Any]) -> UP:
 		d = src_dict.copy()
 		_center = d.pop("center", UNSET)
 		center: Union[Unset, Point3d]
@@ -690,7 +690,7 @@ class default_camera_look_at:
 
 
 
-UP = TypeVar("UP", bound="default_camera_zoom")
+AZ = TypeVar("AZ", bound="default_camera_zoom")
 
 @attr.s(auto_attribs=True)
 class default_camera_zoom:
@@ -714,7 +714,7 @@ class default_camera_zoom:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UP], src_dict: Dict[str, Any]) -> UP:
+	def from_dict(cls: Type[AZ], src_dict: Dict[str, Any]) -> AZ:
 		d = src_dict.copy()
 		magnitude = d.pop("magnitude", UNSET)
 
@@ -748,7 +748,7 @@ class default_camera_zoom:
 
 
 
-AZ = TypeVar("AZ", bound="default_camera_enable_sketch_mode")
+DJ = TypeVar("DJ", bound="default_camera_enable_sketch_mode")
 
 @attr.s(auto_attribs=True)
 class default_camera_enable_sketch_mode:
@@ -795,7 +795,7 @@ class default_camera_enable_sketch_mode:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[AZ], src_dict: Dict[str, Any]) -> AZ:
+	def from_dict(cls: Type[DJ], src_dict: Dict[str, Any]) -> DJ:
 		d = src_dict.copy()
 		animated = d.pop("animated", UNSET)
 
@@ -859,7 +859,7 @@ class default_camera_enable_sketch_mode:
 
 
 
-DJ = TypeVar("DJ", bound="default_camera_disable_sketch_mode")
+WJ = TypeVar("WJ", bound="default_camera_disable_sketch_mode")
 
 @attr.s(auto_attribs=True)
 class default_camera_disable_sketch_mode:
@@ -879,7 +879,7 @@ class default_camera_disable_sketch_mode:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[DJ], src_dict: Dict[str, Any]) -> DJ:
+	def from_dict(cls: Type[WJ], src_dict: Dict[str, Any]) -> WJ:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -910,7 +910,7 @@ class default_camera_disable_sketch_mode:
 
 
 
-WJ = TypeVar("WJ", bound="export")
+TR = TypeVar("TR", bound="export")
 
 @attr.s(auto_attribs=True)
 class export:
@@ -946,7 +946,7 @@ class export:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[WJ], src_dict: Dict[str, Any]) -> WJ:
+	def from_dict(cls: Type[TR], src_dict: Dict[str, Any]) -> TR:
 		d = src_dict.copy()
 		entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -996,7 +996,7 @@ class export:
 
 
 
-TR = TypeVar("TR", bound="entity_get_parent_id")
+YD = TypeVar("YD", bound="entity_get_parent_id")
 
 @attr.s(auto_attribs=True)
 class entity_get_parent_id:
@@ -1020,7 +1020,7 @@ class entity_get_parent_id:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[TR], src_dict: Dict[str, Any]) -> TR:
+	def from_dict(cls: Type[YD], src_dict: Dict[str, Any]) -> YD:
 		d = src_dict.copy()
 		entity_id = d.pop("entity_id", UNSET)
 
@@ -1054,7 +1054,7 @@ class entity_get_parent_id:
 
 
 
-YD = TypeVar("YD", bound="entity_get_num_children")
+JF = TypeVar("JF", bound="entity_get_num_children")
 
 @attr.s(auto_attribs=True)
 class entity_get_num_children:
@@ -1078,7 +1078,7 @@ class entity_get_num_children:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[YD], src_dict: Dict[str, Any]) -> YD:
+	def from_dict(cls: Type[JF], src_dict: Dict[str, Any]) -> JF:
 		d = src_dict.copy()
 		entity_id = d.pop("entity_id", UNSET)
 
@@ -1112,7 +1112,7 @@ class entity_get_num_children:
 
 
 
-JF = TypeVar("JF", bound="entity_get_child_uuid")
+VP = TypeVar("VP", bound="entity_get_child_uuid")
 
 @attr.s(auto_attribs=True)
 class entity_get_child_uuid:
@@ -1140,7 +1140,7 @@ class entity_get_child_uuid:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JF], src_dict: Dict[str, Any]) -> JF:
+	def from_dict(cls: Type[VP], src_dict: Dict[str, Any]) -> VP:
 		d = src_dict.copy()
 		child_index = d.pop("child_index", UNSET)
 
@@ -1177,7 +1177,7 @@ class entity_get_child_uuid:
 
 
 
-VP = TypeVar("VP", bound="entity_get_all_child_uuids")
+EL = TypeVar("EL", bound="entity_get_all_child_uuids")
 
 @attr.s(auto_attribs=True)
 class entity_get_all_child_uuids:
@@ -1201,7 +1201,7 @@ class entity_get_all_child_uuids:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[VP], src_dict: Dict[str, Any]) -> VP:
+	def from_dict(cls: Type[EL], src_dict: Dict[str, Any]) -> EL:
 		d = src_dict.copy()
 		entity_id = d.pop("entity_id", UNSET)
 
@@ -1235,7 +1235,7 @@ class entity_get_all_child_uuids:
 
 
 
-EL = TypeVar("EL", bound="edit_mode_enter")
+ZG = TypeVar("ZG", bound="edit_mode_enter")
 
 @attr.s(auto_attribs=True)
 class edit_mode_enter:
@@ -1259,7 +1259,7 @@ class edit_mode_enter:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[EL], src_dict: Dict[str, Any]) -> EL:
+	def from_dict(cls: Type[ZG], src_dict: Dict[str, Any]) -> ZG:
 		d = src_dict.copy()
 		target = d.pop("target", UNSET)
 
@@ -1293,7 +1293,7 @@ class edit_mode_enter:
 
 
 
-ZG = TypeVar("ZG", bound="edit_mode_exit")
+LF = TypeVar("LF", bound="edit_mode_exit")
 
 @attr.s(auto_attribs=True)
 class edit_mode_exit:
@@ -1313,7 +1313,7 @@ class edit_mode_exit:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[ZG], src_dict: Dict[str, Any]) -> ZG:
+	def from_dict(cls: Type[LF], src_dict: Dict[str, Any]) -> LF:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -1344,7 +1344,7 @@ class edit_mode_exit:
 
 
 
-LF = TypeVar("LF", bound="select_with_point")
+CS = TypeVar("CS", bound="select_with_point")
 
 @attr.s(auto_attribs=True)
 class select_with_point:
@@ -1374,7 +1374,7 @@ class select_with_point:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[LF], src_dict: Dict[str, Any]) -> LF:
+	def from_dict(cls: Type[CS], src_dict: Dict[str, Any]) -> CS:
 		d = src_dict.copy()
 		_selected_at_window = d.pop("selected_at_window", UNSET)
 		selected_at_window: Union[Unset, Point2d]
@@ -1421,7 +1421,7 @@ class select_with_point:
 
 
 
-CS = TypeVar("CS", bound="select_clear")
+GN = TypeVar("GN", bound="select_clear")
 
 @attr.s(auto_attribs=True)
 class select_clear:
@@ -1441,7 +1441,7 @@ class select_clear:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[CS], src_dict: Dict[str, Any]) -> CS:
+	def from_dict(cls: Type[GN], src_dict: Dict[str, Any]) -> GN:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -1472,7 +1472,7 @@ class select_clear:
 
 
 
-GN = TypeVar("GN", bound="select_add")
+GD = TypeVar("GD", bound="select_add")
 
 @attr.s(auto_attribs=True)
 class select_add:
@@ -1498,7 +1498,7 @@ class select_add:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[GN], src_dict: Dict[str, Any]) -> GN:
+	def from_dict(cls: Type[GD], src_dict: Dict[str, Any]) -> GD:
 		d = src_dict.copy()
 		entities = cast(List[str], d.pop("entities", UNSET))
 
@@ -1532,7 +1532,7 @@ class select_add:
 
 
 
-GD = TypeVar("GD", bound="select_remove")
+VJ = TypeVar("VJ", bound="select_remove")
 
 @attr.s(auto_attribs=True)
 class select_remove:
@@ -1558,7 +1558,7 @@ class select_remove:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[GD], src_dict: Dict[str, Any]) -> GD:
+	def from_dict(cls: Type[VJ], src_dict: Dict[str, Any]) -> VJ:
 		d = src_dict.copy()
 		entities = cast(List[str], d.pop("entities", UNSET))
 
@@ -1592,7 +1592,7 @@ class select_remove:
 
 
 
-VJ = TypeVar("VJ", bound="select_replace")
+OX = TypeVar("OX", bound="select_replace")
 
 @attr.s(auto_attribs=True)
 class select_replace:
@@ -1618,7 +1618,7 @@ class select_replace:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[VJ], src_dict: Dict[str, Any]) -> VJ:
+	def from_dict(cls: Type[OX], src_dict: Dict[str, Any]) -> OX:
 		d = src_dict.copy()
 		entities = cast(List[str], d.pop("entities", UNSET))
 
@@ -1652,7 +1652,7 @@ class select_replace:
 
 
 
-OX = TypeVar("OX", bound="select_get")
+YW = TypeVar("YW", bound="select_get")
 
 @attr.s(auto_attribs=True)
 class select_get:
@@ -1672,7 +1672,7 @@ class select_get:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[OX], src_dict: Dict[str, Any]) -> OX:
+	def from_dict(cls: Type[YW], src_dict: Dict[str, Any]) -> YW:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -1703,7 +1703,7 @@ class select_get:
 
 
 
-YW = TypeVar("YW", bound="highlight_set_entity")
+QX = TypeVar("QX", bound="highlight_set_entity")
 
 @attr.s(auto_attribs=True)
 class highlight_set_entity:
@@ -1732,7 +1732,7 @@ class highlight_set_entity:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[YW], src_dict: Dict[str, Any]) -> YW:
+	def from_dict(cls: Type[QX], src_dict: Dict[str, Any]) -> QX:
 		d = src_dict.copy()
 		_selected_at_window = d.pop("selected_at_window", UNSET)
 		selected_at_window: Union[Unset, Point2d]
@@ -1774,7 +1774,7 @@ class highlight_set_entity:
 
 
 
-QX = TypeVar("QX", bound="highlight_set_entities")
+NO = TypeVar("NO", bound="highlight_set_entities")
 
 @attr.s(auto_attribs=True)
 class highlight_set_entities:
@@ -1800,7 +1800,7 @@ class highlight_set_entities:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[QX], src_dict: Dict[str, Any]) -> QX:
+	def from_dict(cls: Type[NO], src_dict: Dict[str, Any]) -> NO:
 		d = src_dict.copy()
 		entities = cast(List[str], d.pop("entities", UNSET))
 
@@ -1834,7 +1834,7 @@ class highlight_set_entities:
 
 
 
-NO = TypeVar("NO", bound="new_annotation")
+VX = TypeVar("VX", bound="new_annotation")
 
 @attr.s(auto_attribs=True)
 class new_annotation:
@@ -1868,7 +1868,7 @@ class new_annotation:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[NO], src_dict: Dict[str, Any]) -> NO:
+	def from_dict(cls: Type[VX], src_dict: Dict[str, Any]) -> VX:
 		d = src_dict.copy()
 		_annotation_type = d.pop("annotation_type", UNSET)
 		annotation_type: Union[Unset, AnnotationType]
@@ -1918,7 +1918,7 @@ class new_annotation:
 
 
 
-VX = TypeVar("VX", bound="update_annotation")
+RG = TypeVar("RG", bound="update_annotation")
 
 @attr.s(auto_attribs=True)
 class update_annotation:
@@ -1947,7 +1947,7 @@ class update_annotation:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[VX], src_dict: Dict[str, Any]) -> VX:
+	def from_dict(cls: Type[RG], src_dict: Dict[str, Any]) -> RG:
 		d = src_dict.copy()
 		annotation_id = d.pop("annotation_id", UNSET)
 
@@ -1989,7 +1989,7 @@ class update_annotation:
 
 
 
-RG = TypeVar("RG", bound="object_visible")
+IT = TypeVar("IT", bound="object_visible")
 
 @attr.s(auto_attribs=True)
 class object_visible:
@@ -2017,7 +2017,7 @@ class object_visible:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[RG], src_dict: Dict[str, Any]) -> RG:
+	def from_dict(cls: Type[IT], src_dict: Dict[str, Any]) -> IT:
 		d = src_dict.copy()
 		hidden = d.pop("hidden", UNSET)
 
@@ -2054,7 +2054,65 @@ class object_visible:
 
 
 
-IT = TypeVar("IT", bound="get_entity_type")
+LD = TypeVar("LD", bound="object_bring_to_front")
+
+@attr.s(auto_attribs=True)
+class object_bring_to_front:
+	""" Bring an object to the front of the scene """ # noqa: E501
+	object_id: Union[Unset, str] = UNSET
+	type: str = "object_bring_to_front"
+
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+	def to_dict(self) -> Dict[str, Any]:
+		object_id = self.object_id
+		type = self.type
+
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		if object_id is not UNSET:
+			field_dict['object_id'] = object_id
+		field_dict['type'] = type
+
+		return field_dict
+
+	@classmethod
+	def from_dict(cls: Type[LD], src_dict: Dict[str, Any]) -> LD:
+		d = src_dict.copy()
+		object_id = d.pop("object_id", UNSET)
+
+		type = d.pop("type", UNSET)
+
+
+		object_bring_to_front = cls(
+			object_id= object_id,
+			type= type,
+		)
+
+		object_bring_to_front.additional_properties = d
+		return object_bring_to_front
+
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
+
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
+
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
+
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
+
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties
+
+
+
+
+UA = TypeVar("UA", bound="get_entity_type")
 
 @attr.s(auto_attribs=True)
 class get_entity_type:
@@ -2078,7 +2136,7 @@ class get_entity_type:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[IT], src_dict: Dict[str, Any]) -> IT:
+	def from_dict(cls: Type[UA], src_dict: Dict[str, Any]) -> UA:
 		d = src_dict.copy()
 		entity_id = d.pop("entity_id", UNSET)
 
@@ -2112,7 +2170,7 @@ class get_entity_type:
 
 
 
-LD = TypeVar("LD", bound="solid3d_get_all_edge_faces")
+TN = TypeVar("TN", bound="solid3d_get_all_edge_faces")
 
 @attr.s(auto_attribs=True)
 class solid3d_get_all_edge_faces:
@@ -2140,7 +2198,7 @@ class solid3d_get_all_edge_faces:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[LD], src_dict: Dict[str, Any]) -> LD:
+	def from_dict(cls: Type[TN], src_dict: Dict[str, Any]) -> TN:
 		d = src_dict.copy()
 		edge_id = d.pop("edge_id", UNSET)
 
@@ -2177,7 +2235,7 @@ class solid3d_get_all_edge_faces:
 
 
 
-UA = TypeVar("UA", bound="solid3d_get_all_opposite_edges")
+MZ = TypeVar("MZ", bound="solid3d_get_all_opposite_edges")
 
 @attr.s(auto_attribs=True)
 class solid3d_get_all_opposite_edges:
@@ -2210,7 +2268,7 @@ class solid3d_get_all_opposite_edges:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UA], src_dict: Dict[str, Any]) -> UA:
+	def from_dict(cls: Type[MZ], src_dict: Dict[str, Any]) -> MZ:
 		d = src_dict.copy()
 		_along_vector = d.pop("along_vector", UNSET)
 		along_vector: Union[Unset, Point3d]
@@ -2255,7 +2313,7 @@ class solid3d_get_all_opposite_edges:
 
 
 
-TN = TypeVar("TN", bound="solid3d_get_opposite_edge")
+UG = TypeVar("UG", bound="solid3d_get_opposite_edge")
 
 @attr.s(auto_attribs=True)
 class solid3d_get_opposite_edge:
@@ -2287,7 +2345,7 @@ class solid3d_get_opposite_edge:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[TN], src_dict: Dict[str, Any]) -> TN:
+	def from_dict(cls: Type[UG], src_dict: Dict[str, Any]) -> UG:
 		d = src_dict.copy()
 		edge_id = d.pop("edge_id", UNSET)
 
@@ -2327,7 +2385,7 @@ class solid3d_get_opposite_edge:
 
 
 
-MZ = TypeVar("MZ", bound="solid3d_get_next_adjacent_edge")
+CY = TypeVar("CY", bound="solid3d_get_next_adjacent_edge")
 
 @attr.s(auto_attribs=True)
 class solid3d_get_next_adjacent_edge:
@@ -2359,7 +2417,7 @@ class solid3d_get_next_adjacent_edge:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[MZ], src_dict: Dict[str, Any]) -> MZ:
+	def from_dict(cls: Type[CY], src_dict: Dict[str, Any]) -> CY:
 		d = src_dict.copy()
 		edge_id = d.pop("edge_id", UNSET)
 
@@ -2399,7 +2457,7 @@ class solid3d_get_next_adjacent_edge:
 
 
 
-UG = TypeVar("UG", bound="solid3d_get_prev_adjacent_edge")
+NZ = TypeVar("NZ", bound="solid3d_get_prev_adjacent_edge")
 
 @attr.s(auto_attribs=True)
 class solid3d_get_prev_adjacent_edge:
@@ -2431,7 +2489,7 @@ class solid3d_get_prev_adjacent_edge:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UG], src_dict: Dict[str, Any]) -> UG:
+	def from_dict(cls: Type[NZ], src_dict: Dict[str, Any]) -> NZ:
 		d = src_dict.copy()
 		edge_id = d.pop("edge_id", UNSET)
 
@@ -2471,7 +2529,7 @@ class solid3d_get_prev_adjacent_edge:
 
 
 
-CY = TypeVar("CY", bound="send_object")
+LI = TypeVar("LI", bound="send_object")
 
 @attr.s(auto_attribs=True)
 class send_object:
@@ -2499,7 +2557,7 @@ class send_object:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[CY], src_dict: Dict[str, Any]) -> CY:
+	def from_dict(cls: Type[LI], src_dict: Dict[str, Any]) -> LI:
 		d = src_dict.copy()
 		front = d.pop("front", UNSET)
 
@@ -2536,7 +2594,7 @@ class send_object:
 
 
 
-NZ = TypeVar("NZ", bound="entity_set_opacity")
+LO = TypeVar("LO", bound="entity_set_opacity")
 
 @attr.s(auto_attribs=True)
 class entity_set_opacity:
@@ -2564,7 +2622,7 @@ class entity_set_opacity:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[NZ], src_dict: Dict[str, Any]) -> NZ:
+	def from_dict(cls: Type[LO], src_dict: Dict[str, Any]) -> LO:
 		d = src_dict.copy()
 		entity_id = d.pop("entity_id", UNSET)
 
@@ -2601,7 +2659,7 @@ class entity_set_opacity:
 
 
 
-LI = TypeVar("LI", bound="entity_fade")
+XJ = TypeVar("XJ", bound="entity_fade")
 
 @attr.s(auto_attribs=True)
 class entity_fade:
@@ -2633,7 +2691,7 @@ class entity_fade:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[LI], src_dict: Dict[str, Any]) -> LI:
+	def from_dict(cls: Type[XJ], src_dict: Dict[str, Any]) -> XJ:
 		d = src_dict.copy()
 		duration_seconds = d.pop("duration_seconds", UNSET)
 
@@ -2673,12 +2731,13 @@ class entity_fade:
 
 
 
-LO = TypeVar("LO", bound="make_plane")
+OW = TypeVar("OW", bound="make_plane")
 
 @attr.s(auto_attribs=True)
 class make_plane:
 	""" Make a plane. """ # noqa: E501
 	clobber: Union[Unset, bool] = False
+	hide: Union[Unset, bool] = False
 	origin: Union[Unset, Point3d] = UNSET
 	size:  Union[Unset, float] = UNSET
 	type: str = "make_plane"
@@ -2689,6 +2748,7 @@ class make_plane:
 
 	def to_dict(self) -> Dict[str, Any]:
 		clobber = self.clobber
+		hide = self.hide
 		if not isinstance(self.origin, Unset):
 			origin = self.origin
 		size = self.size
@@ -2703,6 +2763,8 @@ class make_plane:
 		field_dict.update({})
 		if clobber is not UNSET:
 			field_dict['clobber'] = clobber
+		if hide is not UNSET:
+			field_dict['hide'] = hide
 		if origin is not UNSET:
 			field_dict['origin'] = origin
 		if size is not UNSET:
@@ -2716,9 +2778,11 @@ class make_plane:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[LO], src_dict: Dict[str, Any]) -> LO:
+	def from_dict(cls: Type[OW], src_dict: Dict[str, Any]) -> OW:
 		d = src_dict.copy()
 		clobber = d.pop("clobber", UNSET)
+
+		hide = d.pop("hide", UNSET)
 
 		_origin = d.pop("origin", UNSET)
 		origin: Union[Unset, Point3d]
@@ -2748,6 +2812,7 @@ class make_plane:
 
 		make_plane = cls(
 			clobber= clobber,
+			hide= hide,
 			origin= origin,
 			size= size,
 			type= type,
@@ -2777,7 +2842,7 @@ class make_plane:
 
 
 
-XJ = TypeVar("XJ", bound="plane_set_color")
+JQ = TypeVar("JQ", bound="plane_set_color")
 
 @attr.s(auto_attribs=True)
 class plane_set_color:
@@ -2806,7 +2871,7 @@ class plane_set_color:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[XJ], src_dict: Dict[str, Any]) -> XJ:
+	def from_dict(cls: Type[JQ], src_dict: Dict[str, Any]) -> JQ:
 		d = src_dict.copy()
 		_color = d.pop("color", UNSET)
 		color: Union[Unset, Color]
@@ -2848,7 +2913,7 @@ class plane_set_color:
 
 
 
-OW = TypeVar("OW", bound="set_tool")
+PQ = TypeVar("PQ", bound="set_tool")
 
 @attr.s(auto_attribs=True)
 class set_tool:
@@ -2873,7 +2938,7 @@ class set_tool:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[OW], src_dict: Dict[str, Any]) -> OW:
+	def from_dict(cls: Type[PQ], src_dict: Dict[str, Any]) -> PQ:
 		d = src_dict.copy()
 		_tool = d.pop("tool", UNSET)
 		tool: Union[Unset, SceneToolType]
@@ -2912,7 +2977,7 @@ class set_tool:
 
 
 
-JQ = TypeVar("JQ", bound="mouse_move")
+IM = TypeVar("IM", bound="mouse_move")
 
 @attr.s(auto_attribs=True)
 class mouse_move:
@@ -2941,7 +3006,7 @@ class mouse_move:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JQ], src_dict: Dict[str, Any]) -> JQ:
+	def from_dict(cls: Type[IM], src_dict: Dict[str, Any]) -> IM:
 		d = src_dict.copy()
 		sequence = d.pop("sequence", UNSET)
 
@@ -2983,7 +3048,7 @@ class mouse_move:
 
 
 
-PQ = TypeVar("PQ", bound="mouse_click")
+OU = TypeVar("OU", bound="mouse_click")
 
 @attr.s(auto_attribs=True)
 class mouse_click:
@@ -3008,7 +3073,7 @@ class mouse_click:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[PQ], src_dict: Dict[str, Any]) -> PQ:
+	def from_dict(cls: Type[OU], src_dict: Dict[str, Any]) -> OU:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -3047,12 +3112,13 @@ class mouse_click:
 
 
 
-IM = TypeVar("IM", bound="sketch_mode_enable")
+KL = TypeVar("KL", bound="sketch_mode_enable")
 
 @attr.s(auto_attribs=True)
 class sketch_mode_enable:
 	""" Enable sketch mode on the given plane. """ # noqa: E501
 	animated: Union[Unset, bool] = False
+	disable_camera_with_plane: Union[Unset, Point3d] = UNSET
 	ortho: Union[Unset, bool] = False
 	plane_id: Union[Unset, str] = UNSET
 	type: str = "sketch_mode_enable"
@@ -3061,6 +3127,8 @@ class sketch_mode_enable:
 
 	def to_dict(self) -> Dict[str, Any]:
 		animated = self.animated
+		if not isinstance(self.disable_camera_with_plane, Unset):
+			disable_camera_with_plane = self.disable_camera_with_plane
 		ortho = self.ortho
 		plane_id = self.plane_id
 		type = self.type
@@ -3070,6 +3138,8 @@ class sketch_mode_enable:
 		field_dict.update({})
 		if animated is not UNSET:
 			field_dict['animated'] = animated
+		if disable_camera_with_plane is not UNSET:
+			field_dict['disable_camera_with_plane'] = disable_camera_with_plane
 		if ortho is not UNSET:
 			field_dict['ortho'] = ortho
 		if plane_id is not UNSET:
@@ -3079,9 +3149,16 @@ class sketch_mode_enable:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[IM], src_dict: Dict[str, Any]) -> IM:
+	def from_dict(cls: Type[KL], src_dict: Dict[str, Any]) -> KL:
 		d = src_dict.copy()
 		animated = d.pop("animated", UNSET)
+
+		_disable_camera_with_plane = d.pop("disable_camera_with_plane", UNSET)
+		disable_camera_with_plane: Union[Unset, Point3d]
+		if isinstance(_disable_camera_with_plane, Unset):
+			disable_camera_with_plane = UNSET
+		else:
+			disable_camera_with_plane = _disable_camera_with_plane # type: ignore[arg-type]
 
 		ortho = d.pop("ortho", UNSET)
 
@@ -3092,6 +3169,7 @@ class sketch_mode_enable:
 
 		sketch_mode_enable = cls(
 			animated= animated,
+			disable_camera_with_plane= disable_camera_with_plane,
 			ortho= ortho,
 			plane_id= plane_id,
 			type= type,
@@ -3119,7 +3197,7 @@ class sketch_mode_enable:
 
 
 
-OU = TypeVar("OU", bound="sketch_mode_disable")
+XI = TypeVar("XI", bound="sketch_mode_disable")
 
 @attr.s(auto_attribs=True)
 class sketch_mode_disable:
@@ -3139,7 +3217,7 @@ class sketch_mode_disable:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[OU], src_dict: Dict[str, Any]) -> OU:
+	def from_dict(cls: Type[XI], src_dict: Dict[str, Any]) -> XI:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -3170,7 +3248,7 @@ class sketch_mode_disable:
 
 
 
-KL = TypeVar("KL", bound="curve_get_type")
+PO = TypeVar("PO", bound="curve_get_type")
 
 @attr.s(auto_attribs=True)
 class curve_get_type:
@@ -3194,7 +3272,7 @@ class curve_get_type:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[KL], src_dict: Dict[str, Any]) -> KL:
+	def from_dict(cls: Type[PO], src_dict: Dict[str, Any]) -> PO:
 		d = src_dict.copy()
 		curve_id = d.pop("curve_id", UNSET)
 
@@ -3228,7 +3306,7 @@ class curve_get_type:
 
 
 
-XI = TypeVar("XI", bound="curve_get_control_points")
+PS = TypeVar("PS", bound="curve_get_control_points")
 
 @attr.s(auto_attribs=True)
 class curve_get_control_points:
@@ -3252,7 +3330,7 @@ class curve_get_control_points:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[XI], src_dict: Dict[str, Any]) -> XI:
+	def from_dict(cls: Type[PS], src_dict: Dict[str, Any]) -> PS:
 		d = src_dict.copy()
 		curve_id = d.pop("curve_id", UNSET)
 
@@ -3286,7 +3364,7 @@ class curve_get_control_points:
 
 
 
-PO = TypeVar("PO", bound="take_snapshot")
+WR = TypeVar("WR", bound="take_snapshot")
 
 @attr.s(auto_attribs=True)
 class take_snapshot:
@@ -3311,7 +3389,7 @@ class take_snapshot:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[PO], src_dict: Dict[str, Any]) -> PO:
+	def from_dict(cls: Type[WR], src_dict: Dict[str, Any]) -> WR:
 		d = src_dict.copy()
 		_format = d.pop("format", UNSET)
 		format: Union[Unset, ImageFormat]
@@ -3350,7 +3428,7 @@ class take_snapshot:
 
 
 
-PS = TypeVar("PS", bound="make_axes_gizmo")
+XL = TypeVar("XL", bound="make_axes_gizmo")
 
 @attr.s(auto_attribs=True)
 class make_axes_gizmo:
@@ -3378,7 +3456,7 @@ class make_axes_gizmo:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[PS], src_dict: Dict[str, Any]) -> PS:
+	def from_dict(cls: Type[XL], src_dict: Dict[str, Any]) -> XL:
 		d = src_dict.copy()
 		clobber = d.pop("clobber", UNSET)
 
@@ -3415,7 +3493,7 @@ class make_axes_gizmo:
 
 
 
-WR = TypeVar("WR", bound="path_get_info")
+ZX = TypeVar("ZX", bound="path_get_info")
 
 @attr.s(auto_attribs=True)
 class path_get_info:
@@ -3439,7 +3517,7 @@ class path_get_info:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[WR], src_dict: Dict[str, Any]) -> WR:
+	def from_dict(cls: Type[ZX], src_dict: Dict[str, Any]) -> ZX:
 		d = src_dict.copy()
 		path_id = d.pop("path_id", UNSET)
 
@@ -3473,7 +3551,7 @@ class path_get_info:
 
 
 
-XL = TypeVar("XL", bound="path_get_curve_uuids_for_vertices")
+FT = TypeVar("FT", bound="path_get_curve_uuids_for_vertices")
 
 @attr.s(auto_attribs=True)
 class path_get_curve_uuids_for_vertices:
@@ -3503,7 +3581,7 @@ class path_get_curve_uuids_for_vertices:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[XL], src_dict: Dict[str, Any]) -> XL:
+	def from_dict(cls: Type[FT], src_dict: Dict[str, Any]) -> FT:
 		d = src_dict.copy()
 		path_id = d.pop("path_id", UNSET)
 
@@ -3540,7 +3618,7 @@ class path_get_curve_uuids_for_vertices:
 
 
 
-ZX = TypeVar("ZX", bound="handle_mouse_drag_start")
+NX = TypeVar("NX", bound="handle_mouse_drag_start")
 
 @attr.s(auto_attribs=True)
 class handle_mouse_drag_start:
@@ -3565,7 +3643,7 @@ class handle_mouse_drag_start:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[ZX], src_dict: Dict[str, Any]) -> ZX:
+	def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -3604,7 +3682,7 @@ class handle_mouse_drag_start:
 
 
 
-FT = TypeVar("FT", bound="handle_mouse_drag_move")
+SC = TypeVar("SC", bound="handle_mouse_drag_move")
 
 @attr.s(auto_attribs=True)
 class handle_mouse_drag_move:
@@ -3633,7 +3711,7 @@ class handle_mouse_drag_move:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[FT], src_dict: Dict[str, Any]) -> FT:
+	def from_dict(cls: Type[SC], src_dict: Dict[str, Any]) -> SC:
 		d = src_dict.copy()
 		sequence = d.pop("sequence", UNSET)
 
@@ -3675,7 +3753,7 @@ class handle_mouse_drag_move:
 
 
 
-NX = TypeVar("NX", bound="handle_mouse_drag_end")
+TX = TypeVar("TX", bound="handle_mouse_drag_end")
 
 @attr.s(auto_attribs=True)
 class handle_mouse_drag_end:
@@ -3700,7 +3778,7 @@ class handle_mouse_drag_end:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[NX], src_dict: Dict[str, Any]) -> NX:
+	def from_dict(cls: Type[TX], src_dict: Dict[str, Any]) -> TX:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -3739,7 +3817,7 @@ class handle_mouse_drag_end:
 
 
 
-SC = TypeVar("SC", bound="remove_scene_objects")
+JA = TypeVar("JA", bound="remove_scene_objects")
 
 @attr.s(auto_attribs=True)
 class remove_scene_objects:
@@ -3765,7 +3843,7 @@ class remove_scene_objects:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[SC], src_dict: Dict[str, Any]) -> SC:
+	def from_dict(cls: Type[JA], src_dict: Dict[str, Any]) -> JA:
 		d = src_dict.copy()
 		object_ids = cast(List[str], d.pop("object_ids", UNSET))
 
@@ -3799,7 +3877,7 @@ class remove_scene_objects:
 
 
 
-TX = TypeVar("TX", bound="plane_intersect_and_project")
+SK = TypeVar("SK", bound="plane_intersect_and_project")
 
 @attr.s(auto_attribs=True)
 class plane_intersect_and_project:
@@ -3828,7 +3906,7 @@ class plane_intersect_and_project:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[TX], src_dict: Dict[str, Any]) -> TX:
+	def from_dict(cls: Type[SK], src_dict: Dict[str, Any]) -> SK:
 		d = src_dict.copy()
 		plane_id = d.pop("plane_id", UNSET)
 
@@ -3870,7 +3948,7 @@ class plane_intersect_and_project:
 
 
 
-JA = TypeVar("JA", bound="curve_get_end_points")
+UK = TypeVar("UK", bound="curve_get_end_points")
 
 @attr.s(auto_attribs=True)
 class curve_get_end_points:
@@ -3894,7 +3972,7 @@ class curve_get_end_points:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JA], src_dict: Dict[str, Any]) -> JA:
+	def from_dict(cls: Type[UK], src_dict: Dict[str, Any]) -> UK:
 		d = src_dict.copy()
 		curve_id = d.pop("curve_id", UNSET)
 
@@ -3928,7 +4006,7 @@ class curve_get_end_points:
 
 
 
-SK = TypeVar("SK", bound="reconfigure_stream")
+CX = TypeVar("CX", bound="reconfigure_stream")
 
 @attr.s(auto_attribs=True)
 class reconfigure_stream:
@@ -3960,7 +4038,7 @@ class reconfigure_stream:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[SK], src_dict: Dict[str, Any]) -> SK:
+	def from_dict(cls: Type[CX], src_dict: Dict[str, Any]) -> CX:
 		d = src_dict.copy()
 		fps = d.pop("fps", UNSET)
 
@@ -4000,7 +4078,7 @@ class reconfigure_stream:
 
 
 
-UK = TypeVar("UK", bound="import_files")
+MT = TypeVar("MT", bound="import_files")
 
 @attr.s(auto_attribs=True)
 class import_files:
@@ -4028,7 +4106,7 @@ class import_files:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UK], src_dict: Dict[str, Any]) -> UK:
+	def from_dict(cls: Type[MT], src_dict: Dict[str, Any]) -> MT:
 		d = src_dict.copy()
 		from ..models.import_file import ImportFile
 		files = cast(List[ImportFile], d.pop("files", UNSET))
@@ -4063,7 +4141,7 @@ class import_files:
 
 
 
-CX = TypeVar("CX", bound="mass")
+LJ = TypeVar("LJ", bound="mass")
 
 @attr.s(auto_attribs=True)
 class mass:
@@ -4108,7 +4186,7 @@ class mass:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[CX], src_dict: Dict[str, Any]) -> CX:
+	def from_dict(cls: Type[LJ], src_dict: Dict[str, Any]) -> LJ:
 		d = src_dict.copy()
 		entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -4169,7 +4247,7 @@ class mass:
 
 
 
-MT = TypeVar("MT", bound="density")
+TF = TypeVar("TF", bound="density")
 
 @attr.s(auto_attribs=True)
 class density:
@@ -4214,7 +4292,7 @@ class density:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[MT], src_dict: Dict[str, Any]) -> MT:
+	def from_dict(cls: Type[TF], src_dict: Dict[str, Any]) -> TF:
 		d = src_dict.copy()
 		entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -4275,7 +4353,7 @@ class density:
 
 
 
-LJ = TypeVar("LJ", bound="volume")
+HF = TypeVar("HF", bound="volume")
 
 @attr.s(auto_attribs=True)
 class volume:
@@ -4311,7 +4389,7 @@ class volume:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[LJ], src_dict: Dict[str, Any]) -> LJ:
+	def from_dict(cls: Type[HF], src_dict: Dict[str, Any]) -> HF:
 		d = src_dict.copy()
 		entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -4361,7 +4439,7 @@ class volume:
 
 
 
-TF = TypeVar("TF", bound="center_of_mass")
+JD = TypeVar("JD", bound="center_of_mass")
 
 @attr.s(auto_attribs=True)
 class center_of_mass:
@@ -4397,7 +4475,7 @@ class center_of_mass:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[TF], src_dict: Dict[str, Any]) -> TF:
+	def from_dict(cls: Type[JD], src_dict: Dict[str, Any]) -> JD:
 		d = src_dict.copy()
 		entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -4447,7 +4525,7 @@ class center_of_mass:
 
 
 
-HF = TypeVar("HF", bound="surface_area")
+RZ = TypeVar("RZ", bound="surface_area")
 
 @attr.s(auto_attribs=True)
 class surface_area:
@@ -4483,7 +4561,7 @@ class surface_area:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[HF], src_dict: Dict[str, Any]) -> HF:
+	def from_dict(cls: Type[RZ], src_dict: Dict[str, Any]) -> RZ:
 		d = src_dict.copy()
 		entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
@@ -4530,4 +4608,55 @@ class surface_area:
 	def __contains__(self, key: str) -> bool:
 		return key in self.additional_properties
 
-ModelingCmd = Union[start_path, move_path_pen, extend_path, extrude, close_path, camera_drag_start, camera_drag_move, camera_drag_end, default_camera_look_at, default_camera_zoom, default_camera_enable_sketch_mode, default_camera_disable_sketch_mode, export, entity_get_parent_id, entity_get_num_children, entity_get_child_uuid, entity_get_all_child_uuids, edit_mode_enter, edit_mode_exit, select_with_point, select_clear, select_add, select_remove, select_replace, select_get, highlight_set_entity, highlight_set_entities, new_annotation, update_annotation, object_visible, get_entity_type, solid3d_get_all_edge_faces, solid3d_get_all_opposite_edges, solid3d_get_opposite_edge, solid3d_get_next_adjacent_edge, solid3d_get_prev_adjacent_edge, send_object, entity_set_opacity, entity_fade, make_plane, plane_set_color, set_tool, mouse_move, mouse_click, sketch_mode_enable, sketch_mode_disable, curve_get_type, curve_get_control_points, take_snapshot, make_axes_gizmo, path_get_info, path_get_curve_uuids_for_vertices, handle_mouse_drag_start, handle_mouse_drag_move, handle_mouse_drag_end, remove_scene_objects, plane_intersect_and_project, curve_get_end_points, reconfigure_stream, import_files, mass, density, volume, center_of_mass, surface_area]
+
+
+
+BH = TypeVar("BH", bound="get_sketch_mode_plane")
+
+@attr.s(auto_attribs=True)
+class get_sketch_mode_plane:
+	""" Get the plane of the sketch mode. This is useful for getting the normal of the plane after a user selects a plane. """ # noqa: E501
+	type: str = "get_sketch_mode_plane"
+
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+	def to_dict(self) -> Dict[str, Any]:
+		type = self.type
+
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		field_dict['type'] = type
+
+		return field_dict
+
+	@classmethod
+	def from_dict(cls: Type[BH], src_dict: Dict[str, Any]) -> BH:
+		d = src_dict.copy()
+		type = d.pop("type", UNSET)
+
+
+		get_sketch_mode_plane = cls(
+			type= type,
+		)
+
+		get_sketch_mode_plane.additional_properties = d
+		return get_sketch_mode_plane
+
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
+
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
+
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
+
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
+
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties
+
+ModelingCmd = Union[start_path, move_path_pen, extend_path, extrude, close_path, camera_drag_start, camera_drag_move, camera_drag_end, default_camera_look_at, default_camera_zoom, default_camera_enable_sketch_mode, default_camera_disable_sketch_mode, export, entity_get_parent_id, entity_get_num_children, entity_get_child_uuid, entity_get_all_child_uuids, edit_mode_enter, edit_mode_exit, select_with_point, select_clear, select_add, select_remove, select_replace, select_get, highlight_set_entity, highlight_set_entities, new_annotation, update_annotation, object_visible, object_bring_to_front, get_entity_type, solid3d_get_all_edge_faces, solid3d_get_all_opposite_edges, solid3d_get_opposite_edge, solid3d_get_next_adjacent_edge, solid3d_get_prev_adjacent_edge, send_object, entity_set_opacity, entity_fade, make_plane, plane_set_color, set_tool, mouse_move, mouse_click, sketch_mode_enable, sketch_mode_disable, curve_get_type, curve_get_control_points, take_snapshot, make_axes_gizmo, path_get_info, path_get_curve_uuids_for_vertices, handle_mouse_drag_start, handle_mouse_drag_move, handle_mouse_drag_end, remove_scene_objects, plane_intersect_and_project, curve_get_end_points, reconfigure_stream, import_files, mass, density, volume, center_of_mass, surface_area, get_sketch_mode_plane]
