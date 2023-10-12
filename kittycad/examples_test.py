@@ -138,6 +138,8 @@ from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.image_type import ImageType
+from kittycad.models.rtc_sdp_type import RtcSdpType
+from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -153,6 +155,7 @@ from kittycad.models.unit_temperature import UnitTemperature
 from kittycad.models.unit_torque import UnitTorque
 from kittycad.models.unit_volume import UnitVolume
 from kittycad.models.update_user import UpdateUser
+from kittycad.models.web_socket_request import sdp_offer
 from kittycad.types import Response
 
 
@@ -2198,45 +2201,6 @@ async def test_get_volume_unit_conversion_async():
 
 
 @pytest.mark.skip
-def test_delete_user_self():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = delete_user_self.sync(
-        client=client,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Error = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_user_self.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_delete_user_self_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = await delete_user_self.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    response: Response[Optional[Error]] = await delete_user_self.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
 def test_get_user_self():
     # Create our client.
     client = ClientFromEnv()
@@ -2347,6 +2311,45 @@ async def test_update_user_self_async():
             last_name="<string>",
             phone="<string>",
         ),
+    )
+
+
+@pytest.mark.skip
+def test_delete_user_self():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_user_self.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_user_self.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_user_self_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_user_self.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_user_self.asyncio_detailed(
+        client=client,
     )
 
 
@@ -2559,51 +2562,6 @@ async def test_create_api_token_for_user_async():
 
 
 @pytest.mark.skip
-def test_delete_api_token_for_user():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = delete_api_token_for_user.sync(
-        client=client,
-        token="<uuid>",
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Error = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_api_token_for_user.sync_detailed(
-        client=client,
-        token="<uuid>",
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_delete_api_token_for_user_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = await delete_api_token_for_user.asyncio(
-        client=client,
-        token="<uuid>",
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Error]
-    ] = await delete_api_token_for_user.asyncio_detailed(
-        client=client,
-        token="<uuid>",
-    )
-
-
-@pytest.mark.skip
 def test_get_api_token_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2645,6 +2603,51 @@ async def test_get_api_token_for_user_async():
     response: Response[
         Optional[Union[ApiToken, Error]]
     ] = await get_api_token_for_user.asyncio_detailed(
+        client=client,
+        token="<uuid>",
+    )
+
+
+@pytest.mark.skip
+def test_delete_api_token_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_api_token_for_user.sync(
+        client=client,
+        token="<uuid>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_api_token_for_user.sync_detailed(
+        client=client,
+        token="<uuid>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_api_token_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_api_token_for_user.asyncio(
+        client=client,
+        token="<uuid>",
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await delete_api_token_for_user.asyncio_detailed(
         client=client,
         token="<uuid>",
     )
@@ -2769,49 +2772,6 @@ async def test_get_user_onboarding_self_async():
 
 
 @pytest.mark.skip
-def test_delete_payment_information_for_user():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = delete_payment_information_for_user.sync(
-        client=client,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Error = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Error]
-    ] = delete_payment_information_for_user.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_delete_payment_information_for_user_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = await delete_payment_information_for_user.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Error]
-    ] = await delete_payment_information_for_user.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
 def test_get_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -2853,6 +2813,67 @@ async def test_get_payment_information_for_user_async():
         Optional[Union[Customer, Error]]
     ] = await get_payment_information_for_user.asyncio_detailed(
         client=client,
+    )
+
+
+@pytest.mark.skip
+def test_update_payment_information_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Customer, Error]] = update_payment_information_for_user.sync(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Customer = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = update_payment_information_for_user.sync_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_payment_information_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[Customer, Error]
+    ] = await update_payment_information_for_user.asyncio(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await update_payment_information_for_user.asyncio_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -2918,63 +2939,45 @@ async def test_create_payment_information_for_user_async():
 
 
 @pytest.mark.skip
-def test_update_payment_information_for_user():
+def test_delete_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Customer, Error]] = update_payment_information_for_user.sync(
+    result: Optional[Error] = delete_payment_information_for_user.sync(
         client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
     )
 
     if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
-    body: Customer = result
+    body: Error = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
     response: Response[
-        Optional[Union[Customer, Error]]
-    ] = update_payment_information_for_user.sync_detailed(
+        Optional[Error]
+    ] = delete_payment_information_for_user.sync_detailed(
         client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
     )
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_update_payment_information_for_user_async():
+async def test_delete_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[
-        Union[Customer, Error]
-    ] = await update_payment_information_for_user.asyncio(
+    result: Optional[Error] = await delete_payment_information_for_user.asyncio(
         client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
     )
 
     # OR run async with more info
     response: Response[
-        Optional[Union[Customer, Error]]
-    ] = await update_payment_information_for_user.asyncio_detailed(
+        Optional[Error]
+    ] = await delete_payment_information_for_user.asyncio_detailed(
         client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
     )
 
 
@@ -3611,6 +3614,12 @@ def test_modeling_commands_ws():
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
+        body=sdp_offer(
+            offer=RtcSessionDescription(
+                sdp="<string>",
+                type=RtcSdpType.UNSPECIFIED,
+            ),
+        ),
     )
 
     # Send a message.
@@ -3636,6 +3645,12 @@ async def test_modeling_commands_ws_async():
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
+        body=sdp_offer(
+            offer=RtcSessionDescription(
+                sdp="<string>",
+                type=RtcSdpType.UNSPECIFIED,
+            ),
+        ),
     )
 
     # Send a message.

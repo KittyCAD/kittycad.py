@@ -7,7 +7,7 @@ from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-EQ = TypeVar("EQ", bound="line")
+UJ = TypeVar("UJ", bound="line")
 
 @attr.s(auto_attribs=True)
 class line:
@@ -36,7 +36,7 @@ class line:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[EQ], src_dict: Dict[str, Any]) -> EQ:
+	def from_dict(cls: Type[UJ], src_dict: Dict[str, Any]) -> UJ:
 		d = src_dict.copy()
 		_end = d.pop("end", UNSET)
 		end: Union[Unset, Point3d]
@@ -78,7 +78,7 @@ class line:
 
 
 
-UW = TypeVar("UW", bound="arc")
+RU = TypeVar("RU", bound="arc")
 
 @attr.s(auto_attribs=True)
 class arc:
@@ -119,7 +119,7 @@ class arc:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UW], src_dict: Dict[str, Any]) -> UW:
+	def from_dict(cls: Type[RU], src_dict: Dict[str, Any]) -> RU:
 		d = src_dict.copy()
 		angle_end = d.pop("angle_end", UNSET)
 
@@ -170,7 +170,7 @@ class arc:
 
 
 
-MD = TypeVar("MD", bound="bezier")
+DL = TypeVar("DL", bound="bezier")
 
 @attr.s(auto_attribs=True)
 class bezier:
@@ -209,7 +209,7 @@ class bezier:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[MD], src_dict: Dict[str, Any]) -> MD:
+	def from_dict(cls: Type[DL], src_dict: Dict[str, Any]) -> DL:
 		d = src_dict.copy()
 		_control1 = d.pop("control1", UNSET)
 		control1: Union[Unset, Point3d]
@@ -267,7 +267,7 @@ class bezier:
 
 
 
-HD = TypeVar("HD", bound="tangential_arc")
+QT = TypeVar("QT", bound="tangential_arc")
 
 @attr.s(auto_attribs=True)
 class tangential_arc:
@@ -296,7 +296,7 @@ class tangential_arc:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[HD], src_dict: Dict[str, Any]) -> HD:
+	def from_dict(cls: Type[QT], src_dict: Dict[str, Any]) -> QT:
 		d = src_dict.copy()
 		_offset = d.pop("offset", UNSET)
 		offset: Union[Unset, Angle]
@@ -338,7 +338,7 @@ class tangential_arc:
 
 
 
-UJ = TypeVar("UJ", bound="tangential_arc_to")
+PT = TypeVar("PT", bound="tangential_arc_to")
 
 @attr.s(auto_attribs=True)
 class tangential_arc_to:
@@ -368,7 +368,7 @@ class tangential_arc_to:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UJ], src_dict: Dict[str, Any]) -> UJ:
+	def from_dict(cls: Type[PT], src_dict: Dict[str, Any]) -> PT:
 		d = src_dict.copy()
 		_angle_snap_increment = d.pop("angle_snap_increment", UNSET)
 		angle_snap_increment: Union[Unset, Angle]

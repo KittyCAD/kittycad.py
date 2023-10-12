@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-UY = TypeVar("UY", bound="RawFile")
+CG = TypeVar("CG", bound="RawFile")
 
 @attr.s(auto_attribs=True)
 class RawFile:
@@ -31,7 +31,7 @@ class RawFile:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UY], src_dict: Dict[str, Any]) -> UY:
+	def from_dict(cls: Type[CG], src_dict: Dict[str, Any]) -> CG:
 		d = src_dict.copy()
 		contents = cast(List[int], d.pop("contents", UNSET))
 

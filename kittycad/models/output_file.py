@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-DU = TypeVar("DU", bound="OutputFile")
+GP = TypeVar("GP", bound="OutputFile")
 
 @attr.s(auto_attribs=True)
 class OutputFile:
@@ -29,7 +29,7 @@ class OutputFile:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[DU], src_dict: Dict[str, Any]) -> DU:
+	def from_dict(cls: Type[GP], src_dict: Dict[str, Any]) -> GP:
 		d = src_dict.copy()
 		contents = d.pop("contents", UNSET)
 
