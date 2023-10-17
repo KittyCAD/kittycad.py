@@ -10,7 +10,7 @@ from ..models.jetstream import Jetstream
 from ..models.leaf_node import LeafNode
 from ..types import UNSET, Unset
 
-KQ = TypeVar("KQ", bound="Connection")
+FH = TypeVar("FH", bound="Connection")
 
 @attr.s(auto_attribs=True)
 class Connection:
@@ -224,7 +224,7 @@ This is mostly used for internal purposes and debugging. """ # noqa: E501
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[KQ], src_dict: Dict[str, Any]) -> KQ:
+	def from_dict(cls: Type[FH], src_dict: Dict[str, Any]) -> FH:
 		d = src_dict.copy()
 		auth_timeout = d.pop("auth_timeout", UNSET)
 

@@ -5,23 +5,19 @@ import httpx
 from ...client import Client
 from ...models.error import Error
 from ...models.file_export_format import FileExportFormat
-from ...models.image_type import ImageType
-from ...models.mesh import Mesh
+from ...models.text_to_cad import TextToCad
+from ...models.text_to_cad_create_body import TextToCadCreateBody
 from ...types import Response
 
 
 def _get_kwargs(
     
     
-    input_format: ImageType,
-    
-    
-    
     output_format: FileExportFormat,
     
     
     
-    body: bytes,
+    body: TextToCadCreateBody,
     
     
     *,
@@ -31,12 +27,8 @@ def _get_kwargs(
     
     
     
-    
-    
 ) -> Dict[str, Any]:
-    url = "{}/ai/image-to-3d/{input_format}/{output_format}".format(client.base_url, input_format=input_format,output_format=output_format,)  # noqa: E501
-    
-    
+    url = "{}/ai/text-to-cad/{output_format}".format(client.base_url, output_format=output_format,)  # noqa: E501
     
     
     
@@ -56,10 +48,10 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Mesh, Error]] :
-	if response.status_code == 200:
-		response_200 = Mesh.from_dict(response.json())
-		return response_200
+def _parse_response(*, response: httpx.Response) -> Optional[Union[TextToCad, Error]] :
+	if response.status_code == 201:
+		response_201 = TextToCad.from_dict(response.json())
+		return response_201
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
 		return response_4XX
@@ -72,7 +64,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Mesh, Error]]
 
 def _build_response(
     *, response: httpx.Response
-)  -> Response[Optional[Union[Mesh, Error]]]:
+)  -> Response[Optional[Union[TextToCad, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -84,15 +76,11 @@ def _build_response(
 def sync_detailed(
     
     
-    input_format: ImageType,
-    
-    
-    
     output_format: FileExportFormat,
     
     
     
-    body: bytes,
+    body: TextToCadCreateBody,
     
     
     *,
@@ -102,12 +90,8 @@ def sync_detailed(
     
     
     
-    
-    
-)  -> Response[Optional[Union[Mesh, Error]]]:
+)  -> Response[Optional[Union[TextToCad, Error]]]:
     kwargs = _get_kwargs(
-        
-        input_format=input_format,
         
         output_format=output_format,
         
@@ -127,15 +111,11 @@ def sync_detailed(
 def sync(
     
     
-    input_format: ImageType,
-    
-    
-    
     output_format: FileExportFormat,
     
     
     
-    body: bytes,
+    body: TextToCadCreateBody,
     
     
     *,
@@ -145,14 +125,11 @@ def sync(
     
     
     
-    
-    
-)  -> Optional[Union[Mesh, Error]] :
-    """This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
+)  -> Optional[Union[TextToCad, Error]] :
+    """This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
 
     return sync_detailed(
-        
-        input_format=input_format,
         
         output_format=output_format,
         
@@ -165,15 +142,11 @@ def sync(
 async def asyncio_detailed(
     
     
-    input_format: ImageType,
-    
-    
-    
     output_format: FileExportFormat,
     
     
     
-    body: bytes,
+    body: TextToCadCreateBody,
     
     
     *,
@@ -183,12 +156,8 @@ async def asyncio_detailed(
     
     
     
-    
-    
-)  -> Response[Optional[Union[Mesh, Error]]]:
+)  -> Response[Optional[Union[TextToCad, Error]]]:
     kwargs = _get_kwargs(
-        
-        input_format=input_format,
         
         output_format=output_format,
         
@@ -206,15 +175,11 @@ async def asyncio_detailed(
 async def asyncio(
     
     
-    input_format: ImageType,
-    
-    
-    
     output_format: FileExportFormat,
     
     
     
-    body: bytes,
+    body: TextToCadCreateBody,
     
     
     *,
@@ -224,15 +189,12 @@ async def asyncio(
     
     
     
-    
-    
-)  -> Optional[Union[Mesh, Error]] :
-    """This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
+)  -> Optional[Union[TextToCad, Error]] :
+    """This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
 
     return (
         await asyncio_detailed(
-            
-            input_format=input_format,
             
             output_format=output_format,
             

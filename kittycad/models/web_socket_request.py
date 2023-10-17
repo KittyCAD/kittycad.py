@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -9,7 +9,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 from ..types import UNSET, Unset
 
-RD = TypeVar("RD", bound="trickle_ice")
+EW = TypeVar("EW", bound="trickle_ice")
 
 @attr.s(auto_attribs=True)
 class trickle_ice:
@@ -34,7 +34,7 @@ class trickle_ice:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[RD], src_dict: Dict[str, Any]) -> RD:
+	def from_dict(cls: Type[EW], src_dict: Dict[str, Any]) -> EW:
 		d = src_dict.copy()
 		_candidate = d.pop("candidate", UNSET)
 		candidate: Union[Unset, RtcIceCandidateInit]
@@ -73,7 +73,7 @@ class trickle_ice:
 
 
 
-JW = TypeVar("JW", bound="sdp_offer")
+BU = TypeVar("BU", bound="sdp_offer")
 
 @attr.s(auto_attribs=True)
 class sdp_offer:
@@ -98,7 +98,7 @@ class sdp_offer:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JW], src_dict: Dict[str, Any]) -> JW:
+	def from_dict(cls: Type[BU], src_dict: Dict[str, Any]) -> BU:
 		d = src_dict.copy()
 		_offer = d.pop("offer", UNSET)
 		offer: Union[Unset, RtcSessionDescription]
@@ -137,7 +137,7 @@ class sdp_offer:
 
 
 
-KZ = TypeVar("KZ", bound="modeling_cmd_req")
+BT = TypeVar("BT", bound="modeling_cmd_req")
 
 @attr.s(auto_attribs=True)
 class modeling_cmd_req:
@@ -167,7 +167,7 @@ class modeling_cmd_req:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[KZ], src_dict: Dict[str, Any]) -> KZ:
+	def from_dict(cls: Type[BT], src_dict: Dict[str, Any]) -> BT:
 		d = src_dict.copy()
 		_cmd = d.pop("cmd", UNSET)
 		cmd: Union[Unset, ModelingCmd]
@@ -214,7 +214,70 @@ class modeling_cmd_req:
 
 
 
-AS = TypeVar("AS", bound="ping")
+GR = TypeVar("GR", bound="modeling_cmd_batch_req")
+
+@attr.s(auto_attribs=True)
+class modeling_cmd_batch_req:
+	""" A sequence of modeling requests. If any request fails, following requests will not be tried. """ # noqa: E501
+	from ..models.modeling_cmd_req import ModelingCmdReq
+	requests: Union[Unset, List[ModelingCmdReq]] = UNSET
+	type: str = "modeling_cmd_batch_req"
+
+	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+
+	def to_dict(self) -> Dict[str, Any]:
+		from ..models.modeling_cmd_req import ModelingCmdReq
+		requests: Union[Unset, List[ModelingCmdReq]] = UNSET
+		if not isinstance(self.requests, Unset):
+			requests = self.requests
+		type = self.type
+
+		field_dict: Dict[str, Any] = {}
+		field_dict.update(self.additional_properties)
+		field_dict.update({})
+		if requests is not UNSET:
+			field_dict['requests'] = requests
+		field_dict['type'] = type
+
+		return field_dict
+
+	@classmethod
+	def from_dict(cls: Type[GR], src_dict: Dict[str, Any]) -> GR:
+		d = src_dict.copy()
+		from ..models.modeling_cmd_req import ModelingCmdReq
+		requests = cast(List[ModelingCmdReq], d.pop("requests", UNSET))
+
+		type = d.pop("type", UNSET)
+
+
+		modeling_cmd_batch_req = cls(
+			requests= requests,
+			type= type,
+		)
+
+		modeling_cmd_batch_req.additional_properties = d
+		return modeling_cmd_batch_req
+
+	@property
+	def additional_keys(self) -> List[str]:
+		return list(self.additional_properties.keys())
+
+	def __getitem__(self, key: str) -> Any:
+		return self.additional_properties[key]
+
+	def __setitem__(self, key: str, value: Any) -> None:
+		self.additional_properties[key] = value
+
+	def __delitem__(self, key: str) -> None:
+		del self.additional_properties[key]
+
+	def __contains__(self, key: str) -> bool:
+		return key in self.additional_properties
+
+
+
+
+AG = TypeVar("AG", bound="ping")
 
 @attr.s(auto_attribs=True)
 class ping:
@@ -234,7 +297,7 @@ class ping:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[AS], src_dict: Dict[str, Any]) -> AS:
+	def from_dict(cls: Type[AG], src_dict: Dict[str, Any]) -> AG:
 		d = src_dict.copy()
 		type = d.pop("type", UNSET)
 
@@ -265,7 +328,7 @@ class ping:
 
 
 
-IU = TypeVar("IU", bound="metrics_response")
+EJ = TypeVar("EJ", bound="metrics_response")
 
 @attr.s(auto_attribs=True)
 class metrics_response:
@@ -290,7 +353,7 @@ class metrics_response:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[IU], src_dict: Dict[str, Any]) -> IU:
+	def from_dict(cls: Type[EJ], src_dict: Dict[str, Any]) -> EJ:
 		d = src_dict.copy()
 		_metrics = d.pop("metrics", UNSET)
 		metrics: Union[Unset, ClientMetrics]
@@ -326,4 +389,4 @@ class metrics_response:
 	def __contains__(self, key: str) -> bool:
 		return key in self.additional_properties
 
-WebSocketRequest = Union[trickle_ice, sdp_offer, modeling_cmd_req, ping, metrics_response]
+WebSocketRequest = Union[trickle_ice, sdp_offer, modeling_cmd_req, modeling_cmd_batch_req, ping, metrics_response]

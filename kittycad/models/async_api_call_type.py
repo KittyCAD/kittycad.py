@@ -15,6 +15,8 @@ class AsyncApiCallType(str, Enum):
 	FILE_DENSITY = 'file_density'
 	"""# File surface area. """ # noqa: E501
 	FILE_SURFACE_AREA = 'file_surface_area'
+	"""# Text to CAD. """ # noqa: E501
+	TEXT_TO_CAD = 'text_to_cad'
 
 	def __str__(self) -> str:
 		return str(self.value)

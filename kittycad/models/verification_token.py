@@ -6,7 +6,7 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, Unset
 
-CQ = TypeVar("CQ", bound="VerificationToken")
+YQ = TypeVar("YQ", bound="VerificationToken")
 
 @attr.s(auto_attribs=True)
 class VerificationToken:
@@ -51,7 +51,7 @@ This is typically used to verify a user's email address. """ # noqa: E501
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[CQ], src_dict: Dict[str, Any]) -> CQ:
+	def from_dict(cls: Type[YQ], src_dict: Dict[str, Any]) -> YQ:
 		d = src_dict.copy()
 		_created_at = d.pop("created_at", UNSET)
 		created_at: Union[Unset, datetime.datetime]

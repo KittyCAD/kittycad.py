@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-KU = TypeVar("KU", bound="Solid3dGetAllEdgeFaces")
+JG = TypeVar("JG", bound="Solid3dGetAllEdgeFaces")
 
 @attr.s(auto_attribs=True)
 class Solid3dGetAllEdgeFaces:
@@ -27,7 +27,7 @@ class Solid3dGetAllEdgeFaces:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[KU], src_dict: Dict[str, Any]) -> KU:
+	def from_dict(cls: Type[JG], src_dict: Dict[str, Any]) -> JG:
 		d = src_dict.copy()
 		faces = cast(List[str], d.pop("faces", UNSET))
 

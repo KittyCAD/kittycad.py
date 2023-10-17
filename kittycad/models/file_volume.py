@@ -10,7 +10,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-HC = TypeVar("HC", bound="FileVolume")
+FM = TypeVar("FM", bound="FileVolume")
 
 @attr.s(auto_attribs=True)
 class FileVolume:
@@ -82,7 +82,7 @@ class FileVolume:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[HC], src_dict: Dict[str, Any]) -> HC:
+	def from_dict(cls: Type[FM], src_dict: Dict[str, Any]) -> FM:
 		d = src_dict.copy()
 		_completed_at = d.pop("completed_at", UNSET)
 		completed_at: Union[Unset, datetime.datetime]

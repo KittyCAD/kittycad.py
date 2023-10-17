@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-ET = TypeVar("ET", bound="Export")
+QF = TypeVar("QF", bound="Export")
 
 @attr.s(auto_attribs=True)
 class Export:
@@ -29,7 +29,7 @@ class Export:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[ET], src_dict: Dict[str, Any]) -> ET:
+	def from_dict(cls: Type[QF], src_dict: Dict[str, Any]) -> QF:
 		d = src_dict.copy()
 		from ..models.export_file import ExportFile
 		files = cast(List[ExportFile], d.pop("files", UNSET))

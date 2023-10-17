@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-VR = TypeVar("VR", bound="ClientMetrics")
+ON = TypeVar("ON", bound="ClientMetrics")
 
 @attr.s(auto_attribs=True)
 class ClientMetrics:
@@ -53,7 +53,7 @@ class ClientMetrics:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[VR], src_dict: Dict[str, Any]) -> VR:
+	def from_dict(cls: Type[ON], src_dict: Dict[str, Any]) -> ON:
 		d = src_dict.copy()
 		rtc_frames_decoded = d.pop("rtc_frames_decoded", UNSET)
 

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-US = TypeVar("US", bound="Color")
+KQ = TypeVar("KQ", bound="Color")
 
 @attr.s(auto_attribs=True)
 class Color:
@@ -37,7 +37,7 @@ class Color:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[US], src_dict: Dict[str, Any]) -> US:
+	def from_dict(cls: Type[KQ], src_dict: Dict[str, Any]) -> KQ:
 		d = src_dict.copy()
 		a = d.pop("a", UNSET)
 
