@@ -7,7 +7,7 @@ from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-UJ = TypeVar("UJ", bound="line")
+HR = TypeVar("HR", bound="line")
 
 @attr.s(auto_attribs=True)
 class line:
@@ -36,7 +36,7 @@ class line:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UJ], src_dict: Dict[str, Any]) -> UJ:
+	def from_dict(cls: Type[HR], src_dict: Dict[str, Any]) -> HR:
 		d = src_dict.copy()
 		_end = d.pop("end", UNSET)
 		end: Union[Unset, Point3d]
@@ -78,7 +78,7 @@ class line:
 
 
 
-RU = TypeVar("RU", bound="arc")
+VF = TypeVar("VF", bound="arc")
 
 @attr.s(auto_attribs=True)
 class arc:
@@ -86,8 +86,10 @@ class arc:
 	angle_end:  Union[Unset, float] = UNSET
 	angle_start:  Union[Unset, float] = UNSET
 	center: Union[Unset, Point2d] = UNSET
+	end: Union[Unset, Angle] = UNSET
 	radius:  Union[Unset, float] = UNSET
 	relative: Union[Unset, bool] = False
+	start: Union[Unset, Angle] = UNSET
 	type: str = "arc"
 
 	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -97,8 +99,12 @@ class arc:
 		angle_start = self.angle_start
 		if not isinstance(self.center, Unset):
 			center = self.center
+		if not isinstance(self.end, Unset):
+			end = self.end
 		radius = self.radius
 		relative = self.relative
+		if not isinstance(self.start, Unset):
+			start = self.start
 		type = self.type
 
 		field_dict: Dict[str, Any] = {}
@@ -110,16 +116,20 @@ class arc:
 			field_dict['angle_start'] = angle_start
 		if center is not UNSET:
 			field_dict['center'] = center
+		if end is not UNSET:
+			field_dict['end'] = end
 		if radius is not UNSET:
 			field_dict['radius'] = radius
 		if relative is not UNSET:
 			field_dict['relative'] = relative
+		if start is not UNSET:
+			field_dict['start'] = start
 		field_dict['type'] = type
 
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[RU], src_dict: Dict[str, Any]) -> RU:
+	def from_dict(cls: Type[VF], src_dict: Dict[str, Any]) -> VF:
 		d = src_dict.copy()
 		angle_end = d.pop("angle_end", UNSET)
 
@@ -132,9 +142,23 @@ class arc:
 		else:
 			center = _center # type: ignore[arg-type]
 
+		_end = d.pop("end", UNSET)
+		end: Union[Unset, Angle]
+		if isinstance(_end, Unset):
+			end = UNSET
+		else:
+			end = _end # type: ignore[arg-type]
+
 		radius = d.pop("radius", UNSET)
 
 		relative = d.pop("relative", UNSET)
+
+		_start = d.pop("start", UNSET)
+		start: Union[Unset, Angle]
+		if isinstance(_start, Unset):
+			start = UNSET
+		else:
+			start = _start # type: ignore[arg-type]
 
 		type = d.pop("type", UNSET)
 
@@ -143,8 +167,10 @@ class arc:
 			angle_end= angle_end,
 			angle_start= angle_start,
 			center= center,
+			end= end,
 			radius= radius,
 			relative= relative,
+			start= start,
 			type= type,
 		)
 
@@ -170,7 +196,7 @@ class arc:
 
 
 
-DL = TypeVar("DL", bound="bezier")
+VM = TypeVar("VM", bound="bezier")
 
 @attr.s(auto_attribs=True)
 class bezier:
@@ -209,7 +235,7 @@ class bezier:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[DL], src_dict: Dict[str, Any]) -> DL:
+	def from_dict(cls: Type[VM], src_dict: Dict[str, Any]) -> VM:
 		d = src_dict.copy()
 		_control1 = d.pop("control1", UNSET)
 		control1: Union[Unset, Point3d]
@@ -267,7 +293,7 @@ class bezier:
 
 
 
-QT = TypeVar("QT", bound="tangential_arc")
+WH = TypeVar("WH", bound="tangential_arc")
 
 @attr.s(auto_attribs=True)
 class tangential_arc:
@@ -296,7 +322,7 @@ class tangential_arc:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[QT], src_dict: Dict[str, Any]) -> QT:
+	def from_dict(cls: Type[WH], src_dict: Dict[str, Any]) -> WH:
 		d = src_dict.copy()
 		_offset = d.pop("offset", UNSET)
 		offset: Union[Unset, Angle]
@@ -338,7 +364,7 @@ class tangential_arc:
 
 
 
-PT = TypeVar("PT", bound="tangential_arc_to")
+DQ = TypeVar("DQ", bound="tangential_arc_to")
 
 @attr.s(auto_attribs=True)
 class tangential_arc_to:
@@ -368,7 +394,7 @@ class tangential_arc_to:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[PT], src_dict: Dict[str, Any]) -> PT:
+	def from_dict(cls: Type[DQ], src_dict: Dict[str, Any]) -> DQ:
 		d = src_dict.copy()
 		_angle_snap_increment = d.pop("angle_snap_increment", UNSET)
 		angle_snap_increment: Union[Unset, Angle]

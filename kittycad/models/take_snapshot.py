@@ -5,7 +5,7 @@ import attr
 from ..models.base64data import Base64Data
 from ..types import UNSET, Unset
 
-AD = TypeVar("AD", bound="TakeSnapshot")
+MC = TypeVar("MC", bound="TakeSnapshot")
 
 @attr.s(auto_attribs=True)
 class TakeSnapshot:
@@ -28,7 +28,7 @@ class TakeSnapshot:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[AD], src_dict: Dict[str, Any]) -> AD:
+	def from_dict(cls: Type[MC], src_dict: Dict[str, Any]) -> MC:
 		d = src_dict.copy()
 		_contents = d.pop("contents", UNSET)
 		contents: Union[Unset, Base64Data]

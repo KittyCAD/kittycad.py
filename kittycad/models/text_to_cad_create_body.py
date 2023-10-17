@@ -4,37 +4,38 @@ import attr
 
 from ..types import UNSET, Unset
 
-KX = TypeVar("KX", bound="Mesh")
+BR = TypeVar("BR", bound="TextToCadCreateBody")
 
 @attr.s(auto_attribs=True)
-class Mesh:
-	mesh: Union[Unset, str] = UNSET
+class TextToCadCreateBody:
+	""" Body for generating models from text. """ # noqa: E501
+	prompt: Union[Unset, str] = UNSET
 
 	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
 	def to_dict(self) -> Dict[str, Any]:
-		mesh = self.mesh
+		prompt = self.prompt
 
 		field_dict: Dict[str, Any] = {}
 		field_dict.update(self.additional_properties)
 		field_dict.update({})
-		if mesh is not UNSET:
-			field_dict['mesh'] = mesh
+		if prompt is not UNSET:
+			field_dict['prompt'] = prompt
 
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[KX], src_dict: Dict[str, Any]) -> KX:
+	def from_dict(cls: Type[BR], src_dict: Dict[str, Any]) -> BR:
 		d = src_dict.copy()
-		mesh = d.pop("mesh", UNSET)
+		prompt = d.pop("prompt", UNSET)
 
 
-		mesh = cls(
-			mesh= mesh,
+		text_to_cad_create_body = cls(
+			prompt= prompt,
 		)
 
-		mesh.additional_properties = d
-		return mesh
+		text_to_cad_create_body.additional_properties = d
+		return text_to_cad_create_body
 
 	@property
 	def additional_keys(self) -> List[str]:

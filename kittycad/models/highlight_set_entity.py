@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-TP = TypeVar("TP", bound="HighlightSetEntity")
+CF = TypeVar("CF", bound="HighlightSetEntity")
 
 @attr.s(auto_attribs=True)
 class HighlightSetEntity:
@@ -29,7 +29,7 @@ class HighlightSetEntity:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[TP], src_dict: Dict[str, Any]) -> TP:
+	def from_dict(cls: Type[CF], src_dict: Dict[str, Any]) -> CF:
 		d = src_dict.copy()
 		entity_id = d.pop("entity_id", UNSET)
 

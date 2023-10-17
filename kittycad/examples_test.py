@@ -2,7 +2,11 @@ from typing import List, Optional, Union
 
 import pytest
 
-from kittycad.api.ai import create_image_to_3d, create_text_to_3d
+from kittycad.api.ai import (
+    create_text_to_cad,
+    create_text_to_cad_model_feedback,
+    list_text_to_cad_models_for_user,
+)
 from kittycad.api.api_calls import (
     get_api_call,
     get_api_call_for_user,
@@ -105,13 +109,14 @@ from kittycad.models import (
     FileSurfaceArea,
     FileVolume,
     Invoice,
-    Mesh,
     Metadata,
     Onboarding,
     PaymentIntent,
     PaymentMethod,
     Pong,
     Session,
+    TextToCad,
+    TextToCadResultsPage,
     UnitAngleConversion,
     UnitAreaConversion,
     UnitCurrentConversion,
@@ -129,6 +134,7 @@ from kittycad.models import (
     UserResultsPage,
     VerificationToken,
 )
+from kittycad.models.ai_feedback import AiFeedback
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.billing_info import BillingInfo
@@ -137,9 +143,9 @@ from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.image_type import ImageType
 from kittycad.models.rtc_sdp_type import RtcSdpType
 from kittycad.models.rtc_session_description import RtcSessionDescription
+from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -278,104 +284,61 @@ async def test_get_metadata_async():
 
 
 @pytest.mark.skip
-def test_create_image_to_3d():
+def test_create_text_to_cad():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Mesh, Error]] = create_image_to_3d.sync(
+    result: Optional[Union[TextToCad, Error]] = create_text_to_cad.sync(
         client=client,
-        input_format=ImageType.PNG,
         output_format=FileExportFormat.FBX,
-        body=bytes("some bytes", "utf-8"),
+        body=TextToCadCreateBody(
+            prompt="<string>",
+        ),
     )
 
     if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
-    body: Mesh = result
+    body: TextToCad = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[Mesh, Error]]] = create_image_to_3d.sync_detailed(
+    response: Response[
+        Optional[Union[TextToCad, Error]]
+    ] = create_text_to_cad.sync_detailed(
         client=client,
-        input_format=ImageType.PNG,
         output_format=FileExportFormat.FBX,
-        body=bytes("some bytes", "utf-8"),
+        body=TextToCadCreateBody(
+            prompt="<string>",
+        ),
     )
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_create_image_to_3d_async():
+async def test_create_text_to_cad_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Mesh, Error]] = await create_image_to_3d.asyncio(
+    result: Optional[Union[TextToCad, Error]] = await create_text_to_cad.asyncio(
         client=client,
-        input_format=ImageType.PNG,
         output_format=FileExportFormat.FBX,
-        body=bytes("some bytes", "utf-8"),
+        body=TextToCadCreateBody(
+            prompt="<string>",
+        ),
     )
 
     # OR run async with more info
     response: Response[
-        Optional[Union[Mesh, Error]]
-    ] = await create_image_to_3d.asyncio_detailed(
-        client=client,
-        input_format=ImageType.PNG,
-        output_format=FileExportFormat.FBX,
-        body=bytes("some bytes", "utf-8"),
-    )
-
-
-@pytest.mark.skip
-def test_create_text_to_3d():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Mesh, Error]] = create_text_to_3d.sync(
+        Optional[Union[TextToCad, Error]]
+    ] = await create_text_to_cad.asyncio_detailed(
         client=client,
         output_format=FileExportFormat.FBX,
-        prompt="<string>",
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Mesh = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[Mesh, Error]]] = create_text_to_3d.sync_detailed(
-        client=client,
-        output_format=FileExportFormat.FBX,
-        prompt="<string>",
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_create_text_to_3d_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Mesh, Error]] = await create_text_to_3d.asyncio(
-        client=client,
-        output_format=FileExportFormat.FBX,
-        prompt="<string>",
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[Mesh, Error]]
-    ] = await create_text_to_3d.asyncio_detailed(
-        client=client,
-        output_format=FileExportFormat.FBX,
-        prompt="<string>",
+        body=TextToCadCreateBody(
+            prompt="<string>",
+        ),
     )
 
 
@@ -733,6 +696,7 @@ def test_get_async_operation():
             FileVolume,
             FileDensity,
             FileSurfaceArea,
+            TextToCad,
             Error,
         ]
     ] = get_async_operation.sync(
@@ -751,6 +715,7 @@ def test_get_async_operation():
         FileVolume,
         FileDensity,
         FileSurfaceArea,
+        TextToCad,
     ] = result
     print(body)
 
@@ -764,6 +729,7 @@ def test_get_async_operation():
                 FileVolume,
                 FileDensity,
                 FileSurfaceArea,
+                TextToCad,
                 Error,
             ]
         ]
@@ -788,6 +754,7 @@ async def test_get_async_operation_async():
             FileVolume,
             FileDensity,
             FileSurfaceArea,
+            TextToCad,
             Error,
         ]
     ] = await get_async_operation.asyncio(
@@ -805,6 +772,7 @@ async def test_get_async_operation_async():
                 FileVolume,
                 FileDensity,
                 FileSurfaceArea,
+                TextToCad,
                 Error,
             ]
         ]
@@ -3295,6 +3263,116 @@ async def test_get_session_for_user_async():
     ] = await get_session_for_user.asyncio_detailed(
         client=client,
         token="<uuid>",
+    )
+
+
+@pytest.mark.skip
+def test_list_text_to_cad_models_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[TextToCadResultsPage, Error]
+    ] = list_text_to_cad_models_for_user.sync(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: TextToCadResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[TextToCadResultsPage, Error]]
+    ] = list_text_to_cad_models_for_user.sync_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_text_to_cad_models_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[TextToCadResultsPage, Error]
+    ] = await list_text_to_cad_models_for_user.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[TextToCadResultsPage, Error]]
+    ] = await list_text_to_cad_models_for_user.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
+def test_create_text_to_cad_model_feedback():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = create_text_to_cad_model_feedback.sync(
+        client=client,
+        id="<uuid>",
+        feedback=AiFeedback.THUMBS_UP,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Error]
+    ] = create_text_to_cad_model_feedback.sync_detailed(
+        client=client,
+        id="<uuid>",
+        feedback=AiFeedback.THUMBS_UP,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_text_to_cad_model_feedback_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await create_text_to_cad_model_feedback.asyncio(
+        client=client,
+        id="<uuid>",
+        feedback=AiFeedback.THUMBS_UP,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await create_text_to_cad_model_feedback.asyncio_detailed(
+        client=client,
+        id="<uuid>",
+        feedback=AiFeedback.THUMBS_UP,
     )
 
 

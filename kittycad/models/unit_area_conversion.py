@@ -9,7 +9,7 @@ from ..models.unit_area import UnitArea
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-VY = TypeVar("VY", bound="UnitAreaConversion")
+MU = TypeVar("MU", bound="UnitAreaConversion")
 
 @attr.s(auto_attribs=True)
 class UnitAreaConversion:
@@ -85,7 +85,7 @@ class UnitAreaConversion:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[VY], src_dict: Dict[str, Any]) -> VY:
+	def from_dict(cls: Type[MU], src_dict: Dict[str, Any]) -> MU:
 		d = src_dict.copy()
 		_completed_at = d.pop("completed_at", UNSET)
 		completed_at: Union[Unset, datetime.datetime]

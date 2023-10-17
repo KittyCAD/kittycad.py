@@ -9,7 +9,7 @@ from ..models.unit_angle import UnitAngle
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-AB = TypeVar("AB", bound="UnitAngleConversion")
+OK = TypeVar("OK", bound="UnitAngleConversion")
 
 @attr.s(auto_attribs=True)
 class UnitAngleConversion:
@@ -85,7 +85,7 @@ class UnitAngleConversion:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[AB], src_dict: Dict[str, Any]) -> AB:
+	def from_dict(cls: Type[OK], src_dict: Dict[str, Any]) -> OK:
 		d = src_dict.copy()
 		_completed_at = d.pop("completed_at", UNSET)
 		completed_at: Union[Unset, datetime.datetime]

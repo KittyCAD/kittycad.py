@@ -7,7 +7,7 @@ from dateutil.parser import isoparse
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-BL = TypeVar("BL", bound="Session")
+GE = TypeVar("GE", bound="Session")
 
 @attr.s(auto_attribs=True)
 class Session:
@@ -56,7 +56,7 @@ For our UIs, these are automatically created by Next.js. """ # noqa: E501
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[BL], src_dict: Dict[str, Any]) -> BL:
+	def from_dict(cls: Type[GE], src_dict: Dict[str, Any]) -> GE:
 		d = src_dict.copy()
 		_created_at = d.pop("created_at", UNSET)
 		created_at: Union[Unset, datetime.datetime]

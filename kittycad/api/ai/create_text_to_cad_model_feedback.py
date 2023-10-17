@@ -1,22 +1,21 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
+from ...models.ai_feedback import AiFeedback
 from ...models.error import Error
-from ...models.file_export_format import FileExportFormat
-from ...models.mesh import Mesh
 from ...types import Response
 
 
 def _get_kwargs(
     
     
-    output_format: FileExportFormat,
+    id: str,
     
     
     
-    prompt: str,
+    feedback: AiFeedback,
     
     
     *,
@@ -27,16 +26,16 @@ def _get_kwargs(
     
     
 ) -> Dict[str, Any]:
-    url = "{}/ai/text-to-3d/{output_format}".format(client.base_url, output_format=output_format,)  # noqa: E501
+    url = "{}/user/text-to-cad/{id}".format(client.base_url, id=id,)  # noqa: E501
     
     
     
     
-    if prompt is not None:
+    if feedback is not None:
         if "?" in url:
-            url = url + "&prompt=" + str(prompt)
+            url = url + "&feedback=" + str(feedback)
         else:
-            url = url + "?prompt=" + str(prompt)
+            url = url + "?feedback=" + str(feedback)
     
     
 
@@ -53,10 +52,8 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Mesh, Error]] :
-	if response.status_code == 200:
-		response_200 = Mesh.from_dict(response.json())
-		return response_200
+def _parse_response(*, response: httpx.Response) -> Optional[Error] :
+	return None
 	if response.status_code == 400:
 		response_4XX = Error.from_dict(response.json())
 		return response_4XX
@@ -69,7 +66,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Mesh, Error]]
 
 def _build_response(
     *, response: httpx.Response
-)  -> Response[Optional[Union[Mesh, Error]]]:
+)  -> Response[Optional[Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -81,11 +78,11 @@ def _build_response(
 def sync_detailed(
     
     
-    output_format: FileExportFormat,
+    id: str,
     
     
     
-    prompt: str,
+    feedback: AiFeedback,
     
     
     *,
@@ -95,12 +92,12 @@ def sync_detailed(
     
     
     
-)  -> Response[Optional[Union[Mesh, Error]]]:
+)  -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
         
-        output_format=output_format,
+        id=id,
         
-        prompt=prompt,
+        feedback=feedback,
         
         client=client,
     )
@@ -116,11 +113,11 @@ def sync_detailed(
 def sync(
     
     
-    output_format: FileExportFormat,
+    id: str,
     
     
     
-    prompt: str,
+    feedback: AiFeedback,
     
     
     *,
@@ -130,14 +127,14 @@ def sync(
     
     
     
-)  -> Optional[Union[Mesh, Error]] :
-    """This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
+)  -> Optional[Error] :
+    """This endpoint requires authentication by any KittyCAD user. The user must be the owner of the text-to-CAD model, in order to give feedback."""  # noqa: E501
 
     return sync_detailed(
         
-        output_format=output_format,
+        id=id,
         
-        prompt=prompt,
+        feedback=feedback,
         
         client=client,
     ).parsed
@@ -146,11 +143,11 @@ def sync(
 async def asyncio_detailed(
     
     
-    output_format: FileExportFormat,
+    id: str,
     
     
     
-    prompt: str,
+    feedback: AiFeedback,
     
     
     *,
@@ -160,12 +157,12 @@ async def asyncio_detailed(
     
     
     
-)  -> Response[Optional[Union[Mesh, Error]]]:
+)  -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
         
-        output_format=output_format,
+        id=id,
         
-        prompt=prompt,
+        feedback=feedback,
         
         client=client,
     )
@@ -179,11 +176,11 @@ async def asyncio_detailed(
 async def asyncio(
     
     
-    output_format: FileExportFormat,
+    id: str,
     
     
     
-    prompt: str,
+    feedback: AiFeedback,
     
     
     *,
@@ -193,15 +190,15 @@ async def asyncio(
     
     
     
-)  -> Optional[Union[Mesh, Error]] :
-    """This is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better."""  # noqa: E501
+)  -> Optional[Error] :
+    """This endpoint requires authentication by any KittyCAD user. The user must be the owner of the text-to-CAD model, in order to give feedback."""  # noqa: E501
 
     return (
         await asyncio_detailed(
             
-            output_format=output_format,
+            id=id,
             
-            prompt=prompt,
+            feedback=feedback,
             
             client=client,
         )

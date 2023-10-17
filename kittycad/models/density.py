@@ -5,7 +5,7 @@ import attr
 from ..models.unit_density import UnitDensity
 from ..types import UNSET, Unset
 
-CE = TypeVar("CE", bound="Density")
+MS = TypeVar("MS", bound="Density")
 
 @attr.s(auto_attribs=True)
 class Density:
@@ -31,7 +31,7 @@ class Density:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[CE], src_dict: Dict[str, Any]) -> CE:
+	def from_dict(cls: Type[MS], src_dict: Dict[str, Any]) -> MS:
 		d = src_dict.copy()
 		density = d.pop("density", UNSET)
 

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-FH = TypeVar("FH", bound="Coupon")
+NH = TypeVar("NH", bound="Coupon")
 
 @attr.s(auto_attribs=True)
 class Coupon:
@@ -37,7 +37,7 @@ class Coupon:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[FH], src_dict: Dict[str, Any]) -> FH:
+	def from_dict(cls: Type[NH], src_dict: Dict[str, Any]) -> NH:
 		d = src_dict.copy()
 		amount_off = d.pop("amount_off", UNSET)
 

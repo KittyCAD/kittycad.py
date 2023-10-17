@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-NH = TypeVar("NH", bound="CurveGetControlPoints")
+BB = TypeVar("BB", bound="CurveGetControlPoints")
 
 @attr.s(auto_attribs=True)
 class CurveGetControlPoints:
@@ -29,7 +29,7 @@ class CurveGetControlPoints:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[NH], src_dict: Dict[str, Any]) -> NH:
+	def from_dict(cls: Type[BB], src_dict: Dict[str, Any]) -> BB:
 		d = src_dict.copy()
 		from ..models.point3d import Point3d
 		control_points = cast(List[Point3d], d.pop("control_points", UNSET))

@@ -1,43 +1,43 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-SM = TypeVar("SM", bound="PointEMetadata")
+PT = TypeVar("PT", bound="PathGetVertexUuids")
 
 @attr.s(auto_attribs=True)
-class PointEMetadata:
-	""" Metadata about our point-e instance.
-
-This is mostly used for internal purposes and debugging. """ # noqa: E501
-	ok: Union[Unset, bool] = False
+class PathGetVertexUuids:
+	""" The response from the `PathGetVertexUuids` command. """ # noqa: E501
+	vertex_ids: Union[Unset, List[str]] = UNSET
 
 	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
 	def to_dict(self) -> Dict[str, Any]:
-		ok = self.ok
+		vertex_ids: Union[Unset, List[str]] = UNSET
+		if not isinstance(self.vertex_ids, Unset):
+			vertex_ids = self.vertex_ids
 
 		field_dict: Dict[str, Any] = {}
 		field_dict.update(self.additional_properties)
 		field_dict.update({})
-		if ok is not UNSET:
-			field_dict['ok'] = ok
+		if vertex_ids is not UNSET:
+			field_dict['vertex_ids'] = vertex_ids
 
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[SM], src_dict: Dict[str, Any]) -> SM:
+	def from_dict(cls: Type[PT], src_dict: Dict[str, Any]) -> PT:
 		d = src_dict.copy()
-		ok = d.pop("ok", UNSET)
+		vertex_ids = cast(List[str], d.pop("vertex_ids", UNSET))
 
 
-		point_e_metadata = cls(
-			ok= ok,
+		path_get_vertex_uuids = cls(
+			vertex_ids= vertex_ids,
 		)
 
-		point_e_metadata.additional_properties = d
-		return point_e_metadata
+		path_get_vertex_uuids.additional_properties = d
+		return path_get_vertex_uuids
 
 	@property
 	def additional_keys(self) -> List[str]:

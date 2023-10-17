@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-LT = TypeVar("LT", bound="DeviceAuthRequestForm")
+ED = TypeVar("ED", bound="DeviceAuthRequestForm")
 
 @attr.s(auto_attribs=True)
 class DeviceAuthRequestForm:
@@ -25,7 +25,7 @@ class DeviceAuthRequestForm:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[LT], src_dict: Dict[str, Any]) -> LT:
+	def from_dict(cls: Type[ED], src_dict: Dict[str, Any]) -> ED:
 		d = src_dict.copy()
 		client_id = d.pop("client_id", UNSET)
 
