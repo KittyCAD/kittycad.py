@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-UF = TypeVar("UF", bound="FailureWebSocketResponse")
+YF = TypeVar("YF", bound="FailureWebSocketResponse")
 
 @attr.s(auto_attribs=True)
 class FailureWebSocketResponse:
@@ -37,7 +37,7 @@ class FailureWebSocketResponse:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[UF], src_dict: Dict[str, Any]) -> UF:
+	def from_dict(cls: Type[YF], src_dict: Dict[str, Any]) -> YF:
 		d = src_dict.copy()
 		from ..models.api_error import ApiError
 		errors = cast(List[ApiError], d.pop("errors", UNSET))

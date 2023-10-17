@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-JR = TypeVar("JR", bound="CacheMetadata")
+LY = TypeVar("LY", bound="CacheMetadata")
 
 @attr.s(auto_attribs=True)
 class CacheMetadata:
@@ -27,7 +27,7 @@ This is mostly used for internal purposes and debugging. """ # noqa: E501
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JR], src_dict: Dict[str, Any]) -> JR:
+	def from_dict(cls: Type[LY], src_dict: Dict[str, Any]) -> LY:
 		d = src_dict.copy()
 		ok = d.pop("ok", UNSET)
 

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-PC = TypeVar("PC", bound="CodeOutput")
+US = TypeVar("US", bound="CodeOutput")
 
 @attr.s(auto_attribs=True)
 class CodeOutput:
@@ -37,7 +37,7 @@ class CodeOutput:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[PC], src_dict: Dict[str, Any]) -> PC:
+	def from_dict(cls: Type[US], src_dict: Dict[str, Any]) -> US:
 		d = src_dict.copy()
 		from ..models.output_file import OutputFile
 		output_files = cast(List[OutputFile], d.pop("output_files", UNSET))

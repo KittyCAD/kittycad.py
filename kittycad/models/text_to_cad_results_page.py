@@ -4,20 +4,20 @@ import attr
 
 from ..types import UNSET, Unset
 
-AH = TypeVar("AH", bound="AsyncApiCallResultsPage")
+WM = TypeVar("WM", bound="TextToCadResultsPage")
 
 @attr.s(auto_attribs=True)
-class AsyncApiCallResultsPage:
+class TextToCadResultsPage:
 	""" A single page of results """ # noqa: E501
-	from ..models.async_api_call import AsyncApiCall
-	items: Union[Unset, List[AsyncApiCall]] = UNSET
+	from ..models.text_to_cad import TextToCad
+	items: Union[Unset, List[TextToCad]] = UNSET
 	next_page: Union[Unset, str] = UNSET
 
 	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
 	def to_dict(self) -> Dict[str, Any]:
-		from ..models.async_api_call import AsyncApiCall
-		items: Union[Unset, List[AsyncApiCall]] = UNSET
+		from ..models.text_to_cad import TextToCad
+		items: Union[Unset, List[TextToCad]] = UNSET
 		if not isinstance(self.items, Unset):
 			items = self.items
 		next_page = self.next_page
@@ -33,21 +33,21 @@ class AsyncApiCallResultsPage:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[AH], src_dict: Dict[str, Any]) -> AH:
+	def from_dict(cls: Type[WM], src_dict: Dict[str, Any]) -> WM:
 		d = src_dict.copy()
-		from ..models.async_api_call import AsyncApiCall
-		items = cast(List[AsyncApiCall], d.pop("items", UNSET))
+		from ..models.text_to_cad import TextToCad
+		items = cast(List[TextToCad], d.pop("items", UNSET))
 
 		next_page = d.pop("next_page", UNSET)
 
 
-		async_api_call_results_page = cls(
+		text_to_cad_results_page = cls(
 			items= items,
 			next_page= next_page,
 		)
 
-		async_api_call_results_page.additional_properties = d
-		return async_api_call_results_page
+		text_to_cad_results_page.additional_properties = d
+		return text_to_cad_results_page
 
 	@property
 	def additional_keys(self) -> List[str]:

@@ -1,6 +1,7 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .account_provider import AccountProvider
+from .ai_feedback import AiFeedback
 from .ai_plugin_api import AiPluginApi
 from .ai_plugin_api_type import AiPluginApiType
 from .ai_plugin_auth import AiPluginAuth
@@ -91,7 +92,6 @@ from .gltf_storage import GltfStorage
 from .highlight_set_entity import HighlightSetEntity
 from .ice_server import IceServer
 from .image_format import ImageFormat
-from .image_type import ImageType
 from .import_file import ImportFile
 from .import_files import ImportFiles
 from .input_format import InputFormat
@@ -104,12 +104,12 @@ from .jetstream_config import JetstreamConfig
 from .jetstream_stats import JetstreamStats
 from .leaf_node import LeafNode
 from .mass import Mass
-from .mesh import Mesh
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
 from .method import Method
 from .modeling_cmd import ModelingCmd
 from .modeling_cmd_id import ModelingCmdId
+from .modeling_cmd_req import ModelingCmdReq
 from .mouse_click import MouseClick
 from .new_address import NewAddress
 from .o_auth2_client_info import OAuth2ClientInfo
@@ -122,6 +122,7 @@ from .output_format import OutputFormat
 from .path_command import PathCommand
 from .path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from .path_get_info import PathGetInfo
+from .path_get_vertex_uuids import PathGetVertexUuids
 from .path_segment import PathSegment
 from .path_segment_info import PathSegmentInfo
 from .payment_intent import PaymentIntent
@@ -132,7 +133,6 @@ from .plane_intersect_and_project import PlaneIntersectAndProject
 from .ply_storage import PlyStorage
 from .point2d import Point2d
 from .point3d import Point3d
-from .point_e_metadata import PointEMetadata
 from .pong import Pong
 from .raw_file import RawFile
 from .rtc_ice_candidate_init import RtcIceCandidateInit
@@ -153,6 +153,9 @@ from .success_web_socket_response import SuccessWebSocketResponse
 from .surface_area import SurfaceArea
 from .system import System
 from .take_snapshot import TakeSnapshot
+from .text_to_cad import TextToCad
+from .text_to_cad_create_body import TextToCadCreateBody
+from .text_to_cad_results_page import TextToCadResultsPage
 from .unit_angle import UnitAngle
 from .unit_angle_conversion import UnitAngleConversion
 from .unit_area import UnitArea

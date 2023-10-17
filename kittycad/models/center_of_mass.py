@@ -6,7 +6,7 @@ from ..models.point3d import Point3d
 from ..models.unit_length import UnitLength
 from ..types import UNSET, Unset
 
-HK = TypeVar("HK", bound="CenterOfMass")
+VR = TypeVar("VR", bound="CenterOfMass")
 
 @attr.s(auto_attribs=True)
 class CenterOfMass:
@@ -33,7 +33,7 @@ class CenterOfMass:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[HK], src_dict: Dict[str, Any]) -> HK:
+	def from_dict(cls: Type[VR], src_dict: Dict[str, Any]) -> VR:
 		d = src_dict.copy()
 		_center_of_mass = d.pop("center_of_mass", UNSET)
 		center_of_mass: Union[Unset, Point3d]

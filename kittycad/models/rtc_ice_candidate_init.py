@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-QA = TypeVar("QA", bound="RtcIceCandidateInit")
+BL = TypeVar("BL", bound="RtcIceCandidateInit")
 
 @attr.s(auto_attribs=True)
 class RtcIceCandidateInit:
@@ -37,7 +37,7 @@ class RtcIceCandidateInit:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[QA], src_dict: Dict[str, Any]) -> QA:
+	def from_dict(cls: Type[BL], src_dict: Dict[str, Any]) -> BL:
 		d = src_dict.copy()
 		candidate = d.pop("candidate", UNSET)
 

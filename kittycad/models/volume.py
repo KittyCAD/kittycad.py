@@ -5,7 +5,7 @@ import attr
 from ..models.unit_volume import UnitVolume
 from ..types import UNSET, Unset
 
-JE = TypeVar("JE", bound="Volume")
+NQ = TypeVar("NQ", bound="Volume")
 
 @attr.s(auto_attribs=True)
 class Volume:
@@ -31,7 +31,7 @@ class Volume:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JE], src_dict: Dict[str, Any]) -> JE:
+	def from_dict(cls: Type[NQ], src_dict: Dict[str, Any]) -> NQ:
 		d = src_dict.copy()
 		_output_unit = d.pop("output_unit", UNSET)
 		output_unit: Union[Unset, UnitVolume]

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-EI = TypeVar("EI", bound="UserResultsPage")
+IU = TypeVar("IU", bound="UserResultsPage")
 
 @attr.s(auto_attribs=True)
 class UserResultsPage:
@@ -33,7 +33,7 @@ class UserResultsPage:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[EI], src_dict: Dict[str, Any]) -> EI:
+	def from_dict(cls: Type[IU], src_dict: Dict[str, Any]) -> IU:
 		d = src_dict.copy()
 		from ..models.user import User
 		items = cast(List[User], d.pop("items", UNSET))

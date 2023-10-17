@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-FX = TypeVar("FX", bound="SelectWithPoint")
+FA = TypeVar("FA", bound="SelectWithPoint")
 
 @attr.s(auto_attribs=True)
 class SelectWithPoint:
@@ -25,7 +25,7 @@ class SelectWithPoint:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[FX], src_dict: Dict[str, Any]) -> FX:
+	def from_dict(cls: Type[FA], src_dict: Dict[str, Any]) -> FA:
 		d = src_dict.copy()
 		entity_id = d.pop("entity_id", UNSET)
 

@@ -4,24 +4,27 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
-from ..models.unit_volume import UnitVolume
+from ..models.base64data import Base64Data
+from ..models.file_export_format import FileExportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-JW = TypeVar("JW", bound="UnitVolumeConversion")
+AV = TypeVar("AV", bound="TextToCad")
 
 @attr.s(auto_attribs=True)
-class UnitVolumeConversion:
-	""" Result of converting between units. """ # noqa: E501
+class TextToCad:
+	""" A response from a text to CAD prompt. """ # noqa: E501
 	completed_at: Union[Unset, datetime.datetime] = UNSET
 	created_at: Union[Unset, datetime.datetime] = UNSET
 	error: Union[Unset, str] = UNSET
+	feedback: Union[Unset, AiFeedback] = UNSET
 	id: Union[Unset, str] = UNSET
-	input:  Union[Unset, float] = UNSET
-	input_unit: Union[Unset, UnitVolume] = UNSET
-	output:  Union[Unset, float] = UNSET
-	output_unit: Union[Unset, UnitVolume] = UNSET
+	model_version: Union[Unset, str] = UNSET
+	output_format: Union[Unset, FileExportFormat] = UNSET
+	outputs: Union[Unset, Dict[str, Base64Data]] = UNSET
+	prompt: Union[Unset, str] = UNSET
 	started_at: Union[Unset, datetime.datetime] = UNSET
 	status: Union[Unset, ApiCallStatus] = UNSET
 	updated_at: Union[Unset, datetime.datetime] = UNSET
@@ -37,13 +40,19 @@ class UnitVolumeConversion:
 		if not isinstance(self.created_at, Unset):
 			created_at = self.created_at.isoformat()
 		error = self.error
+		if not isinstance(self.feedback, Unset):
+			feedback = self.feedback
 		id = self.id
-		input = self.input
-		if not isinstance(self.input_unit, Unset):
-			input_unit = self.input_unit
-		output = self.output
-		if not isinstance(self.output_unit, Unset):
-			output_unit = self.output_unit
+		model_version = self.model_version
+		if not isinstance(self.output_format, Unset):
+			output_format = self.output_format
+		outputs: Union[Unset, Dict[str, str]] = UNSET
+		if not isinstance(self.outputs, Unset):
+			new_dict: Dict[str, str] = {}
+			for key, value in self.outputs.items():
+				new_dict[key] = value.get_encoded()
+			outputs = new_dict
+		prompt = self.prompt
 		started_at: Union[Unset, str] = UNSET
 		if not isinstance(self.started_at, Unset):
 			started_at = self.started_at.isoformat()
@@ -63,16 +72,18 @@ class UnitVolumeConversion:
 			field_dict['created_at'] = created_at
 		if error is not UNSET:
 			field_dict['error'] = error
+		if feedback is not UNSET:
+			field_dict['feedback'] = feedback
 		if id is not UNSET:
 			field_dict['id'] = id
-		if input is not UNSET:
-			field_dict['input'] = input
-		if input_unit is not UNSET:
-			field_dict['input_unit'] = input_unit
-		if output is not UNSET:
-			field_dict['output'] = output
-		if output_unit is not UNSET:
-			field_dict['output_unit'] = output_unit
+		if model_version is not UNSET:
+			field_dict['model_version'] = model_version
+		if output_format is not UNSET:
+			field_dict['output_format'] = output_format
+		if outputs is not UNSET:
+			field_dict['outputs'] = outputs
+		if prompt is not UNSET:
+			field_dict['prompt'] = prompt
 		if started_at is not UNSET:
 			field_dict['started_at'] = started_at
 		if status is not UNSET:
@@ -85,7 +96,7 @@ class UnitVolumeConversion:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[JW], src_dict: Dict[str, Any]) -> JW:
+	def from_dict(cls: Type[AV], src_dict: Dict[str, Any]) -> AV:
 		d = src_dict.copy()
 		_completed_at = d.pop("completed_at", UNSET)
 		completed_at: Union[Unset, datetime.datetime]
@@ -103,6 +114,13 @@ class UnitVolumeConversion:
 
 		error = d.pop("error", UNSET)
 
+		_feedback = d.pop("feedback", UNSET)
+		feedback: Union[Unset, AiFeedback]
+		if isinstance(_feedback, Unset):
+			feedback = UNSET
+		else:
+			feedback = _feedback # type: ignore[arg-type]
+
 		_id = d.pop("id", UNSET)
 		id: Union[Unset, Uuid]
 		if isinstance(_id, Unset):
@@ -110,23 +128,25 @@ class UnitVolumeConversion:
 		else:
 			id = _id # type: ignore[arg-type]
 
-		input = d.pop("input", UNSET)
+		model_version = d.pop("model_version", UNSET)
 
-		_input_unit = d.pop("input_unit", UNSET)
-		input_unit: Union[Unset, UnitVolume]
-		if isinstance(_input_unit, Unset):
-			input_unit = UNSET
+		_output_format = d.pop("output_format", UNSET)
+		output_format: Union[Unset, FileExportFormat]
+		if isinstance(_output_format, Unset):
+			output_format = UNSET
 		else:
-			input_unit = _input_unit # type: ignore[arg-type]
+			output_format = _output_format # type: ignore[arg-type]
 
-		output = d.pop("output", UNSET)
-
-		_output_unit = d.pop("output_unit", UNSET)
-		output_unit: Union[Unset, UnitVolume]
-		if isinstance(_output_unit, Unset):
-			output_unit = UNSET
+		_outputs = d.pop("outputs", UNSET)
+		if isinstance(_outputs, Unset):
+			outputs = UNSET
 		else:
-			output_unit = _output_unit # type: ignore[arg-type]
+			new_map: Dict[str, Base64Data] = {}
+			for k, v in _outputs.items():
+				new_map[k] = Base64Data(bytes(v, 'utf-8'))
+			outputs = new_map # type: ignore
+
+		prompt = d.pop("prompt", UNSET)
 
 		_started_at = d.pop("started_at", UNSET)
 		started_at: Union[Unset, datetime.datetime]
@@ -152,23 +172,24 @@ class UnitVolumeConversion:
 		user_id = d.pop("user_id", UNSET)
 
 
-		unit_volume_conversion = cls(
+		text_to_cad = cls(
 			completed_at= completed_at,
 			created_at= created_at,
 			error= error,
+			feedback= feedback,
 			id= id,
-			input= input,
-			input_unit= input_unit,
-			output= output,
-			output_unit= output_unit,
+			model_version= model_version,
+			output_format= output_format,
+			outputs= outputs,
+			prompt= prompt,
 			started_at= started_at,
 			status= status,
 			updated_at= updated_at,
 			user_id= user_id,
 		)
 
-		unit_volume_conversion.additional_properties = d
-		return unit_volume_conversion
+		text_to_cad.additional_properties = d
+		return text_to_cad
 
 	@property
 	def additional_keys(self) -> List[str]:

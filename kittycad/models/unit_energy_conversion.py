@@ -9,7 +9,7 @@ from ..models.unit_energy import UnitEnergy
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-MC = TypeVar("MC", bound="UnitEnergyConversion")
+WW = TypeVar("WW", bound="UnitEnergyConversion")
 
 @attr.s(auto_attribs=True)
 class UnitEnergyConversion:
@@ -85,7 +85,7 @@ class UnitEnergyConversion:
 		return field_dict
 
 	@classmethod
-	def from_dict(cls: Type[MC], src_dict: Dict[str, Any]) -> MC:
+	def from_dict(cls: Type[WW], src_dict: Dict[str, Any]) -> WW:
 		d = src_dict.copy()
 		_completed_at = d.pop("completed_at", UNSET)
 		completed_at: Union[Unset, datetime.datetime]

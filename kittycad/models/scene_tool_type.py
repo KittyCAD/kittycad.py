@@ -7,6 +7,7 @@ class SceneToolType(str, Enum):
 	SELECT = 'select'
 	MOVE = 'move'
 	SKETCH_LINE = 'sketch_line'
+	SKETCH_TANGENTIAL_ARC = 'sketch_tangential_arc'
 	SKETCH_CURVE = 'sketch_curve'
 	SKETCH_CURVE_MOD = 'sketch_curve_mod'
 
