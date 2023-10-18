@@ -35,7 +35,7 @@ def main():
     # Add the client information to the generation.
     data["info"]["x-python"] = {
         "client": """# Create a client with your token.
-from kittycad import Client
+from kittycad.client import Client
 
 client = Client(token="$TOKEN")
 
@@ -43,7 +43,7 @@ client = Client(token="$TOKEN")
 
 # Create a new client with your token parsed from the environment variable:
 #   `KITTYCAD_API_TOKEN`.
-from kittycad import ClientFromEnv
+from kittycad.client import ClientFromEnv
 
 client = ClientFromEnv()
 
