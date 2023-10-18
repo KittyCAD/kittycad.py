@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kittycad"
-version = "0.5.4"
+version = "0.5.5"
 description = "A client library for accessing KittyCAD"
 
 authors = []
