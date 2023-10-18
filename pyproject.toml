@@ -20,7 +20,7 @@ websockets = "^11.0.3"
 
 [tool.poetry.dev-dependencies]
 autoclasstoc = "^1.6.0"
-black = "^23.7.0"
+black = "^23.10.0"
 isort = "^5.12.0"
 jinja2 = "^3.1.2"
 jsonpatch = "^1.33"
