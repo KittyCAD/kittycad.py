@@ -4,53 +4,54 @@ import attr
 
 from ..types import UNSET, Unset
 
-HH = TypeVar("HH", bound="Solid3dGetAllOppositeEdges")
+BR = TypeVar("BR", bound="Solid3dGetAllOppositeEdges")
+
 
 @attr.s(auto_attribs=True)
 class Solid3dGetAllOppositeEdges:
-	""" The response from the `Solid3dGetAllOppositeEdges` command. """ # noqa: E501
-	edges: Union[Unset, List[str]] = UNSET
+    """The response from the `Solid3dGetAllOppositeEdges` command."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    edges: Union[Unset, List[str]] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		edges: Union[Unset, List[str]] = UNSET
-		if not isinstance(self.edges, Unset):
-			edges = self.edges
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if edges is not UNSET:
-			field_dict['edges'] = edges
+    def to_dict(self) -> Dict[str, Any]:
+        edges: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.edges, Unset):
+            edges = self.edges
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if edges is not UNSET:
+            field_dict["edges"] = edges
 
-	@classmethod
-	def from_dict(cls: Type[HH], src_dict: Dict[str, Any]) -> HH:
-		d = src_dict.copy()
-		edges = cast(List[str], d.pop("edges", UNSET))
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[BR], src_dict: Dict[str, Any]) -> BR:
+        d = src_dict.copy()
+        edges = cast(List[str], d.pop("edges", UNSET))
 
-		solid3d_get_all_opposite_edges = cls(
-			edges= edges,
-		)
+        solid3d_get_all_opposite_edges = cls(
+            edges=edges,
+        )
 
-		solid3d_get_all_opposite_edges.additional_properties = d
-		return solid3d_get_all_opposite_edges
+        solid3d_get_all_opposite_edges.additional_properties = d
+        return solid3d_get_all_opposite_edges
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

@@ -4,53 +4,54 @@ import attr
 
 from ..types import UNSET, Unset
 
-HC = TypeVar("HC", bound="FileSystemMetadata")
+PV = TypeVar("PV", bound="FileSystemMetadata")
+
 
 @attr.s(auto_attribs=True)
 class FileSystemMetadata:
-	""" Metadata about our file system.
+    """Metadata about our file system.
 
-This is mostly used for internal purposes and debugging. """ # noqa: E501
-	ok: Union[Unset, bool] = False
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    ok: Union[Unset, bool] = False
 
-	def to_dict(self) -> Dict[str, Any]:
-		ok = self.ok
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if ok is not UNSET:
-			field_dict['ok'] = ok
+    def to_dict(self) -> Dict[str, Any]:
+        ok = self.ok
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if ok is not UNSET:
+            field_dict["ok"] = ok
 
-	@classmethod
-	def from_dict(cls: Type[HC], src_dict: Dict[str, Any]) -> HC:
-		d = src_dict.copy()
-		ok = d.pop("ok", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[PV], src_dict: Dict[str, Any]) -> PV:
+        d = src_dict.copy()
+        ok = d.pop("ok", UNSET)
 
-		file_system_metadata = cls(
-			ok= ok,
-		)
+        file_system_metadata = cls(
+            ok=ok,
+        )
 
-		file_system_metadata.additional_properties = d
-		return file_system_metadata
+        file_system_metadata.additional_properties = d
+        return file_system_metadata
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

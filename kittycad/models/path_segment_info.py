@@ -6,77 +6,78 @@ from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.path_command import PathCommand
 from ..types import UNSET, Unset
 
-UY = TypeVar("UY", bound="PathSegmentInfo")
+CG = TypeVar("CG", bound="PathSegmentInfo")
+
 
 @attr.s(auto_attribs=True)
 class PathSegmentInfo:
-	""" Info about a path segment """ # noqa: E501
-	command: Union[Unset, PathCommand] = UNSET
-	command_id: Union[Unset, ModelingCmdId] = UNSET
-	relative: Union[Unset, bool] = False
+    """Info about a path segment"""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    command: Union[Unset, PathCommand] = UNSET
+    command_id: Union[Unset, ModelingCmdId] = UNSET
+    relative: Union[Unset, bool] = False
 
-	def to_dict(self) -> Dict[str, Any]:
-		if not isinstance(self.command, Unset):
-			command = self.command
-		if not isinstance(self.command_id, Unset):
-			command_id = self.command_id
-		relative = self.relative
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if command is not UNSET:
-			field_dict['command'] = command
-		if command_id is not UNSET:
-			field_dict['command_id'] = command_id
-		if relative is not UNSET:
-			field_dict['relative'] = relative
+    def to_dict(self) -> Dict[str, Any]:
+        if not isinstance(self.command, Unset):
+            command = self.command
+        if not isinstance(self.command_id, Unset):
+            command_id = self.command_id
+        relative = self.relative
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if command is not UNSET:
+            field_dict["command"] = command
+        if command_id is not UNSET:
+            field_dict["command_id"] = command_id
+        if relative is not UNSET:
+            field_dict["relative"] = relative
 
-	@classmethod
-	def from_dict(cls: Type[UY], src_dict: Dict[str, Any]) -> UY:
-		d = src_dict.copy()
-		_command = d.pop("command", UNSET)
-		command: Union[Unset, PathCommand]
-		if isinstance(_command, Unset):
-			command = UNSET
-		else:
-			command = _command # type: ignore[arg-type]
+        return field_dict
 
-		_command_id = d.pop("command_id", UNSET)
-		command_id: Union[Unset, ModelingCmdId]
-		if isinstance(_command_id, Unset):
-			command_id = UNSET
-		else:
-			command_id = _command_id # type: ignore[arg-type]
+    @classmethod
+    def from_dict(cls: Type[CG], src_dict: Dict[str, Any]) -> CG:
+        d = src_dict.copy()
+        _command = d.pop("command", UNSET)
+        command: Union[Unset, PathCommand]
+        if isinstance(_command, Unset):
+            command = UNSET
+        else:
+            command = _command  # type: ignore[arg-type]
 
-		relative = d.pop("relative", UNSET)
+        _command_id = d.pop("command_id", UNSET)
+        command_id: Union[Unset, ModelingCmdId]
+        if isinstance(_command_id, Unset):
+            command_id = UNSET
+        else:
+            command_id = _command_id  # type: ignore[arg-type]
 
+        relative = d.pop("relative", UNSET)
 
-		path_segment_info = cls(
-			command= command,
-			command_id= command_id,
-			relative= relative,
-		)
+        path_segment_info = cls(
+            command=command,
+            command_id=command_id,
+            relative=relative,
+        )
 
-		path_segment_info.additional_properties = d
-		return path_segment_info
+        path_segment_info.additional_properties = d
+        return path_segment_info
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

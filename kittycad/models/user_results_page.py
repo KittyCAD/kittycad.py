@@ -4,63 +4,67 @@ import attr
 
 from ..types import UNSET, Unset
 
-IU = TypeVar("IU", bound="UserResultsPage")
+EA = TypeVar("EA", bound="UserResultsPage")
+
 
 @attr.s(auto_attribs=True)
 class UserResultsPage:
-	""" A single page of results """ # noqa: E501
-	from ..models.user import User
-	items: Union[Unset, List[User]] = UNSET
-	next_page: Union[Unset, str] = UNSET
+    """A single page of results"""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    from ..models.user import User
 
-	def to_dict(self) -> Dict[str, Any]:
-		from ..models.user import User
-		items: Union[Unset, List[User]] = UNSET
-		if not isinstance(self.items, Unset):
-			items = self.items
-		next_page = self.next_page
+    items: Union[Unset, List[User]] = UNSET
+    next_page: Union[Unset, str] = UNSET
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if items is not UNSET:
-			field_dict['items'] = items
-		if next_page is not UNSET:
-			field_dict['next_page'] = next_page
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		return field_dict
+    def to_dict(self) -> Dict[str, Any]:
+        from ..models.user import User
 
-	@classmethod
-	def from_dict(cls: Type[IU], src_dict: Dict[str, Any]) -> IU:
-		d = src_dict.copy()
-		from ..models.user import User
-		items = cast(List[User], d.pop("items", UNSET))
+        items: Union[Unset, List[User]] = UNSET
+        if not isinstance(self.items, Unset):
+            items = self.items
+        next_page = self.next_page
 
-		next_page = d.pop("next_page", UNSET)
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if items is not UNSET:
+            field_dict["items"] = items
+        if next_page is not UNSET:
+            field_dict["next_page"] = next_page
 
+        return field_dict
 
-		user_results_page = cls(
-			items= items,
-			next_page= next_page,
-		)
+    @classmethod
+    def from_dict(cls: Type[EA], src_dict: Dict[str, Any]) -> EA:
+        d = src_dict.copy()
+        from ..models.user import User
 
-		user_results_page.additional_properties = d
-		return user_results_page
+        items = cast(List[User], d.pop("items", UNSET))
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+        next_page = d.pop("next_page", UNSET)
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+        user_results_page = cls(
+            items=items,
+            next_page=next_page,
+        )
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+        user_results_page.additional_properties = d
+        return user_results_page
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
