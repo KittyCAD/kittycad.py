@@ -5,7 +5,7 @@ import attr
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-CR = TypeVar("CR", bound="CurveGetEndPoints")
+DI = TypeVar("DI", bound="CurveGetEndPoints")
 
 
 @attr.s(auto_attribs=True)
@@ -34,7 +34,7 @@ class CurveGetEndPoints:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CR], src_dict: Dict[str, Any]) -> CR:
+    def from_dict(cls: Type[DI], src_dict: Dict[str, Any]) -> DI:
         d = src_dict.copy()
         _end = d.pop("end", UNSET)
         end: Union[Unset, Point3d]

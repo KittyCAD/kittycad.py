@@ -1,7 +1,6 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
-from typing_extensions import Self
 
 from ..models.center_of_mass import CenterOfMass
 from ..models.curve_get_control_points import CurveGetControlPoints
@@ -35,7 +34,7 @@ from ..models.take_snapshot import TakeSnapshot
 from ..models.volume import Volume
 from ..types import UNSET, Unset
 
-YK = TypeVar("YK", bound="empty")
+FO = TypeVar("FO", bound="empty")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +56,7 @@ class empty:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YK], src_dict: Dict[str, Any]) -> YK:
+    def from_dict(cls: Type[FO], src_dict: Dict[str, Any]) -> FO:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -85,7 +84,7 @@ class empty:
         return key in self.additional_properties
 
 
-WS = TypeVar("WS", bound="export")
+KB = TypeVar("KB", bound="export")
 
 
 @attr.s(auto_attribs=True)
@@ -112,7 +111,7 @@ class export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WS], src_dict: Dict[str, Any]) -> WS:
+    def from_dict(cls: Type[KB], src_dict: Dict[str, Any]) -> KB:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Export]
@@ -148,7 +147,7 @@ class export:
         return key in self.additional_properties
 
 
-SL = TypeVar("SL", bound="select_with_point")
+QH = TypeVar("QH", bound="select_with_point")
 
 
 @attr.s(auto_attribs=True)
@@ -175,7 +174,7 @@ class select_with_point:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SL], src_dict: Dict[str, Any]) -> SL:
+    def from_dict(cls: Type[QH], src_dict: Dict[str, Any]) -> QH:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, SelectWithPoint]
@@ -211,7 +210,7 @@ class select_with_point:
         return key in self.additional_properties
 
 
-MK = TypeVar("MK", bound="highlight_set_entity")
+EV = TypeVar("EV", bound="highlight_set_entity")
 
 
 @attr.s(auto_attribs=True)
@@ -238,7 +237,7 @@ class highlight_set_entity:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MK], src_dict: Dict[str, Any]) -> MK:
+    def from_dict(cls: Type[EV], src_dict: Dict[str, Any]) -> EV:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, HighlightSetEntity]
@@ -274,7 +273,7 @@ class highlight_set_entity:
         return key in self.additional_properties
 
 
-TU = TypeVar("TU", bound="entity_get_child_uuid")
+YL = TypeVar("YL", bound="entity_get_child_uuid")
 
 
 @attr.s(auto_attribs=True)
@@ -301,7 +300,7 @@ class entity_get_child_uuid:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TU], src_dict: Dict[str, Any]) -> TU:
+    def from_dict(cls: Type[YL], src_dict: Dict[str, Any]) -> YL:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetChildUuid]
@@ -337,7 +336,7 @@ class entity_get_child_uuid:
         return key in self.additional_properties
 
 
-FY = TypeVar("FY", bound="entity_get_num_children")
+AN = TypeVar("AN", bound="entity_get_num_children")
 
 
 @attr.s(auto_attribs=True)
@@ -364,7 +363,7 @@ class entity_get_num_children:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FY], src_dict: Dict[str, Any]) -> FY:
+    def from_dict(cls: Type[AN], src_dict: Dict[str, Any]) -> AN:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetNumChildren]
@@ -400,7 +399,7 @@ class entity_get_num_children:
         return key in self.additional_properties
 
 
-FD = TypeVar("FD", bound="entity_get_parent_id")
+UV = TypeVar("UV", bound="entity_get_parent_id")
 
 
 @attr.s(auto_attribs=True)
@@ -427,7 +426,7 @@ class entity_get_parent_id:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FD], src_dict: Dict[str, Any]) -> FD:
+    def from_dict(cls: Type[UV], src_dict: Dict[str, Any]) -> UV:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetParentId]
@@ -463,7 +462,7 @@ class entity_get_parent_id:
         return key in self.additional_properties
 
 
-TZ = TypeVar("TZ", bound="entity_get_all_child_uuids")
+IB = TypeVar("IB", bound="entity_get_all_child_uuids")
 
 
 @attr.s(auto_attribs=True)
@@ -490,7 +489,7 @@ class entity_get_all_child_uuids:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TZ], src_dict: Dict[str, Any]) -> TZ:
+    def from_dict(cls: Type[IB], src_dict: Dict[str, Any]) -> IB:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, EntityGetAllChildUuids]
@@ -526,7 +525,7 @@ class entity_get_all_child_uuids:
         return key in self.additional_properties
 
 
-AX = TypeVar("AX", bound="select_get")
+EU = TypeVar("EU", bound="select_get")
 
 
 @attr.s(auto_attribs=True)
@@ -553,7 +552,7 @@ class select_get:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AX], src_dict: Dict[str, Any]) -> AX:
+    def from_dict(cls: Type[EU], src_dict: Dict[str, Any]) -> EU:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, SelectGet]
@@ -589,7 +588,7 @@ class select_get:
         return key in self.additional_properties
 
 
-RQ = TypeVar("RQ", bound="get_entity_type")
+QW = TypeVar("QW", bound="get_entity_type")
 
 
 @attr.s(auto_attribs=True)
@@ -616,7 +615,7 @@ class get_entity_type:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RQ], src_dict: Dict[str, Any]) -> RQ:
+    def from_dict(cls: Type[QW], src_dict: Dict[str, Any]) -> QW:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, GetEntityType]
@@ -652,7 +651,7 @@ class get_entity_type:
         return key in self.additional_properties
 
 
-ZL = TypeVar("ZL", bound="solid3d_get_all_edge_faces")
+RN = TypeVar("RN", bound="solid3d_get_all_edge_faces")
 
 
 @attr.s(auto_attribs=True)
@@ -679,7 +678,7 @@ class solid3d_get_all_edge_faces:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZL], src_dict: Dict[str, Any]) -> ZL:
+    def from_dict(cls: Type[RN], src_dict: Dict[str, Any]) -> RN:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetAllEdgeFaces]
@@ -715,7 +714,7 @@ class solid3d_get_all_edge_faces:
         return key in self.additional_properties
 
 
-CM = TypeVar("CM", bound="solid3d_get_all_opposite_edges")
+JN = TypeVar("JN", bound="solid3d_get_all_opposite_edges")
 
 
 @attr.s(auto_attribs=True)
@@ -742,7 +741,7 @@ class solid3d_get_all_opposite_edges:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CM], src_dict: Dict[str, Any]) -> CM:
+    def from_dict(cls: Type[JN], src_dict: Dict[str, Any]) -> JN:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetAllOppositeEdges]
@@ -778,7 +777,7 @@ class solid3d_get_all_opposite_edges:
         return key in self.additional_properties
 
 
-OS = TypeVar("OS", bound="solid3d_get_opposite_edge")
+BD = TypeVar("BD", bound="solid3d_get_opposite_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -805,7 +804,7 @@ class solid3d_get_opposite_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OS], src_dict: Dict[str, Any]) -> OS:
+    def from_dict(cls: Type[BD], src_dict: Dict[str, Any]) -> BD:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetOppositeEdge]
@@ -841,7 +840,7 @@ class solid3d_get_opposite_edge:
         return key in self.additional_properties
 
 
-WP = TypeVar("WP", bound="solid3d_get_prev_adjacent_edge")
+XW = TypeVar("XW", bound="solid3d_get_prev_adjacent_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -868,7 +867,7 @@ class solid3d_get_prev_adjacent_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WP], src_dict: Dict[str, Any]) -> WP:
+    def from_dict(cls: Type[XW], src_dict: Dict[str, Any]) -> XW:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetPrevAdjacentEdge]
@@ -904,7 +903,7 @@ class solid3d_get_prev_adjacent_edge:
         return key in self.additional_properties
 
 
-XO = TypeVar("XO", bound="solid3d_get_next_adjacent_edge")
+LP = TypeVar("LP", bound="solid3d_get_next_adjacent_edge")
 
 
 @attr.s(auto_attribs=True)
@@ -931,7 +930,7 @@ class solid3d_get_next_adjacent_edge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[XO], src_dict: Dict[str, Any]) -> XO:
+    def from_dict(cls: Type[LP], src_dict: Dict[str, Any]) -> LP:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Solid3dGetNextAdjacentEdge]
@@ -967,7 +966,7 @@ class solid3d_get_next_adjacent_edge:
         return key in self.additional_properties
 
 
-LN = TypeVar("LN", bound="mouse_click")
+XN = TypeVar("XN", bound="mouse_click")
 
 
 @attr.s(auto_attribs=True)
@@ -994,7 +993,7 @@ class mouse_click:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LN], src_dict: Dict[str, Any]) -> LN:
+    def from_dict(cls: Type[XN], src_dict: Dict[str, Any]) -> XN:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, MouseClick]
@@ -1030,7 +1029,7 @@ class mouse_click:
         return key in self.additional_properties
 
 
-KR = TypeVar("KR", bound="curve_get_type")
+PL = TypeVar("PL", bound="curve_get_type")
 
 
 @attr.s(auto_attribs=True)
@@ -1057,7 +1056,7 @@ class curve_get_type:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[KR], src_dict: Dict[str, Any]) -> KR:
+    def from_dict(cls: Type[PL], src_dict: Dict[str, Any]) -> PL:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, CurveGetType]
@@ -1093,7 +1092,7 @@ class curve_get_type:
         return key in self.additional_properties
 
 
-MG = TypeVar("MG", bound="curve_get_control_points")
+XS = TypeVar("XS", bound="curve_get_control_points")
 
 
 @attr.s(auto_attribs=True)
@@ -1120,7 +1119,7 @@ class curve_get_control_points:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MG], src_dict: Dict[str, Any]) -> MG:
+    def from_dict(cls: Type[XS], src_dict: Dict[str, Any]) -> XS:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, CurveGetControlPoints]
@@ -1156,7 +1155,7 @@ class curve_get_control_points:
         return key in self.additional_properties
 
 
-UE = TypeVar("UE", bound="take_snapshot")
+YB = TypeVar("YB", bound="take_snapshot")
 
 
 @attr.s(auto_attribs=True)
@@ -1183,7 +1182,7 @@ class take_snapshot:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UE], src_dict: Dict[str, Any]) -> UE:
+    def from_dict(cls: Type[YB], src_dict: Dict[str, Any]) -> YB:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, TakeSnapshot]
@@ -1219,7 +1218,7 @@ class take_snapshot:
         return key in self.additional_properties
 
 
-BF = TypeVar("BF", bound="path_get_info")
+YX = TypeVar("YX", bound="path_get_info")
 
 
 @attr.s(auto_attribs=True)
@@ -1246,7 +1245,7 @@ class path_get_info:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BF], src_dict: Dict[str, Any]) -> BF:
+    def from_dict(cls: Type[YX], src_dict: Dict[str, Any]) -> YX:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, PathGetInfo]
@@ -1282,7 +1281,7 @@ class path_get_info:
         return key in self.additional_properties
 
 
-UU = TypeVar("UU", bound="path_get_curve_uuids_for_vertices")
+LM = TypeVar("LM", bound="path_get_curve_uuids_for_vertices")
 
 
 @attr.s(auto_attribs=True)
@@ -1309,7 +1308,7 @@ class path_get_curve_uuids_for_vertices:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UU], src_dict: Dict[str, Any]) -> UU:
+    def from_dict(cls: Type[LM], src_dict: Dict[str, Any]) -> LM:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, PathGetCurveUuidsForVertices]
@@ -1345,7 +1344,7 @@ class path_get_curve_uuids_for_vertices:
         return key in self.additional_properties
 
 
-MB = TypeVar("MB", bound="path_get_vertex_uuids")
+DM = TypeVar("DM", bound="path_get_vertex_uuids")
 
 
 @attr.s(auto_attribs=True)
@@ -1372,7 +1371,7 @@ class path_get_vertex_uuids:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MB], src_dict: Dict[str, Any]) -> MB:
+    def from_dict(cls: Type[DM], src_dict: Dict[str, Any]) -> DM:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, PathGetVertexUuids]
@@ -1408,7 +1407,7 @@ class path_get_vertex_uuids:
         return key in self.additional_properties
 
 
-TB = TypeVar("TB", bound="plane_intersect_and_project")
+HZ = TypeVar("HZ", bound="plane_intersect_and_project")
 
 
 @attr.s(auto_attribs=True)
@@ -1435,7 +1434,7 @@ class plane_intersect_and_project:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TB], src_dict: Dict[str, Any]) -> TB:
+    def from_dict(cls: Type[HZ], src_dict: Dict[str, Any]) -> HZ:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, PlaneIntersectAndProject]
@@ -1471,7 +1470,7 @@ class plane_intersect_and_project:
         return key in self.additional_properties
 
 
-FJ = TypeVar("FJ", bound="curve_get_end_points")
+CP = TypeVar("CP", bound="curve_get_end_points")
 
 
 @attr.s(auto_attribs=True)
@@ -1498,7 +1497,7 @@ class curve_get_end_points:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FJ], src_dict: Dict[str, Any]) -> FJ:
+    def from_dict(cls: Type[CP], src_dict: Dict[str, Any]) -> CP:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, CurveGetEndPoints]
@@ -1534,7 +1533,7 @@ class curve_get_end_points:
         return key in self.additional_properties
 
 
-HB = TypeVar("HB", bound="import_files")
+IP = TypeVar("IP", bound="import_files")
 
 
 @attr.s(auto_attribs=True)
@@ -1561,7 +1560,7 @@ class import_files:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HB], src_dict: Dict[str, Any]) -> HB:
+    def from_dict(cls: Type[IP], src_dict: Dict[str, Any]) -> IP:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, ImportFiles]
@@ -1597,7 +1596,7 @@ class import_files:
         return key in self.additional_properties
 
 
-SF = TypeVar("SF", bound="mass")
+XV = TypeVar("XV", bound="mass")
 
 
 @attr.s(auto_attribs=True)
@@ -1624,7 +1623,7 @@ class mass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SF], src_dict: Dict[str, Any]) -> SF:
+    def from_dict(cls: Type[XV], src_dict: Dict[str, Any]) -> XV:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Mass]
@@ -1660,7 +1659,7 @@ class mass:
         return key in self.additional_properties
 
 
-DU = TypeVar("DU", bound="volume")
+TW = TypeVar("TW", bound="volume")
 
 
 @attr.s(auto_attribs=True)
@@ -1687,7 +1686,7 @@ class volume:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DU], src_dict: Dict[str, Any]) -> DU:
+    def from_dict(cls: Type[TW], src_dict: Dict[str, Any]) -> TW:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Volume]
@@ -1723,7 +1722,7 @@ class volume:
         return key in self.additional_properties
 
 
-BM = TypeVar("BM", bound="density")
+CH = TypeVar("CH", bound="density")
 
 
 @attr.s(auto_attribs=True)
@@ -1750,7 +1749,7 @@ class density:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BM], src_dict: Dict[str, Any]) -> BM:
+    def from_dict(cls: Type[CH], src_dict: Dict[str, Any]) -> CH:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, Density]
@@ -1786,7 +1785,7 @@ class density:
         return key in self.additional_properties
 
 
-TY = TypeVar("TY", bound="surface_area")
+MW = TypeVar("MW", bound="surface_area")
 
 
 @attr.s(auto_attribs=True)
@@ -1813,7 +1812,7 @@ class surface_area:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TY], src_dict: Dict[str, Any]) -> TY:
+    def from_dict(cls: Type[MW], src_dict: Dict[str, Any]) -> MW:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, SurfaceArea]
@@ -1849,7 +1848,7 @@ class surface_area:
         return key in self.additional_properties
 
 
-NC = TypeVar("NC", bound="center_of_mass")
+VN = TypeVar("VN", bound="center_of_mass")
 
 
 @attr.s(auto_attribs=True)
@@ -1876,7 +1875,7 @@ class center_of_mass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NC], src_dict: Dict[str, Any]) -> NC:
+    def from_dict(cls: Type[VN], src_dict: Dict[str, Any]) -> VN:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, CenterOfMass]
@@ -1912,7 +1911,7 @@ class center_of_mass:
         return key in self.additional_properties
 
 
-GP = TypeVar("GP", bound="get_sketch_mode_plane")
+WE = TypeVar("WE", bound="get_sketch_mode_plane")
 
 
 @attr.s(auto_attribs=True)
@@ -1939,7 +1938,7 @@ class get_sketch_mode_plane:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GP], src_dict: Dict[str, Any]) -> GP:
+    def from_dict(cls: Type[WE], src_dict: Dict[str, Any]) -> WE:
         d = src_dict.copy()
         _data = d.pop("data", UNSET)
         data: Union[Unset, GetSketchModePlane]
@@ -1975,6 +1974,10 @@ class get_sketch_mode_plane:
         return key in self.additional_properties
 
 
+GY = TypeVar("GY", bound="OkModelingCmdResponse")
+
+
+@attr.s(auto_attribs=True)
 class OkModelingCmdResponse:
 
     """A successful response from a modeling command. This can be one of several types of responses, depending on the command."""
@@ -2011,298 +2014,268 @@ class OkModelingCmdResponse:
         surface_area,
         center_of_mass,
         get_sketch_mode_plane,
-    ] = None
+    ]
 
     def __init__(
         self,
         type: Union[
-            type(empty),
-            type(export),
-            type(select_with_point),
-            type(highlight_set_entity),
-            type(entity_get_child_uuid),
-            type(entity_get_num_children),
-            type(entity_get_parent_id),
-            type(entity_get_all_child_uuids),
-            type(select_get),
-            type(get_entity_type),
-            type(solid3d_get_all_edge_faces),
-            type(solid3d_get_all_opposite_edges),
-            type(solid3d_get_opposite_edge),
-            type(solid3d_get_prev_adjacent_edge),
-            type(solid3d_get_next_adjacent_edge),
-            type(mouse_click),
-            type(curve_get_type),
-            type(curve_get_control_points),
-            type(take_snapshot),
-            type(path_get_info),
-            type(path_get_curve_uuids_for_vertices),
-            type(path_get_vertex_uuids),
-            type(plane_intersect_and_project),
-            type(curve_get_end_points),
-            type(import_files),
-            type(mass),
-            type(volume),
-            type(density),
-            type(surface_area),
-            type(center_of_mass),
-            type(get_sketch_mode_plane),
+            empty,
+            export,
+            select_with_point,
+            highlight_set_entity,
+            entity_get_child_uuid,
+            entity_get_num_children,
+            entity_get_parent_id,
+            entity_get_all_child_uuids,
+            select_get,
+            get_entity_type,
+            solid3d_get_all_edge_faces,
+            solid3d_get_all_opposite_edges,
+            solid3d_get_opposite_edge,
+            solid3d_get_prev_adjacent_edge,
+            solid3d_get_next_adjacent_edge,
+            mouse_click,
+            curve_get_type,
+            curve_get_control_points,
+            take_snapshot,
+            path_get_info,
+            path_get_curve_uuids_for_vertices,
+            path_get_vertex_uuids,
+            plane_intersect_and_project,
+            curve_get_end_points,
+            import_files,
+            mass,
+            volume,
+            density,
+            surface_area,
+            center_of_mass,
+            get_sketch_mode_plane,
         ],
     ):
         self.type = type
 
     def to_dict(self) -> Dict[str, Any]:
         if isinstance(self.type, empty):
-            n: empty = self.type
-            return n.to_dict()
+            YZ: empty = self.type
+            return YZ.to_dict()
         elif isinstance(self.type, export):
-            n: export = self.type
-            return n.to_dict()
+            SV: export = self.type
+            return SV.to_dict()
         elif isinstance(self.type, select_with_point):
-            n: select_with_point = self.type
-            return n.to_dict()
+            ZF: select_with_point = self.type
+            return ZF.to_dict()
         elif isinstance(self.type, highlight_set_entity):
-            n: highlight_set_entity = self.type
-            return n.to_dict()
+            RA: highlight_set_entity = self.type
+            return RA.to_dict()
         elif isinstance(self.type, entity_get_child_uuid):
-            n: entity_get_child_uuid = self.type
-            return n.to_dict()
+            KP: entity_get_child_uuid = self.type
+            return KP.to_dict()
         elif isinstance(self.type, entity_get_num_children):
-            n: entity_get_num_children = self.type
-            return n.to_dict()
+            HM: entity_get_num_children = self.type
+            return HM.to_dict()
         elif isinstance(self.type, entity_get_parent_id):
-            n: entity_get_parent_id = self.type
-            return n.to_dict()
+            NT: entity_get_parent_id = self.type
+            return NT.to_dict()
         elif isinstance(self.type, entity_get_all_child_uuids):
-            n: entity_get_all_child_uuids = self.type
-            return n.to_dict()
+            IH: entity_get_all_child_uuids = self.type
+            return IH.to_dict()
         elif isinstance(self.type, select_get):
-            n: select_get = self.type
-            return n.to_dict()
+            WK: select_get = self.type
+            return WK.to_dict()
         elif isinstance(self.type, get_entity_type):
-            n: get_entity_type = self.type
-            return n.to_dict()
+            CA: get_entity_type = self.type
+            return CA.to_dict()
         elif isinstance(self.type, solid3d_get_all_edge_faces):
-            n: solid3d_get_all_edge_faces = self.type
-            return n.to_dict()
+            AF: solid3d_get_all_edge_faces = self.type
+            return AF.to_dict()
         elif isinstance(self.type, solid3d_get_all_opposite_edges):
-            n: solid3d_get_all_opposite_edges = self.type
-            return n.to_dict()
+            IY: solid3d_get_all_opposite_edges = self.type
+            return IY.to_dict()
         elif isinstance(self.type, solid3d_get_opposite_edge):
-            n: solid3d_get_opposite_edge = self.type
-            return n.to_dict()
+            QB: solid3d_get_opposite_edge = self.type
+            return QB.to_dict()
         elif isinstance(self.type, solid3d_get_prev_adjacent_edge):
-            n: solid3d_get_prev_adjacent_edge = self.type
-            return n.to_dict()
+            QN: solid3d_get_prev_adjacent_edge = self.type
+            return QN.to_dict()
         elif isinstance(self.type, solid3d_get_next_adjacent_edge):
-            n: solid3d_get_next_adjacent_edge = self.type
-            return n.to_dict()
+            VL: solid3d_get_next_adjacent_edge = self.type
+            return VL.to_dict()
         elif isinstance(self.type, mouse_click):
-            n: mouse_click = self.type
-            return n.to_dict()
+            IW: mouse_click = self.type
+            return IW.to_dict()
         elif isinstance(self.type, curve_get_type):
-            n: curve_get_type = self.type
-            return n.to_dict()
+            LW: curve_get_type = self.type
+            return LW.to_dict()
         elif isinstance(self.type, curve_get_control_points):
-            n: curve_get_control_points = self.type
-            return n.to_dict()
+            ID: curve_get_control_points = self.type
+            return ID.to_dict()
         elif isinstance(self.type, take_snapshot):
-            n: take_snapshot = self.type
-            return n.to_dict()
+            NI: take_snapshot = self.type
+            return NI.to_dict()
         elif isinstance(self.type, path_get_info):
-            n: path_get_info = self.type
-            return n.to_dict()
+            BY: path_get_info = self.type
+            return BY.to_dict()
         elif isinstance(self.type, path_get_curve_uuids_for_vertices):
-            n: path_get_curve_uuids_for_vertices = self.type
-            return n.to_dict()
+            IC: path_get_curve_uuids_for_vertices = self.type
+            return IC.to_dict()
         elif isinstance(self.type, path_get_vertex_uuids):
-            n: path_get_vertex_uuids = self.type
-            return n.to_dict()
+            SH: path_get_vertex_uuids = self.type
+            return SH.to_dict()
         elif isinstance(self.type, plane_intersect_and_project):
-            n: plane_intersect_and_project = self.type
-            return n.to_dict()
+            RV: plane_intersect_and_project = self.type
+            return RV.to_dict()
         elif isinstance(self.type, curve_get_end_points):
-            n: curve_get_end_points = self.type
-            return n.to_dict()
+            TI: curve_get_end_points = self.type
+            return TI.to_dict()
         elif isinstance(self.type, import_files):
-            n: import_files = self.type
-            return n.to_dict()
+            KO: import_files = self.type
+            return KO.to_dict()
         elif isinstance(self.type, mass):
-            n: mass = self.type
-            return n.to_dict()
+            AL: mass = self.type
+            return AL.to_dict()
         elif isinstance(self.type, volume):
-            n: volume = self.type
-            return n.to_dict()
+            ZH: volume = self.type
+            return ZH.to_dict()
         elif isinstance(self.type, density):
-            n: density = self.type
-            return n.to_dict()
+            KD: density = self.type
+            return KD.to_dict()
         elif isinstance(self.type, surface_area):
-            n: surface_area = self.type
-            return n.to_dict()
+            YA: surface_area = self.type
+            return YA.to_dict()
         elif isinstance(self.type, center_of_mass):
-            n: center_of_mass = self.type
-            return n.to_dict()
+            WD: center_of_mass = self.type
+            return WD.to_dict()
         elif isinstance(self.type, get_sketch_mode_plane):
-            n: get_sketch_mode_plane = self.type
-            return n.to_dict()
+            RJ: get_sketch_mode_plane = self.type
+            return RJ.to_dict()
 
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "empty":
-            n: empty = empty()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            GZ: empty = empty()
+            GZ.from_dict(d)
+            return cls(type=GZ)
         elif d.get("type") == "export":
-            n: export = export()
-            n.from_dict(d)
-            self.type = n
-            return self
+            XB: export = export()
+            XB.from_dict(d)
+            return cls(type=XB)
         elif d.get("type") == "select_with_point":
-            n: select_with_point = select_with_point()
-            n.from_dict(d)
-            self.type = n
-            return self
+            XM: select_with_point = select_with_point()
+            XM.from_dict(d)
+            return cls(type=XM)
         elif d.get("type") == "highlight_set_entity":
-            n: highlight_set_entity = highlight_set_entity()
-            n.from_dict(d)
-            self.type = n
-            return self
+            TQ: highlight_set_entity = highlight_set_entity()
+            TQ.from_dict(d)
+            return cls(type=TQ)
         elif d.get("type") == "entity_get_child_uuid":
-            n: entity_get_child_uuid = entity_get_child_uuid()
-            n.from_dict(d)
-            self.type = n
-            return self
+            SU: entity_get_child_uuid = entity_get_child_uuid()
+            SU.from_dict(d)
+            return cls(type=SU)
         elif d.get("type") == "entity_get_num_children":
-            n: entity_get_num_children = entity_get_num_children()
-            n.from_dict(d)
-            self.type = n
-            return self
+            QD: entity_get_num_children = entity_get_num_children()
+            QD.from_dict(d)
+            return cls(type=QD)
         elif d.get("type") == "entity_get_parent_id":
-            n: entity_get_parent_id = entity_get_parent_id()
-            n.from_dict(d)
-            self.type = n
-            return self
+            XC: entity_get_parent_id = entity_get_parent_id()
+            XC.from_dict(d)
+            return cls(type=XC)
         elif d.get("type") == "entity_get_all_child_uuids":
-            n: entity_get_all_child_uuids = entity_get_all_child_uuids()
-            n.from_dict(d)
-            self.type = n
-            return self
+            IX: entity_get_all_child_uuids = entity_get_all_child_uuids()
+            IX.from_dict(d)
+            return cls(type=IX)
         elif d.get("type") == "select_get":
-            n: select_get = select_get()
-            n.from_dict(d)
-            self.type = n
-            return self
+            YS: select_get = select_get()
+            YS.from_dict(d)
+            return cls(type=YS)
         elif d.get("type") == "get_entity_type":
-            n: get_entity_type = get_entity_type()
-            n.from_dict(d)
-            self.type = n
-            return self
+            TT: get_entity_type = get_entity_type()
+            TT.from_dict(d)
+            return cls(type=TT)
         elif d.get("type") == "solid3d_get_all_edge_faces":
-            n: solid3d_get_all_edge_faces = solid3d_get_all_edge_faces()
-            n.from_dict(d)
-            self.type = n
-            return self
+            CK: solid3d_get_all_edge_faces = solid3d_get_all_edge_faces()
+            CK.from_dict(d)
+            return cls(type=CK)
         elif d.get("type") == "solid3d_get_all_opposite_edges":
-            n: solid3d_get_all_opposite_edges = solid3d_get_all_opposite_edges()
-            n.from_dict(d)
-            self.type = n
-            return self
+            BO: solid3d_get_all_opposite_edges = solid3d_get_all_opposite_edges()
+            BO.from_dict(d)
+            return cls(type=BO)
         elif d.get("type") == "solid3d_get_opposite_edge":
-            n: solid3d_get_opposite_edge = solid3d_get_opposite_edge()
-            n.from_dict(d)
-            self.type = n
-            return self
+            VB: solid3d_get_opposite_edge = solid3d_get_opposite_edge()
+            VB.from_dict(d)
+            return cls(type=VB)
         elif d.get("type") == "solid3d_get_prev_adjacent_edge":
-            n: solid3d_get_prev_adjacent_edge = solid3d_get_prev_adjacent_edge()
-            n.from_dict(d)
-            self.type = n
-            return self
+            RR: solid3d_get_prev_adjacent_edge = solid3d_get_prev_adjacent_edge()
+            RR.from_dict(d)
+            return cls(type=RR)
         elif d.get("type") == "solid3d_get_next_adjacent_edge":
-            n: solid3d_get_next_adjacent_edge = solid3d_get_next_adjacent_edge()
-            n.from_dict(d)
-            self.type = n
-            return self
+            JS: solid3d_get_next_adjacent_edge = solid3d_get_next_adjacent_edge()
+            JS.from_dict(d)
+            return cls(type=JS)
         elif d.get("type") == "mouse_click":
-            n: mouse_click = mouse_click()
-            n.from_dict(d)
-            self.type = n
-            return self
+            JU: mouse_click = mouse_click()
+            JU.from_dict(d)
+            return cls(type=JU)
         elif d.get("type") == "curve_get_type":
-            n: curve_get_type = curve_get_type()
-            n.from_dict(d)
-            self.type = n
-            return self
+            MF: curve_get_type = curve_get_type()
+            MF.from_dict(d)
+            return cls(type=MF)
         elif d.get("type") == "curve_get_control_points":
-            n: curve_get_control_points = curve_get_control_points()
-            n.from_dict(d)
-            self.type = n
-            return self
+            ER: curve_get_control_points = curve_get_control_points()
+            ER.from_dict(d)
+            return cls(type=ER)
         elif d.get("type") == "take_snapshot":
-            n: take_snapshot = take_snapshot()
-            n.from_dict(d)
-            self.type = n
-            return self
+            GV: take_snapshot = take_snapshot()
+            GV.from_dict(d)
+            return cls(type=GV)
         elif d.get("type") == "path_get_info":
-            n: path_get_info = path_get_info()
-            n.from_dict(d)
-            self.type = n
-            return self
+            SR: path_get_info = path_get_info()
+            SR.from_dict(d)
+            return cls(type=SR)
         elif d.get("type") == "path_get_curve_uuids_for_vertices":
-            n: path_get_curve_uuids_for_vertices = path_get_curve_uuids_for_vertices()
-            n.from_dict(d)
-            self.type = n
-            return self
+            CU: path_get_curve_uuids_for_vertices = path_get_curve_uuids_for_vertices()
+            CU.from_dict(d)
+            return cls(type=CU)
         elif d.get("type") == "path_get_vertex_uuids":
-            n: path_get_vertex_uuids = path_get_vertex_uuids()
-            n.from_dict(d)
-            self.type = n
-            return self
+            OZ: path_get_vertex_uuids = path_get_vertex_uuids()
+            OZ.from_dict(d)
+            return cls(type=OZ)
         elif d.get("type") == "plane_intersect_and_project":
-            n: plane_intersect_and_project = plane_intersect_and_project()
-            n.from_dict(d)
-            self.type = n
-            return self
+            HS: plane_intersect_and_project = plane_intersect_and_project()
+            HS.from_dict(d)
+            return cls(type=HS)
         elif d.get("type") == "curve_get_end_points":
-            n: curve_get_end_points = curve_get_end_points()
-            n.from_dict(d)
-            self.type = n
-            return self
+            JB: curve_get_end_points = curve_get_end_points()
+            JB.from_dict(d)
+            return cls(type=JB)
         elif d.get("type") == "import_files":
-            n: import_files = import_files()
-            n.from_dict(d)
-            self.type = n
-            return self
+            RP: import_files = import_files()
+            RP.from_dict(d)
+            return cls(type=RP)
         elif d.get("type") == "mass":
-            n: mass = mass()
-            n.from_dict(d)
-            self.type = n
-            return self
+            PF: mass = mass()
+            PF.from_dict(d)
+            return cls(type=PF)
         elif d.get("type") == "volume":
-            n: volume = volume()
-            n.from_dict(d)
-            self.type = n
-            return self
+            KV: volume = volume()
+            KV.from_dict(d)
+            return cls(type=KV)
         elif d.get("type") == "density":
-            n: density = density()
-            n.from_dict(d)
-            self.type = n
-            return self
+            IN: density = density()
+            IN.from_dict(d)
+            return cls(type=IN)
         elif d.get("type") == "surface_area":
-            n: surface_area = surface_area()
-            n.from_dict(d)
-            self.type = n
-            return self
+            QR: surface_area = surface_area()
+            QR.from_dict(d)
+            return cls(type=QR)
         elif d.get("type") == "center_of_mass":
-            n: center_of_mass = center_of_mass()
-            n.from_dict(d)
-            self.type = n
-            return self
+            PG: center_of_mass = center_of_mass()
+            PG.from_dict(d)
+            return cls(type=PG)
         elif d.get("type") == "get_sketch_mode_plane":
-            n: get_sketch_mode_plane = get_sketch_mode_plane()
-            n.from_dict(d)
-            self.type = n
-            return self
+            QS: get_sketch_mode_plane = get_sketch_mode_plane()
+            QS.from_dict(d)
+            return cls(type=QS)
 
         raise Exception("Unknown type")

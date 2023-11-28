@@ -5,7 +5,7 @@ import attr
 from ..models.currency import Currency
 from ..types import UNSET, Unset
 
-ZP = TypeVar("ZP", bound="InvoiceLineItem")
+GD = TypeVar("GD", bound="InvoiceLineItem")
 
 
 @attr.s(auto_attribs=True)
@@ -49,7 +49,7 @@ class InvoiceLineItem:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZP], src_dict: Dict[str, Any]) -> ZP:
+    def from_dict(cls: Type[GD], src_dict: Dict[str, Any]) -> GD:
         d = src_dict.copy()
         amount = d.pop("amount", UNSET)
 

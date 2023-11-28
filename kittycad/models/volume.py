@@ -5,7 +5,7 @@ import attr
 from ..models.unit_volume import UnitVolume
 from ..types import UNSET, Unset
 
-VW = TypeVar("VW", bound="Volume")
+NV = TypeVar("NV", bound="Volume")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class Volume:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[VW], src_dict: Dict[str, Any]) -> VW:
+    def from_dict(cls: Type[NV], src_dict: Dict[str, Any]) -> NV:
         d = src_dict.copy()
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitVolume]

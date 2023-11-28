@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
-from typing_extensions import Self
 
 from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
@@ -1412,6 +1411,10 @@ class text_to_cad:
         return key in self.additional_properties
 
 
+GY = TypeVar("GY", bound="AsyncApiCallOutput")
+
+
+@attr.s(auto_attribs=True)
 class AsyncApiCallOutput:
 
     """The output from the async API call."""
@@ -1424,82 +1427,76 @@ class AsyncApiCallOutput:
         file_density,
         file_surface_area,
         text_to_cad,
-    ] = None
+    ]
 
     def __init__(
         self,
         type: Union[
-            type(file_conversion),
-            type(file_center_of_mass),
-            type(file_mass),
-            type(file_volume),
-            type(file_density),
-            type(file_surface_area),
-            type(text_to_cad),
+            file_conversion,
+            file_center_of_mass,
+            file_mass,
+            file_volume,
+            file_density,
+            file_surface_area,
+            text_to_cad,
         ],
     ):
         self.type = type
 
     def to_dict(self) -> Dict[str, Any]:
         if isinstance(self.type, file_conversion):
-            n: file_conversion = self.type
-            return n.to_dict()
+            JR: file_conversion = self.type
+            return JR.to_dict()
         elif isinstance(self.type, file_center_of_mass):
-            n: file_center_of_mass = self.type
-            return n.to_dict()
+            HK: file_center_of_mass = self.type
+            return HK.to_dict()
         elif isinstance(self.type, file_mass):
-            n: file_mass = self.type
-            return n.to_dict()
+            ON: file_mass = self.type
+            return ON.to_dict()
         elif isinstance(self.type, file_volume):
-            n: file_volume = self.type
-            return n.to_dict()
+            US: file_volume = self.type
+            return US.to_dict()
         elif isinstance(self.type, file_density):
-            n: file_density = self.type
-            return n.to_dict()
+            FH: file_density = self.type
+            return FH.to_dict()
         elif isinstance(self.type, file_surface_area):
-            n: file_surface_area = self.type
-            return n.to_dict()
+            BB: file_surface_area = self.type
+            return BB.to_dict()
         elif isinstance(self.type, text_to_cad):
-            n: text_to_cad = self.type
-            return n.to_dict()
+            TV: text_to_cad = self.type
+            return TV.to_dict()
 
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "file_conversion":
-            n: file_conversion = file_conversion()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            LY: file_conversion = file_conversion()
+            LY.from_dict(d)
+            return cls(type=LY)
         elif d.get("type") == "file_center_of_mass":
-            n: file_center_of_mass = file_center_of_mass()
-            n.from_dict(d)
-            self.type = n
-            return self
+            VR: file_center_of_mass = file_center_of_mass()
+            VR.from_dict(d)
+            return cls(type=VR)
         elif d.get("type") == "file_mass":
-            n: file_mass = file_mass()
-            n.from_dict(d)
-            self.type = n
-            return self
+            PC: file_mass = file_mass()
+            PC.from_dict(d)
+            return cls(type=PC)
         elif d.get("type") == "file_volume":
-            n: file_volume = file_volume()
-            n.from_dict(d)
-            self.type = n
-            return self
+            KQ: file_volume = file_volume()
+            KQ.from_dict(d)
+            return cls(type=KQ)
         elif d.get("type") == "file_density":
-            n: file_density = file_density()
-            n.from_dict(d)
-            self.type = n
-            return self
+            NH: file_density = file_density()
+            NH.from_dict(d)
+            return cls(type=NH)
         elif d.get("type") == "file_surface_area":
-            n: file_surface_area = file_surface_area()
-            n.from_dict(d)
-            self.type = n
-            return self
+            PJ: file_surface_area = file_surface_area()
+            PJ.from_dict(d)
+            return cls(type=PJ)
         elif d.get("type") == "text_to_cad":
-            n: text_to_cad = text_to_cad()
-            n.from_dict(d)
-            self.type = n
-            return self
+            CR: text_to_cad = text_to_cad()
+            CR.from_dict(d)
+            return cls(type=CR)
 
         raise Exception("Unknown type")

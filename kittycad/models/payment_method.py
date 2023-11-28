@@ -9,7 +9,7 @@ from ..models.card_details import CardDetails
 from ..models.payment_method_type import PaymentMethodType
 from ..types import UNSET, Unset
 
-ZB = TypeVar("ZB", bound="PaymentMethod")
+CT = TypeVar("CT", bound="PaymentMethod")
 
 
 @attr.s(auto_attribs=True)
@@ -58,7 +58,7 @@ class PaymentMethod:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ZB], src_dict: Dict[str, Any]) -> ZB:
+    def from_dict(cls: Type[CT], src_dict: Dict[str, Any]) -> CT:
         d = src_dict.copy()
         _billing_info = d.pop("billing_info", UNSET)
         billing_info: Union[Unset, BillingInfo]

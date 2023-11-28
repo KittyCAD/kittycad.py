@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-WM = TypeVar("WM", bound="Solid3dGetNextAdjacentEdge")
+WL = TypeVar("WL", bound="Solid3dGetNextAdjacentEdge")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class Solid3dGetNextAdjacentEdge:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WM], src_dict: Dict[str, Any]) -> WM:
+    def from_dict(cls: Type[WL], src_dict: Dict[str, Any]) -> WL:
         d = src_dict.copy()
         edge = d.pop("edge", UNSET)
 

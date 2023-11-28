@@ -5,7 +5,7 @@ import attr
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-OM = TypeVar("OM", bound="GetSketchModePlane")
+EO = TypeVar("EO", bound="GetSketchModePlane")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class GetSketchModePlane:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OM], src_dict: Dict[str, Any]) -> OM:
+    def from_dict(cls: Type[EO], src_dict: Dict[str, Any]) -> EO:
         d = src_dict.copy()
         _x_axis = d.pop("x_axis", UNSET)
         x_axis: Union[Unset, Point3d]

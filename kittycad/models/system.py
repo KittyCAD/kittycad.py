@@ -5,7 +5,7 @@ import attr
 from ..models.axis_direction_pair import AxisDirectionPair
 from ..types import UNSET, Unset
 
-LV = TypeVar("LV", bound="System")
+FW = TypeVar("FW", bound="System")
 
 
 @attr.s(auto_attribs=True)
@@ -41,7 +41,7 @@ class System:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LV], src_dict: Dict[str, Any]) -> LV:
+    def from_dict(cls: Type[FW], src_dict: Dict[str, Any]) -> FW:
         d = src_dict.copy()
         _forward = d.pop("forward", UNSET)
         forward: Union[Unset, AxisDirectionPair]

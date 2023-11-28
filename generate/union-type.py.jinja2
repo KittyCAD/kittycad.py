@@ -1,6 +1,10 @@
-from typing import Dict, Any, Union
+from typing import Dict, Any, Union, Type, TypeVar
 from typing_extensions import Self
+import attr
 
+GY = TypeVar("GY", bound="{{name}}")
+
+@attr.s(auto_attribs=True)
 class {{name}}:
     {% if description %}
     """{{description}}"""
@@ -9,12 +13,12 @@ class {{name}}:
         {% for type in types %}
         {{type.name}},
         {% endfor %}
-    ] = None
+    ]
 
     def __init__(self,
                  type: Union[
                      {% for type in types %}
-                     type({{type.name}}),
+                     {{type.name}},
                      {% endfor %}
                  ]):
         self.type = type
@@ -22,25 +26,24 @@ class {{name}}:
     def to_dict(self) -> Dict[str, Any]:
         {% for type in types %}{% if loop.first %}
         if isinstance(self.type, {{type.name}}):
-            n : {{type.name}} = self.type
-            return n.to_dict()
+            {{type.var0}} : {{type.name}} = self.type
+            return {{type.var0}}.to_dict()
         {% else %}elif isinstance(self.type, {{type.name}}):
-            n : {{type.name}} = self.type
-            return n.to_dict()
+            {{type.var0}} : {{type.name}} = self.type
+            return {{type.var0}}.to_dict()
         {% endif %}{% endfor %}
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         {% for type in types %}{% if loop.first %}
         if d.get("type") == "{{type.name}}":
-            n : {{type.name}} = {{type.name}}()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            {{type.var1}} : {{type.name}} = {{type.name}}()
+            {{type.var1}}.from_dict(d)
+            return cls(type={{type.var1}})
         {% else %}elif d.get("type") == "{{type.name}}":
-            n : {{type.name}} = {{type.name}}()
-            n.from_dict(d)
-            self.type = n
-            return self
+            {{type.var1}} : {{type.name}} = {{type.name}}()
+            {{type.var1}}.from_dict(d)
+            return cls(type={{type.var1}})
         {% endif %}{% endfor %}
         raise Exception("Unknown type")

@@ -5,7 +5,7 @@ import attr
 from ..models.rtc_sdp_type import RtcSdpType
 from ..types import UNSET, Unset
 
-JG = TypeVar("JG", bound="RtcSessionDescription")
+IF = TypeVar("IF", bound="RtcSessionDescription")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class RtcSessionDescription:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JG], src_dict: Dict[str, Any]) -> JG:
+    def from_dict(cls: Type[IF], src_dict: Dict[str, Any]) -> IF:
         d = src_dict.copy()
         sdp = d.pop("sdp", UNSET)
 

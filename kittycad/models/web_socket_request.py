@@ -1,7 +1,6 @@
 from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
-from typing_extensions import Self
 
 from ..models.client_metrics import ClientMetrics
 from ..models.modeling_cmd import ModelingCmd
@@ -10,7 +9,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 from ..types import UNSET, Unset
 
-DP = TypeVar("DP", bound="trickle_ice")
+ZI = TypeVar("ZI", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +36,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DP], src_dict: Dict[str, Any]) -> DP:
+    def from_dict(cls: Type[ZI], src_dict: Dict[str, Any]) -> ZI:
         d = src_dict.copy()
         _candidate = d.pop("candidate", UNSET)
         candidate: Union[Unset, RtcIceCandidateInit]
@@ -73,7 +72,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-JO = TypeVar("JO", bound="sdp_offer")
+CZ = TypeVar("CZ", bound="sdp_offer")
 
 
 @attr.s(auto_attribs=True)
@@ -100,7 +99,7 @@ class sdp_offer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JO], src_dict: Dict[str, Any]) -> JO:
+    def from_dict(cls: Type[CZ], src_dict: Dict[str, Any]) -> CZ:
         d = src_dict.copy()
         _offer = d.pop("offer", UNSET)
         offer: Union[Unset, RtcSessionDescription]
@@ -136,7 +135,7 @@ class sdp_offer:
         return key in self.additional_properties
 
 
-OF = TypeVar("OF", bound="modeling_cmd_req")
+OE = TypeVar("OE", bound="modeling_cmd_req")
 
 
 @attr.s(auto_attribs=True)
@@ -168,7 +167,7 @@ class modeling_cmd_req:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OF], src_dict: Dict[str, Any]) -> OF:
+    def from_dict(cls: Type[OE], src_dict: Dict[str, Any]) -> OE:
         d = src_dict.copy()
         _cmd = d.pop("cmd", UNSET)
         cmd: Union[Unset, ModelingCmd]
@@ -212,7 +211,7 @@ class modeling_cmd_req:
         return key in self.additional_properties
 
 
-TE = TypeVar("TE", bound="modeling_cmd_batch_req")
+QC = TypeVar("QC", bound="modeling_cmd_batch_req")
 
 
 @attr.s(auto_attribs=True)
@@ -244,7 +243,7 @@ class modeling_cmd_batch_req:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TE], src_dict: Dict[str, Any]) -> TE:
+    def from_dict(cls: Type[QC], src_dict: Dict[str, Any]) -> QC:
         d = src_dict.copy()
         from ..models.modeling_cmd_req import ModelingCmdReq
 
@@ -277,7 +276,7 @@ class modeling_cmd_batch_req:
         return key in self.additional_properties
 
 
-OV = TypeVar("OV", bound="ping")
+JJ = TypeVar("JJ", bound="ping")
 
 
 @attr.s(auto_attribs=True)
@@ -299,7 +298,7 @@ class ping:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OV], src_dict: Dict[str, Any]) -> OV:
+    def from_dict(cls: Type[JJ], src_dict: Dict[str, Any]) -> JJ:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -327,7 +326,7 @@ class ping:
         return key in self.additional_properties
 
 
-WY = TypeVar("WY", bound="metrics_response")
+OD = TypeVar("OD", bound="metrics_response")
 
 
 @attr.s(auto_attribs=True)
@@ -354,7 +353,7 @@ class metrics_response:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WY], src_dict: Dict[str, Any]) -> WY:
+    def from_dict(cls: Type[OD], src_dict: Dict[str, Any]) -> OD:
         d = src_dict.copy()
         _metrics = d.pop("metrics", UNSET)
         metrics: Union[Unset, ClientMetrics]
@@ -390,6 +389,10 @@ class metrics_response:
         return key in self.additional_properties
 
 
+GY = TypeVar("GY", bound="WebSocketRequest")
+
+
+@attr.s(auto_attribs=True)
 class WebSocketRequest:
 
     """The websocket messages the server receives."""
@@ -401,73 +404,68 @@ class WebSocketRequest:
         modeling_cmd_batch_req,
         ping,
         metrics_response,
-    ] = None
+    ]
 
     def __init__(
         self,
         type: Union[
-            type(trickle_ice),
-            type(sdp_offer),
-            type(modeling_cmd_req),
-            type(modeling_cmd_batch_req),
-            type(ping),
-            type(metrics_response),
+            trickle_ice,
+            sdp_offer,
+            modeling_cmd_req,
+            modeling_cmd_batch_req,
+            ping,
+            metrics_response,
         ],
     ):
         self.type = type
 
     def to_dict(self) -> Dict[str, Any]:
         if isinstance(self.type, trickle_ice):
-            n: trickle_ice = self.type
-            return n.to_dict()
+            ZY: trickle_ice = self.type
+            return ZY.to_dict()
         elif isinstance(self.type, sdp_offer):
-            n: sdp_offer = self.type
-            return n.to_dict()
+            GJ: sdp_offer = self.type
+            return GJ.to_dict()
         elif isinstance(self.type, modeling_cmd_req):
-            n: modeling_cmd_req = self.type
-            return n.to_dict()
+            GM: modeling_cmd_req = self.type
+            return GM.to_dict()
         elif isinstance(self.type, modeling_cmd_batch_req):
-            n: modeling_cmd_batch_req = self.type
-            return n.to_dict()
+            ZA: modeling_cmd_batch_req = self.type
+            return ZA.to_dict()
         elif isinstance(self.type, ping):
-            n: ping = self.type
-            return n.to_dict()
+            ZW: ping = self.type
+            return ZW.to_dict()
         elif isinstance(self.type, metrics_response):
-            n: metrics_response = self.type
-            return n.to_dict()
+            DS: metrics_response = self.type
+            return DS.to_dict()
 
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "trickle_ice":
-            n: trickle_ice = trickle_ice()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            GW: trickle_ice = trickle_ice()
+            GW.from_dict(d)
+            return cls(type=GW)
         elif d.get("type") == "sdp_offer":
-            n: sdp_offer = sdp_offer()
-            n.from_dict(d)
-            self.type = n
-            return self
+            QU: sdp_offer = sdp_offer()
+            QU.from_dict(d)
+            return cls(type=QU)
         elif d.get("type") == "modeling_cmd_req":
-            n: modeling_cmd_req = modeling_cmd_req()
-            n.from_dict(d)
-            self.type = n
-            return self
+            XU: modeling_cmd_req = modeling_cmd_req()
+            XU.from_dict(d)
+            return cls(type=XU)
         elif d.get("type") == "modeling_cmd_batch_req":
-            n: modeling_cmd_batch_req = modeling_cmd_batch_req()
-            n.from_dict(d)
-            self.type = n
-            return self
+            BC: modeling_cmd_batch_req = modeling_cmd_batch_req()
+            BC.from_dict(d)
+            return cls(type=BC)
         elif d.get("type") == "ping":
-            n: ping = ping()
-            n.from_dict(d)
-            self.type = n
-            return self
+            MX: ping = ping()
+            MX.from_dict(d)
+            return cls(type=MX)
         elif d.get("type") == "metrics_response":
-            n: metrics_response = metrics_response()
-            n.from_dict(d)
-            self.type = n
-            return self
+            ZQ: metrics_response = metrics_response()
+            ZQ.from_dict(d)
+            return cls(type=ZQ)
 
         raise Exception("Unknown type")

@@ -5,7 +5,7 @@ import attr
 from ..models.entity_type import EntityType
 from ..types import UNSET, Unset
 
-CF = TypeVar("CF", bound="GetEntityType")
+ZP = TypeVar("ZP", bound="GetEntityType")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class GetEntityType:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CF], src_dict: Dict[str, Any]) -> CF:
+    def from_dict(cls: Type[ZP], src_dict: Dict[str, Any]) -> ZP:
         d = src_dict.copy()
         _entity_type = d.pop("entity_type", UNSET)
         entity_type: Union[Unset, EntityType]

@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-WH = TypeVar("WH", bound="PathGetVertexUuids")
+VS = TypeVar("VS", bound="PathGetVertexUuids")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class PathGetVertexUuids:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WH], src_dict: Dict[str, Any]) -> WH:
+    def from_dict(cls: Type[VS], src_dict: Dict[str, Any]) -> VS:
         d = src_dict.copy()
         vertex_ids = cast(List[str], d.pop("vertex_ids", UNSET))
 

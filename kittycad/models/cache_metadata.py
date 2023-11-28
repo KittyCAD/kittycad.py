@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-VR = TypeVar("VR", bound="CacheMetadata")
+ED = TypeVar("ED", bound="CacheMetadata")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class CacheMetadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[VR], src_dict: Dict[str, Any]) -> VR:
+    def from_dict(cls: Type[ED], src_dict: Dict[str, Any]) -> ED:
         d = src_dict.copy()
         ok = d.pop("ok", UNSET)
 

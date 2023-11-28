@@ -9,7 +9,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-GR = TypeVar("GR", bound="UnitVolumeConversion")
+EZ = TypeVar("EZ", bound="UnitVolumeConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitVolumeConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[GR], src_dict: Dict[str, Any]) -> GR:
+    def from_dict(cls: Type[EZ], src_dict: Dict[str, Any]) -> EZ:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

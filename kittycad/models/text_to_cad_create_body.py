@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-OA = TypeVar("OA", bound="TextToCadCreateBody")
+CC = TypeVar("CC", bound="TextToCadCreateBody")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class TextToCadCreateBody:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OA], src_dict: Dict[str, Any]) -> OA:
+    def from_dict(cls: Type[CC], src_dict: Dict[str, Any]) -> CC:
         d = src_dict.copy()
         prompt = d.pop("prompt", UNSET)
 

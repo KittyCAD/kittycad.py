@@ -5,7 +5,7 @@ import attr
 from ..models.base64data import Base64Data
 from ..types import UNSET, Unset
 
-UF = TypeVar("UF", bound="ExportFile")
+EN = TypeVar("EN", bound="ExportFile")
 
 
 @attr.s(auto_attribs=True)
@@ -34,7 +34,7 @@ class ExportFile:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UF], src_dict: Dict[str, Any]) -> UF:
+    def from_dict(cls: Type[EN], src_dict: Dict[str, Any]) -> EN:
         d = src_dict.copy()
         _contents = d.pop("contents", UNSET)
         contents: Union[Unset, Base64Data]

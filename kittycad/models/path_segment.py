@@ -1,14 +1,13 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
-from typing_extensions import Self
 
 from ..models.angle import Angle
 from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..types import UNSET, Unset
 
-DQ = TypeVar("DQ", bound="line")
+PM = TypeVar("PM", bound="line")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +38,7 @@ class line:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DQ], src_dict: Dict[str, Any]) -> DQ:
+    def from_dict(cls: Type[PM], src_dict: Dict[str, Any]) -> PM:
         d = src_dict.copy()
         _end = d.pop("end", UNSET)
         end: Union[Unset, Point3d]
@@ -78,7 +77,7 @@ class line:
         return key in self.additional_properties
 
 
-UY = TypeVar("UY", bound="arc")
+HI = TypeVar("HI", bound="arc")
 
 
 @attr.s(auto_attribs=True)
@@ -131,7 +130,7 @@ class arc:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UY], src_dict: Dict[str, Any]) -> UY:
+    def from_dict(cls: Type[HI], src_dict: Dict[str, Any]) -> HI:
         d = src_dict.copy()
         angle_end = d.pop("angle_end", UNSET)
 
@@ -195,7 +194,7 @@ class arc:
         return key in self.additional_properties
 
 
-PD = TypeVar("PD", bound="bezier")
+XD = TypeVar("XD", bound="bezier")
 
 
 @attr.s(auto_attribs=True)
@@ -236,7 +235,7 @@ class bezier:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PD], src_dict: Dict[str, Any]) -> PD:
+    def from_dict(cls: Type[XD], src_dict: Dict[str, Any]) -> XD:
         d = src_dict.copy()
         _control1 = d.pop("control1", UNSET)
         control1: Union[Unset, Point3d]
@@ -291,7 +290,7 @@ class bezier:
         return key in self.additional_properties
 
 
-SM = TypeVar("SM", bound="tangential_arc")
+HN = TypeVar("HN", bound="tangential_arc")
 
 
 @attr.s(auto_attribs=True)
@@ -322,7 +321,7 @@ class tangential_arc:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[SM], src_dict: Dict[str, Any]) -> SM:
+    def from_dict(cls: Type[HN], src_dict: Dict[str, Any]) -> HN:
         d = src_dict.copy()
         _offset = d.pop("offset", UNSET)
         offset: Union[Unset, Angle]
@@ -361,7 +360,7 @@ class tangential_arc:
         return key in self.additional_properties
 
 
-JL = TypeVar("JL", bound="tangential_arc_to")
+OT = TypeVar("OT", bound="tangential_arc_to")
 
 
 @attr.s(auto_attribs=True)
@@ -393,7 +392,7 @@ class tangential_arc_to:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[JL], src_dict: Dict[str, Any]) -> JL:
+    def from_dict(cls: Type[OT], src_dict: Dict[str, Any]) -> OT:
         d = src_dict.copy()
         _angle_snap_increment = d.pop("angle_snap_increment", UNSET)
         angle_snap_increment: Union[Unset, Angle]
@@ -437,6 +436,10 @@ class tangential_arc_to:
         return key in self.additional_properties
 
 
+GY = TypeVar("GY", bound="PathSegment")
+
+
+@attr.s(auto_attribs=True)
 class PathSegment:
 
     """A segment of a path. Paths are composed of many segments."""
@@ -447,64 +450,60 @@ class PathSegment:
         bezier,
         tangential_arc,
         tangential_arc_to,
-    ] = None
+    ]
 
     def __init__(
         self,
         type: Union[
-            type(line),
-            type(arc),
-            type(bezier),
-            type(tangential_arc),
-            type(tangential_arc_to),
+            line,
+            arc,
+            bezier,
+            tangential_arc,
+            tangential_arc_to,
         ],
     ):
         self.type = type
 
     def to_dict(self) -> Dict[str, Any]:
         if isinstance(self.type, line):
-            n: line = self.type
-            return n.to_dict()
+            AT: line = self.type
+            return AT.to_dict()
         elif isinstance(self.type, arc):
-            n: arc = self.type
-            return n.to_dict()
+            KI: arc = self.type
+            return KI.to_dict()
         elif isinstance(self.type, bezier):
-            n: bezier = self.type
-            return n.to_dict()
+            HW: bezier = self.type
+            return HW.to_dict()
         elif isinstance(self.type, tangential_arc):
-            n: tangential_arc = self.type
-            return n.to_dict()
+            FR: tangential_arc = self.type
+            return FR.to_dict()
         elif isinstance(self.type, tangential_arc_to):
-            n: tangential_arc_to = self.type
-            return n.to_dict()
+            WZ: tangential_arc_to = self.type
+            return WZ.to_dict()
 
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "line":
-            n: line = line()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            GF: line = line()
+            GF.from_dict(d)
+            return cls(type=GF)
         elif d.get("type") == "arc":
-            n: arc = arc()
-            n.from_dict(d)
-            self.type = n
-            return self
+            RM: arc = arc()
+            RM.from_dict(d)
+            return cls(type=RM)
         elif d.get("type") == "bezier":
-            n: bezier = bezier()
-            n.from_dict(d)
-            self.type = n
-            return self
+            UD: bezier = bezier()
+            UD.from_dict(d)
+            return cls(type=UD)
         elif d.get("type") == "tangential_arc":
-            n: tangential_arc = tangential_arc()
-            n.from_dict(d)
-            self.type = n
-            return self
+            GT: tangential_arc = tangential_arc()
+            GT.from_dict(d)
+            return cls(type=GT)
         elif d.get("type") == "tangential_arc_to":
-            n: tangential_arc_to = tangential_arc_to()
-            n.from_dict(d)
-            self.type = n
-            return self
+            BQ: tangential_arc_to = tangential_arc_to()
+            BQ.from_dict(d)
+            return cls(type=BQ)
 
         raise Exception("Unknown type")

@@ -1220,6 +1220,8 @@ def generateUnionType(types: List[str], name: str, description: str) -> str:
         "ArgType",
         {
             "name": str,
+            "var0": str,
+            "var1": str,
         },
     )
     TemplateType = TypedDict(
@@ -1236,7 +1238,9 @@ def generateUnionType(types: List[str], name: str, description: str) -> str:
         "name": name,
     }
     for type in types:
-        template_info["types"].append({"name": type})
+        template_info["types"].append(
+            {"name": type, "var0": randletter(), "var1": randletter()}
+        )
 
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
     template_file = "union-type.py.jinja2"
