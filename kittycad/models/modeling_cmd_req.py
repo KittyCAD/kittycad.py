@@ -41,15 +41,19 @@ class ModelingCmdReq:
         cmd: Union[Unset, ModelingCmd]
         if isinstance(_cmd, Unset):
             cmd = UNSET
+        if _cmd is None:
+            cmd = UNSET
         else:
-            cmd = _cmd  # type: ignore[arg-type]
+            cmd = ModelingCmd.from_dict(_cmd)
 
         _cmd_id = d.pop("cmd_id", UNSET)
         cmd_id: Union[Unset, ModelingCmdId]
         if isinstance(_cmd_id, Unset):
             cmd_id = UNSET
+        if _cmd_id is None:
+            cmd_id = UNSET
         else:
-            cmd_id = _cmd_id  # type: ignore[arg-type]
+            cmd_id = _cmd_id
 
         modeling_cmd_req = cls(
             cmd=cmd,

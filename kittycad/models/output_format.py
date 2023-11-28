@@ -45,8 +45,10 @@ class fbx:
         storage: Union[Unset, FbxStorage]
         if isinstance(_storage, Unset):
             storage = UNSET
+        if _storage is None:
+            storage = UNSET
         else:
-            storage = _storage  # type: ignore[arg-type]
+            storage = _storage
 
         type = d.pop("type", UNSET)
 
@@ -113,15 +115,19 @@ class gltf:
         presentation: Union[Unset, GltfPresentation]
         if isinstance(_presentation, Unset):
             presentation = UNSET
+        if _presentation is None:
+            presentation = UNSET
         else:
-            presentation = _presentation  # type: ignore[arg-type]
+            presentation = _presentation
 
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, GltfStorage]
         if isinstance(_storage, Unset):
             storage = UNSET
+        if _storage is None:
+            storage = UNSET
         else:
-            storage = _storage  # type: ignore[arg-type]
+            storage = _storage
 
         type = d.pop("type", UNSET)
 
@@ -189,8 +195,10 @@ class obj:
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
+        if _coords is None:
+            coords = UNSET
         else:
-            coords = _coords  # type: ignore[arg-type]
+            coords = System.from_dict(_coords)
 
         type = d.pop("type", UNSET)
 
@@ -198,8 +206,10 @@ class obj:
         units: Union[Unset, UnitLength]
         if isinstance(_units, Unset):
             units = UNSET
+        if _units is None:
+            units = UNSET
         else:
-            units = _units  # type: ignore[arg-type]
+            units = _units
 
         obj = cls(
             coords=coords,
@@ -275,22 +285,28 @@ class ply:
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
+        if _coords is None:
+            coords = UNSET
         else:
-            coords = _coords  # type: ignore[arg-type]
+            coords = System.from_dict(_coords)
 
         _selection = d.pop("selection", UNSET)
         selection: Union[Unset, Selection]
         if isinstance(_selection, Unset):
             selection = UNSET
+        if _selection is None:
+            selection = UNSET
         else:
-            selection = _selection  # type: ignore[arg-type]
+            selection = Selection.from_dict(_selection)
 
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, PlyStorage]
         if isinstance(_storage, Unset):
             storage = UNSET
+        if _storage is None:
+            storage = UNSET
         else:
-            storage = _storage  # type: ignore[arg-type]
+            storage = _storage
 
         type = d.pop("type", UNSET)
 
@@ -298,8 +314,10 @@ class ply:
         units: Union[Unset, UnitLength]
         if isinstance(_units, Unset):
             units = UNSET
+        if _units is None:
+            units = UNSET
         else:
-            units = _units  # type: ignore[arg-type]
+            units = _units
 
         ply = cls(
             coords=coords,
@@ -362,8 +380,10 @@ class step:
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
+        if _coords is None:
+            coords = UNSET
         else:
-            coords = _coords  # type: ignore[arg-type]
+            coords = System.from_dict(_coords)
 
         type = d.pop("type", UNSET)
 
@@ -440,22 +460,28 @@ class stl:
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
+        if _coords is None:
+            coords = UNSET
         else:
-            coords = _coords  # type: ignore[arg-type]
+            coords = System.from_dict(_coords)
 
         _selection = d.pop("selection", UNSET)
         selection: Union[Unset, Selection]
         if isinstance(_selection, Unset):
             selection = UNSET
+        if _selection is None:
+            selection = UNSET
         else:
-            selection = _selection  # type: ignore[arg-type]
+            selection = Selection.from_dict(_selection)
 
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, StlStorage]
         if isinstance(_storage, Unset):
             storage = UNSET
+        if _storage is None:
+            storage = UNSET
         else:
-            storage = _storage  # type: ignore[arg-type]
+            storage = _storage
 
         type = d.pop("type", UNSET)
 
@@ -463,8 +489,10 @@ class stl:
         units: Union[Unset, UnitLength]
         if isinstance(_units, Unset):
             units = UNSET
+        if _units is None:
+            units = UNSET
         else:
-            units = _units  # type: ignore[arg-type]
+            units = _units
 
         stl = cls(
             coords=coords,

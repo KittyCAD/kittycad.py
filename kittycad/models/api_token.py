@@ -69,8 +69,10 @@ class ApiToken:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         is_valid = d.pop("is_valid", UNSET)
 
@@ -78,8 +80,10 @@ class ApiToken:
         token: Union[Unset, Uuid]
         if isinstance(_token, Unset):
             token = UNSET
+        if _token is None:
+            token = UNSET
         else:
-            token = _token  # type: ignore[arg-type]
+            token = _token
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -92,8 +96,10 @@ class ApiToken:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         api_token = cls(
             created_at=created_at,

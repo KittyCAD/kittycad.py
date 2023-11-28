@@ -65,8 +65,10 @@ class CardDetails:
         checks: Union[Unset, PaymentMethodCardChecks]
         if isinstance(_checks, Unset):
             checks = UNSET
+        if _checks is None:
+            checks = UNSET
         else:
-            checks = _checks  # type: ignore[arg-type]
+            checks = PaymentMethodCardChecks.from_dict(_checks)
 
         country = d.pop("country", UNSET)
 

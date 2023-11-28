@@ -78,8 +78,10 @@ class Customer:
         address: Union[Unset, NewAddress]
         if isinstance(_address, Unset):
             address = UNSET
+        if _address is None:
+            address = UNSET
         else:
-            address = _address  # type: ignore[arg-type]
+            address = NewAddress.from_dict(_address)
 
         balance = d.pop("balance", UNSET)
 
@@ -94,8 +96,10 @@ class Customer:
         currency: Union[Unset, Currency]
         if isinstance(_currency, Unset):
             currency = UNSET
+        if _currency is None:
+            currency = UNSET
         else:
-            currency = _currency  # type: ignore[arg-type]
+            currency = _currency
 
         delinquent = d.pop("delinquent", UNSET)
 

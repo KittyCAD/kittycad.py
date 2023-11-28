@@ -124,22 +124,28 @@ class FileConversion:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileExportFormat]
         if isinstance(_output_format, Unset):
             output_format = UNSET
+        if _output_format is None:
+            output_format = UNSET
         else:
-            output_format = _output_format  # type: ignore[arg-type]
+            output_format = _output_format
 
         _output_format_options = d.pop("output_format_options", UNSET)
         output_format_options: Union[Unset, OutputFormat]
         if isinstance(_output_format_options, Unset):
             output_format_options = UNSET
+        if _output_format_options is None:
+            output_format_options = UNSET
         else:
-            output_format_options = _output_format_options  # type: ignore[arg-type]
+            output_format_options = OutputFormat.from_dict(_output_format_options)
 
         _outputs = d.pop("outputs", UNSET)
         if isinstance(_outputs, Unset):
@@ -154,15 +160,19 @@ class FileConversion:
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _src_format_options = d.pop("src_format_options", UNSET)
         src_format_options: Union[Unset, InputFormat]
         if isinstance(_src_format_options, Unset):
             src_format_options = UNSET
+        if _src_format_options is None:
+            src_format_options = UNSET
         else:
-            src_format_options = _src_format_options  # type: ignore[arg-type]
+            src_format_options = InputFormat.from_dict(_src_format_options)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -175,8 +185,10 @@ class FileConversion:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -189,8 +201,10 @@ class FileConversion:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         file_conversion = cls(
             completed_at=completed_at,

@@ -47,8 +47,10 @@ class DeviceAccessTokenRequestForm:
         grant_type: Union[Unset, OAuth2GrantType]
         if isinstance(_grant_type, Unset):
             grant_type = UNSET
+        if _grant_type is None:
+            grant_type = UNSET
         else:
-            grant_type = _grant_type  # type: ignore[arg-type]
+            grant_type = _grant_type
 
         device_access_token_request_form = cls(
             client_id=client_id,

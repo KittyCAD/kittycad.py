@@ -41,15 +41,19 @@ class CenterOfMass:
         center_of_mass: Union[Unset, Point3d]
         if isinstance(_center_of_mass, Unset):
             center_of_mass = UNSET
+        if _center_of_mass is None:
+            center_of_mass = UNSET
         else:
-            center_of_mass = _center_of_mass  # type: ignore[arg-type]
+            center_of_mass = Point3d.from_dict(_center_of_mass)
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitLength]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         center_of_mass = cls(
             center_of_mass=center_of_mass,

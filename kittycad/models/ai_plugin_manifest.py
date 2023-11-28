@@ -76,15 +76,19 @@ class AiPluginManifest:
         api: Union[Unset, AiPluginApi]
         if isinstance(_api, Unset):
             api = UNSET
+        if _api is None:
+            api = UNSET
         else:
-            api = _api  # type: ignore[arg-type]
+            api = AiPluginApi.from_dict(_api)
 
         _auth = d.pop("auth", UNSET)
         auth: Union[Unset, AiPluginAuth]
         if isinstance(_auth, Unset):
             auth = UNSET
+        if _auth is None:
+            auth = UNSET
         else:
-            auth = _auth  # type: ignore[arg-type]
+            auth = AiPluginAuth.from_dict(_auth)
 
         contact_email = d.pop("contact_email", UNSET)
 

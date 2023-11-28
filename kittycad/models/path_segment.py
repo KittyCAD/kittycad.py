@@ -44,8 +44,10 @@ class line:
         end: Union[Unset, Point3d]
         if isinstance(_end, Unset):
             end = UNSET
+        if _end is None:
+            end = UNSET
         else:
-            end = _end  # type: ignore[arg-type]
+            end = Point3d.from_dict(_end)
 
         relative = d.pop("relative", UNSET)
 
@@ -140,15 +142,19 @@ class arc:
         center: Union[Unset, Point2d]
         if isinstance(_center, Unset):
             center = UNSET
+        if _center is None:
+            center = UNSET
         else:
-            center = _center  # type: ignore[arg-type]
+            center = Point2d.from_dict(_center)
 
         _end = d.pop("end", UNSET)
         end: Union[Unset, Angle]
         if isinstance(_end, Unset):
             end = UNSET
+        if _end is None:
+            end = UNSET
         else:
-            end = _end  # type: ignore[arg-type]
+            end = Angle.from_dict(_end)
 
         radius = d.pop("radius", UNSET)
 
@@ -158,8 +164,10 @@ class arc:
         start: Union[Unset, Angle]
         if isinstance(_start, Unset):
             start = UNSET
+        if _start is None:
+            start = UNSET
         else:
-            start = _start  # type: ignore[arg-type]
+            start = Angle.from_dict(_start)
 
         type = d.pop("type", UNSET)
 
@@ -241,22 +249,28 @@ class bezier:
         control1: Union[Unset, Point3d]
         if isinstance(_control1, Unset):
             control1 = UNSET
+        if _control1 is None:
+            control1 = UNSET
         else:
-            control1 = _control1  # type: ignore[arg-type]
+            control1 = Point3d.from_dict(_control1)
 
         _control2 = d.pop("control2", UNSET)
         control2: Union[Unset, Point3d]
         if isinstance(_control2, Unset):
             control2 = UNSET
+        if _control2 is None:
+            control2 = UNSET
         else:
-            control2 = _control2  # type: ignore[arg-type]
+            control2 = Point3d.from_dict(_control2)
 
         _end = d.pop("end", UNSET)
         end: Union[Unset, Point3d]
         if isinstance(_end, Unset):
             end = UNSET
+        if _end is None:
+            end = UNSET
         else:
-            end = _end  # type: ignore[arg-type]
+            end = Point3d.from_dict(_end)
 
         relative = d.pop("relative", UNSET)
 
@@ -327,8 +341,10 @@ class tangential_arc:
         offset: Union[Unset, Angle]
         if isinstance(_offset, Unset):
             offset = UNSET
+        if _offset is None:
+            offset = UNSET
         else:
-            offset = _offset  # type: ignore[arg-type]
+            offset = Angle.from_dict(_offset)
 
         radius = d.pop("radius", UNSET)
 
@@ -398,15 +414,19 @@ class tangential_arc_to:
         angle_snap_increment: Union[Unset, Angle]
         if isinstance(_angle_snap_increment, Unset):
             angle_snap_increment = UNSET
+        if _angle_snap_increment is None:
+            angle_snap_increment = UNSET
         else:
-            angle_snap_increment = _angle_snap_increment  # type: ignore[arg-type]
+            angle_snap_increment = Angle.from_dict(_angle_snap_increment)
 
         _to = d.pop("to", UNSET)
         to: Union[Unset, Point3d]
         if isinstance(_to, Unset):
             to = UNSET
+        if _to is None:
+            to = UNSET
         else:
-            to = _to  # type: ignore[arg-type]
+            to = Point3d.from_dict(_to)
 
         type = d.pop("type", UNSET)
 

@@ -131,8 +131,10 @@ class ExtendedUser:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         image = d.pop("image", UNSET)
 

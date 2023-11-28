@@ -61,8 +61,10 @@ class JetstreamStats:
         api: Union[Unset, JetstreamApiStats]
         if isinstance(_api, Unset):
             api = UNSET
+        if _api is None:
+            api = UNSET
         else:
-            api = _api  # type: ignore[arg-type]
+            api = JetstreamApiStats.from_dict(_api)
 
         ha_assets = d.pop("ha_assets", UNSET)
 

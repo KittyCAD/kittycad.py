@@ -134,22 +134,28 @@ class file_conversion:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         _output_format = d.pop("output_format", UNSET)
         output_format: Union[Unset, FileExportFormat]
         if isinstance(_output_format, Unset):
             output_format = UNSET
+        if _output_format is None:
+            output_format = UNSET
         else:
-            output_format = _output_format  # type: ignore[arg-type]
+            output_format = _output_format
 
         _output_format_options = d.pop("output_format_options", UNSET)
         output_format_options: Union[Unset, OutputFormat]
         if isinstance(_output_format_options, Unset):
             output_format_options = UNSET
+        if _output_format_options is None:
+            output_format_options = UNSET
         else:
-            output_format_options = _output_format_options  # type: ignore[arg-type]
+            output_format_options = OutputFormat.from_dict(_output_format_options)
 
         _outputs = d.pop("outputs", UNSET)
         if isinstance(_outputs, Unset):
@@ -164,15 +170,19 @@ class file_conversion:
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _src_format_options = d.pop("src_format_options", UNSET)
         src_format_options: Union[Unset, InputFormat]
         if isinstance(_src_format_options, Unset):
             src_format_options = UNSET
+        if _src_format_options is None:
+            src_format_options = UNSET
         else:
-            src_format_options = _src_format_options  # type: ignore[arg-type]
+            src_format_options = InputFormat.from_dict(_src_format_options)
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -185,8 +195,10 @@ class file_conversion:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         type = d.pop("type", UNSET)
 
@@ -201,8 +213,10 @@ class file_conversion:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         file_conversion = cls(
             completed_at=completed_at,
@@ -325,8 +339,10 @@ class file_center_of_mass:
         center_of_mass: Union[Unset, Point3d]
         if isinstance(_center_of_mass, Unset):
             center_of_mass = UNSET
+        if _center_of_mass is None:
+            center_of_mass = UNSET
         else:
-            center_of_mass = _center_of_mass  # type: ignore[arg-type]
+            center_of_mass = Point3d.from_dict(_center_of_mass)
 
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -348,22 +364,28 @@ class file_center_of_mass:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitLength]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -376,8 +398,10 @@ class file_center_of_mass:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         type = d.pop("type", UNSET)
 
@@ -392,8 +416,10 @@ class file_center_of_mass:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         file_center_of_mass = cls(
             center_of_mass=center_of_mass,
@@ -538,8 +564,10 @@ class file_mass:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         mass = d.pop("mass", UNSET)
 
@@ -549,22 +577,28 @@ class file_mass:
         material_density_unit: Union[Unset, UnitDensity]
         if isinstance(_material_density_unit, Unset):
             material_density_unit = UNSET
+        if _material_density_unit is None:
+            material_density_unit = UNSET
         else:
-            material_density_unit = _material_density_unit  # type: ignore[arg-type]
+            material_density_unit = _material_density_unit
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitMass]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -577,8 +611,10 @@ class file_mass:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         type = d.pop("type", UNSET)
 
@@ -593,8 +629,10 @@ class file_mass:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         file_mass = cls(
             completed_at=completed_at,
@@ -732,22 +770,28 @@ class file_volume:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitVolume]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -760,8 +804,10 @@ class file_volume:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         type = d.pop("type", UNSET)
 
@@ -776,8 +822,10 @@ class file_volume:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         volume = d.pop("volume", UNSET)
 
@@ -926,8 +974,10 @@ class file_density:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         material_mass = d.pop("material_mass", UNSET)
 
@@ -935,22 +985,28 @@ class file_density:
         material_mass_unit: Union[Unset, UnitMass]
         if isinstance(_material_mass_unit, Unset):
             material_mass_unit = UNSET
+        if _material_mass_unit is None:
+            material_mass_unit = UNSET
         else:
-            material_mass_unit = _material_mass_unit  # type: ignore[arg-type]
+            material_mass_unit = _material_mass_unit
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitDensity]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -963,8 +1019,10 @@ class file_density:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         type = d.pop("type", UNSET)
 
@@ -979,8 +1037,10 @@ class file_density:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         file_density = cls(
             completed_at=completed_at,
@@ -1118,22 +1178,28 @@ class file_surface_area:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitArea]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -1146,8 +1212,10 @@ class file_surface_area:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         surface_area = d.pop("surface_area", UNSET)
 
@@ -1164,8 +1232,10 @@ class file_surface_area:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         file_surface_area = cls(
             completed_at=completed_at,
@@ -1314,15 +1384,19 @@ class text_to_cad:
         feedback: Union[Unset, AiFeedback]
         if isinstance(_feedback, Unset):
             feedback = UNSET
+        if _feedback is None:
+            feedback = UNSET
         else:
-            feedback = _feedback  # type: ignore[arg-type]
+            feedback = _feedback
 
         _id = d.pop("id", UNSET)
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         model_version = d.pop("model_version", UNSET)
 
@@ -1330,8 +1404,10 @@ class text_to_cad:
         output_format: Union[Unset, FileExportFormat]
         if isinstance(_output_format, Unset):
             output_format = UNSET
+        if _output_format is None:
+            output_format = UNSET
         else:
-            output_format = _output_format  # type: ignore[arg-type]
+            output_format = _output_format
 
         _outputs = d.pop("outputs", UNSET)
         if isinstance(_outputs, Unset):
@@ -1355,8 +1431,10 @@ class text_to_cad:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         type = d.pop("type", UNSET)
 
@@ -1371,8 +1449,10 @@ class text_to_cad:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         text_to_cad = cls(
             completed_at=completed_at,

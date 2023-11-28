@@ -112,15 +112,19 @@ class move_path_pen:
         path: Union[Unset, ModelingCmdId]
         if isinstance(_path, Unset):
             path = UNSET
+        if _path is None:
+            path = UNSET
         else:
-            path = _path  # type: ignore[arg-type]
+            path = _path
 
         _to = d.pop("to", UNSET)
         to: Union[Unset, Point3d]
         if isinstance(_to, Unset):
             to = UNSET
+        if _to is None:
+            to = UNSET
         else:
-            to = _to  # type: ignore[arg-type]
+            to = Point3d.from_dict(_to)
 
         type = d.pop("type", UNSET)
 
@@ -188,15 +192,19 @@ class extend_path:
         path: Union[Unset, ModelingCmdId]
         if isinstance(_path, Unset):
             path = UNSET
+        if _path is None:
+            path = UNSET
         else:
-            path = _path  # type: ignore[arg-type]
+            path = _path
 
         _segment = d.pop("segment", UNSET)
         segment: Union[Unset, PathSegment]
         if isinstance(_segment, Unset):
             segment = UNSET
+        if _segment is None:
+            segment = UNSET
         else:
-            segment = _segment  # type: ignore[arg-type]
+            segment = PathSegment.from_dict(_segment)
 
         type = d.pop("type", UNSET)
 
@@ -271,8 +279,10 @@ class extrude:
         target: Union[Unset, ModelingCmdId]
         if isinstance(_target, Unset):
             target = UNSET
+        if _target is None:
+            target = UNSET
         else:
-            target = _target  # type: ignore[arg-type]
+            target = _target
 
         type = d.pop("type", UNSET)
 
@@ -398,8 +408,10 @@ class camera_drag_start:
         interaction: Union[Unset, CameraDragInteractionType]
         if isinstance(_interaction, Unset):
             interaction = UNSET
+        if _interaction is None:
+            interaction = UNSET
         else:
-            interaction = _interaction  # type: ignore[arg-type]
+            interaction = _interaction
 
         type = d.pop("type", UNSET)
 
@@ -407,8 +419,10 @@ class camera_drag_start:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         camera_drag_start = cls(
             interaction=interaction,
@@ -478,8 +492,10 @@ class camera_drag_move:
         interaction: Union[Unset, CameraDragInteractionType]
         if isinstance(_interaction, Unset):
             interaction = UNSET
+        if _interaction is None:
+            interaction = UNSET
         else:
-            interaction = _interaction  # type: ignore[arg-type]
+            interaction = _interaction
 
         sequence = d.pop("sequence", UNSET)
 
@@ -489,8 +505,10 @@ class camera_drag_move:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         camera_drag_move = cls(
             interaction=interaction,
@@ -557,8 +575,10 @@ class camera_drag_end:
         interaction: Union[Unset, CameraDragInteractionType]
         if isinstance(_interaction, Unset):
             interaction = UNSET
+        if _interaction is None:
+            interaction = UNSET
         else:
-            interaction = _interaction  # type: ignore[arg-type]
+            interaction = _interaction
 
         type = d.pop("type", UNSET)
 
@@ -566,8 +586,10 @@ class camera_drag_end:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         camera_drag_end = cls(
             interaction=interaction,
@@ -638,8 +660,10 @@ class default_camera_look_at:
         center: Union[Unset, Point3d]
         if isinstance(_center, Unset):
             center = UNSET
+        if _center is None:
+            center = UNSET
         else:
-            center = _center  # type: ignore[arg-type]
+            center = Point3d.from_dict(_center)
 
         type = d.pop("type", UNSET)
 
@@ -647,15 +671,19 @@ class default_camera_look_at:
         up: Union[Unset, Point3d]
         if isinstance(_up, Unset):
             up = UNSET
+        if _up is None:
+            up = UNSET
         else:
-            up = _up  # type: ignore[arg-type]
+            up = Point3d.from_dict(_up)
 
         _vantage = d.pop("vantage", UNSET)
         vantage: Union[Unset, Point3d]
         if isinstance(_vantage, Unset):
             vantage = UNSET
+        if _vantage is None:
+            vantage = UNSET
         else:
-            vantage = _vantage  # type: ignore[arg-type]
+            vantage = Point3d.from_dict(_vantage)
 
         default_camera_look_at = cls(
             center=center,
@@ -800,8 +828,10 @@ class default_camera_enable_sketch_mode:
         origin: Union[Unset, Point3d]
         if isinstance(_origin, Unset):
             origin = UNSET
+        if _origin is None:
+            origin = UNSET
         else:
-            origin = _origin  # type: ignore[arg-type]
+            origin = Point3d.from_dict(_origin)
 
         ortho = d.pop("ortho", UNSET)
 
@@ -811,15 +841,19 @@ class default_camera_enable_sketch_mode:
         x_axis: Union[Unset, Point3d]
         if isinstance(_x_axis, Unset):
             x_axis = UNSET
+        if _x_axis is None:
+            x_axis = UNSET
         else:
-            x_axis = _x_axis  # type: ignore[arg-type]
+            x_axis = Point3d.from_dict(_x_axis)
 
         _y_axis = d.pop("y_axis", UNSET)
         y_axis: Union[Unset, Point3d]
         if isinstance(_y_axis, Unset):
             y_axis = UNSET
+        if _y_axis is None:
+            y_axis = UNSET
         else:
-            y_axis = _y_axis  # type: ignore[arg-type]
+            y_axis = Point3d.from_dict(_y_axis)
 
         default_camera_enable_sketch_mode = cls(
             animated=animated,
@@ -1004,15 +1038,19 @@ class export:
         format: Union[Unset, OutputFormat]
         if isinstance(_format, Unset):
             format = UNSET
+        if _format is None:
+            format = UNSET
         else:
-            format = _format  # type: ignore[arg-type]
+            format = OutputFormat.from_dict(_format)
 
         _source_unit = d.pop("source_unit", UNSET)
         source_unit: Union[Unset, UnitLength]
         if isinstance(_source_unit, Unset):
             source_unit = UNSET
+        if _source_unit is None:
+            source_unit = UNSET
         else:
-            source_unit = _source_unit  # type: ignore[arg-type]
+            source_unit = _source_unit
 
         type = d.pop("type", UNSET)
 
@@ -1423,15 +1461,19 @@ class select_with_point:
         selected_at_window: Union[Unset, Point2d]
         if isinstance(_selected_at_window, Unset):
             selected_at_window = UNSET
+        if _selected_at_window is None:
+            selected_at_window = UNSET
         else:
-            selected_at_window = _selected_at_window  # type: ignore[arg-type]
+            selected_at_window = Point2d.from_dict(_selected_at_window)
 
         _selection_type = d.pop("selection_type", UNSET)
         selection_type: Union[Unset, SceneSelectionType]
         if isinstance(_selection_type, Unset):
             selection_type = UNSET
+        if _selection_type is None:
+            selection_type = UNSET
         else:
-            selection_type = _selection_type  # type: ignore[arg-type]
+            selection_type = _selection_type
 
         type = d.pop("type", UNSET)
 
@@ -1775,8 +1817,10 @@ class highlight_set_entity:
         selected_at_window: Union[Unset, Point2d]
         if isinstance(_selected_at_window, Unset):
             selected_at_window = UNSET
+        if _selected_at_window is None:
+            selected_at_window = UNSET
         else:
-            selected_at_window = _selected_at_window  # type: ignore[arg-type]
+            selected_at_window = Point2d.from_dict(_selected_at_window)
 
         sequence = d.pop("sequence", UNSET)
 
@@ -1909,8 +1953,10 @@ class new_annotation:
         annotation_type: Union[Unset, AnnotationType]
         if isinstance(_annotation_type, Unset):
             annotation_type = UNSET
+        if _annotation_type is None:
+            annotation_type = UNSET
         else:
-            annotation_type = _annotation_type  # type: ignore[arg-type]
+            annotation_type = _annotation_type
 
         clobber = d.pop("clobber", UNSET)
 
@@ -1918,8 +1964,10 @@ class new_annotation:
         options: Union[Unset, AnnotationOptions]
         if isinstance(_options, Unset):
             options = UNSET
+        if _options is None:
+            options = UNSET
         else:
-            options = _options  # type: ignore[arg-type]
+            options = AnnotationOptions.from_dict(_options)
 
         type = d.pop("type", UNSET)
 
@@ -1989,8 +2037,10 @@ class update_annotation:
         options: Union[Unset, AnnotationOptions]
         if isinstance(_options, Unset):
             options = UNSET
+        if _options is None:
+            options = UNSET
         else:
-            options = _options  # type: ignore[arg-type]
+            options = AnnotationOptions.from_dict(_options)
 
         type = d.pop("type", UNSET)
 
@@ -2367,8 +2417,10 @@ class solid3d_get_all_opposite_edges:
         along_vector: Union[Unset, Point3d]
         if isinstance(_along_vector, Unset):
             along_vector = UNSET
+        if _along_vector is None:
+            along_vector = UNSET
         else:
-            along_vector = _along_vector  # type: ignore[arg-type]
+            along_vector = Point3d.from_dict(_along_vector)
 
         edge_id = d.pop("edge_id", UNSET)
 
@@ -2874,8 +2926,10 @@ class make_plane:
         origin: Union[Unset, Point3d]
         if isinstance(_origin, Unset):
             origin = UNSET
+        if _origin is None:
+            origin = UNSET
         else:
-            origin = _origin  # type: ignore[arg-type]
+            origin = Point3d.from_dict(_origin)
 
         size = d.pop("size", UNSET)
 
@@ -2885,15 +2939,19 @@ class make_plane:
         x_axis: Union[Unset, Point3d]
         if isinstance(_x_axis, Unset):
             x_axis = UNSET
+        if _x_axis is None:
+            x_axis = UNSET
         else:
-            x_axis = _x_axis  # type: ignore[arg-type]
+            x_axis = Point3d.from_dict(_x_axis)
 
         _y_axis = d.pop("y_axis", UNSET)
         y_axis: Union[Unset, Point3d]
         if isinstance(_y_axis, Unset):
             y_axis = UNSET
+        if _y_axis is None:
+            y_axis = UNSET
         else:
-            y_axis = _y_axis  # type: ignore[arg-type]
+            y_axis = Point3d.from_dict(_y_axis)
 
         make_plane = cls(
             clobber=clobber,
@@ -2962,8 +3020,10 @@ class plane_set_color:
         color: Union[Unset, Color]
         if isinstance(_color, Unset):
             color = UNSET
+        if _color is None:
+            color = UNSET
         else:
-            color = _color  # type: ignore[arg-type]
+            color = Color.from_dict(_color)
 
         plane_id = d.pop("plane_id", UNSET)
 
@@ -3028,8 +3088,10 @@ class set_tool:
         tool: Union[Unset, SceneToolType]
         if isinstance(_tool, Unset):
             tool = UNSET
+        if _tool is None:
+            tool = UNSET
         else:
-            tool = _tool  # type: ignore[arg-type]
+            tool = _tool
 
         type = d.pop("type", UNSET)
 
@@ -3099,8 +3161,10 @@ class mouse_move:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         mouse_move = cls(
             sequence=sequence,
@@ -3163,8 +3227,10 @@ class mouse_click:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         mouse_click = cls(
             type=type,
@@ -3240,8 +3306,10 @@ class sketch_mode_enable:
         disable_camera_with_plane: Union[Unset, Point3d]
         if isinstance(_disable_camera_with_plane, Unset):
             disable_camera_with_plane = UNSET
+        if _disable_camera_with_plane is None:
+            disable_camera_with_plane = UNSET
         else:
-            disable_camera_with_plane = _disable_camera_with_plane  # type: ignore[arg-type]
+            disable_camera_with_plane = Point3d.from_dict(_disable_camera_with_plane)
 
         ortho = d.pop("ortho", UNSET)
 
@@ -3474,8 +3542,10 @@ class take_snapshot:
         format: Union[Unset, ImageFormat]
         if isinstance(_format, Unset):
             format = UNSET
+        if _format is None:
+            format = UNSET
         else:
-            format = _format  # type: ignore[arg-type]
+            format = _format
 
         type = d.pop("type", UNSET)
 
@@ -3783,8 +3853,10 @@ class handle_mouse_drag_start:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         handle_mouse_drag_start = cls(
             type=type,
@@ -3852,8 +3924,10 @@ class handle_mouse_drag_move:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         handle_mouse_drag_move = cls(
             sequence=sequence,
@@ -3916,8 +3990,10 @@ class handle_mouse_drag_end:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         handle_mouse_drag_end = cls(
             type=type,
@@ -4044,8 +4120,10 @@ class plane_intersect_and_project:
         window: Union[Unset, Point2d]
         if isinstance(_window, Unset):
             window = UNSET
+        if _window is None:
+            window = UNSET
         else:
-            window = _window  # type: ignore[arg-type]
+            window = Point2d.from_dict(_window)
 
         plane_intersect_and_project = cls(
             plane_id=plane_id,
@@ -4248,8 +4326,10 @@ class import_files:
         format: Union[Unset, InputFormat]
         if isinstance(_format, Unset):
             format = UNSET
+        if _format is None:
+            format = UNSET
         else:
-            format = _format  # type: ignore[arg-type]
+            format = InputFormat.from_dict(_format)
 
         type = d.pop("type", UNSET)
 
@@ -4336,22 +4416,28 @@ class mass:
         material_density_unit: Union[Unset, UnitDensity]
         if isinstance(_material_density_unit, Unset):
             material_density_unit = UNSET
+        if _material_density_unit is None:
+            material_density_unit = UNSET
         else:
-            material_density_unit = _material_density_unit  # type: ignore[arg-type]
+            material_density_unit = _material_density_unit
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitMass]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _source_unit = d.pop("source_unit", UNSET)
         source_unit: Union[Unset, UnitLength]
         if isinstance(_source_unit, Unset):
             source_unit = UNSET
+        if _source_unit is None:
+            source_unit = UNSET
         else:
-            source_unit = _source_unit  # type: ignore[arg-type]
+            source_unit = _source_unit
 
         type = d.pop("type", UNSET)
 
@@ -4441,22 +4527,28 @@ class density:
         material_mass_unit: Union[Unset, UnitMass]
         if isinstance(_material_mass_unit, Unset):
             material_mass_unit = UNSET
+        if _material_mass_unit is None:
+            material_mass_unit = UNSET
         else:
-            material_mass_unit = _material_mass_unit  # type: ignore[arg-type]
+            material_mass_unit = _material_mass_unit
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitDensity]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _source_unit = d.pop("source_unit", UNSET)
         source_unit: Union[Unset, UnitLength]
         if isinstance(_source_unit, Unset):
             source_unit = UNSET
+        if _source_unit is None:
+            source_unit = UNSET
         else:
-            source_unit = _source_unit  # type: ignore[arg-type]
+            source_unit = _source_unit
 
         type = d.pop("type", UNSET)
 
@@ -4535,15 +4627,19 @@ class volume:
         output_unit: Union[Unset, UnitVolume]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _source_unit = d.pop("source_unit", UNSET)
         source_unit: Union[Unset, UnitLength]
         if isinstance(_source_unit, Unset):
             source_unit = UNSET
+        if _source_unit is None:
+            source_unit = UNSET
         else:
-            source_unit = _source_unit  # type: ignore[arg-type]
+            source_unit = _source_unit
 
         type = d.pop("type", UNSET)
 
@@ -4620,15 +4716,19 @@ class center_of_mass:
         output_unit: Union[Unset, UnitLength]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _source_unit = d.pop("source_unit", UNSET)
         source_unit: Union[Unset, UnitLength]
         if isinstance(_source_unit, Unset):
             source_unit = UNSET
+        if _source_unit is None:
+            source_unit = UNSET
         else:
-            source_unit = _source_unit  # type: ignore[arg-type]
+            source_unit = _source_unit
 
         type = d.pop("type", UNSET)
 
@@ -4705,15 +4805,19 @@ class surface_area:
         output_unit: Union[Unset, UnitArea]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _source_unit = d.pop("source_unit", UNSET)
         source_unit: Union[Unset, UnitLength]
         if isinstance(_source_unit, Unset):
             source_unit = UNSET
+        if _source_unit is None:
+            source_unit = UNSET
         else:
-            source_unit = _source_unit  # type: ignore[arg-type]
+            source_unit = _source_unit
 
         type = d.pop("type", UNSET)
 
@@ -4836,15 +4940,19 @@ class curve_set_constraint:
         constraint_bound: Union[Unset, PathComponentConstraintBound]
         if isinstance(_constraint_bound, Unset):
             constraint_bound = UNSET
+        if _constraint_bound is None:
+            constraint_bound = UNSET
         else:
-            constraint_bound = _constraint_bound  # type: ignore[arg-type]
+            constraint_bound = _constraint_bound
 
         _constraint_type = d.pop("constraint_type", UNSET)
         constraint_type: Union[Unset, PathComponentConstraintType]
         if isinstance(_constraint_type, Unset):
             constraint_type = UNSET
+        if _constraint_type is None:
+            constraint_type = UNSET
         else:
-            constraint_type = _constraint_type  # type: ignore[arg-type]
+            constraint_type = _constraint_type
 
         object_id = d.pop("object_id", UNSET)
 

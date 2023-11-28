@@ -53,15 +53,19 @@ class AnnotationTextOptions:
         x: Union[Unset, AnnotationTextAlignmentX]
         if isinstance(_x, Unset):
             x = UNSET
+        if _x is None:
+            x = UNSET
         else:
-            x = _x  # type: ignore[arg-type]
+            x = _x
 
         _y = d.pop("y", UNSET)
         y: Union[Unset, AnnotationTextAlignmentY]
         if isinstance(_y, Unset):
             y = UNSET
+        if _y is None:
+            y = UNSET
         else:
-            y = _y  # type: ignore[arg-type]
+            y = _y
 
         annotation_text_options = cls(
             point_size=point_size,

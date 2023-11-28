@@ -64,15 +64,19 @@ class PaymentMethod:
         billing_info: Union[Unset, BillingInfo]
         if isinstance(_billing_info, Unset):
             billing_info = UNSET
+        if _billing_info is None:
+            billing_info = UNSET
         else:
-            billing_info = _billing_info  # type: ignore[arg-type]
+            billing_info = BillingInfo.from_dict(_billing_info)
 
         _card = d.pop("card", UNSET)
         card: Union[Unset, CardDetails]
         if isinstance(_card, Unset):
             card = UNSET
+        if _card is None:
+            card = UNSET
         else:
-            card = _card  # type: ignore[arg-type]
+            card = CardDetails.from_dict(_card)
 
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]
@@ -89,8 +93,10 @@ class PaymentMethod:
         type: Union[Unset, PaymentMethodType]
         if isinstance(_type, Unset):
             type = UNSET
+        if _type is None:
+            type = UNSET
         else:
-            type = _type  # type: ignore[arg-type]
+            type = _type
 
         payment_method = cls(
             billing_info=billing_info,

@@ -57,15 +57,19 @@ class AnnotationOptions:
         color: Union[Unset, Color]
         if isinstance(_color, Unset):
             color = UNSET
+        if _color is None:
+            color = UNSET
         else:
-            color = _color  # type: ignore[arg-type]
+            color = Color.from_dict(_color)
 
         _line_ends = d.pop("line_ends", UNSET)
         line_ends: Union[Unset, AnnotationLineEndOptions]
         if isinstance(_line_ends, Unset):
             line_ends = UNSET
+        if _line_ends is None:
+            line_ends = UNSET
         else:
-            line_ends = _line_ends  # type: ignore[arg-type]
+            line_ends = AnnotationLineEndOptions.from_dict(_line_ends)
 
         line_width = d.pop("line_width", UNSET)
 
@@ -73,15 +77,19 @@ class AnnotationOptions:
         position: Union[Unset, Point3d]
         if isinstance(_position, Unset):
             position = UNSET
+        if _position is None:
+            position = UNSET
         else:
-            position = _position  # type: ignore[arg-type]
+            position = Point3d.from_dict(_position)
 
         _text = d.pop("text", UNSET)
         text: Union[Unset, AnnotationTextOptions]
         if isinstance(_text, Unset):
             text = UNSET
+        if _text is None:
+            text = UNSET
         else:
-            text = _text  # type: ignore[arg-type]
+            text = AnnotationTextOptions.from_dict(_text)
 
         annotation_options = cls(
             color=color,

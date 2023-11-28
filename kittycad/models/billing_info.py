@@ -43,8 +43,10 @@ class BillingInfo:
         address: Union[Unset, NewAddress]
         if isinstance(_address, Unset):
             address = UNSET
+        if _address is None:
+            address = UNSET
         else:
-            address = _address  # type: ignore[arg-type]
+            address = NewAddress.from_dict(_address)
 
         name = d.pop("name", UNSET)
 

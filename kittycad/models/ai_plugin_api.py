@@ -45,8 +45,10 @@ class AiPluginApi:
         type: Union[Unset, AiPluginApiType]
         if isinstance(_type, Unset):
             type = UNSET
+        if _type is None:
+            type = UNSET
         else:
-            type = _type  # type: ignore[arg-type]
+            type = _type
 
         url = d.pop("url", UNSET)
 

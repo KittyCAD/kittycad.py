@@ -42,8 +42,10 @@ class trickle_ice:
         candidate: Union[Unset, RtcIceCandidateInit]
         if isinstance(_candidate, Unset):
             candidate = UNSET
+        if _candidate is None:
+            candidate = UNSET
         else:
-            candidate = _candidate  # type: ignore[arg-type]
+            candidate = RtcIceCandidateInit.from_dict(_candidate)
 
         type = d.pop("type", UNSET)
 
@@ -105,8 +107,10 @@ class sdp_offer:
         offer: Union[Unset, RtcSessionDescription]
         if isinstance(_offer, Unset):
             offer = UNSET
+        if _offer is None:
+            offer = UNSET
         else:
-            offer = _offer  # type: ignore[arg-type]
+            offer = RtcSessionDescription.from_dict(_offer)
 
         type = d.pop("type", UNSET)
 
@@ -173,15 +177,19 @@ class modeling_cmd_req:
         cmd: Union[Unset, ModelingCmd]
         if isinstance(_cmd, Unset):
             cmd = UNSET
+        if _cmd is None:
+            cmd = UNSET
         else:
-            cmd = _cmd  # type: ignore[arg-type]
+            cmd = ModelingCmd.from_dict(_cmd)
 
         _cmd_id = d.pop("cmd_id", UNSET)
         cmd_id: Union[Unset, ModelingCmdId]
         if isinstance(_cmd_id, Unset):
             cmd_id = UNSET
+        if _cmd_id is None:
+            cmd_id = UNSET
         else:
-            cmd_id = _cmd_id  # type: ignore[arg-type]
+            cmd_id = _cmd_id
 
         type = d.pop("type", UNSET)
 
@@ -359,8 +367,10 @@ class metrics_response:
         metrics: Union[Unset, ClientMetrics]
         if isinstance(_metrics, Unset):
             metrics = UNSET
+        if _metrics is None:
+            metrics = UNSET
         else:
-            metrics = _metrics  # type: ignore[arg-type]
+            metrics = ClientMetrics.from_dict(_metrics)
 
         type = d.pop("type", UNSET)
 

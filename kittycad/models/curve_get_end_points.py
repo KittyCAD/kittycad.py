@@ -40,15 +40,19 @@ class CurveGetEndPoints:
         end: Union[Unset, Point3d]
         if isinstance(_end, Unset):
             end = UNSET
+        if _end is None:
+            end = UNSET
         else:
-            end = _end  # type: ignore[arg-type]
+            end = Point3d.from_dict(_end)
 
         _start = d.pop("start", UNSET)
         start: Union[Unset, Point3d]
         if isinstance(_start, Unset):
             start = UNSET
+        if _start is None:
+            start = UNSET
         else:
-            start = _start  # type: ignore[arg-type]
+            start = Point3d.from_dict(_start)
 
         curve_get_end_points = cls(
             end=end,

@@ -117,8 +117,10 @@ class export:
         data: Union[Unset, Export]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Export.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -180,8 +182,10 @@ class select_with_point:
         data: Union[Unset, SelectWithPoint]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = SelectWithPoint.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -243,8 +247,10 @@ class highlight_set_entity:
         data: Union[Unset, HighlightSetEntity]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = HighlightSetEntity.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -306,8 +312,10 @@ class entity_get_child_uuid:
         data: Union[Unset, EntityGetChildUuid]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = EntityGetChildUuid.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -369,8 +377,10 @@ class entity_get_num_children:
         data: Union[Unset, EntityGetNumChildren]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = EntityGetNumChildren.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -432,8 +442,10 @@ class entity_get_parent_id:
         data: Union[Unset, EntityGetParentId]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = EntityGetParentId.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -495,8 +507,10 @@ class entity_get_all_child_uuids:
         data: Union[Unset, EntityGetAllChildUuids]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = EntityGetAllChildUuids.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -558,8 +572,10 @@ class select_get:
         data: Union[Unset, SelectGet]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = SelectGet.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -621,8 +637,10 @@ class get_entity_type:
         data: Union[Unset, GetEntityType]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = GetEntityType.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -684,8 +702,10 @@ class solid3d_get_all_edge_faces:
         data: Union[Unset, Solid3dGetAllEdgeFaces]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Solid3dGetAllEdgeFaces.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -747,8 +767,10 @@ class solid3d_get_all_opposite_edges:
         data: Union[Unset, Solid3dGetAllOppositeEdges]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Solid3dGetAllOppositeEdges.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -810,8 +832,10 @@ class solid3d_get_opposite_edge:
         data: Union[Unset, Solid3dGetOppositeEdge]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Solid3dGetOppositeEdge.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -873,8 +897,10 @@ class solid3d_get_prev_adjacent_edge:
         data: Union[Unset, Solid3dGetPrevAdjacentEdge]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Solid3dGetPrevAdjacentEdge.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -936,8 +962,10 @@ class solid3d_get_next_adjacent_edge:
         data: Union[Unset, Solid3dGetNextAdjacentEdge]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Solid3dGetNextAdjacentEdge.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -999,8 +1027,10 @@ class mouse_click:
         data: Union[Unset, MouseClick]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = MouseClick.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1062,8 +1092,10 @@ class curve_get_type:
         data: Union[Unset, CurveGetType]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = CurveGetType.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1125,8 +1157,10 @@ class curve_get_control_points:
         data: Union[Unset, CurveGetControlPoints]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = CurveGetControlPoints.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1188,8 +1222,10 @@ class take_snapshot:
         data: Union[Unset, TakeSnapshot]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = TakeSnapshot.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1251,8 +1287,10 @@ class path_get_info:
         data: Union[Unset, PathGetInfo]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = PathGetInfo.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1314,8 +1352,10 @@ class path_get_curve_uuids_for_vertices:
         data: Union[Unset, PathGetCurveUuidsForVertices]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = PathGetCurveUuidsForVertices.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1377,8 +1417,10 @@ class path_get_vertex_uuids:
         data: Union[Unset, PathGetVertexUuids]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = PathGetVertexUuids.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1440,8 +1482,10 @@ class plane_intersect_and_project:
         data: Union[Unset, PlaneIntersectAndProject]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = PlaneIntersectAndProject.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1503,8 +1547,10 @@ class curve_get_end_points:
         data: Union[Unset, CurveGetEndPoints]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = CurveGetEndPoints.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1566,8 +1612,10 @@ class import_files:
         data: Union[Unset, ImportFiles]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = ImportFiles.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1629,8 +1677,10 @@ class mass:
         data: Union[Unset, Mass]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Mass.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1692,8 +1742,10 @@ class volume:
         data: Union[Unset, Volume]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Volume.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1755,8 +1807,10 @@ class density:
         data: Union[Unset, Density]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = Density.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1818,8 +1872,10 @@ class surface_area:
         data: Union[Unset, SurfaceArea]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = SurfaceArea.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1881,8 +1937,10 @@ class center_of_mass:
         data: Union[Unset, CenterOfMass]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = CenterOfMass.from_dict(_data)
 
         type = d.pop("type", UNSET)
 
@@ -1944,8 +2002,10 @@ class get_sketch_mode_plane:
         data: Union[Unset, GetSketchModePlane]
         if isinstance(_data, Unset):
             data = UNSET
+        if _data is None:
+            data = UNSET
         else:
-            data = _data  # type: ignore[arg-type]
+            data = GetSketchModePlane.from_dict(_data)
 
         type = d.pop("type", UNSET)
 

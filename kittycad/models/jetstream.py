@@ -47,22 +47,28 @@ class Jetstream:
         config: Union[Unset, JetstreamConfig]
         if isinstance(_config, Unset):
             config = UNSET
+        if _config is None:
+            config = UNSET
         else:
-            config = _config  # type: ignore[arg-type]
+            config = JetstreamConfig.from_dict(_config)
 
         _meta = d.pop("meta", UNSET)
         meta: Union[Unset, MetaClusterInfo]
         if isinstance(_meta, Unset):
             meta = UNSET
+        if _meta is None:
+            meta = UNSET
         else:
-            meta = _meta  # type: ignore[arg-type]
+            meta = MetaClusterInfo.from_dict(_meta)
 
         _stats = d.pop("stats", UNSET)
         stats: Union[Unset, JetstreamStats]
         if isinstance(_stats, Unset):
             stats = UNSET
+        if _stats is None:
+            stats = UNSET
         else:
-            stats = _stats  # type: ignore[arg-type]
+            stats = JetstreamStats.from_dict(_stats)
 
         jetstream = cls(
             config=config,

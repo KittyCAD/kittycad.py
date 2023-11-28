@@ -77,8 +77,10 @@ class CustomerBalance:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         monthly_credits_remaining = d.pop("monthly_credits_remaining", UNSET)
 
@@ -99,8 +101,10 @@ class CustomerBalance:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         customer_balance = cls(
             created_at=created_at,

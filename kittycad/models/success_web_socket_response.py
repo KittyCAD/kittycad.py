@@ -45,8 +45,10 @@ class SuccessWebSocketResponse:
         resp: Union[Unset, OkWebSocketResponseData]
         if isinstance(_resp, Unset):
             resp = UNSET
+        if _resp is None:
+            resp = UNSET
         else:
-            resp = _resp  # type: ignore[arg-type]
+            resp = OkWebSocketResponseData.from_dict(_resp)
 
         success = d.pop("success", UNSET)
 

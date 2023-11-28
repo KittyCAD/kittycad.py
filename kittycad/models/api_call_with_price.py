@@ -152,8 +152,10 @@ class ApiCallWithPrice:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         ip_address = d.pop("ip_address", UNSET)
 
@@ -163,8 +165,10 @@ class ApiCallWithPrice:
         method: Union[Unset, Method]
         if isinstance(_method, Unset):
             method = UNSET
+        if _method is None:
+            method = UNSET
         else:
-            method = _method  # type: ignore[arg-type]
+            method = _method
 
         minutes = d.pop("minutes", UNSET)
 
@@ -193,8 +197,10 @@ class ApiCallWithPrice:
         token: Union[Unset, Uuid]
         if isinstance(_token, Unset):
             token = UNSET
+        if _token is None:
+            token = UNSET
         else:
-            token = _token  # type: ignore[arg-type]
+            token = _token
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -209,8 +215,10 @@ class ApiCallWithPrice:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         api_call_with_price = cls(
             completed_at=completed_at,

@@ -41,8 +41,10 @@ class RtcSessionDescription:
         type: Union[Unset, RtcSdpType]
         if isinstance(_type, Unset):
             type = UNSET
+        if _type is None:
+            type = UNSET
         else:
-            type = _type  # type: ignore[arg-type]
+            type = _type
 
         rtc_session_description = cls(
             sdp=sdp,
