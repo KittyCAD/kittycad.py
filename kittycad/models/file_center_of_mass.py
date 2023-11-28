@@ -11,7 +11,7 @@ from ..models.unit_length import UnitLength
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-AR = TypeVar("AR", bound="FileCenterOfMass")
+WF = TypeVar("WF", bound="FileCenterOfMass")
 
 
 @attr.s(auto_attribs=True)
@@ -86,7 +86,7 @@ class FileCenterOfMass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AR], src_dict: Dict[str, Any]) -> AR:
+    def from_dict(cls: Type[WF], src_dict: Dict[str, Any]) -> WF:
         d = src_dict.copy()
         _center_of_mass = d.pop("center_of_mass", UNSET)
         center_of_mass: Union[Unset, Point3d]

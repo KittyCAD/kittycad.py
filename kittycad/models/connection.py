@@ -10,7 +10,7 @@ from ..models.jetstream import Jetstream
 from ..models.leaf_node import LeafNode
 from ..types import UNSET, Unset
 
-BB = TypeVar("BB", bound="Connection")
+VI = TypeVar("VI", bound="Connection")
 
 
 @attr.s(auto_attribs=True)
@@ -226,7 +226,7 @@ class Connection:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BB], src_dict: Dict[str, Any]) -> BB:
+    def from_dict(cls: Type[VI], src_dict: Dict[str, Any]) -> VI:
         d = src_dict.copy()
         auth_timeout = d.pop("auth_timeout", UNSET)
 

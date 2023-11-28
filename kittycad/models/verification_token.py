@@ -7,7 +7,7 @@ from dateutil.parser import isoparse
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-LQ = TypeVar("LQ", bound="VerificationToken")
+HY = TypeVar("HY", bound="VerificationToken")
 
 
 @attr.s(auto_attribs=True)
@@ -54,7 +54,7 @@ class VerificationToken:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LQ], src_dict: Dict[str, Any]) -> LQ:
+    def from_dict(cls: Type[HY], src_dict: Dict[str, Any]) -> HY:
         d = src_dict.copy()
         _created_at = d.pop("created_at", UNSET)
         created_at: Union[Unset, datetime.datetime]

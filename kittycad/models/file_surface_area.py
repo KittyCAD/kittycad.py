@@ -10,7 +10,7 @@ from ..models.unit_area import UnitArea
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-FM = TypeVar("FM", bound="FileSurfaceArea")
+OR = TypeVar("OR", bound="FileSurfaceArea")
 
 
 @attr.s(auto_attribs=True)
@@ -84,7 +84,7 @@ class FileSurfaceArea:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FM], src_dict: Dict[str, Any]) -> FM:
+    def from_dict(cls: Type[OR], src_dict: Dict[str, Any]) -> OR:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

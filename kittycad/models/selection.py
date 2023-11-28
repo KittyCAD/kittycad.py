@@ -1,11 +1,10 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
-from typing_extensions import Self
 
 from ..types import UNSET, Unset
 
-AE = TypeVar("AE", bound="default_scene")
+KW = TypeVar("KW", bound="default_scene")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +26,7 @@ class default_scene:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AE], src_dict: Dict[str, Any]) -> AE:
+    def from_dict(cls: Type[KW], src_dict: Dict[str, Any]) -> KW:
         d = src_dict.copy()
         type = d.pop("type", UNSET)
 
@@ -55,7 +54,7 @@ class default_scene:
         return key in self.additional_properties
 
 
-AD = TypeVar("AD", bound="scene_by_index")
+HJ = TypeVar("HJ", bound="scene_by_index")
 
 
 @attr.s(auto_attribs=True)
@@ -81,7 +80,7 @@ class scene_by_index:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AD], src_dict: Dict[str, Any]) -> AD:
+    def from_dict(cls: Type[HJ], src_dict: Dict[str, Any]) -> HJ:
         d = src_dict.copy()
         index = d.pop("index", UNSET)
 
@@ -112,7 +111,7 @@ class scene_by_index:
         return key in self.additional_properties
 
 
-AB = TypeVar("AB", bound="scene_by_name")
+HA = TypeVar("HA", bound="scene_by_name")
 
 
 @attr.s(auto_attribs=True)
@@ -138,7 +137,7 @@ class scene_by_name:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[AB], src_dict: Dict[str, Any]) -> AB:
+    def from_dict(cls: Type[HA], src_dict: Dict[str, Any]) -> HA:
         d = src_dict.copy()
         name = d.pop("name", UNSET)
 
@@ -169,7 +168,7 @@ class scene_by_name:
         return key in self.additional_properties
 
 
-VY = TypeVar("VY", bound="mesh_by_index")
+ZM = TypeVar("ZM", bound="mesh_by_index")
 
 
 @attr.s(auto_attribs=True)
@@ -195,7 +194,7 @@ class mesh_by_index:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[VY], src_dict: Dict[str, Any]) -> VY:
+    def from_dict(cls: Type[ZM], src_dict: Dict[str, Any]) -> ZM:
         d = src_dict.copy()
         index = d.pop("index", UNSET)
 
@@ -226,7 +225,7 @@ class mesh_by_index:
         return key in self.additional_properties
 
 
-DW = TypeVar("DW", bound="mesh_by_name")
+BX = TypeVar("BX", bound="mesh_by_name")
 
 
 @attr.s(auto_attribs=True)
@@ -252,7 +251,7 @@ class mesh_by_name:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DW], src_dict: Dict[str, Any]) -> DW:
+    def from_dict(cls: Type[BX], src_dict: Dict[str, Any]) -> BX:
         d = src_dict.copy()
         name = d.pop("name", UNSET)
 
@@ -283,6 +282,10 @@ class mesh_by_name:
         return key in self.additional_properties
 
 
+GY = TypeVar("GY", bound="Selection")
+
+
+@attr.s(auto_attribs=True)
 class Selection:
 
     """Data item selection."""
@@ -293,64 +296,60 @@ class Selection:
         scene_by_name,
         mesh_by_index,
         mesh_by_name,
-    ] = None
+    ]
 
     def __init__(
         self,
         type: Union[
-            type(default_scene),
-            type(scene_by_index),
-            type(scene_by_name),
-            type(mesh_by_index),
-            type(mesh_by_name),
+            default_scene,
+            scene_by_index,
+            scene_by_name,
+            mesh_by_index,
+            mesh_by_name,
         ],
     ):
         self.type = type
 
     def to_dict(self) -> Dict[str, Any]:
         if isinstance(self.type, default_scene):
-            n: default_scene = self.type
-            return n.to_dict()
+            TD: default_scene = self.type
+            return TD.to_dict()
         elif isinstance(self.type, scene_by_index):
-            n: scene_by_index = self.type
-            return n.to_dict()
+            SQ: scene_by_index = self.type
+            return SQ.to_dict()
         elif isinstance(self.type, scene_by_name):
-            n: scene_by_name = self.type
-            return n.to_dict()
+            IL: scene_by_name = self.type
+            return IL.to_dict()
         elif isinstance(self.type, mesh_by_index):
-            n: mesh_by_index = self.type
-            return n.to_dict()
+            YG: mesh_by_index = self.type
+            return YG.to_dict()
         elif isinstance(self.type, mesh_by_name):
-            n: mesh_by_name = self.type
-            return n.to_dict()
+            ZE: mesh_by_name = self.type
+            return ZE.to_dict()
 
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "default_scene":
-            n: default_scene = default_scene()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            NR: default_scene = default_scene()
+            NR.from_dict(d)
+            return cls(type=NR)
         elif d.get("type") == "scene_by_index":
-            n: scene_by_index = scene_by_index()
-            n.from_dict(d)
-            self.type = n
-            return self
+            WV: scene_by_index = scene_by_index()
+            WV.from_dict(d)
+            return cls(type=WV)
         elif d.get("type") == "scene_by_name":
-            n: scene_by_name = scene_by_name()
-            n.from_dict(d)
-            self.type = n
-            return self
+            JT: scene_by_name = scene_by_name()
+            JT.from_dict(d)
+            return cls(type=JT)
         elif d.get("type") == "mesh_by_index":
-            n: mesh_by_index = mesh_by_index()
-            n.from_dict(d)
-            self.type = n
-            return self
+            DD: mesh_by_index = mesh_by_index()
+            DD.from_dict(d)
+            return cls(type=DD)
         elif d.get("type") == "mesh_by_name":
-            n: mesh_by_name = mesh_by_name()
-            n.from_dict(d)
-            self.type = n
-            return self
+            UI: mesh_by_name = mesh_by_name()
+            UI.from_dict(d)
+            return cls(type=UI)
 
         raise Exception("Unknown type")

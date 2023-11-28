@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-BR = TypeVar("BR", bound="Solid3dGetAllOppositeEdges")
+LS = TypeVar("LS", bound="Solid3dGetAllOppositeEdges")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class Solid3dGetAllOppositeEdges:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[BR], src_dict: Dict[str, Any]) -> BR:
+    def from_dict(cls: Type[LS], src_dict: Dict[str, Any]) -> LS:
         d = src_dict.copy()
         edges = cast(List[str], d.pop("edges", UNSET))
 

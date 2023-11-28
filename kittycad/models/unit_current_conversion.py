@@ -9,7 +9,7 @@ from ..models.unit_current import UnitCurrent
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-RD = TypeVar("RD", bound="UnitCurrentConversion")
+YI = TypeVar("YI", bound="UnitCurrentConversion")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +87,7 @@ class UnitCurrentConversion:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RD], src_dict: Dict[str, Any]) -> RD:
+    def from_dict(cls: Type[YI], src_dict: Dict[str, Any]) -> YI:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

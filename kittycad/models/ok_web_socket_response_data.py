@@ -1,11 +1,10 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
-from typing_extensions import Self
 
 from ..types import UNSET, Unset
 
-FF = TypeVar("FF", bound="ice_server_info")
+DE = TypeVar("DE", bound="ice_server_info")
 
 
 @attr.s(auto_attribs=True)
@@ -31,7 +30,7 @@ class ice_server_info:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FF], src_dict: Dict[str, Any]) -> FF:
+    def from_dict(cls: Type[DE], src_dict: Dict[str, Any]) -> DE:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -61,7 +60,7 @@ class ice_server_info:
         return key in self.additional_properties
 
 
-YO = TypeVar("YO", bound="trickle_ice")
+PU = TypeVar("PU", bound="trickle_ice")
 
 
 @attr.s(auto_attribs=True)
@@ -87,7 +86,7 @@ class trickle_ice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[YO], src_dict: Dict[str, Any]) -> YO:
+    def from_dict(cls: Type[PU], src_dict: Dict[str, Any]) -> PU:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -117,7 +116,7 @@ class trickle_ice:
         return key in self.additional_properties
 
 
-FS = TypeVar("FS", bound="sdp_answer")
+AP = TypeVar("AP", bound="sdp_answer")
 
 
 @attr.s(auto_attribs=True)
@@ -143,7 +142,7 @@ class sdp_answer:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FS], src_dict: Dict[str, Any]) -> FS:
+    def from_dict(cls: Type[AP], src_dict: Dict[str, Any]) -> AP:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -173,7 +172,7 @@ class sdp_answer:
         return key in self.additional_properties
 
 
-WN = TypeVar("WN", bound="modeling")
+AA = TypeVar("AA", bound="modeling")
 
 
 @attr.s(auto_attribs=True)
@@ -199,7 +198,7 @@ class modeling:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WN], src_dict: Dict[str, Any]) -> WN:
+    def from_dict(cls: Type[AA], src_dict: Dict[str, Any]) -> AA:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -229,7 +228,7 @@ class modeling:
         return key in self.additional_properties
 
 
-EQ = TypeVar("EQ", bound="export")
+MH = TypeVar("MH", bound="export")
 
 
 @attr.s(auto_attribs=True)
@@ -255,7 +254,7 @@ class export:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[EQ], src_dict: Dict[str, Any]) -> EQ:
+    def from_dict(cls: Type[MH], src_dict: Dict[str, Any]) -> MH:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -285,7 +284,7 @@ class export:
         return key in self.additional_properties
 
 
-UW = TypeVar("UW", bound="metrics_request")
+OL = TypeVar("OL", bound="metrics_request")
 
 
 @attr.s(auto_attribs=True)
@@ -311,7 +310,7 @@ class metrics_request:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UW], src_dict: Dict[str, Any]) -> UW:
+    def from_dict(cls: Type[OL], src_dict: Dict[str, Any]) -> OL:
         d = src_dict.copy()
         data = d.pop("data", UNSET)
         type = d.pop("type", UNSET)
@@ -341,6 +340,10 @@ class metrics_request:
         return key in self.additional_properties
 
 
+GY = TypeVar("GY", bound="OkWebSocketResponseData")
+
+
+@attr.s(auto_attribs=True)
 class OkWebSocketResponseData:
 
     """The websocket messages this server sends."""
@@ -352,73 +355,68 @@ class OkWebSocketResponseData:
         modeling,
         export,
         metrics_request,
-    ] = None
+    ]
 
     def __init__(
         self,
         type: Union[
-            type(ice_server_info),
-            type(trickle_ice),
-            type(sdp_answer),
-            type(modeling),
-            type(export),
-            type(metrics_request),
+            ice_server_info,
+            trickle_ice,
+            sdp_answer,
+            modeling,
+            export,
+            metrics_request,
         ],
     ):
         self.type = type
 
     def to_dict(self) -> Dict[str, Any]:
         if isinstance(self.type, ice_server_info):
-            n: ice_server_info = self.type
-            return n.to_dict()
+            WA: ice_server_info = self.type
+            return WA.to_dict()
         elif isinstance(self.type, trickle_ice):
-            n: trickle_ice = self.type
-            return n.to_dict()
+            EP: trickle_ice = self.type
+            return EP.to_dict()
         elif isinstance(self.type, sdp_answer):
-            n: sdp_answer = self.type
-            return n.to_dict()
+            JY: sdp_answer = self.type
+            return JY.to_dict()
         elif isinstance(self.type, modeling):
-            n: modeling = self.type
-            return n.to_dict()
+            BZ: modeling = self.type
+            return BZ.to_dict()
         elif isinstance(self.type, export):
-            n: export = self.type
-            return n.to_dict()
+            NL: export = self.type
+            return NL.to_dict()
         elif isinstance(self.type, metrics_request):
-            n: metrics_request = self.type
-            return n.to_dict()
+            MI: metrics_request = self.type
+            return MI.to_dict()
 
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "ice_server_info":
-            n: ice_server_info = ice_server_info()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            LA: ice_server_info = ice_server_info()
+            LA.from_dict(d)
+            return cls(type=LA)
         elif d.get("type") == "trickle_ice":
-            n: trickle_ice = trickle_ice()
-            n.from_dict(d)
-            self.type = n
-            return self
+            CJ: trickle_ice = trickle_ice()
+            CJ.from_dict(d)
+            return cls(type=CJ)
         elif d.get("type") == "sdp_answer":
-            n: sdp_answer = sdp_answer()
-            n.from_dict(d)
-            self.type = n
-            return self
+            FE: sdp_answer = sdp_answer()
+            FE.from_dict(d)
+            return cls(type=FE)
         elif d.get("type") == "modeling":
-            n: modeling = modeling()
-            n.from_dict(d)
-            self.type = n
-            return self
+            NB: modeling = modeling()
+            NB.from_dict(d)
+            return cls(type=NB)
         elif d.get("type") == "export":
-            n: export = export()
-            n.from_dict(d)
-            self.type = n
-            return self
+            TJ: export = export()
+            TJ.from_dict(d)
+            return cls(type=TJ)
         elif d.get("type") == "metrics_request":
-            n: metrics_request = metrics_request()
-            n.from_dict(d)
-            self.type = n
-            return self
+            KS: metrics_request = metrics_request()
+            KS.from_dict(d)
+            return cls(type=KS)
 
         raise Exception("Unknown type")

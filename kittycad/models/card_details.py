@@ -5,7 +5,7 @@ import attr
 from ..models.payment_method_card_checks import PaymentMethodCardChecks
 from ..types import UNSET, Unset
 
-ON = TypeVar("ON", bound="CardDetails")
+YY = TypeVar("YY", bound="CardDetails")
 
 
 @attr.s(auto_attribs=True)
@@ -57,7 +57,7 @@ class CardDetails:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[ON], src_dict: Dict[str, Any]) -> ON:
+    def from_dict(cls: Type[YY], src_dict: Dict[str, Any]) -> YY:
         d = src_dict.copy()
         brand = d.pop("brand", UNSET)
 

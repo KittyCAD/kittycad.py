@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-LR = TypeVar("LR", bound="ImportFile")
+KX = TypeVar("KX", bound="ImportFile")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class ImportFile:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[LR], src_dict: Dict[str, Any]) -> LR:
+    def from_dict(cls: Type[KX], src_dict: Dict[str, Any]) -> KX:
         d = src_dict.copy()
         data = cast(List[int], d.pop("data", UNSET))
 

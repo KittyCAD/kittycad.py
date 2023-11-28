@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-EI = TypeVar("EI", bound="TextToCadResultsPage")
+BG = TypeVar("BG", bound="TextToCadResultsPage")
 
 
 @attr.s(auto_attribs=True)
@@ -37,7 +37,7 @@ class TextToCadResultsPage:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[EI], src_dict: Dict[str, Any]) -> EI:
+    def from_dict(cls: Type[BG], src_dict: Dict[str, Any]) -> BG:
         d = src_dict.copy()
         from ..models.text_to_cad import TextToCad
 

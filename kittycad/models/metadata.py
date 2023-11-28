@@ -8,7 +8,7 @@ from ..models.environment import Environment
 from ..models.file_system_metadata import FileSystemMetadata
 from ..types import UNSET, Unset
 
-UQ = TypeVar("UQ", bound="Metadata")
+IT = TypeVar("IT", bound="Metadata")
 
 
 @attr.s(auto_attribs=True)
@@ -53,7 +53,7 @@ class Metadata:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UQ], src_dict: Dict[str, Any]) -> UQ:
+    def from_dict(cls: Type[IT], src_dict: Dict[str, Any]) -> IT:
         d = src_dict.copy()
         _cache = d.pop("cache", UNSET)
         cache: Union[Unset, CacheMetadata]

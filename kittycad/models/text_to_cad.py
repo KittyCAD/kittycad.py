@@ -11,7 +11,7 @@ from ..models.file_export_format import FileExportFormat
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-FC = TypeVar("FC", bound="TextToCad")
+RB = TypeVar("RB", bound="TextToCad")
 
 
 @attr.s(auto_attribs=True)
@@ -98,7 +98,7 @@ class TextToCad:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FC], src_dict: Dict[str, Any]) -> FC:
+    def from_dict(cls: Type[RB], src_dict: Dict[str, Any]) -> RB:
         d = src_dict.copy()
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]

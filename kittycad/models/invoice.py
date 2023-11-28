@@ -8,7 +8,7 @@ from ..models.currency import Currency
 from ..models.invoice_status import InvoiceStatus
 from ..types import UNSET, Unset
 
-TO = TypeVar("TO", bound="Invoice")
+GN = TypeVar("GN", bound="Invoice")
 
 
 @attr.s(auto_attribs=True)
@@ -144,7 +144,7 @@ class Invoice:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[TO], src_dict: Dict[str, Any]) -> TO:
+    def from_dict(cls: Type[GN], src_dict: Dict[str, Any]) -> GN:
         d = src_dict.copy()
         amount_due = d.pop("amount_due", UNSET)
 

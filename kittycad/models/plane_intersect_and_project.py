@@ -5,7 +5,7 @@ import attr
 from ..models.point2d import Point2d
 from ..types import UNSET, Unset
 
-FX = TypeVar("FX", bound="PlaneIntersectAndProject")
+DG = TypeVar("DG", bound="PlaneIntersectAndProject")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class PlaneIntersectAndProject:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[FX], src_dict: Dict[str, Any]) -> FX:
+    def from_dict(cls: Type[DG], src_dict: Dict[str, Any]) -> DG:
         d = src_dict.copy()
         _plane_coordinates = d.pop("plane_coordinates", UNSET)
         plane_coordinates: Union[Unset, Point2d]

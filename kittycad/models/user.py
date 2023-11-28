@@ -7,7 +7,7 @@ from dateutil.parser import isoparse
 from ..models.uuid import Uuid
 from ..types import UNSET, Unset
 
-EJ = TypeVar("EJ", bound="User")
+GY = TypeVar("GY", bound="User")
 
 
 @attr.s(auto_attribs=True)
@@ -84,7 +84,7 @@ class User:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[EJ], src_dict: Dict[str, Any]) -> EJ:
+    def from_dict(cls: Type[GY], src_dict: Dict[str, Any]) -> GY:
         d = src_dict.copy()
         company = d.pop("company", UNSET)
 

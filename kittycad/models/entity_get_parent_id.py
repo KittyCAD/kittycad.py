@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-QF = TypeVar("QF", bound="EntityGetParentId")
+TP = TypeVar("TP", bound="EntityGetParentId")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class EntityGetParentId:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[QF], src_dict: Dict[str, Any]) -> QF:
+    def from_dict(cls: Type[TP], src_dict: Dict[str, Any]) -> TP:
         d = src_dict.copy()
         entity_id = d.pop("entity_id", UNSET)
 

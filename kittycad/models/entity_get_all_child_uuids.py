@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-OH = TypeVar("OH", bound="EntityGetAllChildUuids")
+FM = TypeVar("FM", bound="EntityGetAllChildUuids")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class EntityGetAllChildUuids:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[OH], src_dict: Dict[str, Any]) -> OH:
+    def from_dict(cls: Type[FM], src_dict: Dict[str, Any]) -> FM:
         d = src_dict.copy()
         entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 

@@ -5,7 +5,7 @@ import attr
 from ..models.unit_area import UnitArea
 from ..types import UNSET, Unset
 
-WW = TypeVar("WW", bound="SurfaceArea")
+TG = TypeVar("TG", bound="SurfaceArea")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class SurfaceArea:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WW], src_dict: Dict[str, Any]) -> WW:
+    def from_dict(cls: Type[TG], src_dict: Dict[str, Any]) -> TG:
         d = src_dict.copy()
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitArea]

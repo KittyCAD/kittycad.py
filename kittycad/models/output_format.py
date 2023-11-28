@@ -1,7 +1,6 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
-from typing_extensions import Self
 
 from ..models.fbx_storage import FbxStorage
 from ..models.gltf_presentation import GltfPresentation
@@ -13,7 +12,7 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 from ..types import UNSET, Unset
 
-UJ = TypeVar("UJ", bound="fbx")
+DX = TypeVar("DX", bound="fbx")
 
 
 @attr.s(auto_attribs=True)
@@ -40,7 +39,7 @@ class fbx:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[UJ], src_dict: Dict[str, Any]) -> UJ:
+    def from_dict(cls: Type[DX], src_dict: Dict[str, Any]) -> DX:
         d = src_dict.copy()
         _storage = d.pop("storage", UNSET)
         storage: Union[Unset, FbxStorage]
@@ -76,7 +75,7 @@ class fbx:
         return key in self.additional_properties
 
 
-RU = TypeVar("RU", bound="gltf")
+LH = TypeVar("LH", bound="gltf")
 
 
 @attr.s(auto_attribs=True)
@@ -108,7 +107,7 @@ class gltf:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[RU], src_dict: Dict[str, Any]) -> RU:
+    def from_dict(cls: Type[LH], src_dict: Dict[str, Any]) -> LH:
         d = src_dict.copy()
         _presentation = d.pop("presentation", UNSET)
         presentation: Union[Unset, GltfPresentation]
@@ -152,7 +151,7 @@ class gltf:
         return key in self.additional_properties
 
 
-DL = TypeVar("DL", bound="obj")
+XA = TypeVar("XA", bound="obj")
 
 
 @attr.s(auto_attribs=True)
@@ -184,7 +183,7 @@ class obj:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[DL], src_dict: Dict[str, Any]) -> DL:
+    def from_dict(cls: Type[XA], src_dict: Dict[str, Any]) -> XA:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -228,7 +227,7 @@ class obj:
         return key in self.additional_properties
 
 
-QT = TypeVar("QT", bound="ply")
+QJ = TypeVar("QJ", bound="ply")
 
 
 @attr.s(auto_attribs=True)
@@ -270,7 +269,7 @@ class ply:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[QT], src_dict: Dict[str, Any]) -> QT:
+    def from_dict(cls: Type[QJ], src_dict: Dict[str, Any]) -> QJ:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -330,7 +329,7 @@ class ply:
         return key in self.additional_properties
 
 
-PT = TypeVar("PT", bound="step")
+ES = TypeVar("ES", bound="step")
 
 
 @attr.s(auto_attribs=True)
@@ -357,7 +356,7 @@ class step:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[PT], src_dict: Dict[str, Any]) -> PT:
+    def from_dict(cls: Type[ES], src_dict: Dict[str, Any]) -> ES:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -393,7 +392,7 @@ class step:
         return key in self.additional_properties
 
 
-HR = TypeVar("HR", bound="stl")
+AI = TypeVar("AI", bound="stl")
 
 
 @attr.s(auto_attribs=True)
@@ -435,7 +434,7 @@ class stl:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HR], src_dict: Dict[str, Any]) -> HR:
+    def from_dict(cls: Type[AI], src_dict: Dict[str, Any]) -> AI:
         d = src_dict.copy()
         _coords = d.pop("coords", UNSET)
         coords: Union[Unset, System]
@@ -495,6 +494,10 @@ class stl:
         return key in self.additional_properties
 
 
+GY = TypeVar("GY", bound="OutputFormat")
+
+
+@attr.s(auto_attribs=True)
 class OutputFormat:
 
     """Output format specifier."""
@@ -506,73 +509,68 @@ class OutputFormat:
         ply,
         step,
         stl,
-    ] = None
+    ]
 
     def __init__(
         self,
         type: Union[
-            type(fbx),
-            type(gltf),
-            type(obj),
-            type(ply),
-            type(step),
-            type(stl),
+            fbx,
+            gltf,
+            obj,
+            ply,
+            step,
+            stl,
         ],
     ):
         self.type = type
 
     def to_dict(self) -> Dict[str, Any]:
         if isinstance(self.type, fbx):
-            n: fbx = self.type
-            return n.to_dict()
+            MV: fbx = self.type
+            return MV.to_dict()
         elif isinstance(self.type, gltf):
-            n: gltf = self.type
-            return n.to_dict()
+            NW: gltf = self.type
+            return NW.to_dict()
         elif isinstance(self.type, obj):
-            n: obj = self.type
-            return n.to_dict()
+            MR: obj = self.type
+            return MR.to_dict()
         elif isinstance(self.type, ply):
-            n: ply = self.type
-            return n.to_dict()
+            WG: ply = self.type
+            return WG.to_dict()
         elif isinstance(self.type, step):
-            n: step = self.type
-            return n.to_dict()
+            DZ: step = self.type
+            return DZ.to_dict()
         elif isinstance(self.type, stl):
-            n: stl = self.type
-            return n.to_dict()
+            UC: stl = self.type
+            return UC.to_dict()
 
         raise Exception("Unknown type")
 
-    def from_dict(self, d) -> Self:
+    @classmethod
+    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "fbx":
-            n: fbx = fbx()
-            n.from_dict(d)
-            self.type = n
-            return Self
+            LU: fbx = fbx()
+            LU.from_dict(d)
+            return cls(type=LU)
         elif d.get("type") == "gltf":
-            n: gltf = gltf()
-            n.from_dict(d)
-            self.type = n
-            return self
+            EH: gltf = gltf()
+            EH.from_dict(d)
+            return cls(type=EH)
         elif d.get("type") == "obj":
-            n: obj = obj()
-            n.from_dict(d)
-            self.type = n
-            return self
+            MY: obj = obj()
+            MY.from_dict(d)
+            return cls(type=MY)
         elif d.get("type") == "ply":
-            n: ply = ply()
-            n.from_dict(d)
-            self.type = n
-            return self
+            WC: ply = ply()
+            WC.from_dict(d)
+            return cls(type=WC)
         elif d.get("type") == "step":
-            n: step = step()
-            n.from_dict(d)
-            self.type = n
-            return self
+            ZT: step = step()
+            ZT.from_dict(d)
+            return cls(type=ZT)
         elif d.get("type") == "stl":
-            n: stl = stl()
-            n.from_dict(d)
-            self.type = n
-            return self
+            VZ: stl = stl()
+            VZ.from_dict(d)
+            return cls(type=VZ)
 
         raise Exception("Unknown type")

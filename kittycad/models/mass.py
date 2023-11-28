@@ -5,7 +5,7 @@ import attr
 from ..models.unit_mass import UnitMass
 from ..types import UNSET, Unset
 
-WO = TypeVar("WO", bound="Mass")
+VX = TypeVar("VX", bound="Mass")
 
 
 @attr.s(auto_attribs=True)
@@ -33,7 +33,7 @@ class Mass:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[WO], src_dict: Dict[str, Any]) -> WO:
+    def from_dict(cls: Type[VX], src_dict: Dict[str, Any]) -> VX:
         d = src_dict.copy()
         mass = d.pop("mass", UNSET)
 

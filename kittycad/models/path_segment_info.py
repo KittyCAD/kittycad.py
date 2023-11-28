@@ -6,7 +6,7 @@ from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.path_command import PathCommand
 from ..types import UNSET, Unset
 
-CG = TypeVar("CG", bound="PathSegmentInfo")
+UH = TypeVar("UH", bound="PathSegmentInfo")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class PathSegmentInfo:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[CG], src_dict: Dict[str, Any]) -> CG:
+    def from_dict(cls: Type[UH], src_dict: Dict[str, Any]) -> UH:
         d = src_dict.copy()
         _command = d.pop("command", UNSET)
         command: Union[Unset, PathCommand]

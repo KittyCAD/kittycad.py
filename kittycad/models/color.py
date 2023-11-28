@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-NH = TypeVar("NH", bound="Color")
+OH = TypeVar("OH", bound="Color")
 
 
 @attr.s(auto_attribs=True)
@@ -39,7 +39,7 @@ class Color:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[NH], src_dict: Dict[str, Any]) -> NH:
+    def from_dict(cls: Type[OH], src_dict: Dict[str, Any]) -> OH:
         d = src_dict.copy()
         a = d.pop("a", UNSET)
 

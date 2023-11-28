@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-MP = TypeVar("MP", bound="ImportFiles")
+IZ = TypeVar("IZ", bound="ImportFiles")
 
 
 @attr.s(auto_attribs=True)
@@ -27,7 +27,7 @@ class ImportFiles:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[MP], src_dict: Dict[str, Any]) -> MP:
+    def from_dict(cls: Type[IZ], src_dict: Dict[str, Any]) -> IZ:
         d = src_dict.copy()
         object_id = d.pop("object_id", UNSET)
 

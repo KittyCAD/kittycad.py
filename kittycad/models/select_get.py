@@ -4,7 +4,7 @@ import attr
 
 from ..types import UNSET, Unset
 
-HH = TypeVar("HH", bound="SelectGet")
+MQ = TypeVar("MQ", bound="SelectGet")
 
 
 @attr.s(auto_attribs=True)
@@ -29,7 +29,7 @@ class SelectGet:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[HH], src_dict: Dict[str, Any]) -> HH:
+    def from_dict(cls: Type[MQ], src_dict: Dict[str, Any]) -> MQ:
         d = src_dict.copy()
         entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
