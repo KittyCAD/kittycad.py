@@ -5,6 +5,9 @@ import pytest
 from kittycad.api.ai import (
     create_text_to_cad,
     create_text_to_cad_model_feedback,
+    get_ai_prompt,
+    get_text_to_cad_model_for_user,
+    list_ai_prompts,
     list_text_to_cad_models_for_user,
 )
 from kittycad.api.api_calls import (
@@ -43,6 +46,7 @@ from kittycad.api.meta import (
     get_metadata,
     get_openai_schema,
     get_schema,
+    internal_get_api_token_for_discord_user,
     ping,
 )
 from kittycad.api.modeling import modeling_commands_ws
@@ -89,6 +93,8 @@ from kittycad.api.users import (
 from kittycad.client import ClientFromEnv
 from kittycad.models import (
     AiPluginManifest,
+    AiPrompt,
+    AiPromptResultsPage,
     ApiCallQueryGroup,
     ApiCallWithPrice,
     ApiCallWithPriceResultsPage,
@@ -280,6 +286,106 @@ async def test_get_metadata_async():
         Optional[Union[Metadata, Error]]
     ] = await get_metadata.asyncio_detailed(
         client=client,
+    )
+
+
+@pytest.mark.skip
+def test_list_ai_prompts():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[AiPromptResultsPage, Error]] = list_ai_prompts.sync(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: AiPromptResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[AiPromptResultsPage, Error]]
+    ] = list_ai_prompts.sync_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_ai_prompts_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[AiPromptResultsPage, Error]] = await list_ai_prompts.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[AiPromptResultsPage, Error]]
+    ] = await list_ai_prompts.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
+def test_get_ai_prompt():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[AiPrompt, Error]] = get_ai_prompt.sync(
+        client=client,
+        id="<uuid>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: AiPrompt = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[AiPrompt, Error]]] = get_ai_prompt.sync_detailed(
+        client=client,
+        id="<uuid>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_ai_prompt_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[AiPrompt, Error]] = await get_ai_prompt.asyncio(
+        client=client,
+        id="<uuid>",
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[AiPrompt, Error]]
+    ] = await get_ai_prompt.asyncio_detailed(
+        client=client,
+        id="<uuid>",
     )
 
 
@@ -1292,6 +1398,57 @@ async def test_create_file_volume_async():
         output_unit=UnitVolume.CM3,
         src_format=FileImportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
+    )
+
+
+@pytest.mark.skip
+def test_internal_get_api_token_for_discord_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ApiToken, Error]
+    ] = internal_get_api_token_for_discord_user.sync(
+        client=client,
+        discord_id="<string>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ApiToken = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[ApiToken, Error]]
+    ] = internal_get_api_token_for_discord_user.sync_detailed(
+        client=client,
+        discord_id="<string>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_internal_get_api_token_for_discord_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ApiToken, Error]
+    ] = await internal_get_api_token_for_discord_user.asyncio(
+        client=client,
+        discord_id="<string>",
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ApiToken, Error]]
+    ] = await internal_get_api_token_for_discord_user.asyncio_detailed(
+        client=client,
+        discord_id="<string>",
     )
 
 
@@ -3322,6 +3479,55 @@ async def test_list_text_to_cad_models_for_user_async():
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
+def test_get_text_to_cad_model_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[TextToCad, Error]] = get_text_to_cad_model_for_user.sync(
+        client=client,
+        id="<uuid>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: TextToCad = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[TextToCad, Error]]
+    ] = get_text_to_cad_model_for_user.sync_detailed(
+        client=client,
+        id="<uuid>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_text_to_cad_model_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[TextToCad, Error]
+    ] = await get_text_to_cad_model_for_user.asyncio(
+        client=client,
+        id="<uuid>",
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[TextToCad, Error]]
+    ] = await get_text_to_cad_model_for_user.asyncio_detailed(
+        client=client,
+        id="<uuid>",
     )
 
 

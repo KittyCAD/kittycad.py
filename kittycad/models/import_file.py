@@ -4,60 +4,61 @@ import attr
 
 from ..types import UNSET, Unset
 
-EN = TypeVar("EN", bound="ImportFile")
+LR = TypeVar("LR", bound="ImportFile")
+
 
 @attr.s(auto_attribs=True)
 class ImportFile:
-	""" File to import into the current model """ # noqa: E501
-	data: Union[Unset, List[int]] = UNSET
-	path: Union[Unset, str] = UNSET
+    """File to import into the current model"""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: Union[Unset, List[int]] = UNSET
+    path: Union[Unset, str] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		data: Union[Unset, List[int]] = UNSET
-		if not isinstance(self.data, Unset):
-			data = self.data
-		path = self.path
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if data is not UNSET:
-			field_dict['data'] = data
-		if path is not UNSET:
-			field_dict['path'] = path
+    def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, List[int]] = UNSET
+        if not isinstance(self.data, Unset):
+            data = self.data
+        path = self.path
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        if path is not UNSET:
+            field_dict["path"] = path
 
-	@classmethod
-	def from_dict(cls: Type[EN], src_dict: Dict[str, Any]) -> EN:
-		d = src_dict.copy()
-		data = cast(List[int], d.pop("data", UNSET))
+        return field_dict
 
-		path = d.pop("path", UNSET)
+    @classmethod
+    def from_dict(cls: Type[LR], src_dict: Dict[str, Any]) -> LR:
+        d = src_dict.copy()
+        data = cast(List[int], d.pop("data", UNSET))
 
+        path = d.pop("path", UNSET)
 
-		import_file = cls(
-			data= data,
-			path= path,
-		)
+        import_file = cls(
+            data=data,
+            path=path,
+        )
 
-		import_file.additional_properties = d
-		return import_file
+        import_file.additional_properties = d
+        return import_file
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

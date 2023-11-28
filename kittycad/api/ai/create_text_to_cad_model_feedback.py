@@ -9,36 +9,21 @@ from ...types import Response
 
 
 def _get_kwargs(
-    
-    
     id: str,
-    
-    
-    
     feedback: AiFeedback,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
 ) -> Dict[str, Any]:
-    url = "{}/user/text-to-cad/{id}".format(client.base_url, id=id,)  # noqa: E501
-    
-    
-    
-    
+    url = "{}/user/text-to-cad/{id}".format(
+        client.base_url,
+        id=id,
+    )  # noqa: E501
+
     if feedback is not None:
         if "?" in url:
             url = url + "&feedback=" + str(feedback)
         else:
             url = url + "?feedback=" + str(feedback)
-    
-    
-
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -48,25 +33,21 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Error] :
-	return None
-	if response.status_code == 400:
-		response_4XX = Error.from_dict(response.json())
-		return response_4XX
-	if response.status_code == 500:
-		response_5XX = Error.from_dict(response.json())
-		return response_5XX
-	return Error.from_dict(response.json())
+def _parse_response(*, response: httpx.Response) -> Optional[Error]:
+    return None
+    if response.status_code == 400:
+        response_4XX = Error.from_dict(response.json())
+        return response_4XX
+    if response.status_code == 500:
+        response_5XX = Error.from_dict(response.json())
+        return response_5XX
+    return Error.from_dict(response.json())
 
 
-
-def _build_response(
-    *, response: httpx.Response
-)  -> Response[Optional[Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -76,29 +57,14 @@ def _build_response(
 
 
 def sync_detailed(
-    
-    
     id: str,
-    
-    
-    
     feedback: AiFeedback,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Response[Optional[Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
-        
         id=id,
-        
         feedback=feedback,
-        
         client=client,
     )
 
@@ -111,59 +77,29 @@ def sync_detailed(
 
 
 def sync(
-    
-    
     id: str,
-    
-    
-    
     feedback: AiFeedback,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Optional[Error] :
+) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. The user must be the owner of the text-to-CAD model, in order to give feedback."""  # noqa: E501
 
     return sync_detailed(
-        
         id=id,
-        
         feedback=feedback,
-        
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    
-    
     id: str,
-    
-    
-    
     feedback: AiFeedback,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Response[Optional[Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
-        
         id=id,
-        
         feedback=feedback,
-        
         client=client,
     )
 
@@ -174,32 +110,17 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    
-    
     id: str,
-    
-    
-    
     feedback: AiFeedback,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Optional[Error] :
+) -> Optional[Error]:
     """This endpoint requires authentication by any KittyCAD user. The user must be the owner of the text-to-CAD model, in order to give feedback."""  # noqa: E501
 
     return (
         await asyncio_detailed(
-            
             id=id,
-            
             feedback=feedback,
-            
             client=client,
         )
     ).parsed

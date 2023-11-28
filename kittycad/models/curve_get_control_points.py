@@ -4,56 +4,60 @@ import attr
 
 from ..types import UNSET, Unset
 
-BB = TypeVar("BB", bound="CurveGetControlPoints")
+TV = TypeVar("TV", bound="CurveGetControlPoints")
+
 
 @attr.s(auto_attribs=True)
 class CurveGetControlPoints:
-	""" The response from the `CurveGetControlPoints` command. """ # noqa: E501
-	from ..models.point3d import Point3d
-	control_points: Union[Unset, List[Point3d]] = UNSET
+    """The response from the `CurveGetControlPoints` command."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    from ..models.point3d import Point3d
 
-	def to_dict(self) -> Dict[str, Any]:
-		from ..models.point3d import Point3d
-		control_points: Union[Unset, List[Point3d]] = UNSET
-		if not isinstance(self.control_points, Unset):
-			control_points = self.control_points
+    control_points: Union[Unset, List[Point3d]] = UNSET
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if control_points is not UNSET:
-			field_dict['control_points'] = control_points
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		return field_dict
+    def to_dict(self) -> Dict[str, Any]:
+        from ..models.point3d import Point3d
 
-	@classmethod
-	def from_dict(cls: Type[BB], src_dict: Dict[str, Any]) -> BB:
-		d = src_dict.copy()
-		from ..models.point3d import Point3d
-		control_points = cast(List[Point3d], d.pop("control_points", UNSET))
+        control_points: Union[Unset, List[Point3d]] = UNSET
+        if not isinstance(self.control_points, Unset):
+            control_points = self.control_points
 
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if control_points is not UNSET:
+            field_dict["control_points"] = control_points
 
-		curve_get_control_points = cls(
-			control_points= control_points,
-		)
+        return field_dict
 
-		curve_get_control_points.additional_properties = d
-		return curve_get_control_points
+    @classmethod
+    def from_dict(cls: Type[TV], src_dict: Dict[str, Any]) -> TV:
+        d = src_dict.copy()
+        from ..models.point3d import Point3d
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+        control_points = cast(List[Point3d], d.pop("control_points", UNSET))
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+        curve_get_control_points = cls(
+            control_points=control_points,
+        )
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+        curve_get_control_points.additional_properties = d
+        return curve_get_control_points
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

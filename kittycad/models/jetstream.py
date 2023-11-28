@@ -7,83 +7,84 @@ from ..models.jetstream_stats import JetstreamStats
 from ..models.meta_cluster_info import MetaClusterInfo
 from ..types import UNSET, Unset
 
-TO = TypeVar("TO", bound="Jetstream")
+EO = TypeVar("EO", bound="Jetstream")
+
 
 @attr.s(auto_attribs=True)
 class Jetstream:
-	""" Jetstream information. """ # noqa: E501
-	config: Union[Unset, JetstreamConfig] = UNSET
-	meta: Union[Unset, MetaClusterInfo] = UNSET
-	stats: Union[Unset, JetstreamStats] = UNSET
+    """Jetstream information."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    config: Union[Unset, JetstreamConfig] = UNSET
+    meta: Union[Unset, MetaClusterInfo] = UNSET
+    stats: Union[Unset, JetstreamStats] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		if not isinstance(self.config, Unset):
-			config = self.config
-		if not isinstance(self.meta, Unset):
-			meta = self.meta
-		if not isinstance(self.stats, Unset):
-			stats = self.stats
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if config is not UNSET:
-			field_dict['config'] = config
-		if meta is not UNSET:
-			field_dict['meta'] = meta
-		if stats is not UNSET:
-			field_dict['stats'] = stats
+    def to_dict(self) -> Dict[str, Any]:
+        if not isinstance(self.config, Unset):
+            config = self.config
+        if not isinstance(self.meta, Unset):
+            meta = self.meta
+        if not isinstance(self.stats, Unset):
+            stats = self.stats
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if config is not UNSET:
+            field_dict["config"] = config
+        if meta is not UNSET:
+            field_dict["meta"] = meta
+        if stats is not UNSET:
+            field_dict["stats"] = stats
 
-	@classmethod
-	def from_dict(cls: Type[TO], src_dict: Dict[str, Any]) -> TO:
-		d = src_dict.copy()
-		_config = d.pop("config", UNSET)
-		config: Union[Unset, JetstreamConfig]
-		if isinstance(_config, Unset):
-			config = UNSET
-		else:
-			config = _config # type: ignore[arg-type]
+        return field_dict
 
-		_meta = d.pop("meta", UNSET)
-		meta: Union[Unset, MetaClusterInfo]
-		if isinstance(_meta, Unset):
-			meta = UNSET
-		else:
-			meta = _meta # type: ignore[arg-type]
+    @classmethod
+    def from_dict(cls: Type[EO], src_dict: Dict[str, Any]) -> EO:
+        d = src_dict.copy()
+        _config = d.pop("config", UNSET)
+        config: Union[Unset, JetstreamConfig]
+        if isinstance(_config, Unset):
+            config = UNSET
+        else:
+            config = _config  # type: ignore[arg-type]
 
-		_stats = d.pop("stats", UNSET)
-		stats: Union[Unset, JetstreamStats]
-		if isinstance(_stats, Unset):
-			stats = UNSET
-		else:
-			stats = _stats # type: ignore[arg-type]
+        _meta = d.pop("meta", UNSET)
+        meta: Union[Unset, MetaClusterInfo]
+        if isinstance(_meta, Unset):
+            meta = UNSET
+        else:
+            meta = _meta  # type: ignore[arg-type]
 
+        _stats = d.pop("stats", UNSET)
+        stats: Union[Unset, JetstreamStats]
+        if isinstance(_stats, Unset):
+            stats = UNSET
+        else:
+            stats = _stats  # type: ignore[arg-type]
 
-		jetstream = cls(
-			config= config,
-			meta= meta,
-			stats= stats,
-		)
+        jetstream = cls(
+            config=config,
+            meta=meta,
+            stats=stats,
+        )
 
-		jetstream.additional_properties = d
-		return jetstream
+        jetstream.additional_properties = d
+        return jetstream
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

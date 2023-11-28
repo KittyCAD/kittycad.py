@@ -4,65 +4,66 @@ import attr
 
 from ..types import UNSET, Unset
 
-ET = TypeVar("ET", bound="Error")
+DI = TypeVar("DI", bound="Error")
+
 
 @attr.s(auto_attribs=True)
 class Error:
-	""" Error information from a response. """ # noqa: E501
-	error_code: Union[Unset, str] = UNSET
-	message: Union[Unset, str] = UNSET
-	request_id: Union[Unset, str] = UNSET
+    """Error information from a response."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    error_code: Union[Unset, str] = UNSET
+    message: Union[Unset, str] = UNSET
+    request_id: Union[Unset, str] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		error_code = self.error_code
-		message = self.message
-		request_id = self.request_id
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if error_code is not UNSET:
-			field_dict['error_code'] = error_code
-		if message is not UNSET:
-			field_dict['message'] = message
-		if request_id is not UNSET:
-			field_dict['request_id'] = request_id
+    def to_dict(self) -> Dict[str, Any]:
+        error_code = self.error_code
+        message = self.message
+        request_id = self.request_id
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if error_code is not UNSET:
+            field_dict["error_code"] = error_code
+        if message is not UNSET:
+            field_dict["message"] = message
+        if request_id is not UNSET:
+            field_dict["request_id"] = request_id
 
-	@classmethod
-	def from_dict(cls: Type[ET], src_dict: Dict[str, Any]) -> ET:
-		d = src_dict.copy()
-		error_code = d.pop("error_code", UNSET)
+        return field_dict
 
-		message = d.pop("message", UNSET)
+    @classmethod
+    def from_dict(cls: Type[DI], src_dict: Dict[str, Any]) -> DI:
+        d = src_dict.copy()
+        error_code = d.pop("error_code", UNSET)
 
-		request_id = d.pop("request_id", UNSET)
+        message = d.pop("message", UNSET)
 
+        request_id = d.pop("request_id", UNSET)
 
-		error = cls(
-			error_code= error_code,
-			message= message,
-			request_id= request_id,
-		)
+        error = cls(
+            error_code=error_code,
+            message=message,
+            request_id=request_id,
+        )
 
-		error.additional_properties = d
-		return error
+        error.additional_properties = d
+        return error
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

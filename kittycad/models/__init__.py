@@ -8,6 +8,9 @@ from .ai_plugin_auth import AiPluginAuth
 from .ai_plugin_auth_type import AiPluginAuthType
 from .ai_plugin_http_auth_type import AiPluginHttpAuthType
 from .ai_plugin_manifest import AiPluginManifest
+from .ai_prompt import AiPrompt
+from .ai_prompt_results_page import AiPromptResultsPage
+from .ai_prompt_type import AiPromptType
 from .angle import Angle
 from .annotation_line_end import AnnotationLineEnd
 from .annotation_line_end_options import AnnotationLineEndOptions
@@ -120,6 +123,8 @@ from .onboarding import Onboarding
 from .output_file import OutputFile
 from .output_format import OutputFormat
 from .path_command import PathCommand
+from .path_component_constraint_bound import PathComponentConstraintBound
+from .path_component_constraint_type import PathComponentConstraintType
 from .path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from .path_get_info import PathGetInfo
 from .path_get_vertex_uuids import PathGetVertexUuids
@@ -142,6 +147,7 @@ from .scene_selection_type import SceneSelectionType
 from .scene_tool_type import SceneToolType
 from .select_get import SelectGet
 from .select_with_point import SelectWithPoint
+from .selection import Selection
 from .session import Session
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from .solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
@@ -187,6 +193,7 @@ from .update_user import UpdateUser
 from .user import User
 from .user_results_page import UserResultsPage
 from .uuid import Uuid
+from .uuid_binary import UuidBinary
 from .verification_token import VerificationToken
 from .volume import Volume
 from .web_socket_request import WebSocketRequest

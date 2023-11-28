@@ -4,56 +4,60 @@ import attr
 
 from ..types import UNSET, Unset
 
-QT = TypeVar("QT", bound="PathGetInfo")
+VM = TypeVar("VM", bound="PathGetInfo")
+
 
 @attr.s(auto_attribs=True)
 class PathGetInfo:
-	""" The response from the `PathGetInfo` command. """ # noqa: E501
-	from ..models.path_segment_info import PathSegmentInfo
-	segments: Union[Unset, List[PathSegmentInfo]] = UNSET
+    """The response from the `PathGetInfo` command."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    from ..models.path_segment_info import PathSegmentInfo
 
-	def to_dict(self) -> Dict[str, Any]:
-		from ..models.path_segment_info import PathSegmentInfo
-		segments: Union[Unset, List[PathSegmentInfo]] = UNSET
-		if not isinstance(self.segments, Unset):
-			segments = self.segments
+    segments: Union[Unset, List[PathSegmentInfo]] = UNSET
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if segments is not UNSET:
-			field_dict['segments'] = segments
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		return field_dict
+    def to_dict(self) -> Dict[str, Any]:
+        from ..models.path_segment_info import PathSegmentInfo
 
-	@classmethod
-	def from_dict(cls: Type[QT], src_dict: Dict[str, Any]) -> QT:
-		d = src_dict.copy()
-		from ..models.path_segment_info import PathSegmentInfo
-		segments = cast(List[PathSegmentInfo], d.pop("segments", UNSET))
+        segments: Union[Unset, List[PathSegmentInfo]] = UNSET
+        if not isinstance(self.segments, Unset):
+            segments = self.segments
 
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if segments is not UNSET:
+            field_dict["segments"] = segments
 
-		path_get_info = cls(
-			segments= segments,
-		)
+        return field_dict
 
-		path_get_info.additional_properties = d
-		return path_get_info
+    @classmethod
+    def from_dict(cls: Type[VM], src_dict: Dict[str, Any]) -> VM:
+        d = src_dict.copy()
+        from ..models.path_segment_info import PathSegmentInfo
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+        segments = cast(List[PathSegmentInfo], d.pop("segments", UNSET))
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+        path_get_info = cls(
+            segments=segments,
+        )
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+        path_get_info.additional_properties = d
+        return path_get_info
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

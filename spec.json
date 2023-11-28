@@ -194,6 +194,176 @@
         }
       }
     },
+    "/ai-prompts": {
+      "get": {
+        "tags": [
+          "ai",
+          "hidden"
+        ],
+        "summary": "List all AI prompts.",
+        "description": "For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.\nThis endpoint requires authentication by a KittyCAD employee.\nThe AI prompts are returned in order of creation, with the most recently created AI prompts first.",
+        "operationId": "list_ai_prompts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of items returned by a single call",
+            "schema": {
+              "nullable": true,
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "description": "Token returned by previous call to retrieve the subsequent page",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort_by",
+            "schema": {
+              "$ref": "#/components/schemas/CreatedAtSortMode"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiPromptResultsPage"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-dropshot-pagination": {
+          "required": []
+        }
+      }
+    },
+    "/ai-prompts/{id}": {
+      "get": {
+        "tags": [
+          "ai",
+          "hidden"
+        ],
+        "summary": "Get an AI prompt.",
+        "description": "This endpoint requires authentication by a KittyCAD employee.",
+        "operationId": "get_ai_prompt",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the model to give feedback to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiPrompt"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
     "/ai/text-to-cad/{output_format}": {
       "post": {
         "tags": [
@@ -202,7 +372,7 @@
           "hidden"
         ],
         "summary": "Generate a CAD model from text.",
-        "description": "This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\nThis is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better.",
+        "description": "Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\nOne thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`.\nThis is an alpha endpoint. It will change in the future. The current output is honestly pretty bad. So if you find this endpoint, you get what you pay for, which currently is nothing. But in the future will be made a lot better.",
         "operationId": "create_text_to_cad",
         "parameters": [
           {
@@ -1237,7 +1407,7 @@
           "beta"
         ],
         "summary": "Get CAD file center of mass.",
-        "description": "We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.\nThis endpoint returns the cartesian co-ordinate in world space measure units.\nIn the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.\nGet the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.\nIf the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.",
+        "description": "We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.\nThis endpoint returns the cartesian coordinate in world space measure units.\nIn the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.\nGet the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.\nIf the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.",
         "operationId": "create_file_center_of_mass",
         "parameters": [
           {
@@ -2377,6 +2547,80 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/WebSocketResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/internal/discord/api-token/{discord_id}": {
+      "get": {
+        "tags": [
+          "meta",
+          "hidden"
+        ],
+        "summary": "Get an API token for a user by their discord id.",
+        "description": "This endpoint allows us to run API calls from our discord bot on behalf of a user. The user must have a discord account linked to their KittyCAD Account via oauth2 for this to work.\nYou must be a KittyCAD employee to use this endpoint.",
+        "operationId": "internal_get_api_token_for_discord_user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "discord_id",
+            "description": "The user's discord ID.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiToken"
                 }
               }
             }
@@ -6242,7 +6486,7 @@
           "hidden"
         ],
         "summary": "List text-to-CAD models you've generated.",
-        "description": "This endpoint requires authentication by any KittyCAD user. It returns the text-to-CAD models for the authenticated user.\nThe text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.",
+        "description": "This will always return the STEP file contents as well as the format the user originally requested.\nThis endpoint requires authentication by any KittyCAD user. It returns the text-to-CAD models for the authenticated user.\nThe text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.",
         "operationId": "list_text_to_cad_models_for_user",
         "parameters": [
           {
@@ -6331,6 +6575,80 @@
       }
     },
     "/user/text-to-cad/{id}": {
+      "get": {
+        "tags": [
+          "ai",
+          "beta",
+          "hidden"
+        ],
+        "summary": "Get a text-to-CAD response.",
+        "description": "This endpoint requires authentication by any KittyCAD user. The user must be the owner of the text-to-CAD model.",
+        "operationId": "get_text_to_cad_model_for_user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the model to give feedback to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TextToCad"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      },
       "post": {
         "tags": [
           "ai",
@@ -7039,6 +7357,13 @@
         "description": "An account provider.",
         "oneOf": [
           {
+            "description": "The Discord account provider.",
+            "type": "string",
+            "enum": [
+              "discord"
+            ]
+          },
+          {
             "description": "The Google account provider.",
             "type": "string",
             "enum": [
@@ -7252,6 +7577,144 @@
           "logo_url"
         ]
       },
+      "AiPrompt": {
+        "description": "An AI prompt.",
+        "type": "object",
+        "properties": {
+          "completed_at": {
+            "nullable": true,
+            "title": "DateTime",
+            "description": "When the prompt was completed.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "title": "DateTime",
+            "description": "The date and time the AI prompt was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "error": {
+            "nullable": true,
+            "description": "The error message if the prompt failed.",
+            "type": "string"
+          },
+          "feedback": {
+            "nullable": true,
+            "description": "Feedback from the user, if any.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AiFeedback"
+              }
+            ]
+          },
+          "id": {
+            "description": "The unique identifier for the AI Prompt.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UuidBinary"
+              }
+            ]
+          },
+          "metadata": {
+            "nullable": true,
+            "description": "The metadata for the prompt."
+          },
+          "model_version": {
+            "description": "The version of the model.",
+            "type": "string"
+          },
+          "output_file": {
+            "nullable": true,
+            "description": "The output file. In the case of TextToCad this is a link to a file in a GCP bucket.",
+            "type": "string"
+          },
+          "prompt": {
+            "description": "The prompt.",
+            "type": "string"
+          },
+          "started_at": {
+            "nullable": true,
+            "title": "DateTime",
+            "description": "When the prompt was started.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "description": "The status of the prompt.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ApiCallStatus"
+              }
+            ]
+          },
+          "type": {
+            "description": "The type of prompt.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AiPromptType"
+              }
+            ]
+          },
+          "updated_at": {
+            "title": "DateTime",
+            "description": "The date and time the AI prompt was last updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "user_id": {
+            "description": "The user ID of the user who created the AI Prompt.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "model_version",
+          "prompt",
+          "status",
+          "type",
+          "updated_at",
+          "user_id"
+        ]
+      },
+      "AiPromptResultsPage": {
+        "description": "A single page of results",
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "list of items on this page of results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AiPrompt"
+            }
+          },
+          "next_page": {
+            "nullable": true,
+            "description": "token used to fetch the next page of results (if any)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "AiPromptType": {
+        "description": "A type of AI prompt.",
+        "oneOf": [
+          {
+            "description": "Text to CAD.",
+            "type": "string",
+            "enum": [
+              "text_to_cad"
+            ]
+          }
+        ]
+      },
       "Angle": {
         "description": "An angle, with a specific unit.",
         "type": "object",
@@ -7358,7 +7821,7 @@
         }
       },
       "AnnotationTextAlignmentX": {
-        "description": "Horizontal Text aligment",
+        "description": "Horizontal Text alignment",
         "type": "string",
         "enum": [
           "left",
@@ -7367,7 +7830,7 @@
         ]
       },
       "AnnotationTextAlignmentY": {
-        "description": "Vertical Text aligment",
+        "description": "Vertical Text alignment",
         "type": "string",
         "enum": [
           "bottom",
@@ -7590,7 +8053,7 @@
             "type": "boolean"
           },
           "method": {
-            "description": "The HTTP method requsted by the API call.",
+            "description": "The HTTP method requested by the API call.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/Method"
@@ -7666,7 +8129,11 @@
           },
           "user_id": {
             "description": "The ID of the user that made the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -7675,7 +8142,8 @@
           "method",
           "token",
           "updated_at",
-          "user_agent"
+          "user_agent",
+          "user_id"
         ]
       },
       "ApiCallWithPriceResultsPage": {
@@ -7733,7 +8201,11 @@
           },
           "id": {
             "description": "The unique identifier for the API token.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "is_valid": {
             "description": "If the token is valid. We never delete API tokens, but we can mark them as invalid. We save them for ever to preserve the history of the API token.",
@@ -7755,14 +8227,20 @@
           },
           "user_id": {
             "description": "The ID of the user that owns the API token.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
           "created_at",
+          "id",
           "is_valid",
           "token",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "ApiTokenResultsPage": {
@@ -7864,7 +8342,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the async API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "worker": {
             "description": "The worker node that is performing or performed the async API call.",
@@ -7876,7 +8358,8 @@
           "id",
           "status",
           "type",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "AsyncApiCallOutput": {
@@ -7984,7 +8467,11 @@
               },
               "user_id": {
                 "description": "The user ID of the user who created the API call.",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               }
             },
             "required": [
@@ -7994,7 +8481,8 @@
               "src_format",
               "status",
               "type",
-              "updated_at"
+              "updated_at",
+              "user_id"
             ]
           },
           {
@@ -8081,7 +8569,11 @@
               },
               "user_id": {
                 "description": "The user ID of the user who created the API call.",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               }
             },
             "required": [
@@ -8091,7 +8583,8 @@
               "src_format",
               "status",
               "type",
-              "updated_at"
+              "updated_at",
+              "user_id"
             ]
           },
           {
@@ -8189,7 +8682,11 @@
               },
               "user_id": {
                 "description": "The user ID of the user who created the API call.",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               }
             },
             "required": [
@@ -8200,7 +8697,8 @@
               "src_format",
               "status",
               "type",
-              "updated_at"
+              "updated_at",
+              "user_id"
             ]
           },
           {
@@ -8278,7 +8776,11 @@
               },
               "user_id": {
                 "description": "The user ID of the user who created the API call.",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               },
               "volume": {
                 "nullable": true,
@@ -8294,7 +8796,8 @@
               "src_format",
               "status",
               "type",
-              "updated_at"
+              "updated_at",
+              "user_id"
             ]
           },
           {
@@ -8392,7 +8895,11 @@
               },
               "user_id": {
                 "description": "The user ID of the user who created the API call.",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               }
             },
             "required": [
@@ -8403,7 +8910,8 @@
               "src_format",
               "status",
               "type",
-              "updated_at"
+              "updated_at",
+              "user_id"
             ]
           },
           {
@@ -8487,7 +8995,11 @@
               },
               "user_id": {
                 "description": "The user ID of the user who created the API call.",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               }
             },
             "required": [
@@ -8497,7 +9009,8 @@
               "src_format",
               "status",
               "type",
-              "updated_at"
+              "updated_at",
+              "user_id"
             ]
           },
           {
@@ -8593,7 +9106,11 @@
               },
               "user_id": {
                 "description": "The user ID of the user who created the API call.",
-                "type": "string"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               }
             },
             "required": [
@@ -8604,7 +9121,8 @@
               "prompt",
               "status",
               "type",
-              "updated_at"
+              "updated_at",
+              "user_id"
             ]
           }
         ]
@@ -9630,7 +10148,11 @@
           },
           "user_id": {
             "description": "The user ID the balance belongs to.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -9640,7 +10162,8 @@
           "pre_pay_cash_remaining",
           "pre_pay_credits_remaining",
           "total_due",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "Density": {
@@ -10047,7 +10570,11 @@
           },
           "id": {
             "description": "The unique identifier for the user.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "image": {
             "title": "String",
@@ -10089,6 +10616,7 @@
         },
         "required": [
           "created_at",
+          "id",
           "image",
           "updated_at"
         ]
@@ -10238,7 +10766,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -10247,7 +10779,8 @@
           "output_unit",
           "src_format",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "FileConversion": {
@@ -10346,7 +10879,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -10355,7 +10892,8 @@
           "output_format",
           "src_format",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "FileDensity": {
@@ -10447,7 +10985,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -10457,7 +10999,8 @@
           "output_unit",
           "src_format",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "FileExportFormat": {
@@ -10657,7 +11200,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -10667,7 +11214,8 @@
           "output_unit",
           "src_format",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "FileSurfaceArea": {
@@ -10745,7 +11293,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -10754,7 +11306,8 @@
           "output_unit",
           "src_format",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "FileSystemMetadata": {
@@ -10839,7 +11392,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "volume": {
             "nullable": true,
@@ -10854,7 +11411,8 @@
           "output_unit",
           "src_format",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "Gateway": {
@@ -12242,6 +12800,27 @@
             ]
           },
           {
+            "description": "Focus default camera on object.",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "default_camera_focus_on"
+                ]
+              },
+              "uuid": {
+                "description": "UUID of object to focus on.",
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "required": [
+              "type",
+              "uuid"
+            ]
+          },
+          {
             "description": "Export the scene to a file.",
             "type": "object",
             "properties": {
@@ -13591,11 +14170,19 @@
             "type": "object",
             "properties": {
               "files": {
-                "description": "Files to import",
+                "description": "Files to import.",
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/ImportFile"
                 }
+              },
+              "format": {
+                "description": "Input file format.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/InputFormat"
+                  }
+                ]
               },
               "type": {
                 "type": "string",
@@ -13606,6 +14193,7 @@
             },
             "required": [
               "files",
+              "format",
               "type"
             ]
           },
@@ -13863,6 +14451,45 @@
             "required": [
               "type"
             ]
+          },
+          {
+            "description": "Constrain a curve.",
+            "type": "object",
+            "properties": {
+              "constraint_bound": {
+                "description": "Which constraint to apply.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PathComponentConstraintBound"
+                  }
+                ]
+              },
+              "constraint_type": {
+                "description": "What part of the curve should be constrained.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PathComponentConstraintType"
+                  }
+                ]
+              },
+              "object_id": {
+                "description": "Which curve to constrain.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "curve_set_constraint"
+                ]
+              }
+            },
+            "required": [
+              "constraint_bound",
+              "constraint_type",
+              "object_id",
+              "type"
+            ]
           }
         ]
       },
@@ -13953,7 +14580,11 @@
           },
           "user_id": {
             "description": "The user ID that this address belongs to.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "zip": {
             "description": "The zip component.",
@@ -13961,7 +14592,8 @@
           }
         },
         "required": [
-          "country"
+          "country",
+          "user_id"
         ]
       },
       "OAuth2ClientInfo": {
@@ -14906,6 +15538,14 @@
                   }
                 ]
               },
+              "selection": {
+                "description": "Export selection.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Selection"
+                  }
+                ]
+              },
               "storage": {
                 "description": "The storage for the output PLY file.",
                 "allOf": [
@@ -14919,12 +15559,22 @@
                 "enum": [
                   "ply"
                 ]
+              },
+              "units": {
+                "description": "Export length unit.\n\nDefaults to meters.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UnitLength"
+                  }
+                ]
               }
             },
             "required": [
               "coords",
+              "selection",
               "storage",
-              "type"
+              "type",
+              "units"
             ]
           },
           {
@@ -14963,6 +15613,14 @@
                   }
                 ]
               },
+              "selection": {
+                "description": "Export selection.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Selection"
+                  }
+                ]
+              },
               "storage": {
                 "description": "Export storage.",
                 "allOf": [
@@ -14988,6 +15646,7 @@
             },
             "required": [
               "coords",
+              "selection",
               "storage",
               "type",
               "units"
@@ -15004,6 +15663,27 @@
           "bez_curve_to",
           "nurbs_curve_to",
           "add_arc"
+        ]
+      },
+      "PathComponentConstraintBound": {
+        "description": "The path component constraint bounds type",
+        "type": "string",
+        "enum": [
+          "unconstrained",
+          "partially_constrained",
+          "fully_constrained"
+        ]
+      },
+      "PathComponentConstraintType": {
+        "description": "The path component constraint type",
+        "type": "string",
+        "enum": [
+          "unconstrained",
+          "vertical",
+          "horizontal",
+          "equal_length",
+          "parallel",
+          "angle_between"
         ]
       },
       "PathGetCurveUuidsForVertices": {
@@ -15672,6 +16352,110 @@
           }
         }
       },
+      "Selection": {
+        "description": "Data item selection.",
+        "oneOf": [
+          {
+            "description": "Visit the default scene.",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "default_scene"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          {
+            "description": "Visit the indexed scene.",
+            "type": "object",
+            "properties": {
+              "index": {
+                "description": "The index.",
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "scene_by_index"
+                ]
+              }
+            },
+            "required": [
+              "index",
+              "type"
+            ]
+          },
+          {
+            "description": "Visit the first scene with the given name.",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "scene_by_name"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ]
+          },
+          {
+            "description": "Visit the indexed mesh.",
+            "type": "object",
+            "properties": {
+              "index": {
+                "description": "The index.",
+                "type": "integer",
+                "format": "uint",
+                "minimum": 0
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "mesh_by_index"
+                ]
+              }
+            },
+            "required": [
+              "index",
+              "type"
+            ]
+          },
+          {
+            "description": "Visit the first mesh with the given name.",
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "The name.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "mesh_by_name"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ]
+          }
+        ]
+      },
       "Session": {
         "description": "An authentication session.\n\nFor our UIs, these are automatically created by Next.js.",
         "type": "object",
@@ -15690,7 +16474,11 @@
           },
           "id": {
             "description": "The unique identifier for the session.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "session_token": {
             "description": "The session token.",
@@ -15708,14 +16496,20 @@
           },
           "user_id": {
             "description": "The user ID of the user that the session belongs to.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
           "created_at",
           "expires",
+          "id",
           "session_token",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "Solid3dGetAllEdgeFaces": {
@@ -15988,7 +16782,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -15998,7 +16796,8 @@
           "output_format",
           "prompt",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "TextToCadCreateBody": {
@@ -16135,7 +16934,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -16144,7 +16947,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitArea": {
@@ -16289,7 +17093,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -16298,7 +17106,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitCurrent": {
@@ -16415,7 +17224,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -16424,7 +17237,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitDensity": {
@@ -16574,7 +17388,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -16583,7 +17401,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitForce": {
@@ -16721,7 +17540,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -16730,7 +17553,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitFrequency": {
@@ -16875,7 +17699,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -16884,7 +17712,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitLength": {
@@ -17015,7 +17844,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -17024,7 +17857,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitMass": {
@@ -17134,7 +17968,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -17143,7 +17981,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitPower": {
@@ -17281,7 +18120,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -17290,7 +18133,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitPressure": {
@@ -17428,7 +18272,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -17437,7 +18285,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitTemperature": {
@@ -17554,7 +18403,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -17563,7 +18416,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitTorque": {
@@ -17666,7 +18520,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -17675,7 +18533,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UnitVolume": {
@@ -17827,7 +18686,11 @@
           },
           "user_id": {
             "description": "The user ID of the user who created the API call.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           }
         },
         "required": [
@@ -17836,7 +18699,8 @@
           "input_unit",
           "output_unit",
           "status",
-          "updated_at"
+          "updated_at",
+          "user_id"
         ]
       },
       "UpdateUser": {
@@ -17912,7 +18776,11 @@
           },
           "id": {
             "description": "The unique identifier for the user.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "image": {
             "title": "String",
@@ -17944,6 +18812,7 @@
         },
         "required": [
           "created_at",
+          "id",
           "image",
           "updated_at"
         ]
@@ -17970,7 +18839,12 @@
         ]
       },
       "Uuid": {
-        "description": "A uuid.\n\nA Version 4 UUID is a universally unique identifier that is generated using random numbers.",
+        "description": "A uuid stored as a varchar(191).\n\nA Version 4 UUID is a universally unique identifier that is generated using random numbers.",
+        "type": "string",
+        "format": "uuid"
+      },
+      "UuidBinary": {
+        "description": "A uuid stored as binary(16).\n\nMysql binary(16) storage for UUIDs. Uses Version 7 UUID by default, a universally unique identifier that is generated using random numbers and a timestamp. UUIDv7 are recommended for database ids/primary keys because they are sequential and this helps with efficient indexing, especially on MySQL. For other uses cases, like API tokens, UUIDv4 makes more sense because it's completely random.\n\nHowever, both should be stored as binary on MySQL! Both versions use the same data format, so they can be used interchangeably with this data type.",
         "type": "string",
         "format": "uuid"
       },
@@ -17992,7 +18866,11 @@
           },
           "id": {
             "description": "The token used for verification. This is used as the id for the table since it is unique per record.",
-            "type": "string"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "identifier": {
             "description": "The identifier for the user. This is typically the user's email address since that is what we are verifying.",
@@ -18008,6 +18886,7 @@
         "required": [
           "created_at",
           "expires",
+          "id",
           "updated_at"
         ]
       },

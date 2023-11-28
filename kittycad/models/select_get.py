@@ -4,53 +4,54 @@ import attr
 
 from ..types import UNSET, Unset
 
-PZ = TypeVar("PZ", bound="SelectGet")
+HH = TypeVar("HH", bound="SelectGet")
+
 
 @attr.s(auto_attribs=True)
 class SelectGet:
-	""" The response from the `SelectGet` command. """ # noqa: E501
-	entity_ids: Union[Unset, List[str]] = UNSET
+    """The response from the `SelectGet` command."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    entity_ids: Union[Unset, List[str]] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		entity_ids: Union[Unset, List[str]] = UNSET
-		if not isinstance(self.entity_ids, Unset):
-			entity_ids = self.entity_ids
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if entity_ids is not UNSET:
-			field_dict['entity_ids'] = entity_ids
+    def to_dict(self) -> Dict[str, Any]:
+        entity_ids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.entity_ids, Unset):
+            entity_ids = self.entity_ids
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if entity_ids is not UNSET:
+            field_dict["entity_ids"] = entity_ids
 
-	@classmethod
-	def from_dict(cls: Type[PZ], src_dict: Dict[str, Any]) -> PZ:
-		d = src_dict.copy()
-		entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[HH], src_dict: Dict[str, Any]) -> HH:
+        d = src_dict.copy()
+        entity_ids = cast(List[str], d.pop("entity_ids", UNSET))
 
-		select_get = cls(
-			entity_ids= entity_ids,
-		)
+        select_get = cls(
+            entity_ids=entity_ids,
+        )
 
-		select_get.additional_properties = d
-		return select_get
+        select_get.additional_properties = d
+        return select_get
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

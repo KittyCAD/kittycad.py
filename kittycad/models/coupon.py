@@ -4,72 +4,73 @@ import attr
 
 from ..types import UNSET, Unset
 
-NH = TypeVar("NH", bound="Coupon")
+PJ = TypeVar("PJ", bound="Coupon")
+
 
 @attr.s(auto_attribs=True)
 class Coupon:
-	""" The resource representing a Coupon. """ # noqa: E501
-	amount_off:  Union[Unset, float] = UNSET
-	deleted: Union[Unset, bool] = False
-	id: Union[Unset, str] = UNSET
-	percent_off:  Union[Unset, float] = UNSET
+    """The resource representing a Coupon."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    amount_off: Union[Unset, float] = UNSET
+    deleted: Union[Unset, bool] = False
+    id: Union[Unset, str] = UNSET
+    percent_off: Union[Unset, float] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		amount_off = self.amount_off
-		deleted = self.deleted
-		id = self.id
-		percent_off = self.percent_off
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if amount_off is not UNSET:
-			field_dict['amount_off'] = amount_off
-		if deleted is not UNSET:
-			field_dict['deleted'] = deleted
-		if id is not UNSET:
-			field_dict['id'] = id
-		if percent_off is not UNSET:
-			field_dict['percent_off'] = percent_off
+    def to_dict(self) -> Dict[str, Any]:
+        amount_off = self.amount_off
+        deleted = self.deleted
+        id = self.id
+        percent_off = self.percent_off
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if amount_off is not UNSET:
+            field_dict["amount_off"] = amount_off
+        if deleted is not UNSET:
+            field_dict["deleted"] = deleted
+        if id is not UNSET:
+            field_dict["id"] = id
+        if percent_off is not UNSET:
+            field_dict["percent_off"] = percent_off
 
-	@classmethod
-	def from_dict(cls: Type[NH], src_dict: Dict[str, Any]) -> NH:
-		d = src_dict.copy()
-		amount_off = d.pop("amount_off", UNSET)
+        return field_dict
 
-		deleted = d.pop("deleted", UNSET)
+    @classmethod
+    def from_dict(cls: Type[PJ], src_dict: Dict[str, Any]) -> PJ:
+        d = src_dict.copy()
+        amount_off = d.pop("amount_off", UNSET)
 
-		id = d.pop("id", UNSET)
+        deleted = d.pop("deleted", UNSET)
 
-		percent_off = d.pop("percent_off", UNSET)
+        id = d.pop("id", UNSET)
 
+        percent_off = d.pop("percent_off", UNSET)
 
-		coupon = cls(
-			amount_off= amount_off,
-			deleted= deleted,
-			id= id,
-			percent_off= percent_off,
-		)
+        coupon = cls(
+            amount_off=amount_off,
+            deleted=deleted,
+            id=id,
+            percent_off=percent_off,
+        )
 
-		coupon.additional_properties = d
-		return coupon
+        coupon.additional_properties = d
+        return coupon
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
