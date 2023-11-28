@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
+from typing_extensions import Self
 
 from ..models.client_metrics import ClientMetrics
 from ..models.modeling_cmd import ModelingCmd
@@ -389,11 +390,84 @@ class metrics_response:
         return key in self.additional_properties
 
 
-WebSocketRequest = Union[
-    trickle_ice,
-    sdp_offer,
-    modeling_cmd_req,
-    modeling_cmd_batch_req,
-    ping,
-    metrics_response,
-]
+class WebSocketRequest:
+
+    """The websocket messages the server receives."""
+
+    type: Union[
+        trickle_ice,
+        sdp_offer,
+        modeling_cmd_req,
+        modeling_cmd_batch_req,
+        ping,
+        metrics_response,
+    ] = None
+
+    def __init__(
+        self,
+        type: Union[
+            type(trickle_ice),
+            type(sdp_offer),
+            type(modeling_cmd_req),
+            type(modeling_cmd_batch_req),
+            type(ping),
+            type(metrics_response),
+        ],
+    ):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        if isinstance(self.type, trickle_ice):
+            n: trickle_ice = self.type
+            return n.to_dict()
+        elif isinstance(self.type, sdp_offer):
+            n: sdp_offer = self.type
+            return n.to_dict()
+        elif isinstance(self.type, modeling_cmd_req):
+            n: modeling_cmd_req = self.type
+            return n.to_dict()
+        elif isinstance(self.type, modeling_cmd_batch_req):
+            n: modeling_cmd_batch_req = self.type
+            return n.to_dict()
+        elif isinstance(self.type, ping):
+            n: ping = self.type
+            return n.to_dict()
+        elif isinstance(self.type, metrics_response):
+            n: metrics_response = self.type
+            return n.to_dict()
+
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        if d.get("type") == "trickle_ice":
+            n: trickle_ice = trickle_ice()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        elif d.get("type") == "sdp_offer":
+            n: sdp_offer = sdp_offer()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "modeling_cmd_req":
+            n: modeling_cmd_req = modeling_cmd_req()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "modeling_cmd_batch_req":
+            n: modeling_cmd_batch_req = modeling_cmd_batch_req()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "ping":
+            n: ping = ping()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "metrics_response":
+            n: metrics_response = metrics_response()
+            n.from_dict(d)
+            self.type = n
+            return self
+
+        raise Exception("Unknown type")

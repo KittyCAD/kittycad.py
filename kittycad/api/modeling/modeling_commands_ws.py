@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import bson
 from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
@@ -153,7 +153,11 @@ class WebSocket:
         """Send data as bson to the websocket."""
         self.ws.send(bson.BSON.encode(data.to_dict()))
 
-    def recv(self) -> Optional[WebSocketResponse]:
+    def recv(self) -> WebSocketResponse:
         """Receive data from the websocket."""
         message = self.ws.recv()
-        return Optional[WebSocketResponse].from_dict(json.loads(message))
+        return WebSocketResponse.from_dict(json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()

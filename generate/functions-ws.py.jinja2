@@ -179,4 +179,8 @@ class WebSocket:
         """Receive data from the websocket."""
         message = self.ws.recv()
         return {{response_type}}.from_dict(json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
 {%endif%}

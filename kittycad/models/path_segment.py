@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
+from typing_extensions import Self
 
 from ..models.angle import Angle
 from ..models.point2d import Point2d
@@ -436,4 +437,74 @@ class tangential_arc_to:
         return key in self.additional_properties
 
 
-PathSegment = Union[line, arc, bezier, tangential_arc, tangential_arc_to]
+class PathSegment:
+
+    """A segment of a path. Paths are composed of many segments."""
+
+    type: Union[
+        line,
+        arc,
+        bezier,
+        tangential_arc,
+        tangential_arc_to,
+    ] = None
+
+    def __init__(
+        self,
+        type: Union[
+            type(line),
+            type(arc),
+            type(bezier),
+            type(tangential_arc),
+            type(tangential_arc_to),
+        ],
+    ):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        if isinstance(self.type, line):
+            n: line = self.type
+            return n.to_dict()
+        elif isinstance(self.type, arc):
+            n: arc = self.type
+            return n.to_dict()
+        elif isinstance(self.type, bezier):
+            n: bezier = self.type
+            return n.to_dict()
+        elif isinstance(self.type, tangential_arc):
+            n: tangential_arc = self.type
+            return n.to_dict()
+        elif isinstance(self.type, tangential_arc_to):
+            n: tangential_arc_to = self.type
+            return n.to_dict()
+
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        if d.get("type") == "line":
+            n: line = line()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        elif d.get("type") == "arc":
+            n: arc = arc()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "bezier":
+            n: bezier = bezier()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "tangential_arc":
+            n: tangential_arc = tangential_arc()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "tangential_arc_to":
+            n: tangential_arc_to = tangential_arc_to()
+            n.from_dict(d)
+            self.type = n
+            return self
+
+        raise Exception("Unknown type")

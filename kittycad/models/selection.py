@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
+from typing_extensions import Self
 
 from ..types import UNSET, Unset
 
@@ -282,6 +283,74 @@ class mesh_by_name:
         return key in self.additional_properties
 
 
-Selection = Union[
-    default_scene, scene_by_index, scene_by_name, mesh_by_index, mesh_by_name
-]
+class Selection:
+
+    """Data item selection."""
+
+    type: Union[
+        default_scene,
+        scene_by_index,
+        scene_by_name,
+        mesh_by_index,
+        mesh_by_name,
+    ] = None
+
+    def __init__(
+        self,
+        type: Union[
+            type(default_scene),
+            type(scene_by_index),
+            type(scene_by_name),
+            type(mesh_by_index),
+            type(mesh_by_name),
+        ],
+    ):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        if isinstance(self.type, default_scene):
+            n: default_scene = self.type
+            return n.to_dict()
+        elif isinstance(self.type, scene_by_index):
+            n: scene_by_index = self.type
+            return n.to_dict()
+        elif isinstance(self.type, scene_by_name):
+            n: scene_by_name = self.type
+            return n.to_dict()
+        elif isinstance(self.type, mesh_by_index):
+            n: mesh_by_index = self.type
+            return n.to_dict()
+        elif isinstance(self.type, mesh_by_name):
+            n: mesh_by_name = self.type
+            return n.to_dict()
+
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        if d.get("type") == "default_scene":
+            n: default_scene = default_scene()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        elif d.get("type") == "scene_by_index":
+            n: scene_by_index = scene_by_index()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "scene_by_name":
+            n: scene_by_name = scene_by_name()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "mesh_by_index":
+            n: mesh_by_index = mesh_by_index()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "mesh_by_name":
+            n: mesh_by_name = mesh_by_name()
+            n.from_dict(d)
+            self.type = n
+            return self
+
+        raise Exception("Unknown type")
