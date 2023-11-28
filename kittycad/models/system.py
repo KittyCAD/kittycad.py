@@ -34,9 +34,9 @@ class System:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if forward is not UNSET:
-            field_dict["forward"] = forward
+            field_dict["forward"] = forward.to_dict()
         if up is not UNSET:
-            field_dict["up"] = up
+            field_dict["up"] = up.to_dict()
 
         return field_dict
 

@@ -133,7 +133,7 @@ class Connection:
         if auth_timeout is not UNSET:
             field_dict["auth_timeout"] = auth_timeout
         if cluster is not UNSET:
-            field_dict["cluster"] = cluster
+            field_dict["cluster"] = cluster.to_dict()
         if config_load_time is not UNSET:
             field_dict["config_load_time"] = config_load_time
         if connections is not UNSET:
@@ -143,7 +143,7 @@ class Connection:
         if cpu is not UNSET:
             field_dict["cpu"] = cpu
         if gateway is not UNSET:
-            field_dict["gateway"] = gateway
+            field_dict["gateway"] = gateway.to_dict()
         if git_commit is not UNSET:
             field_dict["git_commit"] = git_commit
         if go is not UNSET:
@@ -167,9 +167,9 @@ class Connection:
         if in_msgs is not UNSET:
             field_dict["in_msgs"] = in_msgs
         if jetstream is not UNSET:
-            field_dict["jetstream"] = jetstream
+            field_dict["jetstream"] = jetstream.to_dict()
         if leaf is not UNSET:
-            field_dict["leaf"] = leaf
+            field_dict["leaf"] = leaf.to_dict()
         if leafnodes is not UNSET:
             field_dict["leafnodes"] = leafnodes
         if max_connections is not UNSET:

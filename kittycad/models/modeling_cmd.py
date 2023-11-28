@@ -100,7 +100,7 @@ class move_path_pen:
         if path is not UNSET:
             field_dict["path"] = path
         if to is not UNSET:
-            field_dict["to"] = to
+            field_dict["to"] = to.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -176,7 +176,7 @@ class extend_path:
         if path is not UNSET:
             field_dict["path"] = path
         if segment is not UNSET:
-            field_dict["segment"] = segment
+            field_dict["segment"] = segment.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -387,7 +387,7 @@ class camera_drag_start:
             field_dict["interaction"] = interaction
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -467,7 +467,7 @@ class camera_drag_move:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -546,7 +546,7 @@ class camera_drag_end:
             field_dict["interaction"] = interaction
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -622,12 +622,12 @@ class default_camera_look_at:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center is not UNSET:
-            field_dict["center"] = center
+            field_dict["center"] = center.to_dict()
         field_dict["type"] = type
         if up is not UNSET:
-            field_dict["up"] = up
+            field_dict["up"] = up.to_dict()
         if vantage is not UNSET:
-            field_dict["vantage"] = vantage
+            field_dict["vantage"] = vantage.to_dict()
 
         return field_dict
 
@@ -778,14 +778,14 @@ class default_camera_enable_sketch_mode:
         if distance_to_plane is not UNSET:
             field_dict["distance_to_plane"] = distance_to_plane
         if origin is not UNSET:
-            field_dict["origin"] = origin
+            field_dict["origin"] = origin.to_dict()
         if ortho is not UNSET:
             field_dict["ortho"] = ortho
         field_dict["type"] = type
         if x_axis is not UNSET:
-            field_dict["x_axis"] = x_axis
+            field_dict["x_axis"] = x_axis.to_dict()
         if y_axis is not UNSET:
-            field_dict["y_axis"] = y_axis
+            field_dict["y_axis"] = y_axis.to_dict()
 
         return field_dict
 
@@ -988,7 +988,7 @@ class export:
         if entity_ids is not UNSET:
             field_dict["entity_ids"] = entity_ids
         if format is not UNSET:
-            field_dict["format"] = format
+            field_dict["format"] = format.to_dict()
         if source_unit is not UNSET:
             field_dict["source_unit"] = source_unit
         field_dict["type"] = type
@@ -1409,7 +1409,7 @@ class select_with_point:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if selected_at_window is not UNSET:
-            field_dict["selected_at_window"] = selected_at_window
+            field_dict["selected_at_window"] = selected_at_window.to_dict()
         if selection_type is not UNSET:
             field_dict["selection_type"] = selection_type
         field_dict["type"] = type
@@ -1761,7 +1761,7 @@ class highlight_set_entity:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if selected_at_window is not UNSET:
-            field_dict["selected_at_window"] = selected_at_window
+            field_dict["selected_at_window"] = selected_at_window.to_dict()
         if sequence is not UNSET:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
@@ -1897,7 +1897,7 @@ class new_annotation:
         if clobber is not UNSET:
             field_dict["clobber"] = clobber
         if options is not UNSET:
-            field_dict["options"] = options
+            field_dict["options"] = options.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1975,7 +1975,7 @@ class update_annotation:
         if annotation_id is not UNSET:
             field_dict["annotation_id"] = annotation_id
         if options is not UNSET:
-            field_dict["options"] = options
+            field_dict["options"] = options.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -2351,7 +2351,7 @@ class solid3d_get_all_opposite_edges:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if along_vector is not UNSET:
-            field_dict["along_vector"] = along_vector
+            field_dict["along_vector"] = along_vector.to_dict()
         if edge_id is not UNSET:
             field_dict["edge_id"] = edge_id
         if object_id is not UNSET:
@@ -2852,14 +2852,14 @@ class make_plane:
         if hide is not UNSET:
             field_dict["hide"] = hide
         if origin is not UNSET:
-            field_dict["origin"] = origin
+            field_dict["origin"] = origin.to_dict()
         if size is not UNSET:
             field_dict["size"] = size
         field_dict["type"] = type
         if x_axis is not UNSET:
-            field_dict["x_axis"] = x_axis
+            field_dict["x_axis"] = x_axis.to_dict()
         if y_axis is not UNSET:
-            field_dict["y_axis"] = y_axis
+            field_dict["y_axis"] = y_axis.to_dict()
 
         return field_dict
 
@@ -2948,7 +2948,7 @@ class plane_set_color:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if color is not UNSET:
-            field_dict["color"] = color
+            field_dict["color"] = color.to_dict()
         if plane_id is not UNSET:
             field_dict["plane_id"] = plane_id
         field_dict["type"] = type
@@ -3084,7 +3084,7 @@ class mouse_move:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -3150,7 +3150,7 @@ class mouse_click:
         field_dict.update({})
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -3220,7 +3220,9 @@ class sketch_mode_enable:
         if animated is not UNSET:
             field_dict["animated"] = animated
         if disable_camera_with_plane is not UNSET:
-            field_dict["disable_camera_with_plane"] = disable_camera_with_plane
+            field_dict[
+                "disable_camera_with_plane"
+            ] = disable_camera_with_plane.to_dict()
         if ortho is not UNSET:
             field_dict["ortho"] = ortho
         if plane_id is not UNSET:
@@ -3768,7 +3770,7 @@ class handle_mouse_drag_start:
         field_dict.update({})
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -3835,7 +3837,7 @@ class handle_mouse_drag_move:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -3901,7 +3903,7 @@ class handle_mouse_drag_end:
         field_dict.update({})
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -4027,7 +4029,7 @@ class plane_intersect_and_project:
             field_dict["plane_id"] = plane_id
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window
+            field_dict["window"] = window.to_dict()
 
         return field_dict
 
@@ -4230,7 +4232,7 @@ class import_files:
         if files is not UNSET:
             field_dict["files"] = files
         if format is not UNSET:
-            field_dict["format"] = format
+            field_dict["format"] = format.to_dict()
         field_dict["type"] = type
 
         return field_dict

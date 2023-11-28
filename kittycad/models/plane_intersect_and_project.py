@@ -24,7 +24,7 @@ class PlaneIntersectAndProject:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if plane_coordinates is not UNSET:
-            field_dict["plane_coordinates"] = plane_coordinates
+            field_dict["plane_coordinates"] = plane_coordinates.to_dict()
 
         return field_dict
 

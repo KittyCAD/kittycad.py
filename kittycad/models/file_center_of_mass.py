@@ -61,7 +61,7 @@ class FileCenterOfMass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center_of_mass is not UNSET:
-            field_dict["center_of_mass"] = center_of_mass
+            field_dict["center_of_mass"] = center_of_mass.to_dict()
         if completed_at is not UNSET:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:

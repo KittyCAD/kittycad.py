@@ -149,8 +149,6 @@ from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.rtc_sdp_type import RtcSdpType
-from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
@@ -167,7 +165,6 @@ from kittycad.models.unit_temperature import UnitTemperature
 from kittycad.models.unit_torque import UnitTorque
 from kittycad.models.unit_volume import UnitVolume
 from kittycad.models.update_user import UpdateUser
-from kittycad.models.web_socket_request import sdp_offer
 from kittycad.types import Response
 
 
@@ -3898,12 +3895,6 @@ def test_modeling_commands_ws():
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
-        body=sdp_offer(
-            offer=RtcSessionDescription(
-                sdp="<string>",
-                type=RtcSdpType.UNSPECIFIED,
-            ),
-        ),
     )
 
     # Send a message.
@@ -3929,12 +3920,6 @@ async def test_modeling_commands_ws_async():
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
-        body=sdp_offer(
-            offer=RtcSessionDescription(
-                sdp="<string>",
-                type=RtcSdpType.UNSPECIFIED,
-            ),
-        ),
     )
 
     # Send a message.

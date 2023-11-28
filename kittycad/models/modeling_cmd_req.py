@@ -28,7 +28,7 @@ class ModelingCmdReq:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cmd is not UNSET:
-            field_dict["cmd"] = cmd
+            field_dict["cmd"] = cmd.to_dict()
         if cmd_id is not UNSET:
             field_dict["cmd_id"] = cmd_id
 

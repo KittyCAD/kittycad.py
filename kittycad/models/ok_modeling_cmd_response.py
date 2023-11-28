@@ -105,7 +105,7 @@ class export:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -168,7 +168,7 @@ class select_with_point:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -231,7 +231,7 @@ class highlight_set_entity:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -294,7 +294,7 @@ class entity_get_child_uuid:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -357,7 +357,7 @@ class entity_get_num_children:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -420,7 +420,7 @@ class entity_get_parent_id:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -483,7 +483,7 @@ class entity_get_all_child_uuids:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -546,7 +546,7 @@ class select_get:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -609,7 +609,7 @@ class get_entity_type:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -672,7 +672,7 @@ class solid3d_get_all_edge_faces:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -735,7 +735,7 @@ class solid3d_get_all_opposite_edges:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -798,7 +798,7 @@ class solid3d_get_opposite_edge:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -861,7 +861,7 @@ class solid3d_get_prev_adjacent_edge:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -924,7 +924,7 @@ class solid3d_get_next_adjacent_edge:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -987,7 +987,7 @@ class mouse_click:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1050,7 +1050,7 @@ class curve_get_type:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1113,7 +1113,7 @@ class curve_get_control_points:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1176,7 +1176,7 @@ class take_snapshot:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1239,7 +1239,7 @@ class path_get_info:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1302,7 +1302,7 @@ class path_get_curve_uuids_for_vertices:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1365,7 +1365,7 @@ class path_get_vertex_uuids:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1428,7 +1428,7 @@ class plane_intersect_and_project:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1491,7 +1491,7 @@ class curve_get_end_points:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1554,7 +1554,7 @@ class import_files:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1617,7 +1617,7 @@ class mass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1680,7 +1680,7 @@ class volume:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1743,7 +1743,7 @@ class density:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1806,7 +1806,7 @@ class surface_area:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1869,7 +1869,7 @@ class center_of_mass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1932,7 +1932,7 @@ class get_sketch_mode_plane:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data
+            field_dict["data"] = data.to_dict()
         field_dict["type"] = type
 
         return field_dict

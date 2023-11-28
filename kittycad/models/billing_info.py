@@ -28,7 +28,7 @@ class BillingInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if address is not UNSET:
-            field_dict["address"] = address
+            field_dict["address"] = address.to_dict()
         if name is not UNSET:
             field_dict["name"] = name
         if phone is not UNSET:

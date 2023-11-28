@@ -38,15 +38,15 @@ class AnnotationOptions:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if color is not UNSET:
-            field_dict["color"] = color
+            field_dict["color"] = color.to_dict()
         if line_ends is not UNSET:
-            field_dict["line_ends"] = line_ends
+            field_dict["line_ends"] = line_ends.to_dict()
         if line_width is not UNSET:
             field_dict["line_width"] = line_width
         if position is not UNSET:
-            field_dict["position"] = position
+            field_dict["position"] = position.to_dict()
         if text is not UNSET:
-            field_dict["text"] = text
+            field_dict["text"] = text.to_dict()
 
         return field_dict
 

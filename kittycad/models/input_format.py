@@ -130,7 +130,7 @@ class obj:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords
+            field_dict["coords"] = coords.to_dict()
         field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units
@@ -206,7 +206,7 @@ class ply:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords
+            field_dict["coords"] = coords.to_dict()
         field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units
@@ -382,7 +382,7 @@ class stl:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords
+            field_dict["coords"] = coords.to_dict()
         field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units

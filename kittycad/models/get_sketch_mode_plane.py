@@ -30,11 +30,11 @@ class GetSketchModePlane:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if x_axis is not UNSET:
-            field_dict["x_axis"] = x_axis
+            field_dict["x_axis"] = x_axis.to_dict()
         if y_axis is not UNSET:
-            field_dict["y_axis"] = y_axis
+            field_dict["y_axis"] = y_axis.to_dict()
         if z_axis is not UNSET:
-            field_dict["z_axis"] = z_axis
+            field_dict["z_axis"] = z_axis.to_dict()
 
         return field_dict
 

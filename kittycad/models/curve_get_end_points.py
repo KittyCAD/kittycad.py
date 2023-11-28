@@ -27,9 +27,9 @@ class CurveGetEndPoints:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if end is not UNSET:
-            field_dict["end"] = end
+            field_dict["end"] = end.to_dict()
         if start is not UNSET:
-            field_dict["start"] = start
+            field_dict["start"] = start.to_dict()
 
         return field_dict
 

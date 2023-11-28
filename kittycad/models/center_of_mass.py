@@ -28,7 +28,7 @@ class CenterOfMass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center_of_mass is not UNSET:
-            field_dict["center_of_mass"] = center_of_mass
+            field_dict["center_of_mass"] = center_of_mass.to_dict()
         if output_unit is not UNSET:
             field_dict["output_unit"] = output_unit
 

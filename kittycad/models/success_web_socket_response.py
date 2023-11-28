@@ -30,7 +30,7 @@ class SuccessWebSocketResponse:
         if request_id is not UNSET:
             field_dict["request_id"] = request_id
         if resp is not UNSET:
-            field_dict["resp"] = resp
+            field_dict["resp"] = resp.to_dict()
         if success is not UNSET:
             field_dict["success"] = success
 

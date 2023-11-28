@@ -40,15 +40,15 @@ class Metadata:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cache is not UNSET:
-            field_dict["cache"] = cache
+            field_dict["cache"] = cache.to_dict()
         if environment is not UNSET:
             field_dict["environment"] = environment
         if fs is not UNSET:
-            field_dict["fs"] = fs
+            field_dict["fs"] = fs.to_dict()
         if git_hash is not UNSET:
             field_dict["git_hash"] = git_hash
         if pubsub is not UNSET:
-            field_dict["pubsub"] = pubsub
+            field_dict["pubsub"] = pubsub.to_dict()
 
         return field_dict
 

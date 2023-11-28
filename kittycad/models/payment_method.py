@@ -43,9 +43,9 @@ class PaymentMethod:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if billing_info is not UNSET:
-            field_dict["billing_info"] = billing_info
+            field_dict["billing_info"] = billing_info.to_dict()
         if card is not UNSET:
-            field_dict["card"] = card
+            field_dict["card"] = card.to_dict()
         if created_at is not UNSET:
             field_dict["created_at"] = created_at
         if id is not UNSET:

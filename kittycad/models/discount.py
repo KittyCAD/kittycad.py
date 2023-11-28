@@ -24,7 +24,7 @@ class Discount:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coupon is not UNSET:
-            field_dict["coupon"] = coupon
+            field_dict["coupon"] = coupon.to_dict()
 
         return field_dict
 

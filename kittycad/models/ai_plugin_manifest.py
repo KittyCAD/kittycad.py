@@ -47,9 +47,9 @@ class AiPluginManifest:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if api is not UNSET:
-            field_dict["api"] = api
+            field_dict["api"] = api.to_dict()
         if auth is not UNSET:
-            field_dict["auth"] = auth
+            field_dict["auth"] = auth.to_dict()
         if contact_email is not UNSET:
             field_dict["contact_email"] = contact_email
         if description_for_human is not UNSET:

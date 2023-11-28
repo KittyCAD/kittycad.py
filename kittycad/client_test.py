@@ -1,4 +1,6 @@
+import json
 import os
+import uuid
 from typing import Dict, Optional, Union
 
 import pytest
@@ -6,6 +8,7 @@ import pytest
 from .api.api_tokens import list_api_tokens_for_user
 from .api.file import create_file_conversion, create_file_mass, create_file_volume
 from .api.meta import ping
+from .api.modeling import modeling_commands_ws
 from .api.users import get_user_self, list_users_extended
 from .client import ClientFromEnv
 from .models import (
@@ -20,12 +23,15 @@ from .models import (
     FileImportFormat,
     FileMass,
     FileVolume,
+    ModelingCmdId,
     Pong,
     UnitDensity,
     UnitMass,
     UnitVolume,
     User,
 )
+from .models.modeling_cmd import start_path
+from .models.web_socket_request import modeling_cmd_req
 from .types import Unset
 
 
@@ -283,3 +289,32 @@ def test_list_users():
     assert isinstance(response, ExtendedUserResultsPage)
 
     print(f"ExtendedUserResultsPage: {response}")
+
+
+def test_ws():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    websocket = modeling_commands_ws.WebSocket(
+        client=client,
+        fps=30,
+        unlocked_framerate=False,
+        video_res_height=480,
+        video_res_width=640,
+        webrtc=False,
+    )
+
+    # Send a message.
+    id = uuid.uuid4()
+    req = modeling_cmd_req(cmd=start_path(), cmd_id=ModelingCmdId(id))
+    j = json.dumps(req.to_dict())
+    print(f"Sending: {j}")
+    websocket.send(req)
+    print("Sent.")
+
+    # Get the messages.
+    while True:
+        message = websocket.recv()
+        print(json.dumps(message))
+        break
