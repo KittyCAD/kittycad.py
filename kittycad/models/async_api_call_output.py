@@ -92,13 +92,13 @@ class file_conversion:
         if output_format is not UNSET:
             field_dict["output_format"] = output_format
         if output_format_options is not UNSET:
-            field_dict["output_format_options"] = output_format_options
+            field_dict["output_format_options"] = output_format_options.to_dict()
         if outputs is not UNSET:
             field_dict["outputs"] = outputs
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
         if src_format_options is not UNSET:
-            field_dict["src_format_options"] = src_format_options
+            field_dict["src_format_options"] = src_format_options.to_dict()
         if started_at is not UNSET:
             field_dict["started_at"] = started_at
         if status is not UNSET:
@@ -293,7 +293,7 @@ class file_center_of_mass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center_of_mass is not UNSET:
-            field_dict["center_of_mass"] = center_of_mass
+            field_dict["center_of_mass"] = center_of_mass.to_dict()
         if completed_at is not UNSET:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:

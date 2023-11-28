@@ -32,11 +32,11 @@ class Jetstream:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if config is not UNSET:
-            field_dict["config"] = config
+            field_dict["config"] = config.to_dict()
         if meta is not UNSET:
-            field_dict["meta"] = meta
+            field_dict["meta"] = meta.to_dict()
         if stats is not UNSET:
-            field_dict["stats"] = stats
+            field_dict["stats"] = stats.to_dict()
 
         return field_dict
 

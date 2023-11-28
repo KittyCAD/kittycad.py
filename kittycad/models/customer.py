@@ -49,7 +49,7 @@ class Customer:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if address is not UNSET:
-            field_dict["address"] = address
+            field_dict["address"] = address.to_dict()
         if balance is not UNSET:
             field_dict["balance"] = balance
         if created_at is not UNSET:

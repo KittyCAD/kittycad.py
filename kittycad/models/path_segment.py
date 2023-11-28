@@ -30,7 +30,7 @@ class line:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if end is not UNSET:
-            field_dict["end"] = end
+            field_dict["end"] = end.to_dict()
         if relative is not UNSET:
             field_dict["relative"] = relative
         field_dict["type"] = type
@@ -116,15 +116,15 @@ class arc:
         if angle_start is not UNSET:
             field_dict["angle_start"] = angle_start
         if center is not UNSET:
-            field_dict["center"] = center
+            field_dict["center"] = center.to_dict()
         if end is not UNSET:
-            field_dict["end"] = end
+            field_dict["end"] = end.to_dict()
         if radius is not UNSET:
             field_dict["radius"] = radius
         if relative is not UNSET:
             field_dict["relative"] = relative
         if start is not UNSET:
-            field_dict["start"] = start
+            field_dict["start"] = start.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -223,11 +223,11 @@ class bezier:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if control1 is not UNSET:
-            field_dict["control1"] = control1
+            field_dict["control1"] = control1.to_dict()
         if control2 is not UNSET:
-            field_dict["control2"] = control2
+            field_dict["control2"] = control2.to_dict()
         if end is not UNSET:
-            field_dict["end"] = end
+            field_dict["end"] = end.to_dict()
         if relative is not UNSET:
             field_dict["relative"] = relative
         field_dict["type"] = type
@@ -313,7 +313,7 @@ class tangential_arc:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if offset is not UNSET:
-            field_dict["offset"] = offset
+            field_dict["offset"] = offset.to_dict()
         if radius is not UNSET:
             field_dict["radius"] = radius
         field_dict["type"] = type
@@ -384,9 +384,9 @@ class tangential_arc_to:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if angle_snap_increment is not UNSET:
-            field_dict["angle_snap_increment"] = angle_snap_increment
+            field_dict["angle_snap_increment"] = angle_snap_increment.to_dict()
         if to is not UNSET:
-            field_dict["to"] = to
+            field_dict["to"] = to.to_dict()
         field_dict["type"] = type
 
         return field_dict

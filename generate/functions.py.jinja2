@@ -28,10 +28,17 @@ def _get_kwargs(
     {% for arg in args %}
     {% if arg.in_query %}
     if {{arg.name}} is not None:
+        {% if arg.type == "bool" %}
+        if "?" in url:
+            url = url + "&{{arg.name}}=" + str({{arg.name}}).lower()
+        else:
+            url = url + "?{{arg.name}}=" + str({{arg.name}}).lower()
+        {% else %}
         if "?" in url:
             url = url + "&{{arg.name}}=" + str({{arg.name}})
         else:
             url = url + "?{{arg.name}}=" + str({{arg.name}})
+        {% endif %}
     {% endif %}
     {% endfor %}
 

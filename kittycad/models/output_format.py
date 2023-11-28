@@ -175,7 +175,7 @@ class obj:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords
+            field_dict["coords"] = coords.to_dict()
         field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units
@@ -257,9 +257,9 @@ class ply:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords
+            field_dict["coords"] = coords.to_dict()
         if selection is not UNSET:
-            field_dict["selection"] = selection
+            field_dict["selection"] = selection.to_dict()
         if storage is not UNSET:
             field_dict["storage"] = storage
         field_dict["type"] = type
@@ -350,7 +350,7 @@ class step:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords
+            field_dict["coords"] = coords.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -422,9 +422,9 @@ class stl:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords
+            field_dict["coords"] = coords.to_dict()
         if selection is not UNSET:
-            field_dict["selection"] = selection
+            field_dict["selection"] = selection.to_dict()
         if storage is not UNSET:
             field_dict["storage"] = storage
         field_dict["type"] = type

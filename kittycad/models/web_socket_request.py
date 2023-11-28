@@ -30,7 +30,7 @@ class trickle_ice:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if candidate is not UNSET:
-            field_dict["candidate"] = candidate
+            field_dict["candidate"] = candidate.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -93,7 +93,7 @@ class sdp_offer:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if offer is not UNSET:
-            field_dict["offer"] = offer
+            field_dict["offer"] = offer.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -159,7 +159,7 @@ class modeling_cmd_req:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cmd is not UNSET:
-            field_dict["cmd"] = cmd
+            field_dict["cmd"] = cmd.to_dict()
         if cmd_id is not UNSET:
             field_dict["cmd_id"] = cmd_id
         field_dict["type"] = type
@@ -347,7 +347,7 @@ class metrics_response:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if metrics is not UNSET:
-            field_dict["metrics"] = metrics
+            field_dict["metrics"] = metrics.to_dict()
         field_dict["type"] = type
 
         return field_dict

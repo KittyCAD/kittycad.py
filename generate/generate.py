@@ -433,7 +433,7 @@ from kittycad.types import Response
         for optional_arg in optional_args:
             params_str += optional_arg
 
-    if request_body_type:
+    if request_body_type and "x-dropshot-websocket" not in endpoint:
         if request_body_type == "str":
             params_str += "body='<string>',\n"
         elif request_body_type == "bytes":
@@ -1391,6 +1391,9 @@ def generateObjectTypeCode(
 
     # Iternate over the properties.
     for property_name in schema["properties"]:
+        property_schema = schema["properties"][property_name]
+        if "allOf" in property_schema and len(property_schema["allOf"]) == 1:
+            property_schema = property_schema["allOf"][0]
         if property_name == tag:
             f.write(
                 "\t\tfield_dict['"
@@ -1404,13 +1407,41 @@ def generateObjectTypeCode(
             f.write(
                 "\t\tif " + clean_parameter_name(property_name) + " is not UNSET:\n"
             )
-            f.write(
-                "\t\t\tfield_dict['"
-                + property_name
-                + "'] = "
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
+            # We only want .to_dict on nested objects.
+            if "$ref" in property_schema:
+                actual_schema = data["components"]["schemas"][
+                    property_schema["$ref"].replace("#/components/schemas/", "")
+                ]
+                is_enum = isEnumWithDocsOneOf(actual_schema)
+                if (
+                    "properties" in actual_schema
+                    or "oneOf" in actual_schema
+                    or "anyOf" in actual_schema
+                    or "allOf" in actual_schema
+                ) and not is_enum:
+                    f.write(
+                        "\t\t\tfield_dict['"
+                        + property_name
+                        + "'] = "
+                        + clean_parameter_name(property_name)
+                        + ".to_dict()\n"
+                    )
+                else:
+                    f.write(
+                        "\t\t\tfield_dict['"
+                        + property_name
+                        + "'] = "
+                        + clean_parameter_name(property_name)
+                        + "\n"
+                    )
+            else:
+                f.write(
+                    "\t\t\tfield_dict['"
+                    + property_name
+                    + "'] = "
+                    + clean_parameter_name(property_name)
+                    + "\n"
+                )
 
     f.write("\n")
     f.write("\t\treturn field_dict\n")

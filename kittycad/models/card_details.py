@@ -40,7 +40,7 @@ class CardDetails:
         if brand is not UNSET:
             field_dict["brand"] = brand
         if checks is not UNSET:
-            field_dict["checks"] = checks
+            field_dict["checks"] = checks.to_dict()
         if country is not UNSET:
             field_dict["country"] = country
         if exp_month is not UNSET:

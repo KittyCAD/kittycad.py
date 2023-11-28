@@ -83,13 +83,13 @@ class FileConversion:
         if output_format is not UNSET:
             field_dict["output_format"] = output_format
         if output_format_options is not UNSET:
-            field_dict["output_format_options"] = output_format_options
+            field_dict["output_format_options"] = output_format_options.to_dict()
         if outputs is not UNSET:
             field_dict["outputs"] = outputs
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
         if src_format_options is not UNSET:
-            field_dict["src_format_options"] = src_format_options
+            field_dict["src_format_options"] = src_format_options.to_dict()
         if started_at is not UNSET:
             field_dict["started_at"] = started_at
         if status is not UNSET:

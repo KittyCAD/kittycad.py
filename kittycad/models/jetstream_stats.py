@@ -38,7 +38,7 @@ class JetstreamStats:
         if accounts is not UNSET:
             field_dict["accounts"] = accounts
         if api is not UNSET:
-            field_dict["api"] = api
+            field_dict["api"] = api.to_dict()
         if ha_assets is not UNSET:
             field_dict["ha_assets"] = ha_assets
         if memory is not UNSET:
