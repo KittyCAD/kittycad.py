@@ -23,12 +23,14 @@ from .models import (
     FileImportFormat,
     FileMass,
     FileVolume,
+    ModelingCmd,
     ModelingCmdId,
     Pong,
     UnitDensity,
     UnitMass,
     UnitVolume,
     User,
+    WebSocketRequest,
 )
 from .models.modeling_cmd import start_path
 from .models.web_socket_request import modeling_cmd_req
@@ -307,7 +309,9 @@ def test_ws():
 
     # Send a message.
     id = uuid.uuid4()
-    req = modeling_cmd_req(cmd=start_path(), cmd_id=ModelingCmdId(id))
+    req = WebSocketRequest(
+        modeling_cmd_req(cmd=ModelingCmd(start_path()), cmd_id=ModelingCmdId(id))
+    )
     j = json.dumps(req.to_dict())
     print(f"Sending: {j}")
     websocket.send(req)
@@ -318,3 +322,6 @@ def test_ws():
         message = websocket.recv()
         print(json.dumps(message))
         break
+
+    # Close the websocket.
+    websocket.close()

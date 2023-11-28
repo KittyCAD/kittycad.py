@@ -1,0 +1,46 @@
+from typing import Dict, Any, Union
+from typing_extensions import Self
+
+class {{name}}:
+    {% if description %}
+    """{{description}}"""
+    {% endif %}
+    type: Union[
+        {% for type in types %}
+        {{type.name}},
+        {% endfor %}
+    ] = None
+
+    def __init__(self,
+                 type: Union[
+                     {% for type in types %}
+                     type({{type.name}}),
+                     {% endfor %}
+                 ]):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        {% for type in types %}{% if loop.first %}
+        if isinstance(self.type, {{type.name}}):
+            n : {{type.name}} = self.type
+            return n.to_dict()
+        {% else %}elif isinstance(self.type, {{type.name}}):
+            n : {{type.name}} = self.type
+            return n.to_dict()
+        {% endif %}{% endfor %}
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        {% for type in types %}{% if loop.first %}
+        if d.get("type") == "{{type.name}}":
+            n : {{type.name}} = {{type.name}}()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        {% else %}elif d.get("type") == "{{type.name}}":
+            n : {{type.name}} = {{type.name}}()
+            n.from_dict(d)
+            self.type = n
+            return self
+        {% endif %}{% endfor %}
+        raise Exception("Unknown type")

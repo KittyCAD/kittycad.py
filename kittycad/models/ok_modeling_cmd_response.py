@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
+from typing_extensions import Self
 
 from ..models.center_of_mass import CenterOfMass
 from ..models.curve_get_control_points import CurveGetControlPoints
@@ -1974,36 +1975,334 @@ class get_sketch_mode_plane:
         return key in self.additional_properties
 
 
-OkModelingCmdResponse = Union[
-    empty,
-    export,
-    select_with_point,
-    highlight_set_entity,
-    entity_get_child_uuid,
-    entity_get_num_children,
-    entity_get_parent_id,
-    entity_get_all_child_uuids,
-    select_get,
-    get_entity_type,
-    solid3d_get_all_edge_faces,
-    solid3d_get_all_opposite_edges,
-    solid3d_get_opposite_edge,
-    solid3d_get_prev_adjacent_edge,
-    solid3d_get_next_adjacent_edge,
-    mouse_click,
-    curve_get_type,
-    curve_get_control_points,
-    take_snapshot,
-    path_get_info,
-    path_get_curve_uuids_for_vertices,
-    path_get_vertex_uuids,
-    plane_intersect_and_project,
-    curve_get_end_points,
-    import_files,
-    mass,
-    volume,
-    density,
-    surface_area,
-    center_of_mass,
-    get_sketch_mode_plane,
-]
+class OkModelingCmdResponse:
+
+    """A successful response from a modeling command. This can be one of several types of responses, depending on the command."""
+
+    type: Union[
+        empty,
+        export,
+        select_with_point,
+        highlight_set_entity,
+        entity_get_child_uuid,
+        entity_get_num_children,
+        entity_get_parent_id,
+        entity_get_all_child_uuids,
+        select_get,
+        get_entity_type,
+        solid3d_get_all_edge_faces,
+        solid3d_get_all_opposite_edges,
+        solid3d_get_opposite_edge,
+        solid3d_get_prev_adjacent_edge,
+        solid3d_get_next_adjacent_edge,
+        mouse_click,
+        curve_get_type,
+        curve_get_control_points,
+        take_snapshot,
+        path_get_info,
+        path_get_curve_uuids_for_vertices,
+        path_get_vertex_uuids,
+        plane_intersect_and_project,
+        curve_get_end_points,
+        import_files,
+        mass,
+        volume,
+        density,
+        surface_area,
+        center_of_mass,
+        get_sketch_mode_plane,
+    ] = None
+
+    def __init__(
+        self,
+        type: Union[
+            type(empty),
+            type(export),
+            type(select_with_point),
+            type(highlight_set_entity),
+            type(entity_get_child_uuid),
+            type(entity_get_num_children),
+            type(entity_get_parent_id),
+            type(entity_get_all_child_uuids),
+            type(select_get),
+            type(get_entity_type),
+            type(solid3d_get_all_edge_faces),
+            type(solid3d_get_all_opposite_edges),
+            type(solid3d_get_opposite_edge),
+            type(solid3d_get_prev_adjacent_edge),
+            type(solid3d_get_next_adjacent_edge),
+            type(mouse_click),
+            type(curve_get_type),
+            type(curve_get_control_points),
+            type(take_snapshot),
+            type(path_get_info),
+            type(path_get_curve_uuids_for_vertices),
+            type(path_get_vertex_uuids),
+            type(plane_intersect_and_project),
+            type(curve_get_end_points),
+            type(import_files),
+            type(mass),
+            type(volume),
+            type(density),
+            type(surface_area),
+            type(center_of_mass),
+            type(get_sketch_mode_plane),
+        ],
+    ):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        if isinstance(self.type, empty):
+            n: empty = self.type
+            return n.to_dict()
+        elif isinstance(self.type, export):
+            n: export = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_with_point):
+            n: select_with_point = self.type
+            return n.to_dict()
+        elif isinstance(self.type, highlight_set_entity):
+            n: highlight_set_entity = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_child_uuid):
+            n: entity_get_child_uuid = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_num_children):
+            n: entity_get_num_children = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_parent_id):
+            n: entity_get_parent_id = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_all_child_uuids):
+            n: entity_get_all_child_uuids = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_get):
+            n: select_get = self.type
+            return n.to_dict()
+        elif isinstance(self.type, get_entity_type):
+            n: get_entity_type = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_all_edge_faces):
+            n: solid3d_get_all_edge_faces = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_all_opposite_edges):
+            n: solid3d_get_all_opposite_edges = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_opposite_edge):
+            n: solid3d_get_opposite_edge = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_prev_adjacent_edge):
+            n: solid3d_get_prev_adjacent_edge = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_next_adjacent_edge):
+            n: solid3d_get_next_adjacent_edge = self.type
+            return n.to_dict()
+        elif isinstance(self.type, mouse_click):
+            n: mouse_click = self.type
+            return n.to_dict()
+        elif isinstance(self.type, curve_get_type):
+            n: curve_get_type = self.type
+            return n.to_dict()
+        elif isinstance(self.type, curve_get_control_points):
+            n: curve_get_control_points = self.type
+            return n.to_dict()
+        elif isinstance(self.type, take_snapshot):
+            n: take_snapshot = self.type
+            return n.to_dict()
+        elif isinstance(self.type, path_get_info):
+            n: path_get_info = self.type
+            return n.to_dict()
+        elif isinstance(self.type, path_get_curve_uuids_for_vertices):
+            n: path_get_curve_uuids_for_vertices = self.type
+            return n.to_dict()
+        elif isinstance(self.type, path_get_vertex_uuids):
+            n: path_get_vertex_uuids = self.type
+            return n.to_dict()
+        elif isinstance(self.type, plane_intersect_and_project):
+            n: plane_intersect_and_project = self.type
+            return n.to_dict()
+        elif isinstance(self.type, curve_get_end_points):
+            n: curve_get_end_points = self.type
+            return n.to_dict()
+        elif isinstance(self.type, import_files):
+            n: import_files = self.type
+            return n.to_dict()
+        elif isinstance(self.type, mass):
+            n: mass = self.type
+            return n.to_dict()
+        elif isinstance(self.type, volume):
+            n: volume = self.type
+            return n.to_dict()
+        elif isinstance(self.type, density):
+            n: density = self.type
+            return n.to_dict()
+        elif isinstance(self.type, surface_area):
+            n: surface_area = self.type
+            return n.to_dict()
+        elif isinstance(self.type, center_of_mass):
+            n: center_of_mass = self.type
+            return n.to_dict()
+        elif isinstance(self.type, get_sketch_mode_plane):
+            n: get_sketch_mode_plane = self.type
+            return n.to_dict()
+
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        if d.get("type") == "empty":
+            n: empty = empty()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        elif d.get("type") == "export":
+            n: export = export()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_with_point":
+            n: select_with_point = select_with_point()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "highlight_set_entity":
+            n: highlight_set_entity = highlight_set_entity()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_child_uuid":
+            n: entity_get_child_uuid = entity_get_child_uuid()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_num_children":
+            n: entity_get_num_children = entity_get_num_children()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_parent_id":
+            n: entity_get_parent_id = entity_get_parent_id()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_all_child_uuids":
+            n: entity_get_all_child_uuids = entity_get_all_child_uuids()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_get":
+            n: select_get = select_get()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "get_entity_type":
+            n: get_entity_type = get_entity_type()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_all_edge_faces":
+            n: solid3d_get_all_edge_faces = solid3d_get_all_edge_faces()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_all_opposite_edges":
+            n: solid3d_get_all_opposite_edges = solid3d_get_all_opposite_edges()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_opposite_edge":
+            n: solid3d_get_opposite_edge = solid3d_get_opposite_edge()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_prev_adjacent_edge":
+            n: solid3d_get_prev_adjacent_edge = solid3d_get_prev_adjacent_edge()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_next_adjacent_edge":
+            n: solid3d_get_next_adjacent_edge = solid3d_get_next_adjacent_edge()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "mouse_click":
+            n: mouse_click = mouse_click()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "curve_get_type":
+            n: curve_get_type = curve_get_type()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "curve_get_control_points":
+            n: curve_get_control_points = curve_get_control_points()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "take_snapshot":
+            n: take_snapshot = take_snapshot()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "path_get_info":
+            n: path_get_info = path_get_info()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "path_get_curve_uuids_for_vertices":
+            n: path_get_curve_uuids_for_vertices = path_get_curve_uuids_for_vertices()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "path_get_vertex_uuids":
+            n: path_get_vertex_uuids = path_get_vertex_uuids()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "plane_intersect_and_project":
+            n: plane_intersect_and_project = plane_intersect_and_project()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "curve_get_end_points":
+            n: curve_get_end_points = curve_get_end_points()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "import_files":
+            n: import_files = import_files()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "mass":
+            n: mass = mass()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "volume":
+            n: volume = volume()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "density":
+            n: density = density()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "surface_area":
+            n: surface_area = surface_area()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "center_of_mass":
+            n: center_of_mass = center_of_mass()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "get_sketch_mode_plane":
+            n: get_sketch_mode_plane = get_sketch_mode_plane()
+            n.from_dict(d)
+            self.type = n
+            return self
+
+        raise Exception("Unknown type")

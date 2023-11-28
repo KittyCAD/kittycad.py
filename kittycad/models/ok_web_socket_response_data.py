@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
+from typing_extensions import Self
 
 from ..types import UNSET, Unset
 
@@ -340,6 +341,84 @@ class metrics_request:
         return key in self.additional_properties
 
 
-OkWebSocketResponseData = Union[
-    ice_server_info, trickle_ice, sdp_answer, modeling, export, metrics_request
-]
+class OkWebSocketResponseData:
+
+    """The websocket messages this server sends."""
+
+    type: Union[
+        ice_server_info,
+        trickle_ice,
+        sdp_answer,
+        modeling,
+        export,
+        metrics_request,
+    ] = None
+
+    def __init__(
+        self,
+        type: Union[
+            type(ice_server_info),
+            type(trickle_ice),
+            type(sdp_answer),
+            type(modeling),
+            type(export),
+            type(metrics_request),
+        ],
+    ):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        if isinstance(self.type, ice_server_info):
+            n: ice_server_info = self.type
+            return n.to_dict()
+        elif isinstance(self.type, trickle_ice):
+            n: trickle_ice = self.type
+            return n.to_dict()
+        elif isinstance(self.type, sdp_answer):
+            n: sdp_answer = self.type
+            return n.to_dict()
+        elif isinstance(self.type, modeling):
+            n: modeling = self.type
+            return n.to_dict()
+        elif isinstance(self.type, export):
+            n: export = self.type
+            return n.to_dict()
+        elif isinstance(self.type, metrics_request):
+            n: metrics_request = self.type
+            return n.to_dict()
+
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        if d.get("type") == "ice_server_info":
+            n: ice_server_info = ice_server_info()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        elif d.get("type") == "trickle_ice":
+            n: trickle_ice = trickle_ice()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "sdp_answer":
+            n: sdp_answer = sdp_answer()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "modeling":
+            n: modeling = modeling()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "export":
+            n: export = export()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "metrics_request":
+            n: metrics_request = metrics_request()
+            n.from_dict(d)
+            self.type = n
+            return self
+
+        raise Exception("Unknown type")

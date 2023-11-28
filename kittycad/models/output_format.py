@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
+from typing_extensions import Self
 
 from ..models.fbx_storage import FbxStorage
 from ..models.gltf_presentation import GltfPresentation
@@ -494,4 +495,84 @@ class stl:
         return key in self.additional_properties
 
 
-OutputFormat = Union[fbx, gltf, obj, ply, step, stl]
+class OutputFormat:
+
+    """Output format specifier."""
+
+    type: Union[
+        fbx,
+        gltf,
+        obj,
+        ply,
+        step,
+        stl,
+    ] = None
+
+    def __init__(
+        self,
+        type: Union[
+            type(fbx),
+            type(gltf),
+            type(obj),
+            type(ply),
+            type(step),
+            type(stl),
+        ],
+    ):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        if isinstance(self.type, fbx):
+            n: fbx = self.type
+            return n.to_dict()
+        elif isinstance(self.type, gltf):
+            n: gltf = self.type
+            return n.to_dict()
+        elif isinstance(self.type, obj):
+            n: obj = self.type
+            return n.to_dict()
+        elif isinstance(self.type, ply):
+            n: ply = self.type
+            return n.to_dict()
+        elif isinstance(self.type, step):
+            n: step = self.type
+            return n.to_dict()
+        elif isinstance(self.type, stl):
+            n: stl = self.type
+            return n.to_dict()
+
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        if d.get("type") == "fbx":
+            n: fbx = fbx()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        elif d.get("type") == "gltf":
+            n: gltf = gltf()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "obj":
+            n: obj = obj()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "ply":
+            n: ply = ply()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "step":
+            n: step = step()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "stl":
+            n: stl = stl()
+            n.from_dict(d)
+            self.type = n
+            return self
+
+        raise Exception("Unknown type")

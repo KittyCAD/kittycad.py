@@ -1,6 +1,7 @@
 from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
+from typing_extensions import Self
 
 from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
@@ -4877,76 +4878,734 @@ class curve_set_constraint:
         return key in self.additional_properties
 
 
-ModelingCmd = Union[
-    start_path,
-    move_path_pen,
-    extend_path,
-    extrude,
-    close_path,
-    camera_drag_start,
-    camera_drag_move,
-    camera_drag_end,
-    default_camera_look_at,
-    default_camera_zoom,
-    default_camera_enable_sketch_mode,
-    default_camera_disable_sketch_mode,
-    default_camera_focus_on,
-    export,
-    entity_get_parent_id,
-    entity_get_num_children,
-    entity_get_child_uuid,
-    entity_get_all_child_uuids,
-    edit_mode_enter,
-    edit_mode_exit,
-    select_with_point,
-    select_clear,
-    select_add,
-    select_remove,
-    select_replace,
-    select_get,
-    highlight_set_entity,
-    highlight_set_entities,
-    new_annotation,
-    update_annotation,
-    object_visible,
-    object_bring_to_front,
-    get_entity_type,
-    solid2d_add_hole,
-    solid3d_get_all_edge_faces,
-    solid3d_get_all_opposite_edges,
-    solid3d_get_opposite_edge,
-    solid3d_get_next_adjacent_edge,
-    solid3d_get_prev_adjacent_edge,
-    send_object,
-    entity_set_opacity,
-    entity_fade,
-    make_plane,
-    plane_set_color,
-    set_tool,
-    mouse_move,
-    mouse_click,
-    sketch_mode_enable,
-    sketch_mode_disable,
-    curve_get_type,
-    curve_get_control_points,
-    take_snapshot,
-    make_axes_gizmo,
-    path_get_info,
-    path_get_curve_uuids_for_vertices,
-    path_get_vertex_uuids,
-    handle_mouse_drag_start,
-    handle_mouse_drag_move,
-    handle_mouse_drag_end,
-    remove_scene_objects,
-    plane_intersect_and_project,
-    curve_get_end_points,
-    reconfigure_stream,
-    import_files,
-    mass,
-    density,
-    volume,
-    center_of_mass,
-    surface_area,
-    get_sketch_mode_plane,
-    curve_set_constraint,
-]
+class ModelingCmd:
+
+    """Commands that the KittyCAD engine can execute."""
+
+    type: Union[
+        start_path,
+        move_path_pen,
+        extend_path,
+        extrude,
+        close_path,
+        camera_drag_start,
+        camera_drag_move,
+        camera_drag_end,
+        default_camera_look_at,
+        default_camera_zoom,
+        default_camera_enable_sketch_mode,
+        default_camera_disable_sketch_mode,
+        default_camera_focus_on,
+        export,
+        entity_get_parent_id,
+        entity_get_num_children,
+        entity_get_child_uuid,
+        entity_get_all_child_uuids,
+        edit_mode_enter,
+        edit_mode_exit,
+        select_with_point,
+        select_clear,
+        select_add,
+        select_remove,
+        select_replace,
+        select_get,
+        highlight_set_entity,
+        highlight_set_entities,
+        new_annotation,
+        update_annotation,
+        object_visible,
+        object_bring_to_front,
+        get_entity_type,
+        solid2d_add_hole,
+        solid3d_get_all_edge_faces,
+        solid3d_get_all_opposite_edges,
+        solid3d_get_opposite_edge,
+        solid3d_get_next_adjacent_edge,
+        solid3d_get_prev_adjacent_edge,
+        send_object,
+        entity_set_opacity,
+        entity_fade,
+        make_plane,
+        plane_set_color,
+        set_tool,
+        mouse_move,
+        mouse_click,
+        sketch_mode_enable,
+        sketch_mode_disable,
+        curve_get_type,
+        curve_get_control_points,
+        take_snapshot,
+        make_axes_gizmo,
+        path_get_info,
+        path_get_curve_uuids_for_vertices,
+        path_get_vertex_uuids,
+        handle_mouse_drag_start,
+        handle_mouse_drag_move,
+        handle_mouse_drag_end,
+        remove_scene_objects,
+        plane_intersect_and_project,
+        curve_get_end_points,
+        reconfigure_stream,
+        import_files,
+        mass,
+        density,
+        volume,
+        center_of_mass,
+        surface_area,
+        get_sketch_mode_plane,
+        curve_set_constraint,
+    ] = None
+
+    def __init__(
+        self,
+        type: Union[
+            type(start_path),
+            type(move_path_pen),
+            type(extend_path),
+            type(extrude),
+            type(close_path),
+            type(camera_drag_start),
+            type(camera_drag_move),
+            type(camera_drag_end),
+            type(default_camera_look_at),
+            type(default_camera_zoom),
+            type(default_camera_enable_sketch_mode),
+            type(default_camera_disable_sketch_mode),
+            type(default_camera_focus_on),
+            type(export),
+            type(entity_get_parent_id),
+            type(entity_get_num_children),
+            type(entity_get_child_uuid),
+            type(entity_get_all_child_uuids),
+            type(edit_mode_enter),
+            type(edit_mode_exit),
+            type(select_with_point),
+            type(select_clear),
+            type(select_add),
+            type(select_remove),
+            type(select_replace),
+            type(select_get),
+            type(highlight_set_entity),
+            type(highlight_set_entities),
+            type(new_annotation),
+            type(update_annotation),
+            type(object_visible),
+            type(object_bring_to_front),
+            type(get_entity_type),
+            type(solid2d_add_hole),
+            type(solid3d_get_all_edge_faces),
+            type(solid3d_get_all_opposite_edges),
+            type(solid3d_get_opposite_edge),
+            type(solid3d_get_next_adjacent_edge),
+            type(solid3d_get_prev_adjacent_edge),
+            type(send_object),
+            type(entity_set_opacity),
+            type(entity_fade),
+            type(make_plane),
+            type(plane_set_color),
+            type(set_tool),
+            type(mouse_move),
+            type(mouse_click),
+            type(sketch_mode_enable),
+            type(sketch_mode_disable),
+            type(curve_get_type),
+            type(curve_get_control_points),
+            type(take_snapshot),
+            type(make_axes_gizmo),
+            type(path_get_info),
+            type(path_get_curve_uuids_for_vertices),
+            type(path_get_vertex_uuids),
+            type(handle_mouse_drag_start),
+            type(handle_mouse_drag_move),
+            type(handle_mouse_drag_end),
+            type(remove_scene_objects),
+            type(plane_intersect_and_project),
+            type(curve_get_end_points),
+            type(reconfigure_stream),
+            type(import_files),
+            type(mass),
+            type(density),
+            type(volume),
+            type(center_of_mass),
+            type(surface_area),
+            type(get_sketch_mode_plane),
+            type(curve_set_constraint),
+        ],
+    ):
+        self.type = type
+
+    def to_dict(self) -> Dict[str, Any]:
+        if isinstance(self.type, start_path):
+            n: start_path = self.type
+            return n.to_dict()
+        elif isinstance(self.type, move_path_pen):
+            n: move_path_pen = self.type
+            return n.to_dict()
+        elif isinstance(self.type, extend_path):
+            n: extend_path = self.type
+            return n.to_dict()
+        elif isinstance(self.type, extrude):
+            n: extrude = self.type
+            return n.to_dict()
+        elif isinstance(self.type, close_path):
+            n: close_path = self.type
+            return n.to_dict()
+        elif isinstance(self.type, camera_drag_start):
+            n: camera_drag_start = self.type
+            return n.to_dict()
+        elif isinstance(self.type, camera_drag_move):
+            n: camera_drag_move = self.type
+            return n.to_dict()
+        elif isinstance(self.type, camera_drag_end):
+            n: camera_drag_end = self.type
+            return n.to_dict()
+        elif isinstance(self.type, default_camera_look_at):
+            n: default_camera_look_at = self.type
+            return n.to_dict()
+        elif isinstance(self.type, default_camera_zoom):
+            n: default_camera_zoom = self.type
+            return n.to_dict()
+        elif isinstance(self.type, default_camera_enable_sketch_mode):
+            n: default_camera_enable_sketch_mode = self.type
+            return n.to_dict()
+        elif isinstance(self.type, default_camera_disable_sketch_mode):
+            n: default_camera_disable_sketch_mode = self.type
+            return n.to_dict()
+        elif isinstance(self.type, default_camera_focus_on):
+            n: default_camera_focus_on = self.type
+            return n.to_dict()
+        elif isinstance(self.type, export):
+            n: export = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_parent_id):
+            n: entity_get_parent_id = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_num_children):
+            n: entity_get_num_children = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_child_uuid):
+            n: entity_get_child_uuid = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_get_all_child_uuids):
+            n: entity_get_all_child_uuids = self.type
+            return n.to_dict()
+        elif isinstance(self.type, edit_mode_enter):
+            n: edit_mode_enter = self.type
+            return n.to_dict()
+        elif isinstance(self.type, edit_mode_exit):
+            n: edit_mode_exit = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_with_point):
+            n: select_with_point = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_clear):
+            n: select_clear = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_add):
+            n: select_add = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_remove):
+            n: select_remove = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_replace):
+            n: select_replace = self.type
+            return n.to_dict()
+        elif isinstance(self.type, select_get):
+            n: select_get = self.type
+            return n.to_dict()
+        elif isinstance(self.type, highlight_set_entity):
+            n: highlight_set_entity = self.type
+            return n.to_dict()
+        elif isinstance(self.type, highlight_set_entities):
+            n: highlight_set_entities = self.type
+            return n.to_dict()
+        elif isinstance(self.type, new_annotation):
+            n: new_annotation = self.type
+            return n.to_dict()
+        elif isinstance(self.type, update_annotation):
+            n: update_annotation = self.type
+            return n.to_dict()
+        elif isinstance(self.type, object_visible):
+            n: object_visible = self.type
+            return n.to_dict()
+        elif isinstance(self.type, object_bring_to_front):
+            n: object_bring_to_front = self.type
+            return n.to_dict()
+        elif isinstance(self.type, get_entity_type):
+            n: get_entity_type = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid2d_add_hole):
+            n: solid2d_add_hole = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_all_edge_faces):
+            n: solid3d_get_all_edge_faces = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_all_opposite_edges):
+            n: solid3d_get_all_opposite_edges = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_opposite_edge):
+            n: solid3d_get_opposite_edge = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_next_adjacent_edge):
+            n: solid3d_get_next_adjacent_edge = self.type
+            return n.to_dict()
+        elif isinstance(self.type, solid3d_get_prev_adjacent_edge):
+            n: solid3d_get_prev_adjacent_edge = self.type
+            return n.to_dict()
+        elif isinstance(self.type, send_object):
+            n: send_object = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_set_opacity):
+            n: entity_set_opacity = self.type
+            return n.to_dict()
+        elif isinstance(self.type, entity_fade):
+            n: entity_fade = self.type
+            return n.to_dict()
+        elif isinstance(self.type, make_plane):
+            n: make_plane = self.type
+            return n.to_dict()
+        elif isinstance(self.type, plane_set_color):
+            n: plane_set_color = self.type
+            return n.to_dict()
+        elif isinstance(self.type, set_tool):
+            n: set_tool = self.type
+            return n.to_dict()
+        elif isinstance(self.type, mouse_move):
+            n: mouse_move = self.type
+            return n.to_dict()
+        elif isinstance(self.type, mouse_click):
+            n: mouse_click = self.type
+            return n.to_dict()
+        elif isinstance(self.type, sketch_mode_enable):
+            n: sketch_mode_enable = self.type
+            return n.to_dict()
+        elif isinstance(self.type, sketch_mode_disable):
+            n: sketch_mode_disable = self.type
+            return n.to_dict()
+        elif isinstance(self.type, curve_get_type):
+            n: curve_get_type = self.type
+            return n.to_dict()
+        elif isinstance(self.type, curve_get_control_points):
+            n: curve_get_control_points = self.type
+            return n.to_dict()
+        elif isinstance(self.type, take_snapshot):
+            n: take_snapshot = self.type
+            return n.to_dict()
+        elif isinstance(self.type, make_axes_gizmo):
+            n: make_axes_gizmo = self.type
+            return n.to_dict()
+        elif isinstance(self.type, path_get_info):
+            n: path_get_info = self.type
+            return n.to_dict()
+        elif isinstance(self.type, path_get_curve_uuids_for_vertices):
+            n: path_get_curve_uuids_for_vertices = self.type
+            return n.to_dict()
+        elif isinstance(self.type, path_get_vertex_uuids):
+            n: path_get_vertex_uuids = self.type
+            return n.to_dict()
+        elif isinstance(self.type, handle_mouse_drag_start):
+            n: handle_mouse_drag_start = self.type
+            return n.to_dict()
+        elif isinstance(self.type, handle_mouse_drag_move):
+            n: handle_mouse_drag_move = self.type
+            return n.to_dict()
+        elif isinstance(self.type, handle_mouse_drag_end):
+            n: handle_mouse_drag_end = self.type
+            return n.to_dict()
+        elif isinstance(self.type, remove_scene_objects):
+            n: remove_scene_objects = self.type
+            return n.to_dict()
+        elif isinstance(self.type, plane_intersect_and_project):
+            n: plane_intersect_and_project = self.type
+            return n.to_dict()
+        elif isinstance(self.type, curve_get_end_points):
+            n: curve_get_end_points = self.type
+            return n.to_dict()
+        elif isinstance(self.type, reconfigure_stream):
+            n: reconfigure_stream = self.type
+            return n.to_dict()
+        elif isinstance(self.type, import_files):
+            n: import_files = self.type
+            return n.to_dict()
+        elif isinstance(self.type, mass):
+            n: mass = self.type
+            return n.to_dict()
+        elif isinstance(self.type, density):
+            n: density = self.type
+            return n.to_dict()
+        elif isinstance(self.type, volume):
+            n: volume = self.type
+            return n.to_dict()
+        elif isinstance(self.type, center_of_mass):
+            n: center_of_mass = self.type
+            return n.to_dict()
+        elif isinstance(self.type, surface_area):
+            n: surface_area = self.type
+            return n.to_dict()
+        elif isinstance(self.type, get_sketch_mode_plane):
+            n: get_sketch_mode_plane = self.type
+            return n.to_dict()
+        elif isinstance(self.type, curve_set_constraint):
+            n: curve_set_constraint = self.type
+            return n.to_dict()
+
+        raise Exception("Unknown type")
+
+    def from_dict(self, d) -> Self:
+        if d.get("type") == "start_path":
+            n: start_path = start_path()
+            n.from_dict(d)
+            self.type = n
+            return Self
+        elif d.get("type") == "move_path_pen":
+            n: move_path_pen = move_path_pen()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "extend_path":
+            n: extend_path = extend_path()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "extrude":
+            n: extrude = extrude()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "close_path":
+            n: close_path = close_path()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "camera_drag_start":
+            n: camera_drag_start = camera_drag_start()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "camera_drag_move":
+            n: camera_drag_move = camera_drag_move()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "camera_drag_end":
+            n: camera_drag_end = camera_drag_end()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "default_camera_look_at":
+            n: default_camera_look_at = default_camera_look_at()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "default_camera_zoom":
+            n: default_camera_zoom = default_camera_zoom()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "default_camera_enable_sketch_mode":
+            n: default_camera_enable_sketch_mode = default_camera_enable_sketch_mode()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "default_camera_disable_sketch_mode":
+            n: default_camera_disable_sketch_mode = default_camera_disable_sketch_mode()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "default_camera_focus_on":
+            n: default_camera_focus_on = default_camera_focus_on()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "export":
+            n: export = export()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_parent_id":
+            n: entity_get_parent_id = entity_get_parent_id()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_num_children":
+            n: entity_get_num_children = entity_get_num_children()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_child_uuid":
+            n: entity_get_child_uuid = entity_get_child_uuid()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_get_all_child_uuids":
+            n: entity_get_all_child_uuids = entity_get_all_child_uuids()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "edit_mode_enter":
+            n: edit_mode_enter = edit_mode_enter()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "edit_mode_exit":
+            n: edit_mode_exit = edit_mode_exit()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_with_point":
+            n: select_with_point = select_with_point()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_clear":
+            n: select_clear = select_clear()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_add":
+            n: select_add = select_add()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_remove":
+            n: select_remove = select_remove()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_replace":
+            n: select_replace = select_replace()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "select_get":
+            n: select_get = select_get()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "highlight_set_entity":
+            n: highlight_set_entity = highlight_set_entity()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "highlight_set_entities":
+            n: highlight_set_entities = highlight_set_entities()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "new_annotation":
+            n: new_annotation = new_annotation()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "update_annotation":
+            n: update_annotation = update_annotation()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "object_visible":
+            n: object_visible = object_visible()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "object_bring_to_front":
+            n: object_bring_to_front = object_bring_to_front()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "get_entity_type":
+            n: get_entity_type = get_entity_type()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid2d_add_hole":
+            n: solid2d_add_hole = solid2d_add_hole()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_all_edge_faces":
+            n: solid3d_get_all_edge_faces = solid3d_get_all_edge_faces()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_all_opposite_edges":
+            n: solid3d_get_all_opposite_edges = solid3d_get_all_opposite_edges()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_opposite_edge":
+            n: solid3d_get_opposite_edge = solid3d_get_opposite_edge()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_next_adjacent_edge":
+            n: solid3d_get_next_adjacent_edge = solid3d_get_next_adjacent_edge()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "solid3d_get_prev_adjacent_edge":
+            n: solid3d_get_prev_adjacent_edge = solid3d_get_prev_adjacent_edge()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "send_object":
+            n: send_object = send_object()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_set_opacity":
+            n: entity_set_opacity = entity_set_opacity()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "entity_fade":
+            n: entity_fade = entity_fade()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "make_plane":
+            n: make_plane = make_plane()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "plane_set_color":
+            n: plane_set_color = plane_set_color()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "set_tool":
+            n: set_tool = set_tool()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "mouse_move":
+            n: mouse_move = mouse_move()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "mouse_click":
+            n: mouse_click = mouse_click()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "sketch_mode_enable":
+            n: sketch_mode_enable = sketch_mode_enable()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "sketch_mode_disable":
+            n: sketch_mode_disable = sketch_mode_disable()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "curve_get_type":
+            n: curve_get_type = curve_get_type()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "curve_get_control_points":
+            n: curve_get_control_points = curve_get_control_points()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "take_snapshot":
+            n: take_snapshot = take_snapshot()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "make_axes_gizmo":
+            n: make_axes_gizmo = make_axes_gizmo()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "path_get_info":
+            n: path_get_info = path_get_info()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "path_get_curve_uuids_for_vertices":
+            n: path_get_curve_uuids_for_vertices = path_get_curve_uuids_for_vertices()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "path_get_vertex_uuids":
+            n: path_get_vertex_uuids = path_get_vertex_uuids()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "handle_mouse_drag_start":
+            n: handle_mouse_drag_start = handle_mouse_drag_start()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "handle_mouse_drag_move":
+            n: handle_mouse_drag_move = handle_mouse_drag_move()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "handle_mouse_drag_end":
+            n: handle_mouse_drag_end = handle_mouse_drag_end()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "remove_scene_objects":
+            n: remove_scene_objects = remove_scene_objects()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "plane_intersect_and_project":
+            n: plane_intersect_and_project = plane_intersect_and_project()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "curve_get_end_points":
+            n: curve_get_end_points = curve_get_end_points()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "reconfigure_stream":
+            n: reconfigure_stream = reconfigure_stream()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "import_files":
+            n: import_files = import_files()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "mass":
+            n: mass = mass()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "density":
+            n: density = density()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "volume":
+            n: volume = volume()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "center_of_mass":
+            n: center_of_mass = center_of_mass()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "surface_area":
+            n: surface_area = surface_area()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "get_sketch_mode_plane":
+            n: get_sketch_mode_plane = get_sketch_mode_plane()
+            n.from_dict(d)
+            self.type = n
+            return self
+        elif d.get("type") == "curve_set_constraint":
+            n: curve_set_constraint = curve_set_constraint()
+            n.from_dict(d)
+            self.type = n
+            return self
+
+        raise Exception("Unknown type")

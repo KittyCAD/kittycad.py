@@ -683,6 +683,11 @@ async def test_"""
     if len(endpoint_refs) == 0:
         template_info["response_type"] = ""
 
+    if "x-dropshot-websocket" in endpoint:
+        template_info["response_type"] = (
+            template_info["response_type"].replace("Optional[", "").replace("]", "")
+        )
+
     if "description" in endpoint:
         template_info["docs"] = endpoint["description"]
 
@@ -1195,18 +1200,50 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
             all_options.append(object_name)
 
     # Write the sum type.
-    f.write("from typing import Union\n")
-    f.write(name + " = Union[")
-
-    for num, option in enumerate(all_options, start=0):
-        if num == 0:
-            f.write(option)
-        else:
-            f.write(", " + option + "")
-    f.write("]\n")
+    description = getAnyOfDescription(schema)
+    content = generateUnionType(all_options, name, description)
+    f.write(content)
 
     # Close the file.
     f.close()
+
+
+def getAnyOfDescription(schema: dict) -> str:
+    if "description" in schema:
+        return schema["description"]
+    else:
+        return ""
+
+
+def generateUnionType(types: List[str], name: str, description: str) -> str:
+    ArgType = TypedDict(
+        "ArgType",
+        {
+            "name": str,
+        },
+    )
+    TemplateType = TypedDict(
+        "TemplateType",
+        {
+            "types": List[ArgType],
+            "description": str,
+            "name": str,
+        },
+    )
+    template_info: TemplateType = {
+        "types": [],
+        "description": description,
+        "name": name,
+    }
+    for type in types:
+        template_info["types"].append({"name": type})
+
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    template_file = "union-type.py.jinja2"
+    template = environment.get_template(template_file)
+    content = template.render(**template_info)
+
+    return content
 
 
 def generateOneOfType(path: str, name: str, schema: dict, data: dict):
@@ -1309,18 +1346,19 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         f.write("from typing import Any\n")
         f.write(name + " = Any")
     else:
-        f.write("from typing import Union\n")
-        f.write(name + " = Union[")
-
-        for num, option in enumerate(all_options, start=0):
-            if num == 0:
-                f.write(option)
-            else:
-                f.write(", " + option + "")
-        f.write("]\n")
+        description = getOneOfDescription(schema)
+        content = generateUnionType(all_options, name, description)
+        f.write(content)
 
     # Close the file.
     f.close()
+
+
+def getOneOfDescription(schema: dict) -> str:
+    if "description" in schema:
+        return schema["description"]
+    else:
+        return ""
 
 
 def generateObjectTypeCode(
