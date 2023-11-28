@@ -167,8 +167,10 @@ class Invoice:
         currency: Union[Unset, Currency]
         if isinstance(_currency, Unset):
             currency = UNSET
+        if _currency is None:
+            currency = UNSET
         else:
-            currency = _currency  # type: ignore[arg-type]
+            currency = _currency
 
         customer_email = d.pop("customer_email", UNSET)
 
@@ -204,8 +206,10 @@ class Invoice:
         status: Union[Unset, InvoiceStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         subtotal = d.pop("subtotal", UNSET)
 

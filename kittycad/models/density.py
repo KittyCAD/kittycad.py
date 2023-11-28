@@ -41,8 +41,10 @@ class Density:
         output_unit: Union[Unset, UnitDensity]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         density = cls(
             density=density,

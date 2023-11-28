@@ -59,22 +59,28 @@ class Metadata:
         cache: Union[Unset, CacheMetadata]
         if isinstance(_cache, Unset):
             cache = UNSET
+        if _cache is None:
+            cache = UNSET
         else:
-            cache = _cache  # type: ignore[arg-type]
+            cache = CacheMetadata.from_dict(_cache)
 
         _environment = d.pop("environment", UNSET)
         environment: Union[Unset, Environment]
         if isinstance(_environment, Unset):
             environment = UNSET
+        if _environment is None:
+            environment = UNSET
         else:
-            environment = _environment  # type: ignore[arg-type]
+            environment = _environment
 
         _fs = d.pop("fs", UNSET)
         fs: Union[Unset, FileSystemMetadata]
         if isinstance(_fs, Unset):
             fs = UNSET
+        if _fs is None:
+            fs = UNSET
         else:
-            fs = _fs  # type: ignore[arg-type]
+            fs = FileSystemMetadata.from_dict(_fs)
 
         git_hash = d.pop("git_hash", UNSET)
 
@@ -82,8 +88,10 @@ class Metadata:
         pubsub: Union[Unset, Connection]
         if isinstance(_pubsub, Unset):
             pubsub = UNSET
+        if _pubsub is None:
+            pubsub = UNSET
         else:
-            pubsub = _pubsub  # type: ignore[arg-type]
+            pubsub = Connection.from_dict(_pubsub)
 
         metadata = cls(
             cache=cache,

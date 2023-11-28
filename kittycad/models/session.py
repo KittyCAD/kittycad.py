@@ -78,15 +78,19 @@ class Session:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         _session_token = d.pop("session_token", UNSET)
         session_token: Union[Unset, Uuid]
         if isinstance(_session_token, Unset):
             session_token = UNSET
+        if _session_token is None:
+            session_token = UNSET
         else:
-            session_token = _session_token  # type: ignore[arg-type]
+            session_token = _session_token
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -99,8 +103,10 @@ class Session:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         session = cls(
             created_at=created_at,

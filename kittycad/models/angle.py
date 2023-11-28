@@ -39,8 +39,10 @@ class Angle:
         unit: Union[Unset, UnitAngle]
         if isinstance(_unit, Unset):
             unit = UNSET
+        if _unit is None:
+            unit = UNSET
         else:
-            unit = _unit  # type: ignore[arg-type]
+            unit = _unit
 
         value = d.pop("value", UNSET)
 

@@ -2233,7 +2233,7 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
         # Get the type for the reference.
-        data["components"]["schemas"][ref]
+        actual_schema = data["components"]["schemas"][ref]
 
         f.write(
             "\t\t_"
@@ -2253,15 +2253,34 @@ def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict)
             "\t\tif isinstance(_" + clean_parameter_name(property_name) + ", Unset):\n"
         )
         f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
+        f.write("\t\tif _" + clean_parameter_name(property_name) + " is None:\n")
+        f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
         f.write("\t\telse:\n")
 
-        f.write(
-            "\t\t\t"
-            + clean_parameter_name(property_name)
-            + " = _"
-            + clean_parameter_name(property_name)
-            + " # type: ignore[arg-type]\n"
-        )
+        is_enum = isEnumWithDocsOneOf(actual_schema)
+        if (
+            "properties" in actual_schema
+            or "oneOf" in actual_schema
+            or "anyOf" in actual_schema
+            or "allOf" in actual_schema
+        ) and not is_enum:
+            f.write(
+                "\t\t\t"
+                + clean_parameter_name(property_name)
+                + " = "
+                + ref
+                + ".from_dict(_"
+                + clean_parameter_name(property_name)
+                + ")\n"
+            )
+        else:
+            f.write(
+                "\t\t\t"
+                + clean_parameter_name(property_name)
+                + " = _"
+                + clean_parameter_name(property_name)
+                + "\n"
+            )
 
         f.write("\n")
     elif "allOf" in property_schema:

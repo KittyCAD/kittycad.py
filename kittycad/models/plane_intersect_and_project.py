@@ -35,8 +35,10 @@ class PlaneIntersectAndProject:
         plane_coordinates: Union[Unset, Point2d]
         if isinstance(_plane_coordinates, Unset):
             plane_coordinates = UNSET
+        if _plane_coordinates is None:
+            plane_coordinates = UNSET
         else:
-            plane_coordinates = _plane_coordinates  # type: ignore[arg-type]
+            plane_coordinates = Point2d.from_dict(_plane_coordinates)
 
         plane_intersect_and_project = cls(
             plane_coordinates=plane_coordinates,

@@ -41,15 +41,19 @@ class AiPluginAuth:
         authorization_type: Union[Unset, AiPluginHttpAuthType]
         if isinstance(_authorization_type, Unset):
             authorization_type = UNSET
+        if _authorization_type is None:
+            authorization_type = UNSET
         else:
-            authorization_type = _authorization_type  # type: ignore[arg-type]
+            authorization_type = _authorization_type
 
         _type = d.pop("type", UNSET)
         type: Union[Unset, AiPluginAuthType]
         if isinstance(_type, Unset):
             type = UNSET
+        if _type is None:
+            type = UNSET
         else:
-            type = _type  # type: ignore[arg-type]
+            type = _type
 
         ai_plugin_auth = cls(
             authorization_type=authorization_type,

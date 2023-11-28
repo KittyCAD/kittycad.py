@@ -47,15 +47,19 @@ class System:
         forward: Union[Unset, AxisDirectionPair]
         if isinstance(_forward, Unset):
             forward = UNSET
+        if _forward is None:
+            forward = UNSET
         else:
-            forward = _forward  # type: ignore[arg-type]
+            forward = AxisDirectionPair.from_dict(_forward)
 
         _up = d.pop("up", UNSET)
         up: Union[Unset, AxisDirectionPair]
         if isinstance(_up, Unset):
             up = UNSET
+        if _up is None:
+            up = UNSET
         else:
-            up = _up  # type: ignore[arg-type]
+            up = AxisDirectionPair.from_dict(_up)
 
         system = cls(
             forward=forward,

@@ -45,22 +45,28 @@ class GetSketchModePlane:
         x_axis: Union[Unset, Point3d]
         if isinstance(_x_axis, Unset):
             x_axis = UNSET
+        if _x_axis is None:
+            x_axis = UNSET
         else:
-            x_axis = _x_axis  # type: ignore[arg-type]
+            x_axis = Point3d.from_dict(_x_axis)
 
         _y_axis = d.pop("y_axis", UNSET)
         y_axis: Union[Unset, Point3d]
         if isinstance(_y_axis, Unset):
             y_axis = UNSET
+        if _y_axis is None:
+            y_axis = UNSET
         else:
-            y_axis = _y_axis  # type: ignore[arg-type]
+            y_axis = Point3d.from_dict(_y_axis)
 
         _z_axis = d.pop("z_axis", UNSET)
         z_axis: Union[Unset, Point3d]
         if isinstance(_z_axis, Unset):
             z_axis = UNSET
+        if _z_axis is None:
+            z_axis = UNSET
         else:
-            z_axis = _z_axis  # type: ignore[arg-type]
+            z_axis = Point3d.from_dict(_z_axis)
 
         get_sketch_mode_plane = cls(
             x_axis=x_axis,

@@ -144,8 +144,10 @@ class obj:
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
+        if _coords is None:
+            coords = UNSET
         else:
-            coords = _coords  # type: ignore[arg-type]
+            coords = System.from_dict(_coords)
 
         type = d.pop("type", UNSET)
 
@@ -153,8 +155,10 @@ class obj:
         units: Union[Unset, UnitLength]
         if isinstance(_units, Unset):
             units = UNSET
+        if _units is None:
+            units = UNSET
         else:
-            units = _units  # type: ignore[arg-type]
+            units = _units
 
         obj = cls(
             coords=coords,
@@ -220,8 +224,10 @@ class ply:
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
+        if _coords is None:
+            coords = UNSET
         else:
-            coords = _coords  # type: ignore[arg-type]
+            coords = System.from_dict(_coords)
 
         type = d.pop("type", UNSET)
 
@@ -229,8 +235,10 @@ class ply:
         units: Union[Unset, UnitLength]
         if isinstance(_units, Unset):
             units = UNSET
+        if _units is None:
+            units = UNSET
         else:
-            units = _units  # type: ignore[arg-type]
+            units = _units
 
         ply = cls(
             coords=coords,
@@ -396,8 +404,10 @@ class stl:
         coords: Union[Unset, System]
         if isinstance(_coords, Unset):
             coords = UNSET
+        if _coords is None:
+            coords = UNSET
         else:
-            coords = _coords  # type: ignore[arg-type]
+            coords = System.from_dict(_coords)
 
         type = d.pop("type", UNSET)
 
@@ -405,8 +415,10 @@ class stl:
         units: Union[Unset, UnitLength]
         if isinstance(_units, Unset):
             units = UNSET
+        if _units is None:
+            units = UNSET
         else:
-            units = _units  # type: ignore[arg-type]
+            units = _units
 
         stl = cls(
             coords=coords,

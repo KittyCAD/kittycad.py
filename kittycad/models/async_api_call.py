@@ -108,8 +108,10 @@ class AsyncApiCall:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         input = d.pop("input", UNSET)
         output = d.pop("output", UNSET)
@@ -124,15 +126,19 @@ class AsyncApiCall:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         _type = d.pop("type", UNSET)
         type: Union[Unset, AsyncApiCallType]
         if isinstance(_type, Unset):
             type = UNSET
+        if _type is None:
+            type = UNSET
         else:
-            type = _type  # type: ignore[arg-type]
+            type = _type
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -145,8 +151,10 @@ class AsyncApiCall:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         worker = d.pop("worker", UNSET)
 

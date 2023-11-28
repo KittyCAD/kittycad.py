@@ -109,8 +109,10 @@ class UnitPowerConversion:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         input = d.pop("input", UNSET)
 
@@ -118,8 +120,10 @@ class UnitPowerConversion:
         input_unit: Union[Unset, UnitPower]
         if isinstance(_input_unit, Unset):
             input_unit = UNSET
+        if _input_unit is None:
+            input_unit = UNSET
         else:
-            input_unit = _input_unit  # type: ignore[arg-type]
+            input_unit = _input_unit
 
         output = d.pop("output", UNSET)
 
@@ -127,8 +131,10 @@ class UnitPowerConversion:
         output_unit: Union[Unset, UnitPower]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -141,8 +147,10 @@ class UnitPowerConversion:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -155,8 +163,10 @@ class UnitPowerConversion:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         unit_power_conversion = cls(
             completed_at=completed_at,

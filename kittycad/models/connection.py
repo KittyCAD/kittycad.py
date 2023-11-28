@@ -234,8 +234,10 @@ class Connection:
         cluster: Union[Unset, Cluster]
         if isinstance(_cluster, Unset):
             cluster = UNSET
+        if _cluster is None:
+            cluster = UNSET
         else:
-            cluster = _cluster  # type: ignore[arg-type]
+            cluster = Cluster.from_dict(_cluster)
 
         _config_load_time = d.pop("config_load_time", UNSET)
         config_load_time: Union[Unset, datetime.datetime]
@@ -254,8 +256,10 @@ class Connection:
         gateway: Union[Unset, Gateway]
         if isinstance(_gateway, Unset):
             gateway = UNSET
+        if _gateway is None:
+            gateway = UNSET
         else:
-            gateway = _gateway  # type: ignore[arg-type]
+            gateway = Gateway.from_dict(_gateway)
 
         git_commit = d.pop("git_commit", UNSET)
 
@@ -283,15 +287,19 @@ class Connection:
         jetstream: Union[Unset, Jetstream]
         if isinstance(_jetstream, Unset):
             jetstream = UNSET
+        if _jetstream is None:
+            jetstream = UNSET
         else:
-            jetstream = _jetstream  # type: ignore[arg-type]
+            jetstream = Jetstream.from_dict(_jetstream)
 
         _leaf = d.pop("leaf", UNSET)
         leaf: Union[Unset, LeafNode]
         if isinstance(_leaf, Unset):
             leaf = UNSET
+        if _leaf is None:
+            leaf = UNSET
         else:
-            leaf = _leaf  # type: ignore[arg-type]
+            leaf = LeafNode.from_dict(_leaf)
 
         leafnodes = d.pop("leafnodes", UNSET)
 

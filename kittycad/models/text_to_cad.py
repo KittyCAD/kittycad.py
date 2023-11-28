@@ -120,15 +120,19 @@ class TextToCad:
         feedback: Union[Unset, AiFeedback]
         if isinstance(_feedback, Unset):
             feedback = UNSET
+        if _feedback is None:
+            feedback = UNSET
         else:
-            feedback = _feedback  # type: ignore[arg-type]
+            feedback = _feedback
 
         _id = d.pop("id", UNSET)
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         model_version = d.pop("model_version", UNSET)
 
@@ -136,8 +140,10 @@ class TextToCad:
         output_format: Union[Unset, FileExportFormat]
         if isinstance(_output_format, Unset):
             output_format = UNSET
+        if _output_format is None:
+            output_format = UNSET
         else:
-            output_format = _output_format  # type: ignore[arg-type]
+            output_format = _output_format
 
         _outputs = d.pop("outputs", UNSET)
         if isinstance(_outputs, Unset):
@@ -161,8 +167,10 @@ class TextToCad:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -175,8 +183,10 @@ class TextToCad:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         text_to_cad = cls(
             completed_at=completed_at,

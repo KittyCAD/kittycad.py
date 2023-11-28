@@ -62,8 +62,10 @@ class NewAddress:
         country: Union[Unset, CountryCode]
         if isinstance(_country, Unset):
             country = UNSET
+        if _country is None:
+            country = UNSET
         else:
-            country = _country  # type: ignore[arg-type]
+            country = _country
 
         state = d.pop("state", UNSET)
 
@@ -75,8 +77,10 @@ class NewAddress:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         zip = d.pop("zip", UNSET)
 

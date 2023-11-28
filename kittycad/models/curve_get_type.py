@@ -35,8 +35,10 @@ class CurveGetType:
         curve_type: Union[Unset, CurveType]
         if isinstance(_curve_type, Unset):
             curve_type = UNSET
+        if _curve_type is None:
+            curve_type = UNSET
         else:
-            curve_type = _curve_type  # type: ignore[arg-type]
+            curve_type = _curve_type
 
         curve_get_type = cls(
             curve_type=curve_type,

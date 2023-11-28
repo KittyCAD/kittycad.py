@@ -39,8 +39,10 @@ class ApiError:
         error_code: Union[Unset, ErrorCode]
         if isinstance(_error_code, Unset):
             error_code = UNSET
+        if _error_code is None:
+            error_code = UNSET
         else:
-            error_code = _error_code  # type: ignore[arg-type]
+            error_code = _error_code
 
         message = d.pop("message", UNSET)
 

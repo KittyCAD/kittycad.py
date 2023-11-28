@@ -57,8 +57,10 @@ class InvoiceLineItem:
         currency: Union[Unset, Currency]
         if isinstance(_currency, Unset):
             currency = UNSET
+        if _currency is None:
+            currency = UNSET
         else:
-            currency = _currency  # type: ignore[arg-type]
+            currency = _currency
 
         description = d.pop("description", UNSET)
 

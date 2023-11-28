@@ -45,15 +45,19 @@ class PathSegmentInfo:
         command: Union[Unset, PathCommand]
         if isinstance(_command, Unset):
             command = UNSET
+        if _command is None:
+            command = UNSET
         else:
-            command = _command  # type: ignore[arg-type]
+            command = _command
 
         _command_id = d.pop("command_id", UNSET)
         command_id: Union[Unset, ModelingCmdId]
         if isinstance(_command_id, Unset):
             command_id = UNSET
+        if _command_id is None:
+            command_id = UNSET
         else:
-            command_id = _command_id  # type: ignore[arg-type]
+            command_id = _command_id
 
         relative = d.pop("relative", UNSET)
 

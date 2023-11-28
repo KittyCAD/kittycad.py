@@ -35,8 +35,10 @@ class GetEntityType:
         entity_type: Union[Unset, EntityType]
         if isinstance(_entity_type, Unset):
             entity_type = UNSET
+        if _entity_type is None:
+            entity_type = UNSET
         else:
-            entity_type = _entity_type  # type: ignore[arg-type]
+            entity_type = _entity_type
 
         get_entity_type = cls(
             entity_type=entity_type,

@@ -41,15 +41,19 @@ class AxisDirectionPair:
         axis: Union[Unset, Axis]
         if isinstance(_axis, Unset):
             axis = UNSET
+        if _axis is None:
+            axis = UNSET
         else:
-            axis = _axis  # type: ignore[arg-type]
+            axis = _axis
 
         _direction = d.pop("direction", UNSET)
         direction: Union[Unset, Direction]
         if isinstance(_direction, Unset):
             direction = UNSET
+        if _direction is None:
+            direction = UNSET
         else:
-            direction = _direction  # type: ignore[arg-type]
+            direction = _direction
 
         axis_direction_pair = cls(
             axis=axis,

@@ -92,8 +92,10 @@ class FileCenterOfMass:
         center_of_mass: Union[Unset, Point3d]
         if isinstance(_center_of_mass, Unset):
             center_of_mass = UNSET
+        if _center_of_mass is None:
+            center_of_mass = UNSET
         else:
-            center_of_mass = _center_of_mass  # type: ignore[arg-type]
+            center_of_mass = Point3d.from_dict(_center_of_mass)
 
         _completed_at = d.pop("completed_at", UNSET)
         completed_at: Union[Unset, datetime.datetime]
@@ -115,22 +117,28 @@ class FileCenterOfMass:
         id: Union[Unset, Uuid]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         _output_unit = d.pop("output_unit", UNSET)
         output_unit: Union[Unset, UnitLength]
         if isinstance(_output_unit, Unset):
             output_unit = UNSET
+        if _output_unit is None:
+            output_unit = UNSET
         else:
-            output_unit = _output_unit  # type: ignore[arg-type]
+            output_unit = _output_unit
 
         _src_format = d.pop("src_format", UNSET)
         src_format: Union[Unset, FileImportFormat]
         if isinstance(_src_format, Unset):
             src_format = UNSET
+        if _src_format is None:
+            src_format = UNSET
         else:
-            src_format = _src_format  # type: ignore[arg-type]
+            src_format = _src_format
 
         _started_at = d.pop("started_at", UNSET)
         started_at: Union[Unset, datetime.datetime]
@@ -143,8 +151,10 @@ class FileCenterOfMass:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -157,8 +167,10 @@ class FileCenterOfMass:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         file_center_of_mass = cls(
             center_of_mass=center_of_mass,

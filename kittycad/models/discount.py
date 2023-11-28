@@ -35,8 +35,10 @@ class Discount:
         coupon: Union[Unset, Coupon]
         if isinstance(_coupon, Unset):
             coupon = UNSET
+        if _coupon is None:
+            coupon = UNSET
         else:
-            coupon = _coupon  # type: ignore[arg-type]
+            coupon = Coupon.from_dict(_coupon)
 
         discount = cls(
             coupon=coupon,

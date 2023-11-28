@@ -40,15 +40,19 @@ class AnnotationLineEndOptions:
         end: Union[Unset, AnnotationLineEnd]
         if isinstance(_end, Unset):
             end = UNSET
+        if _end is None:
+            end = UNSET
         else:
-            end = _end  # type: ignore[arg-type]
+            end = _end
 
         _start = d.pop("start", UNSET)
         start: Union[Unset, AnnotationLineEnd]
         if isinstance(_start, Unset):
             start = UNSET
+        if _start is None:
+            start = UNSET
         else:
-            start = _start  # type: ignore[arg-type]
+            start = _start
 
         annotation_line_end_options = cls(
             end=end,

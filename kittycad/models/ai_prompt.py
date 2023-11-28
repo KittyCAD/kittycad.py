@@ -120,15 +120,19 @@ class AiPrompt:
         feedback: Union[Unset, AiFeedback]
         if isinstance(_feedback, Unset):
             feedback = UNSET
+        if _feedback is None:
+            feedback = UNSET
         else:
-            feedback = _feedback  # type: ignore[arg-type]
+            feedback = _feedback
 
         _id = d.pop("id", UNSET)
         id: Union[Unset, UuidBinary]
         if isinstance(_id, Unset):
             id = UNSET
+        if _id is None:
+            id = UNSET
         else:
-            id = _id  # type: ignore[arg-type]
+            id = _id
 
         metadata = d.pop("metadata", UNSET)
         model_version = d.pop("model_version", UNSET)
@@ -148,15 +152,19 @@ class AiPrompt:
         status: Union[Unset, ApiCallStatus]
         if isinstance(_status, Unset):
             status = UNSET
+        if _status is None:
+            status = UNSET
         else:
-            status = _status  # type: ignore[arg-type]
+            status = _status
 
         _type = d.pop("type", UNSET)
         type: Union[Unset, AiPromptType]
         if isinstance(_type, Unset):
             type = UNSET
+        if _type is None:
+            type = UNSET
         else:
-            type = _type  # type: ignore[arg-type]
+            type = _type
 
         _updated_at = d.pop("updated_at", UNSET)
         updated_at: Union[Unset, datetime.datetime]
@@ -169,8 +177,10 @@ class AiPrompt:
         user_id: Union[Unset, Uuid]
         if isinstance(_user_id, Unset):
             user_id = UNSET
+        if _user_id is None:
+            user_id = UNSET
         else:
-            user_id = _user_id  # type: ignore[arg-type]
+            user_id = _user_id
 
         ai_prompt = cls(
             completed_at=completed_at,
