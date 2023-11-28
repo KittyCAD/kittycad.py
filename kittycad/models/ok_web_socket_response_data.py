@@ -4,343 +4,342 @@ import attr
 
 from ..types import UNSET, Unset
 
-BM = TypeVar("BM", bound="ice_server_info")
+FF = TypeVar("FF", bound="ice_server_info")
+
 
 @attr.s(auto_attribs=True)
 class ice_server_info:
-	""" Information about the ICE servers. """ # noqa: E501
-	data: Union[Unset, Any] = UNSET
-	type: str = "ice_server_info"
+    """Information about the ICE servers."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: Union[Unset, Any] = UNSET
+    type: str = "ice_server_info"
 
-	def to_dict(self) -> Dict[str, Any]:
-		data = self.data
-		type = self.type
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if data is not UNSET:
-			field_dict['data'] = data
-		field_dict['type'] = type
+    def to_dict(self) -> Dict[str, Any]:
+        data = self.data
+        type = self.type
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        field_dict["type"] = type
 
-	@classmethod
-	def from_dict(cls: Type[BM], src_dict: Dict[str, Any]) -> BM:
-		d = src_dict.copy()
-		data = d.pop("data", UNSET)
-		type = d.pop("type", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[FF], src_dict: Dict[str, Any]) -> FF:
+        d = src_dict.copy()
+        data = d.pop("data", UNSET)
+        type = d.pop("type", UNSET)
 
-		ice_server_info = cls(
-			data= data,
-			type= type,
-		)
+        ice_server_info = cls(
+            data=data,
+            type=type,
+        )
 
-		ice_server_info.additional_properties = d
-		return ice_server_info
+        ice_server_info.additional_properties = d
+        return ice_server_info
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
-
-
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
 
 
-TY = TypeVar("TY", bound="trickle_ice")
+YO = TypeVar("YO", bound="trickle_ice")
+
 
 @attr.s(auto_attribs=True)
 class trickle_ice:
-	""" The trickle ICE candidate response. """ # noqa: E501
-	data: Union[Unset, Any] = UNSET
-	type: str = "trickle_ice"
+    """The trickle ICE candidate response."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: Union[Unset, Any] = UNSET
+    type: str = "trickle_ice"
 
-	def to_dict(self) -> Dict[str, Any]:
-		data = self.data
-		type = self.type
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if data is not UNSET:
-			field_dict['data'] = data
-		field_dict['type'] = type
+    def to_dict(self) -> Dict[str, Any]:
+        data = self.data
+        type = self.type
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        field_dict["type"] = type
 
-	@classmethod
-	def from_dict(cls: Type[TY], src_dict: Dict[str, Any]) -> TY:
-		d = src_dict.copy()
-		data = d.pop("data", UNSET)
-		type = d.pop("type", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[YO], src_dict: Dict[str, Any]) -> YO:
+        d = src_dict.copy()
+        data = d.pop("data", UNSET)
+        type = d.pop("type", UNSET)
 
-		trickle_ice = cls(
-			data= data,
-			type= type,
-		)
+        trickle_ice = cls(
+            data=data,
+            type=type,
+        )
 
-		trickle_ice.additional_properties = d
-		return trickle_ice
+        trickle_ice.additional_properties = d
+        return trickle_ice
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
-
-
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
 
 
-NC = TypeVar("NC", bound="sdp_answer")
+FS = TypeVar("FS", bound="sdp_answer")
+
 
 @attr.s(auto_attribs=True)
 class sdp_answer:
-	""" The SDP answer response. """ # noqa: E501
-	data: Union[Unset, Any] = UNSET
-	type: str = "sdp_answer"
+    """The SDP answer response."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: Union[Unset, Any] = UNSET
+    type: str = "sdp_answer"
 
-	def to_dict(self) -> Dict[str, Any]:
-		data = self.data
-		type = self.type
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if data is not UNSET:
-			field_dict['data'] = data
-		field_dict['type'] = type
+    def to_dict(self) -> Dict[str, Any]:
+        data = self.data
+        type = self.type
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        field_dict["type"] = type
 
-	@classmethod
-	def from_dict(cls: Type[NC], src_dict: Dict[str, Any]) -> NC:
-		d = src_dict.copy()
-		data = d.pop("data", UNSET)
-		type = d.pop("type", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[FS], src_dict: Dict[str, Any]) -> FS:
+        d = src_dict.copy()
+        data = d.pop("data", UNSET)
+        type = d.pop("type", UNSET)
 
-		sdp_answer = cls(
-			data= data,
-			type= type,
-		)
+        sdp_answer = cls(
+            data=data,
+            type=type,
+        )
 
-		sdp_answer.additional_properties = d
-		return sdp_answer
+        sdp_answer.additional_properties = d
+        return sdp_answer
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
-
-
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
 
 
-GP = TypeVar("GP", bound="modeling")
+WN = TypeVar("WN", bound="modeling")
+
 
 @attr.s(auto_attribs=True)
 class modeling:
-	""" The modeling command response. """ # noqa: E501
-	data: Union[Unset, Any] = UNSET
-	type: str = "modeling"
+    """The modeling command response."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: Union[Unset, Any] = UNSET
+    type: str = "modeling"
 
-	def to_dict(self) -> Dict[str, Any]:
-		data = self.data
-		type = self.type
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if data is not UNSET:
-			field_dict['data'] = data
-		field_dict['type'] = type
+    def to_dict(self) -> Dict[str, Any]:
+        data = self.data
+        type = self.type
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        field_dict["type"] = type
 
-	@classmethod
-	def from_dict(cls: Type[GP], src_dict: Dict[str, Any]) -> GP:
-		d = src_dict.copy()
-		data = d.pop("data", UNSET)
-		type = d.pop("type", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[WN], src_dict: Dict[str, Any]) -> WN:
+        d = src_dict.copy()
+        data = d.pop("data", UNSET)
+        type = d.pop("type", UNSET)
 
-		modeling = cls(
-			data= data,
-			type= type,
-		)
+        modeling = cls(
+            data=data,
+            type=type,
+        )
 
-		modeling.additional_properties = d
-		return modeling
+        modeling.additional_properties = d
+        return modeling
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
-
-
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
 
 
-FF = TypeVar("FF", bound="export")
+EQ = TypeVar("EQ", bound="export")
+
 
 @attr.s(auto_attribs=True)
 class export:
-	""" The exported files. """ # noqa: E501
-	data: Union[Unset, Any] = UNSET
-	type: str = "export"
+    """The exported files."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: Union[Unset, Any] = UNSET
+    type: str = "export"
 
-	def to_dict(self) -> Dict[str, Any]:
-		data = self.data
-		type = self.type
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if data is not UNSET:
-			field_dict['data'] = data
-		field_dict['type'] = type
+    def to_dict(self) -> Dict[str, Any]:
+        data = self.data
+        type = self.type
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        field_dict["type"] = type
 
-	@classmethod
-	def from_dict(cls: Type[FF], src_dict: Dict[str, Any]) -> FF:
-		d = src_dict.copy()
-		data = d.pop("data", UNSET)
-		type = d.pop("type", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[EQ], src_dict: Dict[str, Any]) -> EQ:
+        d = src_dict.copy()
+        data = d.pop("data", UNSET)
+        type = d.pop("type", UNSET)
 
-		export = cls(
-			data= data,
-			type= type,
-		)
+        export = cls(
+            data=data,
+            type=type,
+        )
 
-		export.additional_properties = d
-		return export
+        export.additional_properties = d
+        return export
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
-
-
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
 
 
-YO = TypeVar("YO", bound="metrics_request")
+UW = TypeVar("UW", bound="metrics_request")
+
 
 @attr.s(auto_attribs=True)
 class metrics_request:
-	""" Request a collection of metrics, to include WebRTC. """ # noqa: E501
-	data: Union[Unset, Any] = UNSET
-	type: str = "metrics_request"
+    """Request a collection of metrics, to include WebRTC."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    data: Union[Unset, Any] = UNSET
+    type: str = "metrics_request"
 
-	def to_dict(self) -> Dict[str, Any]:
-		data = self.data
-		type = self.type
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if data is not UNSET:
-			field_dict['data'] = data
-		field_dict['type'] = type
+    def to_dict(self) -> Dict[str, Any]:
+        data = self.data
+        type = self.type
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if data is not UNSET:
+            field_dict["data"] = data
+        field_dict["type"] = type
 
-	@classmethod
-	def from_dict(cls: Type[YO], src_dict: Dict[str, Any]) -> YO:
-		d = src_dict.copy()
-		data = d.pop("data", UNSET)
-		type = d.pop("type", UNSET)
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[UW], src_dict: Dict[str, Any]) -> UW:
+        d = src_dict.copy()
+        data = d.pop("data", UNSET)
+        type = d.pop("type", UNSET)
+
+        metrics_request = cls(
+            data=data,
+            type=type,
+        )
+
+        metrics_request.additional_properties = d
+        return metrics_request
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
 
 
-		metrics_request = cls(
-			data= data,
-			type= type,
-		)
-
-		metrics_request.additional_properties = d
-		return metrics_request
-
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
-
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
-
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
-
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
-
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
-
-OkWebSocketResponseData = Union[ice_server_info, trickle_ice, sdp_answer, modeling, export, metrics_request]
+OkWebSocketResponseData = Union[
+    ice_server_info, trickle_ice, sdp_answer, modeling, export, metrics_request
+]

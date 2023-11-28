@@ -4,56 +4,60 @@ import attr
 
 from ..types import UNSET, Unset
 
-QF = TypeVar("QF", bound="Export")
+OJ = TypeVar("OJ", bound="Export")
+
 
 @attr.s(auto_attribs=True)
 class Export:
-	""" The response from the `Export` endpoint. """ # noqa: E501
-	from ..models.export_file import ExportFile
-	files: Union[Unset, List[ExportFile]] = UNSET
+    """The response from the `Export` endpoint."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    from ..models.export_file import ExportFile
 
-	def to_dict(self) -> Dict[str, Any]:
-		from ..models.export_file import ExportFile
-		files: Union[Unset, List[ExportFile]] = UNSET
-		if not isinstance(self.files, Unset):
-			files = self.files
+    files: Union[Unset, List[ExportFile]] = UNSET
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if files is not UNSET:
-			field_dict['files'] = files
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		return field_dict
+    def to_dict(self) -> Dict[str, Any]:
+        from ..models.export_file import ExportFile
 
-	@classmethod
-	def from_dict(cls: Type[QF], src_dict: Dict[str, Any]) -> QF:
-		d = src_dict.copy()
-		from ..models.export_file import ExportFile
-		files = cast(List[ExportFile], d.pop("files", UNSET))
+        files: Union[Unset, List[ExportFile]] = UNSET
+        if not isinstance(self.files, Unset):
+            files = self.files
 
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if files is not UNSET:
+            field_dict["files"] = files
 
-		export = cls(
-			files= files,
-		)
+        return field_dict
 
-		export.additional_properties = d
-		return export
+    @classmethod
+    def from_dict(cls: Type[OJ], src_dict: Dict[str, Any]) -> OJ:
+        d = src_dict.copy()
+        from ..models.export_file import ExportFile
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+        files = cast(List[ExportFile], d.pop("files", UNSET))
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+        export = cls(
+            files=files,
+        )
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+        export.additional_properties = d
+        return export
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

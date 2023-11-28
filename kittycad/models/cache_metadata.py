@@ -4,53 +4,54 @@ import attr
 
 from ..types import UNSET, Unset
 
-LY = TypeVar("LY", bound="CacheMetadata")
+VR = TypeVar("VR", bound="CacheMetadata")
+
 
 @attr.s(auto_attribs=True)
 class CacheMetadata:
-	""" Metadata about our cache.
+    """Metadata about our cache.
 
-This is mostly used for internal purposes and debugging. """ # noqa: E501
-	ok: Union[Unset, bool] = False
+    This is mostly used for internal purposes and debugging."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    ok: Union[Unset, bool] = False
 
-	def to_dict(self) -> Dict[str, Any]:
-		ok = self.ok
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if ok is not UNSET:
-			field_dict['ok'] = ok
+    def to_dict(self) -> Dict[str, Any]:
+        ok = self.ok
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if ok is not UNSET:
+            field_dict["ok"] = ok
 
-	@classmethod
-	def from_dict(cls: Type[LY], src_dict: Dict[str, Any]) -> LY:
-		d = src_dict.copy()
-		ok = d.pop("ok", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[VR], src_dict: Dict[str, Any]) -> VR:
+        d = src_dict.copy()
+        ok = d.pop("ok", UNSET)
 
-		cache_metadata = cls(
-			ok= ok,
-		)
+        cache_metadata = cls(
+            ok=ok,
+        )
 
-		cache_metadata.additional_properties = d
-		return cache_metadata
+        cache_metadata.additional_properties = d
+        return cache_metadata
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

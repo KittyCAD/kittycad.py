@@ -4,51 +4,52 @@ import attr
 
 from ..types import UNSET, Unset
 
-BR = TypeVar("BR", bound="TextToCadCreateBody")
+OA = TypeVar("OA", bound="TextToCadCreateBody")
+
 
 @attr.s(auto_attribs=True)
 class TextToCadCreateBody:
-	""" Body for generating models from text. """ # noqa: E501
-	prompt: Union[Unset, str] = UNSET
+    """Body for generating models from text."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    prompt: Union[Unset, str] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		prompt = self.prompt
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if prompt is not UNSET:
-			field_dict['prompt'] = prompt
+    def to_dict(self) -> Dict[str, Any]:
+        prompt = self.prompt
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if prompt is not UNSET:
+            field_dict["prompt"] = prompt
 
-	@classmethod
-	def from_dict(cls: Type[BR], src_dict: Dict[str, Any]) -> BR:
-		d = src_dict.copy()
-		prompt = d.pop("prompt", UNSET)
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[OA], src_dict: Dict[str, Any]) -> OA:
+        d = src_dict.copy()
+        prompt = d.pop("prompt", UNSET)
 
-		text_to_cad_create_body = cls(
-			prompt= prompt,
-		)
+        text_to_cad_create_body = cls(
+            prompt=prompt,
+        )
 
-		text_to_cad_create_body.additional_properties = d
-		return text_to_cad_create_body
+        text_to_cad_create_body.additional_properties = d
+        return text_to_cad_create_body
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

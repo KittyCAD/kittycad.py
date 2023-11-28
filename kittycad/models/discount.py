@@ -5,57 +5,58 @@ import attr
 from ..models.coupon import Coupon
 from ..types import UNSET, Unset
 
-DO = TypeVar("DO", bound="Discount")
+GL = TypeVar("GL", bound="Discount")
+
 
 @attr.s(auto_attribs=True)
 class Discount:
-	""" The resource representing a Discount. """ # noqa: E501
-	coupon: Union[Unset, Coupon] = UNSET
+    """The resource representing a Discount."""  # noqa: E501
 
-	additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    coupon: Union[Unset, Coupon] = UNSET
 
-	def to_dict(self) -> Dict[str, Any]:
-		if not isinstance(self.coupon, Unset):
-			coupon = self.coupon
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-		field_dict: Dict[str, Any] = {}
-		field_dict.update(self.additional_properties)
-		field_dict.update({})
-		if coupon is not UNSET:
-			field_dict['coupon'] = coupon
+    def to_dict(self) -> Dict[str, Any]:
+        if not isinstance(self.coupon, Unset):
+            coupon = self.coupon
 
-		return field_dict
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if coupon is not UNSET:
+            field_dict["coupon"] = coupon
 
-	@classmethod
-	def from_dict(cls: Type[DO], src_dict: Dict[str, Any]) -> DO:
-		d = src_dict.copy()
-		_coupon = d.pop("coupon", UNSET)
-		coupon: Union[Unset, Coupon]
-		if isinstance(_coupon, Unset):
-			coupon = UNSET
-		else:
-			coupon = _coupon # type: ignore[arg-type]
+        return field_dict
 
+    @classmethod
+    def from_dict(cls: Type[GL], src_dict: Dict[str, Any]) -> GL:
+        d = src_dict.copy()
+        _coupon = d.pop("coupon", UNSET)
+        coupon: Union[Unset, Coupon]
+        if isinstance(_coupon, Unset):
+            coupon = UNSET
+        else:
+            coupon = _coupon  # type: ignore[arg-type]
 
-		discount = cls(
-			coupon= coupon,
-		)
+        discount = cls(
+            coupon=coupon,
+        )
 
-		discount.additional_properties = d
-		return discount
+        discount.additional_properties = d
+        return discount
 
-	@property
-	def additional_keys(self) -> List[str]:
-		return list(self.additional_properties.keys())
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
 
-	def __getitem__(self, key: str) -> Any:
-		return self.additional_properties[key]
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
 
-	def __setitem__(self, key: str, value: Any) -> None:
-		self.additional_properties[key] = value
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
 
-	def __delitem__(self, key: str) -> None:
-		del self.additional_properties[key]
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
 
-	def __contains__(self, key: str) -> bool:
-		return key in self.additional_properties
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
