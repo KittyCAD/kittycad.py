@@ -192,7 +192,6 @@ from .update_user import UpdateUser
 from .user import User
 from .user_results_page import UserResultsPage
 from .uuid import Uuid
-from .uuid_binary import UuidBinary
 from .verification_token import VerificationToken
 from .volume import Volume
 from .web_socket_request import WebSocketRequest

@@ -7,7 +7,6 @@ from ..models.ai_feedback import AiFeedback
 from ..models.ai_prompt_type import AiPromptType
 from ..models.api_call_status import ApiCallStatus
 from ..models.uuid import Uuid
-from ..models.uuid_binary import UuidBinary
 
 
 class AiPrompt(BaseModel):
@@ -21,7 +20,7 @@ class AiPrompt(BaseModel):
 
     feedback: Optional[AiFeedback] = None
 
-    id: UuidBinary
+    id: Uuid
 
     metadata: Optional[Any] = None
 

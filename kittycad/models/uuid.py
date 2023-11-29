@@ -5,10 +5,7 @@ from pydantic_core import CoreSchema, core_schema
 
 
 class Uuid(str):
-    """A uuid stored as a varchar(191).
-
-    A Version 4 UUID is a universally unique identifier that is generated using random numbers.
-    """
+    """A UUID usually v4 or v7"""
 
     def __str__(self) -> str:
         return self
