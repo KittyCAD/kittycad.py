@@ -55,6 +55,7 @@ class ApiCallWithPrice:
         id = self.id
         ip_address = self.ip_address
         litterbox = self.litterbox
+        method: Union[Unset, Method] = UNSET
         if not isinstance(self.method, Unset):
             method = self.method
         minutes = self.minutes

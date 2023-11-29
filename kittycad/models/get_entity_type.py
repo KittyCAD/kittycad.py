@@ -17,6 +17,7 @@ class GetEntityType:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        entity_type: Union[Unset, EntityType] = UNSET
         if not isinstance(self.entity_type, Unset):
             entity_type = self.entity_type
 

@@ -88,8 +88,10 @@ class move_path_pen:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        path: Union[Unset, ModelingCmdId] = UNSET
         if not isinstance(self.path, Unset):
             path = self.path
+        to: Union[Unset, Point3d] = UNSET
         if not isinstance(self.to, Unset):
             to = self.to
         type = self.type
@@ -100,7 +102,8 @@ class move_path_pen:
         if path is not UNSET:
             field_dict["path"] = path
         if to is not UNSET:
-            field_dict["to"] = to.to_dict()
+            _to: Point3d = cast(Point3d, to)
+            field_dict["to"] = _to.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -168,8 +171,10 @@ class extend_path:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        path: Union[Unset, ModelingCmdId] = UNSET
         if not isinstance(self.path, Unset):
             path = self.path
+        segment: Union[Unset, PathSegment] = UNSET
         if not isinstance(self.segment, Unset):
             segment = self.segment
         type = self.type
@@ -180,7 +185,8 @@ class extend_path:
         if path is not UNSET:
             field_dict["path"] = path
         if segment is not UNSET:
-            field_dict["segment"] = segment.to_dict()
+            _segment: PathSegment = cast(PathSegment, segment)
+            field_dict["segment"] = _segment.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -251,6 +257,7 @@ class extrude:
     def to_dict(self) -> Dict[str, Any]:
         cap = self.cap
         distance = self.distance
+        target: Union[Unset, ModelingCmdId] = UNSET
         if not isinstance(self.target, Unset):
             target = self.target
         type = self.type
@@ -384,9 +391,11 @@ class camera_drag_start:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        interaction: Union[Unset, CameraDragInteractionType] = UNSET
         if not isinstance(self.interaction, Unset):
             interaction = self.interaction
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -397,7 +406,8 @@ class camera_drag_start:
             field_dict["interaction"] = interaction
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -465,10 +475,12 @@ class camera_drag_move:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        interaction: Union[Unset, CameraDragInteractionType] = UNSET
         if not isinstance(self.interaction, Unset):
             interaction = self.interaction
         sequence = self.sequence
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -481,7 +493,8 @@ class camera_drag_move:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -551,9 +564,11 @@ class camera_drag_end:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        interaction: Union[Unset, CameraDragInteractionType] = UNSET
         if not isinstance(self.interaction, Unset):
             interaction = self.interaction
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -564,7 +579,8 @@ class camera_drag_end:
             field_dict["interaction"] = interaction
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -632,11 +648,14 @@ class default_camera_look_at:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        center: Union[Unset, Point3d] = UNSET
         if not isinstance(self.center, Unset):
             center = self.center
         type = self.type
+        up: Union[Unset, Point3d] = UNSET
         if not isinstance(self.up, Unset):
             up = self.up
+        vantage: Union[Unset, Point3d] = UNSET
         if not isinstance(self.vantage, Unset):
             vantage = self.vantage
 
@@ -644,12 +663,15 @@ class default_camera_look_at:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center is not UNSET:
-            field_dict["center"] = center.to_dict()
+            _center: Point3d = cast(Point3d, center)
+            field_dict["center"] = _center.to_dict()
         field_dict["type"] = type
         if up is not UNSET:
-            field_dict["up"] = up.to_dict()
+            _up: Point3d = cast(Point3d, up)
+            field_dict["up"] = _up.to_dict()
         if vantage is not UNSET:
-            field_dict["vantage"] = vantage.to_dict()
+            _vantage: Point3d = cast(Point3d, vantage)
+            field_dict["vantage"] = _vantage.to_dict()
 
         return field_dict
 
@@ -789,12 +811,15 @@ class default_camera_enable_sketch_mode:
     def to_dict(self) -> Dict[str, Any]:
         animated = self.animated
         distance_to_plane = self.distance_to_plane
+        origin: Union[Unset, Point3d] = UNSET
         if not isinstance(self.origin, Unset):
             origin = self.origin
         ortho = self.ortho
         type = self.type
+        x_axis: Union[Unset, Point3d] = UNSET
         if not isinstance(self.x_axis, Unset):
             x_axis = self.x_axis
+        y_axis: Union[Unset, Point3d] = UNSET
         if not isinstance(self.y_axis, Unset):
             y_axis = self.y_axis
 
@@ -806,14 +831,17 @@ class default_camera_enable_sketch_mode:
         if distance_to_plane is not UNSET:
             field_dict["distance_to_plane"] = distance_to_plane
         if origin is not UNSET:
-            field_dict["origin"] = origin.to_dict()
+            _origin: Point3d = cast(Point3d, origin)
+            field_dict["origin"] = _origin.to_dict()
         if ortho is not UNSET:
             field_dict["ortho"] = ortho
         field_dict["type"] = type
         if x_axis is not UNSET:
-            field_dict["x_axis"] = x_axis.to_dict()
+            _x_axis: Point3d = cast(Point3d, x_axis)
+            field_dict["x_axis"] = _x_axis.to_dict()
         if y_axis is not UNSET:
-            field_dict["y_axis"] = y_axis.to_dict()
+            _y_axis: Point3d = cast(Point3d, y_axis)
+            field_dict["y_axis"] = _y_axis.to_dict()
 
         return field_dict
 
@@ -1010,8 +1038,10 @@ class export:
         entity_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.entity_ids, Unset):
             entity_ids = self.entity_ids
+        format: Union[Unset, OutputFormat] = UNSET
         if not isinstance(self.format, Unset):
             format = self.format
+        source_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.source_unit, Unset):
             source_unit = self.source_unit
         type = self.type
@@ -1022,7 +1052,8 @@ class export:
         if entity_ids is not UNSET:
             field_dict["entity_ids"] = entity_ids
         if format is not UNSET:
-            field_dict["format"] = format.to_dict()
+            _format: OutputFormat = cast(OutputFormat, format)
+            field_dict["format"] = _format.to_dict()
         if source_unit is not UNSET:
             field_dict["source_unit"] = source_unit
         field_dict["type"] = type
@@ -1437,8 +1468,10 @@ class select_with_point:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        selected_at_window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.selected_at_window, Unset):
             selected_at_window = self.selected_at_window
+        selection_type: Union[Unset, SceneSelectionType] = UNSET
         if not isinstance(self.selection_type, Unset):
             selection_type = self.selection_type
         type = self.type
@@ -1447,7 +1480,8 @@ class select_with_point:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if selected_at_window is not UNSET:
-            field_dict["selected_at_window"] = selected_at_window.to_dict()
+            _selected_at_window: Point2d = cast(Point2d, selected_at_window)
+            field_dict["selected_at_window"] = _selected_at_window.to_dict()
         if selection_type is not UNSET:
             field_dict["selection_type"] = selection_type
         field_dict["type"] = type
@@ -1794,6 +1828,7 @@ class highlight_set_entity:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        selected_at_window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.selected_at_window, Unset):
             selected_at_window = self.selected_at_window
         sequence = self.sequence
@@ -1803,7 +1838,8 @@ class highlight_set_entity:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if selected_at_window is not UNSET:
-            field_dict["selected_at_window"] = selected_at_window.to_dict()
+            _selected_at_window: Point2d = cast(Point2d, selected_at_window)
+            field_dict["selected_at_window"] = _selected_at_window.to_dict()
         if sequence is not UNSET:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
@@ -1926,9 +1962,11 @@ class new_annotation:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        annotation_type: Union[Unset, AnnotationType] = UNSET
         if not isinstance(self.annotation_type, Unset):
             annotation_type = self.annotation_type
         clobber = self.clobber
+        options: Union[Unset, AnnotationOptions] = UNSET
         if not isinstance(self.options, Unset):
             options = self.options
         type = self.type
@@ -1941,7 +1979,8 @@ class new_annotation:
         if clobber is not UNSET:
             field_dict["clobber"] = clobber
         if options is not UNSET:
-            field_dict["options"] = options.to_dict()
+            _options: AnnotationOptions = cast(AnnotationOptions, options)
+            field_dict["options"] = _options.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -2013,6 +2052,7 @@ class update_annotation:
 
     def to_dict(self) -> Dict[str, Any]:
         annotation_id = self.annotation_id
+        options: Union[Unset, AnnotationOptions] = UNSET
         if not isinstance(self.options, Unset):
             options = self.options
         type = self.type
@@ -2023,7 +2063,8 @@ class update_annotation:
         if annotation_id is not UNSET:
             field_dict["annotation_id"] = annotation_id
         if options is not UNSET:
-            field_dict["options"] = options.to_dict()
+            _options: AnnotationOptions = cast(AnnotationOptions, options)
+            field_dict["options"] = _options.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -2391,6 +2432,7 @@ class solid3d_get_all_opposite_edges:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        along_vector: Union[Unset, Point3d] = UNSET
         if not isinstance(self.along_vector, Unset):
             along_vector = self.along_vector
         edge_id = self.edge_id
@@ -2401,7 +2443,8 @@ class solid3d_get_all_opposite_edges:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if along_vector is not UNSET:
-            field_dict["along_vector"] = along_vector.to_dict()
+            _along_vector: Point3d = cast(Point3d, along_vector)
+            field_dict["along_vector"] = _along_vector.to_dict()
         if edge_id is not UNSET:
             field_dict["edge_id"] = edge_id
         if object_id is not UNSET:
@@ -2887,12 +2930,15 @@ class make_plane:
     def to_dict(self) -> Dict[str, Any]:
         clobber = self.clobber
         hide = self.hide
+        origin: Union[Unset, Point3d] = UNSET
         if not isinstance(self.origin, Unset):
             origin = self.origin
         size = self.size
         type = self.type
+        x_axis: Union[Unset, Point3d] = UNSET
         if not isinstance(self.x_axis, Unset):
             x_axis = self.x_axis
+        y_axis: Union[Unset, Point3d] = UNSET
         if not isinstance(self.y_axis, Unset):
             y_axis = self.y_axis
 
@@ -2904,14 +2950,17 @@ class make_plane:
         if hide is not UNSET:
             field_dict["hide"] = hide
         if origin is not UNSET:
-            field_dict["origin"] = origin.to_dict()
+            _origin: Point3d = cast(Point3d, origin)
+            field_dict["origin"] = _origin.to_dict()
         if size is not UNSET:
             field_dict["size"] = size
         field_dict["type"] = type
         if x_axis is not UNSET:
-            field_dict["x_axis"] = x_axis.to_dict()
+            _x_axis: Point3d = cast(Point3d, x_axis)
+            field_dict["x_axis"] = _x_axis.to_dict()
         if y_axis is not UNSET:
-            field_dict["y_axis"] = y_axis.to_dict()
+            _y_axis: Point3d = cast(Point3d, y_axis)
+            field_dict["y_axis"] = _y_axis.to_dict()
 
         return field_dict
 
@@ -2997,6 +3046,7 @@ class plane_set_color:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        color: Union[Unset, Color] = UNSET
         if not isinstance(self.color, Unset):
             color = self.color
         plane_id = self.plane_id
@@ -3006,7 +3056,8 @@ class plane_set_color:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if color is not UNSET:
-            field_dict["color"] = color.to_dict()
+            _color: Color = cast(Color, color)
+            field_dict["color"] = _color.to_dict()
         if plane_id is not UNSET:
             field_dict["plane_id"] = plane_id
         field_dict["type"] = type
@@ -3068,6 +3119,7 @@ class set_tool:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        tool: Union[Unset, SceneToolType] = UNSET
         if not isinstance(self.tool, Unset):
             tool = self.tool
         type = self.type
@@ -3136,6 +3188,7 @@ class mouse_move:
     def to_dict(self) -> Dict[str, Any]:
         sequence = self.sequence
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -3146,7 +3199,8 @@ class mouse_move:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -3206,6 +3260,7 @@ class mouse_click:
 
     def to_dict(self) -> Dict[str, Any]:
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -3214,7 +3269,8 @@ class mouse_click:
         field_dict.update({})
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -3274,6 +3330,7 @@ class sketch_mode_enable:
 
     def to_dict(self) -> Dict[str, Any]:
         animated = self.animated
+        disable_camera_with_plane: Union[Unset, Point3d] = UNSET
         if not isinstance(self.disable_camera_with_plane, Unset):
             disable_camera_with_plane = self.disable_camera_with_plane
         ortho = self.ortho
@@ -3286,9 +3343,12 @@ class sketch_mode_enable:
         if animated is not UNSET:
             field_dict["animated"] = animated
         if disable_camera_with_plane is not UNSET:
+            _disable_camera_with_plane: Point3d = cast(
+                Point3d, disable_camera_with_plane
+            )
             field_dict[
                 "disable_camera_with_plane"
-            ] = disable_camera_with_plane.to_dict()
+            ] = _disable_camera_with_plane.to_dict()
         if ortho is not UNSET:
             field_dict["ortho"] = ortho
         if plane_id is not UNSET:
@@ -3522,6 +3582,7 @@ class take_snapshot:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        format: Union[Unset, ImageFormat] = UNSET
         if not isinstance(self.format, Unset):
             format = self.format
         type = self.type
@@ -3832,6 +3893,7 @@ class handle_mouse_drag_start:
 
     def to_dict(self) -> Dict[str, Any]:
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -3840,7 +3902,8 @@ class handle_mouse_drag_start:
         field_dict.update({})
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -3899,6 +3962,7 @@ class handle_mouse_drag_move:
     def to_dict(self) -> Dict[str, Any]:
         sequence = self.sequence
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -3909,7 +3973,8 @@ class handle_mouse_drag_move:
             field_dict["sequence"] = sequence
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -3969,6 +4034,7 @@ class handle_mouse_drag_end:
 
     def to_dict(self) -> Dict[str, Any]:
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -3977,7 +4043,8 @@ class handle_mouse_drag_end:
         field_dict.update({})
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -4095,6 +4162,7 @@ class plane_intersect_and_project:
     def to_dict(self) -> Dict[str, Any]:
         plane_id = self.plane_id
         type = self.type
+        window: Union[Unset, Point2d] = UNSET
         if not isinstance(self.window, Unset):
             window = self.window
 
@@ -4105,7 +4173,8 @@ class plane_intersect_and_project:
             field_dict["plane_id"] = plane_id
         field_dict["type"] = type
         if window is not UNSET:
-            field_dict["window"] = window.to_dict()
+            _window: Point2d = cast(Point2d, window)
+            field_dict["window"] = _window.to_dict()
 
         return field_dict
 
@@ -4300,6 +4369,7 @@ class import_files:
         files: Union[Unset, List[ImportFile]] = UNSET
         if not isinstance(self.files, Unset):
             files = self.files
+        format: Union[Unset, InputFormat] = UNSET
         if not isinstance(self.format, Unset):
             format = self.format
         type = self.type
@@ -4310,7 +4380,8 @@ class import_files:
         if files is not UNSET:
             field_dict["files"] = files
         if format is not UNSET:
-            field_dict["format"] = format.to_dict()
+            _format: InputFormat = cast(InputFormat, format)
+            field_dict["format"] = _format.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -4380,10 +4451,13 @@ class mass:
         if not isinstance(self.entity_ids, Unset):
             entity_ids = self.entity_ids
         material_density = self.material_density
+        material_density_unit: Union[Unset, UnitDensity] = UNSET
         if not isinstance(self.material_density_unit, Unset):
             material_density_unit = self.material_density_unit
+        output_unit: Union[Unset, UnitMass] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        source_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.source_unit, Unset):
             source_unit = self.source_unit
         type = self.type
@@ -4491,10 +4565,13 @@ class density:
         if not isinstance(self.entity_ids, Unset):
             entity_ids = self.entity_ids
         material_mass = self.material_mass
+        material_mass_unit: Union[Unset, UnitMass] = UNSET
         if not isinstance(self.material_mass_unit, Unset):
             material_mass_unit = self.material_mass_unit
+        output_unit: Union[Unset, UnitDensity] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        source_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.source_unit, Unset):
             source_unit = self.source_unit
         type = self.type
@@ -4599,8 +4676,10 @@ class volume:
         entity_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.entity_ids, Unset):
             entity_ids = self.entity_ids
+        output_unit: Union[Unset, UnitVolume] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        source_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.source_unit, Unset):
             source_unit = self.source_unit
         type = self.type
@@ -4688,8 +4767,10 @@ class center_of_mass:
         entity_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.entity_ids, Unset):
             entity_ids = self.entity_ids
+        output_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        source_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.source_unit, Unset):
             source_unit = self.source_unit
         type = self.type
@@ -4777,8 +4858,10 @@ class surface_area:
         entity_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.entity_ids, Unset):
             entity_ids = self.entity_ids
+        output_unit: Union[Unset, UnitArea] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        source_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.source_unit, Unset):
             source_unit = self.source_unit
         type = self.type
@@ -4913,8 +4996,10 @@ class curve_set_constraint:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        constraint_bound: Union[Unset, PathComponentConstraintBound] = UNSET
         if not isinstance(self.constraint_bound, Unset):
             constraint_bound = self.constraint_bound
+        constraint_type: Union[Unset, PathComponentConstraintType] = UNSET
         if not isinstance(self.constraint_type, Unset):
             constraint_type = self.constraint_type
         object_id = self.object_id

@@ -18,8 +18,10 @@ class AnnotationLineEndOptions:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        end: Union[Unset, AnnotationLineEnd] = UNSET
         if not isinstance(self.end, Unset):
             end = self.end
+        start: Union[Unset, AnnotationLineEnd] = UNSET
         if not isinstance(self.start, Unset):
             start = self.start
 

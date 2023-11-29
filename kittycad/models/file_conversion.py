@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -45,8 +45,10 @@ class FileConversion:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        output_format: Union[Unset, FileExportFormat] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
+        output_format_options: Union[Unset, OutputFormat] = UNSET
         if not isinstance(self.output_format_options, Unset):
             output_format_options = self.output_format_options
         outputs: Union[Unset, Dict[str, str]] = UNSET
@@ -55,13 +57,16 @@ class FileConversion:
             for key, value in self.outputs.items():
                 new_dict[key] = value.get_encoded()
             outputs = new_dict
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
+        src_format_options: Union[Unset, InputFormat] = UNSET
         if not isinstance(self.src_format_options, Unset):
             src_format_options = self.src_format_options
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET
@@ -83,13 +88,17 @@ class FileConversion:
         if output_format is not UNSET:
             field_dict["output_format"] = output_format
         if output_format_options is not UNSET:
-            field_dict["output_format_options"] = output_format_options.to_dict()
+            _output_format_options: OutputFormat = cast(
+                OutputFormat, output_format_options
+            )
+            field_dict["output_format_options"] = _output_format_options.to_dict()
         if outputs is not UNSET:
             field_dict["outputs"] = outputs
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
         if src_format_options is not UNSET:
-            field_dict["src_format_options"] = src_format_options.to_dict()
+            _src_format_options: InputFormat = cast(InputFormat, src_format_options)
+            field_dict["src_format_options"] = _src_format_options.to_dict()
         if started_at is not UNSET:
             field_dict["started_at"] = started_at
         if status is not UNSET:

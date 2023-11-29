@@ -25,6 +25,7 @@ class NewAddress:
 
     def to_dict(self) -> Dict[str, Any]:
         city = self.city
+        country: Union[Unset, CountryCode] = UNSET
         if not isinstance(self.country, Unset):
             country = self.country
         state = self.state

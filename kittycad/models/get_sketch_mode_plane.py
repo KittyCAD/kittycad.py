@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -19,10 +19,13 @@ class GetSketchModePlane:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        x_axis: Union[Unset, Point3d] = UNSET
         if not isinstance(self.x_axis, Unset):
             x_axis = self.x_axis
+        y_axis: Union[Unset, Point3d] = UNSET
         if not isinstance(self.y_axis, Unset):
             y_axis = self.y_axis
+        z_axis: Union[Unset, Point3d] = UNSET
         if not isinstance(self.z_axis, Unset):
             z_axis = self.z_axis
 
@@ -30,11 +33,14 @@ class GetSketchModePlane:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if x_axis is not UNSET:
-            field_dict["x_axis"] = x_axis.to_dict()
+            _x_axis: Point3d = cast(Point3d, x_axis)
+            field_dict["x_axis"] = _x_axis.to_dict()
         if y_axis is not UNSET:
-            field_dict["y_axis"] = y_axis.to_dict()
+            _y_axis: Point3d = cast(Point3d, y_axis)
+            field_dict["y_axis"] = _y_axis.to_dict()
         if z_axis is not UNSET:
-            field_dict["z_axis"] = z_axis.to_dict()
+            _z_axis: Point3d = cast(Point3d, z_axis)
+            field_dict["z_axis"] = _z_axis.to_dict()
 
         return field_dict
 

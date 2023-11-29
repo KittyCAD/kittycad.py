@@ -40,13 +40,16 @@ class FileSurfaceArea:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        output_unit: Union[Unset, UnitArea] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         surface_area = self.surface_area

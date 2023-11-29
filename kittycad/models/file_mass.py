@@ -45,15 +45,19 @@ class FileMass:
         id = self.id
         mass = self.mass
         material_density = self.material_density
+        material_density_unit: Union[Unset, UnitDensity] = UNSET
         if not isinstance(self.material_density_unit, Unset):
             material_density_unit = self.material_density_unit
+        output_unit: Union[Unset, UnitMass] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET

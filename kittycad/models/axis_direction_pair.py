@@ -19,8 +19,10 @@ class AxisDirectionPair:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        axis: Union[Unset, Axis] = UNSET
         if not isinstance(self.axis, Unset):
             axis = self.axis
+        direction: Union[Unset, Direction] = UNSET
         if not isinstance(self.direction, Unset):
             direction = self.direction
 

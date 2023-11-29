@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -33,6 +33,7 @@ class FileCenterOfMass:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        center_of_mass: Union[Unset, Point3d] = UNSET
         if not isinstance(self.center_of_mass, Unset):
             center_of_mass = self.center_of_mass
         completed_at: Union[Unset, str] = UNSET
@@ -43,13 +44,16 @@ class FileCenterOfMass:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        output_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET
@@ -61,7 +65,8 @@ class FileCenterOfMass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center_of_mass is not UNSET:
-            field_dict["center_of_mass"] = center_of_mass.to_dict()
+            _center_of_mass: Point3d = cast(Point3d, center_of_mass)
+            field_dict["center_of_mass"] = _center_of_mass.to_dict()
         if completed_at is not UNSET:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:

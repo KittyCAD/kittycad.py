@@ -1518,9 +1518,8 @@ def generateObjectTypeCode(
             )
             # We only want .to_dict on nested objects.
             if "$ref" in property_schema:
-                actual_schema = data["components"]["schemas"][
-                    property_schema["$ref"].replace("#/components/schemas/", "")
-                ]
+                ref = property_schema["$ref"].replace("#/components/schemas/", "")
+                actual_schema = data["components"]["schemas"][ref]
                 is_enum = isEnumWithDocsOneOf(actual_schema)
                 if (
                     "properties" in actual_schema
@@ -1529,10 +1528,21 @@ def generateObjectTypeCode(
                     or "allOf" in actual_schema
                 ) and not is_enum:
                     f.write(
+                        "\t\t\t_"
+                        + property_name
+                        + ": "
+                        + ref
+                        + " = cast("
+                        + ref
+                        + ", "
+                        + clean_parameter_name(property_name)
+                        + ")\n"
+                    )
+                    f.write(
                         "\t\t\tfield_dict['"
                         + property_name
-                        + "'] = "
-                        + clean_parameter_name(property_name)
+                        + "'] = _"
+                        + property_name
                         + ".to_dict()\n"
                     )
                 else:
@@ -1849,6 +1859,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
             )
     elif "$ref" in property_schema:
         ref = property_schema["$ref"].replace("#/components/schemas/", "")
+        f.write("\t\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
         f.write(
             "\t\tif not isinstance(self."
             + clean_parameter_name(property_name)
@@ -1869,6 +1880,7 @@ def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
                 return renderTypeToDict(
                     f, property_name, data["components"]["schemas"][ref], data
                 )
+            f.write("\t\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
             f.write(
                 "\t\tif not isinstance(self."
                 + clean_parameter_name(property_name)

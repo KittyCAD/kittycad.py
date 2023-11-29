@@ -19,6 +19,7 @@ class Mass:
 
     def to_dict(self) -> Dict[str, Any]:
         mass = self.mass
+        output_unit: Union[Unset, UnitMass] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
 

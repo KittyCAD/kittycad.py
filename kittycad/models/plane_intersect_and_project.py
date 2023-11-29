@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -17,6 +17,7 @@ class PlaneIntersectAndProject:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        plane_coordinates: Union[Unset, Point2d] = UNSET
         if not isinstance(self.plane_coordinates, Unset):
             plane_coordinates = self.plane_coordinates
 
@@ -24,7 +25,8 @@ class PlaneIntersectAndProject:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if plane_coordinates is not UNSET:
-            field_dict["plane_coordinates"] = plane_coordinates.to_dict()
+            _plane_coordinates: Point2d = cast(Point2d, plane_coordinates)
+            field_dict["plane_coordinates"] = _plane_coordinates.to_dict()
 
         return field_dict
 

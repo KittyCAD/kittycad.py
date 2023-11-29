@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -25,8 +25,10 @@ class System:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        forward: Union[Unset, AxisDirectionPair] = UNSET
         if not isinstance(self.forward, Unset):
             forward = self.forward
+        up: Union[Unset, AxisDirectionPair] = UNSET
         if not isinstance(self.up, Unset):
             up = self.up
 
@@ -34,9 +36,11 @@ class System:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if forward is not UNSET:
-            field_dict["forward"] = forward.to_dict()
+            _forward: AxisDirectionPair = cast(AxisDirectionPair, forward)
+            field_dict["forward"] = _forward.to_dict()
         if up is not UNSET:
-            field_dict["up"] = up.to_dict()
+            _up: AxisDirectionPair = cast(AxisDirectionPair, up)
+            field_dict["up"] = _up.to_dict()
 
         return field_dict
 

@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -53,8 +53,10 @@ class file_conversion:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        output_format: Union[Unset, FileExportFormat] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
+        output_format_options: Union[Unset, OutputFormat] = UNSET
         if not isinstance(self.output_format_options, Unset):
             output_format_options = self.output_format_options
         outputs: Union[Unset, Dict[str, str]] = UNSET
@@ -63,13 +65,16 @@ class file_conversion:
             for key, value in self.outputs.items():
                 new_dict[key] = value.get_encoded()
             outputs = new_dict
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
+        src_format_options: Union[Unset, InputFormat] = UNSET
         if not isinstance(self.src_format_options, Unset):
             src_format_options = self.src_format_options
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         type = self.type
@@ -92,13 +97,17 @@ class file_conversion:
         if output_format is not UNSET:
             field_dict["output_format"] = output_format
         if output_format_options is not UNSET:
-            field_dict["output_format_options"] = output_format_options.to_dict()
+            _output_format_options: OutputFormat = cast(
+                OutputFormat, output_format_options
+            )
+            field_dict["output_format_options"] = _output_format_options.to_dict()
         if outputs is not UNSET:
             field_dict["outputs"] = outputs
         if src_format is not UNSET:
             field_dict["src_format"] = src_format
         if src_format_options is not UNSET:
-            field_dict["src_format_options"] = src_format_options.to_dict()
+            _src_format_options: InputFormat = cast(InputFormat, src_format_options)
+            field_dict["src_format_options"] = _src_format_options.to_dict()
         if started_at is not UNSET:
             field_dict["started_at"] = started_at
         if status is not UNSET:
@@ -278,6 +287,7 @@ class file_center_of_mass:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        center_of_mass: Union[Unset, Point3d] = UNSET
         if not isinstance(self.center_of_mass, Unset):
             center_of_mass = self.center_of_mass
         completed_at: Union[Unset, str] = UNSET
@@ -288,13 +298,16 @@ class file_center_of_mass:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        output_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         type = self.type
@@ -307,7 +320,8 @@ class file_center_of_mass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center_of_mass is not UNSET:
-            field_dict["center_of_mass"] = center_of_mass.to_dict()
+            _center_of_mass: Point3d = cast(Point3d, center_of_mass)
+            field_dict["center_of_mass"] = _center_of_mass.to_dict()
         if completed_at is not UNSET:
             field_dict["completed_at"] = completed_at
         if created_at is not UNSET:
@@ -491,15 +505,19 @@ class file_mass:
         id = self.id
         mass = self.mass
         material_density = self.material_density
+        material_density_unit: Union[Unset, UnitDensity] = UNSET
         if not isinstance(self.material_density_unit, Unset):
             material_density_unit = self.material_density_unit
+        output_unit: Union[Unset, UnitMass] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         type = self.type
@@ -702,13 +720,16 @@ class file_volume:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        output_unit: Union[Unset, UnitVolume] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         type = self.type
@@ -899,15 +920,19 @@ class file_density:
         error = self.error
         id = self.id
         material_mass = self.material_mass
+        material_mass_unit: Union[Unset, UnitMass] = UNSET
         if not isinstance(self.material_mass_unit, Unset):
             material_mass_unit = self.material_mass_unit
+        output_unit: Union[Unset, UnitDensity] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         type = self.type
@@ -1110,13 +1135,16 @@ class file_surface_area:
             created_at = self.created_at.isoformat()
         error = self.error
         id = self.id
+        output_unit: Union[Unset, UnitArea] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
+        src_format: Union[Unset, FileImportFormat] = UNSET
         if not isinstance(self.src_format, Unset):
             src_format = self.src_format
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         surface_area = self.surface_area
@@ -1304,10 +1332,12 @@ class text_to_cad:
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
         error = self.error
+        feedback: Union[Unset, AiFeedback] = UNSET
         if not isinstance(self.feedback, Unset):
             feedback = self.feedback
         id = self.id
         model_version = self.model_version
+        output_format: Union[Unset, FileExportFormat] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
         outputs: Union[Unset, Dict[str, str]] = UNSET
@@ -1320,6 +1350,7 @@ class text_to_cad:
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         type = self.type

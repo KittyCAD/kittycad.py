@@ -41,14 +41,17 @@ class UnitAngleConversion:
         error = self.error
         id = self.id
         input = self.input
+        input_unit: Union[Unset, UnitAngle] = UNSET
         if not isinstance(self.input_unit, Unset):
             input_unit = self.input_unit
         output = self.output
+        output_unit: Union[Unset, UnitAngle] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET

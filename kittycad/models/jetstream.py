@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -21,10 +21,13 @@ class Jetstream:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        config: Union[Unset, JetstreamConfig] = UNSET
         if not isinstance(self.config, Unset):
             config = self.config
+        meta: Union[Unset, MetaClusterInfo] = UNSET
         if not isinstance(self.meta, Unset):
             meta = self.meta
+        stats: Union[Unset, JetstreamStats] = UNSET
         if not isinstance(self.stats, Unset):
             stats = self.stats
 
@@ -32,11 +35,14 @@ class Jetstream:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if config is not UNSET:
-            field_dict["config"] = config.to_dict()
+            _config: JetstreamConfig = cast(JetstreamConfig, config)
+            field_dict["config"] = _config.to_dict()
         if meta is not UNSET:
-            field_dict["meta"] = meta.to_dict()
+            _meta: MetaClusterInfo = cast(MetaClusterInfo, meta)
+            field_dict["meta"] = _meta.to_dict()
         if stats is not UNSET:
-            field_dict["stats"] = stats.to_dict()
+            _stats: JetstreamStats = cast(JetstreamStats, stats)
+            field_dict["stats"] = _stats.to_dict()
 
         return field_dict
 

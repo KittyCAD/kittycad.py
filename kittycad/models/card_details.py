@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -25,6 +25,7 @@ class CardDetails:
 
     def to_dict(self) -> Dict[str, Any]:
         brand = self.brand
+        checks: Union[Unset, PaymentMethodCardChecks] = UNSET
         if not isinstance(self.checks, Unset):
             checks = self.checks
         country = self.country
@@ -40,7 +41,8 @@ class CardDetails:
         if brand is not UNSET:
             field_dict["brand"] = brand
         if checks is not UNSET:
-            field_dict["checks"] = checks.to_dict()
+            _checks: PaymentMethodCardChecks = cast(PaymentMethodCardChecks, checks)
+            field_dict["checks"] = _checks.to_dict()
         if country is not UNSET:
             field_dict["country"] = country
         if exp_month is not UNSET:

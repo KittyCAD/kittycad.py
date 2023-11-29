@@ -18,6 +18,7 @@ class SurfaceArea:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        output_unit: Union[Unset, UnitArea] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
         surface_area = self.surface_area

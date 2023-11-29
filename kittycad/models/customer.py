@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -29,12 +29,14 @@ class Customer:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        address: Union[Unset, NewAddress] = UNSET
         if not isinstance(self.address, Unset):
             address = self.address
         balance = self.balance
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
+        currency: Union[Unset, Currency] = UNSET
         if not isinstance(self.currency, Unset):
             currency = self.currency
         delinquent = self.delinquent
@@ -49,7 +51,8 @@ class Customer:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if address is not UNSET:
-            field_dict["address"] = address.to_dict()
+            _address: NewAddress = cast(NewAddress, address)
+            field_dict["address"] = _address.to_dict()
         if balance is not UNSET:
             field_dict["balance"] = balance
         if created_at is not UNSET:

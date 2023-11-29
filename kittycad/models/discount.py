@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -17,6 +17,7 @@ class Discount:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        coupon: Union[Unset, Coupon] = UNSET
         if not isinstance(self.coupon, Unset):
             coupon = self.coupon
 
@@ -24,7 +25,8 @@ class Discount:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coupon is not UNSET:
-            field_dict["coupon"] = coupon.to_dict()
+            _coupon: Coupon = cast(Coupon, coupon)
+            field_dict["coupon"] = _coupon.to_dict()
 
         return field_dict
 

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -30,8 +30,10 @@ class AiPluginManifest:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        api: Union[Unset, AiPluginApi] = UNSET
         if not isinstance(self.api, Unset):
             api = self.api
+        auth: Union[Unset, AiPluginAuth] = UNSET
         if not isinstance(self.auth, Unset):
             auth = self.auth
         contact_email = self.contact_email
@@ -47,9 +49,11 @@ class AiPluginManifest:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if api is not UNSET:
-            field_dict["api"] = api.to_dict()
+            _api: AiPluginApi = cast(AiPluginApi, api)
+            field_dict["api"] = _api.to_dict()
         if auth is not UNSET:
-            field_dict["auth"] = auth.to_dict()
+            _auth: AiPluginAuth = cast(AiPluginAuth, auth)
+            field_dict["auth"] = _auth.to_dict()
         if contact_email is not UNSET:
             field_dict["contact_email"] = contact_email
         if description_for_human is not UNSET:

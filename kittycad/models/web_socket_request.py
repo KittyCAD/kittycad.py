@@ -22,6 +22,7 @@ class trickle_ice:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        candidate: Union[Unset, RtcIceCandidateInit] = UNSET
         if not isinstance(self.candidate, Unset):
             candidate = self.candidate
         type = self.type
@@ -30,7 +31,8 @@ class trickle_ice:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if candidate is not UNSET:
-            field_dict["candidate"] = candidate.to_dict()
+            _candidate: RtcIceCandidateInit = cast(RtcIceCandidateInit, candidate)
+            field_dict["candidate"] = _candidate.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -87,6 +89,7 @@ class sdp_offer:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        offer: Union[Unset, RtcSessionDescription] = UNSET
         if not isinstance(self.offer, Unset):
             offer = self.offer
         type = self.type
@@ -95,7 +98,8 @@ class sdp_offer:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if offer is not UNSET:
-            field_dict["offer"] = offer.to_dict()
+            _offer: RtcSessionDescription = cast(RtcSessionDescription, offer)
+            field_dict["offer"] = _offer.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -153,8 +157,10 @@ class modeling_cmd_req:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        cmd: Union[Unset, ModelingCmd] = UNSET
         if not isinstance(self.cmd, Unset):
             cmd = self.cmd
+        cmd_id: Union[Unset, ModelingCmdId] = UNSET
         if not isinstance(self.cmd_id, Unset):
             cmd_id = self.cmd_id
         type = self.type
@@ -163,7 +169,8 @@ class modeling_cmd_req:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cmd is not UNSET:
-            field_dict["cmd"] = cmd.to_dict()
+            _cmd: ModelingCmd = cast(ModelingCmd, cmd)
+            field_dict["cmd"] = _cmd.to_dict()
         if cmd_id is not UNSET:
             field_dict["cmd_id"] = cmd_id
         field_dict["type"] = type
@@ -347,6 +354,7 @@ class metrics_response:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        metrics: Union[Unset, ClientMetrics] = UNSET
         if not isinstance(self.metrics, Unset):
             metrics = self.metrics
         type = self.type
@@ -355,7 +363,8 @@ class metrics_response:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if metrics is not UNSET:
-            field_dict["metrics"] = metrics.to_dict()
+            _metrics: ClientMetrics = cast(ClientMetrics, metrics)
+            field_dict["metrics"] = _metrics.to_dict()
         field_dict["type"] = type
 
         return field_dict

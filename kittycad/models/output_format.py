@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -25,6 +25,7 @@ class fbx:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        storage: Union[Unset, FbxStorage] = UNSET
         if not isinstance(self.storage, Unset):
             storage = self.storage
         type = self.type
@@ -91,8 +92,10 @@ class gltf:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        presentation: Union[Unset, GltfPresentation] = UNSET
         if not isinstance(self.presentation, Unset):
             presentation = self.presentation
+        storage: Union[Unset, GltfStorage] = UNSET
         if not isinstance(self.storage, Unset):
             storage = self.storage
         type = self.type
@@ -171,9 +174,11 @@ class obj:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        coords: Union[Unset, System] = UNSET
         if not isinstance(self.coords, Unset):
             coords = self.coords
         type = self.type
+        units: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.units, Unset):
             units = self.units
 
@@ -181,7 +186,8 @@ class obj:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords.to_dict()
+            _coords: System = cast(System, coords)
+            field_dict["coords"] = _coords.to_dict()
         field_dict["type"] = type
         if units is not UNSET:
             field_dict["units"] = units
@@ -253,13 +259,17 @@ class ply:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        coords: Union[Unset, System] = UNSET
         if not isinstance(self.coords, Unset):
             coords = self.coords
+        selection: Union[Unset, Selection] = UNSET
         if not isinstance(self.selection, Unset):
             selection = self.selection
+        storage: Union[Unset, PlyStorage] = UNSET
         if not isinstance(self.storage, Unset):
             storage = self.storage
         type = self.type
+        units: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.units, Unset):
             units = self.units
 
@@ -267,9 +277,11 @@ class ply:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords.to_dict()
+            _coords: System = cast(System, coords)
+            field_dict["coords"] = _coords.to_dict()
         if selection is not UNSET:
-            field_dict["selection"] = selection.to_dict()
+            _selection: Selection = cast(Selection, selection)
+            field_dict["selection"] = _selection.to_dict()
         if storage is not UNSET:
             field_dict["storage"] = storage
         field_dict["type"] = type
@@ -360,6 +372,7 @@ class step:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        coords: Union[Unset, System] = UNSET
         if not isinstance(self.coords, Unset):
             coords = self.coords
         type = self.type
@@ -368,7 +381,8 @@ class step:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords.to_dict()
+            _coords: System = cast(System, coords)
+            field_dict["coords"] = _coords.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -428,13 +442,17 @@ class stl:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        coords: Union[Unset, System] = UNSET
         if not isinstance(self.coords, Unset):
             coords = self.coords
+        selection: Union[Unset, Selection] = UNSET
         if not isinstance(self.selection, Unset):
             selection = self.selection
+        storage: Union[Unset, StlStorage] = UNSET
         if not isinstance(self.storage, Unset):
             storage = self.storage
         type = self.type
+        units: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.units, Unset):
             units = self.units
 
@@ -442,9 +460,11 @@ class stl:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if coords is not UNSET:
-            field_dict["coords"] = coords.to_dict()
+            _coords: System = cast(System, coords)
+            field_dict["coords"] = _coords.to_dict()
         if selection is not UNSET:
-            field_dict["selection"] = selection.to_dict()
+            _selection: Selection = cast(Selection, selection)
+            field_dict["selection"] = _selection.to_dict()
         if storage is not UNSET:
             field_dict["storage"] = storage
         field_dict["type"] = type

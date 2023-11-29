@@ -18,6 +18,7 @@ class ApiError:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        error_code: Union[Unset, ErrorCode] = UNSET
         if not isinstance(self.error_code, Unset):
             error_code = self.error_code
         message = self.message

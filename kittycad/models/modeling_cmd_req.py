@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -19,8 +19,10 @@ class ModelingCmdReq:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        cmd: Union[Unset, ModelingCmd] = UNSET
         if not isinstance(self.cmd, Unset):
             cmd = self.cmd
+        cmd_id: Union[Unset, ModelingCmdId] = UNSET
         if not isinstance(self.cmd_id, Unset):
             cmd_id = self.cmd_id
 
@@ -28,7 +30,8 @@ class ModelingCmdReq:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if cmd is not UNSET:
-            field_dict["cmd"] = cmd.to_dict()
+            _cmd: ModelingCmd = cast(ModelingCmd, cmd)
+            field_dict["cmd"] = _cmd.to_dict()
         if cmd_id is not UNSET:
             field_dict["cmd_id"] = cmd_id
 

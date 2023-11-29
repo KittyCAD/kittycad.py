@@ -42,10 +42,12 @@ class TextToCad:
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
         error = self.error
+        feedback: Union[Unset, AiFeedback] = UNSET
         if not isinstance(self.feedback, Unset):
             feedback = self.feedback
         id = self.id
         model_version = self.model_version
+        output_format: Union[Unset, FileExportFormat] = UNSET
         if not isinstance(self.output_format, Unset):
             output_format = self.output_format
         outputs: Union[Unset, Dict[str, str]] = UNSET
@@ -58,6 +60,7 @@ class TextToCad:
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         updated_at: Union[Unset, str] = UNSET
