@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -26,8 +26,10 @@ class PaymentMethod:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        billing_info: Union[Unset, BillingInfo] = UNSET
         if not isinstance(self.billing_info, Unset):
             billing_info = self.billing_info
+        card: Union[Unset, CardDetails] = UNSET
         if not isinstance(self.card, Unset):
             card = self.card
         created_at: Union[Unset, str] = UNSET
@@ -36,6 +38,7 @@ class PaymentMethod:
         id = self.id
         metadata = self.metadata
 
+        type: Union[Unset, PaymentMethodType] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type
 
@@ -43,9 +46,11 @@ class PaymentMethod:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if billing_info is not UNSET:
-            field_dict["billing_info"] = billing_info.to_dict()
+            _billing_info: BillingInfo = cast(BillingInfo, billing_info)
+            field_dict["billing_info"] = _billing_info.to_dict()
         if card is not UNSET:
-            field_dict["card"] = card.to_dict()
+            _card: CardDetails = cast(CardDetails, card)
+            field_dict["card"] = _card.to_dict()
         if created_at is not UNSET:
             field_dict["created_at"] = created_at
         if id is not UNSET:

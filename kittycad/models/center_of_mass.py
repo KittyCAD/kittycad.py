@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -19,8 +19,10 @@ class CenterOfMass:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        center_of_mass: Union[Unset, Point3d] = UNSET
         if not isinstance(self.center_of_mass, Unset):
             center_of_mass = self.center_of_mass
+        output_unit: Union[Unset, UnitLength] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
 
@@ -28,7 +30,8 @@ class CenterOfMass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if center_of_mass is not UNSET:
-            field_dict["center_of_mass"] = center_of_mass.to_dict()
+            _center_of_mass: Point3d = cast(Point3d, center_of_mass)
+            field_dict["center_of_mass"] = _center_of_mass.to_dict()
         if output_unit is not UNSET:
             field_dict["output_unit"] = output_unit
 

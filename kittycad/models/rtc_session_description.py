@@ -19,6 +19,7 @@ class RtcSessionDescription:
 
     def to_dict(self) -> Dict[str, Any]:
         sdp = self.sdp
+        type: Union[Unset, RtcSdpType] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type
 

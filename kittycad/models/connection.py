@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -70,6 +70,7 @@ class Connection:
 
     def to_dict(self) -> Dict[str, Any]:
         auth_timeout = self.auth_timeout
+        cluster: Union[Unset, Cluster] = UNSET
         if not isinstance(self.cluster, Unset):
             cluster = self.cluster
         config_load_time: Union[Unset, str] = UNSET
@@ -78,6 +79,7 @@ class Connection:
         connections = self.connections
         cores = self.cores
         cpu = self.cpu
+        gateway: Union[Unset, Gateway] = UNSET
         if not isinstance(self.gateway, Unset):
             gateway = self.gateway
         git_commit = self.git_commit
@@ -92,8 +94,10 @@ class Connection:
         https_port = self.https_port
         in_bytes = self.in_bytes
         in_msgs = self.in_msgs
+        jetstream: Union[Unset, Jetstream] = UNSET
         if not isinstance(self.jetstream, Unset):
             jetstream = self.jetstream
+        leaf: Union[Unset, LeafNode] = UNSET
         if not isinstance(self.leaf, Unset):
             leaf = self.leaf
         leafnodes = self.leafnodes
@@ -133,7 +137,8 @@ class Connection:
         if auth_timeout is not UNSET:
             field_dict["auth_timeout"] = auth_timeout
         if cluster is not UNSET:
-            field_dict["cluster"] = cluster.to_dict()
+            _cluster: Cluster = cast(Cluster, cluster)
+            field_dict["cluster"] = _cluster.to_dict()
         if config_load_time is not UNSET:
             field_dict["config_load_time"] = config_load_time
         if connections is not UNSET:
@@ -143,7 +148,8 @@ class Connection:
         if cpu is not UNSET:
             field_dict["cpu"] = cpu
         if gateway is not UNSET:
-            field_dict["gateway"] = gateway.to_dict()
+            _gateway: Gateway = cast(Gateway, gateway)
+            field_dict["gateway"] = _gateway.to_dict()
         if git_commit is not UNSET:
             field_dict["git_commit"] = git_commit
         if go is not UNSET:
@@ -167,9 +173,11 @@ class Connection:
         if in_msgs is not UNSET:
             field_dict["in_msgs"] = in_msgs
         if jetstream is not UNSET:
-            field_dict["jetstream"] = jetstream.to_dict()
+            _jetstream: Jetstream = cast(Jetstream, jetstream)
+            field_dict["jetstream"] = _jetstream.to_dict()
         if leaf is not UNSET:
-            field_dict["leaf"] = leaf.to_dict()
+            _leaf: LeafNode = cast(LeafNode, leaf)
+            field_dict["leaf"] = _leaf.to_dict()
         if leafnodes is not UNSET:
             field_dict["leafnodes"] = leafnodes
         if max_connections is not UNSET:

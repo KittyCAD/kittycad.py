@@ -56,6 +56,7 @@ class Invoice:
         created_at: Union[Unset, str] = UNSET
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
+        currency: Union[Unset, Currency] = UNSET
         if not isinstance(self.currency, Unset):
             currency = self.currency
         customer_email = self.customer_email
@@ -80,6 +81,7 @@ class Invoice:
         pdf = self.pdf
         receipt_number = self.receipt_number
         statement_descriptor = self.statement_descriptor
+        status: Union[Unset, InvoiceStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
         subtotal = self.subtotal

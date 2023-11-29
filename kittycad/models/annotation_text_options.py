@@ -23,8 +23,10 @@ class AnnotationTextOptions:
     def to_dict(self) -> Dict[str, Any]:
         point_size = self.point_size
         text = self.text
+        x: Union[Unset, AnnotationTextAlignmentX] = UNSET
         if not isinstance(self.x, Unset):
             x = self.x
+        y: Union[Unset, AnnotationTextAlignmentY] = UNSET
         if not isinstance(self.y, Unset):
             y = self.y
 

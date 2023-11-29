@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -18,8 +18,10 @@ class CurveGetEndPoints:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        end: Union[Unset, Point3d] = UNSET
         if not isinstance(self.end, Unset):
             end = self.end
+        start: Union[Unset, Point3d] = UNSET
         if not isinstance(self.start, Unset):
             start = self.start
 
@@ -27,9 +29,11 @@ class CurveGetEndPoints:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if end is not UNSET:
-            field_dict["end"] = end.to_dict()
+            _end: Point3d = cast(Point3d, end)
+            field_dict["end"] = _end.to_dict()
         if start is not UNSET:
-            field_dict["start"] = start.to_dict()
+            _start: Point3d = cast(Point3d, start)
+            field_dict["start"] = _start.to_dict()
 
         return field_dict
 

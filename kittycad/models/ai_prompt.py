@@ -43,8 +43,10 @@ class AiPrompt:
         if not isinstance(self.created_at, Unset):
             created_at = self.created_at.isoformat()
         error = self.error
+        feedback: Union[Unset, AiFeedback] = UNSET
         if not isinstance(self.feedback, Unset):
             feedback = self.feedback
+        id: Union[Unset, UuidBinary] = UNSET
         if not isinstance(self.id, Unset):
             id = self.id
         metadata = self.metadata
@@ -54,8 +56,10 @@ class AiPrompt:
         started_at: Union[Unset, str] = UNSET
         if not isinstance(self.started_at, Unset):
             started_at = self.started_at.isoformat()
+        status: Union[Unset, ApiCallStatus] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status
+        type: Union[Unset, AiPromptType] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type
         updated_at: Union[Unset, str] = UNSET

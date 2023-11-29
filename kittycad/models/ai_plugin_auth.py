@@ -19,8 +19,10 @@ class AiPluginAuth:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        authorization_type: Union[Unset, AiPluginHttpAuthType] = UNSET
         if not isinstance(self.authorization_type, Unset):
             authorization_type = self.authorization_type
+        type: Union[Unset, AiPluginAuthType] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type
 

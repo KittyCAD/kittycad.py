@@ -19,6 +19,7 @@ class Density:
 
     def to_dict(self) -> Dict[str, Any]:
         density = self.density
+        output_unit: Union[Unset, UnitDensity] = UNSET
         if not isinstance(self.output_unit, Unset):
             output_unit = self.output_unit
 

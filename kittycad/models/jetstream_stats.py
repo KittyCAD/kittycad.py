@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -24,6 +24,7 @@ class JetstreamStats:
 
     def to_dict(self) -> Dict[str, Any]:
         accounts = self.accounts
+        api: Union[Unset, JetstreamApiStats] = UNSET
         if not isinstance(self.api, Unset):
             api = self.api
         ha_assets = self.ha_assets
@@ -38,7 +39,8 @@ class JetstreamStats:
         if accounts is not UNSET:
             field_dict["accounts"] = accounts
         if api is not UNSET:
-            field_dict["api"] = api.to_dict()
+            _api: JetstreamApiStats = cast(JetstreamApiStats, api)
+            field_dict["api"] = _api.to_dict()
         if ha_assets is not UNSET:
             field_dict["ha_assets"] = ha_assets
         if memory is not UNSET:

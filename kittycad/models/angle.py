@@ -18,6 +18,7 @@ class Angle:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        unit: Union[Unset, UnitAngle] = UNSET
         if not isinstance(self.unit, Unset):
             unit = self.unit
         value = self.value

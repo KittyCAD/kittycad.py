@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -20,6 +20,7 @@ class SuccessWebSocketResponse:
 
     def to_dict(self) -> Dict[str, Any]:
         request_id = self.request_id
+        resp: Union[Unset, OkWebSocketResponseData] = UNSET
         if not isinstance(self.resp, Unset):
             resp = self.resp
         success = self.success
@@ -30,7 +31,8 @@ class SuccessWebSocketResponse:
         if request_id is not UNSET:
             field_dict["request_id"] = request_id
         if resp is not UNSET:
-            field_dict["resp"] = resp.to_dict()
+            _resp: OkWebSocketResponseData = cast(OkWebSocketResponseData, resp)
+            field_dict["resp"] = _resp.to_dict()
         if success is not UNSET:
             field_dict["success"] = success
 

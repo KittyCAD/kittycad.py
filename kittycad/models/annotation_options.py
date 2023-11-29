@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -24,13 +24,17 @@ class AnnotationOptions:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        color: Union[Unset, Color] = UNSET
         if not isinstance(self.color, Unset):
             color = self.color
+        line_ends: Union[Unset, AnnotationLineEndOptions] = UNSET
         if not isinstance(self.line_ends, Unset):
             line_ends = self.line_ends
         line_width = self.line_width
+        position: Union[Unset, Point3d] = UNSET
         if not isinstance(self.position, Unset):
             position = self.position
+        text: Union[Unset, AnnotationTextOptions] = UNSET
         if not isinstance(self.text, Unset):
             text = self.text
 
@@ -38,15 +42,21 @@ class AnnotationOptions:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if color is not UNSET:
-            field_dict["color"] = color.to_dict()
+            _color: Color = cast(Color, color)
+            field_dict["color"] = _color.to_dict()
         if line_ends is not UNSET:
-            field_dict["line_ends"] = line_ends.to_dict()
+            _line_ends: AnnotationLineEndOptions = cast(
+                AnnotationLineEndOptions, line_ends
+            )
+            field_dict["line_ends"] = _line_ends.to_dict()
         if line_width is not UNSET:
             field_dict["line_width"] = line_width
         if position is not UNSET:
-            field_dict["position"] = position.to_dict()
+            _position: Point3d = cast(Point3d, position)
+            field_dict["position"] = _position.to_dict()
         if text is not UNSET:
-            field_dict["text"] = text.to_dict()
+            _text: AnnotationTextOptions = cast(AnnotationTextOptions, text)
+            field_dict["text"] = _text.to_dict()
 
         return field_dict
 

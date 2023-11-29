@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -97,6 +97,7 @@ class export:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Export] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -105,7 +106,8 @@ class export:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Export = cast(Export, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -162,6 +164,7 @@ class select_with_point:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, SelectWithPoint] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -170,7 +173,8 @@ class select_with_point:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: SelectWithPoint = cast(SelectWithPoint, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -227,6 +231,7 @@ class highlight_set_entity:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, HighlightSetEntity] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -235,7 +240,8 @@ class highlight_set_entity:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: HighlightSetEntity = cast(HighlightSetEntity, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -292,6 +298,7 @@ class entity_get_child_uuid:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, EntityGetChildUuid] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -300,7 +307,8 @@ class entity_get_child_uuid:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: EntityGetChildUuid = cast(EntityGetChildUuid, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -357,6 +365,7 @@ class entity_get_num_children:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, EntityGetNumChildren] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -365,7 +374,8 @@ class entity_get_num_children:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: EntityGetNumChildren = cast(EntityGetNumChildren, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -422,6 +432,7 @@ class entity_get_parent_id:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, EntityGetParentId] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -430,7 +441,8 @@ class entity_get_parent_id:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: EntityGetParentId = cast(EntityGetParentId, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -487,6 +499,7 @@ class entity_get_all_child_uuids:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, EntityGetAllChildUuids] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -495,7 +508,8 @@ class entity_get_all_child_uuids:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: EntityGetAllChildUuids = cast(EntityGetAllChildUuids, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -552,6 +566,7 @@ class select_get:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, SelectGet] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -560,7 +575,8 @@ class select_get:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: SelectGet = cast(SelectGet, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -617,6 +633,7 @@ class get_entity_type:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, GetEntityType] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -625,7 +642,8 @@ class get_entity_type:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: GetEntityType = cast(GetEntityType, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -682,6 +700,7 @@ class solid3d_get_all_edge_faces:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Solid3dGetAllEdgeFaces] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -690,7 +709,8 @@ class solid3d_get_all_edge_faces:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Solid3dGetAllEdgeFaces = cast(Solid3dGetAllEdgeFaces, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -747,6 +767,7 @@ class solid3d_get_all_opposite_edges:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Solid3dGetAllOppositeEdges] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -755,7 +776,8 @@ class solid3d_get_all_opposite_edges:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Solid3dGetAllOppositeEdges = cast(Solid3dGetAllOppositeEdges, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -812,6 +834,7 @@ class solid3d_get_opposite_edge:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Solid3dGetOppositeEdge] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -820,7 +843,8 @@ class solid3d_get_opposite_edge:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Solid3dGetOppositeEdge = cast(Solid3dGetOppositeEdge, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -877,6 +901,7 @@ class solid3d_get_prev_adjacent_edge:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Solid3dGetPrevAdjacentEdge] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -885,7 +910,8 @@ class solid3d_get_prev_adjacent_edge:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Solid3dGetPrevAdjacentEdge = cast(Solid3dGetPrevAdjacentEdge, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -942,6 +968,7 @@ class solid3d_get_next_adjacent_edge:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Solid3dGetNextAdjacentEdge] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -950,7 +977,8 @@ class solid3d_get_next_adjacent_edge:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Solid3dGetNextAdjacentEdge = cast(Solid3dGetNextAdjacentEdge, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1007,6 +1035,7 @@ class mouse_click:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, MouseClick] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1015,7 +1044,8 @@ class mouse_click:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: MouseClick = cast(MouseClick, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1072,6 +1102,7 @@ class curve_get_type:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, CurveGetType] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1080,7 +1111,8 @@ class curve_get_type:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: CurveGetType = cast(CurveGetType, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1137,6 +1169,7 @@ class curve_get_control_points:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, CurveGetControlPoints] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1145,7 +1178,8 @@ class curve_get_control_points:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: CurveGetControlPoints = cast(CurveGetControlPoints, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1202,6 +1236,7 @@ class take_snapshot:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, TakeSnapshot] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1210,7 +1245,8 @@ class take_snapshot:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: TakeSnapshot = cast(TakeSnapshot, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1267,6 +1303,7 @@ class path_get_info:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, PathGetInfo] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1275,7 +1312,8 @@ class path_get_info:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: PathGetInfo = cast(PathGetInfo, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1332,6 +1370,7 @@ class path_get_curve_uuids_for_vertices:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, PathGetCurveUuidsForVertices] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1340,7 +1379,10 @@ class path_get_curve_uuids_for_vertices:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: PathGetCurveUuidsForVertices = cast(
+                PathGetCurveUuidsForVertices, data
+            )
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1397,6 +1439,7 @@ class path_get_vertex_uuids:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, PathGetVertexUuids] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1405,7 +1448,8 @@ class path_get_vertex_uuids:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: PathGetVertexUuids = cast(PathGetVertexUuids, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1462,6 +1506,7 @@ class plane_intersect_and_project:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, PlaneIntersectAndProject] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1470,7 +1515,8 @@ class plane_intersect_and_project:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: PlaneIntersectAndProject = cast(PlaneIntersectAndProject, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1527,6 +1573,7 @@ class curve_get_end_points:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, CurveGetEndPoints] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1535,7 +1582,8 @@ class curve_get_end_points:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: CurveGetEndPoints = cast(CurveGetEndPoints, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1592,6 +1640,7 @@ class import_files:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, ImportFiles] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1600,7 +1649,8 @@ class import_files:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: ImportFiles = cast(ImportFiles, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1657,6 +1707,7 @@ class mass:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Mass] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1665,7 +1716,8 @@ class mass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Mass = cast(Mass, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1722,6 +1774,7 @@ class volume:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Volume] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1730,7 +1783,8 @@ class volume:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Volume = cast(Volume, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1787,6 +1841,7 @@ class density:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, Density] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1795,7 +1850,8 @@ class density:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: Density = cast(Density, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1852,6 +1908,7 @@ class surface_area:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, SurfaceArea] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1860,7 +1917,8 @@ class surface_area:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: SurfaceArea = cast(SurfaceArea, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1917,6 +1975,7 @@ class center_of_mass:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, CenterOfMass] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1925,7 +1984,8 @@ class center_of_mass:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: CenterOfMass = cast(CenterOfMass, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict
@@ -1982,6 +2042,7 @@ class get_sketch_mode_plane:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        data: Union[Unset, GetSketchModePlane] = UNSET
         if not isinstance(self.data, Unset):
             data = self.data
         type = self.type
@@ -1990,7 +2051,8 @@ class get_sketch_mode_plane:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
-            field_dict["data"] = data.to_dict()
+            _data: GetSketchModePlane = cast(GetSketchModePlane, data)
+            field_dict["data"] = _data.to_dict()
         field_dict["type"] = type
 
         return field_dict

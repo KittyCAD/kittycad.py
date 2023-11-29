@@ -316,5 +316,6 @@ def test_ws():
 
         # Get the messages.
         while True:
-            websocket.recv()
+            message = websocket.recv()
+            print(json.dumps(message.to_dict()))
             break

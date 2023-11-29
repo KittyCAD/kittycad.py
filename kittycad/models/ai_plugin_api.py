@@ -20,6 +20,7 @@ class AiPluginApi:
 
     def to_dict(self) -> Dict[str, Any]:
         is_user_authenticated = self.is_user_authenticated
+        type: Union[Unset, AiPluginApiType] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type
         url = self.url

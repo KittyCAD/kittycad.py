@@ -17,6 +17,7 @@ class CurveGetType:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        curve_type: Union[Unset, CurveType] = UNSET
         if not isinstance(self.curve_type, Unset):
             curve_type = self.curve_type
 

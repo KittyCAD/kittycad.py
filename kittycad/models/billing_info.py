@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -19,6 +19,7 @@ class BillingInfo:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        address: Union[Unset, NewAddress] = UNSET
         if not isinstance(self.address, Unset):
             address = self.address
         name = self.name
@@ -28,7 +29,8 @@ class BillingInfo:
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if address is not UNSET:
-            field_dict["address"] = address.to_dict()
+            _address: NewAddress = cast(NewAddress, address)
+            field_dict["address"] = _address.to_dict()
         if name is not UNSET:
             field_dict["name"] = name
         if phone is not UNSET:

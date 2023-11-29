@@ -20,8 +20,10 @@ class PathSegmentInfo:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        command: Union[Unset, PathCommand] = UNSET
         if not isinstance(self.command, Unset):
             command = self.command
+        command_id: Union[Unset, ModelingCmdId] = UNSET
         if not isinstance(self.command_id, Unset):
             command_id = self.command_id
         relative = self.relative
