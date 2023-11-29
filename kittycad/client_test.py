@@ -300,10 +300,10 @@ def test_ws():
     # Connect to the websocket.
     with modeling_commands_ws.WebSocket(
         client=client,
-        fps=None,
-        unlocked_framerate=None,
-        video_res_height=None,
-        video_res_width=None,
+        fps=30,
+        unlocked_framerate=False,
+        video_res_height=360,
+        video_res_width=480,
         webrtc=False,
     ) as websocket:
         # Send a message.
@@ -316,6 +316,5 @@ def test_ws():
 
         # Get the messages.
         while True:
-            message = websocket.recv()
-            print(json.dumps(message.to_dict()))
+            websocket.recv()
             break

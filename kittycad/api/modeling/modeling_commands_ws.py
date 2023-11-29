@@ -105,7 +105,7 @@ async def asyncio(
         client=client,
     )
 
-    return ws_connect_async(
+    return await ws_connect_async(
         kwargs["url"].replace("http", "ws"), extra_headers=kwargs["headers"]
     )
 
