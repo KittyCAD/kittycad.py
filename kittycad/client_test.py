@@ -1,7 +1,7 @@
 import json
 import os
 import uuid
-from typing import Dict, Optional, Union
+from typing import Optional, Union, cast
 
 import pytest
 
@@ -14,25 +14,41 @@ from .client import ClientFromEnv
 from .models import (
     ApiCallStatus,
     ApiTokenResultsPage,
-    Base64Data,
+    Axis,
+    AxisDirectionPair,
     CreatedAtSortMode,
+    Direction,
     Error,
     ExtendedUserResultsPage,
+    FailureWebSocketResponse,
     FileConversion,
     FileExportFormat,
     FileImportFormat,
     FileMass,
     FileVolume,
+    ImageFormat,
+    ImportFile,
+    InputFormat,
     ModelingCmd,
     ModelingCmdId,
     Pong,
+    SuccessWebSocketResponse,
+    System,
     UnitDensity,
+    UnitLength,
     UnitMass,
     UnitVolume,
     User,
     WebSocketRequest,
 )
-from .models.modeling_cmd import start_path
+from .models.input_format import obj
+from .models.modeling_cmd import (
+    default_camera_focus_on,
+    import_files,
+    start_path,
+    take_snapshot,
+)
+from .models.ok_web_socket_response_data import modeling
 from .models.web_socket_request import modeling_cmd_req
 from .types import Unset
 
@@ -131,11 +147,11 @@ def test_file_convert_stl():
     print(f"FileConversion: {fc}")
 
     assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
 
-    outputs: Dict[str, Base64Data] = fc.outputs
     # Make sure the bytes are not empty.
-    for key, value in outputs.items():
-        assert len(value.get_decoded()) > 0
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
 
 
 @pytest.mark.asyncio
@@ -170,11 +186,11 @@ async def test_file_convert_stl_async():
     print(f"FileConversion: {fc}")
 
     assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
 
-    outputs: Dict[str, Base64Data] = fc.outputs
     # Make sure the bytes are not empty.
-    for key, value in outputs.items():
-        assert len(value.get_decoded()) > 0
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
 
 
 @pytest.mark.asyncio
@@ -209,11 +225,11 @@ async def test_file_convert_obj_async():
     print(f"FileConversion: {fc}")
 
     assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
 
-    outputs: Dict[str, Base64Data] = fc.outputs
     # Make sure the bytes are not empty.
-    for key, value in outputs.items():
-        assert len(value.get_decoded()) > 0
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
 
 
 def test_file_mass():
@@ -244,7 +260,7 @@ def test_file_mass():
     assert fm.id is not None
     assert fm.mass is not None
 
-    assert fm.to_dict() is not None
+    assert fm.model_dump_json() is not None
 
     assert fm.status == ApiCallStatus.COMPLETED
 
@@ -275,7 +291,7 @@ def test_file_volume():
     assert fv.id is not None
     assert fv.volume is not None
 
-    assert fv.to_dict() is not None
+    assert fv.model_dump_json() is not None
 
     assert fv.status == ApiCallStatus.COMPLETED
 
@@ -311,11 +327,98 @@ def test_ws():
         req = WebSocketRequest(
             modeling_cmd_req(cmd=ModelingCmd(start_path()), cmd_id=ModelingCmdId(id))
         )
-        json.dumps(req.to_dict())
         websocket.send(req)
 
         # Get the messages.
         while True:
             message = websocket.recv()
-            print(json.dumps(message.to_dict()))
+            print(json.dumps(message.model_dump_json()))
             break
+
+
+def test_ws_import():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    with modeling_commands_ws.WebSocket(
+        client=client,
+        fps=30,
+        unlocked_framerate=False,
+        video_res_height=360,
+        video_res_width=480,
+        webrtc=False,
+    ) as websocket:
+        # read the content of the file
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        file_name = "ORIGINALVOXEL-3.obj"
+        file = open(os.path.join(dir_path, "..", "assets", file_name), "rb")
+        content = file.read()
+        file.close()
+        cmd_id = uuid.uuid4()
+        ImportFile(data=content, path=file_name)
+        # form the request
+        req = WebSocketRequest(
+            modeling_cmd_req(
+                cmd=ModelingCmd(
+                    import_files(
+                        files=[ImportFile(data=content, path=file_name)],
+                        format=InputFormat(
+                            obj(
+                                units=UnitLength.MM,
+                                coords=System(
+                                    forward=AxisDirectionPair(
+                                        axis=Axis.Y, direction=Direction.NEGATIVE
+                                    ),
+                                    up=AxisDirectionPair(
+                                        axis=Axis.Z, direction=Direction.POSITIVE
+                                    ),
+                                ),
+                            )
+                        ),
+                    )
+                ),
+                cmd_id=ModelingCmdId(cmd_id),
+            )
+        )
+        # Import files request must be sent as binary, because the file contents might be binary.
+        websocket.send_binary(req)
+
+        # Get the success message.
+        message = websocket.recv()
+        if isinstance(message, FailureWebSocketResponse):
+            raise Exception(message)
+        elif isinstance(message, SuccessWebSocketResponse):
+            response = cast(SuccessWebSocketResponse, message)
+            resp = cast(modeling, response.resp)
+            print(json.dumps(resp.model_dump_json()))
+        # Get the object id from the response.
+        # TODO: FIX
+        object_id = uuid.uuid4()
+
+        # Now we want to focus on the object.
+        cmd_id = uuid.uuid4()
+        # form the request
+        req = WebSocketRequest(
+            modeling_cmd_req(
+                cmd=ModelingCmd(default_camera_focus_on(uuid=object_id)),
+                cmd_id=ModelingCmdId(cmd_id),
+            )
+        )
+        websocket.send(req)
+
+        # Get the success message.
+        message = websocket.recv()
+        print(json.dumps(message.model_dump_json()))
+
+        # Now we want to snapshot as a png.
+        cmd_id = uuid.uuid4()
+        # form the request
+        # form the request
+        req = WebSocketRequest(
+            modeling_cmd_req(
+                cmd=ModelingCmd(take_snapshot(format=ImageFormat.PNG)),
+                cmd_id=ModelingCmdId(cmd_id),
+            )
+        )
+        websocket.send(req)

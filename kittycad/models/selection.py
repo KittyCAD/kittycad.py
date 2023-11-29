@@ -1,285 +1,47 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, Type, TypeVar, Union
 
 import attr
-
-from ..types import UNSET, Unset
-
-KW = TypeVar("KW", bound="default_scene")
+from pydantic import BaseModel, GetCoreSchemaHandler
+from pydantic_core import CoreSchema, core_schema
 
 
-@attr.s(auto_attribs=True)
-class default_scene:
-    """Visit the default scene."""  # noqa: E501
+
+class default_scene(BaseModel):
+    """Visit the default scene."""
 
     type: str = "default_scene"
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        type = self.type
+class scene_by_index(BaseModel):
+    """Visit the indexed scene."""
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        field_dict["type"] = type
+    index: int
 
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[KW], src_dict: Dict[str, Any]) -> KW:
-        d = src_dict.copy()
-        type = d.pop("type", UNSET)
-
-        default_scene = cls(
-            type=type,
-        )
-
-        default_scene.additional_properties = d
-        return default_scene
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-HJ = TypeVar("HJ", bound="scene_by_index")
-
-
-@attr.s(auto_attribs=True)
-class scene_by_index:
-    """Visit the indexed scene."""  # noqa: E501
-
-    index: Union[Unset, int] = UNSET
     type: str = "scene_by_index"
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        index = self.index
-        type = self.type
+class scene_by_name(BaseModel):
+    """Visit the first scene with the given name."""
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if index is not UNSET:
-            field_dict["index"] = index
-        field_dict["type"] = type
+    name: str
 
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[HJ], src_dict: Dict[str, Any]) -> HJ:
-        d = src_dict.copy()
-        index = d.pop("index", UNSET)
-
-        type = d.pop("type", UNSET)
-
-        scene_by_index = cls(
-            index=index,
-            type=type,
-        )
-
-        scene_by_index.additional_properties = d
-        return scene_by_index
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-HA = TypeVar("HA", bound="scene_by_name")
-
-
-@attr.s(auto_attribs=True)
-class scene_by_name:
-    """Visit the first scene with the given name."""  # noqa: E501
-
-    name: Union[Unset, str] = UNSET
     type: str = "scene_by_name"
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        name = self.name
-        type = self.type
+class mesh_by_index(BaseModel):
+    """Visit the indexed mesh."""
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if name is not UNSET:
-            field_dict["name"] = name
-        field_dict["type"] = type
+    index: int
 
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[HA], src_dict: Dict[str, Any]) -> HA:
-        d = src_dict.copy()
-        name = d.pop("name", UNSET)
-
-        type = d.pop("type", UNSET)
-
-        scene_by_name = cls(
-            name=name,
-            type=type,
-        )
-
-        scene_by_name.additional_properties = d
-        return scene_by_name
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-ZM = TypeVar("ZM", bound="mesh_by_index")
-
-
-@attr.s(auto_attribs=True)
-class mesh_by_index:
-    """Visit the indexed mesh."""  # noqa: E501
-
-    index: Union[Unset, int] = UNSET
     type: str = "mesh_by_index"
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        index = self.index
-        type = self.type
+class mesh_by_name(BaseModel):
+    """Visit the first mesh with the given name."""
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if index is not UNSET:
-            field_dict["index"] = index
-        field_dict["type"] = type
+    name: str
 
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[ZM], src_dict: Dict[str, Any]) -> ZM:
-        d = src_dict.copy()
-        index = d.pop("index", UNSET)
-
-        type = d.pop("type", UNSET)
-
-        mesh_by_index = cls(
-            index=index,
-            type=type,
-        )
-
-        mesh_by_index.additional_properties = d
-        return mesh_by_index
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-BX = TypeVar("BX", bound="mesh_by_name")
-
-
-@attr.s(auto_attribs=True)
-class mesh_by_name:
-    """Visit the first mesh with the given name."""  # noqa: E501
-
-    name: Union[Unset, str] = UNSET
     type: str = "mesh_by_name"
-
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
-    def to_dict(self) -> Dict[str, Any]:
-        name = self.name
-        type = self.type
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if name is not UNSET:
-            field_dict["name"] = name
-        field_dict["type"] = type
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[BX], src_dict: Dict[str, Any]) -> BX:
-        d = src_dict.copy()
-        name = d.pop("name", UNSET)
-
-        type = d.pop("type", UNSET)
-
-        mesh_by_name = cls(
-            name=name,
-            type=type,
-        )
-
-        mesh_by_name.additional_properties = d
-        return mesh_by_name
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
 
 
 GY = TypeVar("GY", bound="Selection")
@@ -310,46 +72,58 @@ class Selection:
     ):
         self.type = type
 
-    def to_dict(self) -> Dict[str, Any]:
+    def model_dump(self) -> Dict[str, Any]:
         if isinstance(self.type, default_scene):
-            TD: default_scene = self.type
-            return TD.to_dict()
+            JO: default_scene = self.type
+            return JO.model_dump()
         elif isinstance(self.type, scene_by_index):
-            SQ: scene_by_index = self.type
-            return SQ.to_dict()
+            TE: scene_by_index = self.type
+            return TE.model_dump()
         elif isinstance(self.type, scene_by_name):
-            IL: scene_by_name = self.type
-            return IL.to_dict()
+            WY: scene_by_name = self.type
+            return WY.model_dump()
         elif isinstance(self.type, mesh_by_index):
-            YG: mesh_by_index = self.type
-            return YG.to_dict()
+            QV: mesh_by_index = self.type
+            return QV.model_dump()
         elif isinstance(self.type, mesh_by_name):
-            ZE: mesh_by_name = self.type
-            return ZE.to_dict()
+            BP: mesh_by_name = self.type
+            return BP.model_dump()
 
         raise Exception("Unknown type")
 
     @classmethod
     def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "default_scene":
-            NR: default_scene = default_scene()
-            NR.from_dict(d)
-            return cls(type=NR)
+            OF: default_scene = default_scene(**d)
+            return cls(type=OF)
         elif d.get("type") == "scene_by_index":
-            WV: scene_by_index = scene_by_index()
-            WV.from_dict(d)
-            return cls(type=WV)
+            OV: scene_by_index = scene_by_index(**d)
+            return cls(type=OV)
         elif d.get("type") == "scene_by_name":
-            JT: scene_by_name = scene_by_name()
-            JT.from_dict(d)
-            return cls(type=JT)
+            FK: scene_by_name = scene_by_name(**d)
+            return cls(type=FK)
         elif d.get("type") == "mesh_by_index":
-            DD: mesh_by_index = mesh_by_index()
-            DD.from_dict(d)
-            return cls(type=DD)
+            PE: mesh_by_index = mesh_by_index(**d)
+            return cls(type=PE)
         elif d.get("type") == "mesh_by_name":
-            UI: mesh_by_name = mesh_by_name()
-            UI.from_dict(d)
-            return cls(type=UI)
+            FP: mesh_by_name = mesh_by_name(**d)
+            return cls(type=FP)
 
         raise Exception("Unknown type")
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls,
+            handler(
+                Union[
+                    default_scene,
+                    scene_by_index,
+                    scene_by_name,
+                    mesh_by_index,
+                    mesh_by_name,
+                ]
+            ),
+        )

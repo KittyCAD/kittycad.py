@@ -54,7 +54,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_conversion = FileConversion.from_dict(data)
+            option_file_conversion = FileConversion(**data)
             return option_file_conversion
         except ValueError:
             pass
@@ -63,7 +63,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_center_of_mass = FileCenterOfMass.from_dict(data)
+            option_file_center_of_mass = FileCenterOfMass(**data)
             return option_file_center_of_mass
         except ValueError:
             pass
@@ -72,7 +72,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_mass = FileMass.from_dict(data)
+            option_file_mass = FileMass(**data)
             return option_file_mass
         except ValueError:
             pass
@@ -81,7 +81,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_volume = FileVolume.from_dict(data)
+            option_file_volume = FileVolume(**data)
             return option_file_volume
         except ValueError:
             pass
@@ -90,7 +90,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_density = FileDensity.from_dict(data)
+            option_file_density = FileDensity(**data)
             return option_file_density
         except ValueError:
             pass
@@ -99,7 +99,7 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_file_surface_area = FileSurfaceArea.from_dict(data)
+            option_file_surface_area = FileSurfaceArea(**data)
             return option_file_surface_area
         except ValueError:
             pass
@@ -108,19 +108,19 @@ def _parse_response(
         try:
             if not isinstance(data, dict):
                 raise TypeError()
-            option_text_to_cad = TextToCad.from_dict(data)
+            option_text_to_cad = TextToCad(**data)
             return option_text_to_cad
         except ValueError:
             raise
         except TypeError:
             raise
     if response.status_code == 400:
-        response_4XX = Error.from_dict(response.json())
+        response_4XX = Error(**response.json())
         return response_4XX
     if response.status_code == 500:
-        response_5XX = Error.from_dict(response.json())
+        response_5XX = Error(**response.json())
         return response_5XX
-    return Error.from_dict(response.json())
+    return Error(**response.json())
 
 
 def _build_response(

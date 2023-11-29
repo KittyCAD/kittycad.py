@@ -1,6 +1,8 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, Type, TypeVar, Union
 
 import attr
+from pydantic import BaseModel, GetCoreSchemaHandler
+from pydantic_core import CoreSchema, core_schema
 
 from ..models.fbx_storage import FbxStorage
 from ..models.gltf_presentation import GltfPresentation
@@ -10,536 +12,70 @@ from ..models.selection import Selection
 from ..models.stl_storage import StlStorage
 from ..models.system import System
 from ..models.unit_length import UnitLength
-from ..types import UNSET, Unset
-
-DX = TypeVar("DX", bound="fbx")
 
 
-@attr.s(auto_attribs=True)
-class fbx:
-    """Autodesk Filmbox (FBX) format."""  # noqa: E501
+class fbx(BaseModel):
+    """Autodesk Filmbox (FBX) format."""
 
-    storage: Union[Unset, FbxStorage] = UNSET
+    storage: FbxStorage
+
     type: str = "fbx"
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        storage: Union[Unset, FbxStorage] = UNSET
-        if not isinstance(self.storage, Unset):
-            storage = self.storage
-        type = self.type
+class gltf(BaseModel):
+    """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ascii output, you can set that option for the export."""
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if storage is not UNSET:
-            field_dict["storage"] = storage
-        field_dict["type"] = type
+    presentation: GltfPresentation
 
-        return field_dict
+    storage: GltfStorage
 
-    @classmethod
-    def from_dict(cls: Type[DX], src_dict: Dict[str, Any]) -> DX:
-        d = src_dict.copy()
-        _storage = d.pop("storage", UNSET)
-        storage: Union[Unset, FbxStorage]
-        if isinstance(_storage, Unset):
-            storage = UNSET
-        if _storage is None:
-            storage = UNSET
-        else:
-            storage = _storage
-
-        type = d.pop("type", UNSET)
-
-        fbx = cls(
-            storage=storage,
-            type=type,
-        )
-
-        fbx.additional_properties = d
-        return fbx
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-LH = TypeVar("LH", bound="gltf")
-
-
-@attr.s(auto_attribs=True)
-class gltf:
-    """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ascii output, you can set that option for the export."""  # noqa: E501
-
-    presentation: Union[Unset, GltfPresentation] = UNSET
-    storage: Union[Unset, GltfStorage] = UNSET
     type: str = "gltf"
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        presentation: Union[Unset, GltfPresentation] = UNSET
-        if not isinstance(self.presentation, Unset):
-            presentation = self.presentation
-        storage: Union[Unset, GltfStorage] = UNSET
-        if not isinstance(self.storage, Unset):
-            storage = self.storage
-        type = self.type
+class obj(BaseModel):
+    """Wavefront OBJ format."""
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if presentation is not UNSET:
-            field_dict["presentation"] = presentation
-        if storage is not UNSET:
-            field_dict["storage"] = storage
-        field_dict["type"] = type
+    coords: System
 
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[LH], src_dict: Dict[str, Any]) -> LH:
-        d = src_dict.copy()
-        _presentation = d.pop("presentation", UNSET)
-        presentation: Union[Unset, GltfPresentation]
-        if isinstance(_presentation, Unset):
-            presentation = UNSET
-        if _presentation is None:
-            presentation = UNSET
-        else:
-            presentation = _presentation
-
-        _storage = d.pop("storage", UNSET)
-        storage: Union[Unset, GltfStorage]
-        if isinstance(_storage, Unset):
-            storage = UNSET
-        if _storage is None:
-            storage = UNSET
-        else:
-            storage = _storage
-
-        type = d.pop("type", UNSET)
-
-        gltf = cls(
-            presentation=presentation,
-            storage=storage,
-            type=type,
-        )
-
-        gltf.additional_properties = d
-        return gltf
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-XA = TypeVar("XA", bound="obj")
-
-
-@attr.s(auto_attribs=True)
-class obj:
-    """Wavefront OBJ format."""  # noqa: E501
-
-    coords: Union[Unset, System] = UNSET
     type: str = "obj"
-    units: Union[Unset, UnitLength] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
-    def to_dict(self) -> Dict[str, Any]:
-        coords: Union[Unset, System] = UNSET
-        if not isinstance(self.coords, Unset):
-            coords = self.coords
-        type = self.type
-        units: Union[Unset, UnitLength] = UNSET
-        if not isinstance(self.units, Unset):
-            units = self.units
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if coords is not UNSET:
-            _coords: System = cast(System, coords)
-            field_dict["coords"] = _coords.to_dict()
-        field_dict["type"] = type
-        if units is not UNSET:
-            field_dict["units"] = units
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[XA], src_dict: Dict[str, Any]) -> XA:
-        d = src_dict.copy()
-        _coords = d.pop("coords", UNSET)
-        coords: Union[Unset, System]
-        if isinstance(_coords, Unset):
-            coords = UNSET
-        if _coords is None:
-            coords = UNSET
-        else:
-            coords = System.from_dict(_coords)
-
-        type = d.pop("type", UNSET)
-
-        _units = d.pop("units", UNSET)
-        units: Union[Unset, UnitLength]
-        if isinstance(_units, Unset):
-            units = UNSET
-        if _units is None:
-            units = UNSET
-        else:
-            units = _units
-
-        obj = cls(
-            coords=coords,
-            type=type,
-            units=units,
-        )
-
-        obj.additional_properties = d
-        return obj
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    units: UnitLength
 
 
-QJ = TypeVar("QJ", bound="ply")
+class ply(BaseModel):
+    """The PLY Polygon File Format."""
 
+    coords: System
 
-@attr.s(auto_attribs=True)
-class ply:
-    """The PLY Polygon File Format."""  # noqa: E501
+    selection: Selection
 
-    coords: Union[Unset, System] = UNSET
-    selection: Union[Unset, Selection] = UNSET
-    storage: Union[Unset, PlyStorage] = UNSET
+    storage: PlyStorage
+
     type: str = "ply"
-    units: Union[Unset, UnitLength] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
-    def to_dict(self) -> Dict[str, Any]:
-        coords: Union[Unset, System] = UNSET
-        if not isinstance(self.coords, Unset):
-            coords = self.coords
-        selection: Union[Unset, Selection] = UNSET
-        if not isinstance(self.selection, Unset):
-            selection = self.selection
-        storage: Union[Unset, PlyStorage] = UNSET
-        if not isinstance(self.storage, Unset):
-            storage = self.storage
-        type = self.type
-        units: Union[Unset, UnitLength] = UNSET
-        if not isinstance(self.units, Unset):
-            units = self.units
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if coords is not UNSET:
-            _coords: System = cast(System, coords)
-            field_dict["coords"] = _coords.to_dict()
-        if selection is not UNSET:
-            _selection: Selection = cast(Selection, selection)
-            field_dict["selection"] = _selection.to_dict()
-        if storage is not UNSET:
-            field_dict["storage"] = storage
-        field_dict["type"] = type
-        if units is not UNSET:
-            field_dict["units"] = units
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[QJ], src_dict: Dict[str, Any]) -> QJ:
-        d = src_dict.copy()
-        _coords = d.pop("coords", UNSET)
-        coords: Union[Unset, System]
-        if isinstance(_coords, Unset):
-            coords = UNSET
-        if _coords is None:
-            coords = UNSET
-        else:
-            coords = System.from_dict(_coords)
-
-        _selection = d.pop("selection", UNSET)
-        selection: Union[Unset, Selection]
-        if isinstance(_selection, Unset):
-            selection = UNSET
-        if _selection is None:
-            selection = UNSET
-        else:
-            selection = Selection.from_dict(_selection)
-
-        _storage = d.pop("storage", UNSET)
-        storage: Union[Unset, PlyStorage]
-        if isinstance(_storage, Unset):
-            storage = UNSET
-        if _storage is None:
-            storage = UNSET
-        else:
-            storage = _storage
-
-        type = d.pop("type", UNSET)
-
-        _units = d.pop("units", UNSET)
-        units: Union[Unset, UnitLength]
-        if isinstance(_units, Unset):
-            units = UNSET
-        if _units is None:
-            units = UNSET
-        else:
-            units = _units
-
-        ply = cls(
-            coords=coords,
-            selection=selection,
-            storage=storage,
-            type=type,
-            units=units,
-        )
-
-        ply.additional_properties = d
-        return ply
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    units: UnitLength
 
 
-ES = TypeVar("ES", bound="step")
+class step(BaseModel):
+    """ISO 10303-21 (STEP) format."""
 
+    coords: System
 
-@attr.s(auto_attribs=True)
-class step:
-    """ISO 10303-21 (STEP) format."""  # noqa: E501
-
-    coords: Union[Unset, System] = UNSET
     type: str = "step"
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        coords: Union[Unset, System] = UNSET
-        if not isinstance(self.coords, Unset):
-            coords = self.coords
-        type = self.type
+class stl(BaseModel):
+    """*ST**ereo**L**ithography format."""
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if coords is not UNSET:
-            _coords: System = cast(System, coords)
-            field_dict["coords"] = _coords.to_dict()
-        field_dict["type"] = type
+    coords: System
 
-        return field_dict
+    selection: Selection
 
-    @classmethod
-    def from_dict(cls: Type[ES], src_dict: Dict[str, Any]) -> ES:
-        d = src_dict.copy()
-        _coords = d.pop("coords", UNSET)
-        coords: Union[Unset, System]
-        if isinstance(_coords, Unset):
-            coords = UNSET
-        if _coords is None:
-            coords = UNSET
-        else:
-            coords = System.from_dict(_coords)
+    storage: StlStorage
 
-        type = d.pop("type", UNSET)
-
-        step = cls(
-            coords=coords,
-            type=type,
-        )
-
-        step.additional_properties = d
-        return step
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
-
-
-AI = TypeVar("AI", bound="stl")
-
-
-@attr.s(auto_attribs=True)
-class stl:
-    """*ST**ereo**L**ithography format."""  # noqa: E501
-
-    coords: Union[Unset, System] = UNSET
-    selection: Union[Unset, Selection] = UNSET
-    storage: Union[Unset, StlStorage] = UNSET
     type: str = "stl"
-    units: Union[Unset, UnitLength] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
-    def to_dict(self) -> Dict[str, Any]:
-        coords: Union[Unset, System] = UNSET
-        if not isinstance(self.coords, Unset):
-            coords = self.coords
-        selection: Union[Unset, Selection] = UNSET
-        if not isinstance(self.selection, Unset):
-            selection = self.selection
-        storage: Union[Unset, StlStorage] = UNSET
-        if not isinstance(self.storage, Unset):
-            storage = self.storage
-        type = self.type
-        units: Union[Unset, UnitLength] = UNSET
-        if not isinstance(self.units, Unset):
-            units = self.units
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if coords is not UNSET:
-            _coords: System = cast(System, coords)
-            field_dict["coords"] = _coords.to_dict()
-        if selection is not UNSET:
-            _selection: Selection = cast(Selection, selection)
-            field_dict["selection"] = _selection.to_dict()
-        if storage is not UNSET:
-            field_dict["storage"] = storage
-        field_dict["type"] = type
-        if units is not UNSET:
-            field_dict["units"] = units
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[AI], src_dict: Dict[str, Any]) -> AI:
-        d = src_dict.copy()
-        _coords = d.pop("coords", UNSET)
-        coords: Union[Unset, System]
-        if isinstance(_coords, Unset):
-            coords = UNSET
-        if _coords is None:
-            coords = UNSET
-        else:
-            coords = System.from_dict(_coords)
-
-        _selection = d.pop("selection", UNSET)
-        selection: Union[Unset, Selection]
-        if isinstance(_selection, Unset):
-            selection = UNSET
-        if _selection is None:
-            selection = UNSET
-        else:
-            selection = Selection.from_dict(_selection)
-
-        _storage = d.pop("storage", UNSET)
-        storage: Union[Unset, StlStorage]
-        if isinstance(_storage, Unset):
-            storage = UNSET
-        if _storage is None:
-            storage = UNSET
-        else:
-            storage = _storage
-
-        type = d.pop("type", UNSET)
-
-        _units = d.pop("units", UNSET)
-        units: Union[Unset, UnitLength]
-        if isinstance(_units, Unset):
-            units = UNSET
-        if _units is None:
-            units = UNSET
-        else:
-            units = _units
-
-        stl = cls(
-            coords=coords,
-            selection=selection,
-            storage=storage,
-            type=type,
-            units=units,
-        )
-
-        stl.additional_properties = d
-        return stl
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    units: UnitLength
 
 
 GY = TypeVar("GY", bound="OutputFormat")
@@ -572,53 +108,65 @@ class OutputFormat:
     ):
         self.type = type
 
-    def to_dict(self) -> Dict[str, Any]:
+    def model_dump(self) -> Dict[str, Any]:
         if isinstance(self.type, fbx):
-            MV: fbx = self.type
-            return MV.to_dict()
+            FC: fbx = self.type
+            return FC.model_dump()
         elif isinstance(self.type, gltf):
-            NW: gltf = self.type
-            return NW.to_dict()
+            EI: gltf = self.type
+            return EI.model_dump()
         elif isinstance(self.type, obj):
-            MR: obj = self.type
-            return MR.to_dict()
+            JE: obj = self.type
+            return JE.model_dump()
         elif isinstance(self.type, ply):
-            WG: ply = self.type
-            return WG.to_dict()
+            JW: ply = self.type
+            return JW.model_dump()
         elif isinstance(self.type, step):
-            DZ: step = self.type
-            return DZ.to_dict()
+            AS: step = self.type
+            return AS.model_dump()
         elif isinstance(self.type, stl):
-            UC: stl = self.type
-            return UC.to_dict()
+            YQ: stl = self.type
+            return YQ.model_dump()
 
         raise Exception("Unknown type")
 
     @classmethod
     def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "fbx":
-            LU: fbx = fbx()
-            LU.from_dict(d)
-            return cls(type=LU)
+            OA: fbx = fbx(**d)
+            return cls(type=OA)
         elif d.get("type") == "gltf":
-            EH: gltf = gltf()
-            EH.from_dict(d)
-            return cls(type=EH)
+            CQ: gltf = gltf(**d)
+            return cls(type=CQ)
         elif d.get("type") == "obj":
-            MY: obj = obj()
-            MY.from_dict(d)
-            return cls(type=MY)
+            RD: obj = obj(**d)
+            return cls(type=RD)
         elif d.get("type") == "ply":
-            WC: ply = ply()
-            WC.from_dict(d)
-            return cls(type=WC)
+            KZ: ply = ply(**d)
+            return cls(type=KZ)
         elif d.get("type") == "step":
-            ZT: step = step()
-            ZT.from_dict(d)
-            return cls(type=ZT)
+            IU: step = step(**d)
+            return cls(type=IU)
         elif d.get("type") == "stl":
-            VZ: stl = stl()
-            VZ.from_dict(d)
-            return cls(type=VZ)
+            NQ: stl = stl(**d)
+            return cls(type=NQ)
 
         raise Exception("Unknown type")
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls,
+            handler(
+                Union[
+                    fbx,
+                    gltf,
+                    obj,
+                    ply,
+                    step,
+                    stl,
+                ]
+            ),
+        )

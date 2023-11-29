@@ -3854,16 +3854,15 @@ def test_create_executor_term():
     client = ClientFromEnv()
 
     # Connect to the websocket.
-    websocket = create_executor_term.sync(
+    with create_executor_term.sync(
         client=client,
-    )
+    ) as websocket:
+        # Send a message.
+        websocket.send("{}")
 
-    # Send a message.
-    websocket.send("{}")
-
-    # Get the messages.
-    for message in websocket:
-        print(message)
+        # Get the messages.
+        for message in websocket:
+            print(message)
 
 
 # OR run async
@@ -3892,30 +3891,29 @@ def test_modeling_commands_ws():
     client = ClientFromEnv()
 
     # Connect to the websocket.
-    websocket = modeling_commands_ws.WebSocket(
+    with modeling_commands_ws.WebSocket(
         client=client,
         fps=10,
         unlocked_framerate=False,
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
-    )
-
-    # Send a message.
-    websocket.send(
-        WebSocketRequest(
-            sdp_offer(
-                offer=RtcSessionDescription(
-                    sdp="<string>",
-                    type=RtcSdpType.UNSPECIFIED,
-                ),
+    ) as websocket:
+        # Send a message.
+        websocket.send(
+            WebSocketRequest(
+                sdp_offer(
+                    offer=RtcSessionDescription(
+                        sdp="<string>",
+                        type=RtcSdpType.UNSPECIFIED,
+                    ),
+                )
             )
         )
-    )
 
-    # Get a message.
-    message = websocket.recv()
-    print(message)
+        # Get a message.
+        message = websocket.recv()
+        print(message)
 
 
 # OR run async

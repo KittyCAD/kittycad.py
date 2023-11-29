@@ -82,7 +82,7 @@ def sync(
         client=client,
     )
 
-    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=None, compression=None, max_size=None)  # type: ignore
+    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"])  # type: ignore
 
 
 async def asyncio(
@@ -153,20 +153,20 @@ class WebSocket:
 
         """
         for message in self.ws:
-            yield WebSocketResponse.from_dict(json.loads(message))
+            yield WebSocketResponse(**json.loads(message))
 
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""
-        self.ws.send(json.dumps(data.to_dict()))
+        self.ws.send(json.dumps(data.model_dump()))
 
     def send_binary(self, data: WebSocketRequest):
         """Send data as bson to the websocket."""
-        self.ws.send(bson.BSON.encode(data.to_dict()))
+        self.ws.send(bson.encode(data.model_dump()))
 
     def recv(self) -> WebSocketResponse:
         """Receive data from the websocket."""
         message = self.ws.recv()
-        return WebSocketResponse.from_dict(json.loads(message))
+        return WebSocketResponse(**json.loads(message))
 
     def close(self):
         """Close the websocket."""

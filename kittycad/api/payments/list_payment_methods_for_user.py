@@ -31,15 +31,15 @@ def _parse_response(
     *, response: httpx.Response
 ) -> Optional[Union[List[PaymentMethod], Error]]:
     if response.status_code == 200:
-        response_200 = [PaymentMethod.from_dict(item) for item in response.json()]
+        response_200 = [PaymentMethod(**item) for item in response.json()]
         return response_200
     if response.status_code == 400:
-        response_4XX = Error.from_dict(response.json())
+        response_4XX = Error(**response.json())
         return response_4XX
     if response.status_code == 500:
-        response_5XX = Error.from_dict(response.json())
+        response_5XX = Error(**response.json())
         return response_5XX
-    return Error.from_dict(response.json())
+    return Error(**response.json())
 
 
 def _build_response(

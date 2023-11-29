@@ -34,7 +34,6 @@ from .async_api_call_results_page import AsyncApiCallResultsPage
 from .async_api_call_type import AsyncApiCallType
 from .axis import Axis
 from .axis_direction_pair import AxisDirectionPair
-from .base64data import Base64Data
 from .billing_info import BillingInfo
 from .cache_metadata import CacheMetadata
 from .camera_drag_interaction_type import CameraDragInteractionType

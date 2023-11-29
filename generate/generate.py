@@ -579,18 +579,18 @@ async def test_"""
             client = ClientFromEnv()
 
             # Connect to the websocket.
-            websocket = """
+            with """
                 + fn_name
                 + """.sync(client=client,"""
                 + params_str
-                + """)
+                + """) as websocket:
 
-            # Send a message.
-            websocket.send("{}")
+                # Send a message.
+                websocket.send("{}")
 
-            # Get the messages.
-            for message in websocket:
-                print(message)
+                # Get the messages.
+                for message in websocket:
+                    print(message)
 
         """
             )
@@ -603,20 +603,20 @@ async def test_"""
             client = ClientFromEnv()
 
             # Connect to the websocket.
-            websocket = """
+            with """
                 + fn_name
                 + """.WebSocket(client=client,"""
                 + params_str
-                + """)
+                + """) as websocket:
 
-            # Send a message.
-            websocket.send("""
+                # Send a message.
+                websocket.send("""
                 + body_example
                 + """)
 
-            # Get a message.
-            message = websocket.recv()
-            print(message)
+                # Get a message.
+                message = websocket.recv()
+                print(message)
 
         """
             )
@@ -793,7 +793,7 @@ async def test_"""
                                             + option_name
                                             + " = "
                                             + snake_to_title(ref)
-                                            + ".from_dict(data)\n"
+                                            + "(**data)\n"
                                         )
                                         parse_response.write(
                                             "\t\t\treturn " + option_name + "\n"
@@ -816,7 +816,7 @@ async def test_"""
                                         + response_code
                                         + " = "
                                         + ref
-                                        + ".from_dict(response.json())\n"
+                                        + "(**response.json())\n"
                                     )
                             elif "type" in json:
                                 if json["type"] == "array":
@@ -829,7 +829,7 @@ async def test_"""
                                             "\t\tresponse_" + response_code + " = [\n"
                                         )
                                         parse_response.write(
-                                            "\t\t\t" + ref + ".from_dict(item)\n"
+                                            "\t\t\t" + ref + "(**item)\n"
                                         )
                                         parse_response.write(
                                             "\t\t\tfor item in response.json()\n"
@@ -871,7 +871,7 @@ async def test_"""
                                         + response_code
                                         + " = "
                                         + ref
-                                        + ".from_dict(response.json())\n"
+                                        + "(**response.json())\n"
                                     )
                 else:
                     print(endpoint)
@@ -881,7 +881,7 @@ async def test_"""
                     parse_response.write("\t\treturn response_" + response_code + "\n")
 
         # End the method.
-        parse_response.write("\treturn Error.from_dict(response.json())\n")
+        parse_response.write("\treturn Error(**response.json())\n")
     else:
         parse_response.write("\treturn\n")
 
@@ -994,9 +994,6 @@ def generateTypes(cwd: str, parser: dict):
     # We likely need a better way to handle this.
     f.write("from .empty import Empty\n")
 
-    # Add the Base64Data type.
-    f.write("from .base64data import Base64Data\n")
-
     # Close the file.
     f.close()
 
@@ -1040,10 +1037,29 @@ def generateStringType(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
-    f.write("class " + name + "(str):\n")
-    f.write("\n")
-    f.write("\tdef __str__(self) -> str:\n")
-    f.write("\t\treturn self\n")
+    TemplateType = TypedDict(
+        "TemplateType",
+        {
+            "description": str,
+            "name": str,
+        },
+    )
+
+    description = ""
+    if "description" in schema:
+        description = schema["description"]
+
+    template_info: TemplateType = {
+        "description": description,
+        "name": name,
+    }
+
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    template_file = "str.py.jinja2"
+    template = environment.get_template(template_file)
+    content = template.render(**template_info)
+
+    f.write(content)
 
     # Close the file.
     f.close()
@@ -1053,10 +1069,29 @@ def generateIntegerType(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
-    f.write("class " + name + "(int):\n")
-    f.write("\n")
-    f.write("\tdef __int__(self) -> int:\n")
-    f.write("\t\treturn self\n")
+    TemplateType = TypedDict(
+        "TemplateType",
+        {
+            "description": str,
+            "name": str,
+        },
+    )
+
+    description = ""
+    if "description" in schema:
+        description = schema["description"]
+
+    template_info: TemplateType = {
+        "description": description,
+        "name": name,
+    }
+
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    template_file = "int.py.jinja2"
+    template = environment.get_template(template_file)
+    content = template.render(**template_info)
+
+    f.write(content)
 
     # Close the file.
     f.close()
@@ -1066,10 +1101,29 @@ def generateFloatType(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: ", name, " at: ", path)
     f = open(path, "w")
 
-    f.write("class " + name + "(float):\n")
-    f.write("\n")
-    f.write("\tdef __float__(self) -> float:\n")
-    f.write("\t\treturn self\n")
+    TemplateType = TypedDict(
+        "TemplateType",
+        {
+            "description": str,
+            "name": str,
+        },
+    )
+
+    description = ""
+    if "description" in schema:
+        description = schema["description"]
+
+    template_info: TemplateType = {
+        "description": description,
+        "name": name,
+    }
+
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    template_file = "float.py.jinja2"
+    template = environment.get_template(template_file)
+    content = template.render(**template_info)
+
+    f.write(content)
 
     # Close the file.
     f.close()
@@ -1209,7 +1263,7 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
                         all_options.append(prop_name)
                     else:
                         object_code = generateObjectTypeCode(
-                            prop_name, nested_object, "object", data, None
+                            prop_name, nested_object, "object", data, None, None
                         )
                         f.write(object_code)
                         f.write("\n")
@@ -1231,7 +1285,7 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
             # Get the value of the tag.
             object_name = any_of["properties"][tag]["enum"][0]
             object_code = generateObjectTypeCode(
-                object_name, any_of, "object", data, tag
+                object_name, any_of, "object", data, tag, None
             )
             f.write(object_code)
             f.write("\n")
@@ -1384,7 +1438,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                         all_options.append(prop_name)
                     else:
                         object_code = generateObjectTypeCode(
-                            prop_name, nested_object, "object", data, None
+                            prop_name, nested_object, "object", data, None, None
                         )
                         f.write(object_code)
                         f.write("\n")
@@ -1399,27 +1453,51 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
 
     # Check if each one_of has the same enum of one.
     tag = getTagOneOf(schema)
+    content = getContentOneOf(schema, tag)
 
-    if tag is not None:
+    if tag is not None and content is not None:
+        # Generate each of the options from the tag.
+        for one_of in schema["oneOf"]:
+            # Get the value of the tag.
+            object_name = one_of["properties"][tag]["enum"][0]
+            # Generate the type for the object.
+            content_code = generateObjectTypeCode(
+                snake_to_title(object_name) + "Data",
+                one_of["properties"][content],
+                "object",
+                data,
+                None,
+                None,
+            )
+            f.write(content_code)
+            f.write("\n")
+            object_code = generateObjectTypeCode(
+                object_name, one_of, "object", data, tag, content
+            )
+            f.write(object_code)
+            f.write("\n")
+            all_options.append(object_name)
+    elif tag is not None:
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
             object_name = one_of["properties"][tag]["enum"][0]
             object_code = generateObjectTypeCode(
-                object_name, one_of, "object", data, tag
+                object_name,
+                one_of,
+                "object",
+                data,
+                tag,
+                None,
             )
             f.write(object_code)
             f.write("\n")
             all_options.append(object_name)
 
     # Write the sum type.
-    if name == "SnakeCaseResult":
-        f.write("from typing import Any\n")
-        f.write(name + " = Any")
-    else:
-        description = getOneOfDescription(schema)
-        content = generateUnionType(all_options, name, description)
-        f.write(content)
+    description = getOneOfDescription(schema)
+    content = generateUnionType(all_options, name, description)
+    f.write(content)
 
     # Close the file.
     f.close()
@@ -1433,203 +1511,88 @@ def getOneOfDescription(schema: dict) -> str:
 
 
 def generateObjectTypeCode(
-    name: str, schema: dict, type_name: str, data: dict, tag: Optional[str]
+    name: str,
+    schema: dict,
+    type_name: str,
+    data: dict,
+    tag: Optional[str],
+    content: Optional[str],
 ) -> str:
-    f = io.StringIO()
-
-    has_date_time = hasDateTime(schema)
-    has_base_64 = hasBase64(schema)
-    if has_date_time:
-        f.write("import datetime\n")
-    if has_base_64:
-        f.write("from ..models.base64data import Base64Data\n")
-    f.write(
-        "from typing import Any, Dict, List, Type, TypeVar, Union, cast, deprecated\n"
+    FieldType = TypedDict(
+        "FieldType",
+        {
+            "name": str,
+            "type": str,
+            "value": str,
+        },
     )
-    f.write("\n")
-    f.write("import attr\n")
-    if has_date_time:
-        f.write("from dateutil.parser import isoparse\n")
-    f.write("\n")
+    TemplateType = TypedDict(
+        "TemplateType",
+        {
+            "fields": List[FieldType],
+            "description": str,
+            "name": str,
+            "imports": List[str],
+        },
+    )
 
+    description = ""
+    if "description" in schema:
+        description = schema["description"]
+
+    imports = []
     refs = getRefs(schema)
     for ref in refs:
-        f.write("from ..models." + camel_to_snake(ref) + " import " + ref + "\n")
+        imports.append("from ..models." + camel_to_snake(ref) + " import " + ref + "\n")
 
-    f.write("from ..types import UNSET, Unset\n")
-    f.write("\n")
+    required = []
+    if "required" in schema:
+        required = schema["required"]
 
-    type_letter = randletter()
-    f.write(type_letter + ' = TypeVar("' + type_letter + '", bound="' + name + '")\n')
-    f.write("\n")
-    f.write("@attr.s(auto_attribs=True)\n")
-    f.write("class " + name + ":\n")
-    # Write the description.
-    if "description" in schema:
-        f.write('\t""" ' + schema["description"] + ' """ # noqa: E501\n')
-    # Iterate over the properties.
-    for property_name in schema["properties"]:
-        property_schema = schema["properties"][property_name]
-        if property_name == tag:
-            f.write("\t" + property_name + ': str = "' + name + '"\n')
-        else:
-            renderTypeInit(f, property_name, property_schema, data)
-
-    # Finish writing the class.
-    f.write("\n")
-    f.write(
-        "\tadditional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)\n"
-    )
-
-    # Now let's write the to_dict method.
-    f.write("\n")
-    f.write("\tdef to_dict(self) -> Dict[str, Any]:\n")
-    # Iternate over the properties.
-    for property_name in schema["properties"]:
-        property_schema = schema["properties"][property_name]
-        if property_name == tag:
-            renderTypeToDict(f, property_name, property_schema, data)
-        else:
-            renderTypeToDict(f, property_name, property_schema, data)
-
-    # Finish writing the to_dict method.
-    f.write("\n")
-    f.write("\t\tfield_dict: Dict[str, Any] = {}\n")
-    f.write("\t\tfield_dict.update(self.additional_properties)\n")
-    f.write("\t\tfield_dict.update({})\n")
-
-    # Iternate over the properties.
-    for property_name in schema["properties"]:
-        property_schema = schema["properties"][property_name]
-        if "allOf" in property_schema and len(property_schema["allOf"]) == 1:
-            property_schema = property_schema["allOf"][0]
-        if property_name == tag:
-            f.write(
-                "\t\tfield_dict['"
-                + property_name
-                + "'] = "
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-        else:
-            # Write the property.
-            f.write(
-                "\t\tif " + clean_parameter_name(property_name) + " is not UNSET:\n"
-            )
-            # We only want .to_dict on nested objects.
-            if "$ref" in property_schema:
-                ref = property_schema["$ref"].replace("#/components/schemas/", "")
-                actual_schema = data["components"]["schemas"][ref]
-                is_enum = isEnumWithDocsOneOf(actual_schema)
-                if (
-                    "properties" in actual_schema
-                    or "oneOf" in actual_schema
-                    or "anyOf" in actual_schema
-                    or "allOf" in actual_schema
-                ) and not is_enum:
-                    f.write(
-                        "\t\t\t_"
-                        + property_name
-                        + ": "
-                        + ref
-                        + " = cast("
-                        + ref
-                        + ", "
-                        + clean_parameter_name(property_name)
-                        + ")\n"
-                    )
-                    f.write(
-                        "\t\t\tfield_dict['"
-                        + property_name
-                        + "'] = _"
-                        + property_name
-                        + ".to_dict()\n"
-                    )
-                else:
-                    f.write(
-                        "\t\t\tfield_dict['"
-                        + property_name
-                        + "'] = "
-                        + clean_parameter_name(property_name)
-                        + "\n"
-                    )
+    fields = []
+    if "properties" in schema:
+        for property_name in schema["properties"]:
+            property_schema = schema["properties"][property_name]
+            if property_name == tag:
+                field0: FieldType = {
+                    "name": property_name,
+                    "type": "str",
+                    "value": '"' + name + '"',
+                }
+                fields.append(field0)
+            elif property_name == content:
+                field1: FieldType = {
+                    "name": property_name,
+                    "type": snake_to_title(name) + "Data",
+                    "value": "",
+                }
+                fields.append(field1)
             else:
-                f.write(
-                    "\t\t\tfield_dict['"
-                    + property_name
-                    + "'] = "
-                    + clean_parameter_name(property_name)
-                    + "\n"
-                )
+                field_type = getTypeName(property_schema)
+                if property_name not in required:
+                    field_type = "Optional[" + field_type + "] = None"
+                field2: FieldType = {
+                    "name": property_name,
+                    "type": field_type,
+                    "value": "",
+                }
+                fields.append(field2)
 
-    f.write("\n")
-    f.write("\t\treturn field_dict\n")
+    template_info: TemplateType = {
+        "fields": fields,
+        "description": description,
+        "name": name,
+        "imports": imports,
+    }
 
-    # Now let's write the from_dict method.
-    f.write("\n")
-    f.write("\t@classmethod\n")
-    f.write(
-        "\tdef from_dict(cls: Type["
-        + type_letter
-        + "], src_dict: Dict[str, Any]) -> "
-        + type_letter
-        + ":\n"
-    )
-    f.write("\t\td = src_dict.copy()\n")
+    # Iterate over the properties.
 
-    # Iternate over the properties.
-    for property_name in schema["properties"]:
-        property_schema = schema["properties"][property_name]
-        renderTypeFromDict(f, property_name, property_schema, data)
+    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    template_file = "object.py.jinja2"
+    template = environment.get_template(template_file)
+    content = template.render(**template_info)
 
-    # Finish writing the from_dict method.
-    f.write("\n")
-    f.write("\t\t" + camel_to_snake(name) + " = cls(\n")
-    # Iternate over the properties.
-    for property_name in schema["properties"]:
-        # Write the property.
-        f.write(
-            "\t\t\t"
-            + clean_parameter_name(property_name)
-            + "= "
-            + clean_parameter_name(property_name)
-            + ",\n"
-        )
-
-    # Close the class.
-    f.write("\t\t)\n")
-    f.write("\n")
-    f.write("\t\t" + camel_to_snake(name) + ".additional_properties = d\n")
-    f.write("\t\treturn " + camel_to_snake(name) + "\n")
-
-    # write the rest of the class.
-    f.write("\n")
-    f.write("\t@property\n")
-    f.write("\tdef additional_keys(self) -> List[str]:\n")
-    f.write("\t\treturn list(self.additional_properties.keys())\n")
-
-    f.write("\n")
-    f.write("\tdef __getitem__(self, key: str) -> Any:\n")
-    f.write("\t\treturn self.additional_properties[key]\n")
-
-    f.write("\n")
-    f.write("\tdef __setitem__(self, key: str, value: Any) -> None:\n")
-    f.write("\t\tself.additional_properties[key] = value\n")
-
-    f.write("\n")
-    f.write("\tdef __delitem__(self, key: str) -> None:\n")
-    f.write("\t\tdel self.additional_properties[key]\n")
-
-    f.write("\n")
-    f.write("\tdef __contains__(self, key: str) -> bool:\n")
-    f.write("\t\treturn key in self.additional_properties\n")
-
-    value = f.getvalue()
-
-    # Close the file.
-    f.close()
-
-    return value
+    return content
 
 
 def generateObjectType(path: str, name: str, schema: dict, type_name: str, data: dict):
@@ -1637,788 +1600,11 @@ def generateObjectType(path: str, name: str, schema: dict, type_name: str, data:
 
     f = open(path, "w")
 
-    code = generateObjectTypeCode(name, schema, type_name, data, None)
+    code = generateObjectTypeCode(name, schema, type_name, data, None, None)
     f.write(code)
 
     # Close the file.
     f.close()
-
-
-def renderTypeToDict(f, property_name: str, property_schema: dict, data: dict):
-    if "type" in property_schema:
-        property_type = property_schema["type"]
-
-        # Write the property.
-        if property_type == "string":
-            if "format" in property_schema:
-                if (
-                    property_schema["format"] == "date-time"
-                    or property_schema["format"] == "partial-date-time"
-                ):
-                    f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
-                    f.write(
-                        "\t\tif not isinstance(self."
-                        + clean_parameter_name(property_name)
-                        + ", Unset):\n"
-                    )
-                    f.write(
-                        "\t\t\t"
-                        + clean_parameter_name(property_name)
-                        + " = self."
-                        + clean_parameter_name(property_name)
-                        + ".isoformat()\n"
-                    )
-                    # return early
-                    return
-                elif property_schema["format"] == "byte":
-                    f.write("\t\t" + property_name + ": Union[Unset, str] = UNSET\n")
-                    f.write(
-                        "\t\tif not isinstance(self."
-                        + clean_parameter_name(property_name)
-                        + ", Unset):\n"
-                    )
-                    f.write(
-                        "\t\t\t"
-                        + clean_parameter_name(property_name)
-                        + " = self."
-                        + clean_parameter_name(property_name)
-                        + ".get_encoded()\n"
-                    )
-                    # return early
-                    return
-
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-        elif property_type == "integer":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-        elif property_type == "number":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-        elif property_type == "boolean":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-        elif "additionalProperties" in property_schema and property_type == "object":
-            if "$ref" in property_schema["additionalProperties"]:
-                ref = property_schema["additionalProperties"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-                f.write(
-                    "\t\t" + property_name + ": Union[Unset, Dict[str, Any]] = UNSET\n"
-                )
-                f.write(
-                    "\t\tif not isinstance(self."
-                    + clean_parameter_name(property_name)
-                    + ", Unset):\n"
-                )
-                f.write("\t\t\tnew_dict: Dict[str, Any] = {}\n")
-                f.write(
-                    "\t\t\tfor key, value in self."
-                    + clean_parameter_name(property_name)
-                    + ".items():\n"
-                )
-                f.write("\t\t\t\tnew_dict[key] = value.to_dict()\n")
-                f.write(
-                    "\t\t\t" + clean_parameter_name(property_name) + " = new_dict\n"
-                )
-            elif (
-                "type" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["type"] == "integer"
-            ):
-                f.write(
-                    "\t\t"
-                    + clean_parameter_name(property_name)
-                    + " = self."
-                    + clean_parameter_name(property_name)
-                    + "\n"
-                )
-                f.write("\n")
-            elif (
-                "format" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["format"] == "byte"
-            ):
-                f.write(
-                    "\t\t" + property_name + ": Union[Unset, Dict[str, str]] = UNSET\n"
-                )
-                f.write(
-                    "\t\tif not isinstance(self."
-                    + clean_parameter_name(property_name)
-                    + ", Unset):\n"
-                )
-                f.write("\t\t\tnew_dict: Dict[str, str] = {}\n")
-                f.write(
-                    "\t\t\tfor key, value in self."
-                    + clean_parameter_name(property_name)
-                    + ".items():\n"
-                )
-                f.write("\t\t\t\tnew_dict[key] = value.get_encoded()\n")
-                f.write(
-                    "\t\t\t" + clean_parameter_name(property_name) + " = new_dict\n"
-                )
-            elif (
-                "type" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["type"] == "string"
-            ):
-                f.write(
-                    "\t\t"
-                    + clean_parameter_name(property_name)
-                    + " = self."
-                    + clean_parameter_name(property_name)
-                    + "\n"
-                )
-                f.write("\n")
-            else:
-                # Throw an error.
-                print("property: ", property_schema)
-                raise Exception("Unknown property type")
-        elif property_type == "array":
-            if "items" in property_schema:
-                if "$ref" in property_schema["items"]:
-                    property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace("#/components/schemas/", "")
-                    f.write(
-                        "\t\tfrom ..models."
-                        + camel_to_snake(property_type)
-                        + " import "
-                        + property_type
-                        + "\n"
-                    )
-                elif "type" in property_schema["items"]:
-                    if property_schema["items"]["type"] == "string":
-                        property_type = "str"
-                    elif property_schema["items"]["type"] == "integer":
-                        property_type = "int"
-                    elif property_schema["items"]["type"] == "number":
-                        property_type = "float"
-                    elif property_schema["items"]["type"] == "array":
-                        if "items" in property_schema["items"]:
-                            if property_schema["items"]["items"]["type"] == "string":
-                                property_type = "List[str]"
-                            elif property_schema["items"]["items"]["type"] == "number":
-                                property_type = "List[float]"
-                            else:
-                                logging.error("property: ", property_schema)
-                                raise Exception("Unknown property type")
-                        else:
-                            logging.error("property: ", property_schema)
-                            raise Exception("Unknown property type")
-                    else:
-                        print("property: ", property_schema)
-                        raise Exception("Unknown property type")
-                else:
-                    logging.error("array: ", [property_schema])
-                    logging.error("array: ", [property_schema["items"]])
-                    raise Exception("Unknown array type")
-
-            f.write(
-                "\t\t"
-                + property_name
-                + ": Union[Unset, List["
-                + property_type
-                + "]] = UNSET\n"
-            )
-            f.write(
-                "\t\tif not isinstance(self."
-                + clean_parameter_name(property_name)
-                + ", Unset):\n"
-            )
-            f.write(
-                "\t\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-        else:
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-    elif "$ref" in property_schema:
-        ref = property_schema["$ref"].replace("#/components/schemas/", "")
-        f.write("\t\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
-        f.write(
-            "\t\tif not isinstance(self."
-            + clean_parameter_name(property_name)
-            + ", Unset):\n"
-        )
-        f.write(
-            "\t\t\t"
-            + clean_parameter_name(property_name)
-            + " = self."
-            + clean_parameter_name(property_name)
-            + "\n"
-        )
-    elif "allOf" in property_schema:
-        thing = property_schema["allOf"][0]
-        if "$ref" in thing:
-            ref = thing["$ref"].replace("#/components/schemas/", "")
-            if ref == "Uuid":
-                return renderTypeToDict(
-                    f, property_name, data["components"]["schemas"][ref], data
-                )
-            f.write("\t\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
-            f.write(
-                "\t\tif not isinstance(self."
-                + clean_parameter_name(property_name)
-                + ", Unset):\n"
-            )
-            f.write(
-                "\t\t\t"
-                + clean_parameter_name(property_name)
-                + " = self."
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-        else:
-            raise Exception("unknown allOf type: ", property_schema)
-    else:
-        f.write(
-            "\t\t"
-            + clean_parameter_name(property_name)
-            + " = self."
-            + clean_parameter_name(property_name)
-            + "\n"
-        )
-
-
-def renderTypeInit(f, property_name: str, property_schema: dict, data: dict):
-    property_name = clean_parameter_name(property_name)
-    # if "deprecated" in property_schema and property_schema["deprecated"]:
-    # TODO some properties are deprecated, but we still need to support them
-    # we should show some kind of warning here
-    if "type" in property_schema:
-        property_type = property_schema["type"]
-
-        # Write the property.
-        if property_type == "string":
-            if "format" in property_schema:
-                if (
-                    property_schema["format"] == "date-time"
-                    or property_schema["format"] == "partial-date-time"
-                ):
-                    f.write(
-                        "\t"
-                        + property_name
-                        + ": Union[Unset, datetime.datetime] = UNSET\n"
-                    )
-                    # Return early.
-                    return
-                elif property_schema["format"] == "byte":
-                    f.write(
-                        "\t" + property_name + ": Union[Unset, Base64Data] = UNSET\n"
-                    )
-                    # Return early.
-                    return
-
-            f.write("\t" + property_name + ": Union[Unset, str] = UNSET\n")
-        elif "additionalProperties" in property_schema and property_type == "object":
-            if "$ref" in property_schema["additionalProperties"]:
-                ref = property_schema["additionalProperties"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-                # Make sure we import the model.
-                f.write(
-                    "\tfrom ..models." + camel_to_snake(ref) + " import " + ref + "\n"
-                )
-                f.write(
-                    "\t"
-                    + property_name
-                    + ": Union[Unset, Dict[str, "
-                    + ref
-                    + "]] = UNSET\n"
-                )
-            elif (
-                "type" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["type"] == "integer"
-            ):
-                f.write(
-                    "\t" + property_name + ": Union[Unset, Dict[str, int]] = UNSET\n"
-                )
-            elif (
-                "format" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["format"] == "byte"
-            ):
-                f.write(
-                    "\t"
-                    + property_name
-                    + ": Union[Unset, Dict[str, Base64Data]] = UNSET\n"
-                )
-            elif (
-                "type" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["type"] == "string"
-            ):
-                f.write(
-                    "\t" + property_name + ": Union[Unset, Dict[str, str]] = UNSET\n"
-                )
-            else:
-                # Throw an error.
-                print("property: ", property_schema)
-                raise Exception("Unknown property type")
-        elif property_type == "object":
-            # TODO: we need to get the name of the object
-            f.write("\t" + property_name + ": Union[Unset, Any] = UNSET\n")
-        elif property_type == "integer":
-            f.write("\t" + property_name + ":  Union[Unset, int] = UNSET\n")
-        elif property_type == "number":
-            f.write("\t" + property_name + ":  Union[Unset, float] = UNSET\n")
-        elif property_type == "boolean":
-            f.write("\t" + property_name + ": Union[Unset, bool] = False\n")
-        elif property_type == "array":
-            if "items" in property_schema:
-                if "$ref" in property_schema["items"]:
-                    property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace("#/components/schemas/", "")
-                    f.write(
-                        "\tfrom ..models."
-                        + camel_to_snake(property_type)
-                        + " import "
-                        + property_type
-                        + "\n"
-                    )
-                elif "type" in property_schema["items"]:
-                    if property_schema["items"]["type"] == "string":
-                        property_type = "str"
-                    elif property_schema["items"]["type"] == "number":
-                        property_type = "float"
-                    elif property_schema["items"]["type"] == "integer":
-                        property_type = "int"
-                    elif property_schema["items"]["type"] == "array":
-                        if "items" in property_schema["items"]:
-                            if property_schema["items"]["items"]["type"] == "string":
-                                property_type = "List[str]"
-                            elif property_schema["items"]["items"]["type"] == "number":
-                                property_type = "List[float]"
-                            else:
-                                logging.error("property: ", property_schema)
-                                raise Exception("Unknown property type")
-                        else:
-                            logging.error("property: ", property_schema)
-                            raise Exception("Unknown property type")
-                    else:
-                        print("property: ", property_schema)
-                        raise Exception("Unknown property type")
-                else:
-                    logging.error("array: ", [property_schema])
-                    logging.error("array: ", [property_schema["items"]])
-                    raise Exception("Unknown array type")
-
-                f.write(
-                    "\t"
-                    + property_name
-                    + ": Union[Unset, List["
-                    + property_type
-                    + "]] = UNSET\n"
-                )
-            else:
-                raise Exception("Unknown array type")
-        else:
-            logging.error("property type: ", property_schema)
-            raise Exception("unknown type: ", property_type)
-    elif "$ref" in property_schema:
-        ref = property_schema["$ref"].replace("#/components/schemas/", "")
-        f.write("\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
-    elif "allOf" in property_schema:
-        thing = property_schema["allOf"][0]
-        if "$ref" in thing:
-            ref = thing["$ref"].replace("#/components/schemas/", "")
-            if ref == "Uuid":
-                return renderTypeInit(
-                    f, property_name, data["components"]["schemas"][ref], data
-                )
-            f.write("\t" + property_name + ": Union[Unset, " + ref + "] = UNSET\n")
-        else:
-            raise Exception("unknown allOf type: ", property_schema)
-    else:
-        f.write("\t" + property_name + ": Union[Unset, Any] = UNSET\n")
-
-
-def renderTypeFromDict(f, property_name: str, property_schema: dict, data: dict):
-    if "type" in property_schema:
-        property_type = property_schema["type"]
-
-        # Write the property.
-        if property_type == "string":
-            if "format" in property_schema:
-                if (
-                    property_schema["format"] == "date-time"
-                    or property_schema["format"] == "partial-date-time"
-                ):
-                    f.write(
-                        "\t\t_"
-                        + clean_parameter_name(property_name)
-                        + ' = d.pop("'
-                        + property_name
-                        + '", UNSET)\n'
-                    )
-                    f.write(
-                        "\t\t"
-                        + clean_parameter_name(property_name)
-                        + ": Union[Unset, datetime.datetime]\n"
-                    )
-                    f.write(
-                        "\t\tif isinstance(_"
-                        + clean_parameter_name(property_name)
-                        + ", Unset):\n"
-                    )
-                    f.write(
-                        "\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n"
-                    )
-                    f.write("\t\telse:\n")
-                    f.write(
-                        "\t\t\t"
-                        + clean_parameter_name(property_name)
-                        + " = isoparse(_"
-                        + clean_parameter_name(property_name)
-                        + ")\n"
-                    )
-                    f.write("\n")
-                    # Return early.
-                    return
-                elif property_schema["format"] == "byte":
-                    f.write(
-                        "\t\t_"
-                        + clean_parameter_name(property_name)
-                        + ' = d.pop("'
-                        + property_name
-                        + '", UNSET)\n'
-                    )
-                    f.write(
-                        "\t\t"
-                        + clean_parameter_name(property_name)
-                        + ": Union[Unset, Base64Data]\n"
-                    )
-                    f.write(
-                        "\t\tif isinstance(_"
-                        + clean_parameter_name(property_name)
-                        + ", Unset):\n"
-                    )
-                    f.write(
-                        "\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n"
-                    )
-                    f.write("\t\telse:\n")
-                    f.write(
-                        "\t\t\t"
-                        + clean_parameter_name(property_name)
-                        + " = Base64Data(bytes(_"
-                        + clean_parameter_name(property_name)
-                        + ", 'utf-8'))\n"
-                    )
-                    f.write("\n")
-                    # Return early.
-                    return
-
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
-            )
-            f.write("\n")
-        elif property_type == "integer":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
-            )
-            f.write("\n")
-        elif property_type == "number":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
-            )
-            f.write("\n")
-        elif property_type == "boolean":
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
-            )
-            f.write("\n")
-        elif "additionalProperties" in property_schema and property_type == "object":
-            if "$ref" in property_schema["additionalProperties"]:
-                ref = property_schema["additionalProperties"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-                f.write(
-                    "\t\t_"
-                    + clean_parameter_name(property_name)
-                    + ' = d.pop("'
-                    + property_name
-                    + '", UNSET)\n'
-                )
-                f.write(
-                    "\t\tif isinstance(_"
-                    + clean_parameter_name(property_name)
-                    + ", Unset):\n"
-                )
-                f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
-                f.write("\t\telse:\n")
-                f.write(
-                    "\t\t\tnew_map: Dict[str, "
-                    + ref
-                    + "] = {}\n\t\t\tfor k, v in _"
-                    + clean_parameter_name(property_name)
-                    + ".items():\n\t\t\t\tnew_map[k] = "
-                    + ref
-                    + ".from_dict(v) # type: ignore\n\t\t\t"
-                    + clean_parameter_name(property_name)
-                    + " = new_map # type: ignore\n"
-                )
-                f.write("\n")
-            elif (
-                "type" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["type"] == "integer"
-            ):
-                f.write(
-                    "\t\t"
-                    + clean_parameter_name(property_name)
-                    + ' = d.pop("'
-                    + property_name
-                    + '", UNSET)\n'
-                )
-                f.write("\n")
-            elif (
-                "format" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["format"] == "byte"
-            ):
-                f.write(
-                    "\t\t_"
-                    + clean_parameter_name(property_name)
-                    + ' = d.pop("'
-                    + property_name
-                    + '", UNSET)\n'
-                )
-                f.write(
-                    "\t\tif isinstance(_"
-                    + clean_parameter_name(property_name)
-                    + ", Unset):\n"
-                )
-                f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
-                f.write(
-                    "\t\telse:\n\t\t\tnew_map: Dict[str, Base64Data] = {}\n\t\t\tfor k, v in _"
-                    + clean_parameter_name(property_name)
-                    + ".items():\n\t\t\t\tnew_map[k] = Base64Data(bytes(v, 'utf-8'))\n\t\t\t"
-                    + clean_parameter_name(property_name)
-                    + " = new_map # type: ignore\n"
-                )
-                f.write("\n")
-            elif (
-                "type" in property_schema["additionalProperties"]
-                and property_schema["additionalProperties"]["type"] == "string"
-            ):
-                f.write(
-                    "\t\t"
-                    + clean_parameter_name(property_name)
-                    + ' = d.pop("'
-                    + property_name
-                    + '", UNSET)\n'
-                )
-                f.write("\n")
-            else:
-                # Throw an error.
-                print("property: ", property_schema)
-                raise Exception("Unknown property type")
-        elif property_type == "array":
-            if "items" in property_schema:
-                if "$ref" in property_schema["items"]:
-                    property_type = property_schema["items"]["$ref"]
-                    property_type = property_type.replace("#/components/schemas/", "")
-                    f.write(
-                        "\t\tfrom ..models."
-                        + camel_to_snake(property_type)
-                        + " import "
-                        + property_type
-                        + "\n"
-                    )
-                elif "type" in property_schema["items"]:
-                    if property_schema["items"]["type"] == "string":
-                        property_type = "str"
-                    elif property_schema["items"]["type"] == "number":
-                        property_type = "float"
-                    elif property_schema["items"]["type"] == "integer":
-                        property_type = "int"
-                    elif property_schema["items"]["type"] == "array":
-                        if "items" in property_schema["items"]:
-                            if property_schema["items"]["items"]["type"] == "string":
-                                property_type = "List[str]"
-                            elif property_schema["items"]["items"]["type"] == "number":
-                                property_type = "List[float]"
-                            else:
-                                logging.error("property: ", property_schema)
-                                raise Exception("Unknown property type")
-                        else:
-                            logging.error("property: ", property_schema)
-                            raise Exception("Unknown property type")
-                    else:
-                        raise Exception(
-                            "  unknown array type: ",
-                            property_schema["items"]["type"],
-                        )
-                else:
-                    logging.error("array: ", [property_schema])
-                    logging.error("array: ", [property_schema["items"]])
-                    raise Exception("Unknown array type")
-
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + " = cast(List["
-                + property_type
-                + '], d.pop("'
-                + property_name
-                + '", UNSET))\n'
-            )
-            f.write("\n")
-        else:
-            f.write(
-                "\t\t"
-                + clean_parameter_name(property_name)
-                + ' = d.pop("'
-                + property_name
-                + '", UNSET)\n'
-            )
-    elif "$ref" in property_schema:
-        ref = property_schema["$ref"].replace("#/components/schemas/", "")
-        # Get the type for the reference.
-        actual_schema = data["components"]["schemas"][ref]
-
-        f.write(
-            "\t\t_"
-            + clean_parameter_name(property_name)
-            + ' = d.pop("'
-            + property_name
-            + '", UNSET)\n'
-        )
-        f.write(
-            "\t\t"
-            + clean_parameter_name(property_name)
-            + ": Union[Unset, "
-            + ref
-            + "]\n"
-        )
-        f.write(
-            "\t\tif isinstance(_" + clean_parameter_name(property_name) + ", Unset):\n"
-        )
-        f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
-        f.write("\t\tif _" + clean_parameter_name(property_name) + " is None:\n")
-        f.write("\t\t\t" + clean_parameter_name(property_name) + " = UNSET\n")
-        f.write("\t\telse:\n")
-
-        is_enum = isEnumWithDocsOneOf(actual_schema)
-        if (
-            "properties" in actual_schema
-            or "oneOf" in actual_schema
-            or "anyOf" in actual_schema
-            or "allOf" in actual_schema
-        ) and not is_enum:
-            f.write(
-                "\t\t\t"
-                + clean_parameter_name(property_name)
-                + " = "
-                + ref
-                + ".from_dict(_"
-                + clean_parameter_name(property_name)
-                + ")\n"
-            )
-        else:
-            f.write(
-                "\t\t\t"
-                + clean_parameter_name(property_name)
-                + " = _"
-                + clean_parameter_name(property_name)
-                + "\n"
-            )
-
-        f.write("\n")
-    elif "allOf" in property_schema:
-        if len(property_schema["allOf"]) != 1:
-            print(property_schema)
-            raise Exception("Unknown allOf")
-        thing = property_schema["allOf"][0]
-        renderTypeFromDict(f, property_name, thing, data)
-    else:
-        f.write(
-            "\t\t"
-            + clean_parameter_name(property_name)
-            + ' = d.pop("'
-            + property_name
-            + '", UNSET)\n'
-        )
-
-
-def hasDateTime(schema: dict) -> bool:
-    # Generate the type.
-    if "type" in schema:
-        type_name = schema["type"]
-        if type_name == "object":
-            # Iternate over the properties.
-            if "properties" in schema:
-                for property_name in schema["properties"]:
-                    property_schema = schema["properties"][property_name]
-                    has_date_time = hasDateTime(property_schema)
-                    if has_date_time:
-                        return True
-        elif type_name == "string" and "format" in schema:
-            if (
-                schema["format"] == "date-time"
-                or schema["format"] == "partial-date-time"
-            ):
-                return True
-
-    return False
-
-
-def hasBase64(schema: dict) -> bool:
-    # Generate the type.
-    if "type" in schema:
-        type_name = schema["type"]
-        if type_name == "object":
-            if "additionalProperties" in schema:
-                return hasBase64(schema["additionalProperties"])
-            # Iternate over the properties.
-            if "properties" in schema:
-                for property_name in schema["properties"]:
-                    property_schema = schema["properties"][property_name]
-                    has_base64 = hasBase64(property_schema)
-                    if has_base64:
-                        return True
-        elif type_name == "string" and "format" in schema:
-            if schema["format"] == "byte":
-                return True
-
-    return False
 
 
 def getRefs(schema: dict) -> List[str]:
@@ -2454,6 +1640,12 @@ def getRefs(schema: dict) -> List[str]:
                 else:
                     logging.error("unsupported type: ", schema)
                     raise Exception("unsupported type: ", schema)
+            elif type_name == "array":
+                if "items" in schema:
+                    schema_refs = getRefs(schema["items"])
+                    for ref in schema_refs:
+                        if ref not in refs:
+                            refs.append(ref)
 
     return refs
 
@@ -2764,6 +1956,34 @@ def getTagOneOf(schema: dict) -> Optional[str]:
     return tag
 
 
+def getContentOneOf(schema: dict, tag: Optional[str]) -> Optional[str]:
+    if tag is None:
+        return None
+    content = None
+    for one_of in schema["oneOf"]:
+        has_content = False
+        # Check if each are an object w 1 property in it.
+        if one_of["type"] == "object" and "properties" in one_of:
+            if len(one_of["properties"]) != 2:
+                return None
+
+            for prop_name in one_of["properties"]:
+                if prop_name == tag:
+                    continue
+                if content is not None and content != prop_name:
+                    has_content = False
+                    break
+                else:
+                    has_content = True
+                    content = prop_name
+
+        if has_content is False:
+            content = None
+            break
+
+    return content
+
+
 def isEnumWithDocsOneOf(schema: dict) -> bool:
     if "oneOf" not in schema:
         return False
@@ -2824,6 +2044,51 @@ def getFunctionResultType(endpoint: dict, endpoint_refs: List[str]) -> str:
 
 def getDetailedFunctionResultType(endpoint: dict, endpoint_refs: List[str]) -> str:
     return "Response[" + getFunctionResultType(endpoint, endpoint_refs) + "]"
+
+
+def getTypeName(schema: dict) -> str:
+    if "type" in schema:
+        if schema["type"] == "string":
+            if "format" in schema:
+                if (
+                    schema["format"] == "date-time"
+                    or schema["format"] == "partial-date-time"
+                ):
+                    return "datetime.datetime"
+                elif schema["format"] == "byte":
+                    return "Base64Bytes"
+                elif schema["format"] == "uuid":
+                    return "UUID"
+                elif schema["format"] == "url":
+                    return "AnyUrl"
+                elif schema["format"] == "phone":
+                    return "PhoneNumber"
+            return "str"
+        elif schema["type"] == "number":
+            return "float"
+        elif schema["type"] == "boolean":
+            return "bool"
+        elif schema["type"] == "integer":
+            return "int"
+        elif schema["type"] == "array":
+            if "items" in schema:
+                item_type = getTypeName(schema["items"])
+                if "format" in schema["items"] and schema["items"]["format"] == "uint8":
+                    return "bytes"
+                else:
+                    return "List[" + item_type + "]"
+        elif "additionalProperties" in schema and schema["type"] == "object":
+            item_type = getTypeName(schema["additionalProperties"])
+            return "Dict[str, " + item_type + "]"
+    elif "$ref" in schema:
+        return schema["$ref"].replace("#/components/schemas/", "")
+    elif "allOf" in schema and len(schema["allOf"]) == 1:
+        return getTypeName(schema["allOf"][0])
+    elif "description" in schema:
+        return "Any"
+
+    logging.error("schema: ", [schema])
+    raise Exception("Unknown schema type")
 
 
 letters: List[str] = []
