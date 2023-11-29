@@ -39,11 +39,11 @@ class WebSocketResponse:
 
     @classmethod
     def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
-        if d.get("type") == "SuccessWebSocketResponse":
+        if d.get("success") is True:
             VT: SuccessWebSocketResponse = SuccessWebSocketResponse()
             VT.from_dict(d)
             return cls(type=VT)
-        elif d.get("type") == "FailureWebSocketResponse":
+        elif d.get("success") is False:
             UR: FailureWebSocketResponse = FailureWebSocketResponse()
             UR.from_dict(d)
             return cls(type=UR)

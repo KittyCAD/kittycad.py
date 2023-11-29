@@ -38,6 +38,10 @@ class Client:
         """Get a new client matching this one with a new timeout (in seconds)"""
         return attr.evolve(self, timeout=timeout)
 
+    def with_base_url(self, url: str) -> "Client":
+        """Get a new client matching this one with a new base url"""
+        return attr.evolve(self, base_url=url)
+
 
 @attr.s(auto_attribs=True)
 class ClientFromEnv(Client):

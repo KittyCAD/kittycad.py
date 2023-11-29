@@ -38,11 +38,11 @@ class {{name}}:
     @classmethod
     def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         {% for type in types %}{% if loop.first %}
-        if d.get("type") == "{{type.name}}":
+        if d.get("{{type.check}}") == {{type.value}}:
             {{type.var1}} : {{type.name}} = {{type.name}}()
             {{type.var1}}.from_dict(d)
             return cls(type={{type.var1}})
-        {% else %}elif d.get("type") == "{{type.name}}":
+        {% else %}elif d.get("{{type.check}}") == {{type.value}}:
             {{type.var1}} : {{type.name}} = {{type.name}}()
             {{type.var1}}.from_dict(d)
             return cls(type={{type.var1}})
