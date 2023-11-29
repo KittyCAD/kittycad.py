@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any, Dict, Iterator
 
 import bson
 from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
@@ -140,6 +140,20 @@ class WebSocket:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.close()
+
+    def __iter__(self) -> Iterator[WebSocketResponse]:
+        """
+        Iterate on incoming messages.
+
+        The iterator calls :meth:`recv` and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        :exc:`~websockets.exceptions.ConnectionClosedError` exception after a
+        protocol error or a network failure.
+
+        """
+        for message in self.ws:
+            yield message
 
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""

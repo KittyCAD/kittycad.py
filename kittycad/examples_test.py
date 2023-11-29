@@ -139,6 +139,7 @@ from kittycad.models import (
     User,
     UserResultsPage,
     VerificationToken,
+    WebSocketRequest,
 )
 from kittycad.models.ai_feedback import AiFeedback
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
@@ -149,6 +150,8 @@ from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
+from kittycad.models.rtc_sdp_type import RtcSdpType
+from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
@@ -165,6 +168,7 @@ from kittycad.models.unit_temperature import UnitTemperature
 from kittycad.models.unit_torque import UnitTorque
 from kittycad.models.unit_volume import UnitVolume
 from kittycad.models.update_user import UpdateUser
+from kittycad.models.web_socket_request import sdp_offer
 from kittycad.types import Response
 
 
@@ -3888,7 +3892,7 @@ def test_modeling_commands_ws():
     client = ClientFromEnv()
 
     # Connect to the websocket.
-    websocket = modeling_commands_ws.sync(
+    websocket = modeling_commands_ws.WebSocket(
         client=client,
         fps=10,
         unlocked_framerate=False,
@@ -3898,11 +3902,20 @@ def test_modeling_commands_ws():
     )
 
     # Send a message.
-    websocket.send("{}")
+    websocket.send(
+        WebSocketRequest(
+            sdp_offer(
+                offer=RtcSessionDescription(
+                    sdp="<string>",
+                    type=RtcSdpType.UNSPECIFIED,
+                ),
+            )
+        )
+    )
 
-    # Get the messages.
-    for message in websocket:
-        print(message)
+    # Get a message.
+    message = websocket.recv()
+    print(message)
 
 
 # OR run async

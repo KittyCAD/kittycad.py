@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union, List
+from typing import Iterator, Any, Dict, Optional, Union, List
 import json
 import bson
 
@@ -166,6 +166,20 @@ class WebSocket:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.close()
+
+    def __iter__(self) -> Iterator[{{response_type}}]:
+        """
+        Iterate on incoming messages.
+
+        The iterator calls :meth:`recv` and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        :exc:`~websockets.exceptions.ConnectionClosedError` exception after a
+        protocol error or a network failure.
+
+        """
+        for message in self.ws:
+            yield message
 
     def send(self, data:{% for arg in args %}{%if arg.name == "body" %}{{arg.type}}{% endif %}{% endfor %}):
         """Send data to the websocket."""
