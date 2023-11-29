@@ -153,7 +153,7 @@ class WebSocket:
 
         """
         for message in self.ws:
-            yield message
+            return WebSocketResponse.from_dict(json.loads(message))
 
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""
