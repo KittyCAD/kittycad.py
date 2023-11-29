@@ -433,7 +433,8 @@ from kittycad.types import Response
         for optional_arg in optional_args:
             params_str += optional_arg
 
-    if request_body_type and "x-dropshot-websocket" not in endpoint:
+    body_example = "{}"
+    if request_body_type:
         if request_body_type == "str":
             params_str += "body='<string>',\n"
         elif request_body_type == "bytes":
@@ -443,10 +444,20 @@ from kittycad.types import Response
             rbs: Dict[Any, Any] = request_body_schema
             (
                 body_type,
-                body_example,
+                body_ex,
                 more_example_imports,
             ) = generateTypeAndExamplePython(request_body_type, rbs, data, None, None)
-            params_str += "body=" + body_example + ",\n"
+            body_example = body_ex
+            if "x-dropshot-websocket" not in endpoint:
+                params_str += "body=" + body_example + ",\n"
+            else:
+                body_example = request_body_type + "(" + body_example + ")"
+                example_imports = (
+                    example_imports
+                    + "from kittycad.models import "
+                    + request_body_type
+                    + "\n"
+                )
             example_imports = example_imports + more_example_imports
 
     example_variable = ""
@@ -559,29 +570,56 @@ async def test_"""
 
     # Generate the websocket examples.
     if "x-dropshot-websocket" in endpoint:
-        short_sync_example = (
-            """def test_"""
-            + fn_name
-            + """():
-        # Create our client.
-        client = ClientFromEnv()
+        if request_body_type is None:
+            short_sync_example = (
+                """def test_"""
+                + fn_name
+                + """():
+            # Create our client.
+            client = ClientFromEnv()
 
-        # Connect to the websocket.
-        websocket = """
-            + fn_name
-            + """.sync(client=client,"""
-            + params_str
-            + """)
+            # Connect to the websocket.
+            websocket = """
+                + fn_name
+                + """.sync(client=client,"""
+                + params_str
+                + """)
 
-        # Send a message.
-        websocket.send("{}")
+            # Send a message.
+            websocket.send("{}")
 
-        # Get the messages.
-        for message in websocket:
+            # Get the messages.
+            for message in websocket:
+                print(message)
+
+        """
+            )
+        else:
+            short_sync_example = (
+                """def test_"""
+                + fn_name
+                + """():
+            # Create our client.
+            client = ClientFromEnv()
+
+            # Connect to the websocket.
+            websocket = """
+                + fn_name
+                + """.WebSocket(client=client,"""
+                + params_str
+                + """)
+
+            # Send a message.
+            websocket.send("""
+                + body_example
+                + """)
+
+            # Get a message.
+            message = websocket.recv()
             print(message)
 
-    """
-        )
+        """
+            )
 
         long_example = (
             """
