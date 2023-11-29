@@ -298,30 +298,24 @@ def test_ws():
     client = ClientFromEnv()
 
     # Connect to the websocket.
-    websocket = modeling_commands_ws.WebSocket(
+    with modeling_commands_ws.WebSocket(
         client=client,
-        fps=30,
-        unlocked_framerate=False,
-        video_res_height=480,
-        video_res_width=640,
+        fps=None,
+        unlocked_framerate=None,
+        video_res_height=None,
+        video_res_width=None,
         webrtc=False,
-    )
+    ) as websocket:
+        # Send a message.
+        id = uuid.uuid4()
+        req = WebSocketRequest(
+            modeling_cmd_req(cmd=ModelingCmd(start_path()), cmd_id=ModelingCmdId(id))
+        )
+        json.dumps(req.to_dict())
+        websocket.send(req)
 
-    # Send a message.
-    id = uuid.uuid4()
-    req = WebSocketRequest(
-        modeling_cmd_req(cmd=ModelingCmd(start_path()), cmd_id=ModelingCmdId(id))
-    )
-    j = json.dumps(req.to_dict())
-    print(f"Sending: {j}")
-    websocket.send(req)
-    print("Sent.")
-
-    # Get the messages.
-    while True:
-        message = websocket.recv()
-        print(json.dumps(message))
-        break
-
-    # Close the websocket.
-    websocket.close()
+        # Get the messages.
+        while True:
+            message = websocket.recv()
+            print(json.dumps(message.to_dict()))
+            break

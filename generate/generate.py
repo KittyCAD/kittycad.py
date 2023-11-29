@@ -1222,6 +1222,8 @@ def generateUnionType(types: List[str], name: str, description: str) -> str:
             "name": str,
             "var0": str,
             "var1": str,
+            "check": str,
+            "value": str,
         },
     )
     TemplateType = TypedDict(
@@ -1238,9 +1240,36 @@ def generateUnionType(types: List[str], name: str, description: str) -> str:
         "name": name,
     }
     for type in types:
-        template_info["types"].append(
-            {"name": type, "var0": randletter(), "var1": randletter()}
-        )
+        if type == "SuccessWebSocketResponse":
+            template_info["types"].append(
+                {
+                    "name": type,
+                    "var0": randletter(),
+                    "var1": randletter(),
+                    "check": "success",
+                    "value": "True",
+                }
+            )
+        elif type == "FailureWebSocketResponse":
+            template_info["types"].append(
+                {
+                    "name": type,
+                    "var0": randletter(),
+                    "var1": randletter(),
+                    "check": "success",
+                    "value": "False",
+                }
+            )
+        else:
+            template_info["types"].append(
+                {
+                    "name": type,
+                    "var0": randletter(),
+                    "var1": randletter(),
+                    "check": "type",
+                    "value": '"' + type + '"',
+                }
+            )
 
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
     template_file = "union-type.py.jinja2"

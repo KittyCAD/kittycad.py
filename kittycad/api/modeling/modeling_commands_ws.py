@@ -6,7 +6,6 @@ from websockets.client import WebSocketClientProtocol, connect as ws_connect_asy
 from websockets.sync.client import ClientConnection, connect as ws_connect
 
 from ...client import Client
-from ...models.error import Error
 from ...models.web_socket_request import WebSocketRequest
 from ...models.web_socket_response import WebSocketResponse
 
@@ -83,14 +82,7 @@ def sync(
         client=client,
     )
 
-    with ws_connect(
-        kwargs["url"].replace("https://", "wss://"),
-        additional_headers=kwargs["headers"],
-    ) as websocket:
-        return websocket  # type: ignore
-
-    # Return an error if we got here.
-    return Error(message="An error occurred while connecting to the websocket.")
+    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=None, compression=None, max_size=None)  # type: ignore
 
 
 async def asyncio(
@@ -113,13 +105,9 @@ async def asyncio(
         client=client,
     )
 
-    async with ws_connect_async(
-        kwargs["url"].replace("https://", "wss://"), extra_headers=kwargs["headers"]
-    ) as websocket:
-        return websocket
-
-    # Return an error if we got here.
-    return Error(message="An error occurred while connecting to the websocket.")
+    return ws_connect_async(
+        kwargs["url"].replace("http", "ws"), extra_headers=kwargs["headers"]
+    )
 
 
 class WebSocket:
@@ -144,6 +132,14 @@ class WebSocket:
             webrtc,
             client=client,
         )
+
+    def __enter__(
+        self,
+    ):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
 
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""
