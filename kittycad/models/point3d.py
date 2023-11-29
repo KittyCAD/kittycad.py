@@ -2,6 +2,7 @@
 from pydantic import BaseModel
 
 
+
 class Point3d(BaseModel):
     """A point in 3D space"""
 

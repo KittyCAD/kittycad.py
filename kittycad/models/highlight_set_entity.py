@@ -4,6 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
+
 class HighlightSetEntity(BaseModel):
     """The response from the `HighlightSetEntity` command."""
 

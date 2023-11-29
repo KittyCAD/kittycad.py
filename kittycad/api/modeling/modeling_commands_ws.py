@@ -157,15 +157,15 @@ class WebSocket:
 
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""
-        self.ws.send(json.dumps(data.model_dump()))
+        self.ws.send(json.dumps(data.model_dump(mode="json")))
 
     def send_binary(self, data: WebSocketRequest):
         """Send data as bson to the websocket."""
-        self.ws.send(bson.encode(data.model_dump()))
+        self.ws.send(bson.encode(data.model_dump(mode="json")))  # type: ignore
 
     def recv(self) -> WebSocketResponse:
         """Receive data from the websocket."""
-        message = self.ws.recv()
+        message = self.ws.recv(timeout=60)
         return WebSocketResponse(**json.loads(message))
 
     def close(self):

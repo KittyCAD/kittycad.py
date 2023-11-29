@@ -2,6 +2,7 @@
 from pydantic import BaseModel
 
 
+
 class Color(BaseModel):
     """An RGBA color"""
 

@@ -2,6 +2,7 @@
 from pydantic import BaseModel
 
 
+
 class ClientMetrics(BaseModel):
     """ClientMetrics contains information regarding the state of the peer."""
 

@@ -5,11 +5,14 @@ set -o pipefail
 # Fix for ci.
 git config --global --add safe.directory /home/user/src
 
+git add kittycad/models/base64data.py
 git add kittycad/models/empty.py
+
 
 # Cleanup old stuff.
 rm -rf kittycad/models
 rm -rf kittycad/api
+git checkout kittycad/models/base64data.py
 git checkout kittycad/models/empty.py
 
 # Generate new.

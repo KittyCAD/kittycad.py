@@ -2,7 +2,6 @@ import datetime
 from typing import Dict, Optional
 
 from pydantic import BaseModel
-from pydantic_extra_types.phone_number import PhoneNumber
 
 from ..models.currency import Currency
 from ..models.new_address import NewAddress
@@ -29,4 +28,4 @@ class Customer(BaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[PhoneNumber] = None
+    phone: Optional[str] = None

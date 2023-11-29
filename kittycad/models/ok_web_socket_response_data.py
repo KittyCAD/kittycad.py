@@ -1,8 +1,6 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import List, Union
 
-import attr
-from pydantic import BaseModel, GetCoreSchemaHandler
-from pydantic_core import CoreSchema, core_schema
+from pydantic import BaseModel, RootModel
 
 from ..models.ice_server import IceServer
 from ..models.ok_modeling_cmd_response import OkModelingCmdResponse
@@ -93,15 +91,8 @@ class metrics_request(BaseModel):
     type: str = "metrics_request"
 
 
-GY = TypeVar("GY", bound="OkWebSocketResponseData")
-
-
-@attr.s(auto_attribs=True)
-class OkWebSocketResponseData:
-
-    """The websocket messages this server sends."""
-
-    type: Union[
+OkWebSocketResponseData = RootModel[
+    Union[
         ice_server_info,
         trickle_ice,
         sdp_answer,
@@ -109,79 +100,4 @@ class OkWebSocketResponseData:
         export,
         metrics_request,
     ]
-
-    def __init__(
-        self,
-        type: Union[
-            ice_server_info,
-            trickle_ice,
-            sdp_answer,
-            modeling,
-            export,
-            metrics_request,
-        ],
-    ):
-        self.type = type
-
-    def model_dump(self) -> Dict[str, Any]:
-        if isinstance(self.type, ice_server_info):
-            VY: ice_server_info = self.type
-            return VY.model_dump()
-        elif isinstance(self.type, trickle_ice):
-            MC: trickle_ice = self.type
-            return MC.model_dump()
-        elif isinstance(self.type, sdp_answer):
-            BR: sdp_answer = self.type
-            return BR.model_dump()
-        elif isinstance(self.type, modeling):
-            OK: modeling = self.type
-            return OK.model_dump()
-        elif isinstance(self.type, export):
-            OP: export = self.type
-            return OP.model_dump()
-        elif isinstance(self.type, metrics_request):
-            LV: metrics_request = self.type
-            return LV.model_dump()
-
-        raise Exception("Unknown type")
-
-    @classmethod
-    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
-        if d.get("type") == "ice_server_info":
-            DW: ice_server_info = ice_server_info(**d)
-            return cls(type=DW)
-        elif d.get("type") == "trickle_ice":
-            AV: trickle_ice = trickle_ice(**d)
-            return cls(type=AV)
-        elif d.get("type") == "sdp_answer":
-            WM: sdp_answer = sdp_answer(**d)
-            return cls(type=WM)
-        elif d.get("type") == "modeling":
-            MU: modeling = modeling(**d)
-            return cls(type=MU)
-        elif d.get("type") == "export":
-            WW: export = export(**d)
-            return cls(type=WW)
-        elif d.get("type") == "metrics_request":
-            II: metrics_request = metrics_request(**d)
-            return cls(type=II)
-
-        raise Exception("Unknown type")
-
-    @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source_type: Any, handler: GetCoreSchemaHandler
-    ) -> CoreSchema:
-        return core_schema.no_info_after_validator_function(
-            cls,
-            handler(
-                Union[
-                    ice_server_info,
-                    trickle_ice,
-                    sdp_answer,
-                    modeling,
-                    export,
-                    metrics_request,
-                ]
-            ),
-        )
+]

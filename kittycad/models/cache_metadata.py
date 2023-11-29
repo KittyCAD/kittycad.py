@@ -2,6 +2,7 @@
 from pydantic import BaseModel
 
 
+
 class CacheMetadata(BaseModel):
     """Metadata about our cache.
 
