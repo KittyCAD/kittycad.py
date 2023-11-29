@@ -363,7 +363,7 @@ def test_ws_import():
                         files=[ImportFile(data=content, path=file_name)],
                         format=InputFormat(
                             obj(
-                                units=UnitLength.MM,
+                                units=UnitLength.M,
                                 coords=System(
                                     forward=AxisDirectionPair(
                                         axis=Axis.Y, direction=Direction.NEGATIVE
