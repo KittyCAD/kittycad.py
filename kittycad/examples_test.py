@@ -562,7 +562,7 @@ def test_get_api_call():
 
     result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call.sync(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -577,7 +577,7 @@ def test_get_api_call():
         Optional[Union[ApiCallWithPrice, Error]]
     ] = get_api_call.sync_detailed(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
 
@@ -590,7 +590,7 @@ async def test_get_api_call_async():
 
     result: Optional[Union[ApiCallWithPrice, Error]] = await get_api_call.asyncio(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
     # OR run async with more info
@@ -598,7 +598,7 @@ async def test_get_api_call_async():
         Optional[Union[ApiCallWithPrice, Error]]
     ] = await get_api_call.asyncio_detailed(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
 
@@ -2545,7 +2545,7 @@ def test_get_api_call_for_user():
 
     result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call_for_user.sync(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -2560,7 +2560,7 @@ def test_get_api_call_for_user():
         Optional[Union[ApiCallWithPrice, Error]]
     ] = get_api_call_for_user.sync_detailed(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
 
@@ -2575,7 +2575,7 @@ async def test_get_api_call_for_user_async():
         Union[ApiCallWithPrice, Error]
     ] = await get_api_call_for_user.asyncio(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
     # OR run async with more info
@@ -2583,7 +2583,7 @@ async def test_get_api_call_for_user_async():
         Optional[Union[ApiCallWithPrice, Error]]
     ] = await get_api_call_for_user.asyncio_detailed(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
 
