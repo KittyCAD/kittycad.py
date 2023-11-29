@@ -1293,7 +1293,7 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
 
     # Write the sum type.
     description = getAnyOfDescription(schema)
-    content = generateUnionType(all_options, name, description)
+    content = generateUnionType(all_options, name, description, tag)
     f.write(content)
 
     # Close the file.
@@ -1307,7 +1307,9 @@ def getAnyOfDescription(schema: dict) -> str:
         return ""
 
 
-def generateUnionType(types: List[str], name: str, description: str) -> str:
+def generateUnionType(
+    types: List[str], name: str, description: str, tag: Optional[str]
+) -> str:
     ArgType = TypedDict(
         "ArgType",
         {
@@ -1324,12 +1326,14 @@ def generateUnionType(types: List[str], name: str, description: str) -> str:
             "types": List[ArgType],
             "description": str,
             "name": str,
+            "tag": Optional[str],
         },
     )
     template_info: TemplateType = {
         "types": [],
         "description": description,
         "name": name,
+        "tag": tag,
     }
     for type in types:
         if type == "SuccessWebSocketResponse":
@@ -1496,7 +1500,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
 
     # Write the sum type.
     description = getOneOfDescription(schema)
-    content = generateUnionType(all_options, name, description)
+    content = generateUnionType(all_options, name, description, tag)
     f.write(content)
 
     # Close the file.
@@ -2058,7 +2062,7 @@ def getTypeName(schema: dict) -> str:
                 elif schema["format"] == "byte":
                     return "Base64Data"
                 elif schema["format"] == "uuid":
-                    return "UUID"
+                    return "str"
                 elif schema["format"] == "url":
                     return "AnyUrl"
                 elif schema["format"] == "phone":

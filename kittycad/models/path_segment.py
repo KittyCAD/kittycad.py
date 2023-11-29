@@ -1,6 +1,7 @@
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.angle import Angle
 from ..models.point2d import Point2d
@@ -14,7 +15,7 @@ class line(BaseModel):
 
     relative: bool
 
-    type: str = "line"
+    type: Literal["line"] = "line"
 
 
 class arc(BaseModel):
@@ -34,7 +35,7 @@ class arc(BaseModel):
 
     start: Optional[Angle] = None
 
-    type: str = "arc"
+    type: Literal["arc"] = "arc"
 
 
 class bezier(BaseModel):
@@ -48,7 +49,7 @@ class bezier(BaseModel):
 
     relative: bool
 
-    type: str = "bezier"
+    type: Literal["bezier"] = "bezier"
 
 
 class tangential_arc(BaseModel):
@@ -58,7 +59,7 @@ class tangential_arc(BaseModel):
 
     radius: float
 
-    type: str = "tangential_arc"
+    type: Literal["tangential_arc"] = "tangential_arc"
 
 
 class tangential_arc_to(BaseModel):
@@ -68,15 +69,18 @@ class tangential_arc_to(BaseModel):
 
     to: Point3d
 
-    type: str = "tangential_arc_to"
+    type: Literal["tangential_arc_to"] = "tangential_arc_to"
 
 
 PathSegment = RootModel[
-    Union[
-        line,
-        arc,
-        bezier,
-        tangential_arc,
-        tangential_arc_to,
+    Annotated[
+        Union[
+            line,
+            arc,
+            bezier,
+            tangential_arc,
+            tangential_arc_to,
+        ],
+        Field(discriminator="type"),
     ]
 ]

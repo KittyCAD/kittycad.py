@@ -1,6 +1,7 @@
-from typing import Union
+from typing import Literal, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.center_of_mass import CenterOfMass
 from ..models.curve_get_control_points import CurveGetControlPoints
@@ -37,7 +38,7 @@ from ..models.volume import Volume
 class empty(BaseModel):
     """An empty response, used for any command that does not explicitly have a response defined here."""
 
-    type: str = "empty"
+    type: Literal["empty"] = "empty"
 
 
 class export(BaseModel):
@@ -45,7 +46,7 @@ class export(BaseModel):
 
     data: Export
 
-    type: str = "export"
+    type: Literal["export"] = "export"
 
 
 class select_with_point(BaseModel):
@@ -53,7 +54,7 @@ class select_with_point(BaseModel):
 
     data: SelectWithPoint
 
-    type: str = "select_with_point"
+    type: Literal["select_with_point"] = "select_with_point"
 
 
 class highlight_set_entity(BaseModel):
@@ -61,7 +62,7 @@ class highlight_set_entity(BaseModel):
 
     data: HighlightSetEntity
 
-    type: str = "highlight_set_entity"
+    type: Literal["highlight_set_entity"] = "highlight_set_entity"
 
 
 class entity_get_child_uuid(BaseModel):
@@ -69,7 +70,7 @@ class entity_get_child_uuid(BaseModel):
 
     data: EntityGetChildUuid
 
-    type: str = "entity_get_child_uuid"
+    type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
 
 class entity_get_num_children(BaseModel):
@@ -77,7 +78,7 @@ class entity_get_num_children(BaseModel):
 
     data: EntityGetNumChildren
 
-    type: str = "entity_get_num_children"
+    type: Literal["entity_get_num_children"] = "entity_get_num_children"
 
 
 class entity_get_parent_id(BaseModel):
@@ -85,7 +86,7 @@ class entity_get_parent_id(BaseModel):
 
     data: EntityGetParentId
 
-    type: str = "entity_get_parent_id"
+    type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
 
 
 class entity_get_all_child_uuids(BaseModel):
@@ -93,7 +94,7 @@ class entity_get_all_child_uuids(BaseModel):
 
     data: EntityGetAllChildUuids
 
-    type: str = "entity_get_all_child_uuids"
+    type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
 
 
 class select_get(BaseModel):
@@ -101,7 +102,7 @@ class select_get(BaseModel):
 
     data: SelectGet
 
-    type: str = "select_get"
+    type: Literal["select_get"] = "select_get"
 
 
 class get_entity_type(BaseModel):
@@ -109,7 +110,7 @@ class get_entity_type(BaseModel):
 
     data: GetEntityType
 
-    type: str = "get_entity_type"
+    type: Literal["get_entity_type"] = "get_entity_type"
 
 
 class solid3d_get_all_edge_faces(BaseModel):
@@ -117,7 +118,7 @@ class solid3d_get_all_edge_faces(BaseModel):
 
     data: Solid3dGetAllEdgeFaces
 
-    type: str = "solid3d_get_all_edge_faces"
+    type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
 
 
 class solid3d_get_all_opposite_edges(BaseModel):
@@ -125,7 +126,7 @@ class solid3d_get_all_opposite_edges(BaseModel):
 
     data: Solid3dGetAllOppositeEdges
 
-    type: str = "solid3d_get_all_opposite_edges"
+    type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
 
 
 class solid3d_get_opposite_edge(BaseModel):
@@ -133,7 +134,7 @@ class solid3d_get_opposite_edge(BaseModel):
 
     data: Solid3dGetOppositeEdge
 
-    type: str = "solid3d_get_opposite_edge"
+    type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
 
 
 class solid3d_get_prev_adjacent_edge(BaseModel):
@@ -141,7 +142,7 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 
     data: Solid3dGetPrevAdjacentEdge
 
-    type: str = "solid3d_get_prev_adjacent_edge"
+    type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
 
 
 class solid3d_get_next_adjacent_edge(BaseModel):
@@ -149,7 +150,7 @@ class solid3d_get_next_adjacent_edge(BaseModel):
 
     data: Solid3dGetNextAdjacentEdge
 
-    type: str = "solid3d_get_next_adjacent_edge"
+    type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
 
 
 class mouse_click(BaseModel):
@@ -157,7 +158,7 @@ class mouse_click(BaseModel):
 
     data: MouseClick
 
-    type: str = "mouse_click"
+    type: Literal["mouse_click"] = "mouse_click"
 
 
 class curve_get_type(BaseModel):
@@ -165,7 +166,7 @@ class curve_get_type(BaseModel):
 
     data: CurveGetType
 
-    type: str = "curve_get_type"
+    type: Literal["curve_get_type"] = "curve_get_type"
 
 
 class curve_get_control_points(BaseModel):
@@ -173,7 +174,7 @@ class curve_get_control_points(BaseModel):
 
     data: CurveGetControlPoints
 
-    type: str = "curve_get_control_points"
+    type: Literal["curve_get_control_points"] = "curve_get_control_points"
 
 
 class take_snapshot(BaseModel):
@@ -181,7 +182,7 @@ class take_snapshot(BaseModel):
 
     data: TakeSnapshot
 
-    type: str = "take_snapshot"
+    type: Literal["take_snapshot"] = "take_snapshot"
 
 
 class path_get_info(BaseModel):
@@ -189,7 +190,7 @@ class path_get_info(BaseModel):
 
     data: PathGetInfo
 
-    type: str = "path_get_info"
+    type: Literal["path_get_info"] = "path_get_info"
 
 
 class path_get_curve_uuids_for_vertices(BaseModel):
@@ -197,7 +198,9 @@ class path_get_curve_uuids_for_vertices(BaseModel):
 
     data: PathGetCurveUuidsForVertices
 
-    type: str = "path_get_curve_uuids_for_vertices"
+    type: Literal[
+        "path_get_curve_uuids_for_vertices"
+    ] = "path_get_curve_uuids_for_vertices"
 
 
 class path_get_vertex_uuids(BaseModel):
@@ -205,7 +208,7 @@ class path_get_vertex_uuids(BaseModel):
 
     data: PathGetVertexUuids
 
-    type: str = "path_get_vertex_uuids"
+    type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
 
 
 class plane_intersect_and_project(BaseModel):
@@ -213,7 +216,7 @@ class plane_intersect_and_project(BaseModel):
 
     data: PlaneIntersectAndProject
 
-    type: str = "plane_intersect_and_project"
+    type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
 
 
 class curve_get_end_points(BaseModel):
@@ -221,7 +224,7 @@ class curve_get_end_points(BaseModel):
 
     data: CurveGetEndPoints
 
-    type: str = "curve_get_end_points"
+    type: Literal["curve_get_end_points"] = "curve_get_end_points"
 
 
 class import_files(BaseModel):
@@ -229,7 +232,7 @@ class import_files(BaseModel):
 
     data: ImportFiles
 
-    type: str = "import_files"
+    type: Literal["import_files"] = "import_files"
 
 
 class mass(BaseModel):
@@ -237,7 +240,7 @@ class mass(BaseModel):
 
     data: Mass
 
-    type: str = "mass"
+    type: Literal["mass"] = "mass"
 
 
 class volume(BaseModel):
@@ -245,7 +248,7 @@ class volume(BaseModel):
 
     data: Volume
 
-    type: str = "volume"
+    type: Literal["volume"] = "volume"
 
 
 class density(BaseModel):
@@ -253,7 +256,7 @@ class density(BaseModel):
 
     data: Density
 
-    type: str = "density"
+    type: Literal["density"] = "density"
 
 
 class surface_area(BaseModel):
@@ -261,7 +264,7 @@ class surface_area(BaseModel):
 
     data: SurfaceArea
 
-    type: str = "surface_area"
+    type: Literal["surface_area"] = "surface_area"
 
 
 class center_of_mass(BaseModel):
@@ -269,7 +272,7 @@ class center_of_mass(BaseModel):
 
     data: CenterOfMass
 
-    type: str = "center_of_mass"
+    type: Literal["center_of_mass"] = "center_of_mass"
 
 
 class get_sketch_mode_plane(BaseModel):
@@ -277,41 +280,44 @@ class get_sketch_mode_plane(BaseModel):
 
     data: GetSketchModePlane
 
-    type: str = "get_sketch_mode_plane"
+    type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
 
 
 OkModelingCmdResponse = RootModel[
-    Union[
-        empty,
-        export,
-        select_with_point,
-        highlight_set_entity,
-        entity_get_child_uuid,
-        entity_get_num_children,
-        entity_get_parent_id,
-        entity_get_all_child_uuids,
-        select_get,
-        get_entity_type,
-        solid3d_get_all_edge_faces,
-        solid3d_get_all_opposite_edges,
-        solid3d_get_opposite_edge,
-        solid3d_get_prev_adjacent_edge,
-        solid3d_get_next_adjacent_edge,
-        mouse_click,
-        curve_get_type,
-        curve_get_control_points,
-        take_snapshot,
-        path_get_info,
-        path_get_curve_uuids_for_vertices,
-        path_get_vertex_uuids,
-        plane_intersect_and_project,
-        curve_get_end_points,
-        import_files,
-        mass,
-        volume,
-        density,
-        surface_area,
-        center_of_mass,
-        get_sketch_mode_plane,
+    Annotated[
+        Union[
+            empty,
+            export,
+            select_with_point,
+            highlight_set_entity,
+            entity_get_child_uuid,
+            entity_get_num_children,
+            entity_get_parent_id,
+            entity_get_all_child_uuids,
+            select_get,
+            get_entity_type,
+            solid3d_get_all_edge_faces,
+            solid3d_get_all_opposite_edges,
+            solid3d_get_opposite_edge,
+            solid3d_get_prev_adjacent_edge,
+            solid3d_get_next_adjacent_edge,
+            mouse_click,
+            curve_get_type,
+            curve_get_control_points,
+            take_snapshot,
+            path_get_info,
+            path_get_curve_uuids_for_vertices,
+            path_get_vertex_uuids,
+            plane_intersect_and_project,
+            curve_get_end_points,
+            import_files,
+            mass,
+            volume,
+            density,
+            surface_area,
+            center_of_mass,
+            get_sketch_mode_plane,
+        ],
+        Field(discriminator="type"),
     ]
 ]

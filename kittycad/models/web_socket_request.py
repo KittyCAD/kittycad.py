@@ -1,6 +1,7 @@
-from typing import List, Union
+from typing import List, Literal, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.client_metrics import ClientMetrics
 from ..models.modeling_cmd import ModelingCmd
@@ -15,7 +16,7 @@ class trickle_ice(BaseModel):
 
     candidate: RtcIceCandidateInit
 
-    type: str = "trickle_ice"
+    type: Literal["trickle_ice"] = "trickle_ice"
 
 
 class sdp_offer(BaseModel):
@@ -23,7 +24,7 @@ class sdp_offer(BaseModel):
 
     offer: RtcSessionDescription
 
-    type: str = "sdp_offer"
+    type: Literal["sdp_offer"] = "sdp_offer"
 
 
 class modeling_cmd_req(BaseModel):
@@ -33,7 +34,7 @@ class modeling_cmd_req(BaseModel):
 
     cmd_id: ModelingCmdId
 
-    type: str = "modeling_cmd_req"
+    type: Literal["modeling_cmd_req"] = "modeling_cmd_req"
 
 
 class modeling_cmd_batch_req(BaseModel):
@@ -41,13 +42,13 @@ class modeling_cmd_batch_req(BaseModel):
 
     requests: List[ModelingCmdReq]
 
-    type: str = "modeling_cmd_batch_req"
+    type: Literal["modeling_cmd_batch_req"] = "modeling_cmd_batch_req"
 
 
 class ping(BaseModel):
     """The client-to-server Ping to ensure the WebSocket stays alive."""
 
-    type: str = "ping"
+    type: Literal["ping"] = "ping"
 
 
 class metrics_response(BaseModel):
@@ -55,16 +56,19 @@ class metrics_response(BaseModel):
 
     metrics: ClientMetrics
 
-    type: str = "metrics_response"
+    type: Literal["metrics_response"] = "metrics_response"
 
 
 WebSocketRequest = RootModel[
-    Union[
-        trickle_ice,
-        sdp_offer,
-        modeling_cmd_req,
-        modeling_cmd_batch_req,
-        ping,
-        metrics_response,
+    Annotated[
+        Union[
+            trickle_ice,
+            sdp_offer,
+            modeling_cmd_req,
+            modeling_cmd_batch_req,
+            ping,
+            metrics_response,
+        ],
+        Field(discriminator="type"),
     ]
 ]

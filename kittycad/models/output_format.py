@@ -1,6 +1,7 @@
-from typing import Union
+from typing import Literal, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.fbx_storage import FbxStorage
 from ..models.gltf_presentation import GltfPresentation
@@ -17,7 +18,7 @@ class fbx(BaseModel):
 
     storage: FbxStorage
 
-    type: str = "fbx"
+    type: Literal["fbx"] = "fbx"
 
 
 class gltf(BaseModel):
@@ -27,7 +28,7 @@ class gltf(BaseModel):
 
     storage: GltfStorage
 
-    type: str = "gltf"
+    type: Literal["gltf"] = "gltf"
 
 
 class obj(BaseModel):
@@ -35,7 +36,7 @@ class obj(BaseModel):
 
     coords: System
 
-    type: str = "obj"
+    type: Literal["obj"] = "obj"
 
     units: UnitLength
 
@@ -49,7 +50,7 @@ class ply(BaseModel):
 
     storage: PlyStorage
 
-    type: str = "ply"
+    type: Literal["ply"] = "ply"
 
     units: UnitLength
 
@@ -59,7 +60,7 @@ class step(BaseModel):
 
     coords: System
 
-    type: str = "step"
+    type: Literal["step"] = "step"
 
 
 class stl(BaseModel):
@@ -71,18 +72,21 @@ class stl(BaseModel):
 
     storage: StlStorage
 
-    type: str = "stl"
+    type: Literal["stl"] = "stl"
 
     units: UnitLength
 
 
 OutputFormat = RootModel[
-    Union[
-        fbx,
-        gltf,
-        obj,
-        ply,
-        step,
-        stl,
+    Annotated[
+        Union[
+            fbx,
+            gltf,
+            obj,
+            ply,
+            step,
+            stl,
+        ],
+        Field(discriminator="type"),
     ]
 ]

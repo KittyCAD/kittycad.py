@@ -93,7 +93,7 @@ def sync(
         client=client,
     )
 
-    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=120, compression=None, max_size=None) # type: ignore
+    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=120, max_size=None) # type: ignore
 
 
 
@@ -126,7 +126,7 @@ async def asyncio(
         client=client,
     )
 
-    return await ws_connect_async(kwargs["url"].replace("http", "ws"), extra_headers=kwargs["headers"], close_timeout=120, compression=None, max_size=None)
+    return await ws_connect_async(kwargs["url"].replace("http", "ws"), extra_headers=kwargs["headers"], close_timeout=120, max_size=None)
 
 
 {% if has_request_body %}
@@ -183,11 +183,11 @@ class WebSocket:
 
     def send(self, data:{% for arg in args %}{%if arg.name == "body" %}{{arg.type}}{% endif %}{% endfor %}):
         """Send data to the websocket."""
-        self.ws.send(json.dumps(data.model_dump(mode="json")))
+        self.ws.send(json.dumps(data.model_dump()))
 
     def send_binary(self, data:{% for arg in args %}{%if arg.name == "body" %}{{arg.type}}{% endif %}{% endfor %}):
         """Send data as bson to the websocket."""
-        self.ws.send(bson.encode(data.model_dump(mode="json"))) # type: ignore
+        self.ws.send(bson.encode(data.model_dump())) # type: ignore
 
     def recv(self) ->  {{response_type}}:
         """Receive data from the websocket."""
