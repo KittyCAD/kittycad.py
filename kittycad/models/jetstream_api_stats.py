@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+
 class JetstreamApiStats(BaseModel):
     """Jetstream API statistics."""
 

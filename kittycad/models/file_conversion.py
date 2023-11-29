@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import Base64Bytes, BaseModel
+from pydantic import BaseModel
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
@@ -9,6 +9,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.input_format import InputFormat
 from ..models.output_format import OutputFormat
 from ..models.uuid import Uuid
+from .base64data import Base64Data
 
 
 class FileConversion(BaseModel):
@@ -26,7 +27,7 @@ class FileConversion(BaseModel):
 
     output_format_options: Optional[OutputFormat] = None
 
-    outputs: Optional[Dict[str, Base64Bytes]] = None
+    outputs: Optional[Dict[str, Base64Data]] = None
 
     src_format: FileImportFormat
 

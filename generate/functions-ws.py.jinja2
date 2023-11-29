@@ -183,15 +183,15 @@ class WebSocket:
 
     def send(self, data:{% for arg in args %}{%if arg.name == "body" %}{{arg.type}}{% endif %}{% endfor %}):
         """Send data to the websocket."""
-        self.ws.send(json.dumps(data.model_dump()))
+        self.ws.send(json.dumps(data.model_dump(mode="json")))
 
     def send_binary(self, data:{% for arg in args %}{%if arg.name == "body" %}{{arg.type}}{% endif %}{% endfor %}):
         """Send data as bson to the websocket."""
-        self.ws.send(bson.encode(data.model_dump()))
+        self.ws.send(bson.encode(data.model_dump(mode="json"))) # type: ignore
 
     def recv(self) ->  {{response_type}}:
         """Receive data from the websocket."""
-        message = self.ws.recv()
+        message = self.ws.recv(timeout=60)
         return {{response_type}}(**json.loads(message))
 
     def close(self):

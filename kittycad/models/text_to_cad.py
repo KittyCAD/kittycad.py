@@ -1,12 +1,13 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import Base64Bytes, BaseModel
+from pydantic import BaseModel
 
 from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.uuid import Uuid
+from .base64data import Base64Data
 
 
 class TextToCad(BaseModel):
@@ -26,7 +27,7 @@ class TextToCad(BaseModel):
 
     output_format: FileExportFormat
 
-    outputs: Optional[Dict[str, Base64Bytes]] = None
+    outputs: Optional[Dict[str, Base64Data]] = None
 
     prompt: str
 

@@ -4,6 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
+
 class PathGetVertexUuids(BaseModel):
     """The response from the `PathGetVertexUuids` command."""
 

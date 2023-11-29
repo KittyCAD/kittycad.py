@@ -2056,13 +2056,13 @@ def getTypeName(schema: dict) -> str:
                 ):
                     return "datetime.datetime"
                 elif schema["format"] == "byte":
-                    return "Base64Bytes"
+                    return "Base64Data"
                 elif schema["format"] == "uuid":
                     return "UUID"
                 elif schema["format"] == "url":
                     return "AnyUrl"
                 elif schema["format"] == "phone":
-                    return "PhoneNumber"
+                    return "str"
             return "str"
         elif schema["type"] == "number":
             return "float"

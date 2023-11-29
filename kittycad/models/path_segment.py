@@ -1,8 +1,6 @@
-from typing import Any, Dict, Optional, Type, TypeVar, Union
+from typing import Optional, Union
 
-import attr
-from pydantic import BaseModel, GetCoreSchemaHandler
-from pydantic_core import CoreSchema, core_schema
+from pydantic import BaseModel, RootModel
 
 from ..models.angle import Angle
 from ..models.point2d import Point2d
@@ -73,86 +71,12 @@ class tangential_arc_to(BaseModel):
     type: str = "tangential_arc_to"
 
 
-GY = TypeVar("GY", bound="PathSegment")
-
-
-@attr.s(auto_attribs=True)
-class PathSegment:
-
-    """A segment of a path. Paths are composed of many segments."""
-
-    type: Union[
+PathSegment = RootModel[
+    Union[
         line,
         arc,
         bezier,
         tangential_arc,
         tangential_arc_to,
     ]
-
-    def __init__(
-        self,
-        type: Union[
-            line,
-            arc,
-            bezier,
-            tangential_arc,
-            tangential_arc_to,
-        ],
-    ):
-        self.type = type
-
-    def model_dump(self) -> Dict[str, Any]:
-        if isinstance(self.type, line):
-            EW: line = self.type
-            return EW.model_dump()
-        elif isinstance(self.type, arc):
-            BT: arc = self.type
-            return BT.model_dump()
-        elif isinstance(self.type, bezier):
-            AG: bezier = self.type
-            return AG.model_dump()
-        elif isinstance(self.type, tangential_arc):
-            EA: tangential_arc = self.type
-            return EA.model_dump()
-        elif isinstance(self.type, tangential_arc_to):
-            VW: tangential_arc_to = self.type
-            return VW.model_dump()
-
-        raise Exception("Unknown type")
-
-    @classmethod
-    def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
-        if d.get("type") == "line":
-            BU: line = line(**d)
-            return cls(type=BU)
-        elif d.get("type") == "arc":
-            GR: arc = arc(**d)
-            return cls(type=GR)
-        elif d.get("type") == "bezier":
-            EJ: bezier = bezier(**d)
-            return cls(type=EJ)
-        elif d.get("type") == "tangential_arc":
-            LQ: tangential_arc = tangential_arc(**d)
-            return cls(type=LQ)
-        elif d.get("type") == "tangential_arc_to":
-            DP: tangential_arc_to = tangential_arc_to(**d)
-            return cls(type=DP)
-
-        raise Exception("Unknown type")
-
-    @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source_type: Any, handler: GetCoreSchemaHandler
-    ) -> CoreSchema:
-        return core_schema.no_info_after_validator_function(
-            cls,
-            handler(
-                Union[
-                    line,
-                    arc,
-                    bezier,
-                    tangential_arc,
-                    tangential_arc_to,
-                ]
-            ),
-        )
+]

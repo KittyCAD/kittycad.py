@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+
 class LeafNode(BaseModel):
     """Leaf node information."""
 

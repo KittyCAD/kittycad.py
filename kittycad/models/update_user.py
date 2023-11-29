@@ -1,7 +1,7 @@
 from typing import Optional
 
 from pydantic import BaseModel
-from pydantic_extra_types.phone_number import PhoneNumber
+
 
 
 class UpdateUser(BaseModel):
@@ -17,4 +17,4 @@ class UpdateUser(BaseModel):
 
     last_name: Optional[str] = None
 
-    phone: Optional[PhoneNumber] = None
+    phone: Optional[str] = None

@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+
 class Error(BaseModel):
     """Error information from a response."""
 

@@ -2,7 +2,6 @@ import datetime
 from typing import Optional
 
 from pydantic import BaseModel
-from pydantic_extra_types.phone_number import PhoneNumber
 
 from ..models.uuid import Uuid
 
@@ -39,7 +38,7 @@ class ExtendedUser(BaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[PhoneNumber] = None
+    phone: Optional[str] = None
 
     stripe_id: Optional[str] = None
 

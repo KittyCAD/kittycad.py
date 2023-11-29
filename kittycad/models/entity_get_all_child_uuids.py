@@ -4,6 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
+
 class EntityGetAllChildUuids(BaseModel):
     """The response from the `EntityGetAllChildUuids` command."""
 

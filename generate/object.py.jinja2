@@ -4,6 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Base64Bytes, AnyUrl
 from pydantic_extra_types.phone_numbers import PhoneNumber
+from .base64data import Base64Data
 
 {% for import in imports %}
 {{ import }}
