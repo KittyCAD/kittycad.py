@@ -179,7 +179,7 @@ class WebSocket:
 
         """
         for message in self.ws:
-            yield message
+            return {{response_type}}.from_dict(json.loads(message))
 
     def send(self, data:{% for arg in args %}{%if arg.name == "body" %}{{arg.type}}{% endif %}{% endfor %}):
         """Send data to the websocket."""
