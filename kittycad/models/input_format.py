@@ -1,6 +1,7 @@
-from typing import Union
+from typing import Literal, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.system import System
 from ..models.unit_length import UnitLength
@@ -9,13 +10,13 @@ from ..models.unit_length import UnitLength
 class fbx(BaseModel):
     """Autodesk Filmbox (FBX) format."""
 
-    type: str = "fbx"
+    type: Literal["fbx"] = "fbx"
 
 
 class gltf(BaseModel):
     """Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb)."""
 
-    type: str = "gltf"
+    type: Literal["gltf"] = "gltf"
 
 
 class obj(BaseModel):
@@ -23,7 +24,7 @@ class obj(BaseModel):
 
     coords: System
 
-    type: str = "obj"
+    type: Literal["obj"] = "obj"
 
     units: UnitLength
 
@@ -33,7 +34,7 @@ class ply(BaseModel):
 
     coords: System
 
-    type: str = "ply"
+    type: Literal["ply"] = "ply"
 
     units: UnitLength
 
@@ -41,13 +42,13 @@ class ply(BaseModel):
 class sldprt(BaseModel):
     """SolidWorks part (SLDPRT) format."""
 
-    type: str = "sldprt"
+    type: Literal["sldprt"] = "sldprt"
 
 
 class step(BaseModel):
     """ISO 10303-21 (STEP) format."""
 
-    type: str = "step"
+    type: Literal["step"] = "step"
 
 
 class stl(BaseModel):
@@ -55,19 +56,22 @@ class stl(BaseModel):
 
     coords: System
 
-    type: str = "stl"
+    type: Literal["stl"] = "stl"
 
     units: UnitLength
 
 
 InputFormat = RootModel[
-    Union[
-        fbx,
-        gltf,
-        obj,
-        ply,
-        sldprt,
-        step,
-        stl,
+    Annotated[
+        Union[
+            fbx,
+            gltf,
+            obj,
+            ply,
+            sldprt,
+            step,
+            stl,
+        ],
+        Field(discriminator="type"),
     ]
 ]

@@ -1,5 +1,4 @@
 from typing import List, Optional
-from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -11,6 +10,6 @@ class FailureWebSocketResponse(BaseModel):
 
     errors: List[ApiError]
 
-    request_id: Optional[UUID] = None
+    request_id: Optional[str] = None
 
     success: bool

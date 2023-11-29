@@ -82,7 +82,7 @@ def sync(
         client=client,
     )
 
-    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=120, compression=None, max_size=None)  # type: ignore
+    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=120, max_size=None)  # type: ignore
 
 
 async def asyncio(
@@ -109,7 +109,6 @@ async def asyncio(
         kwargs["url"].replace("http", "ws"),
         extra_headers=kwargs["headers"],
         close_timeout=120,
-        compression=None,
         max_size=None,
     )
 
@@ -161,11 +160,11 @@ class WebSocket:
 
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""
-        self.ws.send(json.dumps(data.model_dump(mode="json")))
+        self.ws.send(json.dumps(data.model_dump()))
 
     def send_binary(self, data: WebSocketRequest):
         """Send data as bson to the websocket."""
-        self.ws.send(bson.encode(data.model_dump(mode="json")))  # type: ignore
+        self.ws.send(bson.encode(data.model_dump()))  # type: ignore
 
     def recv(self) -> WebSocketResponse:
         """Receive data from the websocket."""

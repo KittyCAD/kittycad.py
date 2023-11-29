@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional, Dict, Union, Any
+from typing import List, Optional, Dict, Union, Any, Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Base64Bytes, AnyUrl
@@ -14,7 +14,7 @@ class {{ name }}(BaseModel):
     """{{ description }}"""
     {% for field in fields %}
     {% if field.value %}
-    {{ field.name }}: {{ field.type }} = {{ field.value }}
+    {{ field.name }}: Literal[{{ field.value }}] = {{ field.value }}
     {% else %}
     {{ field.name }}: {{ field.type }}
     {% endif %}

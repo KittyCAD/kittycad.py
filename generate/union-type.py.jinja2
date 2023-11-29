@@ -1,10 +1,21 @@
 from typing import Dict, Any, Union, Type, TypeVar
-from pydantic import RootModel
+from pydantic import RootModel, Field
+
+from typing_extensions import Annotated
 
 
+
+{% if tag %}
+{{name}} = RootModel[Annotated[Union[
+        {% for type in types %}
+        {{type.name}},
+        {% endfor %}
+    ], Field(discriminator='{{tag}}')]]
+{% else %}
 {{name}} = RootModel[Union[
         {% for type in types %}
         {{type.name}},
         {% endfor %}
     ]]
+{% endif %}
 

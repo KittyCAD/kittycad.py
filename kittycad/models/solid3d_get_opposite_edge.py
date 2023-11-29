@@ -1,4 +1,3 @@
-from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -7,4 +6,4 @@ from pydantic import BaseModel
 class Solid3dGetOppositeEdge(BaseModel):
     """The response from the `Solid3dGetOppositeEdge` command."""
 
-    edge: UUID
+    edge: str

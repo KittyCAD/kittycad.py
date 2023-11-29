@@ -1,7 +1,7 @@
-from typing import List, Optional, Union
-from uuid import UUID
+from typing import List, Literal, Optional, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
@@ -29,7 +29,7 @@ from ..models.unit_volume import UnitVolume
 class start_path(BaseModel):
     """Start a path."""
 
-    type: str = "start_path"
+    type: Literal["start_path"] = "start_path"
 
 
 class move_path_pen(BaseModel):
@@ -39,7 +39,7 @@ class move_path_pen(BaseModel):
 
     to: Point3d
 
-    type: str = "move_path_pen"
+    type: Literal["move_path_pen"] = "move_path_pen"
 
 
 class extend_path(BaseModel):
@@ -49,7 +49,7 @@ class extend_path(BaseModel):
 
     segment: PathSegment
 
-    type: str = "extend_path"
+    type: Literal["extend_path"] = "extend_path"
 
 
 class extrude(BaseModel):
@@ -61,15 +61,15 @@ class extrude(BaseModel):
 
     target: ModelingCmdId
 
-    type: str = "extrude"
+    type: Literal["extrude"] = "extrude"
 
 
 class close_path(BaseModel):
     """Closes a path, converting it to a 2D solid."""
 
-    path_id: UUID
+    path_id: str
 
-    type: str = "close_path"
+    type: Literal["close_path"] = "close_path"
 
 
 class camera_drag_start(BaseModel):
@@ -77,7 +77,7 @@ class camera_drag_start(BaseModel):
 
     interaction: CameraDragInteractionType
 
-    type: str = "camera_drag_start"
+    type: Literal["camera_drag_start"] = "camera_drag_start"
 
     window: Point2d
 
@@ -89,7 +89,7 @@ class camera_drag_move(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: str = "camera_drag_move"
+    type: Literal["camera_drag_move"] = "camera_drag_move"
 
     window: Point2d
 
@@ -99,7 +99,7 @@ class camera_drag_end(BaseModel):
 
     interaction: CameraDragInteractionType
 
-    type: str = "camera_drag_end"
+    type: Literal["camera_drag_end"] = "camera_drag_end"
 
     window: Point2d
 
@@ -109,7 +109,7 @@ class default_camera_look_at(BaseModel):
 
     center: Point3d
 
-    type: str = "default_camera_look_at"
+    type: Literal["default_camera_look_at"] = "default_camera_look_at"
 
     up: Point3d
 
@@ -121,7 +121,7 @@ class default_camera_zoom(BaseModel):
 
     magnitude: float
 
-    type: str = "default_camera_zoom"
+    type: Literal["default_camera_zoom"] = "default_camera_zoom"
 
 
 class default_camera_enable_sketch_mode(BaseModel):
@@ -135,7 +135,9 @@ class default_camera_enable_sketch_mode(BaseModel):
 
     ortho: bool
 
-    type: str = "default_camera_enable_sketch_mode"
+    type: Literal[
+        "default_camera_enable_sketch_mode"
+    ] = "default_camera_enable_sketch_mode"
 
     x_axis: Point3d
 
@@ -145,43 +147,45 @@ class default_camera_enable_sketch_mode(BaseModel):
 class default_camera_disable_sketch_mode(BaseModel):
     """Disable sketch mode, from the default camera."""
 
-    type: str = "default_camera_disable_sketch_mode"
+    type: Literal[
+        "default_camera_disable_sketch_mode"
+    ] = "default_camera_disable_sketch_mode"
 
 
 class default_camera_focus_on(BaseModel):
     """Focus default camera on object."""
 
-    type: str = "default_camera_focus_on"
+    type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
 
-    uuid: UUID
+    uuid: str
 
 
 class export(BaseModel):
     """Export the scene to a file."""
 
-    entity_ids: List[UUID]
+    entity_ids: List[str]
 
     format: OutputFormat
 
     source_unit: UnitLength
 
-    type: str = "export"
+    type: Literal["export"] = "export"
 
 
 class entity_get_parent_id(BaseModel):
     """What is this entity's parent?"""
 
-    entity_id: UUID
+    entity_id: str
 
-    type: str = "entity_get_parent_id"
+    type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
 
 
 class entity_get_num_children(BaseModel):
     """How many children does the entity have?"""
 
-    entity_id: UUID
+    entity_id: str
 
-    type: str = "entity_get_num_children"
+    type: Literal["entity_get_num_children"] = "entity_get_num_children"
 
 
 class entity_get_child_uuid(BaseModel):
@@ -189,31 +193,31 @@ class entity_get_child_uuid(BaseModel):
 
     child_index: int
 
-    entity_id: UUID
+    entity_id: str
 
-    type: str = "entity_get_child_uuid"
+    type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
 
 class entity_get_all_child_uuids(BaseModel):
     """What are all UUIDs of this entity's children?"""
 
-    entity_id: UUID
+    entity_id: str
 
-    type: str = "entity_get_all_child_uuids"
+    type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
 
 
 class edit_mode_enter(BaseModel):
     """Enter edit mode"""
 
-    target: UUID
+    target: str
 
-    type: str = "edit_mode_enter"
+    type: Literal["edit_mode_enter"] = "edit_mode_enter"
 
 
 class edit_mode_exit(BaseModel):
     """Exit edit mode"""
 
-    type: str = "edit_mode_exit"
+    type: Literal["edit_mode_exit"] = "edit_mode_exit"
 
 
 class select_with_point(BaseModel):
@@ -223,43 +227,43 @@ class select_with_point(BaseModel):
 
     selection_type: SceneSelectionType
 
-    type: str = "select_with_point"
+    type: Literal["select_with_point"] = "select_with_point"
 
 
 class select_clear(BaseModel):
     """Clear the selection"""
 
-    type: str = "select_clear"
+    type: Literal["select_clear"] = "select_clear"
 
 
 class select_add(BaseModel):
     """Adds one or more entities (by UUID) to the selection."""
 
-    entities: List[UUID]
+    entities: List[str]
 
-    type: str = "select_add"
+    type: Literal["select_add"] = "select_add"
 
 
 class select_remove(BaseModel):
     """Removes one or more entities (by UUID) from the selection."""
 
-    entities: List[UUID]
+    entities: List[str]
 
-    type: str = "select_remove"
+    type: Literal["select_remove"] = "select_remove"
 
 
 class select_replace(BaseModel):
     """Replaces the current selection with these new entities (by UUID). Equivalent to doing SelectClear then SelectAdd."""
 
-    entities: List[UUID]
+    entities: List[str]
 
-    type: str = "select_replace"
+    type: Literal["select_replace"] = "select_replace"
 
 
 class select_get(BaseModel):
     """Find all IDs of selected entities"""
 
-    type: str = "select_get"
+    type: Literal["select_get"] = "select_get"
 
 
 class highlight_set_entity(BaseModel):
@@ -269,15 +273,15 @@ class highlight_set_entity(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: str = "highlight_set_entity"
+    type: Literal["highlight_set_entity"] = "highlight_set_entity"
 
 
 class highlight_set_entities(BaseModel):
     """Changes the current highlighted entity to these entities."""
 
-    entities: List[UUID]
+    entities: List[str]
 
-    type: str = "highlight_set_entities"
+    type: Literal["highlight_set_entities"] = "highlight_set_entities"
 
 
 class new_annotation(BaseModel):
@@ -289,17 +293,17 @@ class new_annotation(BaseModel):
 
     options: AnnotationOptions
 
-    type: str = "new_annotation"
+    type: Literal["new_annotation"] = "new_annotation"
 
 
 class update_annotation(BaseModel):
     """Update an annotation"""
 
-    annotation_id: UUID
+    annotation_id: str
 
     options: AnnotationOptions
 
-    type: str = "update_annotation"
+    type: Literal["update_annotation"] = "update_annotation"
 
 
 class object_visible(BaseModel):
@@ -307,45 +311,45 @@ class object_visible(BaseModel):
 
     hidden: bool
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "object_visible"
+    type: Literal["object_visible"] = "object_visible"
 
 
 class object_bring_to_front(BaseModel):
     """Bring an object to the front of the scene"""
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "object_bring_to_front"
+    type: Literal["object_bring_to_front"] = "object_bring_to_front"
 
 
 class get_entity_type(BaseModel):
     """What type of entity is this?"""
 
-    entity_id: UUID
+    entity_id: str
 
-    type: str = "get_entity_type"
+    type: Literal["get_entity_type"] = "get_entity_type"
 
 
 class solid2d_add_hole(BaseModel):
     """Add a hole to a Solid2d object before extruding it."""
 
-    hole_id: UUID
+    hole_id: str
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "solid2d_add_hole"
+    type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
 
 
 class solid3d_get_all_edge_faces(BaseModel):
     """Gets all faces which use the given edge."""
 
-    edge_id: UUID
+    edge_id: str
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "solid3d_get_all_edge_faces"
+    type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
 
 
 class solid3d_get_all_opposite_edges(BaseModel):
@@ -353,47 +357,47 @@ class solid3d_get_all_opposite_edges(BaseModel):
 
     along_vector: Optional[Point3d] = None
 
-    edge_id: UUID
+    edge_id: str
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "solid3d_get_all_opposite_edges"
+    type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
 
 
 class solid3d_get_opposite_edge(BaseModel):
     """Gets the edge opposite the given edge, along the given face."""
 
-    edge_id: UUID
+    edge_id: str
 
-    face_id: UUID
+    face_id: str
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "solid3d_get_opposite_edge"
+    type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
 
 
 class solid3d_get_next_adjacent_edge(BaseModel):
     """Gets the next adjacent edge for the given edge, along the given face."""
 
-    edge_id: UUID
+    edge_id: str
 
-    face_id: UUID
+    face_id: str
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "solid3d_get_next_adjacent_edge"
+    type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
 
 
 class solid3d_get_prev_adjacent_edge(BaseModel):
     """Gets the previous adjacent edge for the given edge, along the given face."""
 
-    edge_id: UUID
+    edge_id: str
 
-    face_id: UUID
+    face_id: str
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "solid3d_get_prev_adjacent_edge"
+    type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
 
 
 class send_object(BaseModel):
@@ -401,19 +405,19 @@ class send_object(BaseModel):
 
     front: bool
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "send_object"
+    type: Literal["send_object"] = "send_object"
 
 
 class entity_set_opacity(BaseModel):
     """Set opacity of the entity."""
 
-    entity_id: UUID
+    entity_id: str
 
     opacity: float
 
-    type: str = "entity_set_opacity"
+    type: Literal["entity_set_opacity"] = "entity_set_opacity"
 
 
 class entity_fade(BaseModel):
@@ -421,11 +425,11 @@ class entity_fade(BaseModel):
 
     duration_seconds: Optional[float] = None
 
-    entity_id: UUID
+    entity_id: str
 
     fade_in: bool
 
-    type: str = "entity_fade"
+    type: Literal["entity_fade"] = "entity_fade"
 
 
 class make_plane(BaseModel):
@@ -439,7 +443,7 @@ class make_plane(BaseModel):
 
     size: float
 
-    type: str = "make_plane"
+    type: Literal["make_plane"] = "make_plane"
 
     x_axis: Point3d
 
@@ -451,9 +455,9 @@ class plane_set_color(BaseModel):
 
     color: Color
 
-    plane_id: UUID
+    plane_id: str
 
-    type: str = "plane_set_color"
+    type: Literal["plane_set_color"] = "plane_set_color"
 
 
 class set_tool(BaseModel):
@@ -461,7 +465,7 @@ class set_tool(BaseModel):
 
     tool: SceneToolType
 
-    type: str = "set_tool"
+    type: Literal["set_tool"] = "set_tool"
 
 
 class mouse_move(BaseModel):
@@ -469,7 +473,7 @@ class mouse_move(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: str = "mouse_move"
+    type: Literal["mouse_move"] = "mouse_move"
 
     window: Point2d
 
@@ -477,7 +481,7 @@ class mouse_move(BaseModel):
 class mouse_click(BaseModel):
     """Send a mouse click event. Updates modified/selected entities."""
 
-    type: str = "mouse_click"
+    type: Literal["mouse_click"] = "mouse_click"
 
     window: Point2d
 
@@ -491,31 +495,31 @@ class sketch_mode_enable(BaseModel):
 
     ortho: bool
 
-    plane_id: UUID
+    plane_id: str
 
-    type: str = "sketch_mode_enable"
+    type: Literal["sketch_mode_enable"] = "sketch_mode_enable"
 
 
 class sketch_mode_disable(BaseModel):
     """Disable sketch mode."""
 
-    type: str = "sketch_mode_disable"
+    type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
 
 
 class curve_get_type(BaseModel):
     """Get type of a given curve."""
 
-    curve_id: UUID
+    curve_id: str
 
-    type: str = "curve_get_type"
+    type: Literal["curve_get_type"] = "curve_get_type"
 
 
 class curve_get_control_points(BaseModel):
     """Get control points of a given curve."""
 
-    curve_id: UUID
+    curve_id: str
 
-    type: str = "curve_get_control_points"
+    type: Literal["curve_get_control_points"] = "curve_get_control_points"
 
 
 class take_snapshot(BaseModel):
@@ -523,7 +527,7 @@ class take_snapshot(BaseModel):
 
     format: ImageFormat
 
-    type: str = "take_snapshot"
+    type: Literal["take_snapshot"] = "take_snapshot"
 
 
 class make_axes_gizmo(BaseModel):
@@ -533,39 +537,41 @@ class make_axes_gizmo(BaseModel):
 
     gizmo_mode: bool
 
-    type: str = "make_axes_gizmo"
+    type: Literal["make_axes_gizmo"] = "make_axes_gizmo"
 
 
 class path_get_info(BaseModel):
     """Query the given path"""
 
-    path_id: UUID
+    path_id: str
 
-    type: str = "path_get_info"
+    type: Literal["path_get_info"] = "path_get_info"
 
 
 class path_get_curve_uuids_for_vertices(BaseModel):
     """Get curves for vertices within a path"""
 
-    path_id: UUID
+    path_id: str
 
-    type: str = "path_get_curve_uuids_for_vertices"
+    type: Literal[
+        "path_get_curve_uuids_for_vertices"
+    ] = "path_get_curve_uuids_for_vertices"
 
-    vertex_ids: List[UUID]
+    vertex_ids: List[str]
 
 
 class path_get_vertex_uuids(BaseModel):
     """Get vertices within a path"""
 
-    path_id: UUID
+    path_id: str
 
-    type: str = "path_get_vertex_uuids"
+    type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
 
 
 class handle_mouse_drag_start(BaseModel):
     """Start dragging mouse."""
 
-    type: str = "handle_mouse_drag_start"
+    type: Literal["handle_mouse_drag_start"] = "handle_mouse_drag_start"
 
     window: Point2d
 
@@ -575,7 +581,7 @@ class handle_mouse_drag_move(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: str = "handle_mouse_drag_move"
+    type: Literal["handle_mouse_drag_move"] = "handle_mouse_drag_move"
 
     window: Point2d
 
@@ -583,7 +589,7 @@ class handle_mouse_drag_move(BaseModel):
 class handle_mouse_drag_end(BaseModel):
     """Stop dragging mouse."""
 
-    type: str = "handle_mouse_drag_end"
+    type: Literal["handle_mouse_drag_end"] = "handle_mouse_drag_end"
 
     window: Point2d
 
@@ -591,17 +597,17 @@ class handle_mouse_drag_end(BaseModel):
 class remove_scene_objects(BaseModel):
     """Remove scene objects."""
 
-    object_ids: List[UUID]
+    object_ids: List[str]
 
-    type: str = "remove_scene_objects"
+    type: Literal["remove_scene_objects"] = "remove_scene_objects"
 
 
 class plane_intersect_and_project(BaseModel):
     """Utility method. Performs both a ray cast and projection to plane-local coordinates. Returns the plane coordinates for the given window coordinates."""
 
-    plane_id: UUID
+    plane_id: str
 
-    type: str = "plane_intersect_and_project"
+    type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
 
     window: Point2d
 
@@ -609,9 +615,9 @@ class plane_intersect_and_project(BaseModel):
 class curve_get_end_points(BaseModel):
     """Find the start and end of a curve."""
 
-    curve_id: UUID
+    curve_id: str
 
-    type: str = "curve_get_end_points"
+    type: Literal["curve_get_end_points"] = "curve_get_end_points"
 
 
 class reconfigure_stream(BaseModel):
@@ -621,7 +627,7 @@ class reconfigure_stream(BaseModel):
 
     height: int
 
-    type: str = "reconfigure_stream"
+    type: Literal["reconfigure_stream"] = "reconfigure_stream"
 
     width: int
 
@@ -633,13 +639,13 @@ class import_files(BaseModel):
 
     format: InputFormat
 
-    type: str = "import_files"
+    type: Literal["import_files"] = "import_files"
 
 
 class mass(BaseModel):
     """Get the mass of entities in the scene or the default scene."""
 
-    entity_ids: List[UUID]
+    entity_ids: List[str]
 
     material_density: float
 
@@ -649,13 +655,13 @@ class mass(BaseModel):
 
     source_unit: UnitLength
 
-    type: str = "mass"
+    type: Literal["mass"] = "mass"
 
 
 class density(BaseModel):
     """Get the density of entities in the scene or the default scene."""
 
-    entity_ids: List[UUID]
+    entity_ids: List[str]
 
     material_mass: float
 
@@ -665,49 +671,49 @@ class density(BaseModel):
 
     source_unit: UnitLength
 
-    type: str = "density"
+    type: Literal["density"] = "density"
 
 
 class volume(BaseModel):
     """Get the volume of entities in the scene or the default scene."""
 
-    entity_ids: List[UUID]
+    entity_ids: List[str]
 
     output_unit: UnitVolume
 
     source_unit: UnitLength
 
-    type: str = "volume"
+    type: Literal["volume"] = "volume"
 
 
 class center_of_mass(BaseModel):
     """Get the center of mass of entities in the scene or the default scene."""
 
-    entity_ids: List[UUID]
+    entity_ids: List[str]
 
     output_unit: UnitLength
 
     source_unit: UnitLength
 
-    type: str = "center_of_mass"
+    type: Literal["center_of_mass"] = "center_of_mass"
 
 
 class surface_area(BaseModel):
     """Get the surface area of entities in the scene or the default scene."""
 
-    entity_ids: List[UUID]
+    entity_ids: List[str]
 
     output_unit: UnitArea
 
     source_unit: UnitLength
 
-    type: str = "surface_area"
+    type: Literal["surface_area"] = "surface_area"
 
 
 class get_sketch_mode_plane(BaseModel):
     """Get the plane of the sketch mode. This is useful for getting the normal of the plane after a user selects a plane."""
 
-    type: str = "get_sketch_mode_plane"
+    type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
 
 
 class curve_set_constraint(BaseModel):
@@ -717,83 +723,86 @@ class curve_set_constraint(BaseModel):
 
     constraint_type: PathComponentConstraintType
 
-    object_id: UUID
+    object_id: str
 
-    type: str = "curve_set_constraint"
+    type: Literal["curve_set_constraint"] = "curve_set_constraint"
 
 
 ModelingCmd = RootModel[
-    Union[
-        start_path,
-        move_path_pen,
-        extend_path,
-        extrude,
-        close_path,
-        camera_drag_start,
-        camera_drag_move,
-        camera_drag_end,
-        default_camera_look_at,
-        default_camera_zoom,
-        default_camera_enable_sketch_mode,
-        default_camera_disable_sketch_mode,
-        default_camera_focus_on,
-        export,
-        entity_get_parent_id,
-        entity_get_num_children,
-        entity_get_child_uuid,
-        entity_get_all_child_uuids,
-        edit_mode_enter,
-        edit_mode_exit,
-        select_with_point,
-        select_clear,
-        select_add,
-        select_remove,
-        select_replace,
-        select_get,
-        highlight_set_entity,
-        highlight_set_entities,
-        new_annotation,
-        update_annotation,
-        object_visible,
-        object_bring_to_front,
-        get_entity_type,
-        solid2d_add_hole,
-        solid3d_get_all_edge_faces,
-        solid3d_get_all_opposite_edges,
-        solid3d_get_opposite_edge,
-        solid3d_get_next_adjacent_edge,
-        solid3d_get_prev_adjacent_edge,
-        send_object,
-        entity_set_opacity,
-        entity_fade,
-        make_plane,
-        plane_set_color,
-        set_tool,
-        mouse_move,
-        mouse_click,
-        sketch_mode_enable,
-        sketch_mode_disable,
-        curve_get_type,
-        curve_get_control_points,
-        take_snapshot,
-        make_axes_gizmo,
-        path_get_info,
-        path_get_curve_uuids_for_vertices,
-        path_get_vertex_uuids,
-        handle_mouse_drag_start,
-        handle_mouse_drag_move,
-        handle_mouse_drag_end,
-        remove_scene_objects,
-        plane_intersect_and_project,
-        curve_get_end_points,
-        reconfigure_stream,
-        import_files,
-        mass,
-        density,
-        volume,
-        center_of_mass,
-        surface_area,
-        get_sketch_mode_plane,
-        curve_set_constraint,
+    Annotated[
+        Union[
+            start_path,
+            move_path_pen,
+            extend_path,
+            extrude,
+            close_path,
+            camera_drag_start,
+            camera_drag_move,
+            camera_drag_end,
+            default_camera_look_at,
+            default_camera_zoom,
+            default_camera_enable_sketch_mode,
+            default_camera_disable_sketch_mode,
+            default_camera_focus_on,
+            export,
+            entity_get_parent_id,
+            entity_get_num_children,
+            entity_get_child_uuid,
+            entity_get_all_child_uuids,
+            edit_mode_enter,
+            edit_mode_exit,
+            select_with_point,
+            select_clear,
+            select_add,
+            select_remove,
+            select_replace,
+            select_get,
+            highlight_set_entity,
+            highlight_set_entities,
+            new_annotation,
+            update_annotation,
+            object_visible,
+            object_bring_to_front,
+            get_entity_type,
+            solid2d_add_hole,
+            solid3d_get_all_edge_faces,
+            solid3d_get_all_opposite_edges,
+            solid3d_get_opposite_edge,
+            solid3d_get_next_adjacent_edge,
+            solid3d_get_prev_adjacent_edge,
+            send_object,
+            entity_set_opacity,
+            entity_fade,
+            make_plane,
+            plane_set_color,
+            set_tool,
+            mouse_move,
+            mouse_click,
+            sketch_mode_enable,
+            sketch_mode_disable,
+            curve_get_type,
+            curve_get_control_points,
+            take_snapshot,
+            make_axes_gizmo,
+            path_get_info,
+            path_get_curve_uuids_for_vertices,
+            path_get_vertex_uuids,
+            handle_mouse_drag_start,
+            handle_mouse_drag_move,
+            handle_mouse_drag_end,
+            remove_scene_objects,
+            plane_intersect_and_project,
+            curve_get_end_points,
+            reconfigure_stream,
+            import_files,
+            mass,
+            density,
+            volume,
+            center_of_mass,
+            surface_area,
+            get_sketch_mode_plane,
+            curve_set_constraint,
+        ],
+        Field(discriminator="type"),
     ]
 ]

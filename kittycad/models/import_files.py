@@ -1,4 +1,3 @@
-from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -7,4 +6,4 @@ from pydantic import BaseModel
 class ImportFiles(BaseModel):
     """Data from importing the files"""
 
-    object_id: UUID
+    object_id: str

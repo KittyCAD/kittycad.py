@@ -1,13 +1,14 @@
-from typing import Union
+from typing import Literal, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 
 
 class default_scene(BaseModel):
     """Visit the default scene."""
 
-    type: str = "default_scene"
+    type: Literal["default_scene"] = "default_scene"
 
 
 class scene_by_index(BaseModel):
@@ -15,7 +16,7 @@ class scene_by_index(BaseModel):
 
     index: int
 
-    type: str = "scene_by_index"
+    type: Literal["scene_by_index"] = "scene_by_index"
 
 
 class scene_by_name(BaseModel):
@@ -23,7 +24,7 @@ class scene_by_name(BaseModel):
 
     name: str
 
-    type: str = "scene_by_name"
+    type: Literal["scene_by_name"] = "scene_by_name"
 
 
 class mesh_by_index(BaseModel):
@@ -31,7 +32,7 @@ class mesh_by_index(BaseModel):
 
     index: int
 
-    type: str = "mesh_by_index"
+    type: Literal["mesh_by_index"] = "mesh_by_index"
 
 
 class mesh_by_name(BaseModel):
@@ -39,15 +40,18 @@ class mesh_by_name(BaseModel):
 
     name: str
 
-    type: str = "mesh_by_name"
+    type: Literal["mesh_by_name"] = "mesh_by_name"
 
 
 Selection = RootModel[
-    Union[
-        default_scene,
-        scene_by_index,
-        scene_by_name,
-        mesh_by_index,
-        mesh_by_name,
+    Annotated[
+        Union[
+            default_scene,
+            scene_by_index,
+            scene_by_name,
+            mesh_by_index,
+            mesh_by_name,
+        ],
+        Field(discriminator="type"),
     ]
 ]

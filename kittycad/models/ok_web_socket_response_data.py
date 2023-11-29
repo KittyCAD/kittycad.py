@@ -1,6 +1,7 @@
-from typing import List, Union
+from typing import List, Literal, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.ice_server import IceServer
 from ..models.ok_modeling_cmd_response import OkModelingCmdResponse
@@ -20,7 +21,7 @@ class ice_server_info(BaseModel):
 
     data: IceServerInfoData
 
-    type: str = "ice_server_info"
+    type: Literal["ice_server_info"] = "ice_server_info"
 
 
 class TrickleIceData(BaseModel):
@@ -34,7 +35,7 @@ class trickle_ice(BaseModel):
 
     data: TrickleIceData
 
-    type: str = "trickle_ice"
+    type: Literal["trickle_ice"] = "trickle_ice"
 
 
 class SdpAnswerData(BaseModel):
@@ -48,7 +49,7 @@ class sdp_answer(BaseModel):
 
     data: SdpAnswerData
 
-    type: str = "sdp_answer"
+    type: Literal["sdp_answer"] = "sdp_answer"
 
 
 class ModelingData(BaseModel):
@@ -62,7 +63,7 @@ class modeling(BaseModel):
 
     data: ModelingData
 
-    type: str = "modeling"
+    type: Literal["modeling"] = "modeling"
 
 
 class ExportData(BaseModel):
@@ -76,7 +77,7 @@ class export(BaseModel):
 
     data: ExportData
 
-    type: str = "export"
+    type: Literal["export"] = "export"
 
 
 class MetricsRequestData(BaseModel):
@@ -88,16 +89,19 @@ class metrics_request(BaseModel):
 
     data: MetricsRequestData
 
-    type: str = "metrics_request"
+    type: Literal["metrics_request"] = "metrics_request"
 
 
 OkWebSocketResponseData = RootModel[
-    Union[
-        ice_server_info,
-        trickle_ice,
-        sdp_answer,
-        modeling,
-        export,
-        metrics_request,
+    Annotated[
+        Union[
+            ice_server_info,
+            trickle_ice,
+            sdp_answer,
+            modeling,
+            export,
+            metrics_request,
+        ],
+        Field(discriminator="type"),
     ]
 ]

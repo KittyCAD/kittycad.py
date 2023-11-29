@@ -1,7 +1,7 @@
 import json
 import os
 import uuid
-from typing import Optional, Union, cast
+from typing import Optional, Union
 
 import pytest
 
@@ -20,7 +20,6 @@ from .models import (
     Direction,
     Error,
     ExtendedUserResultsPage,
-    FailureWebSocketResponse,
     FileConversion,
     FileExportFormat,
     FileImportFormat,
@@ -32,7 +31,6 @@ from .models import (
     ModelingCmd,
     ModelingCmdId,
     Pong,
-    SuccessWebSocketResponse,
     System,
     UnitDensity,
     UnitLength,
@@ -40,6 +38,7 @@ from .models import (
     UnitVolume,
     User,
     WebSocketRequest,
+    WebSocketResponse,
 )
 from .models.input_format import obj
 from .models.modeling_cmd import (
@@ -48,7 +47,6 @@ from .models.modeling_cmd import (
     start_path,
     take_snapshot,
 )
-from .models.ok_web_socket_response_data import modeling
 from .models.web_socket_request import modeling_cmd_req
 from .types import Unset
 
@@ -385,16 +383,29 @@ def test_ws_import():
         websocket.send_binary(req)
 
         # Get the success message.
-        message = websocket.recv()
-        if isinstance(message, FailureWebSocketResponse):
-            raise Exception(message)
-        elif isinstance(message, SuccessWebSocketResponse):
-            response = cast(SuccessWebSocketResponse, message)
-            resp = cast(modeling, response.resp)
-            print(json.dumps(resp.model_dump_json()))
-        # Get the object id from the response.
-        # TODO: FIX
-        object_id = uuid.uuid4()
+        object_id = ""
+        for message in websocket:
+            message_dict = message.model_dump()
+            if message_dict["success"] is not True:
+                raise Exception(message_dict)
+            elif message_dict["resp"]["type"] != "modeling":
+                continue
+            elif (
+                message_dict["resp"]["data"]["modeling_response"]["type"]
+                != "import_files"
+            ):
+                # We have a modeling command response.
+                # Make sure its the import files response.
+                raise Exception(message_dict)
+            else:
+                # Okay we have the import files response.
+                # Break since now we know it was a success.
+                object_id = str(
+                    message_dict["resp"]["data"]["modeling_response"]["data"][
+                        "object_id"
+                    ]
+                )
+                break
 
         # Now we want to focus on the object.
         cmd_id = uuid.uuid4()
@@ -408,8 +419,17 @@ def test_ws_import():
         websocket.send(req)
 
         # Get the success message.
-        message = websocket.recv()
-        print(json.dumps(message.model_dump_json()))
+        for message in websocket:
+            message_dict = message.model_dump()
+            if message_dict["success"] is not True:
+                raise Exception(message_dict)
+            elif message_dict["resp"]["type"] != "modeling":
+                continue
+            elif message_dict["request_id"] == str(cmd_id):
+                # We got a success response for our cmd.
+                break
+            else:
+                raise Exception(message_dict)
 
         # Now we want to snapshot as a png.
         cmd_id = uuid.uuid4()
@@ -422,3 +442,50 @@ def test_ws_import():
             )
         )
         websocket.send(req)
+
+        # Get the success message.
+        png_contents = b""
+        for message in websocket:
+            message_dict = message.model_dump()
+            if message_dict["success"] is not True:
+                raise Exception(message_dict)
+            elif message_dict["resp"]["type"] != "modeling":
+                continue
+            elif (
+                message_dict["resp"]["data"]["modeling_response"]["type"]
+                != "take_snapshot"
+            ):
+                # Make sure its the correct response.
+                raise Exception(message_dict)
+            else:
+                # Okay we have the snapshot response.
+                # Break since now we know it was a success.
+                png_contents = message_dict["resp"]["data"]["modeling_response"][
+                    "data"
+                ]["contents"].get_decoded()
+                break
+
+        # Save the contents to a file.
+        png_path = os.path.join(dir_path, "..", "assets", "snapshot.png")
+        with open(png_path, "wb") as f:
+            f.write(png_contents)
+
+        # Ensure the file is not empty.
+        assert len(png_contents) > 0
+
+        # Ensure the file exists.
+        assert os.path.exists(png_path)
+
+
+def test_serialize_deserialize():
+    json_str = """{"success":true,"request_id":"16a06065-6ca3-4a96-a042-d0bec6b161a6","resp":{"type":"modeling","data":{"modeling_response":{"type":"import_files","data":{"object_id":"f61ac02e-77bd-468f-858f-fd4141a26acd"}}}}}"""
+    d = json.loads(json_str)
+    print(d)
+    message = WebSocketResponse(**d)
+    model_dump = message.model_dump()
+    print(model_dump)
+    assert model_dump["success"] is True  # type: ignore
+    assert model_dump["request_id"] == "16a06065-6ca3-4a96-a042-d0bec6b161a6"  # type: ignore
+    assert model_dump["resp"]["type"] == "modeling"  # type: ignore
+    assert model_dump["resp"]["data"]["modeling_response"]["type"] == "import_files"  # type: ignore
+    assert model_dump["resp"]["data"]["modeling_response"]["data"]["object_id"] == "f61ac02e-77bd-468f-858f-fd4141a26acd"  # type: ignore

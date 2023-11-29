@@ -1,7 +1,8 @@
 import datetime
-from typing import Dict, Optional, Union
+from typing import Dict, Literal, Optional, Union
 
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel, Field, RootModel
+from typing_extensions import Annotated
 
 from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
@@ -44,7 +45,7 @@ class file_conversion(BaseModel):
 
     status: ApiCallStatus
 
-    type: str = "file_conversion"
+    type: Literal["file_conversion"] = "file_conversion"
 
     updated_at: datetime.datetime
 
@@ -72,7 +73,7 @@ class file_center_of_mass(BaseModel):
 
     status: ApiCallStatus
 
-    type: str = "file_center_of_mass"
+    type: Literal["file_center_of_mass"] = "file_center_of_mass"
 
     updated_at: datetime.datetime
 
@@ -104,7 +105,7 @@ class file_mass(BaseModel):
 
     status: ApiCallStatus
 
-    type: str = "file_mass"
+    type: Literal["file_mass"] = "file_mass"
 
     updated_at: datetime.datetime
 
@@ -130,7 +131,7 @@ class file_volume(BaseModel):
 
     status: ApiCallStatus
 
-    type: str = "file_volume"
+    type: Literal["file_volume"] = "file_volume"
 
     updated_at: datetime.datetime
 
@@ -164,7 +165,7 @@ class file_density(BaseModel):
 
     status: ApiCallStatus
 
-    type: str = "file_density"
+    type: Literal["file_density"] = "file_density"
 
     updated_at: datetime.datetime
 
@@ -192,7 +193,7 @@ class file_surface_area(BaseModel):
 
     surface_area: Optional[float] = None
 
-    type: str = "file_surface_area"
+    type: Literal["file_surface_area"] = "file_surface_area"
 
     updated_at: datetime.datetime
 
@@ -224,7 +225,7 @@ class text_to_cad(BaseModel):
 
     status: ApiCallStatus
 
-    type: str = "text_to_cad"
+    type: Literal["text_to_cad"] = "text_to_cad"
 
     updated_at: datetime.datetime
 
@@ -232,13 +233,16 @@ class text_to_cad(BaseModel):
 
 
 AsyncApiCallOutput = RootModel[
-    Union[
-        file_conversion,
-        file_center_of_mass,
-        file_mass,
-        file_volume,
-        file_density,
-        file_surface_area,
-        text_to_cad,
+    Annotated[
+        Union[
+            file_conversion,
+            file_center_of_mass,
+            file_mass,
+            file_volume,
+            file_density,
+            file_surface_area,
+            text_to_cad,
+        ],
+        Field(discriminator="type"),
     ]
 ]
