@@ -309,7 +309,7 @@ def test_list_users():
     print(f"ExtendedUserResultsPage: {response}")
 
 
-def test_ws():
+def test_ws_simple():
     # Create our client.
     client = ClientFromEnv()
 
