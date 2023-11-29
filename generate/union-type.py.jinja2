@@ -3,6 +3,9 @@ from typing_extensions import Self
 import attr
 from ..types import UNSET, Unset
 
+from pydantic import GetCoreSchemaHandler
+from pydantic_core import CoreSchema, core_schema
+
 GY = TypeVar("GY", bound="{{name}}")
 
 @attr.s(auto_attribs=True)
@@ -24,14 +27,14 @@ class {{name}}:
                  ]):
         self.type = type
 
-    def to_dict(self) -> Dict[str, Any]:
+    def model_dump(self) -> Dict[str, Any]:
         {% for type in types %}{% if loop.first %}
         if isinstance(self.type, {{type.name}}):
             {{type.var0}} : {{type.name}} = self.type
-            return {{type.var0}}.to_dict()
+            return {{type.var0}}.model_dump()
         {% else %}elif isinstance(self.type, {{type.name}}):
             {{type.var0}} : {{type.name}} = self.type
-            return {{type.var0}}.to_dict()
+            return {{type.var0}}.model_dump()
         {% endif %}{% endfor %}
         raise Exception("Unknown type")
 
@@ -39,12 +42,20 @@ class {{name}}:
     def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         {% for type in types %}{% if loop.first %}
         if d.get("{{type.check}}") == {{type.value}}:
-            {{type.var1}} : {{type.name}} = {{type.name}}()
-            {{type.var1}}.from_dict(d)
+            {{type.var1}} : {{type.name}} = {{type.name}}(**d)
             return cls(type={{type.var1}})
         {% else %}elif d.get("{{type.check}}") == {{type.value}}:
-            {{type.var1}} : {{type.name}} = {{type.name}}()
-            {{type.var1}}.from_dict(d)
+            {{type.var1}} : {{type.name}} = {{type.name}}(**d)
             return cls(type={{type.var1}})
         {% endif %}{% endfor %}
         raise Exception("Unknown type")
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        return core_schema.no_info_after_validator_function(cls, handler(Union[
+        {% for type in types %}
+        {{type.name}},
+        {% endfor %}
+    ]))

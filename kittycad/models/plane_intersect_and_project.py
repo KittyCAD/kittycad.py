@@ -1,66 +1,11 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Optional
 
-import attr
+from pydantic import BaseModel
 
 from ..models.point2d import Point2d
-from ..types import UNSET, Unset
-
-DG = TypeVar("DG", bound="PlaneIntersectAndProject")
 
 
-@attr.s(auto_attribs=True)
-class PlaneIntersectAndProject:
-    """Corresponding coordinates of given window coordinates, intersected on given plane."""  # noqa: E501
+class PlaneIntersectAndProject(BaseModel):
+    """Corresponding coordinates of given window coordinates, intersected on given plane."""
 
-    plane_coordinates: Union[Unset, Point2d] = UNSET
-
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
-
-    def to_dict(self) -> Dict[str, Any]:
-        plane_coordinates: Union[Unset, Point2d] = UNSET
-        if not isinstance(self.plane_coordinates, Unset):
-            plane_coordinates = self.plane_coordinates
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if plane_coordinates is not UNSET:
-            _plane_coordinates: Point2d = cast(Point2d, plane_coordinates)
-            field_dict["plane_coordinates"] = _plane_coordinates.to_dict()
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[DG], src_dict: Dict[str, Any]) -> DG:
-        d = src_dict.copy()
-        _plane_coordinates = d.pop("plane_coordinates", UNSET)
-        plane_coordinates: Union[Unset, Point2d]
-        if isinstance(_plane_coordinates, Unset):
-            plane_coordinates = UNSET
-        if _plane_coordinates is None:
-            plane_coordinates = UNSET
-        else:
-            plane_coordinates = Point2d.from_dict(_plane_coordinates)
-
-        plane_intersect_and_project = cls(
-            plane_coordinates=plane_coordinates,
-        )
-
-        plane_intersect_and_project.additional_properties = d
-        return plane_intersect_and_project
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    plane_coordinates: Optional[Point2d] = None

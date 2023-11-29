@@ -1,6 +1,8 @@
 from typing import Any, Dict, Type, TypeVar, Union
 
 import attr
+from pydantic import GetCoreSchemaHandler
+from pydantic_core import CoreSchema, core_schema
 
 from .failure_web_socket_response import FailureWebSocketResponse
 from .success_web_socket_response import SuccessWebSocketResponse
@@ -27,25 +29,37 @@ class WebSocketResponse:
     ):
         self.type = type
 
-    def to_dict(self) -> Dict[str, Any]:
+    def model_dump(self) -> Dict[str, Any]:
         if isinstance(self.type, SuccessWebSocketResponse):
-            XP: SuccessWebSocketResponse = self.type
-            return XP.to_dict()
+            HV: SuccessWebSocketResponse = self.type
+            return HV.model_dump()
         elif isinstance(self.type, FailureWebSocketResponse):
-            QM: FailureWebSocketResponse = self.type
-            return QM.to_dict()
+            CL: FailureWebSocketResponse = self.type
+            return CL.model_dump()
 
         raise Exception("Unknown type")
 
     @classmethod
     def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("success") is True:
-            VT: SuccessWebSocketResponse = SuccessWebSocketResponse()
-            VT.from_dict(d)
-            return cls(type=VT)
+            CD: SuccessWebSocketResponse = SuccessWebSocketResponse(**d)
+            return cls(type=CD)
         elif d.get("success") is False:
-            UR: FailureWebSocketResponse = FailureWebSocketResponse()
-            UR.from_dict(d)
-            return cls(type=UR)
+            ZO: FailureWebSocketResponse = FailureWebSocketResponse(**d)
+            return cls(type=ZO)
 
         raise Exception("Unknown type")
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls,
+            handler(
+                Union[
+                    SuccessWebSocketResponse,
+                    FailureWebSocketResponse,
+                ]
+            ),
+        )

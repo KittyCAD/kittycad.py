@@ -49,15 +49,15 @@ def _parse_response(
     *, response: httpx.Response
 ) -> Optional[Union[FileSurfaceArea, Error]]:
     if response.status_code == 201:
-        response_201 = FileSurfaceArea.from_dict(response.json())
+        response_201 = FileSurfaceArea(**response.json())
         return response_201
     if response.status_code == 400:
-        response_4XX = Error.from_dict(response.json())
+        response_4XX = Error(**response.json())
         return response_4XX
     if response.status_code == 500:
-        response_5XX = Error.from_dict(response.json())
+        response_5XX = Error(**response.json())
         return response_5XX
-    return Error.from_dict(response.json())
+    return Error(**response.json())
 
 
 def _build_response(

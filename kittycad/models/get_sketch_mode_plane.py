@@ -1,100 +1,14 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
-import attr
+from pydantic import BaseModel
 
 from ..models.point3d import Point3d
-from ..types import UNSET, Unset
-
-EO = TypeVar("EO", bound="GetSketchModePlane")
 
 
-@attr.s(auto_attribs=True)
-class GetSketchModePlane:
-    """The plane for sketch mode."""  # noqa: E501
+class GetSketchModePlane(BaseModel):
+    """The plane for sketch mode."""
 
-    x_axis: Union[Unset, Point3d] = UNSET
-    y_axis: Union[Unset, Point3d] = UNSET
-    z_axis: Union[Unset, Point3d] = UNSET
+    x_axis: Point3d
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    y_axis: Point3d
 
-    def to_dict(self) -> Dict[str, Any]:
-        x_axis: Union[Unset, Point3d] = UNSET
-        if not isinstance(self.x_axis, Unset):
-            x_axis = self.x_axis
-        y_axis: Union[Unset, Point3d] = UNSET
-        if not isinstance(self.y_axis, Unset):
-            y_axis = self.y_axis
-        z_axis: Union[Unset, Point3d] = UNSET
-        if not isinstance(self.z_axis, Unset):
-            z_axis = self.z_axis
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if x_axis is not UNSET:
-            _x_axis: Point3d = cast(Point3d, x_axis)
-            field_dict["x_axis"] = _x_axis.to_dict()
-        if y_axis is not UNSET:
-            _y_axis: Point3d = cast(Point3d, y_axis)
-            field_dict["y_axis"] = _y_axis.to_dict()
-        if z_axis is not UNSET:
-            _z_axis: Point3d = cast(Point3d, z_axis)
-            field_dict["z_axis"] = _z_axis.to_dict()
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[EO], src_dict: Dict[str, Any]) -> EO:
-        d = src_dict.copy()
-        _x_axis = d.pop("x_axis", UNSET)
-        x_axis: Union[Unset, Point3d]
-        if isinstance(_x_axis, Unset):
-            x_axis = UNSET
-        if _x_axis is None:
-            x_axis = UNSET
-        else:
-            x_axis = Point3d.from_dict(_x_axis)
-
-        _y_axis = d.pop("y_axis", UNSET)
-        y_axis: Union[Unset, Point3d]
-        if isinstance(_y_axis, Unset):
-            y_axis = UNSET
-        if _y_axis is None:
-            y_axis = UNSET
-        else:
-            y_axis = Point3d.from_dict(_y_axis)
-
-        _z_axis = d.pop("z_axis", UNSET)
-        z_axis: Union[Unset, Point3d]
-        if isinstance(_z_axis, Unset):
-            z_axis = UNSET
-        if _z_axis is None:
-            z_axis = UNSET
-        else:
-            z_axis = Point3d.from_dict(_z_axis)
-
-        get_sketch_mode_plane = cls(
-            x_axis=x_axis,
-            y_axis=y_axis,
-            z_axis=z_axis,
-        )
-
-        get_sketch_mode_plane.additional_properties = d
-        return get_sketch_mode_plane
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    z_axis: Point3d

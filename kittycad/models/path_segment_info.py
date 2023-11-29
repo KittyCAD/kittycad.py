@@ -1,89 +1,16 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Optional
 
-import attr
+from pydantic import BaseModel
 
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.path_command import PathCommand
-from ..types import UNSET, Unset
-
-UH = TypeVar("UH", bound="PathSegmentInfo")
 
 
-@attr.s(auto_attribs=True)
-class PathSegmentInfo:
-    """Info about a path segment"""  # noqa: E501
+class PathSegmentInfo(BaseModel):
+    """Info about a path segment"""
 
-    command: Union[Unset, PathCommand] = UNSET
-    command_id: Union[Unset, ModelingCmdId] = UNSET
-    relative: Union[Unset, bool] = False
+    command: PathCommand
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    command_id: Optional[ModelingCmdId] = None
 
-    def to_dict(self) -> Dict[str, Any]:
-        command: Union[Unset, PathCommand] = UNSET
-        if not isinstance(self.command, Unset):
-            command = self.command
-        command_id: Union[Unset, ModelingCmdId] = UNSET
-        if not isinstance(self.command_id, Unset):
-            command_id = self.command_id
-        relative = self.relative
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if command is not UNSET:
-            field_dict["command"] = command
-        if command_id is not UNSET:
-            field_dict["command_id"] = command_id
-        if relative is not UNSET:
-            field_dict["relative"] = relative
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[UH], src_dict: Dict[str, Any]) -> UH:
-        d = src_dict.copy()
-        _command = d.pop("command", UNSET)
-        command: Union[Unset, PathCommand]
-        if isinstance(_command, Unset):
-            command = UNSET
-        if _command is None:
-            command = UNSET
-        else:
-            command = _command
-
-        _command_id = d.pop("command_id", UNSET)
-        command_id: Union[Unset, ModelingCmdId]
-        if isinstance(_command_id, Unset):
-            command_id = UNSET
-        if _command_id is None:
-            command_id = UNSET
-        else:
-            command_id = _command_id
-
-        relative = d.pop("relative", UNSET)
-
-        path_segment_info = cls(
-            command=command,
-            command_id=command_id,
-            relative=relative,
-        )
-
-        path_segment_info.additional_properties = d
-        return path_segment_info
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    relative: bool

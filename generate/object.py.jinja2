@@ -1,0 +1,20 @@
+import datetime
+from typing import List, Optional, Dict, Union, Any
+from uuid import UUID
+
+from pydantic import BaseModel, Base64Bytes, AnyUrl
+from pydantic_extra_types.phone_numbers import PhoneNumber
+
+{% for import in imports %}
+{{ import }}
+{% endfor %}
+
+class {{ name }}(BaseModel):
+    """{{ description }}"""
+    {% for field in fields %}
+    {% if field.value %}
+    {{ field.name }}: {{ field.type }} = {{ field.value }}
+    {% else %}
+    {{ field.name }}: {{ field.type }}
+    {% endif %}
+    {% endfor %}

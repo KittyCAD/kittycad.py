@@ -1,12 +1,12 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, Optional, Type, TypeVar, Union
 
 import attr
-from dateutil.parser import isoparse
+from pydantic import Base64Bytes, BaseModel, GetCoreSchemaHandler
+from pydantic_core import CoreSchema, core_schema
 
 from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
-from ..models.base64data import Base64Data
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
 from ..models.input_format import InputFormat
@@ -18,1508 +18,218 @@ from ..models.unit_length import UnitLength
 from ..models.unit_mass import UnitMass
 from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
-from ..types import UNSET, Unset
-
-LE = TypeVar("LE", bound="file_conversion")
 
 
-@attr.s(auto_attribs=True)
-class file_conversion:
-    """A file conversion."""  # noqa: E501
+class file_conversion(BaseModel):
+    """A file conversion."""
 
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    error: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
-    output_format: Union[Unset, FileExportFormat] = UNSET
-    output_format_options: Union[Unset, OutputFormat] = UNSET
-    outputs: Union[Unset, Dict[str, Base64Data]] = UNSET
-    src_format: Union[Unset, FileImportFormat] = UNSET
-    src_format_options: Union[Unset, InputFormat] = UNSET
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, ApiCallStatus] = UNSET
+    completed_at: Optional[datetime.datetime] = None
+
+    created_at: datetime.datetime
+
+    error: Optional[str] = None
+
+    id: Uuid
+
+    output_format: FileExportFormat
+
+    output_format_options: Optional[OutputFormat] = None
+
+    outputs: Optional[Dict[str, Base64Bytes]] = None
+
+    src_format: FileImportFormat
+
+    src_format_options: Optional[InputFormat] = None
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
     type: str = "file_conversion"
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    user_id: Union[Unset, str] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    updated_at: datetime.datetime
 
-    def to_dict(self) -> Dict[str, Any]:
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        error = self.error
-        id = self.id
-        output_format: Union[Unset, FileExportFormat] = UNSET
-        if not isinstance(self.output_format, Unset):
-            output_format = self.output_format
-        output_format_options: Union[Unset, OutputFormat] = UNSET
-        if not isinstance(self.output_format_options, Unset):
-            output_format_options = self.output_format_options
-        outputs: Union[Unset, Dict[str, str]] = UNSET
-        if not isinstance(self.outputs, Unset):
-            new_dict: Dict[str, str] = {}
-            for key, value in self.outputs.items():
-                new_dict[key] = value.get_encoded()
-            outputs = new_dict
-        src_format: Union[Unset, FileImportFormat] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format
-        src_format_options: Union[Unset, InputFormat] = UNSET
-        if not isinstance(self.src_format_options, Unset):
-            src_format_options = self.src_format_options
-        started_at: Union[Unset, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat()
-        status: Union[Unset, ApiCallStatus] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status
-        type = self.type
-        updated_at: Union[Unset, str] = UNSET
-        if not isinstance(self.updated_at, Unset):
-            updated_at = self.updated_at.isoformat()
-        user_id = self.user_id
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if error is not UNSET:
-            field_dict["error"] = error
-        if id is not UNSET:
-            field_dict["id"] = id
-        if output_format is not UNSET:
-            field_dict["output_format"] = output_format
-        if output_format_options is not UNSET:
-            _output_format_options: OutputFormat = cast(
-                OutputFormat, output_format_options
-            )
-            field_dict["output_format_options"] = _output_format_options.to_dict()
-        if outputs is not UNSET:
-            field_dict["outputs"] = outputs
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
-        if src_format_options is not UNSET:
-            _src_format_options: InputFormat = cast(InputFormat, src_format_options)
-            field_dict["src_format_options"] = _src_format_options.to_dict()
-        if started_at is not UNSET:
-            field_dict["started_at"] = started_at
-        if status is not UNSET:
-            field_dict["status"] = status
-        field_dict["type"] = type
-        if updated_at is not UNSET:
-            field_dict["updated_at"] = updated_at
-        if user_id is not UNSET:
-            field_dict["user_id"] = user_id
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[LE], src_dict: Dict[str, Any]) -> LE:
-        d = src_dict.copy()
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
-
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
-
-        error = d.pop("error", UNSET)
-
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        if _id is None:
-            id = UNSET
-        else:
-            id = _id
-
-        _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, FileExportFormat]
-        if isinstance(_output_format, Unset):
-            output_format = UNSET
-        if _output_format is None:
-            output_format = UNSET
-        else:
-            output_format = _output_format
-
-        _output_format_options = d.pop("output_format_options", UNSET)
-        output_format_options: Union[Unset, OutputFormat]
-        if isinstance(_output_format_options, Unset):
-            output_format_options = UNSET
-        if _output_format_options is None:
-            output_format_options = UNSET
-        else:
-            output_format_options = OutputFormat.from_dict(_output_format_options)
-
-        _outputs = d.pop("outputs", UNSET)
-        if isinstance(_outputs, Unset):
-            outputs = UNSET
-        else:
-            new_map: Dict[str, Base64Data] = {}
-            for k, v in _outputs.items():
-                new_map[k] = Base64Data(bytes(v, "utf-8"))
-            outputs = new_map  # type: ignore
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileImportFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        if _src_format is None:
-            src_format = UNSET
-        else:
-            src_format = _src_format
-
-        _src_format_options = d.pop("src_format_options", UNSET)
-        src_format_options: Union[Unset, InputFormat]
-        if isinstance(_src_format_options, Unset):
-            src_format_options = UNSET
-        if _src_format_options is None:
-            src_format_options = UNSET
-        else:
-            src_format_options = InputFormat.from_dict(_src_format_options)
-
-        _started_at = d.pop("started_at", UNSET)
-        started_at: Union[Unset, datetime.datetime]
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
-
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, ApiCallStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        if _status is None:
-            status = UNSET
-        else:
-            status = _status
-
-        type = d.pop("type", UNSET)
-
-        _updated_at = d.pop("updated_at", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
-            updated_at = isoparse(_updated_at)
-
-        _user_id = d.pop("user_id", UNSET)
-        user_id: Union[Unset, Uuid]
-        if isinstance(_user_id, Unset):
-            user_id = UNSET
-        if _user_id is None:
-            user_id = UNSET
-        else:
-            user_id = _user_id
-
-        file_conversion = cls(
-            completed_at=completed_at,
-            created_at=created_at,
-            error=error,
-            id=id,
-            output_format=output_format,
-            output_format_options=output_format_options,
-            outputs=outputs,
-            src_format=src_format,
-            src_format_options=src_format_options,
-            started_at=started_at,
-            status=status,
-            type=type,
-            updated_at=updated_at,
-            user_id=user_id,
-        )
-
-        file_conversion.additional_properties = d
-        return file_conversion
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    user_id: Uuid
 
 
-OY = TypeVar("OY", bound="file_center_of_mass")
+class file_center_of_mass(BaseModel):
+    """File center of mass."""
 
+    center_of_mass: Optional[Point3d] = None
 
-@attr.s(auto_attribs=True)
-class file_center_of_mass:
-    """File center of mass."""  # noqa: E501
+    completed_at: Optional[datetime.datetime] = None
 
-    center_of_mass: Union[Unset, Point3d] = UNSET
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    error: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
-    output_unit: Union[Unset, UnitLength] = UNSET
-    src_format: Union[Unset, FileImportFormat] = UNSET
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, ApiCallStatus] = UNSET
+    created_at: datetime.datetime
+
+    error: Optional[str] = None
+
+    id: Uuid
+
+    output_unit: UnitLength
+
+    src_format: FileImportFormat
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
     type: str = "file_center_of_mass"
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    user_id: Union[Unset, str] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    updated_at: datetime.datetime
 
-    def to_dict(self) -> Dict[str, Any]:
-        center_of_mass: Union[Unset, Point3d] = UNSET
-        if not isinstance(self.center_of_mass, Unset):
-            center_of_mass = self.center_of_mass
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        error = self.error
-        id = self.id
-        output_unit: Union[Unset, UnitLength] = UNSET
-        if not isinstance(self.output_unit, Unset):
-            output_unit = self.output_unit
-        src_format: Union[Unset, FileImportFormat] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format
-        started_at: Union[Unset, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat()
-        status: Union[Unset, ApiCallStatus] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status
-        type = self.type
-        updated_at: Union[Unset, str] = UNSET
-        if not isinstance(self.updated_at, Unset):
-            updated_at = self.updated_at.isoformat()
-        user_id = self.user_id
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if center_of_mass is not UNSET:
-            _center_of_mass: Point3d = cast(Point3d, center_of_mass)
-            field_dict["center_of_mass"] = _center_of_mass.to_dict()
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if error is not UNSET:
-            field_dict["error"] = error
-        if id is not UNSET:
-            field_dict["id"] = id
-        if output_unit is not UNSET:
-            field_dict["output_unit"] = output_unit
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
-        if started_at is not UNSET:
-            field_dict["started_at"] = started_at
-        if status is not UNSET:
-            field_dict["status"] = status
-        field_dict["type"] = type
-        if updated_at is not UNSET:
-            field_dict["updated_at"] = updated_at
-        if user_id is not UNSET:
-            field_dict["user_id"] = user_id
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[OY], src_dict: Dict[str, Any]) -> OY:
-        d = src_dict.copy()
-        _center_of_mass = d.pop("center_of_mass", UNSET)
-        center_of_mass: Union[Unset, Point3d]
-        if isinstance(_center_of_mass, Unset):
-            center_of_mass = UNSET
-        if _center_of_mass is None:
-            center_of_mass = UNSET
-        else:
-            center_of_mass = Point3d.from_dict(_center_of_mass)
-
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
-
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
-
-        error = d.pop("error", UNSET)
-
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        if _id is None:
-            id = UNSET
-        else:
-            id = _id
-
-        _output_unit = d.pop("output_unit", UNSET)
-        output_unit: Union[Unset, UnitLength]
-        if isinstance(_output_unit, Unset):
-            output_unit = UNSET
-        if _output_unit is None:
-            output_unit = UNSET
-        else:
-            output_unit = _output_unit
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileImportFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        if _src_format is None:
-            src_format = UNSET
-        else:
-            src_format = _src_format
-
-        _started_at = d.pop("started_at", UNSET)
-        started_at: Union[Unset, datetime.datetime]
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
-
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, ApiCallStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        if _status is None:
-            status = UNSET
-        else:
-            status = _status
-
-        type = d.pop("type", UNSET)
-
-        _updated_at = d.pop("updated_at", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
-            updated_at = isoparse(_updated_at)
-
-        _user_id = d.pop("user_id", UNSET)
-        user_id: Union[Unset, Uuid]
-        if isinstance(_user_id, Unset):
-            user_id = UNSET
-        if _user_id is None:
-            user_id = UNSET
-        else:
-            user_id = _user_id
-
-        file_center_of_mass = cls(
-            center_of_mass=center_of_mass,
-            completed_at=completed_at,
-            created_at=created_at,
-            error=error,
-            id=id,
-            output_unit=output_unit,
-            src_format=src_format,
-            started_at=started_at,
-            status=status,
-            type=type,
-            updated_at=updated_at,
-            user_id=user_id,
-        )
-
-        file_center_of_mass.additional_properties = d
-        return file_center_of_mass
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    user_id: Uuid
 
 
-HO = TypeVar("HO", bound="file_mass")
+class file_mass(BaseModel):
+    """A file mass."""
 
+    completed_at: Optional[datetime.datetime] = None
 
-@attr.s(auto_attribs=True)
-class file_mass:
-    """A file mass."""  # noqa: E501
+    created_at: datetime.datetime
 
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    error: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
-    mass: Union[Unset, float] = UNSET
-    material_density: Union[Unset, float] = UNSET
-    material_density_unit: Union[Unset, UnitDensity] = UNSET
-    output_unit: Union[Unset, UnitMass] = UNSET
-    src_format: Union[Unset, FileImportFormat] = UNSET
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, ApiCallStatus] = UNSET
+    error: Optional[str] = None
+
+    id: Uuid
+
+    mass: Optional[float] = None
+
+    material_density: Optional[float] = None
+
+    material_density_unit: UnitDensity
+
+    output_unit: UnitMass
+
+    src_format: FileImportFormat
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
     type: str = "file_mass"
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    user_id: Union[Unset, str] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    updated_at: datetime.datetime
 
-    def to_dict(self) -> Dict[str, Any]:
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        error = self.error
-        id = self.id
-        mass = self.mass
-        material_density = self.material_density
-        material_density_unit: Union[Unset, UnitDensity] = UNSET
-        if not isinstance(self.material_density_unit, Unset):
-            material_density_unit = self.material_density_unit
-        output_unit: Union[Unset, UnitMass] = UNSET
-        if not isinstance(self.output_unit, Unset):
-            output_unit = self.output_unit
-        src_format: Union[Unset, FileImportFormat] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format
-        started_at: Union[Unset, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat()
-        status: Union[Unset, ApiCallStatus] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status
-        type = self.type
-        updated_at: Union[Unset, str] = UNSET
-        if not isinstance(self.updated_at, Unset):
-            updated_at = self.updated_at.isoformat()
-        user_id = self.user_id
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if error is not UNSET:
-            field_dict["error"] = error
-        if id is not UNSET:
-            field_dict["id"] = id
-        if mass is not UNSET:
-            field_dict["mass"] = mass
-        if material_density is not UNSET:
-            field_dict["material_density"] = material_density
-        if material_density_unit is not UNSET:
-            field_dict["material_density_unit"] = material_density_unit
-        if output_unit is not UNSET:
-            field_dict["output_unit"] = output_unit
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
-        if started_at is not UNSET:
-            field_dict["started_at"] = started_at
-        if status is not UNSET:
-            field_dict["status"] = status
-        field_dict["type"] = type
-        if updated_at is not UNSET:
-            field_dict["updated_at"] = updated_at
-        if user_id is not UNSET:
-            field_dict["user_id"] = user_id
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[HO], src_dict: Dict[str, Any]) -> HO:
-        d = src_dict.copy()
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
-
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
-
-        error = d.pop("error", UNSET)
-
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        if _id is None:
-            id = UNSET
-        else:
-            id = _id
-
-        mass = d.pop("mass", UNSET)
-
-        material_density = d.pop("material_density", UNSET)
-
-        _material_density_unit = d.pop("material_density_unit", UNSET)
-        material_density_unit: Union[Unset, UnitDensity]
-        if isinstance(_material_density_unit, Unset):
-            material_density_unit = UNSET
-        if _material_density_unit is None:
-            material_density_unit = UNSET
-        else:
-            material_density_unit = _material_density_unit
-
-        _output_unit = d.pop("output_unit", UNSET)
-        output_unit: Union[Unset, UnitMass]
-        if isinstance(_output_unit, Unset):
-            output_unit = UNSET
-        if _output_unit is None:
-            output_unit = UNSET
-        else:
-            output_unit = _output_unit
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileImportFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        if _src_format is None:
-            src_format = UNSET
-        else:
-            src_format = _src_format
-
-        _started_at = d.pop("started_at", UNSET)
-        started_at: Union[Unset, datetime.datetime]
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
-
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, ApiCallStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        if _status is None:
-            status = UNSET
-        else:
-            status = _status
-
-        type = d.pop("type", UNSET)
-
-        _updated_at = d.pop("updated_at", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
-            updated_at = isoparse(_updated_at)
-
-        _user_id = d.pop("user_id", UNSET)
-        user_id: Union[Unset, Uuid]
-        if isinstance(_user_id, Unset):
-            user_id = UNSET
-        if _user_id is None:
-            user_id = UNSET
-        else:
-            user_id = _user_id
-
-        file_mass = cls(
-            completed_at=completed_at,
-            created_at=created_at,
-            error=error,
-            id=id,
-            mass=mass,
-            material_density=material_density,
-            material_density_unit=material_density_unit,
-            output_unit=output_unit,
-            src_format=src_format,
-            started_at=started_at,
-            status=status,
-            type=type,
-            updated_at=updated_at,
-            user_id=user_id,
-        )
-
-        file_mass.additional_properties = d
-        return file_mass
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    user_id: Uuid
 
 
-TM = TypeVar("TM", bound="file_volume")
+class file_volume(BaseModel):
+    """A file volume."""
 
+    completed_at: Optional[datetime.datetime] = None
 
-@attr.s(auto_attribs=True)
-class file_volume:
-    """A file volume."""  # noqa: E501
+    created_at: datetime.datetime
 
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    error: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
-    output_unit: Union[Unset, UnitVolume] = UNSET
-    src_format: Union[Unset, FileImportFormat] = UNSET
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, ApiCallStatus] = UNSET
+    error: Optional[str] = None
+
+    id: Uuid
+
+    output_unit: UnitVolume
+
+    src_format: FileImportFormat
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
     type: str = "file_volume"
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    user_id: Union[Unset, str] = UNSET
-    volume: Union[Unset, float] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    updated_at: datetime.datetime
 
-    def to_dict(self) -> Dict[str, Any]:
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        error = self.error
-        id = self.id
-        output_unit: Union[Unset, UnitVolume] = UNSET
-        if not isinstance(self.output_unit, Unset):
-            output_unit = self.output_unit
-        src_format: Union[Unset, FileImportFormat] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format
-        started_at: Union[Unset, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat()
-        status: Union[Unset, ApiCallStatus] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status
-        type = self.type
-        updated_at: Union[Unset, str] = UNSET
-        if not isinstance(self.updated_at, Unset):
-            updated_at = self.updated_at.isoformat()
-        user_id = self.user_id
-        volume = self.volume
+    user_id: Uuid
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if error is not UNSET:
-            field_dict["error"] = error
-        if id is not UNSET:
-            field_dict["id"] = id
-        if output_unit is not UNSET:
-            field_dict["output_unit"] = output_unit
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
-        if started_at is not UNSET:
-            field_dict["started_at"] = started_at
-        if status is not UNSET:
-            field_dict["status"] = status
-        field_dict["type"] = type
-        if updated_at is not UNSET:
-            field_dict["updated_at"] = updated_at
-        if user_id is not UNSET:
-            field_dict["user_id"] = user_id
-        if volume is not UNSET:
-            field_dict["volume"] = volume
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[TM], src_dict: Dict[str, Any]) -> TM:
-        d = src_dict.copy()
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
-
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
-
-        error = d.pop("error", UNSET)
-
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        if _id is None:
-            id = UNSET
-        else:
-            id = _id
-
-        _output_unit = d.pop("output_unit", UNSET)
-        output_unit: Union[Unset, UnitVolume]
-        if isinstance(_output_unit, Unset):
-            output_unit = UNSET
-        if _output_unit is None:
-            output_unit = UNSET
-        else:
-            output_unit = _output_unit
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileImportFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        if _src_format is None:
-            src_format = UNSET
-        else:
-            src_format = _src_format
-
-        _started_at = d.pop("started_at", UNSET)
-        started_at: Union[Unset, datetime.datetime]
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
-
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, ApiCallStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        if _status is None:
-            status = UNSET
-        else:
-            status = _status
-
-        type = d.pop("type", UNSET)
-
-        _updated_at = d.pop("updated_at", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
-            updated_at = isoparse(_updated_at)
-
-        _user_id = d.pop("user_id", UNSET)
-        user_id: Union[Unset, Uuid]
-        if isinstance(_user_id, Unset):
-            user_id = UNSET
-        if _user_id is None:
-            user_id = UNSET
-        else:
-            user_id = _user_id
-
-        volume = d.pop("volume", UNSET)
-
-        file_volume = cls(
-            completed_at=completed_at,
-            created_at=created_at,
-            error=error,
-            id=id,
-            output_unit=output_unit,
-            src_format=src_format,
-            started_at=started_at,
-            status=status,
-            type=type,
-            updated_at=updated_at,
-            user_id=user_id,
-            volume=volume,
-        )
-
-        file_volume.additional_properties = d
-        return file_volume
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    volume: Optional[float] = None
 
 
-BS = TypeVar("BS", bound="file_density")
+class file_density(BaseModel):
+    """A file density."""
 
+    completed_at: Optional[datetime.datetime] = None
 
-@attr.s(auto_attribs=True)
-class file_density:
-    """A file density."""  # noqa: E501
+    created_at: datetime.datetime
 
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    density: Union[Unset, float] = UNSET
-    error: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
-    material_mass: Union[Unset, float] = UNSET
-    material_mass_unit: Union[Unset, UnitMass] = UNSET
-    output_unit: Union[Unset, UnitDensity] = UNSET
-    src_format: Union[Unset, FileImportFormat] = UNSET
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, ApiCallStatus] = UNSET
+    density: Optional[float] = None
+
+    error: Optional[str] = None
+
+    id: Uuid
+
+    material_mass: Optional[float] = None
+
+    material_mass_unit: UnitMass
+
+    output_unit: UnitDensity
+
+    src_format: FileImportFormat
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
     type: str = "file_density"
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    user_id: Union[Unset, str] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    updated_at: datetime.datetime
 
-    def to_dict(self) -> Dict[str, Any]:
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        density = self.density
-        error = self.error
-        id = self.id
-        material_mass = self.material_mass
-        material_mass_unit: Union[Unset, UnitMass] = UNSET
-        if not isinstance(self.material_mass_unit, Unset):
-            material_mass_unit = self.material_mass_unit
-        output_unit: Union[Unset, UnitDensity] = UNSET
-        if not isinstance(self.output_unit, Unset):
-            output_unit = self.output_unit
-        src_format: Union[Unset, FileImportFormat] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format
-        started_at: Union[Unset, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat()
-        status: Union[Unset, ApiCallStatus] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status
-        type = self.type
-        updated_at: Union[Unset, str] = UNSET
-        if not isinstance(self.updated_at, Unset):
-            updated_at = self.updated_at.isoformat()
-        user_id = self.user_id
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if density is not UNSET:
-            field_dict["density"] = density
-        if error is not UNSET:
-            field_dict["error"] = error
-        if id is not UNSET:
-            field_dict["id"] = id
-        if material_mass is not UNSET:
-            field_dict["material_mass"] = material_mass
-        if material_mass_unit is not UNSET:
-            field_dict["material_mass_unit"] = material_mass_unit
-        if output_unit is not UNSET:
-            field_dict["output_unit"] = output_unit
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
-        if started_at is not UNSET:
-            field_dict["started_at"] = started_at
-        if status is not UNSET:
-            field_dict["status"] = status
-        field_dict["type"] = type
-        if updated_at is not UNSET:
-            field_dict["updated_at"] = updated_at
-        if user_id is not UNSET:
-            field_dict["user_id"] = user_id
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[BS], src_dict: Dict[str, Any]) -> BS:
-        d = src_dict.copy()
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
-
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
-
-        density = d.pop("density", UNSET)
-
-        error = d.pop("error", UNSET)
-
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        if _id is None:
-            id = UNSET
-        else:
-            id = _id
-
-        material_mass = d.pop("material_mass", UNSET)
-
-        _material_mass_unit = d.pop("material_mass_unit", UNSET)
-        material_mass_unit: Union[Unset, UnitMass]
-        if isinstance(_material_mass_unit, Unset):
-            material_mass_unit = UNSET
-        if _material_mass_unit is None:
-            material_mass_unit = UNSET
-        else:
-            material_mass_unit = _material_mass_unit
-
-        _output_unit = d.pop("output_unit", UNSET)
-        output_unit: Union[Unset, UnitDensity]
-        if isinstance(_output_unit, Unset):
-            output_unit = UNSET
-        if _output_unit is None:
-            output_unit = UNSET
-        else:
-            output_unit = _output_unit
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileImportFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        if _src_format is None:
-            src_format = UNSET
-        else:
-            src_format = _src_format
-
-        _started_at = d.pop("started_at", UNSET)
-        started_at: Union[Unset, datetime.datetime]
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
-
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, ApiCallStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        if _status is None:
-            status = UNSET
-        else:
-            status = _status
-
-        type = d.pop("type", UNSET)
-
-        _updated_at = d.pop("updated_at", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
-            updated_at = isoparse(_updated_at)
-
-        _user_id = d.pop("user_id", UNSET)
-        user_id: Union[Unset, Uuid]
-        if isinstance(_user_id, Unset):
-            user_id = UNSET
-        if _user_id is None:
-            user_id = UNSET
-        else:
-            user_id = _user_id
-
-        file_density = cls(
-            completed_at=completed_at,
-            created_at=created_at,
-            density=density,
-            error=error,
-            id=id,
-            material_mass=material_mass,
-            material_mass_unit=material_mass_unit,
-            output_unit=output_unit,
-            src_format=src_format,
-            started_at=started_at,
-            status=status,
-            type=type,
-            updated_at=updated_at,
-            user_id=user_id,
-        )
-
-        file_density.additional_properties = d
-        return file_density
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    user_id: Uuid
 
 
-AH = TypeVar("AH", bound="file_surface_area")
+class file_surface_area(BaseModel):
+    """A file surface area."""
 
+    completed_at: Optional[datetime.datetime] = None
 
-@attr.s(auto_attribs=True)
-class file_surface_area:
-    """A file surface area."""  # noqa: E501
+    created_at: datetime.datetime
 
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    error: Union[Unset, str] = UNSET
-    id: Union[Unset, str] = UNSET
-    output_unit: Union[Unset, UnitArea] = UNSET
-    src_format: Union[Unset, FileImportFormat] = UNSET
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, ApiCallStatus] = UNSET
-    surface_area: Union[Unset, float] = UNSET
+    error: Optional[str] = None
+
+    id: Uuid
+
+    output_unit: UnitArea
+
+    src_format: FileImportFormat
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
+    surface_area: Optional[float] = None
+
     type: str = "file_surface_area"
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    user_id: Union[Unset, str] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    updated_at: datetime.datetime
 
-    def to_dict(self) -> Dict[str, Any]:
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        error = self.error
-        id = self.id
-        output_unit: Union[Unset, UnitArea] = UNSET
-        if not isinstance(self.output_unit, Unset):
-            output_unit = self.output_unit
-        src_format: Union[Unset, FileImportFormat] = UNSET
-        if not isinstance(self.src_format, Unset):
-            src_format = self.src_format
-        started_at: Union[Unset, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat()
-        status: Union[Unset, ApiCallStatus] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status
-        surface_area = self.surface_area
-        type = self.type
-        updated_at: Union[Unset, str] = UNSET
-        if not isinstance(self.updated_at, Unset):
-            updated_at = self.updated_at.isoformat()
-        user_id = self.user_id
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if error is not UNSET:
-            field_dict["error"] = error
-        if id is not UNSET:
-            field_dict["id"] = id
-        if output_unit is not UNSET:
-            field_dict["output_unit"] = output_unit
-        if src_format is not UNSET:
-            field_dict["src_format"] = src_format
-        if started_at is not UNSET:
-            field_dict["started_at"] = started_at
-        if status is not UNSET:
-            field_dict["status"] = status
-        if surface_area is not UNSET:
-            field_dict["surface_area"] = surface_area
-        field_dict["type"] = type
-        if updated_at is not UNSET:
-            field_dict["updated_at"] = updated_at
-        if user_id is not UNSET:
-            field_dict["user_id"] = user_id
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[AH], src_dict: Dict[str, Any]) -> AH:
-        d = src_dict.copy()
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
-
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
-
-        error = d.pop("error", UNSET)
-
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        if _id is None:
-            id = UNSET
-        else:
-            id = _id
-
-        _output_unit = d.pop("output_unit", UNSET)
-        output_unit: Union[Unset, UnitArea]
-        if isinstance(_output_unit, Unset):
-            output_unit = UNSET
-        if _output_unit is None:
-            output_unit = UNSET
-        else:
-            output_unit = _output_unit
-
-        _src_format = d.pop("src_format", UNSET)
-        src_format: Union[Unset, FileImportFormat]
-        if isinstance(_src_format, Unset):
-            src_format = UNSET
-        if _src_format is None:
-            src_format = UNSET
-        else:
-            src_format = _src_format
-
-        _started_at = d.pop("started_at", UNSET)
-        started_at: Union[Unset, datetime.datetime]
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
-
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, ApiCallStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        if _status is None:
-            status = UNSET
-        else:
-            status = _status
-
-        surface_area = d.pop("surface_area", UNSET)
-
-        type = d.pop("type", UNSET)
-
-        _updated_at = d.pop("updated_at", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
-            updated_at = isoparse(_updated_at)
-
-        _user_id = d.pop("user_id", UNSET)
-        user_id: Union[Unset, Uuid]
-        if isinstance(_user_id, Unset):
-            user_id = UNSET
-        if _user_id is None:
-            user_id = UNSET
-        else:
-            user_id = _user_id
-
-        file_surface_area = cls(
-            completed_at=completed_at,
-            created_at=created_at,
-            error=error,
-            id=id,
-            output_unit=output_unit,
-            src_format=src_format,
-            started_at=started_at,
-            status=status,
-            surface_area=surface_area,
-            type=type,
-            updated_at=updated_at,
-            user_id=user_id,
-        )
-
-        file_surface_area.additional_properties = d
-        return file_surface_area
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    user_id: Uuid
 
 
-EG = TypeVar("EG", bound="text_to_cad")
+class text_to_cad(BaseModel):
+    """Text to CAD."""
 
+    completed_at: Optional[datetime.datetime] = None
 
-@attr.s(auto_attribs=True)
-class text_to_cad:
-    """Text to CAD."""  # noqa: E501
+    created_at: datetime.datetime
 
-    completed_at: Union[Unset, datetime.datetime] = UNSET
-    created_at: Union[Unset, datetime.datetime] = UNSET
-    error: Union[Unset, str] = UNSET
-    feedback: Union[Unset, AiFeedback] = UNSET
-    id: Union[Unset, str] = UNSET
-    model_version: Union[Unset, str] = UNSET
-    output_format: Union[Unset, FileExportFormat] = UNSET
-    outputs: Union[Unset, Dict[str, Base64Data]] = UNSET
-    prompt: Union[Unset, str] = UNSET
-    started_at: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, ApiCallStatus] = UNSET
+    error: Optional[str] = None
+
+    feedback: Optional[AiFeedback] = None
+
+    id: Uuid
+
+    model_version: str
+
+    output_format: FileExportFormat
+
+    outputs: Optional[Dict[str, Base64Bytes]] = None
+
+    prompt: str
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
     type: str = "text_to_cad"
-    updated_at: Union[Unset, datetime.datetime] = UNSET
-    user_id: Union[Unset, str] = UNSET
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    updated_at: datetime.datetime
 
-    def to_dict(self) -> Dict[str, Any]:
-        completed_at: Union[Unset, str] = UNSET
-        if not isinstance(self.completed_at, Unset):
-            completed_at = self.completed_at.isoformat()
-        created_at: Union[Unset, str] = UNSET
-        if not isinstance(self.created_at, Unset):
-            created_at = self.created_at.isoformat()
-        error = self.error
-        feedback: Union[Unset, AiFeedback] = UNSET
-        if not isinstance(self.feedback, Unset):
-            feedback = self.feedback
-        id = self.id
-        model_version = self.model_version
-        output_format: Union[Unset, FileExportFormat] = UNSET
-        if not isinstance(self.output_format, Unset):
-            output_format = self.output_format
-        outputs: Union[Unset, Dict[str, str]] = UNSET
-        if not isinstance(self.outputs, Unset):
-            new_dict: Dict[str, str] = {}
-            for key, value in self.outputs.items():
-                new_dict[key] = value.get_encoded()
-            outputs = new_dict
-        prompt = self.prompt
-        started_at: Union[Unset, str] = UNSET
-        if not isinstance(self.started_at, Unset):
-            started_at = self.started_at.isoformat()
-        status: Union[Unset, ApiCallStatus] = UNSET
-        if not isinstance(self.status, Unset):
-            status = self.status
-        type = self.type
-        updated_at: Union[Unset, str] = UNSET
-        if not isinstance(self.updated_at, Unset):
-            updated_at = self.updated_at.isoformat()
-        user_id = self.user_id
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if completed_at is not UNSET:
-            field_dict["completed_at"] = completed_at
-        if created_at is not UNSET:
-            field_dict["created_at"] = created_at
-        if error is not UNSET:
-            field_dict["error"] = error
-        if feedback is not UNSET:
-            field_dict["feedback"] = feedback
-        if id is not UNSET:
-            field_dict["id"] = id
-        if model_version is not UNSET:
-            field_dict["model_version"] = model_version
-        if output_format is not UNSET:
-            field_dict["output_format"] = output_format
-        if outputs is not UNSET:
-            field_dict["outputs"] = outputs
-        if prompt is not UNSET:
-            field_dict["prompt"] = prompt
-        if started_at is not UNSET:
-            field_dict["started_at"] = started_at
-        if status is not UNSET:
-            field_dict["status"] = status
-        field_dict["type"] = type
-        if updated_at is not UNSET:
-            field_dict["updated_at"] = updated_at
-        if user_id is not UNSET:
-            field_dict["user_id"] = user_id
-
-        return field_dict
-
-    @classmethod
-    def from_dict(cls: Type[EG], src_dict: Dict[str, Any]) -> EG:
-        d = src_dict.copy()
-        _completed_at = d.pop("completed_at", UNSET)
-        completed_at: Union[Unset, datetime.datetime]
-        if isinstance(_completed_at, Unset):
-            completed_at = UNSET
-        else:
-            completed_at = isoparse(_completed_at)
-
-        _created_at = d.pop("created_at", UNSET)
-        created_at: Union[Unset, datetime.datetime]
-        if isinstance(_created_at, Unset):
-            created_at = UNSET
-        else:
-            created_at = isoparse(_created_at)
-
-        error = d.pop("error", UNSET)
-
-        _feedback = d.pop("feedback", UNSET)
-        feedback: Union[Unset, AiFeedback]
-        if isinstance(_feedback, Unset):
-            feedback = UNSET
-        if _feedback is None:
-            feedback = UNSET
-        else:
-            feedback = _feedback
-
-        _id = d.pop("id", UNSET)
-        id: Union[Unset, Uuid]
-        if isinstance(_id, Unset):
-            id = UNSET
-        if _id is None:
-            id = UNSET
-        else:
-            id = _id
-
-        model_version = d.pop("model_version", UNSET)
-
-        _output_format = d.pop("output_format", UNSET)
-        output_format: Union[Unset, FileExportFormat]
-        if isinstance(_output_format, Unset):
-            output_format = UNSET
-        if _output_format is None:
-            output_format = UNSET
-        else:
-            output_format = _output_format
-
-        _outputs = d.pop("outputs", UNSET)
-        if isinstance(_outputs, Unset):
-            outputs = UNSET
-        else:
-            new_map: Dict[str, Base64Data] = {}
-            for k, v in _outputs.items():
-                new_map[k] = Base64Data(bytes(v, "utf-8"))
-            outputs = new_map  # type: ignore
-
-        prompt = d.pop("prompt", UNSET)
-
-        _started_at = d.pop("started_at", UNSET)
-        started_at: Union[Unset, datetime.datetime]
-        if isinstance(_started_at, Unset):
-            started_at = UNSET
-        else:
-            started_at = isoparse(_started_at)
-
-        _status = d.pop("status", UNSET)
-        status: Union[Unset, ApiCallStatus]
-        if isinstance(_status, Unset):
-            status = UNSET
-        if _status is None:
-            status = UNSET
-        else:
-            status = _status
-
-        type = d.pop("type", UNSET)
-
-        _updated_at = d.pop("updated_at", UNSET)
-        updated_at: Union[Unset, datetime.datetime]
-        if isinstance(_updated_at, Unset):
-            updated_at = UNSET
-        else:
-            updated_at = isoparse(_updated_at)
-
-        _user_id = d.pop("user_id", UNSET)
-        user_id: Union[Unset, Uuid]
-        if isinstance(_user_id, Unset):
-            user_id = UNSET
-        if _user_id is None:
-            user_id = UNSET
-        else:
-            user_id = _user_id
-
-        text_to_cad = cls(
-            completed_at=completed_at,
-            created_at=created_at,
-            error=error,
-            feedback=feedback,
-            id=id,
-            model_version=model_version,
-            output_format=output_format,
-            outputs=outputs,
-            prompt=prompt,
-            started_at=started_at,
-            status=status,
-            type=type,
-            updated_at=updated_at,
-            user_id=user_id,
-        )
-
-        text_to_cad.additional_properties = d
-        return text_to_cad
-
-    @property
-    def additional_keys(self) -> List[str]:
-        return list(self.additional_properties.keys())
-
-    def __getitem__(self, key: str) -> Any:
-        return self.additional_properties[key]
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        self.additional_properties[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        del self.additional_properties[key]
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.additional_properties
+    user_id: Uuid
 
 
 GY = TypeVar("GY", bound="AsyncApiCallOutput")
@@ -1554,60 +264,72 @@ class AsyncApiCallOutput:
     ):
         self.type = type
 
-    def to_dict(self) -> Dict[str, Any]:
+    def model_dump(self) -> Dict[str, Any]:
         if isinstance(self.type, file_conversion):
-            JR: file_conversion = self.type
-            return JR.to_dict()
+            SB: file_conversion = self.type
+            return SB.model_dump()
         elif isinstance(self.type, file_center_of_mass):
-            HK: file_center_of_mass = self.type
-            return HK.to_dict()
+            SA: file_center_of_mass = self.type
+            return SA.model_dump()
         elif isinstance(self.type, file_mass):
-            ON: file_mass = self.type
-            return ON.to_dict()
+            PI: file_mass = self.type
+            return PI.model_dump()
         elif isinstance(self.type, file_volume):
-            US: file_volume = self.type
-            return US.to_dict()
+            FB: file_volume = self.type
+            return FB.model_dump()
         elif isinstance(self.type, file_density):
-            FH: file_density = self.type
-            return FH.to_dict()
+            KC: file_density = self.type
+            return KC.model_dump()
         elif isinstance(self.type, file_surface_area):
-            BB: file_surface_area = self.type
-            return BB.to_dict()
+            LB: file_surface_area = self.type
+            return LB.model_dump()
         elif isinstance(self.type, text_to_cad):
-            TV: text_to_cad = self.type
-            return TV.to_dict()
+            TL: text_to_cad = self.type
+            return TL.model_dump()
 
         raise Exception("Unknown type")
 
     @classmethod
     def from_dict(cls: Type[GY], d: Dict[str, Any]) -> GY:
         if d.get("type") == "file_conversion":
-            LY: file_conversion = file_conversion()
-            LY.from_dict(d)
-            return cls(type=LY)
+            NP: file_conversion = file_conversion(**d)
+            return cls(type=NP)
         elif d.get("type") == "file_center_of_mass":
-            VR: file_center_of_mass = file_center_of_mass()
-            VR.from_dict(d)
-            return cls(type=VR)
+            GO: file_center_of_mass = file_center_of_mass(**d)
+            return cls(type=GO)
         elif d.get("type") == "file_mass":
-            PC: file_mass = file_mass()
-            PC.from_dict(d)
-            return cls(type=PC)
+            UZ: file_mass = file_mass(**d)
+            return cls(type=UZ)
         elif d.get("type") == "file_volume":
-            KQ: file_volume = file_volume()
-            KQ.from_dict(d)
-            return cls(type=KQ)
+            QP: file_volume = file_volume(**d)
+            return cls(type=QP)
         elif d.get("type") == "file_density":
-            NH: file_density = file_density()
-            NH.from_dict(d)
-            return cls(type=NH)
+            HX: file_density = file_density(**d)
+            return cls(type=HX)
         elif d.get("type") == "file_surface_area":
-            PJ: file_surface_area = file_surface_area()
-            PJ.from_dict(d)
-            return cls(type=PJ)
+            NE: file_surface_area = file_surface_area(**d)
+            return cls(type=NE)
         elif d.get("type") == "text_to_cad":
-            CR: text_to_cad = text_to_cad()
-            CR.from_dict(d)
-            return cls(type=CR)
+            MN: text_to_cad = text_to_cad(**d)
+            return cls(type=MN)
 
         raise Exception("Unknown type")
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls,
+            handler(
+                Union[
+                    file_conversion,
+                    file_center_of_mass,
+                    file_mass,
+                    file_volume,
+                    file_density,
+                    file_surface_area,
+                    text_to_cad,
+                ]
+            ),
+        )

@@ -33,7 +33,7 @@ def sync(
         client=client,
     )
 
-    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=None, compression=None, max_size=None)  # type: ignore
+    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"])  # type: ignore
 
 
 async def asyncio(

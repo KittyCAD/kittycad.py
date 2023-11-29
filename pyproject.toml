@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kittycad"
-version = "0.5.7"
+version = "0.5.8"
 description = "A client library for accessing KittyCAD"
 
 authors = []
@@ -17,7 +17,9 @@ httpx = ">=0.15.4,<0.26.0"
 python = "^3.8"
 python-dateutil = "^2.8.0"
 websockets = "^11.0.3"
-bson = "^0.5.10"
+pymongo = "^4.6.0"
+pydantic = "^2.5.2"
+pydantic-extra-types = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 autoclasstoc = "^1.6.0"
