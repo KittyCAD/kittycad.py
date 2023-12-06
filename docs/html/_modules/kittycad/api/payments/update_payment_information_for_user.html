@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.payments.update_payment_information_for_user &mdash; kittycad v0.4.6 documentation</title>
+  <title>kittycad.api.payments.update_payment_information_for_user &mdash; kittycad v0.5.9 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=80626fd4"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=19ad864f"></script>
         <script src="../../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.6
+                v0.5.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -113,15 +113,15 @@
 
 <div class="viewcode-block" id="_parse_response"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.payments.update_payment_information_for_user.html#kittycad.api.payments.update_payment_information_for_user._parse_response">[docs]</a><span class="k">def</span> <span class="nf">_parse_response</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Customer</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="n">response_200</span> <span class="o">=</span> <span class="n">Customer</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+        <span class="n">response_200</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">response_200</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
-        <span class="n">response_4XX</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+        <span class="n">response_4XX</span> <span class="o">=</span> <span class="n">Error</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">response_4XX</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
-        <span class="n">response_5XX</span> <span class="o">=</span> <span class="n">Error</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+        <span class="n">response_5XX</span> <span class="o">=</span> <span class="n">Error</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">response_5XX</span>
-    <span class="k">return</span> <span class="n">Error</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+    <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="_build_response"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.payments.update_payment_information_for_user.html#kittycad.api.payments.update_payment_information_for_user._build_response">[docs]</a><span class="k">def</span> <span class="nf">_build_response</span><span class="p">(</span>

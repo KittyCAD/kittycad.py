@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta property="og:title" content="kittycad.models.ply_storage.PlyStorage" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="_autosummary/kittycad.models.ply_storage.PlyStorage.html" />
+<meta property="og:site_name" content="kittycad" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.ply_storage.PlyStorage_8855aaad.png" />
+<meta property="og:image:alt" content="" />
+<meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.models.ply_storage.PlyStorage &mdash; kittycad v0.5.9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=19ad864f"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="kittycad.models.point2d" href="kittycad.models.point2d.html" />
+    <link rel="prev" title="kittycad.models.ply_storage" href="kittycad.models.ply_storage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.5.9
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="kittycad.models.html">kittycad.models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.account_provider.html">kittycad.models.account_provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_feedback.html">kittycad.models.ai_feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api.html">kittycad.models.ai_plugin_api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api_type.html">kittycad.models.ai_plugin_api_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth.html">kittycad.models.ai_plugin_auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth_type.html">kittycad.models.ai_plugin_auth_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_http_auth_type.html">kittycad.models.ai_plugin_http_auth_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_manifest.html">kittycad.models.ai_plugin_manifest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_prompt.html">kittycad.models.ai_prompt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_prompt_results_page.html">kittycad.models.ai_prompt_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_prompt_type.html">kittycad.models.ai_prompt_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.angle.html">kittycad.models.angle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.annotation_line_end.html">kittycad.models.annotation_line_end</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.annotation_line_end_options.html">kittycad.models.annotation_line_end_options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.annotation_options.html">kittycad.models.annotation_options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.annotation_text_alignment_x.html">kittycad.models.annotation_text_alignment_x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.annotation_text_alignment_y.html">kittycad.models.annotation_text_alignment_y</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.annotation_text_options.html">kittycad.models.annotation_text_options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.annotation_type.html">kittycad.models.annotation_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group.html">kittycad.models.api_call_query_group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_query_group_by.html">kittycad.models.api_call_query_group_by</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_status.html">kittycad.models.api_call_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_with_price.html">kittycad.models.api_call_with_price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_call_with_price_results_page.html">kittycad.models.api_call_with_price_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_error.html">kittycad.models.api_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_token.html">kittycad.models.api_token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.api_token_results_page.html">kittycad.models.api_token_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.app_client_info.html">kittycad.models.app_client_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call.html">kittycad.models.async_api_call</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_output.html">kittycad.models.async_api_call_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_results_page.html">kittycad.models.async_api_call_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_type.html">kittycad.models.async_api_call_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.axis.html">kittycad.models.axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.axis_direction_pair.html">kittycad.models.axis_direction_pair</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.base64data.html">kittycad.models.base64data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.billing_info.html">kittycad.models.billing_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.cache_metadata.html">kittycad.models.cache_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.camera_drag_interaction_type.html">kittycad.models.camera_drag_interaction_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.card_details.html">kittycad.models.card_details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.center_of_mass.html">kittycad.models.center_of_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.client_metrics.html">kittycad.models.client_metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_language.html">kittycad.models.code_language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_output.html">kittycad.models.code_output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.color.html">kittycad.models.color</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.connection.html">kittycad.models.connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.country_code.html">kittycad.models.country_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.coupon.html">kittycad.models.coupon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.currency.html">kittycad.models.currency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.curve_get_control_points.html">kittycad.models.curve_get_control_points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.curve_get_end_points.html">kittycad.models.curve_get_end_points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.curve_get_type.html">kittycad.models.curve_get_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.curve_type.html">kittycad.models.curve_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer.html">kittycad.models.customer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer_balance.html">kittycad.models.customer_balance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.density.html">kittycad.models.density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_access_token_request_form.html">kittycad.models.device_access_token_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_request_form.html">kittycad.models.device_auth_request_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_verify_params.html">kittycad.models.device_auth_verify_params</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.direction.html">kittycad.models.direction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.discount.html">kittycad.models.discount</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.email_authentication_form.html">kittycad.models.email_authentication_form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.empty.html">kittycad.models.empty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_all_child_uuids.html">kittycad.models.entity_get_all_child_uuids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_child_uuid.html">kittycad.models.entity_get_child_uuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_num_children.html">kittycad.models.entity_get_num_children</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_parent_id.html">kittycad.models.entity_get_parent_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_type.html">kittycad.models.entity_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.environment.html">kittycad.models.environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.error.html">kittycad.models.error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.error_code.html">kittycad.models.error_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.export.html">kittycad.models.export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.export_file.html">kittycad.models.export_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user.html">kittycad.models.extended_user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user_results_page.html">kittycad.models.extended_user_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.failure_web_socket_response.html">kittycad.models.failure_web_socket_response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.fbx_storage.html">kittycad.models.fbx_storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_center_of_mass.html">kittycad.models.file_center_of_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_conversion.html">kittycad.models.file_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_density.html">kittycad.models.file_density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_export_format.html">kittycad.models.file_export_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_import_format.html">kittycad.models.file_import_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_mass.html">kittycad.models.file_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_surface_area.html">kittycad.models.file_surface_area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_system_metadata.html">kittycad.models.file_system_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_volume.html">kittycad.models.file_volume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.gateway.html">kittycad.models.gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.get_entity_type.html">kittycad.models.get_entity_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.get_sketch_mode_plane.html">kittycad.models.get_sketch_mode_plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.gltf_presentation.html">kittycad.models.gltf_presentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.gltf_storage.html">kittycad.models.gltf_storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.highlight_set_entity.html">kittycad.models.highlight_set_entity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ice_server.html">kittycad.models.ice_server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.image_format.html">kittycad.models.image_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.import_file.html">kittycad.models.import_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.import_files.html">kittycad.models.import_files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.input_format.html">kittycad.models.input_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice.html">kittycad.models.invoice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_line_item.html">kittycad.models.invoice_line_item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_status.html">kittycad.models.invoice_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream.html">kittycad.models.jetstream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_api_stats.html">kittycad.models.jetstream_api_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_config.html">kittycad.models.jetstream_config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_stats.html">kittycad.models.jetstream_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.leaf_node.html">kittycad.models.leaf_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.mass.html">kittycad.models.mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.meta_cluster_info.html">kittycad.models.meta_cluster_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.metadata.html">kittycad.models.metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.method.html">kittycad.models.method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd.html">kittycad.models.modeling_cmd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd_id.html">kittycad.models.modeling_cmd_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd_req.html">kittycad.models.modeling_cmd_req</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.mouse_click.html">kittycad.models.mouse_click</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.new_address.html">kittycad.models.new_address</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_client_info.html">kittycad.models.o_auth2_client_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_grant_type.html">kittycad.models.o_auth2_grant_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ok_modeling_cmd_response.html">kittycad.models.ok_modeling_cmd_response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ok_web_socket_response_data.html">kittycad.models.ok_web_socket_response_data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.onboarding.html">kittycad.models.onboarding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_file.html">kittycad.models.output_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_format.html">kittycad.models.output_format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_command.html">kittycad.models.path_command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_component_constraint_bound.html">kittycad.models.path_component_constraint_bound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_component_constraint_type.html">kittycad.models.path_component_constraint_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_curve_uuids_for_vertices.html">kittycad.models.path_get_curve_uuids_for_vertices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_info.html">kittycad.models.path_get_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_vertex_uuids.html">kittycad.models.path_get_vertex_uuids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_segment.html">kittycad.models.path_segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_segment_info.html">kittycad.models.path_segment_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_intent.html">kittycad.models.payment_intent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method.html">kittycad.models.payment_method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_card_checks.html">kittycad.models.payment_method_card_checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_type.html">kittycad.models.payment_method_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.plane_intersect_and_project.html">kittycad.models.plane_intersect_and_project</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="kittycad.models.ply_storage.html">kittycad.models.ply_storage</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.ply_storage.PlyStorage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.ply_storage.PlyStorage"><code class="docutils literal notranslate"><span class="pre">PlyStorage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.models.ply_storage.html#kittycad.models.ply_storage.PlyStorage"><code class="docutils literal notranslate"><span class="pre">PlyStorage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.point2d.html">kittycad.models.point2d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.point3d.html">kittycad.models.point3d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.pong.html">kittycad.models.pong</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.raw_file.html">kittycad.models.raw_file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.rtc_ice_candidate_init.html">kittycad.models.rtc_ice_candidate_init</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.rtc_sdp_type.html">kittycad.models.rtc_sdp_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.rtc_session_description.html">kittycad.models.rtc_session_description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.scene_selection_type.html">kittycad.models.scene_selection_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.scene_tool_type.html">kittycad.models.scene_tool_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.select_get.html">kittycad.models.select_get</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.select_with_point.html">kittycad.models.select_with_point</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.selection.html">kittycad.models.selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.session.html">kittycad.models.session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_all_edge_faces.html">kittycad.models.solid3d_get_all_edge_faces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_all_opposite_edges.html">kittycad.models.solid3d_get_all_opposite_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_next_adjacent_edge.html">kittycad.models.solid3d_get_next_adjacent_edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_opposite_edge.html">kittycad.models.solid3d_get_opposite_edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_prev_adjacent_edge.html">kittycad.models.solid3d_get_prev_adjacent_edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.stl_storage.html">kittycad.models.stl_storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.success_web_socket_response.html">kittycad.models.success_web_socket_response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.surface_area.html">kittycad.models.surface_area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.system.html">kittycad.models.system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.take_snapshot.html">kittycad.models.take_snapshot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.text_to_cad.html">kittycad.models.text_to_cad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.text_to_cad_create_body.html">kittycad.models.text_to_cad_create_body</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.text_to_cad_results_page.html">kittycad.models.text_to_cad_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angle.html">kittycad.models.unit_angle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_angle_conversion.html">kittycad.models.unit_angle_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_area.html">kittycad.models.unit_area</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_area_conversion.html">kittycad.models.unit_area_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_current.html">kittycad.models.unit_current</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_current_conversion.html">kittycad.models.unit_current_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_density.html">kittycad.models.unit_density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy.html">kittycad.models.unit_energy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_energy_conversion.html">kittycad.models.unit_energy_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force.html">kittycad.models.unit_force</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_force_conversion.html">kittycad.models.unit_force_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_frequency.html">kittycad.models.unit_frequency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_frequency_conversion.html">kittycad.models.unit_frequency_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_length.html">kittycad.models.unit_length</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_length_conversion.html">kittycad.models.unit_length_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_mass.html">kittycad.models.unit_mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_mass_conversion.html">kittycad.models.unit_mass_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_power.html">kittycad.models.unit_power</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_power_conversion.html">kittycad.models.unit_power_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_pressure.html">kittycad.models.unit_pressure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_pressure_conversion.html">kittycad.models.unit_pressure_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_temperature.html">kittycad.models.unit_temperature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_temperature_conversion.html">kittycad.models.unit_temperature_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_torque.html">kittycad.models.unit_torque</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_torque_conversion.html">kittycad.models.unit_torque_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume.html">kittycad.models.unit_volume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume_conversion.html">kittycad.models.unit_volume_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.update_user.html">kittycad.models.update_user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user.html">kittycad.models.user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user_results_page.html">kittycad.models.user_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.uuid.html">kittycad.models.uuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.verification_token.html">kittycad.models.verification_token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.volume.html">kittycad.models.volume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.web_socket_request.html">kittycad.models.web_socket_request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.web_socket_response.html">kittycad.models.web_socket_response</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="kittycad.models.html">kittycad.models</a></li>
+          <li class="breadcrumb-item"><a href="kittycad.models.ply_storage.html">kittycad.models.ply_storage</a></li>
+      <li class="breadcrumb-item active">kittycad.models.ply_storage.PlyStorage</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kittycad-models-ply-storage-plystorage">
+<h1>kittycad.models.ply_storage.PlyStorage<a class="headerlink" href="#kittycad-models-ply-storage-plystorage" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.ply_storage.</span></span><span class="sig-name descname"><span class="pre">PlyStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/ply_storage.html#PlyStorage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>The storage for the output PLY file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.ply_storage.PlyStorage.ASCII" title="kittycad.models.ply_storage.PlyStorage.ASCII"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ASCII</span></code></a></p></td>
+<td><p># Encode payload as binary using little endian.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.ply_storage.PlyStorage.BINARY_LITTLE_ENDIAN" title="kittycad.models.ply_storage.PlyStorage.BINARY_LITTLE_ENDIAN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BINARY_LITTLE_ENDIAN</span></code></a></p></td>
+<td><p># Encode payload as binary using big endian.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.ply_storage.PlyStorage.BINARY_BIG_ENDIAN" title="kittycad.models.ply_storage.PlyStorage.BINARY_BIG_ENDIAN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BINARY_BIG_ENDIAN</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage.ASCII">
+<span class="sig-name descname"><span class="pre">ASCII</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ascii'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage.ASCII" title="Permalink to this definition"></a></dt>
+<dd><p># Encode payload as binary using little endian.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage.BINARY_BIG_ENDIAN">
+<span class="sig-name descname"><span class="pre">BINARY_BIG_ENDIAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'binary_big_endian'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage.BINARY_BIG_ENDIAN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage.BINARY_LITTLE_ENDIAN">
+<span class="sig-name descname"><span class="pre">BINARY_LITTLE_ENDIAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'binary_little_endian'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage.BINARY_LITTLE_ENDIAN" title="Permalink to this definition"></a></dt>
+<dd><p># Encode payload as binary using big endian.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage.__annotations__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'_generate_next_value_':</span> <span class="pre">&lt;function</span> <span class="pre">Enum._generate_next_value_&gt;,</span> <span class="pre">'__module__':</span> <span class="pre">'kittycad.models.ply_storage',</span> <span class="pre">'__doc__':</span> <span class="pre">'The</span> <span class="pre">storage</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">output</span> <span class="pre">PLY</span> <span class="pre">file.',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">PlyStorage.__str__&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'PlyStorage'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'PlyStorage'</span> <span class="pre">objects&gt;,</span> <span class="pre">'_member_names_':</span> <span class="pre">['ASCII',</span> <span class="pre">'BINARY_LITTLE_ENDIAN',</span> <span class="pre">'BINARY_BIG_ENDIAN'],</span> <span class="pre">'_member_map_':</span> <span class="pre">{'ASCII':</span> <span class="pre">&lt;PlyStorage.ASCII:</span> <span class="pre">'ascii'&gt;,</span> <span class="pre">'BINARY_LITTLE_ENDIAN':</span> <span class="pre">&lt;PlyStorage.BINARY_LITTLE_ENDIAN:</span> <span class="pre">'binary_little_endian'&gt;,</span> <span class="pre">'BINARY_BIG_ENDIAN':</span> <span class="pre">&lt;PlyStorage.BINARY_BIG_ENDIAN:</span> <span class="pre">'binary_big_endian'&gt;},</span> <span class="pre">'_member_type_':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'_value2member_map_':</span> <span class="pre">{'ascii':</span> <span class="pre">&lt;PlyStorage.ASCII:</span> <span class="pre">'ascii'&gt;,</span> <span class="pre">'binary_little_endian':</span> <span class="pre">&lt;PlyStorage.BINARY_LITTLE_ENDIAN:</span> <span class="pre">'binary_little_endian'&gt;,</span> <span class="pre">'binary_big_endian':</span> <span class="pre">&lt;PlyStorage.BINARY_BIG_ENDIAN:</span> <span class="pre">'binary_big_endian'&gt;},</span> <span class="pre">'ASCII':</span> <span class="pre">&lt;PlyStorage.ASCII:</span> <span class="pre">'ascii'&gt;,</span> <span class="pre">'BINARY_LITTLE_ENDIAN':</span> <span class="pre">&lt;PlyStorage.BINARY_LITTLE_ENDIAN:</span> <span class="pre">'binary_little_endian'&gt;,</span> <span class="pre">'BINARY_BIG_ENDIAN':</span> <span class="pre">&lt;PlyStorage.BINARY_BIG_ENDIAN:</span> <span class="pre">'binary_big_endian'&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__repr__&gt;,</span> <span class="pre">'__format__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__format__&gt;,</span> <span class="pre">'__new__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__new__&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.ply_storage'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage._generate_next_value_">
+<span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage._generate_next_value_" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the next value when not given.</p>
+<p>name: the name of the member
+start: the initial start value or None
+count: the number of existing members
+last_value: the last value assigned or None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage._member_map_">
+<span class="sig-name descname"><span class="pre">_member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ASCII':</span> <span class="pre">PlyStorage.ASCII,</span> <span class="pre">'BINARY_BIG_ENDIAN':</span> <span class="pre">PlyStorage.BINARY_BIG_ENDIAN,</span> <span class="pre">'BINARY_LITTLE_ENDIAN':</span> <span class="pre">PlyStorage.BINARY_LITTLE_ENDIAN}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage._member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage._member_names_">
+<span class="sig-name descname"><span class="pre">_member_names_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['ASCII',</span> <span class="pre">'BINARY_LITTLE_ENDIAN',</span> <span class="pre">'BINARY_BIG_ENDIAN']</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage._member_names_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage._member_type_">
+<span class="sig-name descname"><span class="pre">_member_type_</span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage._member_type_" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.ply_storage.PlyStorage._value2member_map_">
+<span class="sig-name descname"><span class="pre">_value2member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ascii':</span> <span class="pre">PlyStorage.ASCII,</span> <span class="pre">'binary_big_endian':</span> <span class="pre">PlyStorage.BINARY_BIG_ENDIAN,</span> <span class="pre">'binary_little_endian':</span> <span class="pre">PlyStorage.BINARY_LITTLE_ENDIAN}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/ply_storage.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.ply_storage.PlyStorage._value2member_map_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="kittycad.models.ply_storage.html" class="btn btn-neutral float-left" title="kittycad.models.ply_storage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.models.point2d.html" class="btn btn-neutral float-right" title="kittycad.models.point2d" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.invoice &mdash; kittycad v0.4.6 documentation</title>
+  <title>kittycad.models.invoice &mdash; kittycad v0.5.9 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=80626fd4"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=19ad864f"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.6
+                v0.5.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -80,266 +80,68 @@
              
   <h1>Source code for kittycad.models.invoice</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">import</span> <span class="nn">attr</span>
-<span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">isoparse</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="kn">from</span> <span class="nn">..models.currency</span> <span class="kn">import</span> <span class="n">Currency</span>
+<span class="kn">from</span> <span class="nn">..models.discount</span> <span class="kn">import</span> <span class="n">Discount</span>
+<span class="kn">from</span> <span class="nn">..models.invoice_line_item</span> <span class="kn">import</span> <span class="n">InvoiceLineItem</span>
 <span class="kn">from</span> <span class="nn">..models.invoice_status</span> <span class="kn">import</span> <span class="n">InvoiceStatus</span>
-<span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
-
-<span class="n">WB</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;WB&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;Invoice&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Invoice"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">Invoice</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;An invoice.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<div class="viewcode-block" id="Invoice"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice">[docs]</a><span class="k">class</span> <span class="nc">Invoice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An invoice.&quot;&quot;&quot;</span>
 
-    <span class="n">amount_due</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">amount_paid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">amount_remaining</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">attempt_count</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">attempted</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">currency</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Currency</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">customer_email</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">customer_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">default_payment_method</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">description</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="kn">from</span> <span class="nn">..models.discount</span> <span class="kn">import</span> <span class="n">Discount</span>
+    <span class="n">amount_due</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">discounts</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Discount</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="kn">from</span> <span class="nn">..models.invoice_line_item</span> <span class="kn">import</span> <span class="n">InvoiceLineItem</span>
+    <span class="n">amount_paid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">lines</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">InvoiceLineItem</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">number</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">paid</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">pdf</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">receipt_number</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">statement_descriptor</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">InvoiceStatus</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">subtotal</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">tax</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">total</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">amount_remaining</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">attempt_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Invoice.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="n">amount_due</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount_due</span>
-        <span class="n">amount_paid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount_paid</span>
-        <span class="n">amount_remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount_remaining</span>
-        <span class="n">attempt_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attempt_count</span>
-        <span class="n">attempted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attempted</span>
-        <span class="n">created_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">created_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currency</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">currency</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currency</span>
-        <span class="n">customer_email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">customer_email</span>
-        <span class="n">customer_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">customer_id</span>
-        <span class="n">default_payment_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_payment_method</span>
-        <span class="n">description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
-        <span class="kn">from</span> <span class="nn">..models.discount</span> <span class="kn">import</span> <span class="n">Discount</span>
+    <span class="n">attempted</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">discounts</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Discount</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">discounts</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">discounts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">discounts</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
-        <span class="kn">from</span> <span class="nn">..models.invoice_line_item</span> <span class="kn">import</span> <span class="n">InvoiceLineItem</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
 
-        <span class="n">lines</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">InvoiceLineItem</span><span class="p">]]</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span>
-        <span class="n">number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span>
-        <span class="n">paid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paid</span>
-        <span class="n">pdf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pdf</span>
-        <span class="n">receipt_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">receipt_number</span>
-        <span class="n">statement_descriptor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">statement_descriptor</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">subtotal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subtotal</span>
-        <span class="n">tax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tax</span>
-        <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span>
+    <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Currency</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
-        <span class="k">if</span> <span class="n">amount_due</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;amount_due&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">amount_due</span>
-        <span class="k">if</span> <span class="n">amount_paid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;amount_paid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">amount_paid</span>
-        <span class="k">if</span> <span class="n">amount_remaining</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;amount_remaining&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">amount_remaining</span>
-        <span class="k">if</span> <span class="n">attempt_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;attempt_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attempt_count</span>
-        <span class="k">if</span> <span class="n">attempted</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;attempted&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attempted</span>
-        <span class="k">if</span> <span class="n">created_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;created_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">created_at</span>
-        <span class="k">if</span> <span class="n">currency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;currency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">currency</span>
-        <span class="k">if</span> <span class="n">customer_email</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;customer_email&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">customer_email</span>
-        <span class="k">if</span> <span class="n">customer_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;customer_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">customer_id</span>
-        <span class="k">if</span> <span class="n">default_payment_method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;default_payment_method&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_payment_method</span>
-        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
-        <span class="k">if</span> <span class="n">discounts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;discounts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">discounts</span>
-        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
-        <span class="k">if</span> <span class="n">lines</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;lines&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lines</span>
-        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
-        <span class="k">if</span> <span class="n">number</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;number&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">number</span>
-        <span class="k">if</span> <span class="n">paid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;paid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paid</span>
-        <span class="k">if</span> <span class="n">pdf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;pdf&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdf</span>
-        <span class="k">if</span> <span class="n">receipt_number</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;receipt_number&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">receipt_number</span>
-        <span class="k">if</span> <span class="n">statement_descriptor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;statement_descriptor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">statement_descriptor</span>
-        <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
-        <span class="k">if</span> <span class="n">subtotal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;subtotal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subtotal</span>
-        <span class="k">if</span> <span class="n">tax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;tax&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tax</span>
-        <span class="k">if</span> <span class="n">total</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span>
-        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url</span>
+    <span class="n">customer_email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="n">field_dict</span></div>
+    <span class="n">customer_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Invoice.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">WB</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">WB</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">amount_due</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;amount_due&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">default_payment_method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">amount_paid</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;amount_paid&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">amount_remaining</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;amount_remaining&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">discounts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Discount</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">attempt_count</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;attempt_count&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">attempted</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;attempted&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">lines</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">InvoiceLineItem</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">_created_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;created_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">created_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_created_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">created_at</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">created_at</span> <span class="o">=</span> <span class="n">isoparse</span><span class="p">(</span><span class="n">_created_at</span><span class="p">)</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">_currency</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;currency&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">currency</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Currency</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_currency</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">currency</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">currency</span> <span class="o">=</span> <span class="n">_currency</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="n">number</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">customer_email</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;customer_email&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">paid</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">customer_id</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;customer_id&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">pdf</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">default_payment_method</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;default_payment_method&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">receipt_number</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">description</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">statement_descriptor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="kn">from</span> <span class="nn">..models.discount</span> <span class="kn">import</span> <span class="n">Discount</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InvoiceStatus</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">discounts</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="n">Discount</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;discounts&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">))</span>
+    <span class="n">subtotal</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="nb">id</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">tax</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="kn">from</span> <span class="nn">..models.invoice_line_item</span> <span class="kn">import</span> <span class="n">InvoiceLineItem</span>
+    <span class="n">total</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">lines</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="n">InvoiceLineItem</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">))</span>
-
-        <span class="n">metadata</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">number</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">paid</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;paid&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">pdf</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">receipt_number</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;receipt_number&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">statement_descriptor</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;statement_descriptor&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">_status</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">InvoiceStatus</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="n">subtotal</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;subtotal&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">tax</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;tax&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">total</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">url</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">invoice</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">amount_due</span><span class="o">=</span><span class="n">amount_due</span><span class="p">,</span>
-            <span class="n">amount_paid</span><span class="o">=</span><span class="n">amount_paid</span><span class="p">,</span>
-            <span class="n">amount_remaining</span><span class="o">=</span><span class="n">amount_remaining</span><span class="p">,</span>
-            <span class="n">attempt_count</span><span class="o">=</span><span class="n">attempt_count</span><span class="p">,</span>
-            <span class="n">attempted</span><span class="o">=</span><span class="n">attempted</span><span class="p">,</span>
-            <span class="n">created_at</span><span class="o">=</span><span class="n">created_at</span><span class="p">,</span>
-            <span class="n">currency</span><span class="o">=</span><span class="n">currency</span><span class="p">,</span>
-            <span class="n">customer_email</span><span class="o">=</span><span class="n">customer_email</span><span class="p">,</span>
-            <span class="n">customer_id</span><span class="o">=</span><span class="n">customer_id</span><span class="p">,</span>
-            <span class="n">default_payment_method</span><span class="o">=</span><span class="n">default_payment_method</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
-            <span class="n">discounts</span><span class="o">=</span><span class="n">discounts</span><span class="p">,</span>
-            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-            <span class="n">lines</span><span class="o">=</span><span class="n">lines</span><span class="p">,</span>
-            <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
-            <span class="n">number</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
-            <span class="n">paid</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span>
-            <span class="n">pdf</span><span class="o">=</span><span class="n">pdf</span><span class="p">,</span>
-            <span class="n">receipt_number</span><span class="o">=</span><span class="n">receipt_number</span><span class="p">,</span>
-            <span class="n">statement_descriptor</span><span class="o">=</span><span class="n">statement_descriptor</span><span class="p">,</span>
-            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
-            <span class="n">subtotal</span><span class="o">=</span><span class="n">subtotal</span><span class="p">,</span>
-            <span class="n">tax</span><span class="o">=</span><span class="n">tax</span><span class="p">,</span>
-            <span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="p">,</span>
-            <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">invoice</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
-        <span class="k">return</span> <span class="n">invoice</span></div>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<div class="viewcode-block" id="Invoice.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="Invoice.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
-
-<div class="viewcode-block" id="Invoice.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="Invoice.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.invoice.Invoice.html#kittycad.models.invoice.Invoice.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+    <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 </pre></div>
 
            </div>

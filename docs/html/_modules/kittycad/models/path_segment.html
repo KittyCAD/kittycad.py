@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.path_segment &mdash; kittycad v0.4.6 documentation</title>
+  <title>kittycad.models.path_segment &mdash; kittycad v0.5.9 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=80626fd4"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=19ad864f"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.6
+                v0.5.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -79,251 +79,92 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.path_segment</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">attr</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">RootModel</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
 
+<span class="kn">from</span> <span class="nn">..models.angle</span> <span class="kn">import</span> <span class="n">Angle</span>
 <span class="kn">from</span> <span class="nn">..models.point2d</span> <span class="kn">import</span> <span class="n">Point2d</span>
 <span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
-<span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
-
-<span class="n">XI</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;XI&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="line"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">line</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A straight line segment. Goes from the current path &quot;pen&quot; to the given endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<div class="viewcode-block" id="line"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line">[docs]</a><span class="k">class</span> <span class="nc">line</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A straight line segment. Goes from the current path &quot;pen&quot; to the given endpoint.&quot;&quot;&quot;</span>
 
-    <span class="n">end</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;line&quot;</span>
+    <span class="n">end</span><span class="p">:</span> <span class="n">Point3d</span>
 
-    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">relative</span><span class="p">:</span> <span class="nb">bool</span>
 
-<div class="viewcode-block" id="line.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span>
-        <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span>
-
-        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
-        <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">end</span>
-        <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span>
-
-        <span class="k">return</span> <span class="n">field_dict</span></div>
-
-<div class="viewcode-block" id="line.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">XI</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">XI</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">_end</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">end</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_end</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">_end</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">line</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">line</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
-        <span class="k">return</span> <span class="n">line</span></div>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<div class="viewcode-block" id="line.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="line.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
-
-<div class="viewcode-block" id="line.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="line.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;line&quot;</span></div>
 
 
-<span class="n">PO</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;PO&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;arc&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="arc"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc">[docs]</a><span class="k">class</span> <span class="nc">arc</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A circular arc segment.&quot;&quot;&quot;</span>
+
+    <span class="n">angle_end</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="n">angle_start</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="n">center</span><span class="p">:</span> <span class="n">Point2d</span>
+
+    <span class="n">end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Angle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="n">relative</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="n">start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Angle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;arc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;arc&quot;</span></div>
 
 
-<div class="viewcode-block" id="arc"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">arc</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A circular arc segment.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<div class="viewcode-block" id="bezier"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier">[docs]</a><span class="k">class</span> <span class="nc">bezier</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A cubic bezier curve segment. Start at the end of the current line, go through control point 1 and 2, then end at a given point.&quot;&quot;&quot;</span>
 
-    <span class="n">angle_end</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">angle_start</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">center</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;arc&quot;</span>
+    <span class="n">control1</span><span class="p">:</span> <span class="n">Point3d</span>
 
-    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">control2</span><span class="p">:</span> <span class="n">Point3d</span>
 
-<div class="viewcode-block" id="arc.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="n">angle_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_end</span>
-        <span class="n">angle_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle_start</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span>
-        <span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
-        <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">end</span><span class="p">:</span> <span class="n">Point3d</span>
 
-        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
-        <span class="k">if</span> <span class="n">angle_end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;angle_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">angle_end</span>
-        <span class="k">if</span> <span class="n">angle_start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;angle_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">angle_start</span>
-        <span class="k">if</span> <span class="n">center</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;center&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">center</span>
-        <span class="k">if</span> <span class="n">radius</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radius</span>
-        <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span>
+    <span class="n">relative</span><span class="p">:</span> <span class="nb">bool</span>
 
-        <span class="k">return</span> <span class="n">field_dict</span></div>
-
-<div class="viewcode-block" id="arc.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">PO</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PO</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">angle_end</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;angle_end&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">angle_start</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;angle_start&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">_center</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">center</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point2d</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_center</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">center</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">center</span> <span class="o">=</span> <span class="n">_center</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="n">radius</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;radius&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">arc</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">angle_end</span><span class="o">=</span><span class="n">angle_end</span><span class="p">,</span>
-            <span class="n">angle_start</span><span class="o">=</span><span class="n">angle_start</span><span class="p">,</span>
-            <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span>
-            <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">arc</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
-        <span class="k">return</span> <span class="n">arc</span></div>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<div class="viewcode-block" id="arc.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="arc.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
-
-<div class="viewcode-block" id="arc.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="arc.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;bezier&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;bezier&quot;</span></div>
 
 
-<span class="n">PS</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;PS&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;bezier&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="tangential_arc"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.tangential_arc.html#kittycad.models.path_segment.tangential_arc">[docs]</a><span class="k">class</span> <span class="nc">tangential_arc</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a tangent arc from current pen position with the given radius and angle.&quot;&quot;&quot;</span>
+
+    <span class="n">offset</span><span class="p">:</span> <span class="n">Angle</span>
+
+    <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;tangential_arc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;tangential_arc&quot;</span></div>
 
 
-<div class="viewcode-block" id="bezier"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">bezier</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A cubic bezier curve segment. Start at the end of the current line, go through control point 1 and 2, then end at a given point.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<div class="viewcode-block" id="tangential_arc_to"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.tangential_arc_to.html#kittycad.models.path_segment.tangential_arc_to">[docs]</a><span class="k">class</span> <span class="nc">tangential_arc_to</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a tangent arc from current pen position to the new position.&quot;&quot;&quot;</span>
 
-    <span class="n">control1</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">control2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">end</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;bezier&quot;</span>
+    <span class="n">angle_snap_increment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Angle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">to</span><span class="p">:</span> <span class="n">Point3d</span>
 
-<div class="viewcode-block" id="bezier.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control1</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">control1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control1</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control2</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">control2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control2</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end</span>
-        <span class="nb">type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span>
-
-        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
-        <span class="k">if</span> <span class="n">control1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;control1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">control1</span>
-        <span class="k">if</span> <span class="n">control2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;control2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">control2</span>
-        <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">end</span>
-        <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span>
-
-        <span class="k">return</span> <span class="n">field_dict</span></div>
-
-<div class="viewcode-block" id="bezier.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">PS</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PS</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">_control1</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;control1&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">control1</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_control1</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">control1</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">control1</span> <span class="o">=</span> <span class="n">_control1</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="n">_control2</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;control2&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">control2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_control2</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">control2</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">control2</span> <span class="o">=</span> <span class="n">_control2</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="n">_end</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">end</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Point3d</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_end</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">_end</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="nb">type</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">bezier</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">control1</span><span class="o">=</span><span class="n">control1</span><span class="p">,</span>
-            <span class="n">control2</span><span class="o">=</span><span class="n">control2</span><span class="p">,</span>
-            <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
-            <span class="nb">type</span><span class="o">=</span><span class="nb">type</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">bezier</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
-        <span class="k">return</span> <span class="n">bezier</span></div>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<div class="viewcode-block" id="bezier.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="bezier.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
-
-<div class="viewcode-block" id="bezier.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="bezier.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;tangential_arc_to&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;tangential_arc_to&quot;</span></div>
 
 
-<span class="n">PathSegment</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">line</span><span class="p">,</span> <span class="n">arc</span><span class="p">,</span> <span class="n">bezier</span><span class="p">]</span>
+<span class="n">PathSegment</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
+    <span class="n">Annotated</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">line</span><span class="p">,</span>
+            <span class="n">arc</span><span class="p">,</span>
+            <span class="n">bezier</span><span class="p">,</span>
+            <span class="n">tangential_arc</span><span class="p">,</span>
+            <span class="n">tangential_arc_to</span><span class="p">,</span>
+        <span class="p">],</span>
+        <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">]</span>
 </pre></div>
 
            </div>

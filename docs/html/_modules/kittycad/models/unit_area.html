@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.unit_area &mdash; kittycad v0.4.6 documentation</title>
+  <title>kittycad.models.unit_area &mdash; kittycad v0.5.9 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=80626fd4"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=19ad864f"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.6
+                v0.5.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -85,25 +85,25 @@
 <div class="viewcode-block" id="UnitArea"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_area.UnitArea.html#kittycad.models.unit_area.UnitArea">[docs]</a><span class="k">class</span> <span class="nc">UnitArea</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The valid types of area units.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square centimetres &lt;https://en.wikipedia.org/wiki/Square_centimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square centimeters &lt;https://en.wikipedia.org/wiki/Square_centimeter&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">CM2</span> <span class="o">=</span> <span class="s2">&quot;cm2&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square decimetres &lt;https://en.wikipedia.org/wiki/Square_decimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square decimeters &lt;https://en.wikipedia.org/wiki/Square_decimeter&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">DM2</span> <span class="o">=</span> <span class="s2">&quot;dm2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square feet &lt;https://en.wikipedia.org/wiki/Square_foot&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">FT2</span> <span class="o">=</span> <span class="s2">&quot;ft2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square inches &lt;https://en.wikipedia.org/wiki/Square_inch&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">IN2</span> <span class="o">=</span> <span class="s2">&quot;in2&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square kilometres &lt;https://en.wikipedia.org/wiki/Square_kilometre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square kilometers &lt;https://en.wikipedia.org/wiki/Square_kilometer&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">KM2</span> <span class="o">=</span> <span class="s2">&quot;km2&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square metres &lt;https://en.wikipedia.org/wiki/Square_metre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square meters &lt;https://en.wikipedia.org/wiki/Square_meter&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">M2</span> <span class="o">=</span> <span class="s2">&quot;m2&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square millimetres &lt;https://en.wikipedia.org/wiki/Square_millimetre&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square millimeters &lt;https://en.wikipedia.org/wiki/Square_millimeter&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">MM2</span> <span class="o">=</span> <span class="s2">&quot;mm2&quot;</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;# Square yards &lt;https://en.wikipedia.org/wiki/Square_mile&gt; &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
     <span class="n">YD2</span> <span class="o">=</span> <span class="s2">&quot;yd2&quot;</span>
 
-<div class="viewcode-block" id="UnitArea.__str__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_area.UnitArea.html#kittycad.models.unit_area.UnitArea.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

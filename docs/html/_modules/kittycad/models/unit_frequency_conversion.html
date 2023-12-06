@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.unit_frequency_conversion &mdash; kittycad v0.4.6 documentation</title>
+  <title>kittycad.models.unit_frequency_conversion &mdash; kittycad v0.5.9 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=80626fd4"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=19ad864f"></script>
         <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.6
+                v0.5.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -80,193 +80,41 @@
              
   <h1>Source code for kittycad.models.unit_frequency_conversion</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">import</span> <span class="nn">attr</span>
-<span class="kn">from</span> <span class="nn">dateutil.parser</span> <span class="kn">import</span> <span class="n">isoparse</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="kn">from</span> <span class="nn">..models.api_call_status</span> <span class="kn">import</span> <span class="n">ApiCallStatus</span>
 <span class="kn">from</span> <span class="nn">..models.unit_frequency</span> <span class="kn">import</span> <span class="n">UnitFrequency</span>
 <span class="kn">from</span> <span class="nn">..models.uuid</span> <span class="kn">import</span> <span class="n">Uuid</span>
-<span class="kn">from</span> <span class="nn">..types</span> <span class="kn">import</span> <span class="n">UNSET</span><span class="p">,</span> <span class="n">Unset</span>
-
-<span class="n">SX</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;SX&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;UnitFrequencyConversion&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="UnitFrequencyConversion"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">UnitFrequencyConversion</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of converting between units.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<div class="viewcode-block" id="UnitFrequencyConversion"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion">[docs]</a><span class="k">class</span> <span class="nc">UnitFrequencyConversion</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Result of converting between units.&quot;&quot;&quot;</span>
 
-    <span class="n">completed_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">error</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="nb">input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">input_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitFrequency</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">output</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">output_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitFrequency</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ApiCallStatus</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">updated_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-    <span class="n">user_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
+    <span class="n">completed_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">additional_properties</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
 
-<div class="viewcode-block" id="UnitFrequencyConversion.to_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="n">completed_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completed_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">completed_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">completed_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="n">created_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">created_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span>
-        <span class="nb">id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
-        <span class="nb">input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">input_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_unit</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">output_unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_unit</span>
-        <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">started_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">started_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">started_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">updated_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">updated_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">updated_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated_at</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span>
+    <span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">field_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">)</span>
-        <span class="n">field_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({})</span>
-        <span class="k">if</span> <span class="n">completed_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;completed_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">completed_at</span>
-        <span class="k">if</span> <span class="n">created_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;created_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">created_at</span>
-        <span class="k">if</span> <span class="n">error</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">error</span>
-        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
-        <span class="k">if</span> <span class="nb">input</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span>
-        <span class="k">if</span> <span class="n">input_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;input_unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_unit</span>
-        <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
-        <span class="k">if</span> <span class="n">output_unit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;output_unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_unit</span>
-        <span class="k">if</span> <span class="n">started_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;started_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">started_at</span>
-        <span class="k">if</span> <span class="n">status</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">status</span>
-        <span class="k">if</span> <span class="n">updated_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;updated_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">updated_at</span>
-        <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">UNSET</span><span class="p">:</span>
-            <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user_id</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span>
 
-        <span class="k">return</span> <span class="n">field_dict</span></div>
+    <span class="nb">input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="UnitFrequencyConversion.from_dict"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">SX</span><span class="p">],</span> <span class="n">src_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">SX</span><span class="p">:</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">src_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">_completed_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;completed_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">completed_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_completed_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">completed_at</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">completed_at</span> <span class="o">=</span> <span class="n">isoparse</span><span class="p">(</span><span class="n">_completed_at</span><span class="p">)</span>
+    <span class="n">input_unit</span><span class="p">:</span> <span class="n">UnitFrequency</span>
 
-        <span class="n">_created_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;created_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">created_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_created_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">created_at</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">created_at</span> <span class="o">=</span> <span class="n">isoparse</span><span class="p">(</span><span class="n">_created_at</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">error</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">output_unit</span><span class="p">:</span> <span class="n">UnitFrequency</span>
 
-        <span class="n">_id</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="nb">id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">Uuid</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_id</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="nb">id</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">id</span> <span class="o">=</span> <span class="n">_id</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="n">started_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="nb">input</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">ApiCallStatus</span>
 
-        <span class="n">_input_unit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;input_unit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">input_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitFrequency</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_input_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">input_unit</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">input_unit</span> <span class="o">=</span> <span class="n">_input_unit</span>  <span class="c1"># type: ignore[arg-type]</span>
+    <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
 
-        <span class="n">output</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">_output_unit</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;output_unit&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">output_unit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">UnitFrequency</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_output_unit</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">output_unit</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">output_unit</span> <span class="o">=</span> <span class="n">_output_unit</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="n">_started_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;started_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">started_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_started_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">started_at</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">started_at</span> <span class="o">=</span> <span class="n">isoparse</span><span class="p">(</span><span class="n">_started_at</span><span class="p">)</span>
-
-        <span class="n">_status</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">status</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">ApiCallStatus</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_status</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">_status</span>  <span class="c1"># type: ignore[arg-type]</span>
-
-        <span class="n">_updated_at</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-        <span class="n">updated_at</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Unset</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_updated_at</span><span class="p">,</span> <span class="n">Unset</span><span class="p">):</span>
-            <span class="n">updated_at</span> <span class="o">=</span> <span class="n">UNSET</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">updated_at</span> <span class="o">=</span> <span class="n">isoparse</span><span class="p">(</span><span class="n">_updated_at</span><span class="p">)</span>
-
-        <span class="n">user_id</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">UNSET</span><span class="p">)</span>
-
-        <span class="n">unit_frequency_conversion</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">completed_at</span><span class="o">=</span><span class="n">completed_at</span><span class="p">,</span>
-            <span class="n">created_at</span><span class="o">=</span><span class="n">created_at</span><span class="p">,</span>
-            <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
-            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
-            <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
-            <span class="n">input_unit</span><span class="o">=</span><span class="n">input_unit</span><span class="p">,</span>
-            <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
-            <span class="n">output_unit</span><span class="o">=</span><span class="n">output_unit</span><span class="p">,</span>
-            <span class="n">started_at</span><span class="o">=</span><span class="n">started_at</span><span class="p">,</span>
-            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">,</span>
-            <span class="n">updated_at</span><span class="o">=</span><span class="n">updated_at</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">unit_frequency_conversion</span><span class="o">.</span><span class="n">additional_properties</span> <span class="o">=</span> <span class="n">d</span>
-        <span class="k">return</span> <span class="n">unit_frequency_conversion</span></div>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">additional_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<div class="viewcode-block" id="UnitFrequencyConversion.__getitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="UnitFrequencyConversion.__setitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
-
-<div class="viewcode-block" id="UnitFrequencyConversion.__delitem__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="UnitFrequencyConversion.__contains__"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.html#kittycad.models.unit_frequency_conversion.UnitFrequencyConversion.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_properties</span></div></div>
+    <span class="n">user_id</span><span class="p">:</span> <span class="n">Uuid</span></div>
 </pre></div>
 
            </div>

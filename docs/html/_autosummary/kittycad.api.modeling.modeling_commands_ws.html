@@ -6,16 +6,16 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="_autosummary/kittycad.api.modeling.modeling_commands_ws.html" />
 <meta property="og:site_name" content="kittycad" />
-<meta property="og:description" content="Functions" />
+<meta property="og:description" content="Functions Classes" />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.api.modeling.modeling_commands_ws_8b8c7ae2.png" />
-<meta property="og:image:alt" content="Functions" />
-<meta name="description" content="Functions" />
+<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.api.modeling.modeling_commands_ws_14b7b853.png" />
+<meta property="og:image:alt" content="Functions Classes" />
+<meta name="description" content="Functions Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.modeling.modeling_commands_ws &mdash; kittycad v0.4.6 documentation</title>
+  <title>kittycad.api.modeling.modeling_commands_ws &mdash; kittycad v0.5.9 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -27,7 +27,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80626fd4"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=19ad864f"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="kittycad.api.modeling.modeling_commands_ws.asyncio" href="kittycad.api.modeling.modeling_commands_ws.asyncio.html" />
-    <link rel="prev" title="kittycad.api.modeling.cmd_batch.sync_detailed" href="kittycad.api.modeling.cmd_batch.sync_detailed.html" /> 
+    <link rel="prev" title="kittycad.api.modeling" href="kittycad.api.modeling.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -51,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.6
+                v0.5.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -74,11 +74,11 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.hidden.html">kittycad.api.hidden</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.meta.html">kittycad.api.meta</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="kittycad.api.modeling.html">kittycad.api.modeling</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="kittycad.api.modeling.cmd.html">kittycad.api.modeling.cmd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kittycad.api.modeling.cmd_batch.html">kittycad.api.modeling.cmd_batch</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.api.modeling.modeling_commands_ws</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.asyncio.html">kittycad.api.modeling.modeling_commands_ws.asyncio</a></li>
 <li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.sync.html">kittycad.api.modeling.modeling_commands_ws.sync</a></li>
+<li class="toctree-l4"><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.WebSocket.html">kittycad.api.modeling.modeling_commands_ws.WebSocket</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket"><code class="docutils literal notranslate"><span class="pre">WebSocket</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.api.modeling.modeling_commands_ws._get_kwargs"><code class="docutils literal notranslate"><span class="pre">_get_kwargs()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.api.modeling.modeling_commands_ws.asyncio"><code class="docutils literal notranslate"><span class="pre">asyncio()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.api.modeling.modeling_commands_ws.sync"><code class="docutils literal notranslate"><span class="pre">sync()</span></code></a></li>
@@ -135,19 +135,112 @@
 </tr>
 </tbody>
 </table>
+<p class="rubric">Classes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.WebSocket.html#kittycad.api.modeling.modeling_commands_ws.WebSocket" title="kittycad.api.modeling.modeling_commands_ws.WebSocket"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WebSocket</span></code></a>(fps, unlocked_framerate, ...)</p></td>
+<td><p>A websocket connection to the API endpoint.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">WebSocket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webrtc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket" title="Permalink to this definition"></a></dt>
+<dd><p>A websocket connection to the API endpoint.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.__annotations__">
+<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ws':</span> <span class="pre">&lt;class</span> <span class="pre">'websockets.sync.client.ClientConnection'&gt;}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.__annotations__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.__dict__">
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.api.modeling.modeling_commands_ws',</span> <span class="pre">'__annotations__':</span> <span class="pre">{'ws':</span> <span class="pre">&lt;class</span> <span class="pre">'websockets.sync.client.ClientConnection'&gt;},</span> <span class="pre">'__doc__':</span> <span class="pre">'A</span> <span class="pre">websocket</span> <span class="pre">connection</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">API</span> <span class="pre">endpoint.',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.__init__&gt;,</span> <span class="pre">'__enter__':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.__enter__&gt;,</span> <span class="pre">'__exit__':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.__exit__&gt;,</span> <span class="pre">'__iter__':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.__iter__&gt;,</span> <span class="pre">'send':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.send&gt;,</span> <span class="pre">'send_binary':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.send_binary&gt;,</span> <span class="pre">'recv':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.recv&gt;,</span> <span class="pre">'close':</span> <span class="pre">&lt;function</span> <span class="pre">WebSocket.close&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'WebSocket'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'WebSocket'</span> <span class="pre">objects&gt;})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.__dict__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.__enter__">
+<span class="sig-name descname"><span class="pre">__enter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.__enter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.__enter__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.__exit__">
+<span class="sig-name descname"><span class="pre">__exit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exc_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">traceback</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.__exit__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.__exit__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webrtc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.__iter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.__iter__" title="Permalink to this definition"></a></dt>
+<dd><p>Iterate on incoming messages.</p>
+<p>The iterator calls <a class="reference internal" href="kittycad.api.modeling.modeling_commands_ws.WebSocket.html#kittycad.api.modeling.modeling_commands_ws.WebSocket.recv" title="kittycad.api.modeling.modeling_commands_ws.WebSocket.recv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">recv()</span></code></a> and yields messages in an infinite loop.</p>
+<p>It exits when the connection is closed normally. It raises a
+<code class="xref py py-exc docutils literal notranslate"><span class="pre">ConnectionClosedError</span></code> exception after a
+protocol error or a network failure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">RootModel[Union[SuccessWebSocketResponse,</span> <span class="pre">FailureWebSocketResponse]]</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.api.modeling.modeling_commands_ws'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.__module__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.close" title="Permalink to this definition"></a></dt>
+<dd><p>Close the websocket.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.recv">
+<span class="sig-name descname"><span class="pre">recv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.recv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.recv" title="Permalink to this definition"></a></dt>
+<dd><p>Receive data from the websocket.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RootModel[Union[SuccessWebSocketResponse,</span> <span class="pre">FailureWebSocketResponse]]</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.send" title="Permalink to this definition"></a></dt>
+<dd><p>Send data to the websocket.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.send_binary">
+<span class="sig-name descname"><span class="pre">send_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#WebSocket.send_binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.send_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Send data as bson to the websocket.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.WebSocket.ws">
+<span class="sig-name descname"><span class="pre">ws</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ClientConnection</span></code></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.WebSocket.ws" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws._get_kwargs">
-<span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">_get_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#_get_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws._get_kwargs" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">_get_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webrtc</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#_get_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws._get_kwargs" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.11)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.asyncio">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.asyncio" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webrtc</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.asyncio" title="Permalink to this definition"></a></dt>
 <dd><p>Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -158,7 +251,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.modeling.modeling_commands_ws.sync">
-<span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.sync" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.modeling.modeling_commands_ws.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unlocked_framerate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">video_res_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webrtc</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/modeling/modeling_commands_ws.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/modeling/modeling_commands_ws.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.modeling.modeling_commands_ws.sync" title="Permalink to this definition"></a></dt>
 <dd><p>Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
@@ -173,7 +266,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kittycad.api.modeling.cmd_batch.sync_detailed.html" class="btn btn-neutral float-left" title="kittycad.api.modeling.cmd_batch.sync_detailed" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.api.modeling.html" class="btn btn-neutral float-left" title="kittycad.api.modeling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="kittycad.api.modeling.modeling_commands_ws.asyncio.html" class="btn btn-neutral float-right" title="kittycad.api.modeling.modeling_commands_ws.asyncio" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

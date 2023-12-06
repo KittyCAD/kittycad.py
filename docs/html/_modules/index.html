@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview: module code &mdash; kittycad v0.4.6 documentation</title>
+  <title>Overview: module code &mdash; kittycad v0.5.9 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=80626fd4"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=19ad864f"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.4.6
+                v0.5.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -78,9 +78,14 @@
            <div itemprop="articleBody">
              
   <h1>All modules for which code is available</h1>
-<ul><li><a href="builtins.html">builtins</a></li>
-<li><a href="kittycad/api/ai/create_image_to_3d.html">kittycad.api.ai.create_image_to_3d</a></li>
-<li><a href="kittycad/api/ai/create_text_to_3d.html">kittycad.api.ai.create_text_to_3d</a></li>
+<ul><li><a href="_abc.html">_abc</a></li>
+<li><a href="builtins.html">builtins</a></li>
+<li><a href="kittycad/api/ai/create_text_to_cad.html">kittycad.api.ai.create_text_to_cad</a></li>
+<li><a href="kittycad/api/ai/create_text_to_cad_model_feedback.html">kittycad.api.ai.create_text_to_cad_model_feedback</a></li>
+<li><a href="kittycad/api/ai/get_ai_prompt.html">kittycad.api.ai.get_ai_prompt</a></li>
+<li><a href="kittycad/api/ai/get_text_to_cad_model_for_user.html">kittycad.api.ai.get_text_to_cad_model_for_user</a></li>
+<li><a href="kittycad/api/ai/list_ai_prompts.html">kittycad.api.ai.list_ai_prompts</a></li>
+<li><a href="kittycad/api/ai/list_text_to_cad_models_for_user.html">kittycad.api.ai.list_text_to_cad_models_for_user</a></li>
 <li><a href="kittycad/api/api_calls/get_api_call.html">kittycad.api.api_calls.get_api_call</a></li>
 <li><a href="kittycad/api/api_calls/get_api_call_for_user.html">kittycad.api.api_calls.get_api_call_for_user</a></li>
 <li><a href="kittycad/api/api_calls/get_api_call_metrics.html">kittycad.api.api_calls.get_api_call_metrics</a></li>
@@ -100,12 +105,10 @@
 <li><a href="kittycad/api/executor/create_file_execution.html">kittycad.api.executor.create_file_execution</a></li>
 <li><a href="kittycad/api/file/create_file_center_of_mass.html">kittycad.api.file.create_file_center_of_mass</a></li>
 <li><a href="kittycad/api/file/create_file_conversion.html">kittycad.api.file.create_file_conversion</a></li>
-<li><a href="kittycad/api/file/create_file_conversion_with_base64_helper.html">kittycad.api.file.create_file_conversion_with_base64_helper</a></li>
 <li><a href="kittycad/api/file/create_file_density.html">kittycad.api.file.create_file_density</a></li>
 <li><a href="kittycad/api/file/create_file_mass.html">kittycad.api.file.create_file_mass</a></li>
 <li><a href="kittycad/api/file/create_file_surface_area.html">kittycad.api.file.create_file_surface_area</a></li>
 <li><a href="kittycad/api/file/create_file_volume.html">kittycad.api.file.create_file_volume</a></li>
-<li><a href="kittycad/api/file/get_file_conversion_with_base64_helper.html">kittycad.api.file.get_file_conversion_with_base64_helper</a></li>
 <li><a href="kittycad/api/hidden/auth_email.html">kittycad.api.hidden.auth_email</a></li>
 <li><a href="kittycad/api/hidden/auth_email_callback.html">kittycad.api.hidden.auth_email_callback</a></li>
 <li><a href="kittycad/api/hidden/logout.html">kittycad.api.hidden.logout</a></li>
@@ -113,9 +116,8 @@
 <li><a href="kittycad/api/meta/get_metadata.html">kittycad.api.meta.get_metadata</a></li>
 <li><a href="kittycad/api/meta/get_openai_schema.html">kittycad.api.meta.get_openai_schema</a></li>
 <li><a href="kittycad/api/meta/get_schema.html">kittycad.api.meta.get_schema</a></li>
+<li><a href="kittycad/api/meta/internal_get_api_token_for_discord_user.html">kittycad.api.meta.internal_get_api_token_for_discord_user</a></li>
 <li><a href="kittycad/api/meta/ping.html">kittycad.api.meta.ping</a></li>
-<li><a href="kittycad/api/modeling/cmd.html">kittycad.api.modeling.cmd</a></li>
-<li><a href="kittycad/api/modeling/cmd_batch.html">kittycad.api.modeling.cmd_batch</a></li>
 <li><a href="kittycad/api/modeling/modeling_commands_ws.html">kittycad.api.modeling.modeling_commands_ws</a></li>
 <li><a href="kittycad/api/payments/create_payment_information_for_user.html">kittycad.api.payments.create_payment_information_for_user</a></li>
 <li><a href="kittycad/api/payments/create_payment_intent_for_user.html">kittycad.api.payments.create_payment_intent_for_user</a></li>
@@ -153,12 +155,17 @@
 <li><a href="kittycad/api/users/update_user_self.html">kittycad.api.users.update_user_self</a></li>
 <li><a href="kittycad/client.html">kittycad.client</a></li>
 <li><a href="kittycad/models/account_provider.html">kittycad.models.account_provider</a></li>
+<li><a href="kittycad/models/ai_feedback.html">kittycad.models.ai_feedback</a></li>
 <li><a href="kittycad/models/ai_plugin_api.html">kittycad.models.ai_plugin_api</a></li>
 <li><a href="kittycad/models/ai_plugin_api_type.html">kittycad.models.ai_plugin_api_type</a></li>
 <li><a href="kittycad/models/ai_plugin_auth.html">kittycad.models.ai_plugin_auth</a></li>
 <li><a href="kittycad/models/ai_plugin_auth_type.html">kittycad.models.ai_plugin_auth_type</a></li>
 <li><a href="kittycad/models/ai_plugin_http_auth_type.html">kittycad.models.ai_plugin_http_auth_type</a></li>
 <li><a href="kittycad/models/ai_plugin_manifest.html">kittycad.models.ai_plugin_manifest</a></li>
+<li><a href="kittycad/models/ai_prompt.html">kittycad.models.ai_prompt</a></li>
+<li><a href="kittycad/models/ai_prompt_results_page.html">kittycad.models.ai_prompt_results_page</a></li>
+<li><a href="kittycad/models/ai_prompt_type.html">kittycad.models.ai_prompt_type</a></li>
+<li><a href="kittycad/models/angle.html">kittycad.models.angle</a></li>
 <li><a href="kittycad/models/annotation_line_end.html">kittycad.models.annotation_line_end</a></li>
 <li><a href="kittycad/models/annotation_line_end_options.html">kittycad.models.annotation_line_end_options</a></li>
 <li><a href="kittycad/models/annotation_options.html">kittycad.models.annotation_options</a></li>
@@ -171,6 +178,7 @@
 <li><a href="kittycad/models/api_call_status.html">kittycad.models.api_call_status</a></li>
 <li><a href="kittycad/models/api_call_with_price.html">kittycad.models.api_call_with_price</a></li>
 <li><a href="kittycad/models/api_call_with_price_results_page.html">kittycad.models.api_call_with_price_results_page</a></li>
+<li><a href="kittycad/models/api_error.html">kittycad.models.api_error</a></li>
 <li><a href="kittycad/models/api_token.html">kittycad.models.api_token</a></li>
 <li><a href="kittycad/models/api_token_results_page.html">kittycad.models.api_token_results_page</a></li>
 <li><a href="kittycad/models/app_client_info.html">kittycad.models.app_client_info</a></li>
@@ -180,37 +188,50 @@
 <li><a href="kittycad/models/async_api_call_type.html">kittycad.models.async_api_call_type</a></li>
 <li><a href="kittycad/models/axis.html">kittycad.models.axis</a></li>
 <li><a href="kittycad/models/axis_direction_pair.html">kittycad.models.axis_direction_pair</a></li>
+<li><a href="kittycad/models/base64data.html">kittycad.models.base64data</a></li>
 <li><a href="kittycad/models/billing_info.html">kittycad.models.billing_info</a></li>
 <li><a href="kittycad/models/cache_metadata.html">kittycad.models.cache_metadata</a></li>
 <li><a href="kittycad/models/camera_drag_interaction_type.html">kittycad.models.camera_drag_interaction_type</a></li>
 <li><a href="kittycad/models/card_details.html">kittycad.models.card_details</a></li>
+<li><a href="kittycad/models/center_of_mass.html">kittycad.models.center_of_mass</a></li>
+<li><a href="kittycad/models/client_metrics.html">kittycad.models.client_metrics</a></li>
 <li><a href="kittycad/models/cluster.html">kittycad.models.cluster</a></li>
 <li><a href="kittycad/models/code_language.html">kittycad.models.code_language</a></li>
 <li><a href="kittycad/models/code_output.html">kittycad.models.code_output</a></li>
 <li><a href="kittycad/models/color.html">kittycad.models.color</a></li>
-<li><a href="kittycad/models/commit.html">kittycad.models.commit</a></li>
 <li><a href="kittycad/models/connection.html">kittycad.models.connection</a></li>
 <li><a href="kittycad/models/country_code.html">kittycad.models.country_code</a></li>
 <li><a href="kittycad/models/coupon.html">kittycad.models.coupon</a></li>
 <li><a href="kittycad/models/created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
 <li><a href="kittycad/models/currency.html">kittycad.models.currency</a></li>
+<li><a href="kittycad/models/curve_get_control_points.html">kittycad.models.curve_get_control_points</a></li>
+<li><a href="kittycad/models/curve_get_end_points.html">kittycad.models.curve_get_end_points</a></li>
+<li><a href="kittycad/models/curve_get_type.html">kittycad.models.curve_get_type</a></li>
+<li><a href="kittycad/models/curve_type.html">kittycad.models.curve_type</a></li>
 <li><a href="kittycad/models/customer.html">kittycad.models.customer</a></li>
 <li><a href="kittycad/models/customer_balance.html">kittycad.models.customer_balance</a></li>
+<li><a href="kittycad/models/density.html">kittycad.models.density</a></li>
 <li><a href="kittycad/models/device_access_token_request_form.html">kittycad.models.device_access_token_request_form</a></li>
 <li><a href="kittycad/models/device_auth_request_form.html">kittycad.models.device_auth_request_form</a></li>
 <li><a href="kittycad/models/device_auth_verify_params.html">kittycad.models.device_auth_verify_params</a></li>
 <li><a href="kittycad/models/direction.html">kittycad.models.direction</a></li>
 <li><a href="kittycad/models/discount.html">kittycad.models.discount</a></li>
-<li><a href="kittycad/models/docker_system_info.html">kittycad.models.docker_system_info</a></li>
 <li><a href="kittycad/models/email_authentication_form.html">kittycad.models.email_authentication_form</a></li>
-<li><a href="kittycad/models/engine_metadata.html">kittycad.models.engine_metadata</a></li>
+<li><a href="kittycad/models/empty.html">kittycad.models.empty</a></li>
+<li><a href="kittycad/models/entity_get_all_child_uuids.html">kittycad.models.entity_get_all_child_uuids</a></li>
+<li><a href="kittycad/models/entity_get_child_uuid.html">kittycad.models.entity_get_child_uuid</a></li>
+<li><a href="kittycad/models/entity_get_num_children.html">kittycad.models.entity_get_num_children</a></li>
+<li><a href="kittycad/models/entity_get_parent_id.html">kittycad.models.entity_get_parent_id</a></li>
 <li><a href="kittycad/models/entity_type.html">kittycad.models.entity_type</a></li>
 <li><a href="kittycad/models/environment.html">kittycad.models.environment</a></li>
 <li><a href="kittycad/models/error.html">kittycad.models.error</a></li>
-<li><a href="kittycad/models/executor_metadata.html">kittycad.models.executor_metadata</a></li>
+<li><a href="kittycad/models/error_code.html">kittycad.models.error_code</a></li>
+<li><a href="kittycad/models/export.html">kittycad.models.export</a></li>
 <li><a href="kittycad/models/export_file.html">kittycad.models.export_file</a></li>
 <li><a href="kittycad/models/extended_user.html">kittycad.models.extended_user</a></li>
 <li><a href="kittycad/models/extended_user_results_page.html">kittycad.models.extended_user_results_page</a></li>
+<li><a href="kittycad/models/failure_web_socket_response.html">kittycad.models.failure_web_socket_response</a></li>
+<li><a href="kittycad/models/fbx_storage.html">kittycad.models.fbx_storage</a></li>
 <li><a href="kittycad/models/file_center_of_mass.html">kittycad.models.file_center_of_mass</a></li>
 <li><a href="kittycad/models/file_conversion.html">kittycad.models.file_conversion</a></li>
 <li><a href="kittycad/models/file_density.html">kittycad.models.file_density</a></li>
@@ -221,8 +242,15 @@
 <li><a href="kittycad/models/file_system_metadata.html">kittycad.models.file_system_metadata</a></li>
 <li><a href="kittycad/models/file_volume.html">kittycad.models.file_volume</a></li>
 <li><a href="kittycad/models/gateway.html">kittycad.models.gateway</a></li>
-<li><a href="kittycad/models/image_type.html">kittycad.models.image_type</a></li>
-<li><a href="kittycad/models/index_info.html">kittycad.models.index_info</a></li>
+<li><a href="kittycad/models/get_entity_type.html">kittycad.models.get_entity_type</a></li>
+<li><a href="kittycad/models/get_sketch_mode_plane.html">kittycad.models.get_sketch_mode_plane</a></li>
+<li><a href="kittycad/models/gltf_presentation.html">kittycad.models.gltf_presentation</a></li>
+<li><a href="kittycad/models/gltf_storage.html">kittycad.models.gltf_storage</a></li>
+<li><a href="kittycad/models/highlight_set_entity.html">kittycad.models.highlight_set_entity</a></li>
+<li><a href="kittycad/models/ice_server.html">kittycad.models.ice_server</a></li>
+<li><a href="kittycad/models/image_format.html">kittycad.models.image_format</a></li>
+<li><a href="kittycad/models/import_file.html">kittycad.models.import_file</a></li>
+<li><a href="kittycad/models/import_files.html">kittycad.models.import_files</a></li>
 <li><a href="kittycad/models/input_format.html">kittycad.models.input_format</a></li>
 <li><a href="kittycad/models/invoice.html">kittycad.models.invoice</a></li>
 <li><a href="kittycad/models/invoice_line_item.html">kittycad.models.invoice_line_item</a></li>
@@ -232,44 +260,62 @@
 <li><a href="kittycad/models/jetstream_config.html">kittycad.models.jetstream_config</a></li>
 <li><a href="kittycad/models/jetstream_stats.html">kittycad.models.jetstream_stats</a></li>
 <li><a href="kittycad/models/leaf_node.html">kittycad.models.leaf_node</a></li>
-<li><a href="kittycad/models/mesh.html">kittycad.models.mesh</a></li>
+<li><a href="kittycad/models/mass.html">kittycad.models.mass</a></li>
 <li><a href="kittycad/models/meta_cluster_info.html">kittycad.models.meta_cluster_info</a></li>
 <li><a href="kittycad/models/metadata.html">kittycad.models.metadata</a></li>
 <li><a href="kittycad/models/method.html">kittycad.models.method</a></li>
 <li><a href="kittycad/models/modeling_cmd.html">kittycad.models.modeling_cmd</a></li>
 <li><a href="kittycad/models/modeling_cmd_id.html">kittycad.models.modeling_cmd_id</a></li>
 <li><a href="kittycad/models/modeling_cmd_req.html">kittycad.models.modeling_cmd_req</a></li>
-<li><a href="kittycad/models/modeling_cmd_req_batch.html">kittycad.models.modeling_cmd_req_batch</a></li>
-<li><a href="kittycad/models/modeling_error.html">kittycad.models.modeling_error</a></li>
-<li><a href="kittycad/models/modeling_outcome.html">kittycad.models.modeling_outcome</a></li>
-<li><a href="kittycad/models/modeling_outcomes.html">kittycad.models.modeling_outcomes</a></li>
+<li><a href="kittycad/models/mouse_click.html">kittycad.models.mouse_click</a></li>
 <li><a href="kittycad/models/new_address.html">kittycad.models.new_address</a></li>
 <li><a href="kittycad/models/o_auth2_client_info.html">kittycad.models.o_auth2_client_info</a></li>
 <li><a href="kittycad/models/o_auth2_grant_type.html">kittycad.models.o_auth2_grant_type</a></li>
 <li><a href="kittycad/models/ok_modeling_cmd_response.html">kittycad.models.ok_modeling_cmd_response</a></li>
+<li><a href="kittycad/models/ok_web_socket_response_data.html">kittycad.models.ok_web_socket_response_data</a></li>
 <li><a href="kittycad/models/onboarding.html">kittycad.models.onboarding</a></li>
 <li><a href="kittycad/models/output_file.html">kittycad.models.output_file</a></li>
 <li><a href="kittycad/models/output_format.html">kittycad.models.output_format</a></li>
+<li><a href="kittycad/models/path_command.html">kittycad.models.path_command</a></li>
+<li><a href="kittycad/models/path_component_constraint_bound.html">kittycad.models.path_component_constraint_bound</a></li>
+<li><a href="kittycad/models/path_component_constraint_type.html">kittycad.models.path_component_constraint_type</a></li>
+<li><a href="kittycad/models/path_get_curve_uuids_for_vertices.html">kittycad.models.path_get_curve_uuids_for_vertices</a></li>
+<li><a href="kittycad/models/path_get_info.html">kittycad.models.path_get_info</a></li>
+<li><a href="kittycad/models/path_get_vertex_uuids.html">kittycad.models.path_get_vertex_uuids</a></li>
 <li><a href="kittycad/models/path_segment.html">kittycad.models.path_segment</a></li>
+<li><a href="kittycad/models/path_segment_info.html">kittycad.models.path_segment_info</a></li>
 <li><a href="kittycad/models/payment_intent.html">kittycad.models.payment_intent</a></li>
 <li><a href="kittycad/models/payment_method.html">kittycad.models.payment_method</a></li>
 <li><a href="kittycad/models/payment_method_card_checks.html">kittycad.models.payment_method_card_checks</a></li>
 <li><a href="kittycad/models/payment_method_type.html">kittycad.models.payment_method_type</a></li>
-<li><a href="kittycad/models/plugins_info.html">kittycad.models.plugins_info</a></li>
+<li><a href="kittycad/models/plane_intersect_and_project.html">kittycad.models.plane_intersect_and_project</a></li>
+<li><a href="kittycad/models/ply_storage.html">kittycad.models.ply_storage</a></li>
 <li><a href="kittycad/models/point2d.html">kittycad.models.point2d</a></li>
 <li><a href="kittycad/models/point3d.html">kittycad.models.point3d</a></li>
-<li><a href="kittycad/models/point_e_metadata.html">kittycad.models.point_e_metadata</a></li>
 <li><a href="kittycad/models/pong.html">kittycad.models.pong</a></li>
-<li><a href="kittycad/models/registry_service_config.html">kittycad.models.registry_service_config</a></li>
-<li><a href="kittycad/models/runtime.html">kittycad.models.runtime</a></li>
+<li><a href="kittycad/models/raw_file.html">kittycad.models.raw_file</a></li>
+<li><a href="kittycad/models/rtc_ice_candidate_init.html">kittycad.models.rtc_ice_candidate_init</a></li>
+<li><a href="kittycad/models/rtc_sdp_type.html">kittycad.models.rtc_sdp_type</a></li>
+<li><a href="kittycad/models/rtc_session_description.html">kittycad.models.rtc_session_description</a></li>
 <li><a href="kittycad/models/scene_selection_type.html">kittycad.models.scene_selection_type</a></li>
+<li><a href="kittycad/models/scene_tool_type.html">kittycad.models.scene_tool_type</a></li>
+<li><a href="kittycad/models/select_get.html">kittycad.models.select_get</a></li>
+<li><a href="kittycad/models/select_with_point.html">kittycad.models.select_with_point</a></li>
+<li><a href="kittycad/models/selection.html">kittycad.models.selection</a></li>
 <li><a href="kittycad/models/session.html">kittycad.models.session</a></li>
-<li><a href="kittycad/models/storage.html">kittycad.models.storage</a></li>
+<li><a href="kittycad/models/solid3d_get_all_edge_faces.html">kittycad.models.solid3d_get_all_edge_faces</a></li>
+<li><a href="kittycad/models/solid3d_get_all_opposite_edges.html">kittycad.models.solid3d_get_all_opposite_edges</a></li>
+<li><a href="kittycad/models/solid3d_get_next_adjacent_edge.html">kittycad.models.solid3d_get_next_adjacent_edge</a></li>
+<li><a href="kittycad/models/solid3d_get_opposite_edge.html">kittycad.models.solid3d_get_opposite_edge</a></li>
+<li><a href="kittycad/models/solid3d_get_prev_adjacent_edge.html">kittycad.models.solid3d_get_prev_adjacent_edge</a></li>
+<li><a href="kittycad/models/stl_storage.html">kittycad.models.stl_storage</a></li>
+<li><a href="kittycad/models/success_web_socket_response.html">kittycad.models.success_web_socket_response</a></li>
+<li><a href="kittycad/models/surface_area.html">kittycad.models.surface_area</a></li>
 <li><a href="kittycad/models/system.html">kittycad.models.system</a></li>
-<li><a href="kittycad/models/system_info_cgroup_driver_enum.html">kittycad.models.system_info_cgroup_driver_enum</a></li>
-<li><a href="kittycad/models/system_info_cgroup_version_enum.html">kittycad.models.system_info_cgroup_version_enum</a></li>
-<li><a href="kittycad/models/system_info_default_address_pools.html">kittycad.models.system_info_default_address_pools</a></li>
-<li><a href="kittycad/models/system_info_isolation_enum.html">kittycad.models.system_info_isolation_enum</a></li>
+<li><a href="kittycad/models/take_snapshot.html">kittycad.models.take_snapshot</a></li>
+<li><a href="kittycad/models/text_to_cad.html">kittycad.models.text_to_cad</a></li>
+<li><a href="kittycad/models/text_to_cad_create_body.html">kittycad.models.text_to_cad_create_body</a></li>
+<li><a href="kittycad/models/text_to_cad_results_page.html">kittycad.models.text_to_cad_results_page</a></li>
 <li><a href="kittycad/models/unit_angle.html">kittycad.models.unit_angle</a></li>
 <li><a href="kittycad/models/unit_angle_conversion.html">kittycad.models.unit_angle_conversion</a></li>
 <li><a href="kittycad/models/unit_area.html">kittycad.models.unit_area</a></li>
@@ -302,7 +348,10 @@
 <li><a href="kittycad/models/user_results_page.html">kittycad.models.user_results_page</a></li>
 <li><a href="kittycad/models/uuid.html">kittycad.models.uuid</a></li>
 <li><a href="kittycad/models/verification_token.html">kittycad.models.verification_token</a></li>
+<li><a href="kittycad/models/volume.html">kittycad.models.volume</a></li>
+<li><a href="kittycad/models/web_socket_request.html">kittycad.models.web_socket_request</a></li>
 <li><a href="kittycad/types.html">kittycad.types</a></li>
+<li><a href="pydantic_core/_pydantic_core.html">pydantic_core._pydantic_core</a></li>
 </ul>
 
            </div>
