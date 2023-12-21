@@ -514,11 +514,11 @@ def test_text_to_cad():
     body: TextToCad = result
 
     # Poll the api until the status is completed.
-    # Timeout after 30 seconds.
+    # Timeout after some seconds.
     start_time = time.time()
     while (
         body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
-    ) and time.time() - start_time < 30:
+    ) and time.time() - start_time < 120:
         result_status: Optional[
             Union[TextToCad, Error]
         ] = get_text_to_cad_model_for_user.sync(
