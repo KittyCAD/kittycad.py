@@ -105,7 +105,7 @@ def sync(
     page_token: Optional[str] = None,
 ) -> Optional[Union[AiPromptResultsPage, Error]]:
     """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
-    This endpoint requires authentication by a KittyCAD employee.
+    This endpoint requires authentication by a Zoo employee.
     The AI prompts are returned in order of creation, with the most recently created AI prompts first.
     """  # noqa: E501
 
@@ -145,7 +145,7 @@ async def asyncio(
     page_token: Optional[str] = None,
 ) -> Optional[Union[AiPromptResultsPage, Error]]:
     """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
-    This endpoint requires authentication by a KittyCAD employee.
+    This endpoint requires authentication by a Zoo employee.
     The AI prompts are returned in order of creation, with the most recently created AI prompts first.
     """  # noqa: E501
 

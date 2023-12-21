@@ -76,7 +76,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[AiPrompt, Error]]:
-    """This endpoint requires authentication by a KittyCAD employee."""  # noqa: E501
+    """This endpoint requires authentication by a Zoo employee."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -105,7 +105,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[AiPrompt, Error]]:
-    """This endpoint requires authentication by a KittyCAD employee."""  # noqa: E501
+    """This endpoint requires authentication by a Zoo employee."""  # noqa: E501
 
     return (
         await asyncio_detailed(

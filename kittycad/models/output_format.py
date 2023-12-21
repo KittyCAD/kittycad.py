@@ -22,7 +22,7 @@ class fbx(BaseModel):
 
 
 class gltf(BaseModel):
-    """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ascii output, you can set that option for the export."""
+    """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ASCII output, you can set that option for the export."""
 
     presentation: GltfPresentation
 

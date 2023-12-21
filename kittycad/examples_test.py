@@ -82,7 +82,6 @@ from kittycad.api.users import (
     get_session_for_user,
     get_user,
     get_user_extended,
-    get_user_front_hash_self,
     get_user_onboarding_self,
     get_user_self,
     get_user_self_extended,
@@ -2818,38 +2817,6 @@ async def test_get_user_self_extended_async():
     response: Response[
         Optional[Union[ExtendedUser, Error]]
     ] = await get_user_self_extended.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
-def test_get_user_front_hash_self():
-    # Create our client.
-    client = ClientFromEnv()
-
-    get_user_front_hash_self.sync(
-        client=client,
-    )
-
-    # OR if you need more info (e.g. status_code)
-    get_user_front_hash_self.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_user_front_hash_self_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    await get_user_front_hash_self.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    await get_user_front_hash_self.asyncio_detailed(
         client=client,
     )
 
