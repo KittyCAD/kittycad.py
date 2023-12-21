@@ -1,10 +1,12 @@
 import json
 import os
+import time
 import uuid
 from typing import Optional, Union
 
 import pytest
 
+from .api.ai import create_text_to_cad, get_text_to_cad_model_for_user
 from .api.api_tokens import list_api_tokens_for_user
 from .api.file import create_file_conversion, create_file_mass, create_file_volume
 from .api.meta import ping
@@ -32,6 +34,8 @@ from .models import (
     ModelingCmdId,
     Pong,
     System,
+    TextToCad,
+    TextToCadCreateBody,
     UnitDensity,
     UnitLength,
     UnitMass,
@@ -489,3 +493,43 @@ def test_serialize_deserialize():
     assert model_dump["resp"]["type"] == "modeling"  # type: ignore
     assert model_dump["resp"]["data"]["modeling_response"]["type"] == "import_files"  # type: ignore
     assert model_dump["resp"]["data"]["modeling_response"]["data"]["object_id"] == "f61ac02e-77bd-468f-858f-fd4141a26acd"  # type: ignore
+
+
+def test_text_to_cad():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[TextToCad, Error]] = create_text_to_cad.sync(
+        client=client,
+        output_format=FileExportFormat.FBX,
+        body=TextToCadCreateBody(
+            prompt="a 2x4 lego",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: TextToCad = result
+
+    # Poll the api until the status is completed.
+    # Timeout after 30 seconds.
+    start_time = time.time()
+    while (
+        body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
+    ) and time.time() - start_time < 30:
+        result_status: Optional[
+            Union[TextToCad, Error]
+        ] = get_text_to_cad_model_for_user.sync(
+            client=client,
+            id=body.id,
+        )
+
+        if isinstance(result_status, Error) or result_status is None:
+            print(result_status)
+            raise Exception("Error in response")
+
+        body = result_status
+
+    assert body.status == ApiCallStatus.COMPLETED
