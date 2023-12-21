@@ -501,7 +501,7 @@ def test_text_to_cad():
 
     result: Optional[Union[TextToCad, Error]] = create_text_to_cad.sync(
         client=client,
-        output_format=FileExportFormat.FBX,
+        output_format=FileExportFormat.STEP,
         body=TextToCadCreateBody(
             prompt="a 2x4 lego",
         ),
