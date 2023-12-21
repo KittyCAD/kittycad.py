@@ -104,7 +104,7 @@ def sync(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.
+    """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
     The API calls are returned in order of creation, with the most recently created API calls first.
     """  # noqa: E501
 
@@ -143,7 +143,7 @@ async def asyncio(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user.
+    """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
     The API calls are returned in order of creation, with the most recently created API calls first.
     """  # noqa: E501
 

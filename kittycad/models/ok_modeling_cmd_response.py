@@ -10,8 +10,10 @@ from ..models.curve_get_type import CurveGetType
 from ..models.density import Density
 from ..models.entity_get_all_child_uuids import EntityGetAllChildUuids
 from ..models.entity_get_child_uuid import EntityGetChildUuid
+from ..models.entity_get_distance import EntityGetDistance
 from ..models.entity_get_num_children import EntityGetNumChildren
 from ..models.entity_get_parent_id import EntityGetParentId
+from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.export import Export
 from ..models.get_entity_type import GetEntityType
 from ..models.get_sketch_mode_plane import GetSketchModePlane
@@ -42,7 +44,7 @@ class empty(BaseModel):
 
 
 class export(BaseModel):
-    """The response from the `Export` command. When this is being performed over a websocket, this is sent as binary not JSON. The binary data can be deserialized as `bincode` into a `Vec<ExportFile>`."""
+    """The response from the ` ` command."""
 
     data: Export
 
@@ -50,7 +52,7 @@ class export(BaseModel):
 
 
 class select_with_point(BaseModel):
-    """The response from the `SelectWithPoint` command."""
+    """The response from the ` ` command."""
 
     data: SelectWithPoint
 
@@ -58,7 +60,7 @@ class select_with_point(BaseModel):
 
 
 class highlight_set_entity(BaseModel):
-    """The response from the `HighlightSetEntity` command."""
+    """The response from the ` ` command."""
 
     data: HighlightSetEntity
 
@@ -66,7 +68,7 @@ class highlight_set_entity(BaseModel):
 
 
 class entity_get_child_uuid(BaseModel):
-    """The response from the `EntityGetChildUuid` command."""
+    """The response from the ` ` command."""
 
     data: EntityGetChildUuid
 
@@ -74,7 +76,7 @@ class entity_get_child_uuid(BaseModel):
 
 
 class entity_get_num_children(BaseModel):
-    """The response from the `EntityGetNumChildren` command."""
+    """The response from the ` ` command."""
 
     data: EntityGetNumChildren
 
@@ -82,7 +84,7 @@ class entity_get_num_children(BaseModel):
 
 
 class entity_get_parent_id(BaseModel):
-    """The response from the `EntityGetParentId` command."""
+    """The response from the ` ` command."""
 
     data: EntityGetParentId
 
@@ -90,7 +92,7 @@ class entity_get_parent_id(BaseModel):
 
 
 class entity_get_all_child_uuids(BaseModel):
-    """The response from the `EntityGetAllChildUuids` command."""
+    """The response from the ` ` command."""
 
     data: EntityGetAllChildUuids
 
@@ -98,7 +100,7 @@ class entity_get_all_child_uuids(BaseModel):
 
 
 class select_get(BaseModel):
-    """The response from the `SelectGet` command."""
+    """The response from the ` ` command."""
 
     data: SelectGet
 
@@ -106,15 +108,31 @@ class select_get(BaseModel):
 
 
 class get_entity_type(BaseModel):
-    """The response from the `GetEntityType` command."""
+    """The response from the ` ` command."""
 
     data: GetEntityType
 
     type: Literal["get_entity_type"] = "get_entity_type"
 
 
+class entity_get_distance(BaseModel):
+    """The response from the ` ` command."""
+
+    data: EntityGetDistance
+
+    type: Literal["entity_get_distance"] = "entity_get_distance"
+
+
+class entity_linear_pattern(BaseModel):
+    """The response from the ` ` command."""
+
+    data: EntityLinearPattern
+
+    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
+
+
 class solid3d_get_all_edge_faces(BaseModel):
-    """The response from the `Solid3dGetAllEdgeFaces` command."""
+    """The response from the ` ` command."""
 
     data: Solid3dGetAllEdgeFaces
 
@@ -122,7 +140,7 @@ class solid3d_get_all_edge_faces(BaseModel):
 
 
 class solid3d_get_all_opposite_edges(BaseModel):
-    """The response from the `Solid3dGetAllOppositeEdges` command."""
+    """The response from the ` ` command."""
 
     data: Solid3dGetAllOppositeEdges
 
@@ -130,7 +148,7 @@ class solid3d_get_all_opposite_edges(BaseModel):
 
 
 class solid3d_get_opposite_edge(BaseModel):
-    """The response from the `Solid3dGetOppositeEdge` command."""
+    """The response from the ` ` command."""
 
     data: Solid3dGetOppositeEdge
 
@@ -138,7 +156,7 @@ class solid3d_get_opposite_edge(BaseModel):
 
 
 class solid3d_get_prev_adjacent_edge(BaseModel):
-    """The response from the `Solid3dGetPrevAdjacentEdge` command."""
+    """The response from the ` ` command."""
 
     data: Solid3dGetPrevAdjacentEdge
 
@@ -146,7 +164,7 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 
 
 class solid3d_get_next_adjacent_edge(BaseModel):
-    """The response from the `Solid3dGetNextAdjacentEdge` command."""
+    """The response from the ` ` command."""
 
     data: Solid3dGetNextAdjacentEdge
 
@@ -154,7 +172,7 @@ class solid3d_get_next_adjacent_edge(BaseModel):
 
 
 class mouse_click(BaseModel):
-    """The response from the `MouseClick` command."""
+    """The response from the ` ` command."""
 
     data: MouseClick
 
@@ -162,7 +180,7 @@ class mouse_click(BaseModel):
 
 
 class curve_get_type(BaseModel):
-    """The response from the `CurveGetType` command."""
+    """The response from the ` ` command."""
 
     data: CurveGetType
 
@@ -170,7 +188,7 @@ class curve_get_type(BaseModel):
 
 
 class curve_get_control_points(BaseModel):
-    """The response from the `CurveGetControlPoints` command."""
+    """The response from the ` ` command."""
 
     data: CurveGetControlPoints
 
@@ -178,7 +196,7 @@ class curve_get_control_points(BaseModel):
 
 
 class take_snapshot(BaseModel):
-    """The response from the `Take Snapshot` command."""
+    """The response from the ` ` command."""
 
     data: TakeSnapshot
 
@@ -186,7 +204,7 @@ class take_snapshot(BaseModel):
 
 
 class path_get_info(BaseModel):
-    """The response from the `Path Get Info` command."""
+    """The response from the ` ` command."""
 
     data: PathGetInfo
 
@@ -194,7 +212,7 @@ class path_get_info(BaseModel):
 
 
 class path_get_curve_uuids_for_vertices(BaseModel):
-    """The response from the `Path Get Curve UUIDs for Vertices` command."""
+    """The response from the ` ` command."""
 
     data: PathGetCurveUuidsForVertices
 
@@ -204,7 +222,7 @@ class path_get_curve_uuids_for_vertices(BaseModel):
 
 
 class path_get_vertex_uuids(BaseModel):
-    """The response from the `Path Get Vertex UUIDs` command."""
+    """The response from the ` ` command."""
 
     data: PathGetVertexUuids
 
@@ -212,7 +230,7 @@ class path_get_vertex_uuids(BaseModel):
 
 
 class plane_intersect_and_project(BaseModel):
-    """The response from the `PlaneIntersectAndProject` command."""
+    """The response from the ` ` command."""
 
     data: PlaneIntersectAndProject
 
@@ -220,7 +238,7 @@ class plane_intersect_and_project(BaseModel):
 
 
 class curve_get_end_points(BaseModel):
-    """The response from the `CurveGetEndPoints` command."""
+    """The response from the ` ` command."""
 
     data: CurveGetEndPoints
 
@@ -228,7 +246,7 @@ class curve_get_end_points(BaseModel):
 
 
 class import_files(BaseModel):
-    """The response from the `ImportFiles` command."""
+    """The response from the ` ` command."""
 
     data: ImportFiles
 
@@ -236,7 +254,7 @@ class import_files(BaseModel):
 
 
 class mass(BaseModel):
-    """The response from the `Mass` command."""
+    """The response from the ` ` command."""
 
     data: Mass
 
@@ -244,7 +262,7 @@ class mass(BaseModel):
 
 
 class volume(BaseModel):
-    """The response from the `Volume` command."""
+    """The response from the ` ` command."""
 
     data: Volume
 
@@ -252,7 +270,7 @@ class volume(BaseModel):
 
 
 class density(BaseModel):
-    """The response from the `Density` command."""
+    """The response from the ` ` command."""
 
     data: Density
 
@@ -260,7 +278,7 @@ class density(BaseModel):
 
 
 class surface_area(BaseModel):
-    """The response from the `SurfaceArea` command."""
+    """The response from the ` ` command."""
 
     data: SurfaceArea
 
@@ -268,7 +286,7 @@ class surface_area(BaseModel):
 
 
 class center_of_mass(BaseModel):
-    """The response from the `CenterOfMass` command."""
+    """The response from the ` ` command."""
 
     data: CenterOfMass
 
@@ -276,7 +294,7 @@ class center_of_mass(BaseModel):
 
 
 class get_sketch_mode_plane(BaseModel):
-    """The response from the `GetSketchModePlane` command."""
+    """The response from the ` ` command."""
 
     data: GetSketchModePlane
 
@@ -296,6 +314,8 @@ OkModelingCmdResponse = RootModel[
             entity_get_all_child_uuids,
             select_get,
             get_entity_type,
+            entity_get_distance,
+            entity_linear_pattern,
             solid3d_get_all_edge_faces,
             solid3d_get_all_opposite_edges,
             solid3d_get_opposite_edge,

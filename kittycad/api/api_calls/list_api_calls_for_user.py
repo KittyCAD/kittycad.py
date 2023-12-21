@@ -109,9 +109,9 @@ def sync(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if "me" is passed as the user id.
+    """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
-    If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.
+    If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
     The API calls are returned in order of creation, with the most recently created API calls first.
     """  # noqa: E501
 
@@ -154,9 +154,9 @@ async def asyncio(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns the API calls for the authenticated user if "me" is passed as the user id.
+    """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
-    If the authenticated user is a KittyCAD employee, then the API calls are returned for the user specified by the user id.
+    If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
     The API calls are returned in order of creation, with the most recently created API calls first.
     """  # noqa: E501
 

@@ -76,7 +76,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[TextToCad, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. The user must be the owner of the text-to-CAD model."""  # noqa: E501
+    """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -105,7 +105,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[TextToCad, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. The user must be the owner of the text-to-CAD model."""  # noqa: E501
+    """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""  # noqa: E501
 
     return (
         await asyncio_detailed(

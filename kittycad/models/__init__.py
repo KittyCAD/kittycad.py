@@ -61,12 +61,15 @@ from .device_auth_request_form import DeviceAuthRequestForm
 from .device_auth_verify_params import DeviceAuthVerifyParams
 from .direction import Direction
 from .discount import Discount
+from .distance_type import DistanceType
 from .email_authentication_form import EmailAuthenticationForm
 from .empty import Empty
 from .entity_get_all_child_uuids import EntityGetAllChildUuids
 from .entity_get_child_uuid import EntityGetChildUuid
+from .entity_get_distance import EntityGetDistance
 from .entity_get_num_children import EntityGetNumChildren
 from .entity_get_parent_id import EntityGetParentId
+from .entity_linear_pattern import EntityLinearPattern
 from .entity_type import EntityType
 from .environment import Environment
 from .error import Error
@@ -89,6 +92,7 @@ from .file_volume import FileVolume
 from .gateway import Gateway
 from .get_entity_type import GetEntityType
 from .get_sketch_mode_plane import GetSketchModePlane
+from .global_axis import GlobalAxis
 from .gltf_presentation import GltfPresentation
 from .gltf_storage import GltfStorage
 from .highlight_set_entity import HighlightSetEntity

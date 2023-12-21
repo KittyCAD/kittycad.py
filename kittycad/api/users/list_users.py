@@ -104,7 +104,7 @@ def sync(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Optional[Union[UserResultsPage, Error]]:
-    """This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first."""  # noqa: E501
+    """This endpoint required authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
@@ -141,7 +141,7 @@ async def asyncio(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Optional[Union[UserResultsPage, Error]]:
-    """This endpoint required authentication by a KittyCAD employee. The users are returned in order of creation, with the most recently created users first."""  # noqa: E501
+    """This endpoint required authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

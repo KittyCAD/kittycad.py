@@ -72,7 +72,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[Metadata, Error]]:
     """This includes information on any of our other distributed systems it is connected to.
-    You must be a KittyCAD employee to perform this request."""  # noqa: E501
+    You must be a Zoo employee to perform this request."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -98,7 +98,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[Metadata, Error]]:
     """This includes information on any of our other distributed systems it is connected to.
-    You must be a KittyCAD employee to perform this request."""  # noqa: E501
+    You must be a Zoo employee to perform this request."""  # noqa: E501
 
     return (
         await asyncio_detailed(

@@ -7,6 +7,7 @@ from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
 from ..models.color import Color
+from ..models.distance_type import DistanceType
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format import InputFormat
@@ -728,6 +729,60 @@ class curve_set_constraint(BaseModel):
     type: Literal["curve_set_constraint"] = "curve_set_constraint"
 
 
+class enable_sketch_mode(BaseModel):
+    """Sketch on some entity (e.g. a plane, a face)"""
+
+    animated: bool
+
+    entity_id: str
+
+    ortho: bool
+
+    type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
+
+
+class object_set_material_params_pbr(BaseModel):
+    """Set the material properties of an object"""
+
+    ambient_occlusion: float
+
+    color: Color
+
+    metalness: float
+
+    object_id: str
+
+    roughness: float
+
+    type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
+
+
+class entity_get_distance(BaseModel):
+    """What is the distance between these two entities?"""
+
+    distance_type: DistanceType
+
+    entity_id1: str
+
+    entity_id2: str
+
+    type: Literal["entity_get_distance"] = "entity_get_distance"
+
+
+class entity_linear_pattern(BaseModel):
+    """Duplicate the given entity, evenly spaced along the chosen axis."""
+
+    axis: Point3d
+
+    entity_id: str
+
+    num_repetitions: int
+
+    spacing: float
+
+    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -802,6 +857,10 @@ ModelingCmd = RootModel[
             surface_area,
             get_sketch_mode_plane,
             curve_set_constraint,
+            enable_sketch_mode,
+            object_set_material_params_pbr,
+            entity_get_distance,
+            entity_linear_pattern,
         ],
         Field(discriminator="type"),
     ]

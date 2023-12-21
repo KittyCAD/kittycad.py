@@ -116,7 +116,7 @@ def sync(
     page_token: Optional[str] = None,
 ) -> Optional[Union[AsyncApiCallResultsPage, Error]]:
     """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
-    This endpoint requires authentication by a KittyCAD employee."""  # noqa: E501
+    This endpoint requires authentication by a Zoo employee."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
@@ -158,7 +158,7 @@ async def asyncio(
     page_token: Optional[str] = None,
 ) -> Optional[Union[AsyncApiCallResultsPage, Error]]:
     """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
-    This endpoint requires authentication by a KittyCAD employee."""  # noqa: E501
+    This endpoint requires authentication by a Zoo employee."""  # noqa: E501
 
     return (
         await asyncio_detailed(

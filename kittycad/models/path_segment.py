@@ -21,19 +21,15 @@ class line(BaseModel):
 class arc(BaseModel):
     """A circular arc segment."""
 
-    angle_end: float
-
-    angle_start: float
-
     center: Point2d
 
-    end: Optional[Angle] = None
+    end: Angle
 
     radius: float
 
     relative: bool
 
-    start: Optional[Angle] = None
+    start: Angle
 
     type: Literal["arc"] = "arc"
 

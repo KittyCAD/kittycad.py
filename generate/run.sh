@@ -3,17 +3,17 @@ set -e
 set -o pipefail
 
 # Fix for ci.
-git config --global --add safe.directory /home/user/src
+git config --global --add safe.directory /home/user/src || true
 
-git add kittycad/models/base64data.py
-git add kittycad/models/empty.py
+git add kittycad/models/base64data.py || true
+git add kittycad/models/empty.py || true
 
 
 # Cleanup old stuff.
 rm -rf kittycad/models
 rm -rf kittycad/api
-git checkout kittycad/models/base64data.py
-git checkout kittycad/models/empty.py
+git checkout kittycad/models/base64data.py || true
+git checkout kittycad/models/empty.py || true
 
 # Generate new.
 poetry run python generate/generate.py

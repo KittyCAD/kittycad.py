@@ -66,7 +66,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any KittyCAD user. It will return an error if the customer's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by any Zoo user. It will return an error if the customer's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -91,7 +91,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any KittyCAD user. It will return an error if the customer's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by any Zoo user. It will return an error if the customer's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
 
     return (
         await asyncio_detailed(

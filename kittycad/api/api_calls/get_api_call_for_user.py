@@ -78,7 +78,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[ApiCallWithPrice, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user."""  # noqa: E501
+    """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -107,7 +107,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[ApiCallWithPrice, Error]]:
-    """This endpoint requires authentication by any KittyCAD user. It returns details of the requested API call for the user."""  # noqa: E501
+    """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user."""  # noqa: E501
 
     return (
         await asyncio_detailed(
