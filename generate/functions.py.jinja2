@@ -51,7 +51,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        {% if has_request_body %}"content": body,{% endif %}
+        {% if has_request_body %}{% if request_body_type != "bytes" %}"content": body.model_dump_json(),{% else %}"content": body,{% endif %}{% endif %}
     }
 
 

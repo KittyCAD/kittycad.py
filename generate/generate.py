@@ -705,6 +705,7 @@ async def test_"""
             "docs": str,
             "parse_response": str,
             "has_request_body": bool,
+            "request_body_type": str,
         },
     )
     template_info: TemplateType = {
@@ -716,6 +717,7 @@ async def test_"""
         "docs": "",
         "parse_response": "",
         "has_request_body": False,
+        "request_body_type": "",
     }
 
     if len(endpoint_refs) == 0:
@@ -954,6 +956,7 @@ async def test_"""
             }
         )
         template_info["has_request_body"] = True
+        template_info["request_body_type"] = request_body_type
 
     # Generate the template for the functions.
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
