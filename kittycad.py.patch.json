@@ -9,106 +9,18 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1ping/get/x-python",
+    "path": "/paths/~1user~1text-to-cad~1{id}/get/x-python",
     "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.meta import ping\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Pong\nfrom kittycad.types import Response\n\n\ndef example_ping():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[Pong, Error]] = ping.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Pong = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.ping.html"
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import get_text_to_cad_model_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, TextToCad\nfrom kittycad.types import Response\n\n\ndef example_get_text_to_cad_model_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[TextToCad, Error]\n    ] = get_text_to_cad_model_for_user.sync(\n        client=client,\n        id=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: TextToCad = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.get_text_to_cad_model_for_user.html"
     }
   },
   {
     "op": "add",
-    "path": "/paths/~1users~1{id}~1api-calls/get/x-python",
+    "path": "/paths/~1user~1text-to-cad~1{id}/post/x-python",
     "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import list_api_calls_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPriceResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_api_calls_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ApiCallWithPriceResultsPage, Error]\n    ] = list_api_calls_for_user.sync(\n        client=client,\n        id=\"<string>\",\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPriceResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.list_api_calls_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment~1balance/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import get_payment_balance_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import CustomerBalance, Error\nfrom kittycad.types import Response\n\n\ndef example_get_payment_balance_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[CustomerBalance, Error]\n    ] = get_payment_balance_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: CustomerBalance = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.get_payment_balance_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1pressure~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_pressure_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitPressureConversion\nfrom kittycad.models.unit_pressure import UnitPressure\nfrom kittycad.types import Response\n\n\ndef example_get_pressure_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitPressureConversion, Error]\n    ] = get_pressure_unit_conversion.sync(\n        client=client,\n        input_unit=UnitPressure.ATMOSPHERES,\n        output_unit=UnitPressure.ATMOSPHERES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitPressureConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_pressure_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment~1methods/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import list_payment_methods_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, PaymentMethod\nfrom kittycad.types import Response\n\n\ndef example_list_payment_methods_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[List[PaymentMethod], Error]\n    ] = list_payment_methods_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: List[PaymentMethod] = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.list_payment_methods_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1async~1operations/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import list_async_operations\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AsyncApiCallResultsPage, Error\nfrom kittycad.models.api_call_status import ApiCallStatus\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_async_operations():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[AsyncApiCallResultsPage, Error]\n    ] = list_async_operations.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        status=ApiCallStatus.QUEUED,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AsyncApiCallResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.list_async_operations.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1frequency~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_frequency_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitFrequencyConversion\nfrom kittycad.models.unit_frequency import UnitFrequency\nfrom kittycad.types import Response\n\n\ndef example_get_frequency_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitFrequencyConversion, Error]\n    ] = get_frequency_unit_conversion.sync(\n        client=client,\n        input_unit=UnitFrequency.GIGAHERTZ,\n        output_unit=UnitFrequency.GIGAHERTZ,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitFrequencyConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_frequency_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1ws~1modeling~1commands/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.modeling import modeling_commands_ws\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, WebSocketRequest, WebSocketResponse\nfrom kittycad.models.rtc_sdp_type import RtcSdpType\nfrom kittycad.models.rtc_session_description import RtcSessionDescription\nfrom kittycad.models.web_socket_request import sdp_offer\nfrom kittycad.types import Response\n\n\ndef example_modeling_commands_ws():\n    # Create our client.\n    client = ClientFromEnv()\n\n    # Connect to the websocket.\n    with modeling_commands_ws.WebSocket(\n        client=client,\n        fps=10,\n        unlocked_framerate=False,\n        video_res_height=10,\n        video_res_width=10,\n        webrtc=False,\n    ) as websocket:\n        # Send a message.\n        websocket.send(\n            WebSocketRequest(\n                sdp_offer(\n                    offer=RtcSessionDescription(\n                        sdp=\"<string>\",\n                        type=RtcSdpType.UNSPECIFIED,\n                    ),\n                )\n            )\n        )\n\n        # Get a message.\n        message = websocket.recv()\n        print(message)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.modeling.modeling_commands_ws.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1api-calls~1{id}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_api_call\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPrice, Error\nfrom kittycad.types import Response\n\n\ndef example_get_api_call():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call.sync(\n        client=client,\n        id=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPrice = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_api_call.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1api-call-metrics/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_api_call_metrics\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallQueryGroup, Error\nfrom kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy\nfrom kittycad.types import Response\n\n\ndef example_get_api_call_metrics():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[List[ApiCallQueryGroup], Error]\n    ] = get_api_call_metrics.sync(\n        client=client,\n        group_by=ApiCallQueryGroupBy.EMAIL,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: List[ApiCallQueryGroup] = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_api_call_metrics.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1temperature~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_temperature_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitTemperatureConversion\nfrom kittycad.models.unit_temperature import UnitTemperature\nfrom kittycad.types import Response\n\n\ndef example_get_temperature_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitTemperatureConversion, Error]\n    ] = get_temperature_unit_conversion.sync(\n        client=client,\n        input_unit=UnitTemperature.CELSIUS,\n        output_unit=UnitTemperature.CELSIUS,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitTemperatureConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_temperature_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1api-calls/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import list_api_calls\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPriceResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_api_calls():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ApiCallWithPriceResultsPage, Error]\n    ] = list_api_calls.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPriceResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.list_api_calls.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1async~1operations~1{id}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_async_operation\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import (\n    Error,\n    FileCenterOfMass,\n    FileConversion,\n    FileDensity,\n    FileMass,\n    FileSurfaceArea,\n    FileVolume,\n    TextToCad,\n)\nfrom kittycad.types import Response\n\n\ndef example_get_async_operation():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[\n            FileConversion,\n            FileCenterOfMass,\n            FileMass,\n            FileVolume,\n            FileDensity,\n            FileSurfaceArea,\n            TextToCad,\n            Error,\n        ]\n    ] = get_async_operation.sync(\n        client=client,\n        id=\"<string>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Union[\n        FileConversion,\n        FileCenterOfMass,\n        FileMass,\n        FileVolume,\n        FileDensity,\n        FileSurfaceArea,\n        TextToCad,\n    ] = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_async_operation.html"
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import create_text_to_cad_model_feedback\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.models.ai_feedback import AiFeedback\nfrom kittycad.types import Response\n\n\ndef example_create_text_to_cad_model_feedback():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = create_text_to_cad_model_feedback.sync(\n        client=client,\n        id=\"<uuid>\",\n        feedback=AiFeedback.THUMBS_UP,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.create_text_to_cad_model_feedback.html"
     }
   },
   {
@@ -121,90 +33,18 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1unit~1conversion~1area~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_area_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitAreaConversion\nfrom kittycad.models.unit_area import UnitArea\nfrom kittycad.types import Response\n\n\ndef example_get_area_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitAreaConversion, Error]\n    ] = get_area_unit_conversion.sync(\n        client=client,\n        input_unit=UnitArea.CM2,\n        output_unit=UnitArea.CM2,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitAreaConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_area_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import get_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Customer, Error\nfrom kittycad.types import Response\n\n\ndef example_get_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[Customer, Error]\n    ] = get_payment_information_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Customer = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.get_payment_information_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import create_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Customer, Error\nfrom kittycad.models.billing_info import BillingInfo\nfrom kittycad.types import Response\n\n\ndef example_create_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[Customer, Error]\n    ] = create_payment_information_for_user.sync(\n        client=client,\n        body=BillingInfo(\n            name=\"<string>\",\n            phone=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Customer = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.create_payment_information_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment/put/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import update_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Customer, Error\nfrom kittycad.models.billing_info import BillingInfo\nfrom kittycad.types import Response\n\n\ndef example_update_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[Customer, Error]\n    ] = update_payment_information_for_user.sync(\n        client=client,\n        body=BillingInfo(\n            name=\"<string>\",\n            phone=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Customer = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.update_payment_information_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment/delete/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import delete_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_delete_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = delete_payment_information_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.delete_payment_information_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1force~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_force_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitForceConversion\nfrom kittycad.models.unit_force import UnitForce\nfrom kittycad.types import Response\n\n\ndef example_get_force_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitForceConversion, Error]\n    ] = get_force_unit_conversion.sync(\n        client=client,\n        input_unit=UnitForce.DYNES,\n        output_unit=UnitForce.DYNES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitForceConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_force_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1/get/x-python",
-    "value": {
-      "example": "from kittycad.api.meta import get_schema\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.types import Response\n\n\ndef example_get_schema():\n    # Create our client.\n    client = ClientFromEnv()\n\n    get_schema.sync(\n        client=client,\n    )\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_schema.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1ai-prompts/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import list_ai_prompts\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AiPromptResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_ai_prompts():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[AiPromptResultsPage, Error]] = list_ai_prompts.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AiPromptResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.list_ai_prompts.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1energy~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_energy_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitEnergyConversion\nfrom kittycad.models.unit_energy import UnitEnergy\nfrom kittycad.types import Response\n\n\ndef example_get_energy_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitEnergyConversion, Error]\n    ] = get_energy_unit_conversion.sync(\n        client=client,\n        input_unit=UnitEnergy.BTU,\n        output_unit=UnitEnergy.BTU,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitEnergyConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_energy_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1ai~1text-to-cad~1{output_format}/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import create_text_to_cad\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, TextToCad\nfrom kittycad.models.file_export_format import FileExportFormat\nfrom kittycad.models.text_to_cad_create_body import TextToCadCreateBody\nfrom kittycad.types import Response\n\n\ndef example_create_text_to_cad():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[TextToCad, Error]] = create_text_to_cad.sync(\n        client=client,\n        output_format=FileExportFormat.FBX,\n        body=TextToCadCreateBody(\n            prompt=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: TextToCad = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.create_text_to_cad.html"
-    }
-  },
-  {
-    "op": "add",
     "path": "/paths/~1internal~1discord~1api-token~1{discord_id}/get/x-python",
     "value": {
       "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.meta import internal_get_api_token_for_discord_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiToken, Error\nfrom kittycad.types import Response\n\n\ndef example_internal_get_api_token_for_discord_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ApiToken, Error]\n    ] = internal_get_api_token_for_discord_user.sync(\n        client=client,\n        discord_id=\"<string>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiToken = result\n    print(body)\n",
       "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.internal_get_api_token_for_discord_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment~1methods/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import list_payment_methods_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, PaymentMethod\nfrom kittycad.types import Response\n\n\ndef example_list_payment_methods_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[List[PaymentMethod], Error]\n    ] = list_payment_methods_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: List[PaymentMethod] = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.list_payment_methods_for_user.html"
     }
   },
   {
@@ -217,18 +57,218 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1.well-known~1ai-plugin.json/get/x-python",
+    "path": "/paths/~1unit~1conversion~1temperature~1{input_unit}~1{output_unit}/get/x-python",
     "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.meta import get_ai_plugin_manifest\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AiPluginManifest, Error\nfrom kittycad.types import Response\n\n\ndef example_get_ai_plugin_manifest():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[AiPluginManifest, Error]\n    ] = get_ai_plugin_manifest.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AiPluginManifest = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_ai_plugin_manifest.html"
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_temperature_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitTemperatureConversion\nfrom kittycad.models.unit_temperature import UnitTemperature\nfrom kittycad.types import Response\n\n\ndef example_get_temperature_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitTemperatureConversion, Error]\n    ] = get_temperature_unit_conversion.sync(\n        client=client,\n        input_unit=UnitTemperature.CELSIUS,\n        output_unit=UnitTemperature.CELSIUS,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitTemperatureConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_temperature_unit_conversion.html"
     }
   },
   {
     "op": "add",
-    "path": "/paths/~1unit~1conversion~1angle~1{input_unit}~1{output_unit}/get/x-python",
+    "path": "/paths/~1user~1api-calls/get/x-python",
     "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_angle_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitAngleConversion\nfrom kittycad.models.unit_angle import UnitAngle\nfrom kittycad.types import Response\n\n\ndef example_get_angle_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitAngleConversion, Error]\n    ] = get_angle_unit_conversion.sync(\n        client=client,\n        input_unit=UnitAngle.DEGREES,\n        output_unit=UnitAngle.DEGREES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitAngleConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_angle_unit_conversion.html"
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import user_list_api_calls\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPriceResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_user_list_api_calls():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ApiCallWithPriceResultsPage, Error]\n    ] = user_list_api_calls.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPriceResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.user_list_api_calls.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1volume~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_volume_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitVolumeConversion\nfrom kittycad.models.unit_volume import UnitVolume\nfrom kittycad.types import Response\n\n\ndef example_get_volume_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitVolumeConversion, Error]\n    ] = get_volume_unit_conversion.sync(\n        client=client,\n        input_unit=UnitVolume.CM3,\n        output_unit=UnitVolume.CM3,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitVolumeConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_volume_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1ws~1modeling~1commands/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.modeling import modeling_commands_ws\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, WebSocketRequest, WebSocketResponse\nfrom kittycad.models.rtc_sdp_type import RtcSdpType\nfrom kittycad.models.rtc_session_description import RtcSessionDescription\nfrom kittycad.models.web_socket_request import sdp_offer\nfrom kittycad.types import Response\n\n\ndef example_modeling_commands_ws():\n    # Create our client.\n    client = ClientFromEnv()\n\n    # Connect to the websocket.\n    with modeling_commands_ws.WebSocket(\n        client=client,\n        fps=10,\n        unlocked_framerate=False,\n        video_res_height=10,\n        video_res_width=10,\n        webrtc=False,\n    ) as websocket:\n        # Send a message.\n        websocket.send(\n            WebSocketRequest(\n                sdp_offer(\n                    offer=RtcSessionDescription(\n                        sdp=\"<string>\",\n                        type=RtcSdpType.UNSPECIFIED,\n                    ),\n                )\n            )\n        )\n\n        # Get a message.\n        message = websocket.recv()\n        print(message)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.modeling.modeling_commands_ws.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1users-extended~1{id}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_user_extended\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, ExtendedUser\nfrom kittycad.types import Response\n\n\ndef example_get_user_extended():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ExtendedUser, Error]] = get_user_extended.sync(\n        client=client,\n        id=\"<string>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ExtendedUser = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_user_extended.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1users/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import list_users\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UserResultsPage\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_users():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[UserResultsPage, Error]] = list_users.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UserResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.list_users.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1apps~1github~1webhook/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.apps import apps_github_webhook\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_apps_github_webhook():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = apps_github_webhook.sync(\n        client=client,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.apps.apps_github_webhook.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1/get/x-python",
+    "value": {
+      "example": "from kittycad.api.meta import get_schema\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.types import Response\n\n\ndef example_get_schema():\n    # Create our client.\n    client = ClientFromEnv()\n\n    get_schema.sync(\n        client=client,\n    )\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_schema.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1force~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_force_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitForceConversion\nfrom kittycad.models.unit_force import UnitForce\nfrom kittycad.types import Response\n\n\ndef example_get_force_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitForceConversion, Error]\n    ] = get_force_unit_conversion.sync(\n        client=client,\n        input_unit=UnitForce.DYNES,\n        output_unit=UnitForce.DYNES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitForceConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_force_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment~1invoices/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import list_invoices_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Invoice\nfrom kittycad.types import Response\n\n\ndef example_list_invoices_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[List[Invoice], Error]] = list_invoices_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: List[Invoice] = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.list_invoices_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1ai~1text-to-cad~1{output_format}/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import create_text_to_cad\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, TextToCad\nfrom kittycad.models.file_export_format import FileExportFormat\nfrom kittycad.models.text_to_cad_create_body import TextToCadCreateBody\nfrom kittycad.types import Response\n\n\ndef example_create_text_to_cad():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[TextToCad, Error]] = create_text_to_cad.sync(\n        client=client,\n        output_format=FileExportFormat.FBX,\n        body=TextToCadCreateBody(\n            prompt=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: TextToCad = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.create_text_to_cad.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1users~1{id}~1api-calls/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import list_api_calls_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPriceResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_api_calls_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ApiCallWithPriceResultsPage, Error]\n    ] = list_api_calls_for_user.sync(\n        client=client,\n        id=\"<string>\",\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPriceResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.list_api_calls_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1session~1{token}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_session_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Session\nfrom kittycad.types import Response\n\n\ndef example_get_session_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[Session, Error]] = get_session_for_user.sync(\n        client=client,\n        token=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Session = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_session_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1async~1operations/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import list_async_operations\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AsyncApiCallResultsPage, Error\nfrom kittycad.models.api_call_status import ApiCallStatus\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_async_operations():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[AsyncApiCallResultsPage, Error]\n    ] = list_async_operations.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        status=ApiCallStatus.QUEUED,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AsyncApiCallResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.list_async_operations.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api-call-metrics/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_api_call_metrics\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallQueryGroup, Error\nfrom kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy\nfrom kittycad.types import Response\n\n\ndef example_get_api_call_metrics():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[List[ApiCallQueryGroup], Error]\n    ] = get_api_call_metrics.sync(\n        client=client,\n        group_by=ApiCallQueryGroupBy.EMAIL,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: List[ApiCallQueryGroup] = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_api_call_metrics.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1ai-prompts/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import list_ai_prompts\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AiPromptResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_ai_prompts():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[AiPromptResultsPage, Error]] = list_ai_prompts.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AiPromptResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.list_ai_prompts.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1auth~1email~1callback/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.hidden import auth_email_callback\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_auth_email_callback():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = auth_email_callback.sync(\n        client=client,\n        email=\"<string>\",\n        token=\"<string>\",\n        callback_url=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.hidden.auth_email_callback.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment~1methods~1{id}/delete/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import delete_payment_method_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_delete_payment_method_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = delete_payment_method_for_user.sync(\n        client=client,\n        id=\"<string>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.delete_payment_method_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1length~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_length_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitLengthConversion\nfrom kittycad.models.unit_length import UnitLength\nfrom kittycad.types import Response\n\n\ndef example_get_length_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitLengthConversion, Error]\n    ] = get_length_unit_conversion.sync(\n        client=client,\n        input_unit=UnitLength.CM,\n        output_unit=UnitLength.CM,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitLengthConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_length_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1power~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_power_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitPowerConversion\nfrom kittycad.models.unit_power import UnitPower\nfrom kittycad.types import Response\n\n\ndef example_get_power_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitPowerConversion, Error]\n    ] = get_power_unit_conversion.sync(\n        client=client,\n        input_unit=UnitPower.BTU_PER_MINUTE,\n        output_unit=UnitPower.BTU_PER_MINUTE,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitPowerConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_power_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1text-to-cad/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import list_text_to_cad_models_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, TextToCadResultsPage\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_text_to_cad_models_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[TextToCadResultsPage, Error]\n    ] = list_text_to_cad_models_for_user.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: TextToCadResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.list_text_to_cad_models_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1async~1operations~1{id}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_async_operation\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import (\n    Error,\n    FileCenterOfMass,\n    FileConversion,\n    FileDensity,\n    FileMass,\n    FileSurfaceArea,\n    FileVolume,\n    TextToCad,\n)\nfrom kittycad.types import Response\n\n\ndef example_get_async_operation():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[\n            FileConversion,\n            FileCenterOfMass,\n            FileMass,\n            FileVolume,\n            FileDensity,\n            FileSurfaceArea,\n            TextToCad,\n            Error,\n        ]\n    ] = get_async_operation.sync(\n        client=client,\n        id=\"<string>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Union[\n        FileConversion,\n        FileCenterOfMass,\n        FileMass,\n        FileVolume,\n        FileDensity,\n        FileSurfaceArea,\n        TextToCad,\n    ] = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_async_operation.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1energy~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_energy_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitEnergyConversion\nfrom kittycad.models.unit_energy import UnitEnergy\nfrom kittycad.types import Response\n\n\ndef example_get_energy_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitEnergyConversion, Error]\n    ] = get_energy_unit_conversion.sync(\n        client=client,\n        input_unit=UnitEnergy.BTU,\n        output_unit=UnitEnergy.BTU,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitEnergyConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_energy_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1torque~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_torque_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitTorqueConversion\nfrom kittycad.models.unit_torque import UnitTorque\nfrom kittycad.types import Response\n\n\ndef example_get_torque_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitTorqueConversion, Error]\n    ] = get_torque_unit_conversion.sync(\n        client=client,\n        input_unit=UnitTorque.NEWTON_METRES,\n        output_unit=UnitTorque.NEWTON_METRES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitTorqueConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_torque_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1api-calls~1{id}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_api_call_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPrice, Error\nfrom kittycad.types import Response\n\n\ndef example_get_api_call_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call_for_user.sync(\n        client=client,\n        id=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPrice = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_api_call_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1frequency~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_frequency_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitFrequencyConversion\nfrom kittycad.models.unit_frequency import UnitFrequency\nfrom kittycad.types import Response\n\n\ndef example_get_frequency_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitFrequencyConversion, Error]\n    ] = get_frequency_unit_conversion.sync(\n        client=client,\n        input_unit=UnitFrequency.GIGAHERTZ,\n        output_unit=UnitFrequency.GIGAHERTZ,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitFrequencyConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_frequency_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1file~1density/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_density\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileDensity\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_density import UnitDensity\nfrom kittycad.models.unit_mass import UnitMass\nfrom kittycad.types import Response\n\n\ndef example_create_file_density():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[FileDensity, Error]] = create_file_density.sync(\n        client=client,\n        material_mass=3.14,\n        material_mass_unit=UnitMass.G,\n        output_unit=UnitDensity.LB_FT3,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileDensity = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_density.html"
     }
   },
   {
@@ -249,290 +289,10 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1file~1mass/post/x-python",
+    "path": "/paths/~1user~1payment~1balance/get/x-python",
     "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_mass\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileMass\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_density import UnitDensity\nfrom kittycad.models.unit_mass import UnitMass\nfrom kittycad.types import Response\n\n\ndef example_create_file_mass():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[FileMass, Error]] = create_file_mass.sync(\n        client=client,\n        material_density=3.14,\n        material_density_unit=UnitDensity.LB_FT3,\n        output_unit=UnitMass.G,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileMass = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_mass.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1extended/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_user_self_extended\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, ExtendedUser\nfrom kittycad.types import Response\n\n\ndef example_get_user_self_extended():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ExtendedUser, Error]] = get_user_self_extended.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ExtendedUser = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_user_self_extended.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1auth~1email~1callback/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.hidden import auth_email_callback\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_auth_email_callback():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = auth_email_callback.sync(\n        client=client,\n        email=\"<string>\",\n        token=\"<string>\",\n        callback_url=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.hidden.auth_email_callback.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1volume~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_volume_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitVolumeConversion\nfrom kittycad.models.unit_volume import UnitVolume\nfrom kittycad.types import Response\n\n\ndef example_get_volume_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitVolumeConversion, Error]\n    ] = get_volume_unit_conversion.sync(\n        client=client,\n        input_unit=UnitVolume.CM3,\n        output_unit=UnitVolume.CM3,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitVolumeConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_volume_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment~1tax/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import validate_customer_tax_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_validate_customer_tax_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = validate_customer_tax_information_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.validate_customer_tax_information_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1users/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import list_users\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UserResultsPage\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_users():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[UserResultsPage, Error]] = list_users.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UserResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.list_users.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1file~1surface-area/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_surface_area\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileSurfaceArea\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_area import UnitArea\nfrom kittycad.types import Response\n\n\ndef example_create_file_surface_area():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[FileSurfaceArea, Error]\n    ] = create_file_surface_area.sync(\n        client=client,\n        output_unit=UnitArea.CM2,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileSurfaceArea = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_surface_area.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1auth~1email/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.hidden import auth_email\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, VerificationToken\nfrom kittycad.models.email_authentication_form import EmailAuthenticationForm\nfrom kittycad.types import Response\n\n\ndef example_auth_email():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[VerificationToken, Error]] = auth_email.sync(\n        client=client,\n        body=EmailAuthenticationForm(\n            email=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: VerificationToken = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.hidden.auth_email.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1mass~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_mass_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitMassConversion\nfrom kittycad.models.unit_mass import UnitMass\nfrom kittycad.types import Response\n\n\ndef example_get_mass_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitMassConversion, Error]\n    ] = get_mass_unit_conversion.sync(\n        client=client,\n        input_unit=UnitMass.G,\n        output_unit=UnitMass.G,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitMassConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_mass_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1_meta~1info/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.meta import get_metadata\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Metadata\nfrom kittycad.types import Response\n\n\ndef example_get_metadata():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[Metadata, Error]] = get_metadata.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Metadata = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_metadata.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1torque~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_torque_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitTorqueConversion\nfrom kittycad.models.unit_torque import UnitTorque\nfrom kittycad.types import Response\n\n\ndef example_get_torque_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitTorqueConversion, Error]\n    ] = get_torque_unit_conversion.sync(\n        client=client,\n        input_unit=UnitTorque.NEWTON_METRES,\n        output_unit=UnitTorque.NEWTON_METRES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitTorqueConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_torque_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1power~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_power_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitPowerConversion\nfrom kittycad.models.unit_power import UnitPower\nfrom kittycad.types import Response\n\n\ndef example_get_power_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitPowerConversion, Error]\n    ] = get_power_unit_conversion.sync(\n        client=client,\n        input_unit=UnitPower.BTU_PER_MINUTE,\n        output_unit=UnitPower.BTU_PER_MINUTE,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitPowerConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_power_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1users-extended~1{id}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_user_extended\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, ExtendedUser\nfrom kittycad.types import Response\n\n\ndef example_get_user_extended():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ExtendedUser, Error]] = get_user_extended.sync(\n        client=client,\n        id=\"<string>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ExtendedUser = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_user_extended.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment~1invoices/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import list_invoices_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Invoice\nfrom kittycad.types import Response\n\n\ndef example_list_invoices_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[List[Invoice], Error]] = list_invoices_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: List[Invoice] = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.list_invoices_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1logout/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.hidden import logout\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_logout():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = logout.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.hidden.logout.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1current~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_current_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitCurrentConversion\nfrom kittycad.models.unit_current import UnitCurrent\nfrom kittycad.types import Response\n\n\ndef example_get_current_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitCurrentConversion, Error]\n    ] = get_current_unit_conversion.sync(\n        client=client,\n        input_unit=UnitCurrent.AMPERES,\n        output_unit=UnitCurrent.AMPERES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitCurrentConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_current_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1apps~1github~1webhook/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.apps import apps_github_webhook\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_apps_github_webhook():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = apps_github_webhook.sync(\n        client=client,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.apps.apps_github_webhook.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1file~1execute~1{lang}/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.executor import create_file_execution\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import CodeOutput, Error\nfrom kittycad.models.code_language import CodeLanguage\nfrom kittycad.types import Response\n\n\ndef example_create_file_execution():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[CodeOutput, Error]] = create_file_execution.sync(\n        client=client,\n        lang=CodeLanguage.GO,\n        output=None,  # Optional[str]\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: CodeOutput = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.executor.create_file_execution.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1users-extended/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import list_users_extended\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, ExtendedUserResultsPage\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_users_extended():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ExtendedUserResultsPage, Error]\n    ] = list_users_extended.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ExtendedUserResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.list_users_extended.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1ws~1executor~1term/get/x-python",
-    "value": {
-      "example": "from kittycad.api.executor import create_executor_term\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.types import Response\n\n\ndef example_create_executor_term():\n    # Create our client.\n    client = ClientFromEnv()\n\n    # Connect to the websocket.\n    with create_executor_term.sync(\n        client=client,\n    ) as websocket:\n        # Send a message.\n        websocket.send(\"{}\")\n\n        # Get the messages.\n        for message in websocket:\n            print(message)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.executor.create_executor_term.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1unit~1conversion~1length~1{input_unit}~1{output_unit}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_length_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitLengthConversion\nfrom kittycad.models.unit_length import UnitLength\nfrom kittycad.types import Response\n\n\ndef example_get_length_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitLengthConversion, Error]\n    ] = get_length_unit_conversion.sync(\n        client=client,\n        input_unit=UnitLength.CM,\n        output_unit=UnitLength.CM,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitLengthConversion = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_length_unit_conversion.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1session~1{token}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_session_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Session\nfrom kittycad.types import Response\n\n\ndef example_get_session_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[Session, Error]] = get_session_for_user.sync(\n        client=client,\n        token=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Session = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_session_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1api-calls~1{id}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_api_call_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPrice, Error\nfrom kittycad.types import Response\n\n\ndef example_get_api_call_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call_for_user.sync(\n        client=client,\n        id=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPrice = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_api_call_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1api-calls/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import user_list_api_calls\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPriceResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_user_list_api_calls():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ApiCallWithPriceResultsPage, Error]\n    ] = user_list_api_calls.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPriceResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.user_list_api_calls.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1apps~1github~1callback/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.apps import apps_github_callback\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_apps_github_callback():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = apps_github_callback.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.apps.apps_github_callback.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment~1methods~1{id}/delete/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import delete_payment_method_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_delete_payment_method_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = delete_payment_method_for_user.sync(\n        client=client,\n        id=\"<string>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.delete_payment_method_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1text-to-cad~1{id}/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import get_text_to_cad_model_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, TextToCad\nfrom kittycad.types import Response\n\n\ndef example_get_text_to_cad_model_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[TextToCad, Error]\n    ] = get_text_to_cad_model_for_user.sync(\n        client=client,\n        id=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: TextToCad = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.get_text_to_cad_model_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1text-to-cad~1{id}/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import create_text_to_cad_model_feedback\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.models.ai_feedback import AiFeedback\nfrom kittycad.types import Response\n\n\ndef example_create_text_to_cad_model_feedback():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = create_text_to_cad_model_feedback.sync(\n        client=client,\n        id=\"<uuid>\",\n        feedback=AiFeedback.THUMBS_UP,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.create_text_to_cad_model_feedback.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1apps~1github~1consent/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.apps import apps_github_consent\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AppClientInfo, Error\nfrom kittycad.types import Response\n\n\ndef example_apps_github_consent():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[AppClientInfo, Error]] = apps_github_consent.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AppClientInfo = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.apps.apps_github_consent.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1file~1volume/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_volume\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileVolume\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_volume import UnitVolume\nfrom kittycad.types import Response\n\n\ndef example_create_file_volume():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[FileVolume, Error]] = create_file_volume.sync(\n        client=client,\n        output_unit=UnitVolume.CM3,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileVolume = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_volume.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1payment~1intent/post/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import create_payment_intent_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, PaymentIntent\nfrom kittycad.types import Response\n\n\ndef example_create_payment_intent_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[PaymentIntent, Error]\n    ] = create_payment_intent_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: PaymentIntent = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.create_payment_intent_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1text-to-cad/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.ai import list_text_to_cad_models_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, TextToCadResultsPage\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_text_to_cad_models_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[TextToCadResultsPage, Error]\n    ] = list_text_to_cad_models_for_user.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: TextToCadResultsPage = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.ai.list_text_to_cad_models_for_user.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1openai~1openapi.json/get/x-python",
-    "value": {
-      "example": "from kittycad.api.meta import get_openai_schema\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.types import Response\n\n\ndef example_get_openai_schema():\n    # Create our client.\n    client = ClientFromEnv()\n\n    get_openai_schema.sync(\n        client=client,\n    )\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_openai_schema.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user/put/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import update_user_self\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, User\nfrom kittycad.models.update_user import UpdateUser\nfrom kittycad.types import Response\n\n\ndef example_update_user_self():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[User, Error]] = update_user_self.sync(\n        client=client,\n        body=UpdateUser(\n            company=\"<string>\",\n            discord=\"<string>\",\n            first_name=\"<string>\",\n            github=\"<string>\",\n            last_name=\"<string>\",\n            phone=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: User = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.update_user_self.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user/delete/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import delete_user_self\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_delete_user_self():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = delete_user_self.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.delete_user_self.html"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user/get/x-python",
-    "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_user_self\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, User\nfrom kittycad.types import Response\n\n\ndef example_get_user_self():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[User, Error]] = get_user_self.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: User = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_user_self.html"
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import get_payment_balance_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import CustomerBalance, Error\nfrom kittycad.types import Response\n\n\ndef example_get_payment_balance_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[CustomerBalance, Error]\n    ] = get_payment_balance_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: CustomerBalance = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.get_payment_balance_for_user.html"
     }
   },
   {
@@ -545,10 +305,250 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1ping/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.meta import ping\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Pong\nfrom kittycad.types import Response\n\n\ndef example_ping():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[Pong, Error]] = ping.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Pong = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.ping.html"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1onboarding/get/x-python",
     "value": {
       "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_user_onboarding_self\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Onboarding\nfrom kittycad.types import Response\n\n\ndef example_get_user_onboarding_self():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[Onboarding, Error]] = get_user_onboarding_self.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Onboarding = result\n    print(body)\n",
       "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_user_onboarding_self.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1.well-known~1ai-plugin.json/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.meta import get_ai_plugin_manifest\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AiPluginManifest, Error\nfrom kittycad.types import Response\n\n\ndef example_get_ai_plugin_manifest():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[AiPluginManifest, Error]\n    ] = get_ai_plugin_manifest.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AiPluginManifest = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_ai_plugin_manifest.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1pressure~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_pressure_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitPressureConversion\nfrom kittycad.models.unit_pressure import UnitPressure\nfrom kittycad.types import Response\n\n\ndef example_get_pressure_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitPressureConversion, Error]\n    ] = get_pressure_unit_conversion.sync(\n        client=client,\n        input_unit=UnitPressure.ATMOSPHERES,\n        output_unit=UnitPressure.ATMOSPHERES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitPressureConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_pressure_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1auth~1email/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.hidden import auth_email\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, VerificationToken\nfrom kittycad.models.email_authentication_form import EmailAuthenticationForm\nfrom kittycad.types import Response\n\n\ndef example_auth_email():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[VerificationToken, Error]] = auth_email.sync(\n        client=client,\n        body=EmailAuthenticationForm(\n            email=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: VerificationToken = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.hidden.auth_email.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1area~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_area_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitAreaConversion\nfrom kittycad.models.unit_area import UnitArea\nfrom kittycad.types import Response\n\n\ndef example_get_area_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitAreaConversion, Error]\n    ] = get_area_unit_conversion.sync(\n        client=client,\n        input_unit=UnitArea.CM2,\n        output_unit=UnitArea.CM2,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitAreaConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_area_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user/delete/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import delete_user_self\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_delete_user_self():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = delete_user_self.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.delete_user_self.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user/put/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import update_user_self\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, User\nfrom kittycad.models.update_user import UpdateUser\nfrom kittycad.types import Response\n\n\ndef example_update_user_self():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[User, Error]] = update_user_self.sync(\n        client=client,\n        body=UpdateUser(\n            company=\"<string>\",\n            discord=\"<string>\",\n            first_name=\"<string>\",\n            github=\"<string>\",\n            last_name=\"<string>\",\n            phone=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: User = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.update_user_self.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_user_self\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, User\nfrom kittycad.types import Response\n\n\ndef example_get_user_self():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[User, Error]] = get_user_self.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: User = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_user_self.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1current~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_current_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitCurrentConversion\nfrom kittycad.models.unit_current import UnitCurrent\nfrom kittycad.types import Response\n\n\ndef example_get_current_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitCurrentConversion, Error]\n    ] = get_current_unit_conversion.sync(\n        client=client,\n        input_unit=UnitCurrent.AMPERES,\n        output_unit=UnitCurrent.AMPERES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitCurrentConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_current_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1apps~1github~1callback/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.apps import apps_github_callback\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_apps_github_callback():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = apps_github_callback.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.apps.apps_github_callback.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment~1tax/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import validate_customer_tax_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_validate_customer_tax_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = validate_customer_tax_information_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.validate_customer_tax_information_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1apps~1github~1consent/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.apps import apps_github_consent\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import AppClientInfo, Error\nfrom kittycad.types import Response\n\n\ndef example_apps_github_consent():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[AppClientInfo, Error]] = apps_github_consent.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: AppClientInfo = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.apps.apps_github_consent.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api-calls/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import list_api_calls\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPriceResultsPage, Error\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_api_calls():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ApiCallWithPriceResultsPage, Error]\n    ] = list_api_calls.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPriceResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.list_api_calls.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1logout/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.hidden import logout\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_logout():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = logout.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.hidden.logout.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1file~1execute~1{lang}/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.executor import create_file_execution\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import CodeOutput, Error\nfrom kittycad.models.code_language import CodeLanguage\nfrom kittycad.types import Response\n\n\ndef example_create_file_execution():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[CodeOutput, Error]] = create_file_execution.sync(\n        client=client,\n        lang=CodeLanguage.GO,\n        output=None,  # Optional[str]\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: CodeOutput = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.executor.create_file_execution.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1file~1volume/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_volume\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileVolume\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_volume import UnitVolume\nfrom kittycad.types import Response\n\n\ndef example_create_file_volume():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[FileVolume, Error]] = create_file_volume.sync(\n        client=client,\n        output_unit=UnitVolume.CM3,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileVolume = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_volume.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1_meta~1info/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.meta import get_metadata\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, Metadata\nfrom kittycad.types import Response\n\n\ndef example_get_metadata():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[Metadata, Error]] = get_metadata.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Metadata = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_metadata.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1openai~1openapi.json/get/x-python",
+    "value": {
+      "example": "from kittycad.api.meta import get_openai_schema\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.types import Response\n\n\ndef example_get_openai_schema():\n    # Create our client.\n    client = ClientFromEnv()\n\n    get_openai_schema.sync(\n        client=client,\n    )\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.meta.get_openai_schema.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1extended/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import get_user_self_extended\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, ExtendedUser\nfrom kittycad.types import Response\n\n\ndef example_get_user_self_extended():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ExtendedUser, Error]] = get_user_self_extended.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ExtendedUser = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.get_user_self_extended.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1ws~1executor~1term/get/x-python",
+    "value": {
+      "example": "from kittycad.api.executor import create_executor_term\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.types import Response\n\n\ndef example_create_executor_term():\n    # Create our client.\n    client = ClientFromEnv()\n\n    # Connect to the websocket.\n    with create_executor_term.sync(\n        client=client,\n    ) as websocket:\n        # Send a message.\n        websocket.send(\"{}\")\n\n        # Get the messages.\n        for message in websocket:\n            print(message)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.executor.create_executor_term.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1angle~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_angle_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitAngleConversion\nfrom kittycad.models.unit_angle import UnitAngle\nfrom kittycad.types import Response\n\n\ndef example_get_angle_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitAngleConversion, Error]\n    ] = get_angle_unit_conversion.sync(\n        client=client,\n        input_unit=UnitAngle.DEGREES,\n        output_unit=UnitAngle.DEGREES,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitAngleConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_angle_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1unit~1conversion~1mass~1{input_unit}~1{output_unit}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.unit import get_mass_unit_conversion\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, UnitMassConversion\nfrom kittycad.models.unit_mass import UnitMass\nfrom kittycad.types import Response\n\n\ndef example_get_mass_unit_conversion():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[UnitMassConversion, Error]\n    ] = get_mass_unit_conversion.sync(\n        client=client,\n        input_unit=UnitMass.G,\n        output_unit=UnitMass.G,\n        value=3.14,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: UnitMassConversion = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.unit.get_mass_unit_conversion.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import create_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Customer, Error\nfrom kittycad.models.billing_info import BillingInfo\nfrom kittycad.types import Response\n\n\ndef example_create_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[Customer, Error]\n    ] = create_payment_information_for_user.sync(\n        client=client,\n        body=BillingInfo(\n            name=\"<string>\",\n            phone=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Customer = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.create_payment_information_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment/put/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import update_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Customer, Error\nfrom kittycad.models.billing_info import BillingInfo\nfrom kittycad.types import Response\n\n\ndef example_update_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[Customer, Error]\n    ] = update_payment_information_for_user.sync(\n        client=client,\n        body=BillingInfo(\n            name=\"<string>\",\n            phone=\"<string>\",\n        ),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Customer = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.update_payment_information_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import get_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Customer, Error\nfrom kittycad.types import Response\n\n\ndef example_get_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[Customer, Error]\n    ] = get_payment_information_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Customer = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.get_payment_information_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment/delete/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import delete_payment_information_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error\nfrom kittycad.types import Response\n\n\ndef example_delete_payment_information_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Error] = delete_payment_information_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: Error = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.delete_payment_information_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1api-calls~1{id}/get/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.api_calls import get_api_call\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import ApiCallWithPrice, Error\nfrom kittycad.types import Response\n\n\ndef example_get_api_call():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call.sync(\n        client=client,\n        id=\"<uuid>\",\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ApiCallWithPrice = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.api_calls.get_api_call.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1file~1mass/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_mass\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileMass\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_density import UnitDensity\nfrom kittycad.models.unit_mass import UnitMass\nfrom kittycad.types import Response\n\n\ndef example_create_file_mass():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[FileMass, Error]] = create_file_mass.sync(\n        client=client,\n        material_density=3.14,\n        material_density_unit=UnitDensity.LB_FT3,\n        output_unit=UnitMass.G,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileMass = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_mass.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment~1intent/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.payments import create_payment_intent_for_user\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, PaymentIntent\nfrom kittycad.types import Response\n\n\ndef example_create_payment_intent_for_user():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[PaymentIntent, Error]\n    ] = create_payment_intent_for_user.sync(\n        client=client,\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: PaymentIntent = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.payments.create_payment_intent_for_user.html"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1file~1surface-area/post/x-python",
+    "value": {
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_surface_area\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileSurfaceArea\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_area import UnitArea\nfrom kittycad.types import Response\n\n\ndef example_create_file_surface_area():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[FileSurfaceArea, Error]\n    ] = create_file_surface_area.sync(\n        client=client,\n        output_unit=UnitArea.CM2,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileSurfaceArea = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_surface_area.html"
     }
   },
   {
@@ -569,10 +569,10 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1file~1density/post/x-python",
+    "path": "/paths/~1users-extended/get/x-python",
     "value": {
-      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.file import create_file_density\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, FileDensity\nfrom kittycad.models.file_import_format import FileImportFormat\nfrom kittycad.models.unit_density import UnitDensity\nfrom kittycad.models.unit_mass import UnitMass\nfrom kittycad.types import Response\n\n\ndef example_create_file_density():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[Union[FileDensity, Error]] = create_file_density.sync(\n        client=client,\n        material_mass=3.14,\n        material_mass_unit=UnitMass.G,\n        output_unit=UnitDensity.LB_FT3,\n        src_format=FileImportFormat.FBX,\n        body=bytes(\"some bytes\", \"utf-8\"),\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: FileDensity = result\n    print(body)\n",
-      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.file.create_file_density.html"
+      "example": "from typing import Any, List, Optional, Tuple, Union\n\nfrom kittycad.api.users import list_users_extended\nfrom kittycad.client import ClientFromEnv\nfrom kittycad.models import Error, ExtendedUserResultsPage\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.types import Response\n\n\ndef example_list_users_extended():\n    # Create our client.\n    client = ClientFromEnv()\n\n    result: Optional[\n        Union[ExtendedUserResultsPage, Error]\n    ] = list_users_extended.sync(\n        client=client,\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,  # Optional[int]\n        page_token=None,  # Optional[str]\n    )\n\n    if isinstance(result, Error) or result == None:\n        print(result)\n        raise Exception(\"Error in response\")\n\n    body: ExtendedUserResultsPage = result\n    print(body)\n",
+      "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api.users.list_users_extended.html"
     }
   },
   {
