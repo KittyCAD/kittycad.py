@@ -42,9 +42,7 @@ from kittycad.api.file import (
 )
 from kittycad.api.hidden import auth_email, auth_email_callback, logout
 from kittycad.api.meta import (
-    get_ai_plugin_manifest,
     get_metadata,
-    get_openai_schema,
     get_schema,
     internal_get_api_token_for_discord_user,
     ping,
@@ -91,7 +89,6 @@ from kittycad.api.users import (
 )
 from kittycad.client import ClientFromEnv
 from kittycad.models import (
-    AiPluginManifest,
     AiPrompt,
     AiPromptResultsPage,
     ApiCallQueryGroup,
@@ -199,51 +196,6 @@ async def test_get_schema_async():
 
     # OR run async with more info
     await get_schema.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
-def test_get_ai_plugin_manifest():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[AiPluginManifest, Error]] = get_ai_plugin_manifest.sync(
-        client=client,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: AiPluginManifest = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[
-        Optional[Union[AiPluginManifest, Error]]
-    ] = get_ai_plugin_manifest.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_ai_plugin_manifest_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[AiPluginManifest, Error]
-    ] = await get_ai_plugin_manifest.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[AiPluginManifest, Error]]
-    ] = await get_ai_plugin_manifest.asyncio_detailed(
         client=client,
     )
 
@@ -1487,38 +1439,6 @@ async def test_logout_async():
 
     # OR run async with more info
     response: Response[Optional[Error]] = await logout.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
-def test_get_openai_schema():
-    # Create our client.
-    client = ClientFromEnv()
-
-    get_openai_schema.sync(
-        client=client,
-    )
-
-    # OR if you need more info (e.g. status_code)
-    get_openai_schema.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_openai_schema_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    await get_openai_schema.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    await get_openai_schema.asyncio_detailed(
         client=client,
     )
 
@@ -3403,6 +3323,7 @@ def test_list_text_to_cad_models_for_user():
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
+        no_models=None,  # Optional[bool]
     )
 
     if isinstance(result, Error) or result is None:
@@ -3420,6 +3341,7 @@ def test_list_text_to_cad_models_for_user():
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
+        no_models=None,  # Optional[bool]
     )
 
 
@@ -3437,6 +3359,7 @@ async def test_list_text_to_cad_models_for_user_async():
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
+        no_models=None,  # Optional[bool]
     )
 
     # OR run async with more info
@@ -3447,6 +3370,7 @@ async def test_list_text_to_cad_models_for_user_async():
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
+        no_models=None,  # Optional[bool]
     )
 
 

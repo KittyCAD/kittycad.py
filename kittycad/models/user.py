@@ -3,11 +3,14 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
 
 
 class User(BaseModel):
     """A user."""
+
+    block: Optional[BlockReason] = None
 
     company: Optional[str] = None
 

@@ -8,6 +8,7 @@ from ..models.annotation_type import AnnotationType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
 from ..models.color import Color
 from ..models.distance_type import DistanceType
+from ..models.entity_type import EntityType
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format import InputFormat
@@ -16,6 +17,7 @@ from ..models.output_format import OutputFormat
 from ..models.path_component_constraint_bound import PathComponentConstraintBound
 from ..models.path_component_constraint_type import PathComponentConstraintType
 from ..models.path_segment import PathSegment
+from ..models.perspective_camera_parameters import PerspectiveCameraParameters
 from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..models.scene_selection_type import SceneSelectionType
@@ -783,6 +785,36 @@ class entity_linear_pattern(BaseModel):
     type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
 
 
+class set_selection_type(BaseModel):
+    """When you select some entity with the current tool, what should happen to the entity?"""
+
+    selection_type: SceneSelectionType
+
+    type: Literal["set_selection_type"] = "set_selection_type"
+
+
+class set_selection_filter(BaseModel):
+    """What kind of entities can be selected?"""
+
+    filter: List[EntityType]
+
+    type: Literal["set_selection_filter"] = "set_selection_filter"
+
+
+class default_camera_set_orthographic(BaseModel):
+    """Use orthographic projection."""
+
+    type: Literal["default_camera_set_orthographic"] = "default_camera_set_orthographic"
+
+
+class default_camera_set_perspective(BaseModel):
+    """Use perspective projection."""
+
+    parameters: Optional[PerspectiveCameraParameters] = None
+
+    type: Literal["default_camera_set_perspective"] = "default_camera_set_perspective"
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -861,6 +893,10 @@ ModelingCmd = RootModel[
             object_set_material_params_pbr,
             entity_get_distance,
             entity_linear_pattern,
+            set_selection_type,
+            set_selection_filter,
+            default_camera_set_orthographic,
+            default_camera_set_perspective,
         ],
         Field(discriminator="type"),
     ]

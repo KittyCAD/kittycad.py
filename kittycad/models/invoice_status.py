@@ -4,8 +4,6 @@ from enum import Enum
 class InvoiceStatus(str, Enum):
     """An enum representing the possible values of an `Invoice`'s `status` field."""  # noqa: E501
 
-    """# Deleted. """  # noqa: E501
-    DELETED = "deleted"
     """# Draft. """  # noqa: E501
     DRAFT = "draft"
     """# Open. """  # noqa: E501
