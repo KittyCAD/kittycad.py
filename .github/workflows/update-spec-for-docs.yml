@@ -15,6 +15,13 @@ jobs:
     name: update-spec
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          # required
+          app-id: ${{ secrets.GH_ORG_APP_ID }}
+          private-key: ${{ secrets.GH_ORG_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - uses: actions/checkout@v4
       - name: make generate
         shell: bash
@@ -38,7 +45,7 @@ jobs:
         with:
           repository: 'kittycad/website'
           path: 'docs'
-          token: ${{secrets.PAT_GITHUB}}
+          token: ${{ steps.app-token.outputs.token }}
       - name: move spec to docs
         shell: bash
         run: |
@@ -62,6 +69,6 @@ jobs:
               --head "$NEW_BRANCH" \
               --base main || true
         env:
-          GITHUB_TOKEN: ${{secrets.PAT_GITHUB}}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
 
