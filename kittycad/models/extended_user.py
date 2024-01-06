@@ -3,14 +3,17 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
 
 
 class ExtendedUser(BaseModel):
     """Extended user information.
 
-    This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: MailChimp, Stripe, and Front
+    This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: MailChimp | Stripe
     """
+
+    block: Optional[BlockReason] = None
 
     company: Optional[str] = None
 

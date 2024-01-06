@@ -15,6 +15,7 @@ def _get_kwargs(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
+    no_models: Optional[bool] = None,
 ) -> Dict[str, Any]:
     url = "{}/user/text-to-cad".format(
         client.base_url,
@@ -37,6 +38,12 @@ def _get_kwargs(
             url = url + "&sort_by=" + str(sort_by)
         else:
             url = url + "?sort_by=" + str(sort_by)
+
+    if no_models is not None:
+        if "?" in url:
+            url = url + "&no_models=" + str(no_models)
+        else:
+            url = url + "?no_models=" + str(no_models)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -81,11 +88,13 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
+    no_models: Optional[bool] = None,
 ) -> Response[Optional[Union[TextToCadResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
         sort_by=sort_by,
+        no_models=no_models,
         client=client,
     )
 
@@ -103,6 +112,7 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
+    no_models: Optional[bool] = None,
 ) -> Optional[Union[TextToCadResultsPage, Error]]:
     """This will always return the STEP file contents as well as the format the user originally requested.
     This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
@@ -113,6 +123,7 @@ def sync(
         limit=limit,
         page_token=page_token,
         sort_by=sort_by,
+        no_models=no_models,
         client=client,
     ).parsed
 
@@ -123,11 +134,13 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
+    no_models: Optional[bool] = None,
 ) -> Response[Optional[Union[TextToCadResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
         sort_by=sort_by,
+        no_models=no_models,
         client=client,
     )
 
@@ -143,6 +156,7 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
+    no_models: Optional[bool] = None,
 ) -> Optional[Union[TextToCadResultsPage, Error]]:
     """This will always return the STEP file contents as well as the format the user originally requested.
     This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
@@ -154,6 +168,7 @@ async def asyncio(
             limit=limit,
             page_token=page_token,
             sort_by=sort_by,
+            no_models=no_models,
             client=client,
         )
     ).parsed

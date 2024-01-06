@@ -2,12 +2,6 @@
 
 from .account_provider import AccountProvider
 from .ai_feedback import AiFeedback
-from .ai_plugin_api import AiPluginApi
-from .ai_plugin_api_type import AiPluginApiType
-from .ai_plugin_auth import AiPluginAuth
-from .ai_plugin_auth_type import AiPluginAuthType
-from .ai_plugin_http_auth_type import AiPluginHttpAuthType
-from .ai_plugin_manifest import AiPluginManifest
 from .ai_prompt import AiPrompt
 from .ai_prompt_results_page import AiPromptResultsPage
 from .ai_prompt_type import AiPromptType
@@ -35,6 +29,7 @@ from .async_api_call_type import AsyncApiCallType
 from .axis import Axis
 from .axis_direction_pair import AxisDirectionPair
 from .billing_info import BillingInfo
+from .block_reason import BlockReason
 from .cache_metadata import CacheMetadata
 from .camera_drag_interaction_type import CameraDragInteractionType
 from .card_details import CardDetails
@@ -137,6 +132,7 @@ from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
 from .payment_method_card_checks import PaymentMethodCardChecks
 from .payment_method_type import PaymentMethodType
+from .perspective_camera_parameters import PerspectiveCameraParameters
 from .plane_intersect_and_project import PlaneIntersectAndProject
 from .ply_storage import PlyStorage
 from .point2d import Point2d
