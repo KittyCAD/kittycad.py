@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -9,3 +9,5 @@ class RawFile(BaseModel):
     contents: bytes
 
     name: str
+
+    model_config = ConfigDict(protected_namespaces=())

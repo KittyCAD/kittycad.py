@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.method import Method
 from ..models.uuid import Uuid
@@ -55,3 +55,5 @@ class ApiCallWithPrice(BaseModel):
     user_agent: str
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())

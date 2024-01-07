@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -12,3 +12,5 @@ class PaymentMethodCardChecks(BaseModel):
     address_postal_code_check: Optional[str] = None
 
     cvc_check: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

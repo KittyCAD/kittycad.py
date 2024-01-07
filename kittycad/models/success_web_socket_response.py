@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.ok_web_socket_response_data import OkWebSocketResponseData
 
@@ -13,3 +13,5 @@ class SuccessWebSocketResponse(BaseModel):
     resp: OkWebSocketResponseData
 
     success: bool
+
+    model_config = ConfigDict(protected_namespaces=())

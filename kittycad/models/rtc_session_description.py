@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.rtc_sdp_type import RtcSdpType
 
@@ -10,3 +10,5 @@ class RtcSessionDescription(BaseModel):
     sdp: str
 
     type: RtcSdpType
+
+    model_config = ConfigDict(protected_namespaces=())

@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
@@ -38,3 +38,5 @@ class TextToCad(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())

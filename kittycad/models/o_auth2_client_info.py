@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -12,3 +12,5 @@ class OAuth2ClientInfo(BaseModel):
     pkce_code_verifier: Optional[str] = None
 
     url: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

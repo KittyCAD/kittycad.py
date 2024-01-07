@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -10,3 +10,5 @@ class EmailAuthenticationForm(BaseModel):
     callback_url: Optional[str] = None
 
     email: str
+
+    model_config = ConfigDict(protected_namespaces=())

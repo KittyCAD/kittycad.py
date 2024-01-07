@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 
@@ -10,6 +10,8 @@ class default_scene(BaseModel):
 
     type: Literal["default_scene"] = "default_scene"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class scene_by_index(BaseModel):
     """Visit the indexed scene."""
@@ -17,6 +19,8 @@ class scene_by_index(BaseModel):
     index: int
 
     type: Literal["scene_by_index"] = "scene_by_index"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class scene_by_name(BaseModel):
@@ -26,6 +30,8 @@ class scene_by_name(BaseModel):
 
     type: Literal["scene_by_name"] = "scene_by_name"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class mesh_by_index(BaseModel):
     """Visit the indexed mesh."""
@@ -34,6 +40,8 @@ class mesh_by_index(BaseModel):
 
     type: Literal["mesh_by_index"] = "mesh_by_index"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class mesh_by_name(BaseModel):
     """Visit the first mesh with the given name."""
@@ -41,6 +49,8 @@ class mesh_by_name(BaseModel):
     name: str
 
     type: Literal["mesh_by_name"] = "mesh_by_name"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 Selection = RootModel[

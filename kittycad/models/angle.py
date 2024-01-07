@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.unit_angle import UnitAngle
 
@@ -10,3 +10,5 @@ class Angle(BaseModel):
     unit: UnitAngle
 
     value: float
+
+    model_config = ConfigDict(protected_namespaces=())

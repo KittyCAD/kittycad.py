@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.annotation_line_end_options import AnnotationLineEndOptions
 from ..models.annotation_text_options import AnnotationTextOptions
@@ -20,3 +20,5 @@ class AnnotationOptions(BaseModel):
     position: Optional[Point3d] = None
 
     text: Optional[AnnotationTextOptions] = None
+
+    model_config = ConfigDict(protected_namespaces=())

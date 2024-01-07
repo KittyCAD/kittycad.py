@@ -1,6 +1,6 @@
 from typing import List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -10,3 +10,5 @@ class MouseClick(BaseModel):
     entities_modified: List[str]
 
     entities_selected: List[str]
+
+    model_config = ConfigDict(protected_namespaces=())

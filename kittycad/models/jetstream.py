@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.jetstream_config import JetstreamConfig
 from ..models.jetstream_stats import JetstreamStats
@@ -15,3 +15,5 @@ class Jetstream(BaseModel):
     meta: Optional[MetaClusterInfo] = None
 
     stats: Optional[JetstreamStats] = None
+
+    model_config = ConfigDict(protected_namespaces=())

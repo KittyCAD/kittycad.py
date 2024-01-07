@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.cluster import Cluster
 from ..models.gateway import Gateway
@@ -105,3 +105,5 @@ class Connection(BaseModel):
     version: Optional[str] = None
 
     write_deadline: Optional[int] = None
+
+    model_config = ConfigDict(protected_namespaces=())

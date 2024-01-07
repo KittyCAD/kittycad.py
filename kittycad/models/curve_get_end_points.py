@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.point3d import Point3d
 
@@ -10,3 +10,5 @@ class CurveGetEndPoints(BaseModel):
     end: Point3d
 
     start: Point3d
+
+    model_config = ConfigDict(protected_namespaces=())

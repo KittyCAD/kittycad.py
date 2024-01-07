@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.payment_method_card_checks import PaymentMethodCardChecks
 
@@ -23,3 +23,5 @@ class CardDetails(BaseModel):
     funding: Optional[str] = None
 
     last4: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

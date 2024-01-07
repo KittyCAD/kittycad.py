@@ -1,6 +1,6 @@
 import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.uuid import Uuid
 
@@ -25,3 +25,5 @@ class CustomerBalance(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())

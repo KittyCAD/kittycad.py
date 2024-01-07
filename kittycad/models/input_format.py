@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.system import System
@@ -12,11 +12,15 @@ class fbx(BaseModel):
 
     type: Literal["fbx"] = "fbx"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class gltf(BaseModel):
     """Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb)."""
 
     type: Literal["gltf"] = "gltf"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class obj(BaseModel):
@@ -28,6 +32,8 @@ class obj(BaseModel):
 
     units: UnitLength
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class ply(BaseModel):
     """The PLY Polygon File Format."""
@@ -38,17 +44,23 @@ class ply(BaseModel):
 
     units: UnitLength
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class sldprt(BaseModel):
     """SolidWorks part (SLDPRT) format."""
 
     type: Literal["sldprt"] = "sldprt"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class step(BaseModel):
     """ISO 10303-21 (STEP) format."""
 
     type: Literal["step"] = "step"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class stl(BaseModel):
@@ -59,6 +71,8 @@ class stl(BaseModel):
     type: Literal["stl"] = "stl"
 
     units: UnitLength
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 InputFormat = RootModel[

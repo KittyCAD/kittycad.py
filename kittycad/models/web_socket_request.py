@@ -1,6 +1,6 @@
 from typing import List, Literal, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.client_metrics import ClientMetrics
@@ -18,6 +18,8 @@ class trickle_ice(BaseModel):
 
     type: Literal["trickle_ice"] = "trickle_ice"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class sdp_offer(BaseModel):
     """The SDP offer request."""
@@ -25,6 +27,8 @@ class sdp_offer(BaseModel):
     offer: RtcSessionDescription
 
     type: Literal["sdp_offer"] = "sdp_offer"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class modeling_cmd_req(BaseModel):
@@ -36,6 +40,8 @@ class modeling_cmd_req(BaseModel):
 
     type: Literal["modeling_cmd_req"] = "modeling_cmd_req"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class modeling_cmd_batch_req(BaseModel):
     """A sequence of modeling requests. If any request fails, following requests will not be tried."""
@@ -44,11 +50,15 @@ class modeling_cmd_batch_req(BaseModel):
 
     type: Literal["modeling_cmd_batch_req"] = "modeling_cmd_batch_req"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class ping(BaseModel):
     """The client-to-server Ping to ensure the WebSocket stays alive."""
 
     type: Literal["ping"] = "ping"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class metrics_response(BaseModel):
@@ -57,6 +67,8 @@ class metrics_response(BaseModel):
     metrics: ClientMetrics
 
     type: Literal["metrics_response"] = "metrics_response"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 WebSocketRequest = RootModel[

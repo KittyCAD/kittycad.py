@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.currency import Currency
 
@@ -19,3 +19,5 @@ class InvoiceLineItem(BaseModel):
     invoice_item: Optional[str] = None
 
     metadata: Optional[Dict[str, str]] = None
+
+    model_config = ConfigDict(protected_namespaces=())

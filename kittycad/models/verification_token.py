@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.uuid import Uuid
 
@@ -20,3 +20,5 @@ class VerificationToken(BaseModel):
     identifier: Optional[str] = None
 
     updated_at: datetime.datetime
+
+    model_config = ConfigDict(protected_namespaces=())

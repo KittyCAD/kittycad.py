@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.o_auth2_grant_type import OAuth2GrantType
 
@@ -12,3 +12,5 @@ class DeviceAccessTokenRequestForm(BaseModel):
     device_code: str
 
     grant_type: OAuth2GrantType
+
+    model_config = ConfigDict(protected_namespaces=())

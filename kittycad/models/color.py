@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -13,3 +13,5 @@ class Color(BaseModel):
     g: float
 
     r: float
+
+    model_config = ConfigDict(protected_namespaces=())

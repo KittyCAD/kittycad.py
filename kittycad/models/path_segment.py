@@ -1,6 +1,6 @@
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.angle import Angle
@@ -16,6 +16,8 @@ class line(BaseModel):
     relative: bool
 
     type: Literal["line"] = "line"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class arc(BaseModel):
@@ -33,6 +35,8 @@ class arc(BaseModel):
 
     type: Literal["arc"] = "arc"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class bezier(BaseModel):
     """A cubic bezier curve segment. Start at the end of the current line, go through control point 1 and 2, then end at a given point."""
@@ -47,6 +51,8 @@ class bezier(BaseModel):
 
     type: Literal["bezier"] = "bezier"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class tangential_arc(BaseModel):
     """Adds a tangent arc from current pen position with the given radius and angle."""
@@ -57,6 +63,8 @@ class tangential_arc(BaseModel):
 
     type: Literal["tangential_arc"] = "tangential_arc"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class tangential_arc_to(BaseModel):
     """Adds a tangent arc from current pen position to the new position."""
@@ -66,6 +74,8 @@ class tangential_arc_to(BaseModel):
     to: Point3d
 
     type: Literal["tangential_arc_to"] = "tangential_arc_to"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 PathSegment = RootModel[

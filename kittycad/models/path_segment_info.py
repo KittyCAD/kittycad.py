@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.path_command import PathCommand
@@ -14,3 +14,5 @@ class PathSegmentInfo(BaseModel):
     command_id: Optional[ModelingCmdId] = None
 
     relative: bool
+
+    model_config = ConfigDict(protected_namespaces=())

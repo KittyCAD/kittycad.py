@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -11,3 +11,5 @@ class Point3d(BaseModel):
     y: float
 
     z: float
+
+    model_config = ConfigDict(protected_namespaces=())

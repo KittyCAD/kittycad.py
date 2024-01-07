@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.annotation_line_end import AnnotationLineEnd
 
@@ -10,3 +10,5 @@ class AnnotationLineEndOptions(BaseModel):
     end: AnnotationLineEnd
 
     start: AnnotationLineEnd
+
+    model_config = ConfigDict(protected_namespaces=())

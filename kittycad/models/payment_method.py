@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.billing_info import BillingInfo
 from ..models.card_details import CardDetails
@@ -22,3 +22,5 @@ class PaymentMethod(BaseModel):
     metadata: Optional[Dict[str, str]] = None
 
     type: PaymentMethodType
+
+    model_config = ConfigDict(protected_namespaces=())

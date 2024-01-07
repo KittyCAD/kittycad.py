@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.currency import Currency
 from ..models.discount import Discount
@@ -61,3 +61,5 @@ class Invoice(BaseModel):
     total: Optional[float] = None
 
     url: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())
