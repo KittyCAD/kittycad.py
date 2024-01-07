@@ -8,7 +8,12 @@ import pytest
 
 from .api.ai import create_text_to_cad, get_text_to_cad_model_for_user
 from .api.api_tokens import list_api_tokens_for_user
-from .api.file import create_file_conversion, create_file_mass, create_file_volume
+from .api.file import (
+    create_file_center_of_mass,
+    create_file_conversion,
+    create_file_mass,
+    create_file_volume,
+)
 from .api.meta import ping
 from .api.modeling import modeling_commands_ws
 from .api.users import get_user_self, list_users_extended
@@ -22,6 +27,7 @@ from .models import (
     Direction,
     Error,
     ExtendedUserResultsPage,
+    FileCenterOfMass,
     FileConversion,
     FileExportFormat,
     FileImportFormat,
@@ -292,6 +298,37 @@ def test_file_volume():
 
     assert fv.id is not None
     assert fv.volume is not None
+
+    assert fv.model_dump_json() is not None
+
+    assert fv.status == ApiCallStatus.COMPLETED
+
+
+def test_file_center_of_mass():
+    # Create our client.
+    client = ClientFromEnv()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the fc.
+    result: Union[FileCenterOfMass, Error, None] = create_file_center_of_mass.sync(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_unit=UnitLength.CM,
+    )
+
+    assert isinstance(result, FileCenterOfMass)
+
+    fv: FileCenterOfMass = result
+
+    print(f"FileCenterOfMass: {fv}")
+
+    assert fv.id is not None
+    assert fv.center_of_mass is not None
 
     assert fv.model_dump_json() is not None
 
