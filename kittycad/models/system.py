@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.axis_direction_pair import AxisDirectionPair
 
@@ -17,3 +17,5 @@ class System(BaseModel):
     forward: AxisDirectionPair
 
     up: AxisDirectionPair
+
+    model_config = ConfigDict(protected_namespaces=())

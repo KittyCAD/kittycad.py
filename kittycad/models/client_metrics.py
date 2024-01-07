@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -21,3 +21,5 @@ class ClientMetrics(BaseModel):
     rtc_keyframes_decoded: int
 
     rtc_total_freezes_duration_sec: float
+
+    model_config = ConfigDict(protected_namespaces=())

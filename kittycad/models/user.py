@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
@@ -37,3 +37,5 @@ class User(BaseModel):
     phone: Optional[str] = None
 
     updated_at: datetime.datetime
+
+    model_config = ConfigDict(protected_namespaces=())

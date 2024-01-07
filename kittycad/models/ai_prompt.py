@@ -1,7 +1,7 @@
 import datetime
 from typing import Any, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.ai_feedback import AiFeedback
 from ..models.ai_prompt_type import AiPromptType
@@ -39,3 +39,5 @@ class AiPrompt(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())

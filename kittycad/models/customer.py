@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.currency import Currency
 from ..models.new_address import NewAddress
@@ -29,3 +29,5 @@ class Customer(BaseModel):
     name: Optional[str] = None
 
     phone: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

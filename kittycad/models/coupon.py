@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -18,3 +18,5 @@ class Coupon(BaseModel):
     name: Optional[str] = None
 
     percent_off: Optional[float] = None
+
+    model_config = ConfigDict(protected_namespaces=())

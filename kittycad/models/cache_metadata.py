@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -9,3 +9,5 @@ class CacheMetadata(BaseModel):
     This is mostly used for internal purposes and debugging."""
 
     ok: bool
+
+    model_config = ConfigDict(protected_namespaces=())

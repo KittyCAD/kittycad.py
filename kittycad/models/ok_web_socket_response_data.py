@@ -1,6 +1,6 @@
 from typing import List, Literal, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.ice_server import IceServer
@@ -15,6 +15,8 @@ class IceServerInfoData(BaseModel):
 
     ice_servers: List[IceServer]
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class ice_server_info(BaseModel):
     """Information about the ICE servers."""
@@ -23,11 +25,15 @@ class ice_server_info(BaseModel):
 
     type: Literal["ice_server_info"] = "ice_server_info"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class TrickleIceData(BaseModel):
     """"""
 
     candidate: RtcIceCandidateInit
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class trickle_ice(BaseModel):
@@ -37,11 +43,15 @@ class trickle_ice(BaseModel):
 
     type: Literal["trickle_ice"] = "trickle_ice"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class SdpAnswerData(BaseModel):
     """"""
 
     answer: RtcSessionDescription
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class sdp_answer(BaseModel):
@@ -51,11 +61,15 @@ class sdp_answer(BaseModel):
 
     type: Literal["sdp_answer"] = "sdp_answer"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class ModelingData(BaseModel):
     """"""
 
     modeling_response: OkModelingCmdResponse
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class modeling(BaseModel):
@@ -65,11 +79,15 @@ class modeling(BaseModel):
 
     type: Literal["modeling"] = "modeling"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class ExportData(BaseModel):
     """"""
 
     files: List[RawFile]
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class export(BaseModel):
@@ -79,9 +97,13 @@ class export(BaseModel):
 
     type: Literal["export"] = "export"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class MetricsRequestData(BaseModel):
     """"""
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class metrics_request(BaseModel):
@@ -90,6 +112,8 @@ class metrics_request(BaseModel):
     data: MetricsRequestData
 
     type: Literal["metrics_request"] = "metrics_request"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 OkWebSocketResponseData = RootModel[

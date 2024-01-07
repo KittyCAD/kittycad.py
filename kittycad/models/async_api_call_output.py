@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.ai_feedback import AiFeedback
@@ -51,6 +51,8 @@ class file_conversion(BaseModel):
 
     user_id: Uuid
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class file_center_of_mass(BaseModel):
     """File center of mass."""
@@ -78,6 +80,8 @@ class file_center_of_mass(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class file_mass(BaseModel):
@@ -111,6 +115,8 @@ class file_mass(BaseModel):
 
     user_id: Uuid
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class file_volume(BaseModel):
     """A file volume."""
@@ -138,6 +144,8 @@ class file_volume(BaseModel):
     user_id: Uuid
 
     volume: Optional[float] = None
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class file_density(BaseModel):
@@ -171,6 +179,8 @@ class file_density(BaseModel):
 
     user_id: Uuid
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class file_surface_area(BaseModel):
     """A file surface area."""
@@ -198,6 +208,8 @@ class file_surface_area(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class text_to_cad(BaseModel):
@@ -230,6 +242,8 @@ class text_to_cad(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 AsyncApiCallOutput = RootModel[

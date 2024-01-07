@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.fbx_storage import FbxStorage
@@ -20,6 +20,8 @@ class fbx(BaseModel):
 
     type: Literal["fbx"] = "fbx"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class gltf(BaseModel):
     """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ASCII output, you can set that option for the export."""
@@ -30,6 +32,8 @@ class gltf(BaseModel):
 
     type: Literal["gltf"] = "gltf"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class obj(BaseModel):
     """Wavefront OBJ format."""
@@ -39,6 +43,8 @@ class obj(BaseModel):
     type: Literal["obj"] = "obj"
 
     units: UnitLength
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class ply(BaseModel):
@@ -54,6 +60,8 @@ class ply(BaseModel):
 
     units: UnitLength
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class step(BaseModel):
     """ISO 10303-21 (STEP) format."""
@@ -61,6 +69,8 @@ class step(BaseModel):
     coords: System
 
     type: Literal["step"] = "step"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class stl(BaseModel):
@@ -75,6 +85,8 @@ class stl(BaseModel):
     type: Literal["stl"] = "stl"
 
     units: UnitLength
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 OutputFormat = RootModel[

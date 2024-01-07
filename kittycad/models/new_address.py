@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.country_code import CountryCode
 from ..models.uuid import Uuid
@@ -22,3 +22,5 @@ class NewAddress(BaseModel):
     user_id: Uuid
 
     zip: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

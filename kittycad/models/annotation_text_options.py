@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.annotation_text_alignment_x import AnnotationTextAlignmentX
 from ..models.annotation_text_alignment_y import AnnotationTextAlignmentY
@@ -15,3 +15,5 @@ class AnnotationTextOptions(BaseModel):
     x: AnnotationTextAlignmentX
 
     y: AnnotationTextAlignmentY
+
+    model_config = ConfigDict(protected_namespaces=())

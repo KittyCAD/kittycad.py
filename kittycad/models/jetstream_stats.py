@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.jetstream_api_stats import JetstreamApiStats
 
@@ -21,3 +21,5 @@ class JetstreamStats(BaseModel):
     reserved_store: Optional[int] = None
 
     store: Optional[int] = None
+
+    model_config = ConfigDict(protected_namespaces=())

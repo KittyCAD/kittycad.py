@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -14,3 +14,5 @@ class RtcIceCandidateInit(BaseModel):
     sdpMid: Optional[str] = None
 
     usernameFragment: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

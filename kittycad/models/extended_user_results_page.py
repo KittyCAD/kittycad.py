@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.extended_user import ExtendedUser
 
@@ -11,3 +11,5 @@ class ExtendedUserResultsPage(BaseModel):
     items: List[ExtendedUser]
 
     next_page: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

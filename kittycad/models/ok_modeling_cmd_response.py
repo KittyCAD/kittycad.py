@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.center_of_mass import CenterOfMass
@@ -42,6 +42,8 @@ class empty(BaseModel):
 
     type: Literal["empty"] = "empty"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class export(BaseModel):
     """The response from the ` ` command."""
@@ -49,6 +51,8 @@ class export(BaseModel):
     data: Export
 
     type: Literal["export"] = "export"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class select_with_point(BaseModel):
@@ -58,6 +62,8 @@ class select_with_point(BaseModel):
 
     type: Literal["select_with_point"] = "select_with_point"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class highlight_set_entity(BaseModel):
     """The response from the ` ` command."""
@@ -65,6 +71,8 @@ class highlight_set_entity(BaseModel):
     data: HighlightSetEntity
 
     type: Literal["highlight_set_entity"] = "highlight_set_entity"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class entity_get_child_uuid(BaseModel):
@@ -74,6 +82,8 @@ class entity_get_child_uuid(BaseModel):
 
     type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_get_num_children(BaseModel):
     """The response from the ` ` command."""
@@ -81,6 +91,8 @@ class entity_get_num_children(BaseModel):
     data: EntityGetNumChildren
 
     type: Literal["entity_get_num_children"] = "entity_get_num_children"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class entity_get_parent_id(BaseModel):
@@ -90,6 +102,8 @@ class entity_get_parent_id(BaseModel):
 
     type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_get_all_child_uuids(BaseModel):
     """The response from the ` ` command."""
@@ -97,6 +111,8 @@ class entity_get_all_child_uuids(BaseModel):
     data: EntityGetAllChildUuids
 
     type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class select_get(BaseModel):
@@ -106,6 +122,8 @@ class select_get(BaseModel):
 
     type: Literal["select_get"] = "select_get"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class get_entity_type(BaseModel):
     """The response from the ` ` command."""
@@ -113,6 +131,8 @@ class get_entity_type(BaseModel):
     data: GetEntityType
 
     type: Literal["get_entity_type"] = "get_entity_type"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class entity_get_distance(BaseModel):
@@ -122,6 +142,8 @@ class entity_get_distance(BaseModel):
 
     type: Literal["entity_get_distance"] = "entity_get_distance"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_linear_pattern(BaseModel):
     """The response from the ` ` command."""
@@ -129,6 +151,8 @@ class entity_linear_pattern(BaseModel):
     data: EntityLinearPattern
 
     type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class solid3d_get_all_edge_faces(BaseModel):
@@ -138,6 +162,8 @@ class solid3d_get_all_edge_faces(BaseModel):
 
     type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class solid3d_get_all_opposite_edges(BaseModel):
     """The response from the ` ` command."""
@@ -145,6 +171,8 @@ class solid3d_get_all_opposite_edges(BaseModel):
     data: Solid3dGetAllOppositeEdges
 
     type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class solid3d_get_opposite_edge(BaseModel):
@@ -154,6 +182,8 @@ class solid3d_get_opposite_edge(BaseModel):
 
     type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class solid3d_get_prev_adjacent_edge(BaseModel):
     """The response from the ` ` command."""
@@ -161,6 +191,8 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
     data: Solid3dGetPrevAdjacentEdge
 
     type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class solid3d_get_next_adjacent_edge(BaseModel):
@@ -170,6 +202,8 @@ class solid3d_get_next_adjacent_edge(BaseModel):
 
     type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class mouse_click(BaseModel):
     """The response from the ` ` command."""
@@ -177,6 +211,8 @@ class mouse_click(BaseModel):
     data: MouseClick
 
     type: Literal["mouse_click"] = "mouse_click"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class curve_get_type(BaseModel):
@@ -186,6 +222,8 @@ class curve_get_type(BaseModel):
 
     type: Literal["curve_get_type"] = "curve_get_type"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class curve_get_control_points(BaseModel):
     """The response from the ` ` command."""
@@ -193,6 +231,8 @@ class curve_get_control_points(BaseModel):
     data: CurveGetControlPoints
 
     type: Literal["curve_get_control_points"] = "curve_get_control_points"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class take_snapshot(BaseModel):
@@ -202,6 +242,8 @@ class take_snapshot(BaseModel):
 
     type: Literal["take_snapshot"] = "take_snapshot"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class path_get_info(BaseModel):
     """The response from the ` ` command."""
@@ -209,6 +251,8 @@ class path_get_info(BaseModel):
     data: PathGetInfo
 
     type: Literal["path_get_info"] = "path_get_info"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class path_get_curve_uuids_for_vertices(BaseModel):
@@ -220,6 +264,8 @@ class path_get_curve_uuids_for_vertices(BaseModel):
         "path_get_curve_uuids_for_vertices"
     ] = "path_get_curve_uuids_for_vertices"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class path_get_vertex_uuids(BaseModel):
     """The response from the ` ` command."""
@@ -227,6 +273,8 @@ class path_get_vertex_uuids(BaseModel):
     data: PathGetVertexUuids
 
     type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class plane_intersect_and_project(BaseModel):
@@ -236,6 +284,8 @@ class plane_intersect_and_project(BaseModel):
 
     type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class curve_get_end_points(BaseModel):
     """The response from the ` ` command."""
@@ -243,6 +293,8 @@ class curve_get_end_points(BaseModel):
     data: CurveGetEndPoints
 
     type: Literal["curve_get_end_points"] = "curve_get_end_points"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class import_files(BaseModel):
@@ -252,6 +304,8 @@ class import_files(BaseModel):
 
     type: Literal["import_files"] = "import_files"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class mass(BaseModel):
     """The response from the ` ` command."""
@@ -259,6 +313,8 @@ class mass(BaseModel):
     data: Mass
 
     type: Literal["mass"] = "mass"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class volume(BaseModel):
@@ -268,6 +324,8 @@ class volume(BaseModel):
 
     type: Literal["volume"] = "volume"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class density(BaseModel):
     """The response from the ` ` command."""
@@ -275,6 +333,8 @@ class density(BaseModel):
     data: Density
 
     type: Literal["density"] = "density"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class surface_area(BaseModel):
@@ -284,6 +344,8 @@ class surface_area(BaseModel):
 
     type: Literal["surface_area"] = "surface_area"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class center_of_mass(BaseModel):
     """The response from the ` ` command."""
@@ -292,6 +354,8 @@ class center_of_mass(BaseModel):
 
     type: Literal["center_of_mass"] = "center_of_mass"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class get_sketch_mode_plane(BaseModel):
     """The response from the ` ` command."""
@@ -299,6 +363,8 @@ class get_sketch_mode_plane(BaseModel):
     data: GetSketchModePlane
 
     type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 OkModelingCmdResponse = RootModel[

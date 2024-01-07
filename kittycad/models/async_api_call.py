@@ -1,7 +1,7 @@
 import datetime
 from typing import Any, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.async_api_call_type import AsyncApiCallType
@@ -34,3 +34,5 @@ class AsyncApiCall(BaseModel):
     user_id: Uuid
 
     worker: Optional[str] = None
+
+    model_config = ConfigDict(protected_namespaces=())

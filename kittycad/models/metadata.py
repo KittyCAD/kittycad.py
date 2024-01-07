@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.cache_metadata import CacheMetadata
 from ..models.connection import Connection
@@ -21,3 +21,5 @@ class Metadata(BaseModel):
     git_hash: str
 
     pubsub: Connection
+
+    model_config = ConfigDict(protected_namespaces=())

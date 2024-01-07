@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_area import UnitArea
@@ -34,3 +34,5 @@ class UnitAreaConversion(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())

@@ -1,6 +1,6 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.global_axis import GlobalAxis
@@ -11,6 +11,8 @@ class euclidean(BaseModel):
 
     type: Literal["euclidean"] = "euclidean"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class on_axis(BaseModel):
     """The distance between objects along the specified axis"""
@@ -18,6 +20,8 @@ class on_axis(BaseModel):
     axis: GlobalAxis
 
     type: Literal["on_axis"] = "on_axis"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 DistanceType = RootModel[

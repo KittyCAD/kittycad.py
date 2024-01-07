@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 
@@ -9,3 +9,5 @@ class Point2d(BaseModel):
     x: float
 
     y: float
+
+    model_config = ConfigDict(protected_namespaces=())

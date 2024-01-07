@@ -1,5 +1,5 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.modeling_cmd import ModelingCmd
 from ..models.modeling_cmd_id import ModelingCmdId
@@ -11,3 +11,5 @@ class ModelingCmdReq(BaseModel):
     cmd: ModelingCmd
 
     cmd_id: ModelingCmdId
+
+    model_config = ConfigDict(protected_namespaces=())

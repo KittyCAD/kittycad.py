@@ -1,6 +1,6 @@
 from typing import List, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.annotation_options import AnnotationOptions
@@ -34,6 +34,8 @@ class start_path(BaseModel):
 
     type: Literal["start_path"] = "start_path"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class move_path_pen(BaseModel):
     """Move the path's "pen"."""
@@ -44,6 +46,8 @@ class move_path_pen(BaseModel):
 
     type: Literal["move_path_pen"] = "move_path_pen"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class extend_path(BaseModel):
     """Extend a path by adding a new segment which starts at the path's "pen". If no "pen" location has been set before (via `MovePen`), then the pen is at the origin."""
@@ -53,6 +57,8 @@ class extend_path(BaseModel):
     segment: PathSegment
 
     type: Literal["extend_path"] = "extend_path"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class extrude(BaseModel):
@@ -66,6 +72,8 @@ class extrude(BaseModel):
 
     type: Literal["extrude"] = "extrude"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class close_path(BaseModel):
     """Closes a path, converting it to a 2D solid."""
@@ -73,6 +81,8 @@ class close_path(BaseModel):
     path_id: str
 
     type: Literal["close_path"] = "close_path"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class camera_drag_start(BaseModel):
@@ -83,6 +93,8 @@ class camera_drag_start(BaseModel):
     type: Literal["camera_drag_start"] = "camera_drag_start"
 
     window: Point2d
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class camera_drag_move(BaseModel):
@@ -96,6 +108,8 @@ class camera_drag_move(BaseModel):
 
     window: Point2d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class camera_drag_end(BaseModel):
     """Camera drag ended."""
@@ -105,6 +119,8 @@ class camera_drag_end(BaseModel):
     type: Literal["camera_drag_end"] = "camera_drag_end"
 
     window: Point2d
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class default_camera_look_at(BaseModel):
@@ -118,6 +134,8 @@ class default_camera_look_at(BaseModel):
 
     vantage: Point3d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class default_camera_zoom(BaseModel):
     """Adjust zoom of the default camera."""
@@ -125,6 +143,8 @@ class default_camera_zoom(BaseModel):
     magnitude: float
 
     type: Literal["default_camera_zoom"] = "default_camera_zoom"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class default_camera_enable_sketch_mode(BaseModel):
@@ -146,6 +166,8 @@ class default_camera_enable_sketch_mode(BaseModel):
 
     y_axis: Point3d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class default_camera_disable_sketch_mode(BaseModel):
     """Disable sketch mode, from the default camera."""
@@ -154,6 +176,8 @@ class default_camera_disable_sketch_mode(BaseModel):
         "default_camera_disable_sketch_mode"
     ] = "default_camera_disable_sketch_mode"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class default_camera_focus_on(BaseModel):
     """Focus default camera on object."""
@@ -161,6 +185,8 @@ class default_camera_focus_on(BaseModel):
     type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
 
     uuid: str
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class export(BaseModel):
@@ -174,6 +200,8 @@ class export(BaseModel):
 
     type: Literal["export"] = "export"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_get_parent_id(BaseModel):
     """What is this entity's parent?"""
@@ -182,6 +210,8 @@ class entity_get_parent_id(BaseModel):
 
     type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_get_num_children(BaseModel):
     """How many children does the entity have?"""
@@ -189,6 +219,8 @@ class entity_get_num_children(BaseModel):
     entity_id: str
 
     type: Literal["entity_get_num_children"] = "entity_get_num_children"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class entity_get_child_uuid(BaseModel):
@@ -200,6 +232,8 @@ class entity_get_child_uuid(BaseModel):
 
     type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_get_all_child_uuids(BaseModel):
     """What are all UUIDs of this entity's children?"""
@@ -207,6 +241,8 @@ class entity_get_all_child_uuids(BaseModel):
     entity_id: str
 
     type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class edit_mode_enter(BaseModel):
@@ -216,11 +252,15 @@ class edit_mode_enter(BaseModel):
 
     type: Literal["edit_mode_enter"] = "edit_mode_enter"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class edit_mode_exit(BaseModel):
     """Exit edit mode"""
 
     type: Literal["edit_mode_exit"] = "edit_mode_exit"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class select_with_point(BaseModel):
@@ -232,11 +272,15 @@ class select_with_point(BaseModel):
 
     type: Literal["select_with_point"] = "select_with_point"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class select_clear(BaseModel):
     """Clear the selection"""
 
     type: Literal["select_clear"] = "select_clear"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class select_add(BaseModel):
@@ -246,6 +290,8 @@ class select_add(BaseModel):
 
     type: Literal["select_add"] = "select_add"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class select_remove(BaseModel):
     """Removes one or more entities (by UUID) from the selection."""
@@ -253,6 +299,8 @@ class select_remove(BaseModel):
     entities: List[str]
 
     type: Literal["select_remove"] = "select_remove"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class select_replace(BaseModel):
@@ -262,11 +310,15 @@ class select_replace(BaseModel):
 
     type: Literal["select_replace"] = "select_replace"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class select_get(BaseModel):
     """Find all IDs of selected entities"""
 
     type: Literal["select_get"] = "select_get"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class highlight_set_entity(BaseModel):
@@ -278,6 +330,8 @@ class highlight_set_entity(BaseModel):
 
     type: Literal["highlight_set_entity"] = "highlight_set_entity"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class highlight_set_entities(BaseModel):
     """Changes the current highlighted entity to these entities."""
@@ -285,6 +339,8 @@ class highlight_set_entities(BaseModel):
     entities: List[str]
 
     type: Literal["highlight_set_entities"] = "highlight_set_entities"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class new_annotation(BaseModel):
@@ -298,6 +354,8 @@ class new_annotation(BaseModel):
 
     type: Literal["new_annotation"] = "new_annotation"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class update_annotation(BaseModel):
     """Update an annotation"""
@@ -307,6 +365,8 @@ class update_annotation(BaseModel):
     options: AnnotationOptions
 
     type: Literal["update_annotation"] = "update_annotation"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class object_visible(BaseModel):
@@ -318,6 +378,8 @@ class object_visible(BaseModel):
 
     type: Literal["object_visible"] = "object_visible"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class object_bring_to_front(BaseModel):
     """Bring an object to the front of the scene"""
@@ -326,6 +388,8 @@ class object_bring_to_front(BaseModel):
 
     type: Literal["object_bring_to_front"] = "object_bring_to_front"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class get_entity_type(BaseModel):
     """What type of entity is this?"""
@@ -333,6 +397,8 @@ class get_entity_type(BaseModel):
     entity_id: str
 
     type: Literal["get_entity_type"] = "get_entity_type"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class solid2d_add_hole(BaseModel):
@@ -344,6 +410,8 @@ class solid2d_add_hole(BaseModel):
 
     type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class solid3d_get_all_edge_faces(BaseModel):
     """Gets all faces which use the given edge."""
@@ -353,6 +421,8 @@ class solid3d_get_all_edge_faces(BaseModel):
     object_id: str
 
     type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class solid3d_get_all_opposite_edges(BaseModel):
@@ -366,6 +436,8 @@ class solid3d_get_all_opposite_edges(BaseModel):
 
     type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class solid3d_get_opposite_edge(BaseModel):
     """Gets the edge opposite the given edge, along the given face."""
@@ -377,6 +449,8 @@ class solid3d_get_opposite_edge(BaseModel):
     object_id: str
 
     type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class solid3d_get_next_adjacent_edge(BaseModel):
@@ -390,6 +464,8 @@ class solid3d_get_next_adjacent_edge(BaseModel):
 
     type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class solid3d_get_prev_adjacent_edge(BaseModel):
     """Gets the previous adjacent edge for the given edge, along the given face."""
@@ -402,6 +478,8 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 
     type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class send_object(BaseModel):
     """Sends object to front or back."""
@@ -412,6 +490,8 @@ class send_object(BaseModel):
 
     type: Literal["send_object"] = "send_object"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_set_opacity(BaseModel):
     """Set opacity of the entity."""
@@ -421,6 +501,8 @@ class entity_set_opacity(BaseModel):
     opacity: float
 
     type: Literal["entity_set_opacity"] = "entity_set_opacity"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class entity_fade(BaseModel):
@@ -433,6 +515,8 @@ class entity_fade(BaseModel):
     fade_in: bool
 
     type: Literal["entity_fade"] = "entity_fade"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class make_plane(BaseModel):
@@ -452,6 +536,8 @@ class make_plane(BaseModel):
 
     y_axis: Point3d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class plane_set_color(BaseModel):
     """Set the plane's color."""
@@ -462,6 +548,8 @@ class plane_set_color(BaseModel):
 
     type: Literal["plane_set_color"] = "plane_set_color"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class set_tool(BaseModel):
     """Set the active tool."""
@@ -469,6 +557,8 @@ class set_tool(BaseModel):
     tool: SceneToolType
 
     type: Literal["set_tool"] = "set_tool"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class mouse_move(BaseModel):
@@ -480,6 +570,8 @@ class mouse_move(BaseModel):
 
     window: Point2d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class mouse_click(BaseModel):
     """Send a mouse click event. Updates modified/selected entities."""
@@ -487,6 +579,8 @@ class mouse_click(BaseModel):
     type: Literal["mouse_click"] = "mouse_click"
 
     window: Point2d
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class sketch_mode_enable(BaseModel):
@@ -502,11 +596,15 @@ class sketch_mode_enable(BaseModel):
 
     type: Literal["sketch_mode_enable"] = "sketch_mode_enable"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class sketch_mode_disable(BaseModel):
     """Disable sketch mode."""
 
     type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class curve_get_type(BaseModel):
@@ -516,6 +614,8 @@ class curve_get_type(BaseModel):
 
     type: Literal["curve_get_type"] = "curve_get_type"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class curve_get_control_points(BaseModel):
     """Get control points of a given curve."""
@@ -524,6 +624,8 @@ class curve_get_control_points(BaseModel):
 
     type: Literal["curve_get_control_points"] = "curve_get_control_points"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class take_snapshot(BaseModel):
     """Take a snapshot."""
@@ -531,6 +633,8 @@ class take_snapshot(BaseModel):
     format: ImageFormat
 
     type: Literal["take_snapshot"] = "take_snapshot"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class make_axes_gizmo(BaseModel):
@@ -542,6 +646,8 @@ class make_axes_gizmo(BaseModel):
 
     type: Literal["make_axes_gizmo"] = "make_axes_gizmo"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class path_get_info(BaseModel):
     """Query the given path"""
@@ -549,6 +655,8 @@ class path_get_info(BaseModel):
     path_id: str
 
     type: Literal["path_get_info"] = "path_get_info"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class path_get_curve_uuids_for_vertices(BaseModel):
@@ -562,6 +670,8 @@ class path_get_curve_uuids_for_vertices(BaseModel):
 
     vertex_ids: List[str]
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class path_get_vertex_uuids(BaseModel):
     """Get vertices within a path"""
@@ -570,6 +680,8 @@ class path_get_vertex_uuids(BaseModel):
 
     type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class handle_mouse_drag_start(BaseModel):
     """Start dragging mouse."""
@@ -577,6 +689,8 @@ class handle_mouse_drag_start(BaseModel):
     type: Literal["handle_mouse_drag_start"] = "handle_mouse_drag_start"
 
     window: Point2d
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class handle_mouse_drag_move(BaseModel):
@@ -588,6 +702,8 @@ class handle_mouse_drag_move(BaseModel):
 
     window: Point2d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class handle_mouse_drag_end(BaseModel):
     """Stop dragging mouse."""
@@ -596,6 +712,8 @@ class handle_mouse_drag_end(BaseModel):
 
     window: Point2d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class remove_scene_objects(BaseModel):
     """Remove scene objects."""
@@ -603,6 +721,8 @@ class remove_scene_objects(BaseModel):
     object_ids: List[str]
 
     type: Literal["remove_scene_objects"] = "remove_scene_objects"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class plane_intersect_and_project(BaseModel):
@@ -614,6 +734,8 @@ class plane_intersect_and_project(BaseModel):
 
     window: Point2d
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class curve_get_end_points(BaseModel):
     """Find the start and end of a curve."""
@@ -621,6 +743,8 @@ class curve_get_end_points(BaseModel):
     curve_id: str
 
     type: Literal["curve_get_end_points"] = "curve_get_end_points"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class reconfigure_stream(BaseModel):
@@ -634,6 +758,8 @@ class reconfigure_stream(BaseModel):
 
     width: int
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class import_files(BaseModel):
     """Import files to the current model."""
@@ -643,6 +769,8 @@ class import_files(BaseModel):
     format: InputFormat
 
     type: Literal["import_files"] = "import_files"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class mass(BaseModel):
@@ -660,6 +788,8 @@ class mass(BaseModel):
 
     type: Literal["mass"] = "mass"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class density(BaseModel):
     """Get the density of entities in the scene or the default scene."""
@@ -676,6 +806,8 @@ class density(BaseModel):
 
     type: Literal["density"] = "density"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class volume(BaseModel):
     """Get the volume of entities in the scene or the default scene."""
@@ -687,6 +819,8 @@ class volume(BaseModel):
     source_unit: UnitLength
 
     type: Literal["volume"] = "volume"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class center_of_mass(BaseModel):
@@ -700,6 +834,8 @@ class center_of_mass(BaseModel):
 
     type: Literal["center_of_mass"] = "center_of_mass"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class surface_area(BaseModel):
     """Get the surface area of entities in the scene or the default scene."""
@@ -712,11 +848,15 @@ class surface_area(BaseModel):
 
     type: Literal["surface_area"] = "surface_area"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class get_sketch_mode_plane(BaseModel):
     """Get the plane of the sketch mode. This is useful for getting the normal of the plane after a user selects a plane."""
 
     type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class curve_set_constraint(BaseModel):
@@ -730,6 +870,8 @@ class curve_set_constraint(BaseModel):
 
     type: Literal["curve_set_constraint"] = "curve_set_constraint"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class enable_sketch_mode(BaseModel):
     """Sketch on some entity (e.g. a plane, a face)"""
@@ -741,6 +883,8 @@ class enable_sketch_mode(BaseModel):
     ortho: bool
 
     type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class object_set_material_params_pbr(BaseModel):
@@ -758,6 +902,8 @@ class object_set_material_params_pbr(BaseModel):
 
     type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class entity_get_distance(BaseModel):
     """What is the distance between these two entities?"""
@@ -769,6 +915,8 @@ class entity_get_distance(BaseModel):
     entity_id2: str
 
     type: Literal["entity_get_distance"] = "entity_get_distance"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class entity_linear_pattern(BaseModel):
@@ -784,6 +932,8 @@ class entity_linear_pattern(BaseModel):
 
     type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class set_selection_type(BaseModel):
     """When you select some entity with the current tool, what should happen to the entity?"""
@@ -791,6 +941,8 @@ class set_selection_type(BaseModel):
     selection_type: SceneSelectionType
 
     type: Literal["set_selection_type"] = "set_selection_type"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class set_selection_filter(BaseModel):
@@ -800,11 +952,15 @@ class set_selection_filter(BaseModel):
 
     type: Literal["set_selection_filter"] = "set_selection_filter"
 
+    model_config = ConfigDict(protected_namespaces=())
+
 
 class default_camera_set_orthographic(BaseModel):
     """Use orthographic projection."""
 
     type: Literal["default_camera_set_orthographic"] = "default_camera_set_orthographic"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 class default_camera_set_perspective(BaseModel):
@@ -813,6 +969,8 @@ class default_camera_set_perspective(BaseModel):
     parameters: Optional[PerspectiveCameraParameters] = None
 
     type: Literal["default_camera_set_perspective"] = "default_camera_set_perspective"
+
+    model_config = ConfigDict(protected_namespaces=())
 
 
 ModelingCmd = RootModel[
