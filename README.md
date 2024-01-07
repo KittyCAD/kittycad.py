@@ -3,8 +3,8 @@
 The Python API client for KittyCAD.
 
 - [PyPI](https://pypi.org/project/kittycad/)
-- [Python docs](https://python.api.docs.kittycad.io/)
-- [KittyCAD API Docs](https://docs.kittycad.io/?lang=python)
+- [Python docs](https://python.api.docs.zoo.dev/)
+- [KittyCAD API Docs](https://zoo.dev/docs/api?lang=python)
 
 ## Generating
 
