@@ -1,17 +1,20 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ...client import Client
+from ...models.add_org_member import AddOrgMember
 from ...models.error import Error
+from ...models.org_member import OrgMember
 from ...types import Response
 
 
 def _get_kwargs(
+    body: AddOrgMember,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/payment/tax".format(
+    url = "{}/org/members".format(
         client.base_url,
     )  # noqa: E501
 
@@ -23,11 +26,14 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "content": body.model_dump_json(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Error]:
-    return None
+def _parse_response(*, response: httpx.Response) -> Optional[Union[OrgMember, Error]]:
+    if response.status_code == 201:
+        response_201 = OrgMember(**response.json())
+        return response_201
     if response.status_code == 400:
         response_4XX = Error(**response.json())
         return response_4XX
@@ -37,7 +43,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Error]:
     return Error(**response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Optional[Union[OrgMember, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -47,14 +55,16 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 
 
 def sync_detailed(
+    body: AddOrgMember,
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+) -> Response[Optional[Union[OrgMember, Error]]]:
     kwargs = _get_kwargs(
+        body=body,
         client=client,
     )
 
-    response = httpx.get(
+    response = httpx.post(
         verify=client.verify_ssl,
         **kwargs,
     )
@@ -63,38 +73,44 @@ def sync_detailed(
 
 
 def sync(
+    body: AddOrgMember,
     *,
     client: Client,
-) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+) -> Optional[Union[OrgMember, Error]]:
+    """This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user's org."""  # noqa: E501
 
     return sync_detailed(
+        body=body,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    body: AddOrgMember,
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+) -> Response[Optional[Union[OrgMember, Error]]]:
     kwargs = _get_kwargs(
+        body=body,
         client=client,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.post(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
+    body: AddOrgMember,
     *,
     client: Client,
-) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+) -> Optional[Union[OrgMember, Error]]:
+    """This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user's org."""  # noqa: E501
 
     return (
         await asyncio_detailed(
+            body=body,
             client=client,
         )
     ).parsed

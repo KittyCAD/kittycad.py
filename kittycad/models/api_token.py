@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -15,6 +16,8 @@ class ApiToken(BaseModel):
     id: Uuid
 
     is_valid: bool
+
+    label: Optional[str] = None
 
     token: Uuid
 

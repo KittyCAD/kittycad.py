@@ -6,13 +6,15 @@ from ..models.uuid import Uuid
 
 
 class CustomerBalance(BaseModel):
-    """A balance for a user.
+    """A balance for a customer.
 
-    This holds information about the financial balance for the user."""
+    This holds information about the financial balance for the customer."""
 
     created_at: datetime.datetime
 
     id: Uuid
+
+    map_id: Uuid
 
     monthly_credits_remaining: float
 
@@ -23,7 +25,5 @@ class CustomerBalance(BaseModel):
     total_due: float
 
     updated_at: datetime.datetime
-
-    user_id: Uuid
 
     model_config = ConfigDict(protected_namespaces=())
