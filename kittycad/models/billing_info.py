@@ -2,13 +2,13 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
-from ..models.new_address import NewAddress
+from ..models.address_details import AddressDetails
 
 
 class BillingInfo(BaseModel):
     """The billing information for payments."""
 
-    address: Optional[NewAddress] = None
+    address: Optional[AddressDetails] = None
 
     name: Optional[str] = None
 

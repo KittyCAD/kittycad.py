@@ -3,14 +3,14 @@ from typing import Dict, Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from ..models.address_details import AddressDetails
 from ..models.currency import Currency
-from ..models.new_address import NewAddress
 
 
 class Customer(BaseModel):
     """The resource representing a payment "Customer"."""
 
-    address: Optional[NewAddress] = None
+    address: Optional[AddressDetails] = None
 
     balance: Optional[float] = None
 

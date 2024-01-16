@@ -11,10 +11,17 @@ from ...types import Response
 def _get_kwargs(
     *,
     client: Client,
+    label: Optional[str] = None,
 ) -> Dict[str, Any]:
     url = "{}/user/api-tokens".format(
         client.base_url,
     )  # noqa: E501
+
+    if label is not None:
+        if "?" in url:
+            url = url + "&label=" + str(label)
+        else:
+            url = url + "?label=" + str(label)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -54,8 +61,10 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
+    label: Optional[str] = None,
 ) -> Response[Optional[Union[ApiToken, Error]]]:
     kwargs = _get_kwargs(
+        label=label,
         client=client,
     )
 
@@ -70,10 +79,12 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
+    label: Optional[str] = None,
 ) -> Optional[Union[ApiToken, Error]]:
     """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""  # noqa: E501
 
     return sync_detailed(
+        label=label,
         client=client,
     ).parsed
 
@@ -81,8 +92,10 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
+    label: Optional[str] = None,
 ) -> Response[Optional[Union[ApiToken, Error]]]:
     kwargs = _get_kwargs(
+        label=label,
         client=client,
     )
 
@@ -95,11 +108,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
+    label: Optional[str] = None,
 ) -> Optional[Union[ApiToken, Error]]:
     """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""  # noqa: E501
 
     return (
         await asyncio_detailed(
+            label=label,
             client=client,
         )
     ).parsed

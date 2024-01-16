@@ -11,7 +11,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/payment/tax".format(
+    url = "{}/org/payment/tax".format(
         client.base_url,
     )  # noqa: E501
 
@@ -66,7 +66,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by an org admin. It will return an error if the org's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -91,7 +91,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by an org admin. It will return an error if the org's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
 
     return (
         await asyncio_detailed(

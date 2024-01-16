@@ -11,7 +11,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/payment/tax".format(
+    url = "{}/org".format(
         client.base_url,
     )  # noqa: E501
 
@@ -54,7 +54,7 @@ def sync_detailed(
         client=client,
     )
 
-    response = httpx.get(
+    response = httpx.delete(
         verify=client.verify_ssl,
         **kwargs,
     )
@@ -66,7 +66,10 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """In order to delete an org, you must first delete all of its members, except yourself.
+    You must also have no outstanding invoices or unpaid balances.
+    This endpoint requires authentication by an org admin. It deletes the authenticated user's org.
+    """  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -82,7 +85,7 @@ async def asyncio_detailed(
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.delete(**kwargs)
 
     return _build_response(response=response)
 
@@ -91,7 +94,10 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """In order to delete an org, you must first delete all of its members, except yourself.
+    You must also have no outstanding invoices or unpaid balances.
+    This endpoint requires authentication by an org admin. It deletes the authenticated user's org.
+    """  # noqa: E501
 
     return (
         await asyncio_detailed(

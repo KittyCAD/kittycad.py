@@ -12,12 +12,14 @@ from kittycad.api.ai import (
 )
 from kittycad.api.api_calls import (
     get_api_call,
+    get_api_call_for_org,
     get_api_call_for_user,
     get_api_call_metrics,
     get_async_operation,
     list_api_calls,
     list_api_calls_for_user,
     list_async_operations,
+    org_list_api_calls,
     user_list_api_calls,
 )
 from kittycad.api.api_tokens import (
@@ -48,16 +50,38 @@ from kittycad.api.meta import (
     ping,
 )
 from kittycad.api.modeling import modeling_commands_ws
+from kittycad.api.orgs import (
+    create_org,
+    create_org_member,
+    delete_org,
+    delete_org_member,
+    get_org,
+    get_org_member,
+    get_user_org,
+    list_org_members,
+    update_org,
+    update_org_member,
+)
 from kittycad.api.payments import (
+    create_payment_information_for_org,
     create_payment_information_for_user,
+    create_payment_intent_for_org,
     create_payment_intent_for_user,
+    delete_payment_information_for_org,
     delete_payment_information_for_user,
+    delete_payment_method_for_org,
     delete_payment_method_for_user,
+    get_payment_balance_for_org,
     get_payment_balance_for_user,
+    get_payment_information_for_org,
     get_payment_information_for_user,
+    list_invoices_for_org,
     list_invoices_for_user,
+    list_payment_methods_for_org,
     list_payment_methods_for_user,
+    update_payment_information_for_org,
     update_payment_information_for_user,
+    validate_customer_tax_information_for_org,
     validate_customer_tax_information_for_user,
 )
 from kittycad.api.unit import (
@@ -113,6 +137,9 @@ from kittycad.models import (
     Invoice,
     Metadata,
     Onboarding,
+    Org,
+    OrgMember,
+    OrgMemberResultsPage,
     PaymentIntent,
     PaymentMethod,
     Pong,
@@ -133,10 +160,12 @@ from kittycad.models import (
     UnitTorqueConversion,
     UnitVolumeConversion,
     User,
+    UserOrgInfo,
     UserResultsPage,
     VerificationToken,
     WebSocketRequest,
 )
+from kittycad.models.add_org_member import AddOrgMember
 from kittycad.models.ai_feedback import AiFeedback
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
@@ -146,6 +175,8 @@ from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
+from kittycad.models.org_details import OrgDetails
+from kittycad.models.org_role import OrgRole
 from kittycad.models.rtc_sdp_type import RtcSdpType
 from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
@@ -163,7 +194,9 @@ from kittycad.models.unit_pressure import UnitPressure
 from kittycad.models.unit_temperature import UnitTemperature
 from kittycad.models.unit_torque import UnitTorque
 from kittycad.models.unit_volume import UnitVolume
+from kittycad.models.update_member_to_org_body import UpdateMemberToOrgBody
 from kittycad.models.update_user import UpdateUser
+from kittycad.models.uuid import Uuid
 from kittycad.models.web_socket_request import sdp_offer
 from kittycad.types import Response
 
@@ -1444,6 +1477,1057 @@ async def test_logout_async():
 
 
 @pytest.mark.skip
+def test_get_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Org, Error]] = get_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Org = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[Org, Error]]] = get_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Org, Error]] = await get_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[Org, Error]]] = await get_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_update_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Org, Error]] = update_org.sync(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Org = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[Org, Error]]] = update_org.sync_detailed(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Org, Error]] = await update_org.asyncio(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[Org, Error]]] = await update_org.asyncio_detailed(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_create_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Org, Error]] = create_org.sync(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Org = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[Org, Error]]] = create_org.sync_detailed(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Org, Error]] = await create_org.asyncio(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[Org, Error]]] = await create_org.asyncio_detailed(
+        client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_delete_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_org_list_api_calls():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ApiCallWithPriceResultsPage, Error]
+    ] = org_list_api_calls.sync(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ApiCallWithPriceResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[ApiCallWithPriceResultsPage, Error]]
+    ] = org_list_api_calls.sync_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_org_list_api_calls_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ApiCallWithPriceResultsPage, Error]
+    ] = await org_list_api_calls.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ApiCallWithPriceResultsPage, Error]]
+    ] = await org_list_api_calls.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
+def test_get_api_call_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call_for_org.sync(
+        client=client,
+        id="<uuid>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ApiCallWithPrice = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[ApiCallWithPrice, Error]]
+    ] = get_api_call_for_org.sync_detailed(
+        client=client,
+        id="<uuid>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_api_call_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ApiCallWithPrice, Error]
+    ] = await get_api_call_for_org.asyncio(
+        client=client,
+        id="<uuid>",
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ApiCallWithPrice, Error]]
+    ] = await get_api_call_for_org.asyncio_detailed(
+        client=client,
+        id="<uuid>",
+    )
+
+
+@pytest.mark.skip
+def test_list_org_members():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[OrgMemberResultsPage, Error]] = list_org_members.sync(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        role=OrgRole.ADMIN,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: OrgMemberResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[OrgMemberResultsPage, Error]]
+    ] = list_org_members.sync_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        role=OrgRole.ADMIN,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_org_members_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[OrgMemberResultsPage, Error]
+    ] = await list_org_members.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        role=OrgRole.ADMIN,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[OrgMemberResultsPage, Error]]
+    ] = await list_org_members.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        role=OrgRole.ADMIN,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
+def test_create_org_member():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[OrgMember, Error]] = create_org_member.sync(
+        client=client,
+        body=AddOrgMember(
+            email="<string>",
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: OrgMember = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = create_org_member.sync_detailed(
+        client=client,
+        body=AddOrgMember(
+            email="<string>",
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_org_member_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[OrgMember, Error]] = await create_org_member.asyncio(
+        client=client,
+        body=AddOrgMember(
+            email="<string>",
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = await create_org_member.asyncio_detailed(
+        client=client,
+        body=AddOrgMember(
+            email="<string>",
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_get_org_member():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[OrgMember, Error]] = get_org_member.sync(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: OrgMember = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = get_org_member.sync_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_member_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[OrgMember, Error]] = await get_org_member.asyncio(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = await get_org_member.asyncio_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+
+@pytest.mark.skip
+def test_update_org_member():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[OrgMember, Error]] = update_org_member.sync(
+        client=client,
+        user_id=Uuid("<uuid>"),
+        body=UpdateMemberToOrgBody(
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: OrgMember = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = update_org_member.sync_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
+        body=UpdateMemberToOrgBody(
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_org_member_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[OrgMember, Error]] = await update_org_member.asyncio(
+        client=client,
+        user_id=Uuid("<uuid>"),
+        body=UpdateMemberToOrgBody(
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = await update_org_member.asyncio_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
+        body=UpdateMemberToOrgBody(
+            role=OrgRole.ADMIN,
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_delete_org_member():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_org_member.sync(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_org_member.sync_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_org_member_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_org_member.asyncio(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_org_member.asyncio_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
+    )
+
+
+@pytest.mark.skip
+def test_get_payment_information_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Customer, Error]] = get_payment_information_for_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Customer = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = get_payment_information_for_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_payment_information_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[Customer, Error]
+    ] = await get_payment_information_for_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await get_payment_information_for_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_update_payment_information_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Customer, Error]] = update_payment_information_for_org.sync(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Customer = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = update_payment_information_for_org.sync_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_payment_information_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[Customer, Error]
+    ] = await update_payment_information_for_org.asyncio(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await update_payment_information_for_org.asyncio_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_create_payment_information_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[Customer, Error]] = create_payment_information_for_org.sync(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Customer = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = create_payment_information_for_org.sync_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_payment_information_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[Customer, Error]
+    ] = await create_payment_information_for_org.asyncio(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await create_payment_information_for_org.asyncio_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_delete_payment_information_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_payment_information_for_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Error]
+    ] = delete_payment_information_for_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_payment_information_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_payment_information_for_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_information_for_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_get_payment_balance_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[CustomerBalance, Error]] = get_payment_balance_for_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: CustomerBalance = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = get_payment_balance_for_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_payment_balance_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[CustomerBalance, Error]
+    ] = await get_payment_balance_for_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = await get_payment_balance_for_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_create_payment_intent_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[PaymentIntent, Error]] = create_payment_intent_for_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: PaymentIntent = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[PaymentIntent, Error]]
+    ] = create_payment_intent_for_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_payment_intent_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[PaymentIntent, Error]
+    ] = await create_payment_intent_for_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[PaymentIntent, Error]]
+    ] = await create_payment_intent_for_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_list_invoices_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[List[Invoice], Error]] = list_invoices_for_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: List[Invoice] = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[List[Invoice], Error]]
+    ] = list_invoices_for_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_invoices_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[List[Invoice], Error]] = await list_invoices_for_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[List[Invoice], Error]]
+    ] = await list_invoices_for_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_list_payment_methods_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[List[PaymentMethod], Error]
+    ] = list_payment_methods_for_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: List[PaymentMethod] = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[List[PaymentMethod], Error]]
+    ] = list_payment_methods_for_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_payment_methods_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[List[PaymentMethod], Error]
+    ] = await list_payment_methods_for_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[List[PaymentMethod], Error]]
+    ] = await list_payment_methods_for_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_delete_payment_method_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_payment_method_for_org.sync(
+        client=client,
+        id="<string>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_payment_method_for_org.sync_detailed(
+        client=client,
+        id="<string>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_payment_method_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_payment_method_for_org.asyncio(
+        client=client,
+        id="<string>",
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_method_for_org.asyncio_detailed(
+        client=client,
+        id="<string>",
+    )
+
+
+@pytest.mark.skip
+def test_validate_customer_tax_information_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = validate_customer_tax_information_for_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Error]
+    ] = validate_customer_tax_information_for_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_validate_customer_tax_information_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await validate_customer_tax_information_for_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await validate_customer_tax_information_for_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
 def test_ping():
     # Create our client.
     client = ClientFromEnv()
@@ -2570,6 +3654,7 @@ def test_create_api_token_for_user():
 
     result: Optional[Union[ApiToken, Error]] = create_api_token_for_user.sync(
         client=client,
+        label=None,  # Optional[str]
     )
 
     if isinstance(result, Error) or result is None:
@@ -2584,6 +3669,7 @@ def test_create_api_token_for_user():
         Optional[Union[ApiToken, Error]]
     ] = create_api_token_for_user.sync_detailed(
         client=client,
+        label=None,  # Optional[str]
     )
 
 
@@ -2596,6 +3682,7 @@ async def test_create_api_token_for_user_async():
 
     result: Optional[Union[ApiToken, Error]] = await create_api_token_for_user.asyncio(
         client=client,
+        label=None,  # Optional[str]
     )
 
     # OR run async with more info
@@ -2603,6 +3690,7 @@ async def test_create_api_token_for_user_async():
         Optional[Union[ApiToken, Error]]
     ] = await create_api_token_for_user.asyncio_detailed(
         client=client,
+        label=None,  # Optional[str]
     )
 
 
@@ -2780,6 +3868,49 @@ async def test_get_user_onboarding_self_async():
     response: Response[
         Optional[Union[Onboarding, Error]]
     ] = await get_user_onboarding_self.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
+def test_get_user_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[UserOrgInfo, Error]] = get_user_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: UserOrgInfo = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[
+        Optional[Union[UserOrgInfo, Error]]
+    ] = get_user_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[UserOrgInfo, Error]] = await get_user_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[UserOrgInfo, Error]]
+    ] = await get_user_org.asyncio_detailed(
         client=client,
     )
 

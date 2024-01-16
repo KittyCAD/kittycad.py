@@ -32,6 +32,8 @@ class ApiCallWithPrice(BaseModel):
 
     minutes: Optional[int] = None
 
+    org_id: Optional[Uuid] = None
+
     origin: Optional[str] = None
 
     price: Optional[float] = None
