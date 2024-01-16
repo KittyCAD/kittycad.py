@@ -1,9 +1,10 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ...client import Client
 from ...models.error import Error
+from ...models.payment_intent import PaymentIntent
 from ...types import Response
 
 
@@ -11,7 +12,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/payment/tax".format(
+    url = "{}/org/payment/intent".format(
         client.base_url,
     )  # noqa: E501
 
@@ -26,8 +27,12 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Error]:
-    return None
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[PaymentIntent, Error]]:
+    if response.status_code == 201:
+        response_201 = PaymentIntent(**response.json())
+        return response_201
     if response.status_code == 400:
         response_4XX = Error(**response.json())
         return response_4XX
@@ -37,7 +42,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Error]:
     return Error(**response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Optional[Union[PaymentIntent, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -49,12 +56,12 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+) -> Response[Optional[Union[PaymentIntent, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
 
-    response = httpx.get(
+    response = httpx.post(
         verify=client.verify_ssl,
         **kwargs,
     )
@@ -65,8 +72,8 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+) -> Optional[Union[PaymentIntent, Error]]:
+    """This endpoint requires authentication by the org admin. It creates a new payment intent for the authenticated user's org's org."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -76,13 +83,13 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+) -> Response[Optional[Union[PaymentIntent, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.post(**kwargs)
 
     return _build_response(response=response)
 
@@ -90,8 +97,8 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+) -> Optional[Union[PaymentIntent, Error]]:
+    """This endpoint requires authentication by the org admin. It creates a new payment intent for the authenticated user's org's org."""  # noqa: E501
 
     return (
         await asyncio_detailed(

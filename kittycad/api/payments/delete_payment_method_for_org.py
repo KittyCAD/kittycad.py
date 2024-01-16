@@ -8,11 +8,13 @@ from ...types import Response
 
 
 def _get_kwargs(
+    id: str,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/payment/tax".format(
+    url = "{}/org/payment/methods/{id}".format(
         client.base_url,
+        id=id,
     )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
@@ -47,14 +49,16 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 
 
 def sync_detailed(
+    id: str,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        id=id,
         client=client,
     )
 
-    response = httpx.get(
+    response = httpx.delete(
         verify=client.verify_ssl,
         **kwargs,
     )
@@ -63,38 +67,44 @@ def sync_detailed(
 
 
 def sync(
+    id: str,
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by an org admin. It deletes the specified payment method for the authenticated user's org."""  # noqa: E501
 
     return sync_detailed(
+        id=id,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    id: str,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        id=id,
         client=client,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.delete(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
+    id: str,
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by an org admin. It deletes the specified payment method for the authenticated user's org."""  # noqa: E501
 
     return (
         await asyncio_detailed(
+            id=id,
             client=client,
         )
     ).parsed

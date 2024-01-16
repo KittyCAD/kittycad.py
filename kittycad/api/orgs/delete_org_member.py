@@ -4,15 +4,18 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
+from ...models.uuid import Uuid
 from ...types import Response
 
 
 def _get_kwargs(
+    user_id: Uuid,
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/user/payment/tax".format(
+    url = "{}/org/members/{user_id}".format(
         client.base_url,
+        user_id=user_id,
     )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
@@ -47,14 +50,16 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 
 
 def sync_detailed(
+    user_id: Uuid,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        user_id=user_id,
         client=client,
     )
 
-    response = httpx.get(
+    response = httpx.delete(
         verify=client.verify_ssl,
         **kwargs,
     )
@@ -63,38 +68,44 @@ def sync_detailed(
 
 
 def sync(
+    user_id: Uuid,
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by an org admin. It removes the specified member from the authenticated user's org."""  # noqa: E501
 
     return sync_detailed(
+        user_id=user_id,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    user_id: Uuid,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        user_id=user_id,
         client=client,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.delete(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
+    user_id: Uuid,
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""  # noqa: E501
+    """This endpoint requires authentication by an org admin. It removes the specified member from the authenticated user's org."""  # noqa: E501
 
     return (
         await asyncio_detailed(
+            user_id=user_id,
             client=client,
         )
     ).parsed
