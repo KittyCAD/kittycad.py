@@ -5,7 +5,7 @@ import httpx
 from ...client import Client
 from ...models.email_authentication_form import EmailAuthenticationForm
 from ...models.error import Error
-from ...models.verification_token import VerificationToken
+from ...models.verification_token_response import VerificationTokenResponse
 from ...types import Response
 
 
@@ -32,9 +32,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[VerificationToken, Error]]:
+) -> Optional[Union[VerificationTokenResponse, Error]]:
     if response.status_code == 201:
-        response_201 = VerificationToken(**response.json())
+        response_201 = VerificationTokenResponse(**response.json())
         return response_201
     if response.status_code == 400:
         response_4XX = Error(**response.json())
@@ -47,7 +47,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[VerificationToken, Error]]]:
+) -> Response[Optional[Union[VerificationTokenResponse, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -60,7 +60,7 @@ def sync_detailed(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Response[Optional[Union[VerificationToken, Error]]]:
+) -> Response[Optional[Union[VerificationTokenResponse, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -78,7 +78,7 @@ def sync(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Optional[Union[VerificationToken, Error]]:
+) -> Optional[Union[VerificationTokenResponse, Error]]:
     return sync_detailed(
         body=body,
         client=client,
@@ -89,7 +89,7 @@ async def asyncio_detailed(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Response[Optional[Union[VerificationToken, Error]]]:
+) -> Response[Optional[Union[VerificationTokenResponse, Error]]]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -105,7 +105,7 @@ async def asyncio(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Optional[Union[VerificationToken, Error]]:
+) -> Optional[Union[VerificationTokenResponse, Error]]:
     return (
         await asyncio_detailed(
             body=body,

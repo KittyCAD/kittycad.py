@@ -6,9 +6,7 @@ from ..models.uuid import Uuid
 
 
 class Session(BaseModel):
-    """An authentication session.
-
-    For our UIs, these are automatically created by Next.js."""
+    """An authentication session."""
 
     created_at: datetime.datetime
 

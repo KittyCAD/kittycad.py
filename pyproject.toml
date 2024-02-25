@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kittycad"
-version = "0.6.5"
+version = "0.6.6"
 description = "A client library for accessing KittyCAD"
 
 authors = []
@@ -84,6 +84,8 @@ combine_as_imports = true
 
 [tool.ruff]
 line-length = 88
+
+[tool.ruff.lint]
 # Since we auto fix these, we don't want to warn about them. Since some doc strings are too long.
 ignore = ["E501"]
 # Allow autofix for all enabled rules (when `--fix`) is provided.
@@ -92,7 +94,7 @@ unfixable = []
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 # We exclude init files since otherwise ruff will delete all the unused imports.
 # This code comes from here: https://beta.ruff.rs/docs/rules/#pyflakes-f
 "__init__.py" = ["F401"]

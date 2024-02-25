@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.angle import Angle
+from ..models.length_unit import LengthUnit
 from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 
@@ -27,7 +28,7 @@ class arc(BaseModel):
 
     end: Angle
 
-    radius: float
+    radius: LengthUnit
 
     relative: bool
 
@@ -59,7 +60,7 @@ class tangential_arc(BaseModel):
 
     offset: Angle
 
-    radius: float
+    radius: LengthUnit
 
     type: Literal["tangential_arc"] = "tangential_arc"
 

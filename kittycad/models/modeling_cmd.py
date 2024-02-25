@@ -12,6 +12,7 @@ from ..models.entity_type import EntityType
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format import InputFormat
+from ..models.length_unit import LengthUnit
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.output_format import OutputFormat
 from ..models.path_component_constraint_bound import PathComponentConstraintBound
@@ -30,7 +31,7 @@ from ..models.unit_volume import UnitVolume
 
 
 class start_path(BaseModel):
-    """Start a path."""
+    """Start a new path."""
 
     type: Literal["start_path"] = "start_path"
 
@@ -62,11 +63,11 @@ class extend_path(BaseModel):
 
 
 class extrude(BaseModel):
-    """Extrude a 2D solid."""
+    """Command for extruding a solid."""
 
     cap: bool
 
-    distance: float
+    distance: LengthUnit
 
     target: ModelingCmdId
 
@@ -112,7 +113,7 @@ class camera_drag_move(BaseModel):
 
 
 class camera_drag_end(BaseModel):
-    """Camera drag ended."""
+    """Camera drag ended"""
 
     interaction: CameraDragInteractionType
 
@@ -128,11 +129,37 @@ class default_camera_look_at(BaseModel):
 
     center: Point3d
 
+    sequence: Optional[int] = None
+
     type: Literal["default_camera_look_at"] = "default_camera_look_at"
 
     up: Point3d
 
     vantage: Point3d
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class default_camera_perspective_settings(BaseModel):
+    """Change what the default camera is looking at."""
+
+    center: Point3d
+
+    fov_y: float
+
+    sequence: Optional[int] = None
+
+    type: Literal[
+        "default_camera_perspective_settings"
+    ] = "default_camera_perspective_settings"
+
+    up: Point3d
+
+    vantage: Point3d
+
+    z_far: float
+
+    z_near: float
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -175,16 +202,6 @@ class default_camera_disable_sketch_mode(BaseModel):
     type: Literal[
         "default_camera_disable_sketch_mode"
     ] = "default_camera_disable_sketch_mode"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class default_camera_focus_on(BaseModel):
-    """Focus default camera on object."""
-
-    type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
-
-    uuid: str
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -245,20 +262,62 @@ class entity_get_all_child_uuids(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class entity_get_distance(BaseModel):
+    """What is the distance between these two entities?"""
+
+    distance_type: DistanceType
+
+    entity_id1: str
+
+    entity_id2: str
+
+    type: Literal["entity_get_distance"] = "entity_get_distance"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_linear_pattern(BaseModel):
+    """Create a linear pattern using this entity (currently only valid for 3D solids)."""
+
+    axis: Point3d
+
+    entity_id: str
+
+    num_repetitions: int
+
+    spacing: LengthUnit
+
+    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_circular_pattern(BaseModel):
+    """Create a circular pattern using this entity (currently only valid for 3D solids)."""
+
+    arc_degrees: float
+
+    axis: Point3d
+
+    center: Point3d
+
+    entity_id: str
+
+    num_repetitions: int
+
+    rotate_duplicates: bool
+
+    type: Literal["entity_circular_pattern"] = "entity_circular_pattern"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class edit_mode_enter(BaseModel):
     """Enter edit mode"""
 
     target: str
 
     type: Literal["edit_mode_enter"] = "edit_mode_enter"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class edit_mode_exit(BaseModel):
-    """Exit edit mode"""
-
-    type: Literal["edit_mode_exit"] = "edit_mode_exit"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -271,14 +330,6 @@ class select_with_point(BaseModel):
     selection_type: SceneSelectionType
 
     type: Literal["select_with_point"] = "select_with_point"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class select_clear(BaseModel):
-    """Clear the selection"""
-
-    type: Literal["select_clear"] = "select_clear"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -304,19 +355,11 @@ class select_remove(BaseModel):
 
 
 class select_replace(BaseModel):
-    """Replaces the current selection with these new entities (by UUID). Equivalent to doing SelectClear then SelectAdd."""
+    """Replaces current selection with these entities (by UUID)."""
 
     entities: List[str]
 
     type: Literal["select_replace"] = "select_replace"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class select_get(BaseModel):
-    """Find all IDs of selected entities"""
-
-    type: Literal["select_get"] = "select_get"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -391,24 +434,30 @@ class object_bring_to_front(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class object_set_material_params_pbr(BaseModel):
+    """Set the material properties of an object"""
+
+    ambient_occlusion: float
+
+    color: Color
+
+    metalness: float
+
+    object_id: str
+
+    roughness: float
+
+    type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class get_entity_type(BaseModel):
     """What type of entity is this?"""
 
     entity_id: str
 
     type: Literal["get_entity_type"] = "get_entity_type"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class solid2d_add_hole(BaseModel):
-    """Add a hole to a Solid2d object before extruding it."""
-
-    hole_id: str
-
-    object_id: str
-
-    type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -421,6 +470,18 @@ class solid3d_get_all_edge_faces(BaseModel):
     object_id: str
 
     type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class solid2d_add_hole(BaseModel):
+    """Add a hole to a Solid2d object before extruding it."""
+
+    hole_id: str
+
+    object_id: str
+
+    type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -481,8 +542,22 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class solid3d_fillet_edge(BaseModel):
+    """Fillets the given edge with the specified radius."""
+
+    edge_id: str
+
+    object_id: str
+
+    radius: LengthUnit
+
+    type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class send_object(BaseModel):
-    """Sends object to front or back."""
+    """Send object to front or back."""
 
     front: bool
 
@@ -506,7 +581,7 @@ class entity_set_opacity(BaseModel):
 
 
 class entity_fade(BaseModel):
-    """Fade the entity in or out."""
+    """Fade entity in or out."""
 
     duration_seconds: Optional[float] = None
 
@@ -520,7 +595,7 @@ class entity_fade(BaseModel):
 
 
 class make_plane(BaseModel):
-    """Make a plane."""
+    """Make a new plane"""
 
     clobber: bool
 
@@ -528,7 +603,7 @@ class make_plane(BaseModel):
 
     origin: Point3d
 
-    size: float
+    size: LengthUnit
 
     type: Literal["make_plane"] = "make_plane"
 
@@ -540,7 +615,7 @@ class make_plane(BaseModel):
 
 
 class plane_set_color(BaseModel):
-    """Set the plane's color."""
+    """Set the color of a plane."""
 
     color: Color
 
@@ -552,7 +627,7 @@ class plane_set_color(BaseModel):
 
 
 class set_tool(BaseModel):
-    """Set the active tool."""
+    """Set the current tool."""
 
     tool: SceneToolType
 
@@ -562,7 +637,7 @@ class set_tool(BaseModel):
 
 
 class mouse_move(BaseModel):
-    """Send a mouse move event."""
+    """Send a mouse move event"""
 
     sequence: Optional[int] = None
 
@@ -574,7 +649,7 @@ class mouse_move(BaseModel):
 
 
 class mouse_click(BaseModel):
-    """Send a mouse click event. Updates modified/selected entities."""
+    """Send a mouse click event Updates modified/selected entities."""
 
     type: Literal["mouse_click"] = "mouse_click"
 
@@ -584,7 +659,7 @@ class mouse_click(BaseModel):
 
 
 class sketch_mode_enable(BaseModel):
-    """Enable sketch mode on the given plane."""
+    """Enable sketch mode on the given plane. If you want to sketch on a face, use `enable_sketch_mode` instead."""
 
     animated: bool
 
@@ -600,15 +675,53 @@ class sketch_mode_enable(BaseModel):
 
 
 class sketch_mode_disable(BaseModel):
-    """Disable sketch mode."""
+    """Disable sketch mode. If you are sketching on a face, be sure to not disable sketch mode until you have extruded. Otherwise, your object will not be fused with the face."""
 
     type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
+class get_sketch_mode_plane(BaseModel):
+    """Get the plane for sketch mode."""
+
+    type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class curve_set_constraint(BaseModel):
+    """Get the plane for sketch mode."""
+
+    constraint_bound: PathComponentConstraintBound
+
+    constraint_type: PathComponentConstraintType
+
+    object_id: str
+
+    type: Literal["curve_set_constraint"] = "curve_set_constraint"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class enable_sketch_mode(BaseModel):
+    """Sketch on some entity (e.g. a plane, a face)."""
+
+    adjust_camera: bool
+
+    animated: bool
+
+    entity_id: str
+
+    ortho: bool
+
+    type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class curve_get_type(BaseModel):
-    """Get type of a given curve."""
+    """Get type of the given curve."""
 
     curve_id: str
 
@@ -618,7 +731,7 @@ class curve_get_type(BaseModel):
 
 
 class curve_get_control_points(BaseModel):
-    """Get control points of a given curve."""
+    """Get control points of the given curve."""
 
     curve_id: str
 
@@ -628,7 +741,7 @@ class curve_get_control_points(BaseModel):
 
 
 class take_snapshot(BaseModel):
-    """Take a snapshot."""
+    """Take a snapshot of the current view."""
 
     format: ImageFormat
 
@@ -650,7 +763,7 @@ class make_axes_gizmo(BaseModel):
 
 
 class path_get_info(BaseModel):
-    """Query the given path"""
+    """Query the given path."""
 
     path_id: str
 
@@ -660,7 +773,7 @@ class path_get_info(BaseModel):
 
 
 class path_get_curve_uuids_for_vertices(BaseModel):
-    """Get curves for vertices within a path"""
+    """Obtain curve ids for vertex ids"""
 
     path_id: str
 
@@ -674,7 +787,7 @@ class path_get_curve_uuids_for_vertices(BaseModel):
 
 
 class path_get_vertex_uuids(BaseModel):
-    """Get vertices within a path"""
+    """Obtain vertex ids for a path"""
 
     path_id: str
 
@@ -684,7 +797,7 @@ class path_get_vertex_uuids(BaseModel):
 
 
 class handle_mouse_drag_start(BaseModel):
-    """Start dragging mouse."""
+    """Start dragging the mouse."""
 
     type: Literal["handle_mouse_drag_start"] = "handle_mouse_drag_start"
 
@@ -694,7 +807,7 @@ class handle_mouse_drag_start(BaseModel):
 
 
 class handle_mouse_drag_move(BaseModel):
-    """Continue dragging mouse."""
+    """Continue dragging the mouse."""
 
     sequence: Optional[int] = None
 
@@ -706,7 +819,7 @@ class handle_mouse_drag_move(BaseModel):
 
 
 class handle_mouse_drag_end(BaseModel):
-    """Stop dragging mouse."""
+    """Stop dragging the mouse."""
 
     type: Literal["handle_mouse_drag_end"] = "handle_mouse_drag_end"
 
@@ -769,6 +882,16 @@ class import_files(BaseModel):
     format: InputFormat
 
     type: Literal["import_files"] = "import_files"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class set_scene_units(BaseModel):
+    """Set the units of the scene. For all following commands, the units will be interpreted as the given units."""
+
+    type: Literal["set_scene_units"] = "set_scene_units"
+
+    unit: UnitLength
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -851,86 +974,12 @@ class surface_area(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_sketch_mode_plane(BaseModel):
-    """Get the plane of the sketch mode. This is useful for getting the normal of the plane after a user selects a plane."""
+class default_camera_focus_on(BaseModel):
+    """Focus the default camera upon an object in the scene."""
 
-    type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
+    type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
 
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class curve_set_constraint(BaseModel):
-    """Constrain a curve."""
-
-    constraint_bound: PathComponentConstraintBound
-
-    constraint_type: PathComponentConstraintType
-
-    object_id: str
-
-    type: Literal["curve_set_constraint"] = "curve_set_constraint"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class enable_sketch_mode(BaseModel):
-    """Sketch on some entity (e.g. a plane, a face)"""
-
-    animated: bool
-
-    entity_id: str
-
-    ortho: bool
-
-    type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class object_set_material_params_pbr(BaseModel):
-    """Set the material properties of an object"""
-
-    ambient_occlusion: float
-
-    color: Color
-
-    metalness: float
-
-    object_id: str
-
-    roughness: float
-
-    type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class entity_get_distance(BaseModel):
-    """What is the distance between these two entities?"""
-
-    distance_type: DistanceType
-
-    entity_id1: str
-
-    entity_id2: str
-
-    type: Literal["entity_get_distance"] = "entity_get_distance"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class entity_linear_pattern(BaseModel):
-    """Duplicate the given entity, evenly spaced along the chosen axis."""
-
-    axis: Point3d
-
-    entity_id: str
-
-    num_repetitions: int
-
-    spacing: float
-
-    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
+    uuid: str
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -973,6 +1022,42 @@ class default_camera_set_perspective(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class solid3d_get_extrusion_face_info(BaseModel):
+    """Get a concise description of all of an extrusion's faces."""
+
+    edge_id: str
+
+    object_id: str
+
+    type: Literal["solid3d_get_extrusion_face_info"] = "solid3d_get_extrusion_face_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class edit_mode_exit(BaseModel):
+    """Exit edit mode"""
+
+    type: Literal["edit_mode_exit"] = "edit_mode_exit"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class select_clear(BaseModel):
+    """Clear the selection"""
+
+    type: Literal["select_clear"] = "select_clear"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class select_get(BaseModel):
+    """Find all IDs of selected entities"""
+
+    type: Literal["select_get"] = "select_get"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -985,36 +1070,38 @@ ModelingCmd = RootModel[
             camera_drag_move,
             camera_drag_end,
             default_camera_look_at,
+            default_camera_perspective_settings,
             default_camera_zoom,
             default_camera_enable_sketch_mode,
             default_camera_disable_sketch_mode,
-            default_camera_focus_on,
             export,
             entity_get_parent_id,
             entity_get_num_children,
             entity_get_child_uuid,
             entity_get_all_child_uuids,
+            entity_get_distance,
+            entity_linear_pattern,
+            entity_circular_pattern,
             edit_mode_enter,
-            edit_mode_exit,
             select_with_point,
-            select_clear,
             select_add,
             select_remove,
             select_replace,
-            select_get,
             highlight_set_entity,
             highlight_set_entities,
             new_annotation,
             update_annotation,
             object_visible,
             object_bring_to_front,
+            object_set_material_params_pbr,
             get_entity_type,
-            solid2d_add_hole,
             solid3d_get_all_edge_faces,
+            solid2d_add_hole,
             solid3d_get_all_opposite_edges,
             solid3d_get_opposite_edge,
             solid3d_get_next_adjacent_edge,
             solid3d_get_prev_adjacent_edge,
+            solid3d_fillet_edge,
             send_object,
             entity_set_opacity,
             entity_fade,
@@ -1025,6 +1112,9 @@ ModelingCmd = RootModel[
             mouse_click,
             sketch_mode_enable,
             sketch_mode_disable,
+            get_sketch_mode_plane,
+            curve_set_constraint,
+            enable_sketch_mode,
             curve_get_type,
             curve_get_control_points,
             take_snapshot,
@@ -1040,21 +1130,21 @@ ModelingCmd = RootModel[
             curve_get_end_points,
             reconfigure_stream,
             import_files,
+            set_scene_units,
             mass,
             density,
             volume,
             center_of_mass,
             surface_area,
-            get_sketch_mode_plane,
-            curve_set_constraint,
-            enable_sketch_mode,
-            object_set_material_params_pbr,
-            entity_get_distance,
-            entity_linear_pattern,
+            default_camera_focus_on,
             set_selection_type,
             set_selection_filter,
             default_camera_set_orthographic,
             default_camera_set_perspective,
+            solid3d_get_extrusion_face_info,
+            edit_mode_exit,
+            select_clear,
+            select_get,
         ],
         Field(discriminator="type"),
     ]

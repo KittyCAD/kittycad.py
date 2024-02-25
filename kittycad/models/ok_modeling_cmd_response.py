@@ -8,6 +8,7 @@ from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
 from ..models.density import Density
+from ..models.entity_circular_pattern import EntityCircularPattern
 from ..models.entity_get_all_child_uuids import EntityGetAllChildUuids
 from ..models.entity_get_child_uuid import EntityGetChildUuid
 from ..models.entity_get_distance import EntityGetDistance
@@ -15,6 +16,7 @@ from ..models.entity_get_num_children import EntityGetNumChildren
 from ..models.entity_get_parent_id import EntityGetParentId
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.export import Export
+from ..models.extrusion_face_info import ExtrusionFaceInfo
 from ..models.get_entity_type import GetEntityType
 from ..models.get_sketch_mode_plane import GetSketchModePlane
 from ..models.highlight_set_entity import HighlightSetEntity
@@ -24,11 +26,13 @@ from ..models.mouse_click import MouseClick
 from ..models.path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from ..models.path_get_info import PathGetInfo
 from ..models.path_get_vertex_uuids import PathGetVertexUuids
+from ..models.path_segment_info import PathSegmentInfo
 from ..models.plane_intersect_and_project import PlaneIntersectAndProject
 from ..models.select_get import SelectGet
 from ..models.select_with_point import SelectWithPoint
 from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from ..models.solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
+from ..models.solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
 from ..models.solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
@@ -46,7 +50,7 @@ class empty(BaseModel):
 
 
 class export(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Export' endpoint"""
 
     data: Export
 
@@ -56,7 +60,7 @@ class export(BaseModel):
 
 
 class select_with_point(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'SelectWithPoint' endpoint"""
 
     data: SelectWithPoint
 
@@ -66,7 +70,7 @@ class select_with_point(BaseModel):
 
 
 class highlight_set_entity(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'HighlightSetEntity' endpoint"""
 
     data: HighlightSetEntity
 
@@ -76,7 +80,7 @@ class highlight_set_entity(BaseModel):
 
 
 class entity_get_child_uuid(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'EntityGetChildUuid' endpoint"""
 
     data: EntityGetChildUuid
 
@@ -86,7 +90,7 @@ class entity_get_child_uuid(BaseModel):
 
 
 class entity_get_num_children(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'EntityGetNumChildren' endpoint"""
 
     data: EntityGetNumChildren
 
@@ -96,7 +100,7 @@ class entity_get_num_children(BaseModel):
 
 
 class entity_get_parent_id(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'EntityGetParentId' endpoint"""
 
     data: EntityGetParentId
 
@@ -106,7 +110,7 @@ class entity_get_parent_id(BaseModel):
 
 
 class entity_get_all_child_uuids(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'EntityGetAllChildUuids' endpoint"""
 
     data: EntityGetAllChildUuids
 
@@ -116,7 +120,7 @@ class entity_get_all_child_uuids(BaseModel):
 
 
 class select_get(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'SelectGet' endpoint"""
 
     data: SelectGet
 
@@ -125,38 +129,8 @@ class select_get(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_entity_type(BaseModel):
-    """The response from the ` ` command."""
-
-    data: GetEntityType
-
-    type: Literal["get_entity_type"] = "get_entity_type"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class entity_get_distance(BaseModel):
-    """The response from the ` ` command."""
-
-    data: EntityGetDistance
-
-    type: Literal["entity_get_distance"] = "entity_get_distance"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class entity_linear_pattern(BaseModel):
-    """The response from the ` ` command."""
-
-    data: EntityLinearPattern
-
-    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
 class solid3d_get_all_edge_faces(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Solid3dGetAllEdgeFaces' endpoint"""
 
     data: Solid3dGetAllEdgeFaces
 
@@ -166,7 +140,7 @@ class solid3d_get_all_edge_faces(BaseModel):
 
 
 class solid3d_get_all_opposite_edges(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Solid3dGetAllOppositeEdges' endpoint"""
 
     data: Solid3dGetAllOppositeEdges
 
@@ -176,7 +150,7 @@ class solid3d_get_all_opposite_edges(BaseModel):
 
 
 class solid3d_get_opposite_edge(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Solid3dGetOppositeEdge' endpoint"""
 
     data: Solid3dGetOppositeEdge
 
@@ -185,18 +159,8 @@ class solid3d_get_opposite_edge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_prev_adjacent_edge(BaseModel):
-    """The response from the ` ` command."""
-
-    data: Solid3dGetPrevAdjacentEdge
-
-    type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
 class solid3d_get_next_adjacent_edge(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Solid3dGetNextAdjacentEdge' endpoint"""
 
     data: Solid3dGetNextAdjacentEdge
 
@@ -205,28 +169,28 @@ class solid3d_get_next_adjacent_edge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mouse_click(BaseModel):
-    """The response from the ` ` command."""
+class solid3d_get_prev_adjacent_edge(BaseModel):
+    """The response to the 'Solid3dGetPrevAdjacentEdge' endpoint"""
 
-    data: MouseClick
+    data: Solid3dGetPrevAdjacentEdge
 
-    type: Literal["mouse_click"] = "mouse_click"
+    type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_get_type(BaseModel):
-    """The response from the ` ` command."""
+class get_entity_type(BaseModel):
+    """The response to the 'GetEntityType' endpoint"""
 
-    data: CurveGetType
+    data: GetEntityType
 
-    type: Literal["curve_get_type"] = "curve_get_type"
+    type: Literal["get_entity_type"] = "get_entity_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
 class curve_get_control_points(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'CurveGetControlPoints' endpoint"""
 
     data: CurveGetControlPoints
 
@@ -235,8 +199,28 @@ class curve_get_control_points(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class curve_get_type(BaseModel):
+    """The response to the 'CurveGetType' endpoint"""
+
+    data: CurveGetType
+
+    type: Literal["curve_get_type"] = "curve_get_type"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class mouse_click(BaseModel):
+    """The response to the 'MouseClick' endpoint"""
+
+    data: MouseClick
+
+    type: Literal["mouse_click"] = "mouse_click"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class take_snapshot(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'TakeSnapshot' endpoint"""
 
     data: TakeSnapshot
 
@@ -246,7 +230,7 @@ class take_snapshot(BaseModel):
 
 
 class path_get_info(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'PathGetInfo' endpoint"""
 
     data: PathGetInfo
 
@@ -255,8 +239,18 @@ class path_get_info(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class path_segment_info(BaseModel):
+    """The response to the 'PathSegmentInfo' endpoint"""
+
+    data: PathSegmentInfo
+
+    type: Literal["path_segment_info"] = "path_segment_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class path_get_curve_uuids_for_vertices(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'PathGetCurveUuidsForVertices' endpoint"""
 
     data: PathGetCurveUuidsForVertices
 
@@ -268,7 +262,7 @@ class path_get_curve_uuids_for_vertices(BaseModel):
 
 
 class path_get_vertex_uuids(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'PathGetVertexUuids' endpoint"""
 
     data: PathGetVertexUuids
 
@@ -277,18 +271,8 @@ class path_get_vertex_uuids(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class plane_intersect_and_project(BaseModel):
-    """The response from the ` ` command."""
-
-    data: PlaneIntersectAndProject
-
-    type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
 class curve_get_end_points(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'CurveGetEndPoints' endpoint"""
 
     data: CurveGetEndPoints
 
@@ -297,8 +281,18 @@ class curve_get_end_points(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class plane_intersect_and_project(BaseModel):
+    """The response to the 'PlaneIntersectAndProject' endpoint"""
+
+    data: PlaneIntersectAndProject
+
+    type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class import_files(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'ImportFiles' endpoint"""
 
     data: ImportFiles
 
@@ -308,7 +302,7 @@ class import_files(BaseModel):
 
 
 class mass(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Mass' endpoint"""
 
     data: Mass
 
@@ -318,7 +312,7 @@ class mass(BaseModel):
 
 
 class volume(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Volume' endpoint"""
 
     data: Volume
 
@@ -328,7 +322,7 @@ class volume(BaseModel):
 
 
 class density(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'Density' endpoint"""
 
     data: Density
 
@@ -338,7 +332,7 @@ class density(BaseModel):
 
 
 class surface_area(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'SurfaceArea' endpoint"""
 
     data: SurfaceArea
 
@@ -348,7 +342,7 @@ class surface_area(BaseModel):
 
 
 class center_of_mass(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'CenterOfMass' endpoint"""
 
     data: CenterOfMass
 
@@ -358,11 +352,61 @@ class center_of_mass(BaseModel):
 
 
 class get_sketch_mode_plane(BaseModel):
-    """The response from the ` ` command."""
+    """The response to the 'GetSketchModePlane' endpoint"""
 
     data: GetSketchModePlane
 
     type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_get_distance(BaseModel):
+    """The response to the 'EntityGetDistance' endpoint"""
+
+    data: EntityGetDistance
+
+    type: Literal["entity_get_distance"] = "entity_get_distance"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_linear_pattern(BaseModel):
+    """The response to the 'EntityLinearPattern' endpoint"""
+
+    data: EntityLinearPattern
+
+    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_circular_pattern(BaseModel):
+    """The response to the 'EntityCircularPattern' endpoint"""
+
+    data: EntityCircularPattern
+
+    type: Literal["entity_circular_pattern"] = "entity_circular_pattern"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class solid3d_get_extrusion_face_info(BaseModel):
+    """The response to the 'Solid3dGetExtrusionFaceInfo' endpoint"""
+
+    data: Solid3dGetExtrusionFaceInfo
+
+    type: Literal["solid3d_get_extrusion_face_info"] = "solid3d_get_extrusion_face_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class extrusion_face_info(BaseModel):
+    """The response to the 'ExtrusionFaceInfo' endpoint"""
+
+    data: ExtrusionFaceInfo
+
+    type: Literal["extrusion_face_info"] = "extrusion_face_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -379,23 +423,22 @@ OkModelingCmdResponse = RootModel[
             entity_get_parent_id,
             entity_get_all_child_uuids,
             select_get,
-            get_entity_type,
-            entity_get_distance,
-            entity_linear_pattern,
             solid3d_get_all_edge_faces,
             solid3d_get_all_opposite_edges,
             solid3d_get_opposite_edge,
-            solid3d_get_prev_adjacent_edge,
             solid3d_get_next_adjacent_edge,
-            mouse_click,
-            curve_get_type,
+            solid3d_get_prev_adjacent_edge,
+            get_entity_type,
             curve_get_control_points,
+            curve_get_type,
+            mouse_click,
             take_snapshot,
             path_get_info,
+            path_segment_info,
             path_get_curve_uuids_for_vertices,
             path_get_vertex_uuids,
-            plane_intersect_and_project,
             curve_get_end_points,
+            plane_intersect_and_project,
             import_files,
             mass,
             volume,
@@ -403,6 +446,11 @@ OkModelingCmdResponse = RootModel[
             surface_area,
             center_of_mass,
             get_sketch_mode_plane,
+            entity_get_distance,
+            entity_linear_pattern,
+            entity_circular_pattern,
+            solid3d_get_extrusion_face_info,
+            extrusion_face_info,
         ],
         Field(discriminator="type"),
     ]
