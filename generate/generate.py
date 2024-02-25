@@ -233,7 +233,11 @@ def generateTypeAndExamplePython(
         elif (
             schema["type"] == "number"
             and "format" in schema
-            and (schema["format"] == "float" or schema["format"] == "double")
+            and (
+                schema["format"] == "float"
+                or schema["format"] == "double"
+                or schema["format"] == "money-usd"
+            )
         ):
             parameter_type = "float"
             parameter_example = "3.14"
@@ -518,7 +522,7 @@ from kittycad.types import Response
 
         short_sync_example = short_sync_example + (
             """
-    if isinstance(result, Error) or result == None:
+    if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
@@ -845,7 +849,17 @@ async def test_"""
                                         + response_code
                                         + " = response.text\n"
                                     )
+                                elif (
+                                    json["type"] == "object"
+                                    and "additionalProperties" in json
+                                ):
+                                    parse_response.write(
+                                        "\t\tresponse_"
+                                        + response_code
+                                        + " = response.json()\n"
+                                    )
                                 else:
+                                    print(json)
                                     raise Exception("Unknown type", json["type"])
                             else:
                                 parse_response.write(
@@ -1500,6 +1514,24 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             f.write(object_code)
             f.write("\n")
             all_options.append(object_name)
+    else:
+        # Generate each of the options from the tag.
+        i = 0
+        for one_of in schema["oneOf"]:
+            # Get the value of the tag.
+            object_name = name + str(i)
+            object_code = generateObjectTypeCode(
+                object_name,
+                one_of,
+                "object",
+                data,
+                None,
+                None,
+            )
+            f.write(object_code)
+            f.write("\n")
+            all_options.append(object_name)
+            i += 1
 
     # Write the sum type.
     description = getOneOfDescription(schema)
@@ -1694,7 +1726,12 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                                 raise Exception("Unknown array type")
                         elif json["type"] == "string":
                             refs.append("str")
+                        elif (
+                            json["type"] == "object" and "additionalProperties" in json
+                        ):
+                            refs.append("dict")
                         else:
+                            print(json)
                             raise Exception("Unknown type ", json["type"])
                     else:
                         refs.append("dict")

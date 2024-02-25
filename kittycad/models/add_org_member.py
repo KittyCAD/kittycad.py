@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel, ConfigDict
 
-from ..models.org_role import OrgRole
+from ..models.user_org_role import UserOrgRole
 
 
 class AddOrgMember(BaseModel):
@@ -9,6 +9,6 @@ class AddOrgMember(BaseModel):
 
     email: str
 
-    role: OrgRole
+    role: UserOrgRole
 
     model_config = ConfigDict(protected_namespaces=())

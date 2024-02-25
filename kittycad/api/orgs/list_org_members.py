@@ -6,13 +6,13 @@ from ...client import Client
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...models.error import Error
 from ...models.org_member_results_page import OrgMemberResultsPage
-from ...models.org_role import OrgRole
+from ...models.user_org_role import UserOrgRole
 from ...types import Response
 
 
 def _get_kwargs(
     sort_by: CreatedAtSortMode,
-    role: OrgRole,
+    role: UserOrgRole,
     *,
     client: Client,
     limit: Optional[int] = None,
@@ -85,7 +85,7 @@ def _build_response(
 
 def sync_detailed(
     sort_by: CreatedAtSortMode,
-    role: OrgRole,
+    role: UserOrgRole,
     *,
     client: Client,
     limit: Optional[int] = None,
@@ -109,7 +109,7 @@ def sync_detailed(
 
 def sync(
     sort_by: CreatedAtSortMode,
-    role: OrgRole,
+    role: UserOrgRole,
     *,
     client: Client,
     limit: Optional[int] = None,
@@ -128,7 +128,7 @@ def sync(
 
 async def asyncio_detailed(
     sort_by: CreatedAtSortMode,
-    role: OrgRole,
+    role: UserOrgRole,
     *,
     client: Client,
     limit: Optional[int] = None,
@@ -150,7 +150,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     sort_by: CreatedAtSortMode,
-    role: OrgRole,
+    role: UserOrgRole,
     *,
     client: Client,
     limit: Optional[int] = None,

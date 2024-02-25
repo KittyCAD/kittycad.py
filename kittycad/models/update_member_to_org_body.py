@@ -1,12 +1,12 @@
 
 from pydantic import BaseModel, ConfigDict
 
-from ..models.org_role import OrgRole
+from ..models.user_org_role import UserOrgRole
 
 
 class UpdateMemberToOrgBody(BaseModel):
     """Data for updating a member of an org."""
 
-    role: OrgRole
+    role: UserOrgRole
 
     model_config = ConfigDict(protected_namespaces=())

@@ -18,6 +18,8 @@ class Org(BaseModel):
 
     block: Optional[BlockReason] = None
 
+    can_train_on_data: Optional[bool] = None
+
     created_at: datetime.datetime
 
     domain: Optional[str] = None

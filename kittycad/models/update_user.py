@@ -15,6 +15,8 @@ class UpdateUser(BaseModel):
 
     github: Optional[str] = None
 
+    image: str
+
     last_name: Optional[str] = None
 
     phone: Optional[str] = None

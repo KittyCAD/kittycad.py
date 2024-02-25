@@ -12,6 +12,8 @@ class User(BaseModel):
 
     block: Optional[BlockReason] = None
 
+    can_train_on_data: Optional[bool] = None
+
     company: Optional[str] = None
 
     created_at: datetime.datetime
@@ -29,6 +31,8 @@ class User(BaseModel):
     id: Uuid
 
     image: str
+
+    is_service_account: Optional[bool] = None
 
     last_name: Optional[str] = None
 

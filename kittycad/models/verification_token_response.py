@@ -6,10 +6,8 @@ from pydantic import BaseModel, ConfigDict
 from ..models.uuid import Uuid
 
 
-class VerificationToken(BaseModel):
-    """A verification token for a user.
-
-    This is typically used to verify a user's email address."""
+class VerificationTokenResponse(BaseModel):
+    """A verification token response."""
 
     created_at: datetime.datetime
 
@@ -18,6 +16,8 @@ class VerificationToken(BaseModel):
     id: Uuid
 
     identifier: Optional[str] = None
+
+    saml_redirect_url: Optional[str] = None
 
     updated_at: datetime.datetime
 

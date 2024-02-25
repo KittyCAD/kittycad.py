@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class GlobalAxis(str, Enum):
-    """An enum that contains the three global axes."""  # noqa: E501
+    """The global axes."""  # noqa: E501
 
     """# The X axis """  # noqa: E501
     X = "x"
