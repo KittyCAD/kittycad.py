@@ -1031,7 +1031,7 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         elif type_name == "integer":
             generateIntegerType(file_path, name, schema, type_name)
         elif type_name == "number":
-            generateIntegerType(file_path, name, schema, type_name)
+            generateFloatType(file_path, name, schema, type_name)
         elif type_name == "string":
             generateStringType(file_path, name, schema, type_name)
         else:
