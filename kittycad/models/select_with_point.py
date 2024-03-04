@@ -1,12 +1,21 @@
-from typing import Optional
+import datetime
+from typing import List, Optional, Dict, Union, Any, Literal
+from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, Base64Bytes, AnyUrl, ConfigDict
+from pydantic_extra_types.phone_numbers import PhoneNumber
+from .base64data import Base64Data
 
 
 
 class SelectWithPoint(BaseModel):
     """The response from the `SelectWithPoint` command."""
-
+    
+    
     entity_id: Optional[str] = None
+    
+    
 
-    model_config = ConfigDict(protected_namespaces=())
+    model_config = ConfigDict(
+        protected_namespaces=()
+    )

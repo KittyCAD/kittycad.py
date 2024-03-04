@@ -6,7 +6,6 @@ from pydantic_core import CoreSchema, core_schema
 
 class Uuid(str):
     """A UUID usually v4 or v7"""
-
     def __str__(self) -> str:
         return self
 

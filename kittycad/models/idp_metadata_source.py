@@ -1,37 +1,66 @@
-from typing import Literal, Union
+import datetime
+from typing import List, Optional, Dict, Union, Any, Literal
+from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
-from typing_extensions import Annotated
-
+from pydantic import BaseModel, Base64Bytes, AnyUrl, ConfigDict
+from pydantic_extra_types.phone_numbers import PhoneNumber
 from .base64data import Base64Data
+
 
 
 class url(BaseModel):
     """A URL to the identity provider metadata descriptor."""
-
+    
+    
     type: Literal["url"] = "url"
-
+    
+    
+    
     url: str
+    
+    
 
-    model_config = ConfigDict(protected_namespaces=())
+    model_config = ConfigDict(
+        protected_namespaces=()
+    )
+import datetime
+from typing import List, Optional, Dict, Union, Any, Literal
+from uuid import UUID
+
+from pydantic import BaseModel, Base64Bytes, AnyUrl, ConfigDict
+from pydantic_extra_types.phone_numbers import PhoneNumber
+from .base64data import Base64Data
+
 
 
 class base64_encoded_xml(BaseModel):
     """A base64 encoded XML document containing the identity provider metadata descriptor."""
-
+    
+    
     data: Base64Data
-
+    
+    
+    
     type: Literal["base64_encoded_xml"] = "base64_encoded_xml"
+    
+    
 
-    model_config = ConfigDict(protected_namespaces=())
+    model_config = ConfigDict(
+        protected_namespaces=()
+    )
+from typing import Dict, Any, Union, Type, TypeVar
+from pydantic import RootModel, Field
+
+from typing_extensions import Annotated
 
 
-IdpMetadataSource = RootModel[
-    Annotated[
-        Union[
-            url,
-            base64_encoded_xml,
-        ],
-        Field(discriminator="type"),
-    ]
-]
+
+
+IdpMetadataSource = RootModel[Annotated[Union[
+        
+        url,
+        
+        base64_encoded_xml,
+        
+    ], Field(discriminator='type')]]
+

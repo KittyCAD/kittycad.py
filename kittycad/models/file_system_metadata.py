@@ -1,13 +1,23 @@
+import datetime
+from typing import List, Optional, Dict, Union, Any, Literal
+from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, Base64Bytes, AnyUrl, ConfigDict
+from pydantic_extra_types.phone_numbers import PhoneNumber
+from .base64data import Base64Data
 
 
 
 class FileSystemMetadata(BaseModel):
     """Metadata about our file system.
 
-    This is mostly used for internal purposes and debugging."""
-
+This is mostly used for internal purposes and debugging."""
+    
+    
     ok: bool
+    
+    
 
-    model_config = ConfigDict(protected_namespaces=())
+    model_config = ConfigDict(
+        protected_namespaces=()
+    )
