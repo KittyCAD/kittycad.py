@@ -1,13 +1,15 @@
 from enum import Enum
 
+
 class StlStorage(str, Enum):
-	""" Export storage. """ # noqa: E501
-	"""# Plaintext encoding. """ # noqa: E501
-	ASCII = 'ascii'
-	"""# Binary STL encoding.
+    """Export storage."""  # noqa: E501
 
-This is the default setting. """ # noqa: E501
-	BINARY = 'binary'
+    """# Plaintext encoding. """  # noqa: E501
+    ASCII = "ascii"
+    """# Binary STL encoding.
 
-	def __str__(self) -> str:
-		return str(self.value)
+This is the default setting. """  # noqa: E501
+    BINARY = "binary"
+
+    def __str__(self) -> str:
+        return str(self.value)

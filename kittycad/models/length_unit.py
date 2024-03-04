@@ -6,6 +6,7 @@ from pydantic_core import CoreSchema, core_schema
 
 class LengthUnit(float):
     """"""
+
     def __float__(self) -> float:
         return self
 

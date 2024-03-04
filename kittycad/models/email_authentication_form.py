@@ -1,25 +1,14 @@
-import datetime
-from typing import List, Optional, Dict, Union, Any, Literal
-from uuid import UUID
+from typing import Optional
 
-from pydantic import BaseModel, Base64Bytes, AnyUrl, ConfigDict
-from pydantic_extra_types.phone_numbers import PhoneNumber
-from .base64data import Base64Data
+from pydantic import BaseModel, ConfigDict
 
 
 
 class EmailAuthenticationForm(BaseModel):
     """The body of the form for email authentication."""
-    
-    
-    callback_url: Optional[str] = None
-    
-    
-    
-    email: str
-    
-    
 
-    model_config = ConfigDict(
-        protected_namespaces=()
-    )
+    callback_url: Optional[str] = None
+
+    email: str
+
+    model_config = ConfigDict(protected_namespaces=())

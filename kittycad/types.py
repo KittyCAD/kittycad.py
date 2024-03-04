@@ -1,4 +1,5 @@
 """ Contains some shared types for properties """
+
 from typing import (
     BinaryIO,
     Generic,

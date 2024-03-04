@@ -6,6 +6,7 @@ from pydantic_core import CoreSchema, core_schema
 
 class CountryCode(str):
     """An ISO-3166 alpha-2 country code. Always uppercase."""
+
     def __str__(self) -> str:
         return self
 

@@ -1,42 +1,23 @@
-from typing import Any, Dict, Optional, Union, List
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...types import Response
-
-from ...models.error import Error
-
 from ...models.uuid import Uuid
-
+from ...types import Response
 
 
 def _get_kwargs(
-    
-    
     provider_id: Uuid,
-    
-    
-    
     body: bytes,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
 ) -> Dict[str, Any]:
-    url = "{}/auth/saml/provider/{provider_id}/login".format(client.base_url, provider_id=provider_id,)  # noqa: E501
-    
-    
-    
-    
-    
-
+    url = "{}/auth/saml/provider/{provider_id}/login".format(
+        client.base_url,
+        provider_id=provider_id,
+    )  # noqa: E501
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -50,21 +31,18 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Error] :
-	return None
-	if response.status_code == 400:
-		response_4XX = Error(**response.json())
-		return response_4XX
-	if response.status_code == 500:
-		response_5XX = Error(**response.json())
-		return response_5XX
-	return Error(**response.json())
+def _parse_response(*, response: httpx.Response) -> Optional[Error]:
+    return None
+    if response.status_code == 400:
+        response_4XX = Error(**response.json())
+        return response_4XX
+    if response.status_code == 500:
+        response_5XX = Error(**response.json())
+        return response_5XX
+    return Error(**response.json())
 
 
-
-def _build_response(
-    *, response: httpx.Response
-)  -> Response[Optional[Error]]:
+def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -74,29 +52,14 @@ def _build_response(
 
 
 def sync_detailed(
-    
-    
     provider_id: Uuid,
-    
-    
-    
     body: bytes,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Response[Optional[Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
-        
         provider_id=provider_id,
-        
         body=body,
-        
         client=client,
     )
 
@@ -109,59 +72,28 @@ def sync_detailed(
 
 
 def sync(
-    
-    
     provider_id: Uuid,
-    
-    
-    
     body: bytes,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Optional[Error] :
-    
+) -> Optional[Error]:
 
     return sync_detailed(
-        
         provider_id=provider_id,
-        
         body=body,
-        
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    
-    
     provider_id: Uuid,
-    
-    
-    
     body: bytes,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Response[Optional[Error]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
-        
         provider_id=provider_id,
-        
         body=body,
-        
         client=client,
     )
 
@@ -172,32 +104,16 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    
-    
     provider_id: Uuid,
-    
-    
-    
     body: bytes,
-    
-    
     *,
     client: Client,
-    
-    
-    
-    
-    
-)  -> Optional[Error] :
-    
+) -> Optional[Error]:
 
     return (
         await asyncio_detailed(
-            
             provider_id=provider_id,
-            
             body=body,
-            
             client=client,
         )
     ).parsed

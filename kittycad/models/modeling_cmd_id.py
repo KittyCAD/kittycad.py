@@ -6,6 +6,7 @@ from pydantic_core import CoreSchema, core_schema
 
 class ModelingCmdId(str):
     """All commands have unique IDs. These should be randomly generated."""
+
     def __str__(self) -> str:
         return self
 

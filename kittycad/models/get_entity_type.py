@@ -1,24 +1,12 @@
-import datetime
-from typing import List, Optional, Dict, Union, Any, Literal
-from uuid import UUID
 
-from pydantic import BaseModel, Base64Bytes, AnyUrl, ConfigDict
-from pydantic_extra_types.phone_numbers import PhoneNumber
-from .base64data import Base64Data
-
+from pydantic import BaseModel, ConfigDict
 
 from ..models.entity_type import EntityType
 
 
-
 class GetEntityType(BaseModel):
     """The response from the `GetEntityType` command."""
-    
-    
-    entity_type: EntityType
-    
-    
 
-    model_config = ConfigDict(
-        protected_namespaces=()
-    )
+    entity_type: EntityType
+
+    model_config = ConfigDict(protected_namespaces=())
