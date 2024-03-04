@@ -566,6 +566,40 @@ class solid3d_fillet_edge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class face_is_planar(BaseModel):
+    """Determines whether a brep face is planar and returns its surface-local planar axes if so"""
+
+    object_id: str
+
+    type: Literal["face_is_planar"] = "face_is_planar"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class face_get_position(BaseModel):
+    """Determines a position on a brep face evaluated by parameters u,v"""
+
+    object_id: str
+
+    type: Literal["face_get_position"] = "face_get_position"
+
+    uv: Point2d
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class face_get_gradient(BaseModel):
+    """Determines the gradient (dFdu, dFdv) + normal vector on a brep face evaluated by parameters u,v"""
+
+    object_id: str
+
+    type: Literal["face_get_gradient"] = "face_get_gradient"
+
+    uv: Point2d
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class send_object(BaseModel):
     """Send object to front or back."""
 
@@ -1113,6 +1147,9 @@ ModelingCmd = RootModel[
             solid3d_get_next_adjacent_edge,
             solid3d_get_prev_adjacent_edge,
             solid3d_fillet_edge,
+            face_is_planar,
+            face_get_position,
+            face_get_gradient,
             send_object,
             entity_set_opacity,
             entity_fade,
