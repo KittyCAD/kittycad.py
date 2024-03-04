@@ -86,6 +86,9 @@ from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
 from .extrusion_face_cap_type import ExtrusionFaceCapType
 from .extrusion_face_info import ExtrusionFaceInfo
+from .face_get_gradient import FaceGetGradient
+from .face_get_position import FaceGetPosition
+from .face_is_planar import FaceIsPlanar
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
 from .file_center_of_mass import FileCenterOfMass

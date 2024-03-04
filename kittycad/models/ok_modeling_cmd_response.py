@@ -21,6 +21,9 @@ from ..models.entity_get_parent_id import EntityGetParentId
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.export import Export
 from ..models.extrusion_face_info import ExtrusionFaceInfo
+from ..models.face_get_gradient import FaceGetGradient
+from ..models.face_get_position import FaceGetPosition
+from ..models.face_is_planar import FaceIsPlanar
 from ..models.get_entity_type import GetEntityType
 from ..models.get_sketch_mode_plane import GetSketchModePlane
 from ..models.highlight_set_entity import HighlightSetEntity
@@ -325,6 +328,36 @@ class curve_get_end_points(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class face_is_planar(BaseModel):
+    """The response to the 'FaceIsPlanar' endpoint"""
+
+    data: FaceIsPlanar
+
+    type: Literal["face_is_planar"] = "face_is_planar"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class face_get_position(BaseModel):
+    """The response to the 'FaceGetPosition' endpoint"""
+
+    data: FaceGetPosition
+
+    type: Literal["face_get_position"] = "face_get_position"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class face_get_gradient(BaseModel):
+    """The response to the 'FaceGetGradient' endpoint"""
+
+    data: FaceGetGradient
+
+    type: Literal["face_get_gradient"] = "face_get_gradient"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class plane_intersect_and_project(BaseModel):
     """The response to the 'PlaneIntersectAndProject' endpoint"""
 
@@ -486,6 +519,9 @@ OkModelingCmdResponse = RootModel[
             path_get_curve_uuids_for_vertices,
             path_get_vertex_uuids,
             curve_get_end_points,
+            face_is_planar,
+            face_get_position,
+            face_get_gradient,
             plane_intersect_and_project,
             import_files,
             mass,
