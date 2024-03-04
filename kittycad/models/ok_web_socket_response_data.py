@@ -116,6 +116,22 @@ class metrics_request(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class PongData(BaseModel):
+    """"""
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class pong(BaseModel):
+    """Pong response to a Ping message."""
+
+    data: PongData
+
+    type: Literal["pong"] = "pong"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 OkWebSocketResponseData = RootModel[
     Annotated[
         Union[
@@ -125,6 +141,7 @@ OkWebSocketResponseData = RootModel[
             modeling,
             export,
             metrics_request,
+            pong,
         ],
         Field(discriminator="type"),
     ]

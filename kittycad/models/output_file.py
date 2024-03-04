@@ -9,7 +9,7 @@ class OutputFile(BaseModel):
 
     <details><summary>JSON schema</summary>
 
-    ```json { "description": "Output file contents.", "type": "object", "properties": { "contents": { "description": "The contents of the file. This is base64 encoded so we can ensure it is UTF-8 for JSON.", "type": "string" }, "name": { "description": "The name of the file.", "default": "", "type": "string" } } } ``` </details>
+    ```json { \"description\": \"Output file contents.\", \"type\": \"object\", \"properties\": { \"contents\": { \"description\": \"The contents of the file. This is base64 encoded so we can ensure it is UTF-8 for JSON.\", \"type\": \"string\" }, \"name\": { \"description\": \"The name of the file.\", \"default\": \"\", \"type\": \"string\" } } } ``` </details>
     """
 
     contents: Optional[str] = None

@@ -79,6 +79,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[VerificationTokenResponse, Error]]:
+
     return sync_detailed(
         body=body,
         client=client,
@@ -106,6 +107,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[VerificationTokenResponse, Error]]:
+
     return (
         await asyncio_detailed(
             body=body,

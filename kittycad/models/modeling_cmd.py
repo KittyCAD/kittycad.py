@@ -39,7 +39,7 @@ class start_path(BaseModel):
 
 
 class move_path_pen(BaseModel):
-    """Move the path's "pen"."""
+    """Move the path's \"pen\"."""
 
     path: ModelingCmdId
 
@@ -51,7 +51,7 @@ class move_path_pen(BaseModel):
 
 
 class extend_path(BaseModel):
-    """Extend a path by adding a new segment which starts at the path's "pen". If no "pen" location has been set before (via `MovePen`), then the pen is at the origin."""
+    """Extend a path by adding a new segment which starts at the path's \"pen\". If no \"pen\" location has been set before (via `MovePen`), then the pen is at the origin."""
 
     path: ModelingCmdId
 
@@ -124,6 +124,14 @@ class camera_drag_end(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class default_camera_get_settings(BaseModel):
+    """Gets the default camera's camera settings"""
+
+    type: Literal["default_camera_get_settings"] = "default_camera_get_settings"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class default_camera_look_at(BaseModel):
     """Change what the default camera is looking at."""
 
@@ -149,9 +157,9 @@ class default_camera_perspective_settings(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal[
+    type: Literal["default_camera_perspective_settings"] = (
         "default_camera_perspective_settings"
-    ] = "default_camera_perspective_settings"
+    )
 
     up: Point3d
 
@@ -185,9 +193,9 @@ class default_camera_enable_sketch_mode(BaseModel):
 
     ortho: bool
 
-    type: Literal[
+    type: Literal["default_camera_enable_sketch_mode"] = (
         "default_camera_enable_sketch_mode"
-    ] = "default_camera_enable_sketch_mode"
+    )
 
     x_axis: Point3d
 
@@ -199,9 +207,9 @@ class default_camera_enable_sketch_mode(BaseModel):
 class default_camera_disable_sketch_mode(BaseModel):
     """Disable sketch mode, from the default camera."""
 
-    type: Literal[
+    type: Literal["default_camera_disable_sketch_mode"] = (
         "default_camera_disable_sketch_mode"
-    ] = "default_camera_disable_sketch_mode"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -323,7 +331,7 @@ class edit_mode_enter(BaseModel):
 
 
 class select_with_point(BaseModel):
-    """Modifies the selection by simulating a "mouse click" at the given x,y window coordinate Returns ID of whatever was selected."""
+    """Modifies the selection by simulating a \"mouse click\" at the given x,y window coordinate Returns ID of whatever was selected."""
 
     selected_at_window: Point2d
 
@@ -551,6 +559,8 @@ class solid3d_fillet_edge(BaseModel):
 
     radius: LengthUnit
 
+    tolerance: LengthUnit
+
     type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
 
     model_config = ConfigDict(protected_namespaces=())
@@ -777,9 +787,9 @@ class path_get_curve_uuids_for_vertices(BaseModel):
 
     path_id: str
 
-    type: Literal[
+    type: Literal["path_get_curve_uuids_for_vertices"] = (
         "path_get_curve_uuids_for_vertices"
-    ] = "path_get_curve_uuids_for_vertices"
+    )
 
     vertex_ids: List[str]
 
@@ -1069,6 +1079,7 @@ ModelingCmd = RootModel[
             camera_drag_start,
             camera_drag_move,
             camera_drag_end,
+            default_camera_get_settings,
             default_camera_look_at,
             default_camera_perspective_settings,
             default_camera_zoom,

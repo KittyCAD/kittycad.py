@@ -1577,7 +1577,7 @@ def generateObjectTypeCode(
 
     description = ""
     if "description" in schema:
-        description = schema["description"]
+        description = schema["description"].replace('"', '\\"')
 
     imports = []
     refs = getRefs(schema)
@@ -1801,6 +1801,11 @@ def getRequestBodyRefs(endpoint: dict) -> List[str]:
                     if "$ref" in form:
                         ref = form["$ref"].replace("#/components/schemas/", "")
                         refs.append(ref)
+                elif content_type == "multipart/form-data":
+                    form = content[content_type]["schema"]
+                    if "$ref" in form:
+                        ref = form["$ref"].replace("#/components/schemas/", "")
+                        refs.append(ref)
                 else:
                     # Throw an error for an unsupported content type.
                     logging.error("content: ", content)
@@ -1839,6 +1844,15 @@ def getRequestBodyTypeSchema(
                     elif form != {}:
                         logging.error("not a ref: ", form)
                         raise Exception("not a ref")
+                elif content_type == "multipart/form-data":
+                    form = content[content_type]["schema"]
+                    if "$ref" in form:
+                        ref = form["$ref"].replace("#/components/schemas/", "")
+                        type_schema = data["components"]["schemas"][ref]
+                        return ref, type_schema
+                    elif form != {}:
+                        type_schema = form
+                        return None, type_schema
                 else:
                     logging.error("unsupported content type: ", content_type)
                     raise Exception("unsupported content type")

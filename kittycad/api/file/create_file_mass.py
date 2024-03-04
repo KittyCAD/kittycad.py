@@ -25,24 +25,28 @@ def _get_kwargs(
     )  # noqa: E501
 
     if material_density is not None:
+
         if "?" in url:
             url = url + "&material_density=" + str(material_density)
         else:
             url = url + "?material_density=" + str(material_density)
 
     if material_density_unit is not None:
+
         if "?" in url:
             url = url + "&material_density_unit=" + str(material_density_unit)
         else:
             url = url + "?material_density_unit=" + str(material_density_unit)
 
     if output_unit is not None:
+
         if "?" in url:
             url = url + "&output_unit=" + str(output_unit)
         else:
             url = url + "?output_unit=" + str(output_unit)
 
     if src_format is not None:
+
         if "?" in url:
             url = url + "&src_format=" + str(src_format)
         else:
