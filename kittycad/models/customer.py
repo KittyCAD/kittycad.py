@@ -8,7 +8,7 @@ from ..models.currency import Currency
 
 
 class Customer(BaseModel):
-    """The resource representing a payment "Customer"."""
+    """The resource representing a payment \"Customer\"."""
 
     address: Optional[AddressDetails] = None
 

@@ -23,6 +23,7 @@ def _get_kwargs(
     )  # noqa: E501
 
     if value is not None:
+
         if "?" in url:
             url = url + "&value=" + str(value)
         else:

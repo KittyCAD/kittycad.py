@@ -1,32 +1,19 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
-from ...models.code_language import CodeLanguage
-from ...models.code_output import CodeOutput
 from ...models.error import Error
 from ...types import Response
 
 
 def _get_kwargs(
-    lang: CodeLanguage,
-    body: bytes,
     *,
     client: Client,
-    output: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/file/execute/{lang}".format(
+    url = "{}/events".format(
         client.base_url,
-        lang=lang,
     )  # noqa: E501
-
-    if output is not None:
-
-        if "?" in url:
-            url = url + "&output=" + str(output)
-        else:
-            url = url + "?output=" + str(output)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -36,14 +23,11 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "content": body,
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[CodeOutput, Error]]:
-    if response.status_code == 200:
-        response_200 = CodeOutput(**response.json())
-        return response_200
+def _parse_response(*, response: httpx.Response) -> Optional[Error]:
+    return None
     if response.status_code == 400:
         response_4XX = Error(**response.json())
         return response_4XX
@@ -53,9 +37,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[CodeOutput, E
     return Error(**response.json())
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -65,16 +47,10 @@ def _build_response(
 
 
 def sync_detailed(
-    lang: CodeLanguage,
-    body: bytes,
     *,
     client: Client,
-    output: Optional[str] = None,
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
-        lang=lang,
-        output=output,
-        body=body,
         client=client,
     )
 
@@ -87,32 +63,21 @@ def sync_detailed(
 
 
 def sync(
-    lang: CodeLanguage,
-    body: bytes,
     *,
     client: Client,
-    output: Optional[str] = None,
-) -> Optional[Union[CodeOutput, Error]]:
+) -> Optional[Error]:
+    """We collect anonymous telemetry data for improving our product."""  # noqa: E501
 
     return sync_detailed(
-        lang=lang,
-        output=output,
-        body=body,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    lang: CodeLanguage,
-    body: bytes,
     *,
     client: Client,
-    output: Optional[str] = None,
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
-        lang=lang,
-        output=output,
-        body=body,
         client=client,
     )
 
@@ -123,18 +88,13 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    lang: CodeLanguage,
-    body: bytes,
     *,
     client: Client,
-    output: Optional[str] = None,
-) -> Optional[Union[CodeOutput, Error]]:
+) -> Optional[Error]:
+    """We collect anonymous telemetry data for improving our product."""  # noqa: E501
 
     return (
         await asyncio_detailed(
-            lang=lang,
-            output=output,
-            body=body,
             client=client,
         )
     ).parsed

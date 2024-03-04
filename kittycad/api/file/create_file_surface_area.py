@@ -22,12 +22,14 @@ def _get_kwargs(
     )  # noqa: E501
 
     if output_unit is not None:
+
         if "?" in url:
             url = url + "&output_unit=" + str(output_unit)
         else:
             url = url + "?output_unit=" + str(output_unit)
 
     if src_format is not None:
+
         if "?" in url:
             url = url + "&src_format=" + str(src_format)
         else:

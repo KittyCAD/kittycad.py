@@ -3,10 +3,14 @@ from typing import Literal, Union
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.camera_drag_end import CameraDragEnd
+from ..models.camera_drag_move import CameraDragMove
 from ..models.center_of_mass import CenterOfMass
 from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
+from ..models.default_camera_get_settings import DefaultCameraGetSettings
+from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
 from ..models.entity_circular_pattern import EntityCircularPattern
 from ..models.entity_get_all_child_uuids import EntityGetAllChildUuids
@@ -115,6 +119,46 @@ class entity_get_all_child_uuids(BaseModel):
     data: EntityGetAllChildUuids
 
     type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class camera_drag_move(BaseModel):
+    """The response to the 'CameraDragMove' endpoint"""
+
+    data: CameraDragMove
+
+    type: Literal["camera_drag_move"] = "camera_drag_move"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class camera_drag_end(BaseModel):
+    """The response to the 'CameraDragEnd' endpoint"""
+
+    data: CameraDragEnd
+
+    type: Literal["camera_drag_end"] = "camera_drag_end"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class default_camera_get_settings(BaseModel):
+    """The response to the 'DefaultCameraGetSettings' endpoint"""
+
+    data: DefaultCameraGetSettings
+
+    type: Literal["default_camera_get_settings"] = "default_camera_get_settings"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class default_camera_zoom(BaseModel):
+    """The response to the 'DefaultCameraZoom' endpoint"""
+
+    data: DefaultCameraZoom
+
+    type: Literal["default_camera_zoom"] = "default_camera_zoom"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -254,9 +298,9 @@ class path_get_curve_uuids_for_vertices(BaseModel):
 
     data: PathGetCurveUuidsForVertices
 
-    type: Literal[
+    type: Literal["path_get_curve_uuids_for_vertices"] = (
         "path_get_curve_uuids_for_vertices"
-    ] = "path_get_curve_uuids_for_vertices"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -422,6 +466,10 @@ OkModelingCmdResponse = RootModel[
             entity_get_num_children,
             entity_get_parent_id,
             entity_get_all_child_uuids,
+            camera_drag_move,
+            camera_drag_end,
+            default_camera_get_settings,
+            default_camera_zoom,
             select_get,
             solid3d_get_all_edge_faces,
             solid3d_get_all_opposite_edges,

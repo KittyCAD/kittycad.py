@@ -22,30 +22,35 @@ def _get_kwargs(
     url = "{}/ws/modeling/commands".format(client.base_url)  # noqa: E501
 
     if fps is not None:
+
         if "?" in url:
             url = url + "&fps=" + str(fps)
         else:
             url = url + "?fps=" + str(fps)
 
     if unlocked_framerate is not None:
+
         if "?" in url:
             url = url + "&unlocked_framerate=" + str(unlocked_framerate).lower()
         else:
             url = url + "?unlocked_framerate=" + str(unlocked_framerate).lower()
 
     if video_res_height is not None:
+
         if "?" in url:
             url = url + "&video_res_height=" + str(video_res_height)
         else:
             url = url + "?video_res_height=" + str(video_res_height)
 
     if video_res_width is not None:
+
         if "?" in url:
             url = url + "&video_res_width=" + str(video_res_width)
         else:
             url = url + "?video_res_width=" + str(video_res_width)
 
     if webrtc is not None:
+
         if "?" in url:
             url = url + "&webrtc=" + str(webrtc).lower()
         else:

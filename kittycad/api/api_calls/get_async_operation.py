@@ -35,9 +35,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[
+def _parse_response(*, response: httpx.Response) -> Optional[
     Union[
         FileConversion,
         FileCenterOfMass,
@@ -123,9 +121,7 @@ def _parse_response(
     return Error(**response.json())
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[
+def _build_response(*, response: httpx.Response) -> Response[
     Optional[
         Union[
             FileConversion,

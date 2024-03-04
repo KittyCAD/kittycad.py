@@ -18,6 +18,7 @@ def _get_kwargs(
     )  # noqa: E501
 
     if label is not None:
+
         if "?" in url:
             url = url + "&label=" + str(label)
         else:

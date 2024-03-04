@@ -19,6 +19,7 @@ def _get_kwargs(
     )  # noqa: E501
 
     if group_by is not None:
+
         if "?" in url:
             url = url + "&group_by=" + str(group_by)
         else:
