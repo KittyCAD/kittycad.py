@@ -28,4 +28,4 @@ jobs:
       # TODO: generate a nice little doc for the release text like we do for the
       # cli repo.
       - name: Create a Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
