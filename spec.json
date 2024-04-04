@@ -1756,11 +1756,11 @@
         "description": "We collect anonymous telemetry data for improving our product.",
         "operationId": "create_event",
         "requestBody": {
+          "description": "Telemetry requests",
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "string",
-                "format": "binary"
+                "$ref": "#/components/schemas/Event"
               }
             }
           },
@@ -2380,8 +2380,8 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "successful operation",
+          "201": {
+            "description": "successful creation",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "description": "Access-Control-Allow-Credentials header.",
@@ -2937,77 +2937,6 @@
                 "required": true,
                 "schema": {
                   "type": "string"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/Error"
-          },
-          "5XX": {
-            "$ref": "#/components/responses/Error"
-          }
-        }
-      }
-    },
-    "/hidden/ws/modeling": {
-      "options": {
-        "tags": [
-          "hidden"
-        ],
-        "summary": "Hidden endpoint for defining the modeling websocket types.",
-        "operationId": "hidden_ws_modeling_types",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WebSocketRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "headers": {
-              "Access-Control-Allow-Credentials": {
-                "description": "Access-Control-Allow-Credentials header.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "description": "Access-Control-Allow-Methods header.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Origin": {
-                "description": "Access-Control-Allow-Origin header.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WebSocketResponse"
                 }
               }
             }
@@ -12274,6 +12203,23 @@
           },
           {
             "in": "query",
+            "name": "pool",
+            "description": "An optional identifier for a pool of engine instances. The 'default' pool is used when none is specified.",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "post_effect",
+            "description": "Engine Post effects (such as SSAO)",
+            "schema": {
+              "$ref": "#/components/schemas/PostEffectType"
+            }
+          },
+          {
+            "in": "query",
             "name": "unlocked_framerate",
             "description": "If true, engine will render video frames as fast as it can.",
             "schema": {
@@ -15239,6 +15185,10 @@
           "updated_at"
         ]
       },
+      "DefaultCameraFocusOn": {
+        "description": "The response from the `DefaultCameraFocusOn` command.",
+        "type": "object"
+      },
       "DefaultCameraGetSettings": {
         "description": "The response from the `DefaultCameraGetSettings` command.",
         "type": "object",
@@ -15745,6 +15695,73 @@
             "type": "string",
             "enum": [
               "message_type_not_accepted_for_web_r_t_c"
+            ]
+          }
+        ]
+      },
+      "Event": {
+        "description": "Telemetry data we are collecting",
+        "oneOf": [
+          {
+            "description": "An event related to modeling app files",
+            "type": "object",
+            "properties": {
+              "attachment_uri": {
+                "nullable": true,
+                "description": "Attachment URI for where the attachment is stored.",
+                "type": "string"
+              },
+              "created_at": {
+                "description": "Time this event was created.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "event_type": {
+                "description": "The specific event type from the modeling app.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ModelingAppEventType"
+                  }
+                ]
+              },
+              "last_compiled_at": {
+                "nullable": true,
+                "description": "Time the associated attachment was last compiled.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "project_description": {
+                "nullable": true,
+                "description": "Project descriptino as given by the user.",
+                "type": "string"
+              },
+              "project_name": {
+                "description": "Project name as given by the user.",
+                "type": "string"
+              },
+              "source_id": {
+                "description": "The source app for this event, uuid that is unique to the app.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "modeling_app_event"
+                ]
+              },
+              "user_id": {
+                "description": "An anonymous user id generated client-side.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "created_at",
+              "event_type",
+              "project_name",
+              "source_id",
+              "type",
+              "user_id"
             ]
           }
         ]
@@ -16894,6 +16911,21 @@
           "entity_type"
         ]
       },
+      "GetNumObjects": {
+        "description": "The response from the `GetNumObjects` command.",
+        "type": "object",
+        "properties": {
+          "num_objects": {
+            "description": "The number of objects in the scene.",
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "num_objects"
+        ]
+      },
       "GetSketchModePlane": {
         "description": "The plane for sketch mode.",
         "type": "object",
@@ -17148,6 +17180,28 @@
         },
         "required": [
           "object_id"
+        ]
+      },
+      "ImportedGeometry": {
+        "description": "Data from importing the files",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "ID of the imported 3D models within the scene.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "value": {
+            "description": "The original file paths that held the geometry.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "value"
         ]
       },
       "InputFormat": {
@@ -18137,6 +18191,18 @@
           }
         ]
       },
+      "ModelingAppEventType": {
+        "description": "Type for modeling-app events",
+        "oneOf": [
+          {
+            "description": "This event is sent before the modeling app or project is closed. The attachment should contain the contents of the most recent successful compile.",
+            "type": "string",
+            "enum": [
+              "successful_compile_before_close"
+            ]
+          }
+        ]
+      },
       "ModelingAppIndividualSubscriptionTier": {
         "description": "The subscription tiers we offer for the Modeling App to individuals.",
         "oneOf": [
@@ -18374,7 +18440,7 @@
             ]
           },
           {
-            "description": "Command for extruding a solid.",
+            "description": "Command for extruding a solid 2d.",
             "type": "object",
             "properties": {
               "cap": {
@@ -18408,6 +18474,119 @@
               "cap",
               "distance",
               "target",
+              "type"
+            ]
+          },
+          {
+            "description": "Command for revolving a solid 2d.",
+            "type": "object",
+            "properties": {
+              "angle": {
+                "description": "The signed angle of revolution (in degrees, must be <= 360 in either direction)",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Angle"
+                  }
+                ]
+              },
+              "axis": {
+                "description": "The axis of the extrusion (taken from the origin)",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Point3d"
+                  }
+                ]
+              },
+              "axis_is_2d": {
+                "description": "If true, the axis is interpreted within the 2D space of the solid 2D's plane",
+                "type": "boolean"
+              },
+              "origin": {
+                "description": "The origin of the extrusion axis",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Point3d"
+                  }
+                ]
+              },
+              "target": {
+                "description": "Which sketch to revolve. Must be a closed 2D solid.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ModelingCmdId"
+                  }
+                ]
+              },
+              "tolerance": {
+                "description": "The maximum acceptable surface gap computed between the revolution surface joints. Must be positive (i.e. greater than zero).",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/LengthUnit"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "revolve"
+                ]
+              }
+            },
+            "required": [
+              "angle",
+              "axis",
+              "axis_is_2d",
+              "origin",
+              "target",
+              "tolerance",
+              "type"
+            ]
+          },
+          {
+            "description": "Command for revolving a solid 2d about a brep edge",
+            "type": "object",
+            "properties": {
+              "angle": {
+                "description": "The signed angle of revolution (in degrees, must be <= 360 in either direction)",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Angle"
+                  }
+                ]
+              },
+              "edge_id": {
+                "description": "The edge to use as the axis of revolution, must be linear and lie in the plane of the solid",
+                "type": "string",
+                "format": "uuid"
+              },
+              "target": {
+                "description": "Which sketch to revolve. Must be a closed 2D solid.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ModelingCmdId"
+                  }
+                ]
+              },
+              "tolerance": {
+                "description": "The maximum acceptable surface gap computed between the revolution surface joints. Must be positive (i.e. greater than zero).",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/LengthUnit"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "revolve_about_edge"
+                ]
+              }
+            },
+            "required": [
+              "angle",
+              "edge_id",
+              "target",
+              "tolerance",
               "type"
             ]
           },
@@ -18783,14 +18962,6 @@
                   }
                 ]
               },
-              "source_unit": {
-                "description": "Select the unit interpretation of exported objects.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UnitLength"
-                  }
-                ]
-              },
               "type": {
                 "type": "string",
                 "enum": [
@@ -18801,7 +18972,6 @@
             "required": [
               "entity_ids",
               "format",
-              "source_unit",
               "type"
             ]
           },
@@ -18933,11 +19103,11 @@
             ]
           },
           {
-            "description": "Create a linear pattern using this entity (currently only valid for 3D solids).",
+            "description": "Create a linear pattern using this entity.",
             "type": "object",
             "properties": {
               "axis": {
-                "description": "Axis along which to make the copies",
+                "description": "Axis along which to make the copies. For Solid2d patterns, the z component is ignored.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/Point3d"
@@ -18979,7 +19149,7 @@
             ]
           },
           {
-            "description": "Create a circular pattern using this entity (currently only valid for 3D solids).",
+            "description": "Create a circular pattern using this entity.",
             "type": "object",
             "properties": {
               "arc_degrees": {
@@ -18988,7 +19158,7 @@
                 "format": "double"
               },
               "axis": {
-                "description": "Axis around which to make the copies",
+                "description": "Axis around which to make the copies. For Solid2d patterns, this is ignored.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/Point3d"
@@ -18996,7 +19166,7 @@
                 ]
               },
               "center": {
-                "description": "Point around which to make the copies",
+                "description": "Point around which to make the copies. For Solid2d patterns, the z component is ignored.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/Point3d"
@@ -19032,6 +19202,56 @@
               "entity_id",
               "num_repetitions",
               "rotate_duplicates",
+              "type"
+            ]
+          },
+          {
+            "description": "Create a helix using the input cylinder and other specified parameters.",
+            "type": "object",
+            "properties": {
+              "cylinder_id": {
+                "description": "ID of the cylinder.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "is_clockwise": {
+                "description": "Is the helix rotation clockwise?",
+                "type": "boolean"
+              },
+              "length": {
+                "description": "Length of the helix.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/LengthUnit"
+                  }
+                ]
+              },
+              "revolutions": {
+                "description": "Number of revolutions.",
+                "type": "number",
+                "format": "double"
+              },
+              "start_angle": {
+                "description": "Start angle (in degrees).",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Angle"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "entity_make_helix"
+                ]
+              }
+            },
+            "required": [
+              "cylinder_id",
+              "is_clockwise",
+              "length",
+              "revolutions",
+              "start_angle",
               "type"
             ]
           },
@@ -19134,6 +19354,21 @@
             },
             "required": [
               "entities",
+              "type"
+            ]
+          },
+          {
+            "description": "Removes all of the Objects in the scene",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "scene_clear_all"
+                ]
+              }
+            },
+            "required": [
               "type"
             ]
           },
@@ -20116,6 +20351,78 @@
             ]
           },
           {
+            "description": "Set the background color of the scene.",
+            "type": "object",
+            "properties": {
+              "color": {
+                "description": "The color to set the background to.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Color"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "set_background_color"
+                ]
+              }
+            },
+            "required": [
+              "color",
+              "type"
+            ]
+          },
+          {
+            "description": "Set the properties of the tool lines for the scene.",
+            "type": "object",
+            "properties": {
+              "color": {
+                "nullable": true,
+                "description": "The color to set the tool line to.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Color"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "set_current_tool_properties"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          {
+            "description": "Set the default system properties used when a specific property isn't set.",
+            "type": "object",
+            "properties": {
+              "color": {
+                "nullable": true,
+                "description": "The default system color.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Color"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "set_default_system_properties"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          {
             "description": "Get type of the given curve.",
             "type": "object",
             "properties": {
@@ -20558,14 +20865,6 @@
                   }
                 ]
               },
-              "source_unit": {
-                "description": "Select the unit interpretation of distances in the scene.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UnitLength"
-                  }
-                ]
-              },
               "type": {
                 "type": "string",
                 "enum": [
@@ -20578,7 +20877,6 @@
               "material_density",
               "material_density_unit",
               "output_unit",
-              "source_unit",
               "type"
             ]
           },
@@ -20615,14 +20913,6 @@
                   }
                 ]
               },
-              "source_unit": {
-                "description": "Select the unit interpretation of distances in the scene.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UnitLength"
-                  }
-                ]
-              },
               "type": {
                 "type": "string",
                 "enum": [
@@ -20635,7 +20925,6 @@
               "material_mass",
               "material_mass_unit",
               "output_unit",
-              "source_unit",
               "type"
             ]
           },
@@ -20659,14 +20948,6 @@
                   }
                 ]
               },
-              "source_unit": {
-                "description": "Select the unit interpretation of distances in the scene.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UnitLength"
-                  }
-                ]
-              },
               "type": {
                 "type": "string",
                 "enum": [
@@ -20677,7 +20958,6 @@
             "required": [
               "entity_ids",
               "output_unit",
-              "source_unit",
               "type"
             ]
           },
@@ -20701,14 +20981,6 @@
                   }
                 ]
               },
-              "source_unit": {
-                "description": "Select the unit interpretation of distances in the scene.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UnitLength"
-                  }
-                ]
-              },
               "type": {
                 "type": "string",
                 "enum": [
@@ -20719,7 +20991,6 @@
             "required": [
               "entity_ids",
               "output_unit",
-              "source_unit",
               "type"
             ]
           },
@@ -20743,14 +21014,6 @@
                   }
                 ]
               },
-              "source_unit": {
-                "description": "Select the unit interpretation of distances in the scene.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UnitLength"
-                  }
-                ]
-              },
               "type": {
                 "type": "string",
                 "enum": [
@@ -20761,7 +21024,6 @@
             "required": [
               "entity_ids",
               "output_unit",
-              "source_unit",
               "type"
             ]
           },
@@ -20937,6 +21199,21 @@
                 "type": "string",
                 "enum": [
                   "select_get"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          {
+            "description": "Get the number of objects in the scene",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "get_num_objects"
                 ]
               }
             },
@@ -21253,6 +21530,44 @@
                 "type": "string",
                 "enum": [
                   "default_camera_zoom"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "description": "The response to the 'GetNumObjects' endpoint",
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/GetNumObjects"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "get_num_objects"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "description": "The response to the 'DefaultCameraFocusOn' endpoint",
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/DefaultCameraFocusOn"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "default_camera_focus_on"
                 ]
               }
             },
@@ -21652,6 +21967,25 @@
                 "type": "string",
                 "enum": [
                   "import_files"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "description": "The response to the 'ImportedGeometry' endpoint",
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/ImportedGeometry"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "imported_geometry"
                 ]
               }
             },
@@ -23187,6 +23521,15 @@
           "message"
         ]
       },
+      "PostEffectType": {
+        "description": "Post effect type",
+        "type": "string",
+        "enum": [
+          "phosphor",
+          "ssao",
+          "noeffect"
+        ]
+      },
       "PrivacySettings": {
         "description": "Privacy settings for an org or user.",
         "type": "object",
@@ -23688,53 +24031,35 @@
         "type": "object",
         "properties": {
           "created_at": {
-            "title": "DateTime",
             "description": "The date and time the session was created.",
             "type": "string",
             "format": "date-time"
           },
-          "expires": {
-            "title": "DateTime",
+          "expires_at": {
             "description": "The date and time the session expires.",
             "type": "string",
             "format": "date-time"
           },
-          "id": {
-            "description": "The unique identifier for the session.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
-          },
-          "session_token": {
+          "token": {
             "description": "The session token.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
+            "type": "string",
+            "format": "uuid"
           },
           "updated_at": {
-            "title": "DateTime",
             "description": "The date and time the session was last updated.",
             "type": "string",
             "format": "date-time"
           },
           "user_id": {
             "description": "The user ID of the user that the session belongs to.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
+            "type": "string",
+            "format": "uuid"
           }
         },
         "required": [
           "created_at",
-          "expires",
-          "id",
-          "session_token",
+          "expires_at",
+          "token",
           "updated_at",
           "user_id"
         ]
@@ -26642,12 +26967,25 @@
             "description": "A sequence of modeling requests. If any request fails, following requests will not be tried.",
             "type": "object",
             "properties": {
+              "batch_id": {
+                "description": "ID of batch being submitted. Each request has their own individual ModelingCmdId, but this is the ID of the overall batch.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ModelingCmdId"
+                  }
+                ]
+              },
               "requests": {
                 "description": "A sequence of modeling requests. If any request fails, following requests will not be tried.",
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/ModelingCmdReq"
                 }
+              },
+              "responses": {
+                "description": "If false or omitted, responses to each batch command will just be Ok(()). If true, responses will be the actual response data for that modeling command.",
+                "default": false,
+                "type": "boolean"
               },
               "type": {
                 "type": "string",
@@ -26657,6 +26995,7 @@
               }
             },
             "required": [
+              "batch_id",
               "requests",
               "type"
             ]
