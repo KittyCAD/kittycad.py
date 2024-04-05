@@ -39,6 +39,7 @@ from .models import (
     ModelingCmd,
     ModelingCmdId,
     Pong,
+    PostEffectType,
     System,
     TextToCad,
     TextToCadCreateBody,
@@ -356,6 +357,7 @@ def test_ws_simple():
     with modeling_commands_ws.WebSocket(
         client=client,
         fps=30,
+        post_effect=PostEffectType.NOEFFECT,
         unlocked_framerate=False,
         video_res_height=360,
         video_res_width=480,
@@ -383,6 +385,7 @@ def test_ws_import():
     with modeling_commands_ws.WebSocket(
         client=client,
         fps=30,
+        post_effect=PostEffectType.NOEFFECT,
         unlocked_framerate=False,
         video_res_height=360,
         video_res_width=480,

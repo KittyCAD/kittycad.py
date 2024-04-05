@@ -161,13 +161,13 @@ class WebSocket:
     ):
         self.ws = sync(
             fps,
-            pool,
             post_effect,
             unlocked_framerate,
             video_res_height,
             video_res_width,
             webrtc,
             client=client,
+            pool=pool,
         )
 
     def __enter__(
