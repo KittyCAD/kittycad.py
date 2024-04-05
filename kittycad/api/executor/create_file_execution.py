@@ -41,9 +41,9 @@ def _get_kwargs(
 
 
 def _parse_response(*, response: httpx.Response) -> Optional[Union[CodeOutput, Error]]:
-    if response.status_code == 200:
-        response_200 = CodeOutput(**response.json())
-        return response_200
+    if response.status_code == 201:
+        response_201 = CodeOutput(**response.json())
+        return response_201
     if response.status_code == 400:
         response_4XX = Error(**response.json())
         return response_4XX

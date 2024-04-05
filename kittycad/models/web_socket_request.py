@@ -1,4 +1,4 @@
-from typing import List, Literal, Union
+from typing import List, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
@@ -46,7 +46,11 @@ class modeling_cmd_req(BaseModel):
 class modeling_cmd_batch_req(BaseModel):
     """A sequence of modeling requests. If any request fails, following requests will not be tried."""
 
+    batch_id: ModelingCmdId
+
     requests: List[ModelingCmdReq]
+
+    responses: Optional[bool] = None
 
     type: Literal["modeling_cmd_batch_req"] = "modeling_cmd_batch_req"
 

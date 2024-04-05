@@ -187,7 +187,6 @@ from kittycad.models import (
     PaymentIntent,
     PaymentMethod,
     Pong,
-    PrivacySettings,
     SamlIdentityProvider,
     ServiceAccount,
     ServiceAccountResultsPage,
@@ -222,11 +221,13 @@ from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
+from kittycad.models.event import modeling_app_event
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.idp_metadata_source import base64_encoded_xml
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
+from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.modeling_app_individual_subscription_tier import (
     ModelingAppIndividualSubscriptionTier,
 )
@@ -235,6 +236,8 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
 )
 from kittycad.models.org_details import OrgDetails
 from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.post_effect_type import PostEffectType
+from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.rtc_sdp_type import RtcSdpType
 from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
@@ -1279,6 +1282,13 @@ def test_create_event():
 
     result: Optional[Error] = create_event.sync(
         client=client,
+        body=modeling_app_event(
+            created_at="<string>",
+            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+            project_name="<string>",
+            source_id="<uuid>",
+            user_id="<string>",
+        ),
     )
 
     if isinstance(result, Error) or result is None:
@@ -1291,6 +1301,13 @@ def test_create_event():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Error]] = create_event.sync_detailed(
         client=client,
+        body=modeling_app_event(
+            created_at="<string>",
+            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+            project_name="<string>",
+            source_id="<uuid>",
+            user_id="<string>",
+        ),
     )
 
 
@@ -1303,11 +1320,25 @@ async def test_create_event_async():
 
     result: Optional[Error] = await create_event.asyncio(
         client=client,
+        body=modeling_app_event(
+            created_at="<string>",
+            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+            project_name="<string>",
+            source_id="<uuid>",
+            user_id="<string>",
+        ),
     )
 
     # OR run async with more info
     response: Response[Optional[Error]] = await create_event.asyncio_detailed(
         client=client,
+        body=modeling_app_event(
+            created_at="<string>",
+            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+            project_name="<string>",
+            source_id="<uuid>",
+            user_id="<string>",
+        ),
     )
 
 
@@ -6732,10 +6763,12 @@ def test_modeling_commands_ws():
     with modeling_commands_ws.WebSocket(
         client=client,
         fps=10,
+        post_effect=PostEffectType.PHOSPHOR,
         unlocked_framerate=False,
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
+        pool=None,  # Optional[str]
     ) as websocket:
 
         # Send a message.
@@ -6766,10 +6799,12 @@ async def test_modeling_commands_ws_async():
     websocket = await modeling_commands_ws.asyncio(
         client=client,
         fps=10,
+        post_effect=PostEffectType.PHOSPHOR,
         unlocked_framerate=False,
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
+        pool=None,  # Optional[str]
     )
 
     # Send a message.

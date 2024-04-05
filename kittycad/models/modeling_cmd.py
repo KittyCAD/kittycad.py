@@ -3,6 +3,7 @@ from typing import List, Literal, Optional, Union
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.angle import Angle
 from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
@@ -63,7 +64,7 @@ class extend_path(BaseModel):
 
 
 class extrude(BaseModel):
-    """Command for extruding a solid."""
+    """Command for extruding a solid 2d."""
 
     cap: bool
 
@@ -72,6 +73,42 @@ class extrude(BaseModel):
     target: ModelingCmdId
 
     type: Literal["extrude"] = "extrude"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class revolve(BaseModel):
+    """Command for revolving a solid 2d."""
+
+    angle: Angle
+
+    axis: Point3d
+
+    axis_is_2d: bool
+
+    origin: Point3d
+
+    target: ModelingCmdId
+
+    tolerance: LengthUnit
+
+    type: Literal["revolve"] = "revolve"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class revolve_about_edge(BaseModel):
+    """Command for revolving a solid 2d about a brep edge"""
+
+    angle: Angle
+
+    edge_id: str
+
+    target: ModelingCmdId
+
+    tolerance: LengthUnit
+
+    type: Literal["revolve_about_edge"] = "revolve_about_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -221,8 +258,6 @@ class export(BaseModel):
 
     format: OutputFormat
 
-    source_unit: UnitLength
-
     type: Literal["export"] = "export"
 
     model_config = ConfigDict(protected_namespaces=())
@@ -285,7 +320,7 @@ class entity_get_distance(BaseModel):
 
 
 class entity_linear_pattern(BaseModel):
-    """Create a linear pattern using this entity (currently only valid for 3D solids)."""
+    """Create a linear pattern using this entity."""
 
     axis: Point3d
 
@@ -301,7 +336,7 @@ class entity_linear_pattern(BaseModel):
 
 
 class entity_circular_pattern(BaseModel):
-    """Create a circular pattern using this entity (currently only valid for 3D solids)."""
+    """Create a circular pattern using this entity."""
 
     arc_degrees: float
 
@@ -316,6 +351,24 @@ class entity_circular_pattern(BaseModel):
     rotate_duplicates: bool
 
     type: Literal["entity_circular_pattern"] = "entity_circular_pattern"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_make_helix(BaseModel):
+    """Create a helix using the input cylinder and other specified parameters."""
+
+    cylinder_id: str
+
+    is_clockwise: bool
+
+    length: LengthUnit
+
+    revolutions: float
+
+    start_angle: Angle
+
+    type: Literal["entity_make_helix"] = "entity_make_helix"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -358,6 +411,14 @@ class select_remove(BaseModel):
     entities: List[str]
 
     type: Literal["select_remove"] = "select_remove"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class scene_clear_all(BaseModel):
+    """Removes all of the Objects in the scene"""
+
+    type: Literal["scene_clear_all"] = "scene_clear_all"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -764,6 +825,36 @@ class enable_sketch_mode(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class set_background_color(BaseModel):
+    """Set the background color of the scene."""
+
+    color: Color
+
+    type: Literal["set_background_color"] = "set_background_color"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class set_current_tool_properties(BaseModel):
+    """Set the properties of the tool lines for the scene."""
+
+    color: Optional[Color] = None
+
+    type: Literal["set_current_tool_properties"] = "set_current_tool_properties"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class set_default_system_properties(BaseModel):
+    """Set the default system properties used when a specific property isn't set."""
+
+    color: Optional[Color] = None
+
+    type: Literal["set_default_system_properties"] = "set_default_system_properties"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class curve_get_type(BaseModel):
     """Get type of the given curve."""
 
@@ -951,8 +1042,6 @@ class mass(BaseModel):
 
     output_unit: UnitMass
 
-    source_unit: UnitLength
-
     type: Literal["mass"] = "mass"
 
     model_config = ConfigDict(protected_namespaces=())
@@ -969,8 +1058,6 @@ class density(BaseModel):
 
     output_unit: UnitDensity
 
-    source_unit: UnitLength
-
     type: Literal["density"] = "density"
 
     model_config = ConfigDict(protected_namespaces=())
@@ -982,8 +1069,6 @@ class volume(BaseModel):
     entity_ids: List[str]
 
     output_unit: UnitVolume
-
-    source_unit: UnitLength
 
     type: Literal["volume"] = "volume"
 
@@ -997,8 +1082,6 @@ class center_of_mass(BaseModel):
 
     output_unit: UnitLength
 
-    source_unit: UnitLength
-
     type: Literal["center_of_mass"] = "center_of_mass"
 
     model_config = ConfigDict(protected_namespaces=())
@@ -1010,8 +1093,6 @@ class surface_area(BaseModel):
     entity_ids: List[str]
 
     output_unit: UnitArea
-
-    source_unit: UnitLength
 
     type: Literal["surface_area"] = "surface_area"
 
@@ -1102,6 +1183,14 @@ class select_get(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class get_num_objects(BaseModel):
+    """Get the number of objects in the scene"""
+
+    type: Literal["get_num_objects"] = "get_num_objects"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1109,6 +1198,8 @@ ModelingCmd = RootModel[
             move_path_pen,
             extend_path,
             extrude,
+            revolve,
+            revolve_about_edge,
             close_path,
             camera_drag_start,
             camera_drag_move,
@@ -1127,10 +1218,12 @@ ModelingCmd = RootModel[
             entity_get_distance,
             entity_linear_pattern,
             entity_circular_pattern,
+            entity_make_helix,
             edit_mode_enter,
             select_with_point,
             select_add,
             select_remove,
+            scene_clear_all,
             select_replace,
             highlight_set_entity,
             highlight_set_entities,
@@ -1163,6 +1256,9 @@ ModelingCmd = RootModel[
             get_sketch_mode_plane,
             curve_set_constraint,
             enable_sketch_mode,
+            set_background_color,
+            set_current_tool_properties,
+            set_default_system_properties,
             curve_get_type,
             curve_get_control_points,
             take_snapshot,
@@ -1193,6 +1289,7 @@ ModelingCmd = RootModel[
             edit_mode_exit,
             select_clear,
             select_get,
+            get_num_objects,
         ],
         Field(discriminator="type"),
     ]

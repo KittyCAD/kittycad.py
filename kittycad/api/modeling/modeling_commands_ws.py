@@ -1,23 +1,26 @@
 import json
-from typing import Any, Dict, Iterator
+from typing import Any, Dict, Iterator, Optional
 
 import bson
 from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
 from websockets.sync.client import ClientConnection, connect as ws_connect
 
 from ...client import Client
+from ...models.post_effect_type import PostEffectType
 from ...models.web_socket_request import WebSocketRequest
 from ...models.web_socket_response import WebSocketResponse
 
 
 def _get_kwargs(
     fps: int,
+    post_effect: PostEffectType,
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
     webrtc: bool,
     *,
     client: Client,
+    pool: Optional[str] = None,
 ) -> Dict[str, Any]:
     url = "{}/ws/modeling/commands".format(client.base_url)  # noqa: E501
 
@@ -27,6 +30,20 @@ def _get_kwargs(
             url = url + "&fps=" + str(fps)
         else:
             url = url + "?fps=" + str(fps)
+
+    if pool is not None:
+
+        if "?" in url:
+            url = url + "&pool=" + str(pool)
+        else:
+            url = url + "?pool=" + str(pool)
+
+    if post_effect is not None:
+
+        if "?" in url:
+            url = url + "&post_effect=" + str(post_effect)
+        else:
+            url = url + "?post_effect=" + str(post_effect)
 
     if unlocked_framerate is not None:
 
@@ -69,17 +86,21 @@ def _get_kwargs(
 
 def sync(
     fps: int,
+    post_effect: PostEffectType,
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
     webrtc: bool,
     *,
     client: Client,
+    pool: Optional[str] = None,
 ) -> ClientConnection:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
         fps=fps,
+        pool=pool,
+        post_effect=post_effect,
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
         video_res_width=video_res_width,
@@ -92,17 +113,21 @@ def sync(
 
 async def asyncio(
     fps: int,
+    post_effect: PostEffectType,
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
     webrtc: bool,
     *,
     client: Client,
+    pool: Optional[str] = None,
 ) -> WebSocketClientProtocol:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
         fps=fps,
+        pool=pool,
+        post_effect=post_effect,
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
         video_res_width=video_res_width,
@@ -126,14 +151,18 @@ class WebSocket:
     def __init__(
         self,
         fps: int,
+        post_effect: PostEffectType,
         unlocked_framerate: bool,
         video_res_height: int,
         video_res_width: int,
         webrtc: bool,
         client: Client,
+        pool: Optional[str] = None,
     ):
         self.ws = sync(
             fps,
+            pool,
+            post_effect,
             unlocked_framerate,
             video_res_height,
             video_res_width,
