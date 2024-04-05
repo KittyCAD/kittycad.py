@@ -9,6 +9,7 @@ from ..models.center_of_mass import CenterOfMass
 from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
+from ..models.default_camera_focus_on import DefaultCameraFocusOn
 from ..models.default_camera_get_settings import DefaultCameraGetSettings
 from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
@@ -25,9 +26,11 @@ from ..models.face_get_gradient import FaceGetGradient
 from ..models.face_get_position import FaceGetPosition
 from ..models.face_is_planar import FaceIsPlanar
 from ..models.get_entity_type import GetEntityType
+from ..models.get_num_objects import GetNumObjects
 from ..models.get_sketch_mode_plane import GetSketchModePlane
 from ..models.highlight_set_entity import HighlightSetEntity
 from ..models.import_files import ImportFiles
+from ..models.imported_geometry import ImportedGeometry
 from ..models.mass import Mass
 from ..models.mouse_click import MouseClick
 from ..models.path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
@@ -162,6 +165,26 @@ class default_camera_zoom(BaseModel):
     data: DefaultCameraZoom
 
     type: Literal["default_camera_zoom"] = "default_camera_zoom"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class get_num_objects(BaseModel):
+    """The response to the 'GetNumObjects' endpoint"""
+
+    data: GetNumObjects
+
+    type: Literal["get_num_objects"] = "get_num_objects"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class default_camera_focus_on(BaseModel):
+    """The response to the 'DefaultCameraFocusOn' endpoint"""
+
+    data: DefaultCameraFocusOn
+
+    type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -378,6 +401,16 @@ class import_files(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class imported_geometry(BaseModel):
+    """The response to the 'ImportedGeometry' endpoint"""
+
+    data: ImportedGeometry
+
+    type: Literal["imported_geometry"] = "imported_geometry"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class mass(BaseModel):
     """The response to the 'Mass' endpoint"""
 
@@ -503,6 +536,8 @@ OkModelingCmdResponse = RootModel[
             camera_drag_end,
             default_camera_get_settings,
             default_camera_zoom,
+            get_num_objects,
+            default_camera_focus_on,
             select_get,
             solid3d_get_all_edge_faces,
             solid3d_get_all_opposite_edges,
@@ -524,6 +559,7 @@ OkModelingCmdResponse = RootModel[
             face_get_gradient,
             plane_intersect_and_project,
             import_files,
+            imported_geometry,
             mass,
             volume,
             density,

@@ -478,11 +478,16 @@ from kittycad.types import Response
         for endpoint_ref in endpoint_refs:
             if endpoint_ref == "Error":
                 continue
-            example_imports = example_imports + (
-                """from kittycad.models import """
-                + endpoint_ref.replace("List[", "").replace("]", "")
-                + "\n"
-            )
+            # For some reason, PrivacySettings is showing up twice so we want to skip
+            # it here. Obviously this is a hack and we should fix the root cause.
+            # When this happens again with another struct there might be a more obvious
+            # solution, but alas, I am lazy.
+            if endpoint_ref != "PrivacySettings":
+                example_imports = example_imports + (
+                    """from kittycad.models import """
+                    + endpoint_ref.replace("List[", "").replace("]", "")
+                    + "\n"
+                )
         example_imports = (
             example_imports + "from typing import Union, Any, Optional, List, Tuple\n"
         )
@@ -1677,8 +1682,9 @@ def getRefs(schema: dict) -> List[str]:
                     # do nothing
                     pass
                 else:
-                    logging.error("unsupported type: ", schema)
-                    raise Exception("unsupported type: ", schema)
+                    # This is likely an empty object like above but with a description
+                    # so we will just skip it.
+                    pass
             elif type_name == "array":
                 if "items" in schema:
                     schema_refs = getRefs(schema["items"])

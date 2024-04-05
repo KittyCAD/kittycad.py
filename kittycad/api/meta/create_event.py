@@ -4,10 +4,12 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
+from ...models.event import Event
 from ...types import Response
 
 
 def _get_kwargs(
+    body: Event,
     *,
     client: Client,
 ) -> Dict[str, Any]:
@@ -23,6 +25,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "content": body.model_dump_json(),
     }
 
 
@@ -47,10 +50,12 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 
 
 def sync_detailed(
+    body: Event,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        body=body,
         client=client,
     )
 
@@ -63,21 +68,25 @@ def sync_detailed(
 
 
 def sync(
+    body: Event,
     *,
     client: Client,
 ) -> Optional[Error]:
     """We collect anonymous telemetry data for improving our product."""  # noqa: E501
 
     return sync_detailed(
+        body=body,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    body: Event,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
     kwargs = _get_kwargs(
+        body=body,
         client=client,
     )
 
@@ -88,6 +97,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    body: Event,
     *,
     client: Client,
 ) -> Optional[Error]:
@@ -95,6 +105,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
+            body=body,
             client=client,
         )
     ).parsed

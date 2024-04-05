@@ -56,6 +56,7 @@ from .curve_get_type import CurveGetType
 from .curve_type import CurveType
 from .customer import Customer
 from .customer_balance import CustomerBalance
+from .default_camera_focus_on import DefaultCameraFocusOn
 from .default_camera_get_settings import DefaultCameraGetSettings
 from .default_camera_zoom import DefaultCameraZoom
 from .density import Density
@@ -80,6 +81,7 @@ from .entity_type import EntityType
 from .environment import Environment
 from .error import Error
 from .error_code import ErrorCode
+from .event import Event
 from .export import Export
 from .export_file import ExportFile
 from .extended_user import ExtendedUser
@@ -102,6 +104,7 @@ from .file_system_metadata import FileSystemMetadata
 from .file_volume import FileVolume
 from .gateway import Gateway
 from .get_entity_type import GetEntityType
+from .get_num_objects import GetNumObjects
 from .get_sketch_mode_plane import GetSketchModePlane
 from .global_axis import GlobalAxis
 from .gltf_presentation import GltfPresentation
@@ -112,6 +115,7 @@ from .idp_metadata_source import IdpMetadataSource
 from .image_format import ImageFormat
 from .import_file import ImportFile
 from .import_files import ImportFiles
+from .imported_geometry import ImportedGeometry
 from .input_format import InputFormat
 from .invoice import Invoice
 from .invoice_line_item import InvoiceLineItem
@@ -130,6 +134,7 @@ from .mass import Mass
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
 from .method import Method
+from .modeling_app_event_type import ModelingAppEventType
 from .modeling_app_individual_subscription_tier import (
     ModelingAppIndividualSubscriptionTier,
 )
@@ -174,6 +179,7 @@ from .ply_storage import PlyStorage
 from .point2d import Point2d
 from .point3d import Point3d
 from .pong import Pong
+from .post_effect_type import PostEffectType
 from .privacy_settings import PrivacySettings
 from .raw_file import RawFile
 from .rtc_ice_candidate_init import RtcIceCandidateInit
