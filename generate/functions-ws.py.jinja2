@@ -154,10 +154,19 @@ class WebSocket:
         self.ws = sync(
         {% for arg in args %}
         {% if arg.in_query %}
+        {% if arg.is_optional == False %}
             {{arg.name}},
+        {% endif %}
         {% endif %}
         {% endfor %}
             client=client,
+        {% for arg in args %}
+        {% if arg.in_query %}
+        {% if arg.is_optional %}
+        {{arg.name}}={{arg.name}},
+        {% endif %}
+        {% endif %}
+        {% endfor %}
         )
 
     def __enter__(self,
