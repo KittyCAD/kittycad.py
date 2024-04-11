@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kittycad"
-version = "0.6.10"
+version = "0.6.11"
 description = "A client library for accessing KittyCAD"
 
 authors = []
@@ -10,6 +10,10 @@ packages = [
     {include = "kittycad"},
 ]
 include = ["CHANGELOG.md", "kittycad/py.typed"]
+
+[[tool.poetry.source]]
+name = "pypi-public"
+url = "https://pypi.org/simple/"
 
 [tool.poetry.dependencies]
 attrs = ">=20.1.0,<24.0.0"
