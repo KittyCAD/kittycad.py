@@ -67,9 +67,9 @@ jobs:
           gh pr create --title "Update lang spec docs for python" \
               --body "Updating the generated docs for python" \
               --head "$NEW_BRANCH" \
-              --assignee jessfraz \
-              --assignee irevdev \
-              --assignee franknoirot \
+              --reviewer jessfraz \
+              --reviewer irevdev \
+              --reviewer franknoirot \
               --base main || true
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
