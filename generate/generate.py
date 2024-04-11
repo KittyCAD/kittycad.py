@@ -482,7 +482,7 @@ from kittycad.types import Response
             # it here. Obviously this is a hack and we should fix the root cause.
             # When this happens again with another struct there might be a more obvious
             # solution, but alas, I am lazy.
-            if endpoint_ref != "PrivacySettings":
+            if endpoint_ref != "PrivacySettings" and endpoint_ref != "List[str]":
                 example_imports = example_imports + (
                     """from kittycad.models import """
                     + endpoint_ref.replace("List[", "").replace("]", "")
@@ -846,6 +846,20 @@ async def test_"""
                                             "\t\t\tfor item in response.json()\n"
                                         )
                                         parse_response.write("\t\t]\n")
+                                    elif "type" in items:
+                                        if items["type"] == "string":
+                                            parse_response.write(
+                                                "\t\tresponse_"
+                                                + response_code
+                                                + " = [\n"
+                                            )
+                                            parse_response.write("\t\t\tstr(**item)\n")
+                                            parse_response.write(
+                                                "\t\t\tfor item in response.json()\n"
+                                            )
+                                            parse_response.write("\t\t]\n")
+                                        else:
+                                            raise Exception("Unknown array type", items)
                                     else:
                                         raise Exception("Unknown array type")
                                 elif json["type"] == "string":
@@ -1728,8 +1742,13 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                             if "$ref" in items:
                                 ref = items["$ref"].replace("#/components/schemas/", "")
                                 refs.append("List[" + ref + "]")
+                            elif "type" in items:
+                                if items["type"] == "string":
+                                    refs.append("List[str]")
+                                else:
+                                    raise Exception("Unknown array type", items)
                             else:
-                                raise Exception("Unknown array type")
+                                raise Exception("Unknown array type", items)
                         elif json["type"] == "string":
                             refs.append("str")
                         elif (

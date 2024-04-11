@@ -51,6 +51,7 @@ from kittycad.api.hidden import (
     post_auth_saml,
 )
 from kittycad.api.meta import (
+    create_debug_uploads,
     create_event,
     get_ipinfo,
     get_metadata,
@@ -1272,6 +1273,49 @@ async def test_post_auth_saml_async():
         client=client,
         provider_id=Uuid("<uuid>"),
         body=bytes("some bytes", "utf-8"),
+    )
+
+
+@pytest.mark.skip
+def test_create_debug_uploads():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[List[str], Error]] = create_debug_uploads.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: List[str] = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[List[str], Error]]] = (
+        create_debug_uploads.sync_detailed(
+            client=client,
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_debug_uploads_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[List[str], Error]] = await create_debug_uploads.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[List[str], Error]]] = (
+        await create_debug_uploads.asyncio_detailed(
+            client=client,
+        )
     )
 
 
