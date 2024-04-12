@@ -1,8 +1,9 @@
-from typing import List, Literal, Union
+from typing import Dict, List, Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.batch_response import BatchResponse
 from ..models.ice_server import IceServer
 from ..models.ok_modeling_cmd_response import OkModelingCmdResponse
 from ..models.raw_file import RawFile
@@ -82,6 +83,24 @@ class modeling(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class ModelingBatchData(BaseModel):
+    """"""
+
+    responses: Dict[str, BatchResponse]
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class modeling_batch(BaseModel):
+    """Response to a ModelingBatch."""
+
+    data: ModelingBatchData
+
+    type: Literal["modeling_batch"] = "modeling_batch"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class ExportData(BaseModel):
     """"""
 
@@ -139,6 +158,7 @@ OkWebSocketResponseData = RootModel[
             trickle_ice,
             sdp_answer,
             modeling,
+            modeling_batch,
             export,
             metrics_request,
             pong,

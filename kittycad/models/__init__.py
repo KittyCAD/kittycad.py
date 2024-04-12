@@ -31,6 +31,7 @@ from .async_api_call_type import AsyncApiCallType
 from .auth_callback import AuthCallback
 from .axis import Axis
 from .axis_direction_pair import AxisDirectionPair
+from .batch_response import BatchResponse
 from .billing_info import BillingInfo
 from .block_reason import BlockReason
 from .cache_metadata import CacheMetadata

@@ -1270,7 +1270,7 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
             f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
             all_options.append(ref_name)
 
-    if isNestedObjectOneOf(schema):
+    if isNestedObjectAnyOf(schema):
         # We want to write each of the nested objects.
         for any_of in schema["anyOf"]:
             # Get the nested object.
@@ -1326,6 +1326,47 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
             f.write(object_code)
             f.write("\n")
             all_options.append(object_name)
+    else:
+        # We want to write each of the nested objects.
+        for any_of in schema["anyOf"]:
+            # Get the nested object.
+            if "properties" in any_of:
+                for prop_name in any_of["properties"]:
+                    nested_object = any_of["properties"][prop_name]
+                    if nested_object == {}:
+                        f.write("from typing import Any\n")
+                        f.write(prop_name + " = Any\n")
+                        f.write("\n")
+                        all_options.append(prop_name)
+                    elif "$ref" in nested_object:
+                        ref = nested_object["$ref"]
+                        ref_name = ref[ref.rfind("/") + 1 :]
+                        f.write(
+                            "from ."
+                            + camel_to_snake(ref_name)
+                            + " import "
+                            + ref_name
+                            + "\n"
+                        )
+                        f.write("\n")
+                        if prop_name != ref_name:
+                            f.write(prop_name + " = " + ref_name + "\n")
+                            f.write("\n")
+                        all_options.append(prop_name)
+                    else:
+                        object_code = generateObjectTypeCode(
+                            prop_name, nested_object, "object", data, None, None
+                        )
+                        f.write(object_code)
+                        f.write("\n")
+                        all_options.append(prop_name)
+            elif "type" in any_of and any_of["type"] == "string":
+                enum_code = generateEnumTypeCode(
+                    any_of["enum"][0], any_of, "string", []
+                )
+                f.write(enum_code)
+                f.write("\n")
+                all_options.append(any_of["enum"][0])
 
     # Write the sum type.
     description = getAnyOfDescription(schema)
@@ -1953,6 +1994,40 @@ def getOneOfRefType(schema: dict) -> str:
     raise Exception("Cannot get oneOf ref type for schema: ", schema)
 
 
+def isNestedObjectAnyOf(schema: dict) -> bool:
+    if "anyOf" not in schema:
+        return False
+
+    is_nested_object = False
+    for any_of in schema["anyOf"]:
+        # Check if each are an object w 1 property in it.
+        if (
+            "type" in any_of
+            and any_of["type"] == "object"
+            and "properties" in any_of
+            and len(any_of["properties"]) == 1
+        ):
+            for prop_name in any_of["properties"]:
+                nested_object = any_of["properties"][prop_name]
+                if "type" in nested_object and nested_object["type"] == "object":
+                    is_nested_object = True
+                else:
+                    is_nested_object = False
+                    break
+        elif (
+            "type" in any_of
+            and any_of["type"] == "string"
+            and "enum" in any_of
+            and len(any_of["enum"]) == 1
+        ):
+            is_nested_object = True
+        else:
+            is_nested_object = False
+            break
+
+    return is_nested_object
+
+
 def isNestedObjectOneOf(schema: dict) -> bool:
     if "oneOf" not in schema:
         return False
@@ -1961,7 +2036,8 @@ def isNestedObjectOneOf(schema: dict) -> bool:
     for one_of in schema["oneOf"]:
         # Check if each are an object w 1 property in it.
         if (
-            one_of["type"] == "object"
+            "type" in one_of
+            and one_of["type"] == "object"
             and "properties" in one_of
             and len(one_of["properties"]) == 1
         ):
@@ -1973,7 +2049,10 @@ def isNestedObjectOneOf(schema: dict) -> bool:
                     is_nested_object = False
                     break
         elif (
-            one_of["type"] == "string" and "enum" in one_of and len(one_of["enum"]) == 1
+            "type" in one_of
+            and one_of["type"] == "string"
+            and "enum" in one_of
+            and len(one_of["enum"]) == 1
         ):
             is_nested_object = True
         else:
