@@ -1,4 +1,4 @@
-from typing import List, Literal, Optional, Union
+from typing import Dict, List, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
@@ -75,6 +75,16 @@ class metrics_response(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class headers(BaseModel):
+    """Authentication header request."""
+
+    headers: Dict[str, str]
+
+    type: Literal["headers"] = "headers"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 WebSocketRequest = RootModel[
     Annotated[
         Union[
@@ -84,6 +94,7 @@ WebSocketRequest = RootModel[
             modeling_cmd_batch_req,
             ping,
             metrics_response,
+            headers,
         ],
         Field(discriminator="type"),
     ]
