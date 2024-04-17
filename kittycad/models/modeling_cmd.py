@@ -481,6 +481,16 @@ class update_annotation(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class edge_lines_visible(BaseModel):
+    """Changes visibility of scene-wide edge lines on brep solids"""
+
+    hidden: bool
+
+    type: Literal["edge_lines_visible"] = "edge_lines_visible"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class object_visible(BaseModel):
     """Hide or show an object"""
 
@@ -1229,6 +1239,7 @@ ModelingCmd = RootModel[
             highlight_set_entities,
             new_annotation,
             update_annotation,
+            edge_lines_visible,
             object_visible,
             object_bring_to_front,
             object_set_material_params_pbr,
