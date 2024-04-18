@@ -2,6 +2,7 @@ import datetime
 
 from pydantic import BaseModel, ConfigDict
 
+from ..models.uuid import Uuid
 
 
 class Session(BaseModel):
@@ -9,12 +10,14 @@ class Session(BaseModel):
 
     created_at: datetime.datetime
 
-    expires_at: datetime.datetime
+    expires: datetime.datetime
 
-    token: str
+    id: Uuid
+
+    session_token: Uuid
 
     updated_at: datetime.datetime
 
-    user_id: str
+    user_id: Uuid
 
     model_config = ConfigDict(protected_namespaces=())
