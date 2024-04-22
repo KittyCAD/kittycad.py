@@ -1157,6 +1157,18 @@ class default_camera_set_perspective(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class zoom_to_fit(BaseModel):
+    """Fit the view to the specified object(s)."""
+
+    object_ids: Optional[List[str]] = None
+
+    padding: float
+
+    type: Literal["zoom_to_fit"] = "zoom_to_fit"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class solid3d_get_extrusion_face_info(BaseModel):
     """Get a concise description of all of an extrusion's faces."""
 
@@ -1296,6 +1308,7 @@ ModelingCmd = RootModel[
             set_selection_filter,
             default_camera_set_orthographic,
             default_camera_set_perspective,
+            zoom_to_fit,
             solid3d_get_extrusion_face_info,
             edit_mode_exit,
             select_clear,
