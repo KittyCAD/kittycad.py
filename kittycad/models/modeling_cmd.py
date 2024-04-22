@@ -373,6 +373,20 @@ class entity_make_helix(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class entity_mirror(BaseModel):
+    """Mirror the input entities over the specified axis. (Currently only supports sketches)"""
+
+    axis: Point3d
+
+    ids: List[str]
+
+    point: Point3d
+
+    type: Literal["entity_mirror"] = "entity_mirror"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class edit_mode_enter(BaseModel):
     """Enter edit mode"""
 
@@ -1241,6 +1255,7 @@ ModelingCmd = RootModel[
             entity_linear_pattern,
             entity_circular_pattern,
             entity_make_helix,
+            entity_mirror,
             edit_mode_enter,
             select_with_point,
             select_add,
