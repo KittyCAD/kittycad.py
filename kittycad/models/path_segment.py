@@ -22,7 +22,7 @@ class line(BaseModel):
 
 
 class arc(BaseModel):
-    """A circular arc segment."""
+    """A circular arc segment. Arcs can be drawn clockwise when start > end."""
 
     center: Point2d
 
@@ -68,7 +68,7 @@ class tangential_arc(BaseModel):
 
 
 class tangential_arc_to(BaseModel):
-    """Adds a tangent arc from current pen position to the new position."""
+    """Adds a tangent arc from current pen position to the new position. Arcs will choose a clockwise or counter-clockwise direction based on the arc end position."""
 
     angle_snap_increment: Optional[Angle] = None
 
