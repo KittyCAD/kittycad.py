@@ -219,38 +219,6 @@ class default_camera_zoom(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_enable_sketch_mode(BaseModel):
-    """Enable sketch mode, where users can sketch 2D geometry. Users choose a plane to sketch on."""
-
-    animated: bool
-
-    distance_to_plane: float
-
-    origin: Point3d
-
-    ortho: bool
-
-    type: Literal["default_camera_enable_sketch_mode"] = (
-        "default_camera_enable_sketch_mode"
-    )
-
-    x_axis: Point3d
-
-    y_axis: Point3d
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class default_camera_disable_sketch_mode(BaseModel):
-    """Disable sketch mode, from the default camera."""
-
-    type: Literal["default_camera_disable_sketch_mode"] = (
-        "default_camera_disable_sketch_mode"
-    )
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
 class export(BaseModel):
     """Export the scene to a file."""
 
@@ -787,22 +755,6 @@ class mouse_click(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sketch_mode_enable(BaseModel):
-    """Enable sketch mode on the given plane. If you want to sketch on a face, use `enable_sketch_mode` instead."""
-
-    animated: bool
-
-    disable_camera_with_plane: Optional[Point3d] = None
-
-    ortho: bool
-
-    plane_id: str
-
-    type: Literal["sketch_mode_enable"] = "sketch_mode_enable"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
 class sketch_mode_disable(BaseModel):
     """Disable sketch mode. If you are sketching on a face, be sure to not disable sketch mode until you have extruded. Otherwise, your object will not be fused with the face."""
 
@@ -843,6 +795,8 @@ class enable_sketch_mode(BaseModel):
     entity_id: str
 
     ortho: bool
+
+    planar_normal: Optional[Point3d] = None
 
     type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
 
@@ -1244,8 +1198,6 @@ ModelingCmd = RootModel[
             default_camera_look_at,
             default_camera_perspective_settings,
             default_camera_zoom,
-            default_camera_enable_sketch_mode,
-            default_camera_disable_sketch_mode,
             export,
             entity_get_parent_id,
             entity_get_num_children,
@@ -1289,7 +1241,6 @@ ModelingCmd = RootModel[
             set_tool,
             mouse_move,
             mouse_click,
-            sketch_mode_enable,
             sketch_mode_disable,
             get_sketch_mode_plane,
             curve_set_constraint,
