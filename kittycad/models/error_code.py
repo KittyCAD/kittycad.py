@@ -10,6 +10,10 @@ class ErrorCode(str, Enum):
     INTERNAL_API = "internal_api"
     """# User requested something geometrically or graphically impossible. Don't retry this request, as it's inherently impossible. Instead, read the error message and change your request. """  # noqa: E501
     BAD_REQUEST = "bad_request"
+    """# Auth token is missing from the request """  # noqa: E501
+    AUTH_TOKEN_MISSING = "auth_token_missing"
+    """# Auth token is invalid in some way (expired, incorrect format, etc) """  # noqa: E501
+    AUTH_TOKEN_INVALID = "auth_token_invalid"
     """# Client sent invalid JSON. """  # noqa: E501
     INVALID_JSON = "invalid_json"
     """# Client sent invalid BSON. """  # noqa: E501

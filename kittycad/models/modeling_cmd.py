@@ -641,6 +641,16 @@ class face_get_position(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class face_get_center(BaseModel):
+    """Obtains the surface \"center of mass\" """
+
+    object_id: str
+
+    type: Literal["face_get_center"] = "face_get_center"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class face_get_gradient(BaseModel):
     """Determines the gradient (dFdu, dFdv) + normal vector on a brep face evaluated by parameters u,v"""
 
@@ -1137,6 +1147,16 @@ class zoom_to_fit(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class view_isometric(BaseModel):
+    """Fit the view to the scene with an isometric view."""
+
+    padding: Optional[float] = None
+
+    type: Literal["view_isometric"] = "view_isometric"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class solid3d_get_extrusion_face_info(BaseModel):
     """Get a concise description of all of an extrusion's faces."""
 
@@ -1232,6 +1252,7 @@ ModelingCmd = RootModel[
             solid3d_fillet_edge,
             face_is_planar,
             face_get_position,
+            face_get_center,
             face_get_gradient,
             send_object,
             entity_set_opacity,
@@ -1275,6 +1296,7 @@ ModelingCmd = RootModel[
             default_camera_set_orthographic,
             default_camera_set_perspective,
             zoom_to_fit,
+            view_isometric,
             solid3d_get_extrusion_face_info,
             edit_mode_exit,
             select_clear,
