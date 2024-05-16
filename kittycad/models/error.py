@@ -1,3 +1,4 @@
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -6,7 +7,7 @@ from pydantic import BaseModel, ConfigDict
 class Error(BaseModel):
     """Error information from a response."""
 
-    error_code: str
+    error_code: Optional[str] = None
 
     message: str
 
