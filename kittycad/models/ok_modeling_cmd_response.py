@@ -22,6 +22,7 @@ from ..models.entity_get_parent_id import EntityGetParentId
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.export import Export
 from ..models.extrusion_face_info import ExtrusionFaceInfo
+from ..models.face_get_center import FaceGetCenter
 from ..models.face_get_gradient import FaceGetGradient
 from ..models.face_get_position import FaceGetPosition
 from ..models.face_is_planar import FaceIsPlanar
@@ -371,6 +372,16 @@ class face_get_position(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class face_get_center(BaseModel):
+    """The response to the 'FaceGetCenter' endpoint"""
+
+    data: FaceGetCenter
+
+    type: Literal["face_get_center"] = "face_get_center"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class face_get_gradient(BaseModel):
     """The response to the 'FaceGetGradient' endpoint"""
 
@@ -556,6 +567,7 @@ OkModelingCmdResponse = RootModel[
             curve_get_end_points,
             face_is_planar,
             face_get_position,
+            face_get_center,
             face_get_gradient,
             plane_intersect_and_project,
             import_files,
