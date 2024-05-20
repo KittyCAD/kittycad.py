@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 from ..models.point3d import Point3d
+from ..models.point4d import Point4d
 
 
 class CameraSettings(BaseModel):
@@ -11,6 +12,8 @@ class CameraSettings(BaseModel):
     center: Point3d
 
     fov_y: Optional[float] = None
+
+    orientation: Point4d
 
     ortho: bool
 

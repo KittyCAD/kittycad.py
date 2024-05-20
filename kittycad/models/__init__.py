@@ -180,6 +180,7 @@ from .plane_intersect_and_project import PlaneIntersectAndProject
 from .ply_storage import PlyStorage
 from .point2d import Point2d
 from .point3d import Point3d
+from .point4d import Point4d
 from .pong import Pong
 from .post_effect_type import PostEffectType
 from .privacy_settings import PrivacySettings
