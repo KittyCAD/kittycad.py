@@ -254,6 +254,7 @@ from .user_org_role import UserOrgRole
 from .user_results_page import UserResultsPage
 from .uuid import Uuid
 from .verification_token_response import VerificationTokenResponse
+from .view_isometric import ViewIsometric
 from .volume import Volume
 from .web_socket_request import WebSocketRequest
 from .web_socket_response import WebSocketResponse
@@ -262,3 +263,4 @@ from .zoo_product_subscriptions import ZooProductSubscriptions
 from .zoo_product_subscriptions_org_request import ZooProductSubscriptionsOrgRequest
 from .zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest
 from .zoo_tool import ZooTool
+from .zoom_to_fit import ZoomToFit
