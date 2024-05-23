@@ -49,7 +49,9 @@ from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from ..models.surface_area import SurfaceArea
 from ..models.take_snapshot import TakeSnapshot
+from ..models.view_isometric import ViewIsometric
 from ..models.volume import Volume
+from ..models.zoom_to_fit import ZoomToFit
 
 
 class empty(BaseModel):
@@ -166,6 +168,26 @@ class default_camera_zoom(BaseModel):
     data: DefaultCameraZoom
 
     type: Literal["default_camera_zoom"] = "default_camera_zoom"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class zoom_to_fit(BaseModel):
+    """The response to the 'ZoomToFit' endpoint"""
+
+    data: ZoomToFit
+
+    type: Literal["zoom_to_fit"] = "zoom_to_fit"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class view_isometric(BaseModel):
+    """The response to the 'ViewIsometric' endpoint"""
+
+    data: ViewIsometric
+
+    type: Literal["view_isometric"] = "view_isometric"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -547,6 +569,8 @@ OkModelingCmdResponse = RootModel[
             camera_drag_end,
             default_camera_get_settings,
             default_camera_zoom,
+            zoom_to_fit,
+            view_isometric,
             get_num_objects,
             default_camera_focus_on,
             select_get,
