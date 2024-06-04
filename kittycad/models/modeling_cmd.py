@@ -97,6 +97,20 @@ class revolve(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class solid3d_shell_face(BaseModel):
+    """Command for revolving a solid 2d."""
+
+    face_ids: List[str]
+
+    object_id: str
+
+    shell_thickness: LengthUnit
+
+    type: Literal["solid3d_shell_face"] = "solid3d_shell_face"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class revolve_about_edge(BaseModel):
     """Command for revolving a solid 2d about a brep edge"""
 
@@ -1209,6 +1223,7 @@ ModelingCmd = RootModel[
             extend_path,
             extrude,
             revolve,
+            solid3d_shell_face,
             revolve_about_edge,
             close_path,
             camera_drag_start,
