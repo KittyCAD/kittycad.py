@@ -57,6 +57,7 @@ from .curve_get_type import CurveGetType
 from .curve_type import CurveType
 from .customer import Customer
 from .customer_balance import CustomerBalance
+from .cut_type import CutType
 from .default_camera_focus_on import DefaultCameraFocusOn
 from .default_camera_get_settings import DefaultCameraGetSettings
 from .default_camera_zoom import DefaultCameraZoom

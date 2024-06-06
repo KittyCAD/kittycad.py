@@ -8,6 +8,7 @@ from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
 from ..models.color import Color
+from ..models.cut_type import CutType
 from ..models.distance_type import DistanceType
 from ..models.entity_type import EntityType
 from ..models.image_format import ImageFormat
@@ -619,6 +620,8 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 
 class solid3d_fillet_edge(BaseModel):
     """Fillets the given edge with the specified radius."""
+
+    cut_type: Optional[CutType] = None
 
     edge_id: str
 
