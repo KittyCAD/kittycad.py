@@ -42,6 +42,7 @@ from .camera_settings import CameraSettings
 from .card_details import CardDetails
 from .center_of_mass import CenterOfMass
 from .client_metrics import ClientMetrics
+from .close_path import ClosePath
 from .cluster import Cluster
 from .code_language import CodeLanguage
 from .code_output import CodeOutput
