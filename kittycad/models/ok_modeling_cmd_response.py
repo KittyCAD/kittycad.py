@@ -6,6 +6,7 @@ from typing_extensions import Annotated
 from ..models.camera_drag_end import CameraDragEnd
 from ..models.camera_drag_move import CameraDragMove
 from ..models.center_of_mass import CenterOfMass
+from ..models.close_path import ClosePath
 from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
@@ -128,6 +129,16 @@ class entity_get_all_child_uuids(BaseModel):
     data: EntityGetAllChildUuids
 
     type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class close_path(BaseModel):
+    """The response to the 'ClosePath' endpoint"""
+
+    data: ClosePath
+
+    type: Literal["close_path"] = "close_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -565,6 +576,7 @@ OkModelingCmdResponse = RootModel[
             entity_get_num_children,
             entity_get_parent_id,
             entity_get_all_child_uuids,
+            close_path,
             camera_drag_move,
             camera_drag_end,
             default_camera_get_settings,
