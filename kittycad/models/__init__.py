@@ -80,6 +80,7 @@ from .entity_get_distance import EntityGetDistance
 from .entity_get_num_children import EntityGetNumChildren
 from .entity_get_parent_id import EntityGetParentId
 from .entity_linear_pattern import EntityLinearPattern
+from .entity_linear_pattern_transform import EntityLinearPatternTransform
 from .entity_type import EntityType
 from .environment import Environment
 from .error import Error
@@ -134,6 +135,7 @@ from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
 from .leaf_node import LeafNode
 from .length_unit import LengthUnit
+from .linear_transform import LinearTransform
 from .mass import Mass
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
