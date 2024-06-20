@@ -15,6 +15,7 @@ from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format import InputFormat
 from ..models.length_unit import LengthUnit
+from ..models.linear_transform import LinearTransform
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.output_format import OutputFormat
 from ..models.path_component_constraint_bound import PathComponentConstraintBound
@@ -298,6 +299,18 @@ class entity_get_distance(BaseModel):
     entity_id2: str
 
     type: Literal["entity_get_distance"] = "entity_get_distance"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_linear_pattern_transform(BaseModel):
+    """Create a linear pattern using this entity."""
+
+    entity_id: str
+
+    transform: List[LinearTransform]
+
+    type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1242,6 +1255,7 @@ ModelingCmd = RootModel[
             entity_get_child_uuid,
             entity_get_all_child_uuids,
             entity_get_distance,
+            entity_linear_pattern_transform,
             entity_linear_pattern,
             entity_circular_pattern,
             entity_make_helix,

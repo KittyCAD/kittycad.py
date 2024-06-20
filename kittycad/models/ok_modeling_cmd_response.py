@@ -21,6 +21,7 @@ from ..models.entity_get_distance import EntityGetDistance
 from ..models.entity_get_num_children import EntityGetNumChildren
 from ..models.entity_get_parent_id import EntityGetParentId
 from ..models.entity_linear_pattern import EntityLinearPattern
+from ..models.entity_linear_pattern_transform import EntityLinearPatternTransform
 from ..models.export import Export
 from ..models.extrusion_face_info import ExtrusionFaceInfo
 from ..models.face_get_center import FaceGetCenter
@@ -525,6 +526,16 @@ class entity_get_distance(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class entity_linear_pattern_transform(BaseModel):
+    """The response to the 'EntityLinearPatternTransform' endpoint"""
+
+    data: EntityLinearPatternTransform
+
+    type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class entity_linear_pattern(BaseModel):
     """The response to the 'EntityLinearPattern' endpoint"""
 
@@ -615,6 +626,7 @@ OkModelingCmdResponse = RootModel[
             center_of_mass,
             get_sketch_mode_plane,
             entity_get_distance,
+            entity_linear_pattern_transform,
             entity_linear_pattern,
             entity_circular_pattern,
             solid3d_get_extrusion_face_info,
