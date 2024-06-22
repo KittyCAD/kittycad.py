@@ -206,7 +206,7 @@ class default_camera_perspective_settings(BaseModel):
 
     center: Point3d
 
-    fov_y: float
+    fov_y: Optional[float] = None
 
     sequence: Optional[int] = None
 
@@ -218,9 +218,9 @@ class default_camera_perspective_settings(BaseModel):
 
     vantage: Point3d
 
-    z_far: float
+    z_far: Optional[float] = None
 
-    z_near: float
+    z_near: Optional[float] = None
 
     model_config = ConfigDict(protected_namespaces=())
 
