@@ -20,7 +20,7 @@ poetry run python generate/generate.py
 
 # Format and lint.
 poetry run isort .
-poetry run black . generate/generate.py docs/conf.py kittycad/client_test.py kittycad/examples_test.py
+poetry run black . generate/generate.py docs/conf.py kittycad/client_test.py kittycad/examples_test.py kittycad/models/*.py kittycad/api/*.py kittycad/api/*/*.py
 poetry run ruff check --fix .
 poetry run mypy . || true
 
