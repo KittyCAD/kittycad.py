@@ -14,6 +14,7 @@ from ...models.web_socket_response import WebSocketResponse
 def _get_kwargs(
     fps: int,
     post_effect: PostEffectType,
+    show_grid: bool,
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
@@ -44,6 +45,13 @@ def _get_kwargs(
             url = url + "&post_effect=" + str(post_effect)
         else:
             url = url + "?post_effect=" + str(post_effect)
+
+    if show_grid is not None:
+
+        if "?" in url:
+            url = url + "&show_grid=" + str(show_grid).lower()
+        else:
+            url = url + "?show_grid=" + str(show_grid).lower()
 
     if unlocked_framerate is not None:
 
@@ -87,6 +95,7 @@ def _get_kwargs(
 def sync(
     fps: int,
     post_effect: PostEffectType,
+    show_grid: bool,
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
@@ -101,6 +110,7 @@ def sync(
         fps=fps,
         pool=pool,
         post_effect=post_effect,
+        show_grid=show_grid,
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
         video_res_width=video_res_width,
@@ -114,6 +124,7 @@ def sync(
 async def asyncio(
     fps: int,
     post_effect: PostEffectType,
+    show_grid: bool,
     unlocked_framerate: bool,
     video_res_height: int,
     video_res_width: int,
@@ -128,6 +139,7 @@ async def asyncio(
         fps=fps,
         pool=pool,
         post_effect=post_effect,
+        show_grid=show_grid,
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
         video_res_width=video_res_width,
@@ -152,6 +164,7 @@ class WebSocket:
         self,
         fps: int,
         post_effect: PostEffectType,
+        show_grid: bool,
         unlocked_framerate: bool,
         video_res_height: int,
         video_res_width: int,
@@ -162,6 +175,7 @@ class WebSocket:
         self.ws = sync(
             fps,
             post_effect,
+            show_grid,
             unlocked_framerate,
             video_res_height,
             video_res_width,

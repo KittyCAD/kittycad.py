@@ -357,6 +357,7 @@ def test_ws_simple():
     with modeling_commands_ws.WebSocket(
         client=client,
         fps=30,
+        show_grid=False,
         post_effect=PostEffectType.NOEFFECT,
         unlocked_framerate=False,
         video_res_height=360,
@@ -386,6 +387,7 @@ def test_ws_import():
         client=client,
         fps=30,
         post_effect=PostEffectType.NOEFFECT,
+        show_grid=False,
         unlocked_framerate=False,
         video_res_height=360,
         video_res_width=480,
