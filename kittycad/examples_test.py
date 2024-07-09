@@ -993,7 +993,7 @@ def test_get_async_operation():
         ]
     ] = get_async_operation.sync(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -1027,7 +1027,7 @@ def test_get_async_operation():
         ]
     ] = get_async_operation.sync_detailed(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
 
@@ -1051,7 +1051,7 @@ async def test_get_async_operation_async():
         ]
     ] = await get_async_operation.asyncio(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
     # OR run async with more info
@@ -1070,7 +1070,7 @@ async def test_get_async_operation_async():
         ]
     ] = await get_async_operation.asyncio_detailed(
         client=client,
-        id="<string>",
+        id="<uuid>",
     )
 
 
