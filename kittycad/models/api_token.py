@@ -3,6 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from ..models.string_uuid import StringUuid
 from ..models.uuid import Uuid
 
 
@@ -19,7 +20,7 @@ class ApiToken(BaseModel):
 
     label: Optional[str] = None
 
-    token: Uuid
+    token: StringUuid
 
     updated_at: datetime.datetime
 
