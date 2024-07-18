@@ -202,6 +202,7 @@ from .selection import Selection
 from .service_account import ServiceAccount
 from .service_account_results_page import ServiceAccountResultsPage
 from .session import Session
+from .session_token_type import SessionTokenType
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from .solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
 from .solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
