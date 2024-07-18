@@ -169,6 +169,7 @@ from .output_format import OutputFormat
 from .path_command import PathCommand
 from .path_component_constraint_bound import PathComponentConstraintBound
 from .path_component_constraint_type import PathComponentConstraintType
+from .path_get_curve_uuid import PathGetCurveUuid
 from .path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from .path_get_info import PathGetInfo
 from .path_get_vertex_uuids import PathGetVertexUuids
@@ -202,7 +203,7 @@ from .selection import Selection
 from .service_account import ServiceAccount
 from .service_account_results_page import ServiceAccountResultsPage
 from .session import Session
-from .session_token_type import SessionTokenType
+from .session_token_uuid import SessionTokenUuid
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from .solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
 from .solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
@@ -211,6 +212,7 @@ from .solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from .solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from .stl_storage import StlStorage
 from .store_coupon_params import StoreCouponParams
+from .string_uuid import StringUuid
 from .subscription_tier_feature import SubscriptionTierFeature
 from .subscription_tier_price import SubscriptionTierPrice
 from .subscription_tier_type import SubscriptionTierType
