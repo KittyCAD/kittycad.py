@@ -2,6 +2,7 @@ import datetime
 
 from pydantic import BaseModel, ConfigDict
 
+from ..models.session_token_type import SessionTokenType
 from ..models.uuid import Uuid
 
 
@@ -14,7 +15,7 @@ class Session(BaseModel):
 
     id: Uuid
 
-    session_token: Uuid
+    session_token: SessionTokenType
 
     updated_at: datetime.datetime
 
