@@ -36,6 +36,7 @@ from ..models.import_files import ImportFiles
 from ..models.imported_geometry import ImportedGeometry
 from ..models.mass import Mass
 from ..models.mouse_click import MouseClick
+from ..models.path_get_curve_uuid import PathGetCurveUuid
 from ..models.path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from ..models.path_get_info import PathGetInfo
 from ..models.path_get_vertex_uuids import PathGetVertexUuids
@@ -366,6 +367,16 @@ class path_get_curve_uuids_for_vertices(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class path_get_curve_uuid(BaseModel):
+    """The response to the 'PathGetCurveUuid' endpoint"""
+
+    data: PathGetCurveUuid
+
+    type: Literal["path_get_curve_uuid"] = "path_get_curve_uuid"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class path_get_vertex_uuids(BaseModel):
     """The response to the 'PathGetVertexUuids' endpoint"""
 
@@ -610,6 +621,7 @@ OkModelingCmdResponse = RootModel[
             path_get_info,
             path_segment_info,
             path_get_curve_uuids_for_vertices,
+            path_get_curve_uuid,
             path_get_vertex_uuids,
             curve_get_end_points,
             face_is_planar,

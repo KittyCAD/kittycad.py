@@ -4,8 +4,8 @@ from pydantic import GetCoreSchemaHandler
 from pydantic_core import CoreSchema, core_schema
 
 
-class SessionTokenType(str):
-    """An auth token. A uuid with a prefix of ses-"""
+class StringUuid(str):
+    """An auth token. A UUIDv4"""
 
     def __str__(self) -> str:
         return self

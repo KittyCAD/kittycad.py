@@ -304,7 +304,7 @@ class entity_get_distance(BaseModel):
 
 
 class entity_linear_pattern_transform(BaseModel):
-    """Create a linear pattern using this entity."""
+    """Create a pattern using this entity by specifying the transform for each desired repetition."""
 
     entity_id: str
 
@@ -379,6 +379,18 @@ class entity_mirror(BaseModel):
     point: Point3d
 
     type: Literal["entity_mirror"] = "entity_mirror"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_mirror_across_edge(BaseModel):
+    """Mirror the input entities over the specified edge. (Currently only supports sketches)"""
+
+    edge_id: str
+
+    ids: List[str]
+
+    type: Literal["entity_mirror_across_edge"] = "entity_mirror_across_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -939,6 +951,18 @@ class path_get_curve_uuids_for_vertices(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class path_get_curve_uuid(BaseModel):
+    """Obtain curve id by index"""
+
+    index: int
+
+    path_id: str
+
+    type: Literal["path_get_curve_uuid"] = "path_get_curve_uuid"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class path_get_vertex_uuids(BaseModel):
     """Obtain vertex ids for a path"""
 
@@ -1260,6 +1284,7 @@ ModelingCmd = RootModel[
             entity_circular_pattern,
             entity_make_helix,
             entity_mirror,
+            entity_mirror_across_edge,
             edit_mode_enter,
             select_with_point,
             select_add,
@@ -1307,6 +1332,7 @@ ModelingCmd = RootModel[
             make_axes_gizmo,
             path_get_info,
             path_get_curve_uuids_for_vertices,
+            path_get_curve_uuid,
             path_get_vertex_uuids,
             handle_mouse_drag_start,
             handle_mouse_drag_move,
