@@ -20,6 +20,7 @@ from ..models.entity_get_child_uuid import EntityGetChildUuid
 from ..models.entity_get_distance import EntityGetDistance
 from ..models.entity_get_num_children import EntityGetNumChildren
 from ..models.entity_get_parent_id import EntityGetParentId
+from ..models.entity_get_sketch_paths import EntityGetSketchPaths
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.entity_linear_pattern_transform import EntityLinearPatternTransform
 from ..models.export import Export
@@ -39,6 +40,7 @@ from ..models.mouse_click import MouseClick
 from ..models.path_get_curve_uuid import PathGetCurveUuid
 from ..models.path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from ..models.path_get_info import PathGetInfo
+from ..models.path_get_sketch_target_uuid import PathGetSketchTargetUuid
 from ..models.path_get_vertex_uuids import PathGetVertexUuids
 from ..models.path_segment_info import PathSegmentInfo
 from ..models.plane_intersect_and_project import PlaneIntersectAndProject
@@ -131,6 +133,16 @@ class entity_get_all_child_uuids(BaseModel):
     data: EntityGetAllChildUuids
 
     type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class entity_get_sketch_paths(BaseModel):
+    """The response to the 'EntityGetSketchPaths' endpoint"""
+
+    data: EntityGetSketchPaths
+
+    type: Literal["entity_get_sketch_paths"] = "entity_get_sketch_paths"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -387,6 +399,16 @@ class path_get_vertex_uuids(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class path_get_sketch_target_uuid(BaseModel):
+    """The response to the 'PathGetSketchTargetUuid' endpoint"""
+
+    data: PathGetSketchTargetUuid
+
+    type: Literal["path_get_sketch_target_uuid"] = "path_get_sketch_target_uuid"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class curve_get_end_points(BaseModel):
     """The response to the 'CurveGetEndPoints' endpoint"""
 
@@ -598,6 +620,7 @@ OkModelingCmdResponse = RootModel[
             entity_get_num_children,
             entity_get_parent_id,
             entity_get_all_child_uuids,
+            entity_get_sketch_paths,
             close_path,
             camera_drag_move,
             camera_drag_end,
@@ -623,6 +646,7 @@ OkModelingCmdResponse = RootModel[
             path_get_curve_uuids_for_vertices,
             path_get_curve_uuid,
             path_get_vertex_uuids,
+            path_get_sketch_target_uuid,
             curve_get_end_points,
             face_is_planar,
             face_get_position,
