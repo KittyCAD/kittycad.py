@@ -79,6 +79,7 @@ from .entity_get_child_uuid import EntityGetChildUuid
 from .entity_get_distance import EntityGetDistance
 from .entity_get_num_children import EntityGetNumChildren
 from .entity_get_parent_id import EntityGetParentId
+from .entity_get_sketch_paths import EntityGetSketchPaths
 from .entity_linear_pattern import EntityLinearPattern
 from .entity_linear_pattern_transform import EntityLinearPatternTransform
 from .entity_type import EntityType
@@ -172,6 +173,7 @@ from .path_component_constraint_type import PathComponentConstraintType
 from .path_get_curve_uuid import PathGetCurveUuid
 from .path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from .path_get_info import PathGetInfo
+from .path_get_sketch_target_uuid import PathGetSketchTargetUuid
 from .path_get_vertex_uuids import PathGetVertexUuids
 from .path_segment import PathSegment
 from .path_segment_info import PathSegmentInfo
