@@ -289,6 +289,16 @@ class entity_get_all_child_uuids(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class entity_get_sketch_paths(BaseModel):
+    """What are all UUIDs of all the paths sketched on top of this entity?"""
+
+    entity_id: str
+
+    type: Literal["entity_get_sketch_paths"] = "entity_get_sketch_paths"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class entity_get_distance(BaseModel):
     """What is the distance between these two entities?"""
 
@@ -973,6 +983,16 @@ class path_get_vertex_uuids(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class path_get_sketch_target_uuid(BaseModel):
+    """Obtain the sketch target id (if the path was drawn in sketchmode) for a path"""
+
+    path_id: str
+
+    type: Literal["path_get_sketch_target_uuid"] = "path_get_sketch_target_uuid"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class handle_mouse_drag_start(BaseModel):
     """Start dragging the mouse."""
 
@@ -1278,6 +1298,7 @@ ModelingCmd = RootModel[
             entity_get_num_children,
             entity_get_child_uuid,
             entity_get_all_child_uuids,
+            entity_get_sketch_paths,
             entity_get_distance,
             entity_linear_pattern_transform,
             entity_linear_pattern,
@@ -1334,6 +1355,7 @@ ModelingCmd = RootModel[
             path_get_curve_uuids_for_vertices,
             path_get_curve_uuid,
             path_get_vertex_uuids,
+            path_get_sketch_target_uuid,
             handle_mouse_drag_start,
             handle_mouse_drag_move,
             handle_mouse_drag_end,
