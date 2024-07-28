@@ -1,14 +1,16 @@
 import json
-from typing import Any, Dict, Iterator, Optional
+from typing import Any, Dict, Iterator, List, Optional, Union
 
 import bson
 from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
 from websockets.sync.client import ClientConnection, connect as ws_connect
 
 from ...client import Client
+from ...models.error import Error
 from ...models.post_effect_type import PostEffectType
 from ...models.web_socket_request import WebSocketRequest
 from ...models.web_socket_response import WebSocketResponse
+from ...types import Response
 
 
 def _get_kwargs(
