@@ -1,9 +1,6 @@
-import datetime
-from typing import Any, Dict, List, Literal, Optional, Type, TypeVar, Union
-from uuid import UUID
+from typing import Literal, Union
 
-from pydantic import AnyUrl, Base64Bytes, BaseModel, ConfigDict, Field, RootModel
-from pydantic_extra_types.phone_numbers import PhoneNumber
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.camera_drag_end import CameraDragEnd
@@ -60,7 +57,6 @@ from ..models.take_snapshot import TakeSnapshot
 from ..models.view_isometric import ViewIsometric
 from ..models.volume import Volume
 from ..models.zoom_to_fit import ZoomToFit
-from .base64data import Base64Data
 
 
 class empty(BaseModel):
