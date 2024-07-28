@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.api_tokens.create_api_token_for_user &mdash; kittycad v0.5.9 documentation</title>
+  <title>kittycad.api.api_tokens.create_api_token_for_user &mdash; kittycad v0.6.17 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -15,9 +15,9 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=19ad864f"></script>
-        <script src="../../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../../_static/documentation_options.js?v=a60b730d"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.5.9
+                v0.6.17
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -89,13 +89,23 @@
 <span class="kn">from</span> <span class="nn">...types</span> <span class="kn">import</span> <span class="n">Response</span>
 
 
-<div class="viewcode-block" id="_get_kwargs"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.html#kittycad.api.api_tokens.create_api_token_for_user._get_kwargs">[docs]</a><span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
+<div class="viewcode-block" id="_get_kwargs">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.html#kittycad.api.api_tokens.create_api_token_for_user._get_kwargs">[docs]</a>
+<span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/user/api-tokens&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
     <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;label=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?label=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
 
     <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_headers</span><span class="p">()</span>
     <span class="n">cookies</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_cookies</span><span class="p">()</span>
@@ -108,7 +118,10 @@
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="_parse_response"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.html#kittycad.api.api_tokens.create_api_token_for_user._parse_response">[docs]</a><span class="k">def</span> <span class="nf">_parse_response</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiToken</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
+
+<div class="viewcode-block" id="_parse_response">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.html#kittycad.api.api_tokens.create_api_token_for_user._parse_response">[docs]</a>
+<span class="k">def</span> <span class="nf">_parse_response</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiToken</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
         <span class="n">response_201</span> <span class="o">=</span> <span class="n">ApiToken</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">response_201</span>
@@ -121,7 +134,10 @@
     <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="_build_response"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.html#kittycad.api.api_tokens.create_api_token_for_user._build_response">[docs]</a><span class="k">def</span> <span class="nf">_build_response</span><span class="p">(</span>
+
+<div class="viewcode-block" id="_build_response">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.html#kittycad.api.api_tokens.create_api_token_for_user._build_response">[docs]</a>
+<span class="k">def</span> <span class="nf">_build_response</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiToken</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
@@ -132,11 +148,16 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sync_detailed"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.sync_detailed.html#kittycad.api.api_tokens.create_api_token_for_user.sync_detailed">[docs]</a><span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sync_detailed">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.sync_detailed.html#kittycad.api.api_tokens.create_api_token_for_user.sync_detailed">[docs]</a>
+<span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiToken</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -148,22 +169,32 @@
     <span class="k">return</span> <span class="n">_build_response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="sync"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.sync.html#kittycad.api.api_tokens.create_api_token_for_user.sync">[docs]</a><span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sync">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.sync.html#kittycad.api.api_tokens.create_api_token_for_user.sync">[docs]</a>
+<span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiToken</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any KittyCAD user. It creates a new API token for the authenticated user.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
     <span class="p">)</span><span class="o">.</span><span class="n">parsed</span></div>
 
 
-<div class="viewcode-block" id="asyncio_detailed"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.asyncio_detailed.html#kittycad.api.api_tokens.create_api_token_for_user.asyncio_detailed">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
+
+<div class="viewcode-block" id="asyncio_detailed">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.asyncio_detailed.html#kittycad.api.api_tokens.create_api_token_for_user.asyncio_detailed">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiToken</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
         <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -173,17 +204,23 @@
     <span class="k">return</span> <span class="n">_build_response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="asyncio"><a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.asyncio.html#kittycad.api.api_tokens.create_api_token_for_user.asyncio">[docs]</a><span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
+
+<div class="viewcode-block" id="asyncio">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.api_tokens.create_api_token_for_user.asyncio.html#kittycad.api.api_tokens.create_api_token_for_user.asyncio">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiToken</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any KittyCAD user. It creates a new API token for the authenticated user.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>
         <span class="k">await</span> <span class="n">asyncio_detailed</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
             <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="p">)</span><span class="o">.</span><span class="n">parsed</span></div>
+
 </pre></div>
 
            </div>
@@ -193,7 +230,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.point3d &mdash; kittycad v0.5.9 documentation</title>
+  <title>kittycad.models.point3d &mdash; kittycad v0.6.17 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,9 +15,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=19ad864f"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/documentation_options.js?v=a60b730d"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.5.9
+                v0.6.17
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -80,18 +80,23 @@
              
   <h1>Source code for kittycad.models.point3d</h1><div class="highlight"><pre>
 <span></span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
 
 
-<div class="viewcode-block" id="Point3d"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.point3d.Point3d.html#kittycad.models.point3d.Point3d">[docs]</a><span class="k">class</span> <span class="nc">Point3d</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="Point3d">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.point3d.Point3d.html#kittycad.models.point3d.Point3d">[docs]</a>
+<span class="k">class</span> <span class="nc">Point3d</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A point in 3D space&quot;&quot;&quot;</span>
 
     <span class="n">x</span><span class="p">:</span> <span class="nb">float</span>
 
     <span class="n">y</span><span class="p">:</span> <span class="nb">float</span>
 
-    <span class="n">z</span><span class="p">:</span> <span class="nb">float</span></div>
+    <span class="n">z</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
 </pre></div>
 
            </div>
@@ -101,7 +106,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

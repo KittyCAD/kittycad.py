@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.unit.get_torque_unit_conversion.sync &mdash; kittycad v0.5.9 documentation</title>
+  <title>kittycad.api.unit.get_torque_unit_conversion.sync &mdash; kittycad v0.6.17 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -25,9 +25,9 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=19ad864f"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/documentation_options.js?v=a60b730d"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.5.9
+                v0.6.17
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -73,7 +73,10 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.meta.html">kittycad.api.meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.modeling.html">kittycad.api.modeling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.oauth2.html">kittycad.api.oauth2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.orgs.html">kittycad.api.orgs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.payments.html">kittycad.api.payments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.service_accounts.html">kittycad.api.service_accounts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.store.html">kittycad.api.store</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="kittycad.api.unit.html">kittycad.api.unit</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.unit.get_angle_unit_conversion.html">kittycad.api.unit.get_angle_unit_conversion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.unit.get_area_unit_conversion.html">kittycad.api.unit.get_area_unit_conversion</a></li>
@@ -138,14 +141,14 @@
            <div itemprop="articleBody">
              
   <section id="kittycad-api-unit-get-torque-unit-conversion-sync">
-<h1>kittycad.api.unit.get_torque_unit_conversion.sync<a class="headerlink" href="#kittycad-api-unit-get-torque-unit-conversion-sync" title="Permalink to this heading"></a></h1>
+<h1>kittycad.api.unit.get_torque_unit_conversion.sync<a class="headerlink" href="#kittycad-api-unit-get-torque-unit-conversion-sync" title="Link to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.unit.get_torque_unit_conversion.sync">
-<span class="sig-prename descclassname"><span class="pre">kittycad.api.unit.get_torque_unit_conversion.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/unit/get_torque_unit_conversion.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/unit/get_torque_unit_conversion.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.unit.get_torque_unit_conversion.sync" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">kittycad.api.unit.get_torque_unit_conversion.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/unit/get_torque_unit_conversion.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/unit/get_torque_unit_conversion.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.unit.get_torque_unit_conversion.sync" title="Link to this definition"></a></dt>
 <dd><p>Convert a torque unit value to another torque unit value. This is a nice endpoint to use for helper functions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="kittycad.models.unit_torque_conversion.UnitTorqueConversion.html#kittycad.models.unit_torque_conversion.UnitTorqueConversion" title="kittycad.models.unit_torque_conversion.UnitTorqueConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnitTorqueConversion</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="kittycad.models.unit_torque_conversion.UnitTorqueConversion.html#kittycad.models.unit_torque_conversion.UnitTorqueConversion" title="kittycad.models.unit_torque_conversion.UnitTorqueConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnitTorqueConversion</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -163,7 +166,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

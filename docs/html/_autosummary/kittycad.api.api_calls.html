@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.api_calls &mdash; kittycad v0.5.9 documentation</title>
+  <title>kittycad.api.api_calls &mdash; kittycad v0.6.17 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -27,9 +27,9 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=19ad864f"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/documentation_options.js?v=a60b730d"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
@@ -51,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.5.9
+                v0.6.17
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -66,12 +66,14 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.ai.html">kittycad.api.ai</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.api.api_calls</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.get_api_call.html">kittycad.api.api_calls.get_api_call</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.get_api_call_for_org.html">kittycad.api.api_calls.get_api_call_for_org</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.get_api_call_for_user.html">kittycad.api.api_calls.get_api_call_for_user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.get_api_call_metrics.html">kittycad.api.api_calls.get_api_call_metrics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.get_async_operation.html">kittycad.api.api_calls.get_async_operation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.list_api_calls.html">kittycad.api.api_calls.list_api_calls</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.list_api_calls_for_user.html">kittycad.api.api_calls.list_api_calls_for_user</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.list_async_operations.html">kittycad.api.api_calls.list_async_operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.org_list_api_calls.html">kittycad.api.api_calls.org_list_api_calls</a></li>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.api.api_calls.user_list_api_calls.html">kittycad.api.api_calls.user_list_api_calls</a></li>
 </ul>
 </li>
@@ -85,7 +87,10 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.meta.html">kittycad.api.meta</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.modeling.html">kittycad.api.modeling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.oauth2.html">kittycad.api.oauth2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.orgs.html">kittycad.api.orgs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.payments.html">kittycad.api.payments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.service_accounts.html">kittycad.api.service_accounts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.store.html">kittycad.api.store</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.unit.html">kittycad.api.unit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.users.html">kittycad.api.users</a></li>
 </ul>
@@ -120,7 +125,7 @@
            <div itemprop="articleBody">
              
   <section id="module-kittycad.api.api_calls">
-<span id="kittycad-api-api-calls"></span><h1>kittycad.api.api_calls<a class="headerlink" href="#module-kittycad.api.api_calls" title="Permalink to this heading"></a></h1>
+<span id="kittycad-api-api-calls"></span><h1>kittycad.api.api_calls<a class="headerlink" href="#module-kittycad.api.api_calls" title="Link to this heading"></a></h1>
 <p>Contains methods for accessing the api_calls API paths: API calls that have been performed by users can be queried by the API. This is helpful for debugging as well as billing.</p>
 <p class="rubric">Modules</p>
 <table class="autosummary longtable docutils align-default">
@@ -128,22 +133,28 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_api_call.html#module-kittycad.api.api_calls.get_api_call" title="kittycad.api.api_calls.get_api_call"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_api_call</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_api_call_for_user.html#module-kittycad.api.api_calls.get_api_call_for_user" title="kittycad.api.api_calls.get_api_call_for_user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_api_call_for_user</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_api_call_for_org.html#module-kittycad.api.api_calls.get_api_call_for_org" title="kittycad.api.api_calls.get_api_call_for_org"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_api_call_for_org</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_api_call_metrics.html#module-kittycad.api.api_calls.get_api_call_metrics" title="kittycad.api.api_calls.get_api_call_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_api_call_metrics</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_api_call_for_user.html#module-kittycad.api.api_calls.get_api_call_for_user" title="kittycad.api.api_calls.get_api_call_for_user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_api_call_for_user</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_async_operation.html#module-kittycad.api.api_calls.get_async_operation" title="kittycad.api.api_calls.get_async_operation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_async_operation</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_api_call_metrics.html#module-kittycad.api.api_calls.get_api_call_metrics" title="kittycad.api.api_calls.get_api_call_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_api_call_metrics</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.list_api_calls.html#module-kittycad.api.api_calls.list_api_calls" title="kittycad.api.api_calls.list_api_calls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.list_api_calls</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.get_async_operation.html#module-kittycad.api.api_calls.get_async_operation" title="kittycad.api.api_calls.get_async_operation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.get_async_operation</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.list_api_calls_for_user.html#module-kittycad.api.api_calls.list_api_calls_for_user" title="kittycad.api.api_calls.list_api_calls_for_user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.list_api_calls_for_user</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.list_api_calls.html#module-kittycad.api.api_calls.list_api_calls" title="kittycad.api.api_calls.list_api_calls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.list_api_calls</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.list_async_operations.html#module-kittycad.api.api_calls.list_async_operations" title="kittycad.api.api_calls.list_async_operations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.list_async_operations</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.list_api_calls_for_user.html#module-kittycad.api.api_calls.list_api_calls_for_user" title="kittycad.api.api_calls.list_api_calls_for_user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.list_api_calls_for_user</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.list_async_operations.html#module-kittycad.api.api_calls.list_async_operations" title="kittycad.api.api_calls.list_async_operations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.list_async_operations</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.org_list_api_calls.html#module-kittycad.api.api_calls.org_list_api_calls" title="kittycad.api.api_calls.org_list_api_calls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.org_list_api_calls</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.user_list_api_calls.html#module-kittycad.api.api_calls.user_list_api_calls" title="kittycad.api.api_calls.user_list_api_calls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls.user_list_api_calls</span></code></a></p></td>
@@ -164,7 +175,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.ok_web_socket_response_data &mdash; kittycad v0.5.9 documentation</title>
+  <title>kittycad.models.ok_web_socket_response_data &mdash; kittycad v0.6.17 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,9 +15,9 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=19ad864f"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/documentation_options.js?v=a60b730d"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.5.9
+                v0.6.17
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -79,11 +79,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.ok_web_socket_response_data</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">RootModel</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">RootModel</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
 
+<span class="kn">from</span> <span class="nn">..models.batch_response</span> <span class="kn">import</span> <span class="n">BatchResponse</span>
 <span class="kn">from</span> <span class="nn">..models.ice_server</span> <span class="kn">import</span> <span class="n">IceServer</span>
 <span class="kn">from</span> <span class="nn">..models.ok_modeling_cmd_response</span> <span class="kn">import</span> <span class="n">OkModelingCmdResponse</span>
 <span class="kn">from</span> <span class="nn">..models.raw_file</span> <span class="kn">import</span> <span class="n">RawFile</span>
@@ -91,86 +92,192 @@
 <span class="kn">from</span> <span class="nn">..models.rtc_session_description</span> <span class="kn">import</span> <span class="n">RtcSessionDescription</span>
 
 
-<div class="viewcode-block" id="IceServerInfoData"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.IceServerInfoData.html#kittycad.models.ok_web_socket_response_data.IceServerInfoData">[docs]</a><span class="k">class</span> <span class="nc">IceServerInfoData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="IceServerInfoData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.IceServerInfoData.html#kittycad.models.ok_web_socket_response_data.IceServerInfoData">[docs]</a>
+<span class="k">class</span> <span class="nc">IceServerInfoData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
 
-    <span class="n">ice_servers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">IceServer</span><span class="p">]</span></div>
+    <span class="n">ice_servers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">IceServer</span><span class="p">]</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="ice_server_info"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ice_server_info.html#kittycad.models.ok_web_socket_response_data.ice_server_info">[docs]</a><span class="k">class</span> <span class="nc">ice_server_info</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ice_server_info">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ice_server_info.html#kittycad.models.ok_web_socket_response_data.ice_server_info">[docs]</a>
+<span class="k">class</span> <span class="nc">ice_server_info</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Information about the ICE servers.&quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">IceServerInfoData</span>
 
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;ice_server_info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ice_server_info&quot;</span></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;ice_server_info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ice_server_info&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="TrickleIceData"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.TrickleIceData.html#kittycad.models.ok_web_socket_response_data.TrickleIceData">[docs]</a><span class="k">class</span> <span class="nc">TrickleIceData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TrickleIceData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.TrickleIceData.html#kittycad.models.ok_web_socket_response_data.TrickleIceData">[docs]</a>
+<span class="k">class</span> <span class="nc">TrickleIceData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
 
-    <span class="n">candidate</span><span class="p">:</span> <span class="n">RtcIceCandidateInit</span></div>
+    <span class="n">candidate</span><span class="p">:</span> <span class="n">RtcIceCandidateInit</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="trickle_ice"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.trickle_ice.html#kittycad.models.ok_web_socket_response_data.trickle_ice">[docs]</a><span class="k">class</span> <span class="nc">trickle_ice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="trickle_ice">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.trickle_ice.html#kittycad.models.ok_web_socket_response_data.trickle_ice">[docs]</a>
+<span class="k">class</span> <span class="nc">trickle_ice</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The trickle ICE candidate response.&quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">TrickleIceData</span>
 
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;trickle_ice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;trickle_ice&quot;</span></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;trickle_ice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;trickle_ice&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="SdpAnswerData"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.SdpAnswerData.html#kittycad.models.ok_web_socket_response_data.SdpAnswerData">[docs]</a><span class="k">class</span> <span class="nc">SdpAnswerData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SdpAnswerData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.SdpAnswerData.html#kittycad.models.ok_web_socket_response_data.SdpAnswerData">[docs]</a>
+<span class="k">class</span> <span class="nc">SdpAnswerData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
 
-    <span class="n">answer</span><span class="p">:</span> <span class="n">RtcSessionDescription</span></div>
+    <span class="n">answer</span><span class="p">:</span> <span class="n">RtcSessionDescription</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="sdp_answer"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.sdp_answer.html#kittycad.models.ok_web_socket_response_data.sdp_answer">[docs]</a><span class="k">class</span> <span class="nc">sdp_answer</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sdp_answer">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.sdp_answer.html#kittycad.models.ok_web_socket_response_data.sdp_answer">[docs]</a>
+<span class="k">class</span> <span class="nc">sdp_answer</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The SDP answer response.&quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">SdpAnswerData</span>
 
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;sdp_answer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sdp_answer&quot;</span></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;sdp_answer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sdp_answer&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="ModelingData"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ModelingData.html#kittycad.models.ok_web_socket_response_data.ModelingData">[docs]</a><span class="k">class</span> <span class="nc">ModelingData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ModelingData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ModelingData.html#kittycad.models.ok_web_socket_response_data.ModelingData">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelingData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
 
-    <span class="n">modeling_response</span><span class="p">:</span> <span class="n">OkModelingCmdResponse</span></div>
+    <span class="n">modeling_response</span><span class="p">:</span> <span class="n">OkModelingCmdResponse</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="modeling"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.modeling.html#kittycad.models.ok_web_socket_response_data.modeling">[docs]</a><span class="k">class</span> <span class="nc">modeling</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="modeling">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.modeling.html#kittycad.models.ok_web_socket_response_data.modeling">[docs]</a>
+<span class="k">class</span> <span class="nc">modeling</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The modeling command response.&quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">ModelingData</span>
 
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;modeling&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;modeling&quot;</span></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;modeling&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;modeling&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="ExportData"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ExportData.html#kittycad.models.ok_web_socket_response_data.ExportData">[docs]</a><span class="k">class</span> <span class="nc">ExportData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ModelingBatchData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ModelingBatchData.html#kittycad.models.ok_web_socket_response_data.ModelingBatchData">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelingBatchData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
 
-    <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RawFile</span><span class="p">]</span></div>
+    <span class="n">responses</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BatchResponse</span><span class="p">]</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="export"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.export.html#kittycad.models.ok_web_socket_response_data.export">[docs]</a><span class="k">class</span> <span class="nc">export</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="modeling_batch">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.modeling_batch.html#kittycad.models.ok_web_socket_response_data.modeling_batch">[docs]</a>
+<span class="k">class</span> <span class="nc">modeling_batch</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Response to a ModelingBatch.&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ModelingBatchData</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;modeling_batch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;modeling_batch&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="ExportData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ExportData.html#kittycad.models.ok_web_socket_response_data.ExportData">[docs]</a>
+<span class="k">class</span> <span class="nc">ExportData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RawFile</span><span class="p">]</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="export">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.export.html#kittycad.models.ok_web_socket_response_data.export">[docs]</a>
+<span class="k">class</span> <span class="nc">export</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The exported files.&quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">ExportData</span>
 
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;export&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;export&quot;</span></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;export&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;export&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="MetricsRequestData"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.MetricsRequestData.html#kittycad.models.ok_web_socket_response_data.MetricsRequestData">[docs]</a><span class="k">class</span> <span class="nc">MetricsRequestData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="MetricsRequestData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.MetricsRequestData.html#kittycad.models.ok_web_socket_response_data.MetricsRequestData">[docs]</a>
+<span class="k">class</span> <span class="nc">MetricsRequestData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="metrics_request"><a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.metrics_request.html#kittycad.models.ok_web_socket_response_data.metrics_request">[docs]</a><span class="k">class</span> <span class="nc">metrics_request</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+<div class="viewcode-block" id="metrics_request">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.metrics_request.html#kittycad.models.ok_web_socket_response_data.metrics_request">[docs]</a>
+<span class="k">class</span> <span class="nc">metrics_request</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Request a collection of metrics, to include WebRTC.&quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">MetricsRequestData</span>
 
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;metrics_request&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;metrics_request&quot;</span></div>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;metrics_request&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;metrics_request&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="PongData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.PongData.html#kittycad.models.ok_web_socket_response_data.PongData">[docs]</a>
+<span class="k">class</span> <span class="nc">PongData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="pong">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.pong.html#kittycad.models.ok_web_socket_response_data.pong">[docs]</a>
+<span class="k">class</span> <span class="nc">pong</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pong response to a Ping message.&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">PongData</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;pong&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;pong&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
 
 
 <span class="n">OkWebSocketResponseData</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
@@ -180,8 +287,10 @@
             <span class="n">trickle_ice</span><span class="p">,</span>
             <span class="n">sdp_answer</span><span class="p">,</span>
             <span class="n">modeling</span><span class="p">,</span>
+            <span class="n">modeling_batch</span><span class="p">,</span>
             <span class="n">export</span><span class="p">,</span>
             <span class="n">metrics_request</span><span class="p">,</span>
+            <span class="n">pong</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>
@@ -195,7 +304,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

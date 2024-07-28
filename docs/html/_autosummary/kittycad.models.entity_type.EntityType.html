@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.entity_type.EntityType &mdash; kittycad v0.5.9 documentation</title>
+  <title>kittycad.models.entity_type.EntityType &mdash; kittycad v0.6.17 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -25,9 +25,9 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=19ad864f"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/documentation_options.js?v=a60b730d"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.5.9
+                v0.6.17
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -64,13 +64,9 @@
 <li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="kittycad.models.html">kittycad.models</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.account_provider.html">kittycad.models.account_provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.add_org_member.html">kittycad.models.add_org_member</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.address_details.html">kittycad.models.address_details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_feedback.html">kittycad.models.ai_feedback</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api.html">kittycad.models.ai_plugin_api</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_api_type.html">kittycad.models.ai_plugin_api_type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth.html">kittycad.models.ai_plugin_auth</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_auth_type.html">kittycad.models.ai_plugin_auth_type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_http_auth_type.html">kittycad.models.ai_plugin_http_auth_type</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_plugin_manifest.html">kittycad.models.ai_plugin_manifest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_prompt.html">kittycad.models.ai_prompt</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_prompt_results_page.html">kittycad.models.ai_prompt_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ai_prompt_type.html">kittycad.models.ai_prompt_type</a></li>
@@ -95,15 +91,22 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_output.html">kittycad.models.async_api_call_output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_results_page.html">kittycad.models.async_api_call_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.async_api_call_type.html">kittycad.models.async_api_call_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.auth_callback.html">kittycad.models.auth_callback</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.axis.html">kittycad.models.axis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.axis_direction_pair.html">kittycad.models.axis_direction_pair</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.base64data.html">kittycad.models.base64data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.batch_response.html">kittycad.models.batch_response</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.billing_info.html">kittycad.models.billing_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.block_reason.html">kittycad.models.block_reason</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cache_metadata.html">kittycad.models.cache_metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.camera_drag_end.html">kittycad.models.camera_drag_end</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.camera_drag_interaction_type.html">kittycad.models.camera_drag_interaction_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.camera_drag_move.html">kittycad.models.camera_drag_move</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.camera_settings.html">kittycad.models.camera_settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.card_details.html">kittycad.models.card_details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.center_of_mass.html">kittycad.models.center_of_mass</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.client_metrics.html">kittycad.models.client_metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.close_path.html">kittycad.models.close_path</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.cluster.html">kittycad.models.cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_language.html">kittycad.models.code_language</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.code_output.html">kittycad.models.code_output</a></li>
@@ -119,18 +122,30 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.curve_type.html">kittycad.models.curve_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer.html">kittycad.models.customer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.customer_balance.html">kittycad.models.customer_balance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.cut_type.html">kittycad.models.cut_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.default_camera_focus_on.html">kittycad.models.default_camera_focus_on</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.default_camera_get_settings.html">kittycad.models.default_camera_get_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.default_camera_zoom.html">kittycad.models.default_camera_zoom</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.density.html">kittycad.models.density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.der_encoded_key_pair.html">kittycad.models.der_encoded_key_pair</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_access_token_request_form.html">kittycad.models.device_access_token_request_form</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_request_form.html">kittycad.models.device_auth_request_form</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.device_auth_verify_params.html">kittycad.models.device_auth_verify_params</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.direction.html">kittycad.models.direction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.discount.html">kittycad.models.discount</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.discount_code.html">kittycad.models.discount_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.distance_type.html">kittycad.models.distance_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.email_authentication_form.html">kittycad.models.email_authentication_form</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.empty.html">kittycad.models.empty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_circular_pattern.html">kittycad.models.entity_circular_pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_all_child_uuids.html">kittycad.models.entity_get_all_child_uuids</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_child_uuid.html">kittycad.models.entity_get_child_uuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_distance.html">kittycad.models.entity_get_distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_num_children.html">kittycad.models.entity_get_num_children</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_parent_id.html">kittycad.models.entity_get_parent_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_get_sketch_paths.html">kittycad.models.entity_get_sketch_paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_linear_pattern.html">kittycad.models.entity_linear_pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_linear_pattern_transform.html">kittycad.models.entity_linear_pattern_transform</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="kittycad.models.entity_type.html">kittycad.models.entity_type</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">kittycad.models.entity_type.EntityType</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.entity_type.EntityType"><code class="docutils literal notranslate"><span class="pre">EntityType</span></code></a></li>
@@ -142,10 +157,17 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.environment.html">kittycad.models.environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.error.html">kittycad.models.error</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.error_code.html">kittycad.models.error_code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.event.html">kittycad.models.event</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.export.html">kittycad.models.export</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.export_file.html">kittycad.models.export_file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user.html">kittycad.models.extended_user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user_results_page.html">kittycad.models.extended_user_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extrusion_face_cap_type.html">kittycad.models.extrusion_face_cap_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extrusion_face_info.html">kittycad.models.extrusion_face_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.face_get_center.html">kittycad.models.face_get_center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.face_get_gradient.html">kittycad.models.face_get_gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.face_get_position.html">kittycad.models.face_get_position</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.face_is_planar.html">kittycad.models.face_is_planar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.failure_web_socket_response.html">kittycad.models.failure_web_socket_response</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.fbx_storage.html">kittycad.models.fbx_storage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_center_of_mass.html">kittycad.models.file_center_of_mass</a></li>
@@ -159,44 +181,66 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.file_volume.html">kittycad.models.file_volume</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.gateway.html">kittycad.models.gateway</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.get_entity_type.html">kittycad.models.get_entity_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.get_num_objects.html">kittycad.models.get_num_objects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.get_sketch_mode_plane.html">kittycad.models.get_sketch_mode_plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.global_axis.html">kittycad.models.global_axis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.gltf_presentation.html">kittycad.models.gltf_presentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.gltf_storage.html">kittycad.models.gltf_storage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.highlight_set_entity.html">kittycad.models.highlight_set_entity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ice_server.html">kittycad.models.ice_server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.idp_metadata_source.html">kittycad.models.idp_metadata_source</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.image_format.html">kittycad.models.image_format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.import_file.html">kittycad.models.import_file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.import_files.html">kittycad.models.import_files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.imported_geometry.html">kittycad.models.imported_geometry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.input_format.html">kittycad.models.input_format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice.html">kittycad.models.invoice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_line_item.html">kittycad.models.invoice_line_item</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.invoice_status.html">kittycad.models.invoice_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.ip_addr_info.html">kittycad.models.ip_addr_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream.html">kittycad.models.jetstream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_api_stats.html">kittycad.models.jetstream_api_stats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_config.html">kittycad.models.jetstream_config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.jetstream_stats.html">kittycad.models.jetstream_stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.kcl_code_completion_params.html">kittycad.models.kcl_code_completion_params</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.kcl_code_completion_request.html">kittycad.models.kcl_code_completion_request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.kcl_code_completion_response.html">kittycad.models.kcl_code_completion_response</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.leaf_node.html">kittycad.models.leaf_node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.length_unit.html">kittycad.models.length_unit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.linear_transform.html">kittycad.models.linear_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.mass.html">kittycad.models.mass</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.meta_cluster_info.html">kittycad.models.meta_cluster_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.metadata.html">kittycad.models.metadata</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.method.html">kittycad.models.method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_app_event_type.html">kittycad.models.modeling_app_event_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_app_individual_subscription_tier.html">kittycad.models.modeling_app_individual_subscription_tier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_app_organization_subscription_tier.html">kittycad.models.modeling_app_organization_subscription_tier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_app_subscription_tier.html">kittycad.models.modeling_app_subscription_tier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_app_subscription_tier_name.html">kittycad.models.modeling_app_subscription_tier_name</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd.html">kittycad.models.modeling_cmd</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd_id.html">kittycad.models.modeling_cmd_id</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.modeling_cmd_req.html">kittycad.models.modeling_cmd_req</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.mouse_click.html">kittycad.models.mouse_click</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.new_address.html">kittycad.models.new_address</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_client_info.html">kittycad.models.o_auth2_client_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.o_auth2_grant_type.html">kittycad.models.o_auth2_grant_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ok_modeling_cmd_response.html">kittycad.models.ok_modeling_cmd_response</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ok_web_socket_response_data.html">kittycad.models.ok_web_socket_response_data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.onboarding.html">kittycad.models.onboarding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.org.html">kittycad.models.org</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.org_details.html">kittycad.models.org_details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.org_member.html">kittycad.models.org_member</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.org_member_results_page.html">kittycad.models.org_member_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.org_results_page.html">kittycad.models.org_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.org_role.html">kittycad.models.org_role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_file.html">kittycad.models.output_file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.output_format.html">kittycad.models.output_format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_command.html">kittycad.models.path_command</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_component_constraint_bound.html">kittycad.models.path_component_constraint_bound</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_component_constraint_type.html">kittycad.models.path_component_constraint_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_curve_uuid.html">kittycad.models.path_get_curve_uuid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_curve_uuids_for_vertices.html">kittycad.models.path_get_curve_uuids_for_vertices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_info.html">kittycad.models.path_get_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_sketch_target_uuid.html">kittycad.models.path_get_sketch_target_uuid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_get_vertex_uuids.html">kittycad.models.path_get_vertex_uuids</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_segment.html">kittycad.models.path_segment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.path_segment_info.html">kittycad.models.path_segment_info</a></li>
@@ -204,28 +248,46 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method.html">kittycad.models.payment_method</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_card_checks.html">kittycad.models.payment_method_card_checks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.payment_method_type.html">kittycad.models.payment_method_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.perspective_camera_parameters.html">kittycad.models.perspective_camera_parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.plan_interval.html">kittycad.models.plan_interval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.plane_intersect_and_project.html">kittycad.models.plane_intersect_and_project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.ply_storage.html">kittycad.models.ply_storage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.point2d.html">kittycad.models.point2d</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.point3d.html">kittycad.models.point3d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.point4d.html">kittycad.models.point4d</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.pong.html">kittycad.models.pong</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.post_effect_type.html">kittycad.models.post_effect_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.privacy_settings.html">kittycad.models.privacy_settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.raw_file.html">kittycad.models.raw_file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.rtc_ice_candidate_init.html">kittycad.models.rtc_ice_candidate_init</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.rtc_sdp_type.html">kittycad.models.rtc_sdp_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.rtc_session_description.html">kittycad.models.rtc_session_description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.saml_identity_provider.html">kittycad.models.saml_identity_provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.saml_identity_provider_create.html">kittycad.models.saml_identity_provider_create</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.scene_selection_type.html">kittycad.models.scene_selection_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.scene_tool_type.html">kittycad.models.scene_tool_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.select_get.html">kittycad.models.select_get</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.select_with_point.html">kittycad.models.select_with_point</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.selection.html">kittycad.models.selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.service_account.html">kittycad.models.service_account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.service_account_results_page.html">kittycad.models.service_account_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.session.html">kittycad.models.session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.session_token_uuid.html">kittycad.models.session_token_uuid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_all_edge_faces.html">kittycad.models.solid3d_get_all_edge_faces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_all_opposite_edges.html">kittycad.models.solid3d_get_all_opposite_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_extrusion_face_info.html">kittycad.models.solid3d_get_extrusion_face_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_next_adjacent_edge.html">kittycad.models.solid3d_get_next_adjacent_edge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_opposite_edge.html">kittycad.models.solid3d_get_opposite_edge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_prev_adjacent_edge.html">kittycad.models.solid3d_get_prev_adjacent_edge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.stl_storage.html">kittycad.models.stl_storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.store_coupon_params.html">kittycad.models.store_coupon_params</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.string_uuid.html">kittycad.models.string_uuid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.subscription_tier_feature.html">kittycad.models.subscription_tier_feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.subscription_tier_price.html">kittycad.models.subscription_tier_price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.subscription_tier_type.html">kittycad.models.subscription_tier_type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.subscription_training_data_behavior.html">kittycad.models.subscription_training_data_behavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.success_web_socket_response.html">kittycad.models.success_web_socket_response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.support_tier.html">kittycad.models.support_tier</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.surface_area.html">kittycad.models.surface_area</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.system.html">kittycad.models.system</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.take_snapshot.html">kittycad.models.take_snapshot</a></li>
@@ -259,14 +321,25 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_torque_conversion.html">kittycad.models.unit_torque_conversion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume.html">kittycad.models.unit_volume</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.unit_volume_conversion.html">kittycad.models.unit_volume_conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.update_member_to_org_body.html">kittycad.models.update_member_to_org_body</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.update_payment_balance.html">kittycad.models.update_payment_balance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.update_user.html">kittycad.models.update_user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.user.html">kittycad.models.user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user_org_info.html">kittycad.models.user_org_info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.user_org_role.html">kittycad.models.user_org_role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.user_results_page.html">kittycad.models.user_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.uuid.html">kittycad.models.uuid</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.models.verification_token.html">kittycad.models.verification_token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.verification_token_response.html">kittycad.models.verification_token_response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.view_isometric.html">kittycad.models.view_isometric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.volume.html">kittycad.models.volume</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.web_socket_request.html">kittycad.models.web_socket_request</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.web_socket_response.html">kittycad.models.web_socket_response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.zoo_product_subscription.html">kittycad.models.zoo_product_subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.zoo_product_subscriptions.html">kittycad.models.zoo_product_subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.zoo_product_subscriptions_org_request.html">kittycad.models.zoo_product_subscriptions_org_request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.zoo_product_subscriptions_user_request.html">kittycad.models.zoo_product_subscriptions_user_request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.zoo_tool.html">kittycad.models.zoo_tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.zoom_to_fit.html">kittycad.models.zoom_to_fit</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kittycad.types.html">kittycad.types</a></li>
@@ -298,17 +371,166 @@
            <div itemprop="articleBody">
              
   <section id="kittycad-models-entity-type-entitytype">
-<h1>kittycad.models.entity_type.EntityType<a class="headerlink" href="#kittycad-models-entity-type-entitytype" title="Permalink to this heading"></a></h1>
+<h1>kittycad.models.entity_type.EntityType<a class="headerlink" href="#kittycad-models-entity-type-entitytype" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.entity_type.</span></span><span class="sig-name descname"><span class="pre">EntityType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/entity_type.html#EntityType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.entity_type.</span></span><span class="sig-name descname"><span class="pre">EntityType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/entity_type.html#EntityType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
 <p>The type of entity</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__init__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.encode" title="kittycad.models.entity_type.EntityType.encode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">encode</span></code></a>([encoding, errors])</p></td>
+<td><p>Encode the string using the codec registered for encoding.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.replace" title="kittycad.models.entity_type.EntityType.replace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace</span></code></a>(old, new[, count])</p></td>
+<td><p>Return a copy with all occurrences of substring old replaced by new.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.split" title="kittycad.models.entity_type.EntityType.split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split</span></code></a>([sep, maxsplit])</p></td>
+<td><p>Return a list of the substrings in the string, using sep as the separator string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.rsplit" title="kittycad.models.entity_type.EntityType.rsplit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rsplit</span></code></a>([sep, maxsplit])</p></td>
+<td><p>Return a list of the substrings in the string, using sep as the separator string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.join" title="kittycad.models.entity_type.EntityType.join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">join</span></code></a>(iterable, /)</p></td>
+<td><p>Concatenate any number of strings.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.capitalize" title="kittycad.models.entity_type.EntityType.capitalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">capitalize</span></code></a>()</p></td>
+<td><p>Return a capitalized version of the string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.casefold" title="kittycad.models.entity_type.EntityType.casefold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">casefold</span></code></a>()</p></td>
+<td><p>Return a version of the string suitable for caseless comparisons.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.title" title="kittycad.models.entity_type.EntityType.title"><code class="xref py py-obj docutils literal notranslate"><span class="pre">title</span></code></a>()</p></td>
+<td><p>Return a version of the string where each word is titlecased.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.center" title="kittycad.models.entity_type.EntityType.center"><code class="xref py py-obj docutils literal notranslate"><span class="pre">center</span></code></a>(width[, fillchar])</p></td>
+<td><p>Return a centered string of length width.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.count" title="kittycad.models.entity_type.EntityType.count"><code class="xref py py-obj docutils literal notranslate"><span class="pre">count</span></code></a>(sub[, start[, end]])</p></td>
+<td><p>Return the number of non-overlapping occurrences of substring sub in string S[start:end].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.expandtabs" title="kittycad.models.entity_type.EntityType.expandtabs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expandtabs</span></code></a>([tabsize])</p></td>
+<td><p>Return a copy where all tab characters are expanded using spaces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.find" title="kittycad.models.entity_type.EntityType.find"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find</span></code></a>(sub[, start[, end]])</p></td>
+<td><p>Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.partition" title="kittycad.models.entity_type.EntityType.partition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">partition</span></code></a>(sep, /)</p></td>
+<td><p>Partition the string into three parts using the given separator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.index" title="kittycad.models.entity_type.EntityType.index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index</span></code></a>(sub[, start[, end]])</p></td>
+<td><p>Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.ljust" title="kittycad.models.entity_type.EntityType.ljust"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ljust</span></code></a>(width[, fillchar])</p></td>
+<td><p>Return a left-justified string of length width.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.lower" title="kittycad.models.entity_type.EntityType.lower"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lower</span></code></a>()</p></td>
+<td><p>Return a copy of the string converted to lowercase.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.lstrip" title="kittycad.models.entity_type.EntityType.lstrip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lstrip</span></code></a>([chars])</p></td>
+<td><p>Return a copy of the string with leading whitespace removed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.rfind" title="kittycad.models.entity_type.EntityType.rfind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rfind</span></code></a>(sub[, start[, end]])</p></td>
+<td><p>Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.rindex" title="kittycad.models.entity_type.EntityType.rindex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rindex</span></code></a>(sub[, start[, end]])</p></td>
+<td><p>Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.rjust" title="kittycad.models.entity_type.EntityType.rjust"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rjust</span></code></a>(width[, fillchar])</p></td>
+<td><p>Return a right-justified string of length width.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.rstrip" title="kittycad.models.entity_type.EntityType.rstrip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rstrip</span></code></a>([chars])</p></td>
+<td><p>Return a copy of the string with trailing whitespace removed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.rpartition" title="kittycad.models.entity_type.EntityType.rpartition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rpartition</span></code></a>(sep, /)</p></td>
+<td><p>Partition the string into three parts using the given separator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.splitlines" title="kittycad.models.entity_type.EntityType.splitlines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">splitlines</span></code></a>([keepends])</p></td>
+<td><p>Return a list of the lines in the string, breaking at line boundaries.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.strip" title="kittycad.models.entity_type.EntityType.strip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">strip</span></code></a>([chars])</p></td>
+<td><p>Return a copy of the string with leading and trailing whitespace removed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.swapcase" title="kittycad.models.entity_type.EntityType.swapcase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">swapcase</span></code></a>()</p></td>
+<td><p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.translate" title="kittycad.models.entity_type.EntityType.translate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">translate</span></code></a>(table, /)</p></td>
+<td><p>Replace each character in the string using the given translation table.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.upper" title="kittycad.models.entity_type.EntityType.upper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">upper</span></code></a>()</p></td>
+<td><p>Return a copy of the string converted to uppercase.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.startswith" title="kittycad.models.entity_type.EntityType.startswith"><code class="xref py py-obj docutils literal notranslate"><span class="pre">startswith</span></code></a>(prefix[, start[, end]])</p></td>
+<td><p>Return True if S starts with the specified prefix, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.endswith" title="kittycad.models.entity_type.EntityType.endswith"><code class="xref py py-obj docutils literal notranslate"><span class="pre">endswith</span></code></a>(suffix[, start[, end]])</p></td>
+<td><p>Return True if S ends with the specified suffix, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.removeprefix" title="kittycad.models.entity_type.EntityType.removeprefix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeprefix</span></code></a>(prefix, /)</p></td>
+<td><p>Return a str with the given prefix string removed if present.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.removesuffix" title="kittycad.models.entity_type.EntityType.removesuffix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">removesuffix</span></code></a>(suffix, /)</p></td>
+<td><p>Return a str with the given suffix string removed if present.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isascii" title="kittycad.models.entity_type.EntityType.isascii"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isascii</span></code></a>()</p></td>
+<td><p>Return True if all characters in the string are ASCII, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.islower" title="kittycad.models.entity_type.EntityType.islower"><code class="xref py py-obj docutils literal notranslate"><span class="pre">islower</span></code></a>()</p></td>
+<td><p>Return True if the string is a lowercase string, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isupper" title="kittycad.models.entity_type.EntityType.isupper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isupper</span></code></a>()</p></td>
+<td><p>Return True if the string is an uppercase string, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.istitle" title="kittycad.models.entity_type.EntityType.istitle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">istitle</span></code></a>()</p></td>
+<td><p>Return True if the string is a title-cased string, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isspace" title="kittycad.models.entity_type.EntityType.isspace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isspace</span></code></a>()</p></td>
+<td><p>Return True if the string is a whitespace string, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isdecimal" title="kittycad.models.entity_type.EntityType.isdecimal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isdecimal</span></code></a>()</p></td>
+<td><p>Return True if the string is a decimal string, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isdigit" title="kittycad.models.entity_type.EntityType.isdigit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isdigit</span></code></a>()</p></td>
+<td><p>Return True if the string is a digit string, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isnumeric" title="kittycad.models.entity_type.EntityType.isnumeric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isnumeric</span></code></a>()</p></td>
+<td><p>Return True if the string is a numeric string, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isalpha" title="kittycad.models.entity_type.EntityType.isalpha"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isalpha</span></code></a>()</p></td>
+<td><p>Return True if the string is an alphabetic string, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isalnum" title="kittycad.models.entity_type.EntityType.isalnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isalnum</span></code></a>()</p></td>
+<td><p>Return True if the string is an alpha-numeric string, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isidentifier" title="kittycad.models.entity_type.EntityType.isidentifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isidentifier</span></code></a>()</p></td>
+<td><p>Return True if the string is a valid Python identifier, False otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.isprintable" title="kittycad.models.entity_type.EntityType.isprintable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isprintable</span></code></a>()</p></td>
+<td><p>Return True if the string is printable, False otherwise.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.zfill" title="kittycad.models.entity_type.EntityType.zfill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zfill</span></code></a>(width, /)</p></td>
+<td><p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.format" title="kittycad.models.entity_type.EntityType.format"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Return a formatted version of S, using substitutions from args and kwargs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.format_map" title="kittycad.models.entity_type.EntityType.format_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_map</span></code></a>(mapping)</p></td>
+<td><p>Return a formatted version of S, using substitutions from mapping.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.maketrans" title="kittycad.models.entity_type.EntityType.maketrans"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maketrans</span></code></a></p></td>
+<td><p>Return a translation table usable for str.translate().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#id0" title="kittycad.models.entity_type.EntityType.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(*args, **kwds)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
@@ -339,98 +561,648 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.PLANE" title="kittycad.models.entity_type.EntityType.PLANE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PLANE</span></code></a></p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.entity_type.EntityType.VERTEX" title="kittycad.models.entity_type.EntityType.VERTEX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VERTEX</span></code></a></p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.CURVE">
-<span class="sig-name descname"><span class="pre">CURVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'curve'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.CURVE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">CURVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'curve'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.CURVE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.EDGE">
-<span class="sig-name descname"><span class="pre">EDGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.EDGE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">EDGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'edge'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.EDGE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.ENTITY">
-<span class="sig-name descname"><span class="pre">ENTITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'entity'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.ENTITY" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">ENTITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'entity'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.ENTITY" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.FACE">
-<span class="sig-name descname"><span class="pre">FACE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'face'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.FACE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">FACE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'face'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.FACE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.OBJECT">
-<span class="sig-name descname"><span class="pre">OBJECT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'object'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.OBJECT" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">OBJECT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'object'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.OBJECT" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.PATH">
-<span class="sig-name descname"><span class="pre">PATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'path'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.PATH" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PATH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'path'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.PATH" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.PLANE">
-<span class="sig-name descname"><span class="pre">PLANE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'plane'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.PLANE" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PLANE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'plane'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.PLANE" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.SOLID2D">
-<span class="sig-name descname"><span class="pre">SOLID2D</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'solid2d'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.SOLID2D" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SOLID2D</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'solid2d'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.SOLID2D" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.SOLID3D">
-<span class="sig-name descname"><span class="pre">SOLID3D</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'solid3d'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.SOLID3D" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SOLID3D</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'solid3d'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.SOLID3D" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__annotations__">
-<span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__annotations__" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__dict__">
-<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'_generate_next_value_':</span> <span class="pre">&lt;function</span> <span class="pre">Enum._generate_next_value_&gt;,</span> <span class="pre">'__module__':</span> <span class="pre">'kittycad.models.entity_type',</span> <span class="pre">'__doc__':</span> <span class="pre">'The</span> <span class="pre">type</span> <span class="pre">of</span> <span class="pre">entity',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">EntityType.__str__&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'EntityType'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'EntityType'</span> <span class="pre">objects&gt;,</span> <span class="pre">'_member_names_':</span> <span class="pre">['ENTITY',</span> <span class="pre">'OBJECT',</span> <span class="pre">'PATH',</span> <span class="pre">'CURVE',</span> <span class="pre">'SOLID2D',</span> <span class="pre">'SOLID3D',</span> <span class="pre">'EDGE',</span> <span class="pre">'FACE',</span> <span class="pre">'PLANE'],</span> <span class="pre">'_member_map_':</span> <span class="pre">{'ENTITY':</span> <span class="pre">&lt;EntityType.ENTITY:</span> <span class="pre">'entity'&gt;,</span> <span class="pre">'OBJECT':</span> <span class="pre">&lt;EntityType.OBJECT:</span> <span class="pre">'object'&gt;,</span> <span class="pre">'PATH':</span> <span class="pre">&lt;EntityType.PATH:</span> <span class="pre">'path'&gt;,</span> <span class="pre">'CURVE':</span> <span class="pre">&lt;EntityType.CURVE:</span> <span class="pre">'curve'&gt;,</span> <span class="pre">'SOLID2D':</span> <span class="pre">&lt;EntityType.SOLID2D:</span> <span class="pre">'solid2d'&gt;,</span> <span class="pre">'SOLID3D':</span> <span class="pre">&lt;EntityType.SOLID3D:</span> <span class="pre">'solid3d'&gt;,</span> <span class="pre">'EDGE':</span> <span class="pre">&lt;EntityType.EDGE:</span> <span class="pre">'edge'&gt;,</span> <span class="pre">'FACE':</span> <span class="pre">&lt;EntityType.FACE:</span> <span class="pre">'face'&gt;,</span> <span class="pre">'PLANE':</span> <span class="pre">&lt;EntityType.PLANE:</span> <span class="pre">'plane'&gt;},</span> <span class="pre">'_member_type_':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'_value2member_map_':</span> <span class="pre">{'entity':</span> <span class="pre">&lt;EntityType.ENTITY:</span> <span class="pre">'entity'&gt;,</span> <span class="pre">'object':</span> <span class="pre">&lt;EntityType.OBJECT:</span> <span class="pre">'object'&gt;,</span> <span class="pre">'path':</span> <span class="pre">&lt;EntityType.PATH:</span> <span class="pre">'path'&gt;,</span> <span class="pre">'curve':</span> <span class="pre">&lt;EntityType.CURVE:</span> <span class="pre">'curve'&gt;,</span> <span class="pre">'solid2d':</span> <span class="pre">&lt;EntityType.SOLID2D:</span> <span class="pre">'solid2d'&gt;,</span> <span class="pre">'solid3d':</span> <span class="pre">&lt;EntityType.SOLID3D:</span> <span class="pre">'solid3d'&gt;,</span> <span class="pre">'edge':</span> <span class="pre">&lt;EntityType.EDGE:</span> <span class="pre">'edge'&gt;,</span> <span class="pre">'face':</span> <span class="pre">&lt;EntityType.FACE:</span> <span class="pre">'face'&gt;,</span> <span class="pre">'plane':</span> <span class="pre">&lt;EntityType.PLANE:</span> <span class="pre">'plane'&gt;},</span> <span class="pre">'ENTITY':</span> <span class="pre">&lt;EntityType.ENTITY:</span> <span class="pre">'entity'&gt;,</span> <span class="pre">'OBJECT':</span> <span class="pre">&lt;EntityType.OBJECT:</span> <span class="pre">'object'&gt;,</span> <span class="pre">'PATH':</span> <span class="pre">&lt;EntityType.PATH:</span> <span class="pre">'path'&gt;,</span> <span class="pre">'CURVE':</span> <span class="pre">&lt;EntityType.CURVE:</span> <span class="pre">'curve'&gt;,</span> <span class="pre">'SOLID2D':</span> <span class="pre">&lt;EntityType.SOLID2D:</span> <span class="pre">'solid2d'&gt;,</span> <span class="pre">'SOLID3D':</span> <span class="pre">&lt;EntityType.SOLID3D:</span> <span class="pre">'solid3d'&gt;,</span> <span class="pre">'EDGE':</span> <span class="pre">&lt;EntityType.EDGE:</span> <span class="pre">'edge'&gt;,</span> <span class="pre">'FACE':</span> <span class="pre">&lt;EntityType.FACE:</span> <span class="pre">'face'&gt;,</span> <span class="pre">'PLANE':</span> <span class="pre">&lt;EntityType.PLANE:</span> <span class="pre">'plane'&gt;,</span> <span class="pre">'__repr__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__repr__&gt;,</span> <span class="pre">'__format__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__format__&gt;,</span> <span class="pre">'__new__':</span> <span class="pre">&lt;function</span> <span class="pre">Enum.__new__&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__dict__" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__module__">
-<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.entity_type'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__module__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.VERTEX">
+<span class="sig-name descname"><span class="pre">VERTEX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'vertex'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.VERTEX" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType._generate_next_value_">
-<span class="sig-name descname"><span class="pre">_generate_next_value_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_values</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType._generate_next_value_" title="Permalink to this definition"></a></dt>
-<dd><p>Generate the next value when not given.</p>
-<p>name: the name of the member
-start: the initial start value or None
-count: the number of existing members
-last_value: the last value assigned or None</p>
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__add__" title="Link to this definition"></a></dt>
+<dd><p>Return self+value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__contains__">
+<span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__contains__" title="Link to this definition"></a></dt>
+<dd><p>Return bool(key in self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__dir__">
+<span class="sig-name descname"><span class="pre">__dir__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__dir__" title="Link to this definition"></a></dt>
+<dd><p>Returns public methods and other interesting attributes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__eq__" title="Link to this definition"></a></dt>
+<dd><p>Return self==value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__format__" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of the string as described by format_spec.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__ge__" title="Link to this definition"></a></dt>
+<dd><p>Return self&gt;=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__getattribute__">
+<span class="sig-name descname"><span class="pre">__getattribute__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__getattribute__" title="Link to this definition"></a></dt>
+<dd><p>Return getattr(self, name).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Return self[key].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__getnewargs__">
+<span class="sig-name descname"><span class="pre">__getnewargs__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__getnewargs__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__gt__" title="Link to this definition"></a></dt>
+<dd><p>Return self&gt;value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__hash__" title="Link to this definition"></a></dt>
+<dd><p>Return hash(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__le__" title="Link to this definition"></a></dt>
+<dd><p>Return self&lt;=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__len__" title="Link to this definition"></a></dt>
+<dd><p>Return len(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__lt__" title="Link to this definition"></a></dt>
+<dd><p>Return self&lt;value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__mod__">
+<span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__mod__" title="Link to this definition"></a></dt>
+<dd><p>Return self%value.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType._member_map_">
-<span class="sig-name descname"><span class="pre">_member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'CURVE':</span> <span class="pre">EntityType.CURVE,</span> <span class="pre">'EDGE':</span> <span class="pre">EntityType.EDGE,</span> <span class="pre">'ENTITY':</span> <span class="pre">EntityType.ENTITY,</span> <span class="pre">'FACE':</span> <span class="pre">EntityType.FACE,</span> <span class="pre">'OBJECT':</span> <span class="pre">EntityType.OBJECT,</span> <span class="pre">'PATH':</span> <span class="pre">EntityType.PATH,</span> <span class="pre">'PLANE':</span> <span class="pre">EntityType.PLANE,</span> <span class="pre">'SOLID2D':</span> <span class="pre">EntityType.SOLID2D,</span> <span class="pre">'SOLID3D':</span> <span class="pre">EntityType.SOLID3D}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType._member_map_" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__module__">
+<span class="sig-name descname"><span class="pre">__module__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'kittycad.models.entity_type'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__module__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType._member_names_">
-<span class="sig-name descname"><span class="pre">_member_names_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['ENTITY',</span> <span class="pre">'OBJECT',</span> <span class="pre">'PATH',</span> <span class="pre">'CURVE',</span> <span class="pre">'SOLID2D',</span> <span class="pre">'SOLID3D',</span> <span class="pre">'EDGE',</span> <span class="pre">'FACE',</span> <span class="pre">'PLANE']</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType._member_names_" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType._member_type_">
-<span class="sig-name descname"><span class="pre">_member_type_</span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType._member_type_" title="Permalink to this definition"></a></dt>
-<dd><p>alias of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__mul__" title="Link to this definition"></a></dt>
+<dd><p>Return self*value.</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType._value2member_map_">
-<span class="sig-name descname"><span class="pre">_value2member_map_</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'curve':</span> <span class="pre">EntityType.CURVE,</span> <span class="pre">'edge':</span> <span class="pre">EntityType.EDGE,</span> <span class="pre">'entity':</span> <span class="pre">EntityType.ENTITY,</span> <span class="pre">'face':</span> <span class="pre">EntityType.FACE,</span> <span class="pre">'object':</span> <span class="pre">EntityType.OBJECT,</span> <span class="pre">'path':</span> <span class="pre">EntityType.PATH,</span> <span class="pre">'plane':</span> <span class="pre">EntityType.PLANE,</span> <span class="pre">'solid2d':</span> <span class="pre">EntityType.SOLID2D,</span> <span class="pre">'solid3d':</span> <span class="pre">EntityType.SOLID3D}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType._value2member_map_" title="Permalink to this definition"></a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__ne__" title="Link to this definition"></a></dt>
+<dd><p>Return self!=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__new__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__reduce_ex__">
+<span class="sig-name descname"><span class="pre">__reduce_ex__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__reduce_ex__" title="Link to this definition"></a></dt>
+<dd><p>Helper for pickle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__rmod__">
+<span class="sig-name descname"><span class="pre">__rmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__rmod__" title="Link to this definition"></a></dt>
+<dd><p>Return value%self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__rmul__">
+<span class="sig-name descname"><span class="pre">__rmul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__rmul__" title="Link to this definition"></a></dt>
+<dd><p>Return value*self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__sizeof__">
+<span class="sig-name descname"><span class="pre">__sizeof__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__sizeof__" title="Link to this definition"></a></dt>
+<dd><p>Return the size of the string in memory, in bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/entity_type.html#EntityType.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.capitalize">
+<span class="sig-name descname"><span class="pre">capitalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.capitalize" title="Link to this definition"></a></dt>
+<dd><p>Return a capitalized version of the string.</p>
+<p>More specifically, make the first character have upper case and the rest lower
+case.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.casefold">
+<span class="sig-name descname"><span class="pre">casefold</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.casefold" title="Link to this definition"></a></dt>
+<dd><p>Return a version of the string suitable for caseless comparisons.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.center">
+<span class="sig-name descname"><span class="pre">center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.center" title="Link to this definition"></a></dt>
+<dd><p>Return a centered string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.count" title="Link to this definition"></a></dt>
+<dd><p>Return the number of non-overlapping occurrences of substring sub in
+string S[start:end].  Optional arguments start and end are
+interpreted as in slice notation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.encode">
+<span class="sig-name descname"><span class="pre">encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strict'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.encode" title="Link to this definition"></a></dt>
+<dd><p>Encode the string using the codec registered for encoding.</p>
+<dl class="simple">
+<dt>encoding</dt><dd><p>The encoding in which to encode the string.</p>
+</dd>
+<dt>errors</dt><dd><p>The error handling scheme to use for encoding errors.
+The default is ‘strict’ meaning that encoding errors raise a
+UnicodeEncodeError.  Other possible values are ‘ignore’, ‘replace’ and
+‘xmlcharrefreplace’ as well as any other name registered with
+codecs.register_error that can handle UnicodeEncodeErrors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.endswith">
+<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.endswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if S ends with the specified suffix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+suffix can also be a tuple of strings to try.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.expandtabs">
+<span class="sig-name descname"><span class="pre">expandtabs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tabsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.expandtabs" title="Link to this definition"></a></dt>
+<dd><p>Return a copy where all tab characters are expanded using spaces.</p>
+<p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.find">
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.find" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.format" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces (‘{’ and ‘}’).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.format_map">
+<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.format_map" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of S, using substitutions from mapping.
+The substitutions are identified by braces (‘{’ and ‘}’).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.index" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isalnum">
+<span class="sig-name descname"><span class="pre">isalnum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isalnum" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is an alpha-numeric string, False otherwise.</p>
+<p>A string is alpha-numeric if all characters in the string are alpha-numeric and
+there is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isalpha">
+<span class="sig-name descname"><span class="pre">isalpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isalpha" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is an alphabetic string, False otherwise.</p>
+<p>A string is alphabetic if all characters in the string are alphabetic and there
+is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isascii">
+<span class="sig-name descname"><span class="pre">isascii</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isascii" title="Link to this definition"></a></dt>
+<dd><p>Return True if all characters in the string are ASCII, False otherwise.</p>
+<p>ASCII characters have code points in the range U+0000-U+007F.
+Empty string is ASCII too.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isdecimal">
+<span class="sig-name descname"><span class="pre">isdecimal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isdecimal" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is a decimal string, False otherwise.</p>
+<p>A string is a decimal string if all characters in the string are decimal and
+there is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isdigit">
+<span class="sig-name descname"><span class="pre">isdigit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isdigit" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is a digit string, False otherwise.</p>
+<p>A string is a digit string if all characters in the string are digits and there
+is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isidentifier">
+<span class="sig-name descname"><span class="pre">isidentifier</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isidentifier" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is a valid Python identifier, False otherwise.</p>
+<p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+such as “def” or “class”.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.islower">
+<span class="sig-name descname"><span class="pre">islower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.islower" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is a lowercase string, False otherwise.</p>
+<p>A string is lowercase if all cased characters in the string are lowercase and
+there is at least one cased character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isnumeric">
+<span class="sig-name descname"><span class="pre">isnumeric</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isnumeric" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is a numeric string, False otherwise.</p>
+<p>A string is numeric if all characters in the string are numeric and there is at
+least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isprintable">
+<span class="sig-name descname"><span class="pre">isprintable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isprintable" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is printable, False otherwise.</p>
+<p>A string is printable if all of its characters are considered printable in
+repr() or if it is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isspace">
+<span class="sig-name descname"><span class="pre">isspace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isspace" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is a whitespace string, False otherwise.</p>
+<p>A string is whitespace if all characters in the string are whitespace and there
+is at least one character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.istitle">
+<span class="sig-name descname"><span class="pre">istitle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.istitle" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is a title-cased string, False otherwise.</p>
+<p>In a title-cased string, upper- and title-case characters may only
+follow uncased characters and lowercase characters only cased ones.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.isupper">
+<span class="sig-name descname"><span class="pre">isupper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.isupper" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string is an uppercase string, False otherwise.</p>
+<p>A string is uppercase if all cased characters in the string are uppercase and
+there is at least one cased character in the string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.join" title="Link to this definition"></a></dt>
+<dd><p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: ‘.’.join([‘ab’, ‘pq’, ‘rs’]) -&gt; ‘ab.pq.rs’</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.ljust">
+<span class="sig-name descname"><span class="pre">ljust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.ljust" title="Link to this definition"></a></dt>
+<dd><p>Return a left-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.lower">
+<span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.lower" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the string converted to lowercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.lstrip">
+<span class="sig-name descname"><span class="pre">lstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.lstrip" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the string with leading whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.maketrans">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maketrans</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.maketrans" title="Link to this definition"></a></dt>
+<dd><p>Return a translation table usable for str.translate().</p>
+<p>If there is only one argument, it must be a dictionary mapping Unicode
+ordinals (integers) or characters to Unicode ordinals, strings or None.
+Character keys will be then converted to ordinals.
+If there are two arguments, they must be strings of equal length, and
+in the resulting dictionary, each character in x will be mapped to the
+character at the same position in y. If there is a third argument, it
+must be a string, whose characters will be mapped to None in the result.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.partition">
+<span class="sig-name descname"><span class="pre">partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.partition" title="Link to this definition"></a></dt>
+<dd><p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string.  If the separator is found,
+returns a 3-tuple containing the part before the separator, the separator
+itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing the original string
+and two empty strings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.removeprefix">
+<span class="sig-name descname"><span class="pre">removeprefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.removeprefix" title="Link to this definition"></a></dt>
+<dd><p>Return a str with the given prefix string removed if present.</p>
+<p>If the string starts with the prefix string, return string[len(prefix):].
+Otherwise, return a copy of the original string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.removesuffix">
+<span class="sig-name descname"><span class="pre">removesuffix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.removesuffix" title="Link to this definition"></a></dt>
+<dd><p>Return a str with the given suffix string removed if present.</p>
+<p>If the string ends with the suffix string and that suffix is not empty,
+return string[:-len(suffix)]. Otherwise, return a copy of the original
+string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.replace">
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.replace" title="Link to this definition"></a></dt>
+<dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>count</dt><dd><p>Maximum number of occurrences to replace.
+-1 (the default value) means replace all occurrences.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>If the optional argument count is given, only the first count occurrences are
+replaced.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.rfind">
+<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.rfind" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.rindex">
+<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.rindex" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.rjust">
+<span class="sig-name descname"><span class="pre">rjust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.rjust" title="Link to this definition"></a></dt>
+<dd><p>Return a right-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.rpartition">
+<span class="sig-name descname"><span class="pre">rpartition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.rpartition" title="Link to this definition"></a></dt>
+<dd><p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string, starting at the end. If
+the separator is found, returns a 3-tuple containing the part before the
+separator, the separator itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing two empty strings
+and the original string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.rsplit">
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.rsplit" title="Link to this definition"></a></dt>
+<dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<blockquote>
+<div><dl>
+<dt>sep</dt><dd><p>The separator used to split the string.</p>
+<p>When set to None (the default value), will split on any whitespace
+character (including n r t f and spaces) and will discard
+empty strings from the result.</p>
+</dd>
+<dt>maxsplit</dt><dd><p>Maximum number of splits.
+-1 (the default value) means no limit.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Splitting starts at the end of the string and works to the front.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.rstrip">
+<span class="sig-name descname"><span class="pre">rstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.rstrip" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the string with trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.split" title="Link to this definition"></a></dt>
+<dd><p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<blockquote>
+<div><dl>
+<dt>sep</dt><dd><p>The separator used to split the string.</p>
+<p>When set to None (the default value), will split on any whitespace
+character (including n r t f and spaces) and will discard
+empty strings from the result.</p>
+</dd>
+<dt>maxsplit</dt><dd><p>Maximum number of splits.
+-1 (the default value) means no limit.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Splitting starts at the front of the string and works to the end.</p>
+<p>Note, str.split() is mainly useful for data that has been intentionally
+delimited.  With natural text that includes punctuation, consider using
+the regular expression module.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.splitlines">
+<span class="sig-name descname"><span class="pre">splitlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keepends</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.splitlines" title="Link to this definition"></a></dt>
+<dd><p>Return a list of the lines in the string, breaking at line boundaries.</p>
+<p>Line breaks are not included in the resulting list unless keepends is given and
+true.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.startswith">
+<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.startswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if S starts with the specified prefix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+prefix can also be a tuple of strings to try.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.strip">
+<span class="sig-name descname"><span class="pre">strip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.strip" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the string with leading and trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.swapcase">
+<span class="sig-name descname"><span class="pre">swapcase</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.swapcase" title="Link to this definition"></a></dt>
+<dd><p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.title">
+<span class="sig-name descname"><span class="pre">title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.title" title="Link to this definition"></a></dt>
+<dd><p>Return a version of the string where each word is titlecased.</p>
+<p>More specifically, words start with uppercased characters and all remaining
+cased characters have lower case.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.translate" title="Link to this definition"></a></dt>
+<dd><p>Replace each character in the string using the given translation table.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>table</dt><dd><p>Translation table, which must be a mapping of Unicode ordinals to
+Unicode ordinals, strings, or None.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>The table must implement lookup/indexing via __getitem__, for instance a
+dictionary or list.  If this operation raises LookupError, the character is
+left untouched.  Characters mapped to None are deleted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.upper">
+<span class="sig-name descname"><span class="pre">upper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.upper" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of the string converted to uppercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.entity_type.EntityType.zfill">
+<span class="sig-name descname"><span class="pre">zfill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/entity_type.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.entity_type.EntityType.zfill" title="Link to this definition"></a></dt>
+<dd><p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
+<p>The string is never truncated.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -447,7 +1219,7 @@ last_value: the last value assigned or None</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
