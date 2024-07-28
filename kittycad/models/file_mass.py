@@ -1,16 +1,13 @@
 import datetime
-from typing import Any, Dict, List, Literal, Optional, Union
-from uuid import UUID
+from typing import Optional
 
-from pydantic import AnyUrl, Base64Bytes, BaseModel, ConfigDict
-from pydantic_extra_types.phone_numbers import PhoneNumber
+from pydantic import BaseModel, ConfigDict
 
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
 from ..models.unit_density import UnitDensity
 from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
-from .base64data import Base64Data
 
 
 class FileMass(BaseModel):

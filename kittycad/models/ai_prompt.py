@@ -1,15 +1,12 @@
 import datetime
-from typing import Any, Dict, List, Literal, Optional, Union
-from uuid import UUID
+from typing import Any, Optional
 
-from pydantic import AnyUrl, Base64Bytes, BaseModel, ConfigDict
-from pydantic_extra_types.phone_numbers import PhoneNumber
+from pydantic import BaseModel, ConfigDict
 
 from ..models.ai_feedback import AiFeedback
 from ..models.ai_prompt_type import AiPromptType
 from ..models.api_call_status import ApiCallStatus
 from ..models.uuid import Uuid
-from .base64data import Base64Data
 
 
 class AiPrompt(BaseModel):

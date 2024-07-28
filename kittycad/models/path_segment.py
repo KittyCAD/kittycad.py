@@ -1,16 +1,12 @@
-import datetime
-from typing import Any, Dict, List, Literal, Optional, Type, TypeVar, Union
-from uuid import UUID
+from typing import Literal, Optional, Union
 
-from pydantic import AnyUrl, Base64Bytes, BaseModel, ConfigDict, Field, RootModel
-from pydantic_extra_types.phone_numbers import PhoneNumber
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.angle import Angle
 from ..models.length_unit import LengthUnit
 from ..models.point2d import Point2d
 from ..models.point3d import Point3d
-from .base64data import Base64Data
 
 
 class line(BaseModel):

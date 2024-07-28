@@ -1,13 +1,10 @@
 import datetime
-from typing import Any, Dict, List, Literal, Optional, Union
-from uuid import UUID
+from typing import Optional
 
-from pydantic import AnyUrl, Base64Bytes, BaseModel, ConfigDict
-from pydantic_extra_types.phone_numbers import PhoneNumber
+from pydantic import BaseModel, ConfigDict
 
 from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
-from .base64data import Base64Data
 
 
 class User(BaseModel):
