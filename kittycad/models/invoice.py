@@ -1,12 +1,15 @@
 import datetime
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional, Union
+from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import AnyUrl, Base64Bytes, BaseModel, ConfigDict
+from pydantic_extra_types.phone_numbers import PhoneNumber
 
 from ..models.currency import Currency
 from ..models.discount import Discount
 from ..models.invoice_line_item import InvoiceLineItem
 from ..models.invoice_status import InvoiceStatus
+from .base64data import Base64Data
 
 
 class Invoice(BaseModel):

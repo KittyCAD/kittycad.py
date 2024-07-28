@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Tuple, Union
 
 import pytest
 
@@ -212,6 +212,7 @@ from kittycad.models import (
     UserResultsPage,
     VerificationTokenResponse,
     WebSocketRequest,
+    WebSocketResponse,
     ZooProductSubscriptions,
 )
 from kittycad.models.add_org_member import AddOrgMember
