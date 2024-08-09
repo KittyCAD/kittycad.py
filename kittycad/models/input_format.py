@@ -1,4 +1,4 @@
-from typing import Literal, Union
+from typing import Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
@@ -50,6 +50,8 @@ class ply(BaseModel):
 class sldprt(BaseModel):
     """SolidWorks part (SLDPRT) format."""
 
+    split_closed_faces: Optional[bool] = None
+
     type: Literal["sldprt"] = "sldprt"
 
     model_config = ConfigDict(protected_namespaces=())
@@ -57,6 +59,8 @@ class sldprt(BaseModel):
 
 class step(BaseModel):
     """ISO 10303-21 (STEP) format."""
+
+    split_closed_faces: Optional[bool] = None
 
     type: Literal["step"] = "step"
 
