@@ -6,7 +6,6 @@ from typing import Optional, Union
 
 import pytest
 
-from .api.ai import create_text_to_cad, get_text_to_cad_model_for_user
 from .api.api_tokens import list_api_tokens_for_user
 from .api.file import (
     create_file_center_of_mass,
@@ -15,6 +14,7 @@ from .api.file import (
     create_file_volume,
 )
 from .api.meta import ping
+from .api.ml import create_text_to_cad, get_text_to_cad_model_for_user
 from .api.modeling import modeling_commands_ws
 from .api.users import get_user_self, list_users_extended
 from .client import ClientFromEnv

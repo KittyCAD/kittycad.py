@@ -5,6 +5,7 @@ from .add_org_member import AddOrgMember
 from .address_details import AddressDetails
 from .ai_feedback import AiFeedback
 from .ai_prompt import AiPrompt
+from .ai_prompt_metadata import AiPromptMetadata
 from .ai_prompt_results_page import AiPromptResultsPage
 from .ai_prompt_type import AiPromptType
 from .angle import Angle

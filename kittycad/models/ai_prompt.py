@@ -1,9 +1,10 @@
 import datetime
-from typing import Any, Optional
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
 from ..models.ai_feedback import AiFeedback
+from ..models.ai_prompt_metadata import AiPromptMetadata
 from ..models.ai_prompt_type import AiPromptType
 from ..models.api_call_status import ApiCallStatus
 from ..models.uuid import Uuid
@@ -22,7 +23,7 @@ class AiPrompt(BaseModel):
 
     id: Uuid
 
-    metadata: Optional[Any] = None
+    metadata: Optional[AiPromptMetadata] = None
 
     model_version: str
 

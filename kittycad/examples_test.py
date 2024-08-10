@@ -2,15 +2,6 @@ from typing import List, Optional, Union
 
 import pytest
 
-from kittycad.api.ai import (
-    create_kcl_code_completions,
-    create_text_to_cad,
-    create_text_to_cad_model_feedback,
-    get_ai_prompt,
-    get_text_to_cad_model_for_user,
-    list_ai_prompts,
-    list_text_to_cad_models_for_user,
-)
 from kittycad.api.api_calls import (
     get_api_call,
     get_api_call_for_org,
@@ -59,6 +50,15 @@ from kittycad.api.meta import (
     get_schema,
     internal_get_api_token_for_discord_user,
     ping,
+)
+from kittycad.api.ml import (
+    create_kcl_code_completions,
+    create_text_to_cad,
+    create_text_to_cad_model_feedback,
+    get_ai_prompt,
+    get_text_to_cad_model_for_user,
+    list_ai_prompts,
+    list_text_to_cad_models_for_user,
 )
 from kittycad.api.modeling import modeling_commands_ws
 from kittycad.api.orgs import (
