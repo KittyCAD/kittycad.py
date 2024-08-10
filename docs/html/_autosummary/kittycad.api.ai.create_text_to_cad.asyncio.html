@@ -13,7 +13,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.ai.create_text_to_cad.asyncio &mdash; kittycad v0.6.17 documentation</title>
+  <title>kittycad.api.ai.create_text_to_cad.asyncio &mdash; kittycad v0.6.18 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -25,7 +25,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=a60b730d"></script>
+        <script src="../_static/documentation_options.js?v=4e11d0cf"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -49,7 +49,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.6.17
+                v0.6.18
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -138,7 +138,7 @@
 <h1>kittycad.api.ai.create_text_to_cad.asyncio<a class="headerlink" href="#kittycad-api-ai-create-text-to-cad-asyncio" title="Link to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.ai.create_text_to_cad.asyncio">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.ai.create_text_to_cad.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/ai/create_text_to_cad.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/ai/create_text_to_cad.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.ai.create_text_to_cad.asyncio" title="Link to this definition"></a></dt>
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.ai.create_text_to_cad.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kcl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/ai/create_text_to_cad.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/ai/create_text_to_cad.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.ai.create_text_to_cad.asyncio" title="Link to this definition"></a></dt>
 <dd><p>Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
 This operation is performed asynchronously, the <a class="reference internal" href="kittycad.models.ai_prompt.AiPrompt.html#kittycad.models.ai_prompt.AiPrompt.id" title="kittycad.models.ai_prompt.AiPrompt.id"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">id</span></code></a> of the operation will be returned. You can use the <a class="reference internal" href="kittycad.models.ai_prompt.AiPrompt.html#kittycad.models.ai_prompt.AiPrompt.id" title="kittycad.models.ai_prompt.AiPrompt.id"><code class="xref any py py-attr docutils literal notranslate"><span class="pre">id</span></code></a> returned from the request to get status information about the async operation from the <code class="xref any docutils literal notranslate"><span class="pre">/async/operations/{id}</span></code> endpoint.
 One thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not <code class="xref any docutils literal notranslate"><span class="pre">Completed</span></code> or <code class="xref any docutils literal notranslate"><span class="pre">Failed</span></code>.</p>
