@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.ai_prompt &mdash; kittycad v0.6.18 documentation</title>
+  <title>kittycad.models.ai_prompt &mdash; kittycad v0.6.19 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=4e11d0cf"></script>
+        <script src="../../../_static/documentation_options.js?v=ea6954d6"></script>
         <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.6.18
+                v0.6.19
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -80,11 +80,12 @@
              
   <h1>Source code for kittycad.models.ai_prompt</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
 <span class="kn">from</span> <span class="nn">..models.ai_feedback</span> <span class="kn">import</span> <span class="n">AiFeedback</span>
+<span class="kn">from</span> <span class="nn">..models.ai_prompt_metadata</span> <span class="kn">import</span> <span class="n">AiPromptMetadata</span>
 <span class="kn">from</span> <span class="nn">..models.ai_prompt_type</span> <span class="kn">import</span> <span class="n">AiPromptType</span>
 <span class="kn">from</span> <span class="nn">..models.api_call_status</span> <span class="kn">import</span> <span class="n">ApiCallStatus</span>
 <span class="kn">from</span> <span class="nn">..models.uuid</span> <span class="kn">import</span> <span class="n">Uuid</span>
@@ -105,7 +106,7 @@
 
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span>
 
-    <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AiPromptMetadata</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">model_version</span><span class="p">:</span> <span class="nb">str</span>
 

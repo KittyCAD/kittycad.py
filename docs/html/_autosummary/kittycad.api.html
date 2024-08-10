@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api &mdash; kittycad v0.6.18 documentation</title>
+  <title>kittycad.api &mdash; kittycad v0.6.19 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -27,7 +27,7 @@
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=4e11d0cf"></script>
+        <script src="../_static/documentation_options.js?v=ea6954d6"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -35,7 +35,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="kittycad.api.ai" href="kittycad.api.ai.html" />
+    <link rel="next" title="kittycad.api.api_calls" href="kittycad.api.api_calls.html" />
     <link rel="prev" title="Welcome to kittycad’s documentation!" href="../index.html" /> 
 </head>
 
@@ -51,7 +51,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.6.18
+                v0.6.19
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -63,7 +63,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">kittycad.api</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kittycad.api.ai.html">kittycad.api.ai</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.api_calls.html">kittycad.api.api_calls</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.api_tokens.html">kittycad.api.api_tokens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.apps.html">kittycad.api.apps</a></li>
@@ -73,6 +72,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.file.html">kittycad.api.file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.hidden.html">kittycad.api.hidden</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.meta.html">kittycad.api.meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.api.ml.html">kittycad.api.ml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.modeling.html">kittycad.api.modeling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.oauth2.html">kittycad.api.oauth2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.api.orgs.html">kittycad.api.orgs</a></li>
@@ -117,35 +117,35 @@
 <p class="rubric">Modules</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.ai.html#module-kittycad.api.ai" title="kittycad.api.ai"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.ai</span></code></a></p></td>
-<td><p>Contains methods for accessing the ai API paths: AI uses machine learning to generate CAD models.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_calls.html#module-kittycad.api.api_calls" title="kittycad.api.api_calls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_calls.html#module-kittycad.api.api_calls" title="kittycad.api.api_calls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_calls</span></code></a></p></td>
 <td><p>Contains methods for accessing the api_calls API paths: API calls that have been performed by users can be queried by the API.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.api_tokens.html#module-kittycad.api.api_tokens" title="kittycad.api.api_tokens"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_tokens</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.api_tokens.html#module-kittycad.api.api_tokens" title="kittycad.api.api_tokens"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.api_tokens</span></code></a></p></td>
 <td><p>Contains methods for accessing the api_tokens API paths: API tokens allow users to call the API outside of their session token that is used as a cookie in the user interface.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.apps.html#module-kittycad.api.apps" title="kittycad.api.apps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.apps</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.apps.html#module-kittycad.api.apps" title="kittycad.api.apps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.apps</span></code></a></p></td>
 <td><p>Contains methods for accessing the apps API paths: Endpoints for third party app grant flows.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.beta.html#module-kittycad.api.beta" title="kittycad.api.beta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.beta</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.beta.html#module-kittycad.api.beta" title="kittycad.api.beta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.beta</span></code></a></p></td>
 <td><p>Contains methods for accessing the beta API paths: Beta API endpoints.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.constant.html#module-kittycad.api.constant" title="kittycad.api.constant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.constant</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.constant.html#module-kittycad.api.constant" title="kittycad.api.constant"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.constant</span></code></a></p></td>
 <td><p>Contains methods for accessing the constant API paths: Constants.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.executor.html#module-kittycad.api.executor" title="kittycad.api.executor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.executor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.executor.html#module-kittycad.api.executor" title="kittycad.api.executor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.executor</span></code></a></p></td>
 <td><p>Contains methods for accessing the executor API paths: Endpoints that allow for code execution or creation of code execution environments.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.file.html#module-kittycad.api.file" title="kittycad.api.file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.file.html#module-kittycad.api.file" title="kittycad.api.file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.file</span></code></a></p></td>
 <td><p>Contains methods for accessing the file API paths: CAD file operations.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.hidden.html#module-kittycad.api.hidden" title="kittycad.api.hidden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.hidden</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.hidden.html#module-kittycad.api.hidden" title="kittycad.api.hidden"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.hidden</span></code></a></p></td>
 <td><p>Contains methods for accessing the hidden API paths: Hidden API endpoints that should not show up in the docs.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.meta.html#module-kittycad.api.meta" title="kittycad.api.meta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.meta</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.meta.html#module-kittycad.api.meta" title="kittycad.api.meta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.meta</span></code></a></p></td>
 <td><p>Contains methods for accessing the meta API paths: Meta information about the API.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.ml.html#module-kittycad.api.ml" title="kittycad.api.ml"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.ml</span></code></a></p></td>
+<td><p>Contains methods for accessing the ml API paths: Machine learning to generate CAD models and other things.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.modeling.html#module-kittycad.api.modeling" title="kittycad.api.modeling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kittycad.api.modeling</span></code></a></p></td>
 <td><p>Contains methods for accessing the modeling API paths: Modeling API for updating your 3D files using the Zoo engine.</p></td>
@@ -180,7 +180,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to kittycad’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="kittycad.api.ai.html" class="btn btn-neutral float-right" title="kittycad.api.ai" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="kittycad.api.api_calls.html" class="btn btn-neutral float-right" title="kittycad.api.api_calls" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
