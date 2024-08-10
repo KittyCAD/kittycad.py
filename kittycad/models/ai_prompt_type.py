@@ -6,6 +6,8 @@ class AiPromptType(str, Enum):
 
     """# Text to CAD. """  # noqa: E501
     TEXT_TO_CAD = "text_to_cad"
+    """# Text to KCL. """  # noqa: E501
+    TEXT_TO_KCL = "text_to_kcl"
 
     def __str__(self) -> str:
         return str(self.value)

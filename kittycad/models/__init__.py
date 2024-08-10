@@ -226,6 +226,7 @@ from .system import System
 from .take_snapshot import TakeSnapshot
 from .text_to_cad import TextToCad
 from .text_to_cad_create_body import TextToCadCreateBody
+from .text_to_cad_model import TextToCadModel
 from .text_to_cad_results_page import TextToCadResultsPage
 from .unit_angle import UnitAngle
 from .unit_angle_conversion import UnitAngleConversion
