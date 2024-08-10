@@ -6,12 +6,15 @@ from pydantic import BaseModel, ConfigDict
 from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
+from ..models.text_to_cad_model import TextToCadModel
 from ..models.uuid import Uuid
 from .base64data import Base64Data
 
 
 class TextToCad(BaseModel):
     """A response from a text to CAD prompt."""
+
+    code: Optional[str] = None
 
     completed_at: Optional[datetime.datetime] = None
 
@@ -22,6 +25,8 @@ class TextToCad(BaseModel):
     feedback: Optional[AiFeedback] = None
 
     id: Uuid
+
+    model: TextToCadModel
 
     model_version: str
 

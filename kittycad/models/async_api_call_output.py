@@ -11,6 +11,7 @@ from ..models.file_import_format import FileImportFormat
 from ..models.input_format import InputFormat
 from ..models.output_format import OutputFormat
 from ..models.point3d import Point3d
+from ..models.text_to_cad_model import TextToCadModel
 from ..models.unit_area import UnitArea
 from ..models.unit_density import UnitDensity
 from ..models.unit_length import UnitLength
@@ -215,6 +216,8 @@ class file_surface_area(BaseModel):
 class text_to_cad(BaseModel):
     """Text to CAD."""
 
+    code: Optional[str] = None
+
     completed_at: Optional[datetime.datetime] = None
 
     created_at: datetime.datetime
@@ -224,6 +227,8 @@ class text_to_cad(BaseModel):
     feedback: Optional[AiFeedback] = None
 
     id: Uuid
+
+    model: TextToCadModel
 
     model_version: str
 

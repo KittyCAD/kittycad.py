@@ -15,11 +15,19 @@ def _get_kwargs(
     body: TextToCadCreateBody,
     *,
     client: Client,
+    kcl: Optional[bool] = None,
 ) -> Dict[str, Any]:
     url = "{}/ai/text-to-cad/{output_format}".format(
         client.base_url,
         output_format=output_format,
     )  # noqa: E501
+
+    if kcl is not None:
+
+        if "?" in url:
+            url = url + "&kcl=" + str(kcl)
+        else:
+            url = url + "?kcl=" + str(kcl)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -62,9 +70,11 @@ def sync_detailed(
     body: TextToCadCreateBody,
     *,
     client: Client,
+    kcl: Optional[bool] = None,
 ) -> Response[Optional[Union[TextToCad, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
+        kcl=kcl,
         body=body,
         client=client,
     )
@@ -82,6 +92,7 @@ def sync(
     body: TextToCadCreateBody,
     *,
     client: Client,
+    kcl: Optional[bool] = None,
 ) -> Optional[Union[TextToCad, Error]]:
     """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
     This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
@@ -90,6 +101,7 @@ def sync(
 
     return sync_detailed(
         output_format=output_format,
+        kcl=kcl,
         body=body,
         client=client,
     ).parsed
@@ -100,9 +112,11 @@ async def asyncio_detailed(
     body: TextToCadCreateBody,
     *,
     client: Client,
+    kcl: Optional[bool] = None,
 ) -> Response[Optional[Union[TextToCad, Error]]]:
     kwargs = _get_kwargs(
         output_format=output_format,
+        kcl=kcl,
         body=body,
         client=client,
     )
@@ -118,6 +132,7 @@ async def asyncio(
     body: TextToCadCreateBody,
     *,
     client: Client,
+    kcl: Optional[bool] = None,
 ) -> Optional[Union[TextToCad, Error]]:
     """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
     This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
@@ -127,6 +142,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             output_format=output_format,
+            kcl=kcl,
             body=body,
             client=client,
         )

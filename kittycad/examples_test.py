@@ -583,6 +583,7 @@ def test_create_text_to_cad():
     result: Optional[Union[TextToCad, Error]] = create_text_to_cad.sync(
         client=client,
         output_format=FileExportFormat.FBX,
+        kcl=None,  # Optional[bool]
         body=TextToCadCreateBody(
             prompt="<string>",
         ),
@@ -600,6 +601,7 @@ def test_create_text_to_cad():
         create_text_to_cad.sync_detailed(
             client=client,
             output_format=FileExportFormat.FBX,
+            kcl=None,  # Optional[bool]
             body=TextToCadCreateBody(
                 prompt="<string>",
             ),
@@ -617,6 +619,7 @@ async def test_create_text_to_cad_async():
     result: Optional[Union[TextToCad, Error]] = await create_text_to_cad.asyncio(
         client=client,
         output_format=FileExportFormat.FBX,
+        kcl=None,  # Optional[bool]
         body=TextToCadCreateBody(
             prompt="<string>",
         ),
@@ -627,6 +630,7 @@ async def test_create_text_to_cad_async():
         await create_text_to_cad.asyncio_detailed(
             client=client,
             output_format=FileExportFormat.FBX,
+            kcl=None,  # Optional[bool]
             body=TextToCadCreateBody(
                 prompt="<string>",
             ),

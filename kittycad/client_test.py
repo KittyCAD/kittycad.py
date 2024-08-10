@@ -547,6 +547,7 @@ def test_text_to_cad():
         body=TextToCadCreateBody(
             prompt="a 2x4 lego",
         ),
+        kcl=None,
     )
 
     if isinstance(result, Error) or result is None:
