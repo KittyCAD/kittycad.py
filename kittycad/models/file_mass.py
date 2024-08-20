@@ -23,7 +23,7 @@ class FileMass(BaseModel):
 
     mass: Optional[float] = None
 
-    material_density: Optional[float] = None
+    material_density: float = 0.0
 
     material_density_unit: UnitDensity
 

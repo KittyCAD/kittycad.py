@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict, Optional
+from typing import Dict
 
 from pydantic import BaseModel, ConfigDict
 
@@ -14,96 +14,121 @@ class Connection(BaseModel):
 
     This is mostly used for internal purposes and debugging."""
 
-    auth_timeout: Optional[int] = None
+    auth_timeout: int = 0
 
-    cluster: Optional[Cluster] = None
+    cluster: Cluster = {
+        "addr": None,
+        "auth_timeout": 0,
+        "cluster_port": 0,
+        "name": "",
+        "tls_timeout": 0,
+        "urls": [],
+    }
 
     config_load_time: datetime.datetime
 
-    connections: Optional[int] = None
+    connections: int = 0
 
-    cores: Optional[int] = None
+    cores: int = 0
 
-    cpu: Optional[float] = None
+    cpu: float = 0.0
 
-    gateway: Optional[Gateway] = None
+    gateway: Gateway = {
+        "auth_timeout": 0,
+        "host": "",
+        "name": "",
+        "port": 0,
+        "tls_timeout": 0,
+    }
 
-    git_commit: Optional[str] = None
+    git_commit: str = ""
 
-    go: Optional[str] = None
+    go: str = ""
 
-    gomaxprocs: Optional[int] = None
+    gomaxprocs: int = 0
 
     host: str
 
-    http_base_path: Optional[str] = None
+    http_base_path: str = ""
 
-    http_host: Optional[str] = None
+    http_host: str = ""
 
-    http_port: Optional[int] = None
+    http_port: int = 0
 
     http_req_stats: Dict[str, int]
 
-    https_port: Optional[int] = None
+    https_port: int = 0
 
-    in_bytes: Optional[int] = None
+    in_bytes: int = 0
 
-    in_msgs: Optional[int] = None
+    in_msgs: int = 0
 
-    jetstream: Optional[Jetstream] = None
+    jetstream: Jetstream = {
+        "config": {"domain": "", "max_memory": 0, "max_storage": 0, "store_dir": ""},
+        "meta": {"cluster_size": 0, "leader": "", "name": ""},
+        "stats": {
+            "accounts": 0,
+            "api": {"errors": 0, "inflight": 0, "total": 0},
+            "ha_assets": 0,
+            "memory": 0,
+            "reserved_memory": 0,
+            "reserved_store": 0,
+            "store": 0,
+        },
+    }
 
-    leaf: Optional[LeafNode] = None
+    leaf: LeafNode = {"auth_timeout": 0, "host": "", "port": 0, "tls_timeout": 0}
 
-    leafnodes: Optional[int] = None
+    leafnodes: int = 0
 
-    max_connections: Optional[int] = None
+    max_connections: int = 0
 
-    max_control_line: Optional[int] = None
+    max_control_line: int = 0
 
-    max_payload: Optional[int] = None
+    max_payload: int = 0
 
-    max_pending: Optional[int] = None
+    max_pending: int = 0
 
-    mem: Optional[int] = None
+    mem: int = 0
 
     now: datetime.datetime
 
-    out_bytes: Optional[int] = None
+    out_bytes: int = 0
 
-    out_msgs: Optional[int] = None
+    out_msgs: int = 0
 
-    ping_interval: Optional[int] = None
+    ping_interval: int = 0
 
-    ping_max: Optional[int] = None
+    ping_max: int = 0
 
-    port: Optional[int] = None
+    port: int = 0
 
-    proto: Optional[int] = None
+    proto: int = 0
 
-    remotes: Optional[int] = None
+    remotes: int = 0
 
-    routes: Optional[int] = None
+    routes: int = 0
 
-    server_id: Optional[str] = None
+    server_id: str = ""
 
-    server_name: Optional[str] = None
+    server_name: str = ""
 
-    slow_consumers: Optional[int] = None
+    slow_consumers: int = 0
 
     start: datetime.datetime
 
-    subscriptions: Optional[int] = None
+    subscriptions: int = 0
 
-    system_account: Optional[str] = None
+    system_account: str = ""
 
-    tls_timeout: Optional[int] = None
+    tls_timeout: int = 0
 
-    total_connections: Optional[int] = None
+    total_connections: int = 0
 
-    uptime: Optional[str] = None
+    uptime: str = ""
 
-    version: Optional[str] = None
+    version: str = ""
 
-    write_deadline: Optional[int] = None
+    write_deadline: int = 0
 
     model_config = ConfigDict(protected_namespaces=())

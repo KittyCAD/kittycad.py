@@ -1,4 +1,3 @@
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -7,10 +6,10 @@ from pydantic import BaseModel, ConfigDict
 class JetstreamApiStats(BaseModel):
     """Jetstream API statistics."""
 
-    errors: Optional[int] = None
+    errors: int = 0
 
-    inflight: Optional[int] = None
+    inflight: int = 0
 
-    total: Optional[int] = None
+    total: int = 0
 
     model_config = ConfigDict(protected_namespaces=())

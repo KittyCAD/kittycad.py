@@ -20,7 +20,7 @@ class IpAddrInfo(BaseModel):
 
     country_code3: Optional[str] = None
 
-    ip: Optional[str] = None
+    ip: str = ""
 
     is_in_european_union: Optional[bool] = None
 

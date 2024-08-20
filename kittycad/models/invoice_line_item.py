@@ -8,9 +8,9 @@ from ..models.currency import Currency
 class InvoiceLineItem(BaseModel):
     """An invoice line item."""
 
-    amount: Optional[float] = None
+    amount: float = 0.0
 
-    currency: Optional[Currency] = None
+    currency: Currency = "usd"
 
     description: Optional[str] = None
 
@@ -18,6 +18,6 @@ class InvoiceLineItem(BaseModel):
 
     invoice_item: Optional[str] = None
 
-    metadata: Optional[Dict[str, str]] = None
+    metadata: Dict[str, str] = {}
 
     model_config = ConfigDict(protected_namespaces=())

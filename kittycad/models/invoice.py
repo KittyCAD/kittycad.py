@@ -12,19 +12,19 @@ from ..models.invoice_status import InvoiceStatus
 class Invoice(BaseModel):
     """An invoice."""
 
-    amount_due: Optional[float] = None
+    amount_due: float = 0.0
 
-    amount_paid: Optional[float] = None
+    amount_paid: float = 0.0
 
-    amount_remaining: Optional[float] = None
+    amount_remaining: float = 0.0
 
-    attempt_count: Optional[int] = None
+    attempt_count: int = 0
 
-    attempted: Optional[bool] = None
+    attempted: bool = False
 
     created_at: datetime.datetime
 
-    currency: Optional[Currency] = None
+    currency: Currency = "usd"
 
     customer_email: Optional[str] = None
 
@@ -40,11 +40,11 @@ class Invoice(BaseModel):
 
     lines: Optional[List[InvoiceLineItem]] = None
 
-    metadata: Optional[Dict[str, str]] = None
+    metadata: Dict[str, str] = {}
 
     number: Optional[str] = None
 
-    paid: Optional[bool] = None
+    paid: bool = False
 
     pdf: Optional[str] = None
 
@@ -54,11 +54,11 @@ class Invoice(BaseModel):
 
     status: Optional[InvoiceStatus] = None
 
-    subtotal: Optional[float] = None
+    subtotal: float = 0.0
 
-    tax: Optional[float] = None
+    tax: float = 0.0
 
-    total: Optional[float] = None
+    total: float = 0.0
 
     url: Optional[str] = None
 

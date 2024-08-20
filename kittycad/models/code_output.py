@@ -15,8 +15,8 @@ class CodeOutput(BaseModel):
 
     output_files: Optional[List[OutputFile]] = None
 
-    stderr: Optional[str] = None
+    stderr: str = ""
 
-    stdout: Optional[str] = None
+    stdout: str = ""
 
     model_config = ConfigDict(protected_namespaces=())

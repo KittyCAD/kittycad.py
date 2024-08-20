@@ -18,7 +18,7 @@ class Org(BaseModel):
 
     block: Optional[BlockReason] = None
 
-    can_train_on_data: Optional[bool] = None
+    can_train_on_data: bool = False
 
     created_at: datetime.datetime
 
@@ -30,7 +30,7 @@ class Org(BaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[str] = None
+    phone: str = ""
 
     stripe_id: Optional[str] = None
 

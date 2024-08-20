@@ -19,7 +19,7 @@ class UnitFrequencyConversion(BaseModel):
 
     id: Uuid
 
-    input: Optional[float] = None
+    input: float = 0.0
 
     input_unit: UnitFrequency
 

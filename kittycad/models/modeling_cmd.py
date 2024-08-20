@@ -656,7 +656,7 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 class solid3d_fillet_edge(BaseModel):
     """Fillets the given edge with the specified radius."""
 
-    cut_type: Optional[CutType] = None
+    cut_type: CutType = "fillet"
 
     edge_id: str
 
@@ -742,7 +742,7 @@ class entity_set_opacity(BaseModel):
 class entity_fade(BaseModel):
     """Fade entity in or out."""
 
-    duration_seconds: Optional[float] = None
+    duration_seconds: float = 0.4000000059604645
 
     entity_id: str
 
@@ -1212,7 +1212,7 @@ class default_camera_set_perspective(BaseModel):
 class zoom_to_fit(BaseModel):
     """Fit the view to the specified object(s)."""
 
-    object_ids: Optional[List[str]] = None
+    object_ids: List[str] = []
 
     padding: float
 
@@ -1224,7 +1224,7 @@ class zoom_to_fit(BaseModel):
 class view_isometric(BaseModel):
     """Fit the view to the scene with an isometric view."""
 
-    padding: Optional[float] = None
+    padding: float = 0.0
 
     type: Literal["view_isometric"] = "view_isometric"
 

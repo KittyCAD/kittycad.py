@@ -1,4 +1,3 @@
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -10,6 +9,6 @@ from ..models.modeling_app_organization_subscription_tier import (
 class ZooProductSubscriptionsOrgRequest(BaseModel):
     """A struct of Zoo product subscriptions an organization can request."""
 
-    modeling_app: Optional[ModelingAppOrganizationSubscriptionTier] = None
+    modeling_app: ModelingAppOrganizationSubscriptionTier = "team"
 
     model_config = ConfigDict(protected_namespaces=())

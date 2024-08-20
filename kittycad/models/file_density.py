@@ -23,7 +23,7 @@ class FileDensity(BaseModel):
 
     id: Uuid
 
-    material_mass: Optional[float] = None
+    material_mass: float = 0.0
 
     material_mass_unit: UnitMass
 

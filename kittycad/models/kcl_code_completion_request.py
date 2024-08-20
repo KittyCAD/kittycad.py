@@ -8,7 +8,7 @@ from ..models.kcl_code_completion_params import KclCodeCompletionParams
 class KclCodeCompletionRequest(BaseModel):
     """A request to generate KCL code completions."""
 
-    extra: Optional[KclCodeCompletionParams] = None
+    extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}
 
     max_tokens: Optional[int] = None
 
@@ -16,13 +16,13 @@ class KclCodeCompletionRequest(BaseModel):
 
     nwo: Optional[str] = None
 
-    prompt: Optional[str] = None
+    prompt: str = ""
 
     stop: Optional[List[str]] = None
 
-    stream: Optional[bool] = None
+    stream: bool = False
 
-    suffix: Optional[str] = None
+    suffix: str = ""
 
     temperature: Optional[float] = None
 
