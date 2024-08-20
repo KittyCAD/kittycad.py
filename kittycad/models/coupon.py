@@ -9,11 +9,11 @@ class Coupon(BaseModel):
 
     amount_off: Optional[float] = None
 
-    deleted: Optional[bool] = None
+    deleted: bool = False
 
     id: Optional[str] = None
 
-    metadata: Optional[Dict[str, str]] = None
+    metadata: Dict[str, str] = {}
 
     name: Optional[str] = None
 

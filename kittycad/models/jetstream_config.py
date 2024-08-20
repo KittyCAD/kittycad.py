@@ -1,4 +1,3 @@
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -7,12 +6,12 @@ from pydantic import BaseModel, ConfigDict
 class JetstreamConfig(BaseModel):
     """Jetstream configuration."""
 
-    domain: Optional[str] = None
+    domain: str = ""
 
-    max_memory: Optional[int] = None
+    max_memory: int = 0
 
-    max_storage: Optional[int] = None
+    max_storage: int = 0
 
-    store_dir: Optional[str] = None
+    store_dir: str = ""
 
     model_config = ConfigDict(protected_namespaces=())

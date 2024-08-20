@@ -1,4 +1,3 @@
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -7,14 +6,14 @@ from pydantic import BaseModel, ConfigDict
 class Gateway(BaseModel):
     """Gateway information."""
 
-    auth_timeout: Optional[int] = None
+    auth_timeout: int = 0
 
-    host: Optional[str] = None
+    host: str = ""
 
-    name: Optional[str] = None
+    name: str = ""
 
-    port: Optional[int] = None
+    port: int = 0
 
-    tls_timeout: Optional[int] = None
+    tls_timeout: int = 0
 
     model_config = ConfigDict(protected_namespaces=())

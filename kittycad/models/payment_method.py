@@ -19,7 +19,7 @@ class PaymentMethod(BaseModel):
 
     id: Optional[str] = None
 
-    metadata: Optional[Dict[str, str]] = None
+    metadata: Dict[str, str] = {}
 
     type: PaymentMethodType
 

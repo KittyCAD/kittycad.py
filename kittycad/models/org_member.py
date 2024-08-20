@@ -32,7 +32,7 @@ class OrgMember(BaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[str] = None
+    phone: str = ""
 
     role: OrgRole
 

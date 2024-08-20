@@ -12,6 +12,6 @@ class BillingInfo(BaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[str] = None
+    phone: str = ""
 
     model_config = ConfigDict(protected_namespaces=())

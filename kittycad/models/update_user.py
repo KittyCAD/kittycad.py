@@ -19,6 +19,6 @@ class UpdateUser(BaseModel):
 
     last_name: Optional[str] = None
 
-    phone: Optional[str] = None
+    phone: str = ""
 
     model_config = ConfigDict(protected_namespaces=())

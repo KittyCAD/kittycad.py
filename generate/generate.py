@@ -1669,7 +1669,15 @@ def generateObjectTypeCode(
             else:
                 field_type = getTypeName(property_schema)
                 if property_name not in required:
-                    field_type = "Optional[" + field_type + "] = None"
+                    if "default" in property_schema:
+                        field_type += (
+                            ' = "' + property_schema["default"] + '"'
+                            if field_type == "str"
+                            or isinstance(property_schema["default"], str)
+                            else " = " + str(property_schema["default"])
+                        )
+                    else:
+                        field_type = "Optional[" + field_type + "] = None"
                 field2: FieldType = {
                     "name": property_name,
                     "type": field_type,
