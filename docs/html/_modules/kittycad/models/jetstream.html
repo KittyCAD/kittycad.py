@@ -79,8 +79,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.jetstream</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-
+<span></span>
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
 <span class="kn">from</span> <span class="nn">..models.jetstream_config</span> <span class="kn">import</span> <span class="n">JetstreamConfig</span>
@@ -93,11 +92,24 @@
 <span class="k">class</span> <span class="nc">Jetstream</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Jetstream information.&quot;&quot;&quot;</span>
 
-    <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">JetstreamConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">JetstreamConfig</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;max_memory&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;max_storage&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;store_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
 
-    <span class="n">meta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MetaClusterInfo</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">MetaClusterInfo</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;leader&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
 
-    <span class="n">stats</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">JetstreamStats</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">stats</span><span class="p">:</span> <span class="n">JetstreamStats</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;accounts&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;api&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;errors&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;inflight&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="s2">&quot;ha_assets&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;memory&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;reserved_memory&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;reserved_store&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;store&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">}</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 

@@ -886,7 +886,7 @@
 <span class="k">class</span> <span class="nc">solid3d_fillet_edge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fillets the given edge with the specified radius.&quot;&quot;&quot;</span>
 
-    <span class="n">cut_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CutType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">cut_type</span><span class="p">:</span> <span class="n">CutType</span> <span class="o">=</span> <span class="s2">&quot;fillet&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
 
@@ -993,7 +993,7 @@
 <span class="k">class</span> <span class="nc">entity_fade</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fade entity in or out.&quot;&quot;&quot;</span>
 
-    <span class="n">duration_seconds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">duration_seconds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4000000059604645</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
 
@@ -1586,7 +1586,7 @@
 <span class="k">class</span> <span class="nc">zoom_to_fit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the view to the specified object(s).&quot;&quot;&quot;</span>
 
-    <span class="n">object_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">object_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="n">padding</span><span class="p">:</span> <span class="nb">float</span>
 
@@ -1601,7 +1601,7 @@
 <span class="k">class</span> <span class="nc">view_isometric</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the view to the scene with an isometric view.&quot;&quot;&quot;</span>
 
-    <span class="n">padding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">padding</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;view_isometric&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;view_isometric&quot;</span>
 
