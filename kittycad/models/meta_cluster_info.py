@@ -1,4 +1,3 @@
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -7,10 +6,10 @@ from pydantic import BaseModel, ConfigDict
 class MetaClusterInfo(BaseModel):
     """Jetstream statistics."""
 
-    cluster_size: Optional[int] = None
+    cluster_size: int = 0
 
-    leader: Optional[str] = None
+    leader: str = ""
 
-    name: Optional[str] = None
+    name: str = ""
 
     model_config = ConfigDict(protected_namespaces=())

@@ -9,14 +9,14 @@ class Cluster(BaseModel):
 
     addr: Optional[str] = None
 
-    auth_timeout: Optional[int] = None
+    auth_timeout: int = 0
 
-    cluster_port: Optional[int] = None
+    cluster_port: int = 0
 
-    name: Optional[str] = None
+    name: str = ""
 
-    tls_timeout: Optional[int] = None
+    tls_timeout: int = 0
 
-    urls: Optional[List[str]] = None
+    urls: List[str] = []
 
     model_config = ConfigDict(protected_namespaces=())

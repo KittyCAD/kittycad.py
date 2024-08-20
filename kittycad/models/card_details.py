@@ -10,13 +10,13 @@ class CardDetails(BaseModel):
 
     brand: Optional[str] = None
 
-    checks: Optional[PaymentMethodCardChecks] = None
+    checks: PaymentMethodCardChecks = {}
 
     country: Optional[str] = None
 
-    exp_month: Optional[int] = None
+    exp_month: int = 0
 
-    exp_year: Optional[int] = None
+    exp_year: int = 0
 
     fingerprint: Optional[str] = None
 

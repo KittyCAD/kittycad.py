@@ -12,22 +12,22 @@ class Customer(BaseModel):
 
     address: Optional[AddressDetails] = None
 
-    balance: Optional[float] = None
+    balance: float = 0.0
 
     created_at: datetime.datetime
 
-    currency: Optional[Currency] = None
+    currency: Currency = "usd"
 
-    delinquent: Optional[bool] = None
+    delinquent: bool = False
 
     email: Optional[str] = None
 
     id: Optional[str] = None
 
-    metadata: Optional[Dict[str, str]] = None
+    metadata: Dict[str, str] = {}
 
     name: Optional[str] = None
 
-    phone: Optional[str] = None
+    phone: str = ""
 
     model_config = ConfigDict(protected_namespaces=())

@@ -1,4 +1,3 @@
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -10,10 +9,23 @@ from ..models.meta_cluster_info import MetaClusterInfo
 class Jetstream(BaseModel):
     """Jetstream information."""
 
-    config: Optional[JetstreamConfig] = None
+    config: JetstreamConfig = {
+        "domain": "",
+        "max_memory": 0,
+        "max_storage": 0,
+        "store_dir": "",
+    }
 
-    meta: Optional[MetaClusterInfo] = None
+    meta: MetaClusterInfo = {"cluster_size": 0, "leader": "", "name": ""}
 
-    stats: Optional[JetstreamStats] = None
+    stats: JetstreamStats = {
+        "accounts": 0,
+        "api": {"errors": 0, "inflight": 0, "total": 0},
+        "ha_assets": 0,
+        "memory": 0,
+        "reserved_memory": 0,
+        "reserved_store": 0,
+        "store": 0,
+    }
 
     model_config = ConfigDict(protected_namespaces=())

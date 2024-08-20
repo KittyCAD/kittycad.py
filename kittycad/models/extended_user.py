@@ -15,7 +15,7 @@ class ExtendedUser(BaseModel):
 
     block: Optional[BlockReason] = None
 
-    can_train_on_data: Optional[bool] = None
+    can_train_on_data: bool = False
 
     company: Optional[str] = None
 
@@ -37,7 +37,7 @@ class ExtendedUser(BaseModel):
 
     image: str
 
-    is_service_account: Optional[bool] = None
+    is_service_account: bool = False
 
     last_name: Optional[str] = None
 
@@ -45,7 +45,7 @@ class ExtendedUser(BaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[str] = None
+    phone: str = ""
 
     stripe_id: Optional[str] = None
 

@@ -24,7 +24,7 @@ class ApiCallWithPrice(BaseModel):
 
     id: Uuid
 
-    ip_address: Optional[str] = None
+    ip_address: str = ""
 
     litterbox: Optional[bool] = None
 

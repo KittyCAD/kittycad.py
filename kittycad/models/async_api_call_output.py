@@ -98,7 +98,7 @@ class file_mass(BaseModel):
 
     mass: Optional[float] = None
 
-    material_density: Optional[float] = None
+    material_density: float = 0.0
 
     material_density_unit: UnitDensity
 
@@ -162,7 +162,7 @@ class file_density(BaseModel):
 
     id: Uuid
 
-    material_mass: Optional[float] = None
+    material_mass: float = 0.0
 
     material_mass_unit: UnitMass
 
