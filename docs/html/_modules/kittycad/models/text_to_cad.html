@@ -84,9 +84,9 @@
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
-<span class="kn">from</span> <span class="nn">..models.ai_feedback</span> <span class="kn">import</span> <span class="n">AiFeedback</span>
 <span class="kn">from</span> <span class="nn">..models.api_call_status</span> <span class="kn">import</span> <span class="n">ApiCallStatus</span>
 <span class="kn">from</span> <span class="nn">..models.file_export_format</span> <span class="kn">import</span> <span class="n">FileExportFormat</span>
+<span class="kn">from</span> <span class="nn">..models.ml_feedback</span> <span class="kn">import</span> <span class="n">MlFeedback</span>
 <span class="kn">from</span> <span class="nn">..models.text_to_cad_model</span> <span class="kn">import</span> <span class="n">TextToCadModel</span>
 <span class="kn">from</span> <span class="nn">..models.uuid</span> <span class="kn">import</span> <span class="n">Uuid</span>
 <span class="kn">from</span> <span class="nn">.base64data</span> <span class="kn">import</span> <span class="n">Base64Data</span>
@@ -105,7 +105,7 @@
 
     <span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">feedback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AiFeedback</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">feedback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MlFeedback</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span>
 

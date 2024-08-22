@@ -92,6 +92,7 @@
 <span class="kn">from</span> <span class="nn">...models.file_surface_area</span> <span class="kn">import</span> <span class="n">FileSurfaceArea</span>
 <span class="kn">from</span> <span class="nn">...models.file_volume</span> <span class="kn">import</span> <span class="n">FileVolume</span>
 <span class="kn">from</span> <span class="nn">...models.text_to_cad</span> <span class="kn">import</span> <span class="n">TextToCad</span>
+<span class="kn">from</span> <span class="nn">...models.text_to_cad_iteration</span> <span class="kn">import</span> <span class="n">TextToCadIteration</span>
 <span class="kn">from</span> <span class="nn">...types</span> <span class="kn">import</span> <span class="n">Response</span>
 
 
@@ -130,6 +131,7 @@
         <span class="n">FileDensity</span><span class="p">,</span>
         <span class="n">FileSurfaceArea</span><span class="p">,</span>
         <span class="n">TextToCad</span><span class="p">,</span>
+        <span class="n">TextToCadIteration</span><span class="p">,</span>
         <span class="n">Error</span><span class="p">,</span>
     <span class="p">]</span>
 <span class="p">]:</span>
@@ -195,6 +197,15 @@
             <span class="n">option_text_to_cad</span> <span class="o">=</span> <span class="n">TextToCad</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">option_text_to_cad</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">()</span>
+            <span class="n">option_text_to_cad_iteration</span> <span class="o">=</span> <span class="n">TextToCadIteration</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">option_text_to_cad_iteration</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">raise</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="k">raise</span>
@@ -220,6 +231,7 @@
             <span class="n">FileDensity</span><span class="p">,</span>
             <span class="n">FileSurfaceArea</span><span class="p">,</span>
             <span class="n">TextToCad</span><span class="p">,</span>
+            <span class="n">TextToCadIteration</span><span class="p">,</span>
             <span class="n">Error</span><span class="p">,</span>
         <span class="p">]</span>
     <span class="p">]</span>
@@ -249,6 +261,7 @@
             <span class="n">FileDensity</span><span class="p">,</span>
             <span class="n">FileSurfaceArea</span><span class="p">,</span>
             <span class="n">TextToCad</span><span class="p">,</span>
+            <span class="n">TextToCadIteration</span><span class="p">,</span>
             <span class="n">Error</span><span class="p">,</span>
         <span class="p">]</span>
     <span class="p">]</span>
@@ -282,6 +295,7 @@
         <span class="n">FileDensity</span><span class="p">,</span>
         <span class="n">FileSurfaceArea</span><span class="p">,</span>
         <span class="n">TextToCad</span><span class="p">,</span>
+        <span class="n">TextToCadIteration</span><span class="p">,</span>
         <span class="n">Error</span><span class="p">,</span>
     <span class="p">]</span>
 <span class="p">]:</span>
@@ -314,6 +328,7 @@
             <span class="n">FileDensity</span><span class="p">,</span>
             <span class="n">FileSurfaceArea</span><span class="p">,</span>
             <span class="n">TextToCad</span><span class="p">,</span>
+            <span class="n">TextToCadIteration</span><span class="p">,</span>
             <span class="n">Error</span><span class="p">,</span>
         <span class="p">]</span>
     <span class="p">]</span>
@@ -345,6 +360,7 @@
         <span class="n">FileDensity</span><span class="p">,</span>
         <span class="n">FileSurfaceArea</span><span class="p">,</span>
         <span class="n">TextToCad</span><span class="p">,</span>
+        <span class="n">TextToCadIteration</span><span class="p">,</span>
         <span class="n">Error</span><span class="p">,</span>
     <span class="p">]</span>
 <span class="p">]:</span>

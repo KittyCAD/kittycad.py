@@ -80,18 +80,19 @@
              
   <h1>Source code for kittycad.models.async_api_call_output</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">RootModel</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
 
-<span class="kn">from</span> <span class="nn">..models.ai_feedback</span> <span class="kn">import</span> <span class="n">AiFeedback</span>
 <span class="kn">from</span> <span class="nn">..models.api_call_status</span> <span class="kn">import</span> <span class="n">ApiCallStatus</span>
 <span class="kn">from</span> <span class="nn">..models.file_export_format</span> <span class="kn">import</span> <span class="n">FileExportFormat</span>
 <span class="kn">from</span> <span class="nn">..models.file_import_format</span> <span class="kn">import</span> <span class="n">FileImportFormat</span>
 <span class="kn">from</span> <span class="nn">..models.input_format</span> <span class="kn">import</span> <span class="n">InputFormat</span>
+<span class="kn">from</span> <span class="nn">..models.ml_feedback</span> <span class="kn">import</span> <span class="n">MlFeedback</span>
 <span class="kn">from</span> <span class="nn">..models.output_format</span> <span class="kn">import</span> <span class="n">OutputFormat</span>
 <span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
+<span class="kn">from</span> <span class="nn">..models.source_range_prompt</span> <span class="kn">import</span> <span class="n">SourceRangePrompt</span>
 <span class="kn">from</span> <span class="nn">..models.text_to_cad_model</span> <span class="kn">import</span> <span class="n">TextToCadModel</span>
 <span class="kn">from</span> <span class="nn">..models.unit_area</span> <span class="kn">import</span> <span class="n">UnitArea</span>
 <span class="kn">from</span> <span class="nn">..models.unit_density</span> <span class="kn">import</span> <span class="n">UnitDensity</span>
@@ -325,7 +326,7 @@
 
     <span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">feedback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AiFeedback</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">feedback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MlFeedback</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span>
 
@@ -353,6 +354,47 @@
 
 
 
+<div class="viewcode-block" id="text_to_cad_iteration">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.async_api_call_output.text_to_cad_iteration.html#kittycad.models.async_api_call_output.text_to_cad_iteration">[docs]</a>
+<span class="k">class</span> <span class="nc">text_to_cad_iteration</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Text to CAD iteration.&quot;&quot;&quot;</span>
+
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">completed_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">created_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
+
+    <span class="n">error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">feedback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MlFeedback</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span>
+
+    <span class="n">model</span><span class="p">:</span> <span class="n">TextToCadModel</span>
+
+    <span class="n">model_version</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">original_source_code</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">prompt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">source_ranges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SourceRangePrompt</span><span class="p">]</span>
+
+    <span class="n">started_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">status</span><span class="p">:</span> <span class="n">ApiCallStatus</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;text_to_cad_iteration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;text_to_cad_iteration&quot;</span>
+
+    <span class="n">updated_at</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
+
+    <span class="n">user_id</span><span class="p">:</span> <span class="n">Uuid</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <span class="n">AsyncApiCallOutput</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
@@ -363,6 +405,7 @@
             <span class="n">file_density</span><span class="p">,</span>
             <span class="n">file_surface_area</span><span class="p">,</span>
             <span class="n">text_to_cad</span><span class="p">,</span>
+            <span class="n">text_to_cad_iteration</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>
