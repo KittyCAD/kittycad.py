@@ -104,6 +104,8 @@ class solid3d_shell_face(BaseModel):
 
     face_ids: List[str]
 
+    hollow: bool = False
+
     object_id: str
 
     shell_thickness: LengthUnit
