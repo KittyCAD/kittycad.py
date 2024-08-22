@@ -3,9 +3,9 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.ai_prompt_results_page import AiPromptResultsPage
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...models.error import Error
+from ...models.ml_prompt_results_page import MlPromptResultsPage
 from ...types import Response
 
 
@@ -16,7 +16,7 @@ def _get_kwargs(
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
 ) -> Dict[str, Any]:
-    url = "{}/ai-prompts".format(
+    url = "{}/ml-prompts".format(
         client.base_url,
     )  # noqa: E501
 
@@ -54,9 +54,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[AiPromptResultsPage, Error]]:
+) -> Optional[Union[MlPromptResultsPage, Error]]:
     if response.status_code == 200:
-        response_200 = AiPromptResultsPage(**response.json())
+        response_200 = MlPromptResultsPage(**response.json())
         return response_200
     if response.status_code == 400:
         response_4XX = Error(**response.json())
@@ -69,7 +69,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[AiPromptResultsPage, Error]]]:
+) -> Response[Optional[Union[MlPromptResultsPage, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -84,7 +84,7 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Optional[Union[AiPromptResultsPage, Error]]]:
+) -> Response[Optional[Union[MlPromptResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -106,10 +106,10 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[AiPromptResultsPage, Error]]:
+) -> Optional[Union[MlPromptResultsPage, Error]]:
     """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
     This endpoint requires authentication by a Zoo employee.
-    The AI prompts are returned in order of creation, with the most recently created AI prompts first.
+    The ML prompts are returned in order of creation, with the most recently created ML prompts first.
     """  # noqa: E501
 
     return sync_detailed(
@@ -126,7 +126,7 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Optional[Union[AiPromptResultsPage, Error]]]:
+) -> Response[Optional[Union[MlPromptResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -146,10 +146,10 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[AiPromptResultsPage, Error]]:
+) -> Optional[Union[MlPromptResultsPage, Error]]:
     """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
     This endpoint requires authentication by a Zoo employee.
-    The AI prompts are returned in order of creation, with the most recently created AI prompts first.
+    The ML prompts are returned in order of creation, with the most recently created ML prompts first.
     """  # noqa: E501
 
     return (

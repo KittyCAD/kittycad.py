@@ -8,6 +8,8 @@ class TextToCadModel(str, Enum):
     CAD = "cad"
     """# KCL. """  # noqa: E501
     KCL = "kcl"
+    """# KCL iteration. """  # noqa: E501
+    KCL_ITERATION = "kcl_iteration"
 
     def __str__(self) -> str:
         return str(self.value)

@@ -54,10 +54,11 @@ from kittycad.api.meta import (
 from kittycad.api.ml import (
     create_kcl_code_completions,
     create_text_to_cad,
+    create_text_to_cad_iteration,
     create_text_to_cad_model_feedback,
-    get_ai_prompt,
+    get_ml_prompt,
     get_text_to_cad_model_for_user,
-    list_ai_prompts,
+    list_ml_prompts,
     list_text_to_cad_models_for_user,
 )
 from kittycad.api.modeling import modeling_commands_ws
@@ -154,8 +155,6 @@ from kittycad.api.users import (
 from kittycad.client import ClientFromEnv
 from kittycad.models import (
     AccountProvider,
-    AiPrompt,
-    AiPromptResultsPage,
     ApiCallQueryGroup,
     ApiCallWithPrice,
     ApiCallWithPriceResultsPage,
@@ -180,6 +179,8 @@ from kittycad.models import (
     IpAddrInfo,
     KclCodeCompletionResponse,
     Metadata,
+    MlPrompt,
+    MlPromptResultsPage,
     Onboarding,
     Org,
     OrgMember,
@@ -193,6 +194,7 @@ from kittycad.models import (
     ServiceAccountResultsPage,
     Session,
     TextToCad,
+    TextToCadIteration,
     TextToCadResultsPage,
     UnitAngleConversion,
     UnitAreaConversion,
@@ -215,7 +217,6 @@ from kittycad.models import (
     ZooProductSubscriptions,
 )
 from kittycad.models.add_org_member import AddOrgMember
-from kittycad.models.ai_feedback import AiFeedback
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.billing_info import BillingInfo
@@ -228,6 +229,7 @@ from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.idp_metadata_source import base64_encoded_xml
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
+from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.modeling_app_individual_subscription_tier import (
     ModelingAppIndividualSubscriptionTier,
@@ -242,9 +244,13 @@ from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.rtc_sdp_type import RtcSdpType
 from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.source_position import SourcePosition
+from kittycad.models.source_range import SourceRange
+from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscription_tier_price import per_user
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
+from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -384,193 +390,6 @@ async def test_get_ipinfo_async():
     response: Response[Optional[Union[IpAddrInfo, Error]]] = (
         await get_ipinfo.asyncio_detailed(
             client=client,
-        )
-    )
-
-
-@pytest.mark.skip
-def test_list_ai_prompts():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[AiPromptResultsPage, Error]] = list_ai_prompts.sync(
-        client=client,
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-        limit=None,  # Optional[int]
-        page_token=None,  # Optional[str]
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: AiPromptResultsPage = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[AiPromptResultsPage, Error]]] = (
-        list_ai_prompts.sync_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_list_ai_prompts_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[AiPromptResultsPage, Error]] = await list_ai_prompts.asyncio(
-        client=client,
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-        limit=None,  # Optional[int]
-        page_token=None,  # Optional[str]
-    )
-
-    # OR run async with more info
-    response: Response[Optional[Union[AiPromptResultsPage, Error]]] = (
-        await list_ai_prompts.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
-    )
-
-
-@pytest.mark.skip
-def test_get_ai_prompt():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[AiPrompt, Error]] = get_ai_prompt.sync(
-        client=client,
-        id="<uuid>",
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: AiPrompt = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[AiPrompt, Error]]] = get_ai_prompt.sync_detailed(
-        client=client,
-        id="<uuid>",
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_ai_prompt_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[AiPrompt, Error]] = await get_ai_prompt.asyncio(
-        client=client,
-        id="<uuid>",
-    )
-
-    # OR run async with more info
-    response: Response[Optional[Union[AiPrompt, Error]]] = (
-        await get_ai_prompt.asyncio_detailed(
-            client=client,
-            id="<uuid>",
-        )
-    )
-
-
-@pytest.mark.skip
-def test_create_kcl_code_completions():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[KclCodeCompletionResponse, Error]] = (
-        create_kcl_code_completions.sync(
-            client=client,
-            body=KclCodeCompletionRequest(
-                extra=KclCodeCompletionParams(
-                    language="<string>",
-                    trim_by_indentation=False,
-                ),
-                prompt="<string>",
-                stop=["<string>"],
-                stream=False,
-                suffix="<string>",
-            ),
-        )
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: KclCodeCompletionResponse = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[KclCodeCompletionResponse, Error]]] = (
-        create_kcl_code_completions.sync_detailed(
-            client=client,
-            body=KclCodeCompletionRequest(
-                extra=KclCodeCompletionParams(
-                    language="<string>",
-                    trim_by_indentation=False,
-                ),
-                prompt="<string>",
-                stop=["<string>"],
-                stream=False,
-                suffix="<string>",
-            ),
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_create_kcl_code_completions_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[KclCodeCompletionResponse, Error]] = (
-        await create_kcl_code_completions.asyncio(
-            client=client,
-            body=KclCodeCompletionRequest(
-                extra=KclCodeCompletionParams(
-                    language="<string>",
-                    trim_by_indentation=False,
-                ),
-                prompt="<string>",
-                stop=["<string>"],
-                stream=False,
-                suffix="<string>",
-            ),
-        )
-    )
-
-    # OR run async with more info
-    response: Response[Optional[Union[KclCodeCompletionResponse, Error]]] = (
-        await create_kcl_code_completions.asyncio_detailed(
-            client=client,
-            body=KclCodeCompletionRequest(
-                extra=KclCodeCompletionParams(
-                    language="<string>",
-                    trim_by_indentation=False,
-                ),
-                prompt="<string>",
-                stop=["<string>"],
-                stream=False,
-                suffix="<string>",
-            ),
         )
     )
 
@@ -993,6 +812,7 @@ def test_get_async_operation():
             FileDensity,
             FileSurfaceArea,
             TextToCad,
+            TextToCadIteration,
             Error,
         ]
     ] = get_async_operation.sync(
@@ -1012,6 +832,7 @@ def test_get_async_operation():
         FileDensity,
         FileSurfaceArea,
         TextToCad,
+        TextToCadIteration,
     ] = result
     print(body)
 
@@ -1026,6 +847,7 @@ def test_get_async_operation():
                 FileDensity,
                 FileSurfaceArea,
                 TextToCad,
+                TextToCadIteration,
                 Error,
             ]
         ]
@@ -1051,6 +873,7 @@ async def test_get_async_operation_async():
             FileDensity,
             FileSurfaceArea,
             TextToCad,
+            TextToCadIteration,
             Error,
         ]
     ] = await get_async_operation.asyncio(
@@ -1069,6 +892,7 @@ async def test_get_async_operation_async():
                 FileDensity,
                 FileSurfaceArea,
                 TextToCad,
+                TextToCadIteration,
                 Error,
             ]
         ]
@@ -1884,6 +1708,312 @@ async def test_logout_async():
     # OR run async with more info
     response: Response[Optional[Error]] = await logout.asyncio_detailed(
         client=client,
+    )
+
+
+@pytest.mark.skip
+def test_list_ml_prompts():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[MlPromptResultsPage, Error]] = list_ml_prompts.sync(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: MlPromptResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[MlPromptResultsPage, Error]]] = (
+        list_ml_prompts.sync_detailed(
+            client=client,
+            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            limit=None,  # Optional[int]
+            page_token=None,  # Optional[str]
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_ml_prompts_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[MlPromptResultsPage, Error]] = await list_ml_prompts.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[MlPromptResultsPage, Error]]] = (
+        await list_ml_prompts.asyncio_detailed(
+            client=client,
+            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            limit=None,  # Optional[int]
+            page_token=None,  # Optional[str]
+        )
+    )
+
+
+@pytest.mark.skip
+def test_get_ml_prompt():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[MlPrompt, Error]] = get_ml_prompt.sync(
+        client=client,
+        id="<uuid>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: MlPrompt = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[MlPrompt, Error]]] = get_ml_prompt.sync_detailed(
+        client=client,
+        id="<uuid>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_ml_prompt_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[MlPrompt, Error]] = await get_ml_prompt.asyncio(
+        client=client,
+        id="<uuid>",
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[MlPrompt, Error]]] = (
+        await get_ml_prompt.asyncio_detailed(
+            client=client,
+            id="<uuid>",
+        )
+    )
+
+
+@pytest.mark.skip
+def test_create_kcl_code_completions():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[KclCodeCompletionResponse, Error]] = (
+        create_kcl_code_completions.sync(
+            client=client,
+            body=KclCodeCompletionRequest(
+                extra=KclCodeCompletionParams(
+                    language="<string>",
+                    trim_by_indentation=False,
+                ),
+                prompt="<string>",
+                stop=["<string>"],
+                stream=False,
+                suffix="<string>",
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: KclCodeCompletionResponse = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[KclCodeCompletionResponse, Error]]] = (
+        create_kcl_code_completions.sync_detailed(
+            client=client,
+            body=KclCodeCompletionRequest(
+                extra=KclCodeCompletionParams(
+                    language="<string>",
+                    trim_by_indentation=False,
+                ),
+                prompt="<string>",
+                stop=["<string>"],
+                stream=False,
+                suffix="<string>",
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_kcl_code_completions_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[KclCodeCompletionResponse, Error]] = (
+        await create_kcl_code_completions.asyncio(
+            client=client,
+            body=KclCodeCompletionRequest(
+                extra=KclCodeCompletionParams(
+                    language="<string>",
+                    trim_by_indentation=False,
+                ),
+                prompt="<string>",
+                stop=["<string>"],
+                stream=False,
+                suffix="<string>",
+            ),
+        )
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[KclCodeCompletionResponse, Error]]] = (
+        await create_kcl_code_completions.asyncio_detailed(
+            client=client,
+            body=KclCodeCompletionRequest(
+                extra=KclCodeCompletionParams(
+                    language="<string>",
+                    trim_by_indentation=False,
+                ),
+                prompt="<string>",
+                stop=["<string>"],
+                stream=False,
+                suffix="<string>",
+            ),
+        )
+    )
+
+
+@pytest.mark.skip
+def test_create_text_to_cad_iteration():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[TextToCadIteration, Error]] = (
+        create_text_to_cad_iteration.sync(
+            client=client,
+            body=TextToCadIterationBody(
+                original_source_code="<string>",
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: TextToCadIteration = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[TextToCadIteration, Error]]] = (
+        create_text_to_cad_iteration.sync_detailed(
+            client=client,
+            body=TextToCadIterationBody(
+                original_source_code="<string>",
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_text_to_cad_iteration_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[TextToCadIteration, Error]] = (
+        await create_text_to_cad_iteration.asyncio(
+            client=client,
+            body=TextToCadIterationBody(
+                original_source_code="<string>",
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+        )
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Union[TextToCadIteration, Error]]] = (
+        await create_text_to_cad_iteration.asyncio_detailed(
+            client=client,
+            body=TextToCadIterationBody(
+                original_source_code="<string>",
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+        )
     )
 
 
@@ -6350,7 +6480,7 @@ def test_create_text_to_cad_model_feedback():
     result: Optional[Error] = create_text_to_cad_model_feedback.sync(
         client=client,
         id="<uuid>",
-        feedback=AiFeedback.THUMBS_UP,
+        feedback=MlFeedback.THUMBS_UP,
     )
 
     if isinstance(result, Error) or result is None:
@@ -6365,7 +6495,7 @@ def test_create_text_to_cad_model_feedback():
         create_text_to_cad_model_feedback.sync_detailed(
             client=client,
             id="<uuid>",
-            feedback=AiFeedback.THUMBS_UP,
+            feedback=MlFeedback.THUMBS_UP,
         )
     )
 
@@ -6380,7 +6510,7 @@ async def test_create_text_to_cad_model_feedback_async():
     result: Optional[Error] = await create_text_to_cad_model_feedback.asyncio(
         client=client,
         id="<uuid>",
-        feedback=AiFeedback.THUMBS_UP,
+        feedback=MlFeedback.THUMBS_UP,
     )
 
     # OR run async with more info
@@ -6388,7 +6518,7 @@ async def test_create_text_to_cad_model_feedback_async():
         await create_text_to_cad_model_feedback.asyncio_detailed(
             client=client,
             id="<uuid>",
-            feedback=AiFeedback.THUMBS_UP,
+            feedback=MlFeedback.THUMBS_UP,
         )
     )
 

@@ -1,8 +1,8 @@
 from enum import Enum
 
 
-class AiFeedback(str, Enum):
-    """Human feedback on an AI response."""  # noqa: E501
+class MlFeedback(str, Enum):
+    """Human feedback on an ML response."""  # noqa: E501
 
     """# Thumbs up. """  # noqa: E501
     THUMBS_UP = "thumbs_up"
