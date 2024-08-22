@@ -1,16 +1,17 @@
 import datetime
-from typing import Dict, Literal, Optional, Union
+from typing import Dict, List, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
-from ..models.ai_feedback import AiFeedback
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
 from ..models.input_format import InputFormat
+from ..models.ml_feedback import MlFeedback
 from ..models.output_format import OutputFormat
 from ..models.point3d import Point3d
+from ..models.source_range_prompt import SourceRangePrompt
 from ..models.text_to_cad_model import TextToCadModel
 from ..models.unit_area import UnitArea
 from ..models.unit_density import UnitDensity
@@ -224,7 +225,7 @@ class text_to_cad(BaseModel):
 
     error: Optional[str] = None
 
-    feedback: Optional[AiFeedback] = None
+    feedback: Optional[MlFeedback] = None
 
     id: Uuid
 
@@ -251,6 +252,44 @@ class text_to_cad(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class text_to_cad_iteration(BaseModel):
+    """Text to CAD iteration."""
+
+    code: str
+
+    completed_at: Optional[datetime.datetime] = None
+
+    created_at: datetime.datetime
+
+    error: Optional[str] = None
+
+    feedback: Optional[MlFeedback] = None
+
+    id: Uuid
+
+    model: TextToCadModel
+
+    model_version: str
+
+    original_source_code: str
+
+    prompt: Optional[str] = None
+
+    source_ranges: List[SourceRangePrompt]
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
+    type: Literal["text_to_cad_iteration"] = "text_to_cad_iteration"
+
+    updated_at: datetime.datetime
+
+    user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 AsyncApiCallOutput = RootModel[
     Annotated[
         Union[
@@ -261,6 +300,7 @@ AsyncApiCallOutput = RootModel[
             file_density,
             file_surface_area,
             text_to_cad,
+            text_to_cad_iteration,
         ],
         Field(discriminator="type"),
     ]

@@ -1,17 +1,19 @@
 import datetime
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
-from ..models.ai_feedback import AiFeedback
-from ..models.ai_prompt_metadata import AiPromptMetadata
-from ..models.ai_prompt_type import AiPromptType
 from ..models.api_call_status import ApiCallStatus
+from ..models.ml_feedback import MlFeedback
+from ..models.source_range_prompt import SourceRangePrompt
+from ..models.text_to_cad_model import TextToCadModel
 from ..models.uuid import Uuid
 
 
-class AiPrompt(BaseModel):
-    """An AI prompt."""
+class TextToCadIteration(BaseModel):
+    """A response from a text to CAD iteration."""
+
+    code: str
 
     completed_at: Optional[datetime.datetime] = None
 
@@ -19,23 +21,23 @@ class AiPrompt(BaseModel):
 
     error: Optional[str] = None
 
-    feedback: Optional[AiFeedback] = None
+    feedback: Optional[MlFeedback] = None
 
     id: Uuid
 
-    metadata: Optional[AiPromptMetadata] = None
+    model: TextToCadModel
 
     model_version: str
 
-    output_file: Optional[str] = None
+    original_source_code: str
 
-    prompt: str
+    prompt: Optional[str] = None
+
+    source_ranges: List[SourceRangePrompt]
 
     started_at: Optional[datetime.datetime] = None
 
     status: ApiCallStatus
-
-    type: AiPromptType
 
     updated_at: datetime.datetime
 

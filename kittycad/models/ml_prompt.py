@@ -1,20 +1,17 @@
 import datetime
-from typing import Dict, Optional
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
 from ..models.api_call_status import ApiCallStatus
-from ..models.file_export_format import FileExportFormat
 from ..models.ml_feedback import MlFeedback
-from ..models.text_to_cad_model import TextToCadModel
+from ..models.ml_prompt_metadata import MlPromptMetadata
+from ..models.ml_prompt_type import MlPromptType
 from ..models.uuid import Uuid
-from .base64data import Base64Data
 
 
-class TextToCad(BaseModel):
-    """A response from a text to CAD prompt."""
-
-    code: Optional[str] = None
+class MlPrompt(BaseModel):
+    """A ML prompt."""
 
     completed_at: Optional[datetime.datetime] = None
 
@@ -26,19 +23,19 @@ class TextToCad(BaseModel):
 
     id: Uuid
 
-    model: TextToCadModel
+    metadata: Optional[MlPromptMetadata] = None
 
     model_version: str
 
-    output_format: FileExportFormat
-
-    outputs: Optional[Dict[str, Base64Data]] = None
+    output_file: Optional[str] = None
 
     prompt: str
 
     started_at: Optional[datetime.datetime] = None
 
     status: ApiCallStatus
+
+    type: MlPromptType
 
     updated_at: datetime.datetime
 

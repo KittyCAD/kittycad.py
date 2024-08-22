@@ -2,13 +2,13 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
-from ..models.ai_prompt import AiPrompt
+from ..models.ml_prompt import MlPrompt
 
 
-class AiPromptResultsPage(BaseModel):
+class MlPromptResultsPage(BaseModel):
     """A single page of results"""
 
-    items: List[AiPrompt]
+    items: List[MlPrompt]
 
     next_page: Optional[str] = None
 

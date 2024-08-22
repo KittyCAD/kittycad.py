@@ -11,6 +11,7 @@ from ...models.file_mass import FileMass
 from ...models.file_surface_area import FileSurfaceArea
 from ...models.file_volume import FileVolume
 from ...models.text_to_cad import TextToCad
+from ...models.text_to_cad_iteration import TextToCadIteration
 from ...types import Response
 
 
@@ -44,6 +45,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[
         FileDensity,
         FileSurfaceArea,
         TextToCad,
+        TextToCadIteration,
         Error,
     ]
 ]:
@@ -109,6 +111,15 @@ def _parse_response(*, response: httpx.Response) -> Optional[
             option_text_to_cad = TextToCad(**data)
             return option_text_to_cad
         except ValueError:
+            pass
+        except TypeError:
+            pass
+        try:
+            if not isinstance(data, dict):
+                raise TypeError()
+            option_text_to_cad_iteration = TextToCadIteration(**data)
+            return option_text_to_cad_iteration
+        except ValueError:
             raise
         except TypeError:
             raise
@@ -131,6 +142,7 @@ def _build_response(*, response: httpx.Response) -> Response[
             FileDensity,
             FileSurfaceArea,
             TextToCad,
+            TextToCadIteration,
             Error,
         ]
     ]
@@ -157,6 +169,7 @@ def sync_detailed(
             FileDensity,
             FileSurfaceArea,
             TextToCad,
+            TextToCadIteration,
             Error,
         ]
     ]
@@ -187,6 +200,7 @@ def sync(
         FileDensity,
         FileSurfaceArea,
         TextToCad,
+        TextToCadIteration,
         Error,
     ]
 ]:
@@ -216,6 +230,7 @@ async def asyncio_detailed(
             FileDensity,
             FileSurfaceArea,
             TextToCad,
+            TextToCadIteration,
             Error,
         ]
     ]
@@ -244,6 +259,7 @@ async def asyncio(
         FileDensity,
         FileSurfaceArea,
         TextToCad,
+        TextToCadIteration,
         Error,
     ]
 ]:
