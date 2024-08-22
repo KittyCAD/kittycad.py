@@ -14,7 +14,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/ai/kcl/completions".format(
+    url = "{}/ml/kcl/completions".format(
         client.base_url,
     )  # noqa: E501
 

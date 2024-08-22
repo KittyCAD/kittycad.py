@@ -3,11 +3,6 @@
 from .account_provider import AccountProvider
 from .add_org_member import AddOrgMember
 from .address_details import AddressDetails
-from .ai_feedback import AiFeedback
-from .ai_prompt import AiPrompt
-from .ai_prompt_metadata import AiPromptMetadata
-from .ai_prompt_results_page import AiPromptResultsPage
-from .ai_prompt_type import AiPromptType
 from .angle import Angle
 from .annotation_line_end import AnnotationLineEnd
 from .annotation_line_end_options import AnnotationLineEndOptions
@@ -142,6 +137,11 @@ from .mass import Mass
 from .meta_cluster_info import MetaClusterInfo
 from .metadata import Metadata
 from .method import Method
+from .ml_feedback import MlFeedback
+from .ml_prompt import MlPrompt
+from .ml_prompt_metadata import MlPromptMetadata
+from .ml_prompt_results_page import MlPromptResultsPage
+from .ml_prompt_type import MlPromptType
 from .modeling_app_event_type import ModelingAppEventType
 from .modeling_app_individual_subscription_tier import (
     ModelingAppIndividualSubscriptionTier,
@@ -213,6 +213,9 @@ from .solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
 from .solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from .solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from .solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
+from .source_position import SourcePosition
+from .source_range import SourceRange
+from .source_range_prompt import SourceRangePrompt
 from .stl_storage import StlStorage
 from .store_coupon_params import StoreCouponParams
 from .string_uuid import StringUuid
@@ -227,6 +230,8 @@ from .system import System
 from .take_snapshot import TakeSnapshot
 from .text_to_cad import TextToCad
 from .text_to_cad_create_body import TextToCadCreateBody
+from .text_to_cad_iteration import TextToCadIteration
+from .text_to_cad_iteration_body import TextToCadIterationBody
 from .text_to_cad_model import TextToCadModel
 from .text_to_cad_results_page import TextToCadResultsPage
 from .unit_angle import UnitAngle
