@@ -6948,6 +6948,7 @@ def test_modeling_commands_ws():
         video_res_width=10,
         webrtc=False,
         pool=None,  # Optional[str]
+        replay=None,  # Optional[str]
     ) as websocket:
 
         # Send a message.
@@ -6985,6 +6986,7 @@ async def test_modeling_commands_ws_async():
         video_res_width=10,
         webrtc=False,
         pool=None,  # Optional[str]
+        replay=None,  # Optional[str]
     )
 
     # Send a message.

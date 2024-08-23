@@ -5,6 +5,7 @@ from typing_extensions import Annotated
 
 from ..models.batch_response import BatchResponse
 from ..models.ice_server import IceServer
+from ..models.modeling_session_data import ModelingSessionData
 from ..models.ok_modeling_cmd_response import OkModelingCmdResponse
 from ..models.raw_file import RawFile
 from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
@@ -135,6 +136,24 @@ class metrics_request(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class ModelingSessionDataData(BaseModel):
+    """"""
+
+    session: ModelingSessionData
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class modeling_session_data(BaseModel):
+    """Data about the Modeling Session (application-level)."""
+
+    data: ModelingSessionDataData
+
+    type: Literal["modeling_session_data"] = "modeling_session_data"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class PongData(BaseModel):
     """"""
 
@@ -161,6 +180,7 @@ OkWebSocketResponseData = RootModel[
             modeling_batch,
             export,
             metrics_request,
+            modeling_session_data,
             pong,
         ],
         Field(discriminator="type"),

@@ -154,6 +154,7 @@ from .modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from .modeling_cmd import ModelingCmd
 from .modeling_cmd_id import ModelingCmdId
 from .modeling_cmd_req import ModelingCmdReq
+from .modeling_session_data import ModelingSessionData
 from .mouse_click import MouseClick
 from .o_auth2_client_info import OAuth2ClientInfo
 from .o_auth2_grant_type import OAuth2GrantType
