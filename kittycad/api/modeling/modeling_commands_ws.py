@@ -22,6 +22,7 @@ def _get_kwargs(
     *,
     client: Client,
     pool: Optional[str] = None,
+    replay: Optional[str] = None,
 ) -> Dict[str, Any]:
     url = "{}/ws/modeling/commands".format(client.base_url)  # noqa: E501
 
@@ -45,6 +46,13 @@ def _get_kwargs(
             url = url + "&post_effect=" + str(post_effect)
         else:
             url = url + "?post_effect=" + str(post_effect)
+
+    if replay is not None:
+
+        if "?" in url:
+            url = url + "&replay=" + str(replay)
+        else:
+            url = url + "?replay=" + str(replay)
 
     if show_grid is not None:
 
@@ -103,6 +111,7 @@ def sync(
     *,
     client: Client,
     pool: Optional[str] = None,
+    replay: Optional[str] = None,
 ) -> ClientConnection:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
@@ -110,6 +119,7 @@ def sync(
         fps=fps,
         pool=pool,
         post_effect=post_effect,
+        replay=replay,
         show_grid=show_grid,
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
@@ -132,6 +142,7 @@ async def asyncio(
     *,
     client: Client,
     pool: Optional[str] = None,
+    replay: Optional[str] = None,
 ) -> WebSocketClientProtocol:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
@@ -139,6 +150,7 @@ async def asyncio(
         fps=fps,
         pool=pool,
         post_effect=post_effect,
+        replay=replay,
         show_grid=show_grid,
         unlocked_framerate=unlocked_framerate,
         video_res_height=video_res_height,
@@ -171,6 +183,7 @@ class WebSocket:
         webrtc: bool,
         client: Client,
         pool: Optional[str] = None,
+        replay: Optional[str] = None,
     ):
         self.ws = sync(
             fps,
@@ -182,6 +195,7 @@ class WebSocket:
             webrtc,
             client=client,
             pool=pool,
+            replay=replay,
         )
 
     def __enter__(
