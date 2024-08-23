@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.modeling.modeling_commands_ws &mdash; kittycad v0.6.19 documentation</title>
+  <title>kittycad.api.modeling.modeling_commands_ws &mdash; kittycad v0.6.20 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../../_static/documentation_options.js?v=ea6954d6"></script>
+        <script src="../../../../_static/documentation_options.js?v=c0d2930c"></script>
         <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.6.19
+                v0.6.20
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
@@ -105,6 +105,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">pool</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">replay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/ws/modeling/commands&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>  <span class="c1"># noqa: E501</span>
 
@@ -128,6 +129,13 @@
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;post_effect=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">post_effect</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?post_effect=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">post_effect</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">replay</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;&amp;replay=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">replay</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;?replay=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">replay</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">show_grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
@@ -189,6 +197,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">pool</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">replay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientConnection</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
@@ -196,6 +205,7 @@
         <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span>
         <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">,</span>
         <span class="n">post_effect</span><span class="o">=</span><span class="n">post_effect</span><span class="p">,</span>
+        <span class="n">replay</span><span class="o">=</span><span class="n">replay</span><span class="p">,</span>
         <span class="n">show_grid</span><span class="o">=</span><span class="n">show_grid</span><span class="p">,</span>
         <span class="n">unlocked_framerate</span><span class="o">=</span><span class="n">unlocked_framerate</span><span class="p">,</span>
         <span class="n">video_res_height</span><span class="o">=</span><span class="n">video_res_height</span><span class="p">,</span>
@@ -221,6 +231,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
     <span class="n">pool</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">replay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WebSocketClientProtocol</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
@@ -228,6 +239,7 @@
         <span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span>
         <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">,</span>
         <span class="n">post_effect</span><span class="o">=</span><span class="n">post_effect</span><span class="p">,</span>
+        <span class="n">replay</span><span class="o">=</span><span class="n">replay</span><span class="p">,</span>
         <span class="n">show_grid</span><span class="o">=</span><span class="n">show_grid</span><span class="p">,</span>
         <span class="n">unlocked_framerate</span><span class="o">=</span><span class="n">unlocked_framerate</span><span class="p">,</span>
         <span class="n">video_res_height</span><span class="o">=</span><span class="n">video_res_height</span><span class="p">,</span>
@@ -265,6 +277,7 @@
         <span class="n">webrtc</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
         <span class="n">pool</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">replay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ws</span> <span class="o">=</span> <span class="n">sync</span><span class="p">(</span>
             <span class="n">fps</span><span class="p">,</span>
@@ -276,6 +289,7 @@
             <span class="n">webrtc</span><span class="p">,</span>
             <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
             <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">,</span>
+            <span class="n">replay</span><span class="o">=</span><span class="n">replay</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.ok_web_socket_response_data &mdash; kittycad v0.6.19 documentation</title>
+  <title>kittycad.models.ok_web_socket_response_data &mdash; kittycad v0.6.20 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=ea6954d6"></script>
+        <script src="../../../_static/documentation_options.js?v=c0d2930c"></script>
         <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.6.19
+                v0.6.20
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -86,6 +86,7 @@
 
 <span class="kn">from</span> <span class="nn">..models.batch_response</span> <span class="kn">import</span> <span class="n">BatchResponse</span>
 <span class="kn">from</span> <span class="nn">..models.ice_server</span> <span class="kn">import</span> <span class="n">IceServer</span>
+<span class="kn">from</span> <span class="nn">..models.modeling_session_data</span> <span class="kn">import</span> <span class="n">ModelingSessionData</span>
 <span class="kn">from</span> <span class="nn">..models.ok_modeling_cmd_response</span> <span class="kn">import</span> <span class="n">OkModelingCmdResponse</span>
 <span class="kn">from</span> <span class="nn">..models.raw_file</span> <span class="kn">import</span> <span class="n">RawFile</span>
 <span class="kn">from</span> <span class="nn">..models.rtc_ice_candidate_init</span> <span class="kn">import</span> <span class="n">RtcIceCandidateInit</span>
@@ -258,6 +259,30 @@
 
 
 
+<div class="viewcode-block" id="ModelingSessionDataData">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.ModelingSessionDataData.html#kittycad.models.ok_web_socket_response_data.ModelingSessionDataData">[docs]</a>
+<span class="k">class</span> <span class="nc">ModelingSessionDataData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">session</span><span class="p">:</span> <span class="n">ModelingSessionData</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="modeling_session_data">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.modeling_session_data.html#kittycad.models.ok_web_socket_response_data.modeling_session_data">[docs]</a>
+<span class="k">class</span> <span class="nc">modeling_session_data</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Data about the Modeling Session (application-level).&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ModelingSessionDataData</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;modeling_session_data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;modeling_session_data&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="PongData">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_web_socket_response_data.PongData.html#kittycad.models.ok_web_socket_response_data.PongData">[docs]</a>
 <span class="k">class</span> <span class="nc">PongData</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -290,6 +315,7 @@
             <span class="n">modeling_batch</span><span class="p">,</span>
             <span class="n">export</span><span class="p">,</span>
             <span class="n">metrics_request</span><span class="p">,</span>
+            <span class="n">modeling_session_data</span><span class="p">,</span>
             <span class="n">pong</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
