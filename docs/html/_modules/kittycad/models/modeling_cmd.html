@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.modeling_cmd &mdash; kittycad v0.6.20 documentation</title>
+  <title>kittycad.models.modeling_cmd &mdash; kittycad v0.6.21 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -15,7 +15,7 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=c0d2930c"></script>
+        <script src="../../../_static/documentation_options.js?v=64aa1715"></script>
         <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -37,7 +37,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.6.20
+                v0.6.21
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -198,7 +198,7 @@
 <div class="viewcode-block" id="solid3d_shell_face">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_shell_face.html#kittycad.models.modeling_cmd.solid3d_shell_face">[docs]</a>
 <span class="k">class</span> <span class="nc">solid3d_shell_face</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for revolving a solid 2d.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for shelling a solid3d face&quot;&quot;&quot;</span>
 
     <span class="n">face_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 
@@ -228,6 +228,27 @@
     <span class="n">tolerance</span><span class="p">:</span> <span class="n">LengthUnit</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;revolve_about_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;revolve_about_edge&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="loft">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.loft.html#kittycad.models.modeling_cmd.loft">[docs]</a>
+<span class="k">class</span> <span class="nc">loft</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for lofting sections to create a solid&quot;&quot;&quot;</span>
+
+    <span class="n">base_curve_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">bez_approximate_rational</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="n">section_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="n">tolerance</span><span class="p">:</span> <span class="n">LengthUnit</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;loft&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;loft&quot;</span>
+
+    <span class="n">v_degree</span><span class="p">:</span> <span class="nb">int</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -1680,6 +1701,7 @@
             <span class="n">revolve</span><span class="p">,</span>
             <span class="n">solid3d_shell_face</span><span class="p">,</span>
             <span class="n">revolve_about_edge</span><span class="p">,</span>
+            <span class="n">loft</span><span class="p">,</span>
             <span class="n">close_path</span><span class="p">,</span>
             <span class="n">camera_drag_start</span><span class="p">,</span>
             <span class="n">camera_drag_move</span><span class="p">,</span>
