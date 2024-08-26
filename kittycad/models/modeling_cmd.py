@@ -100,7 +100,7 @@ class revolve(BaseModel):
 
 
 class solid3d_shell_face(BaseModel):
-    """Command for revolving a solid 2d."""
+    """Command for shelling a solid3d face"""
 
     face_ids: List[str]
 
@@ -127,6 +127,24 @@ class revolve_about_edge(BaseModel):
     tolerance: LengthUnit
 
     type: Literal["revolve_about_edge"] = "revolve_about_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class loft(BaseModel):
+    """Command for lofting sections to create a solid"""
+
+    base_curve_index: Optional[int] = None
+
+    bez_approximate_rational: bool
+
+    section_ids: List[str]
+
+    tolerance: LengthUnit
+
+    type: Literal["loft"] = "loft"
+
+    v_degree: int
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1287,6 +1305,7 @@ ModelingCmd = RootModel[
             revolve,
             solid3d_shell_face,
             revolve_about_edge,
+            loft,
             close_path,
             camera_drag_start,
             camera_drag_move,
