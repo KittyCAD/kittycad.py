@@ -35,6 +35,7 @@ from ..models.get_sketch_mode_plane import GetSketchModePlane
 from ..models.highlight_set_entity import HighlightSetEntity
 from ..models.import_files import ImportFiles
 from ..models.imported_geometry import ImportedGeometry
+from ..models.loft import Loft
 from ..models.mass import Mass
 from ..models.mouse_click import MouseClick
 from ..models.path_get_curve_uuid import PathGetCurveUuid
@@ -143,6 +144,16 @@ class entity_get_sketch_paths(BaseModel):
     data: EntityGetSketchPaths
 
     type: Literal["entity_get_sketch_paths"] = "entity_get_sketch_paths"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class loft(BaseModel):
+    """The response to the 'Loft' endpoint"""
+
+    data: Loft
+
+    type: Literal["loft"] = "loft"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -621,6 +632,7 @@ OkModelingCmdResponse = RootModel[
             entity_get_parent_id,
             entity_get_all_child_uuids,
             entity_get_sketch_paths,
+            loft,
             close_path,
             camera_drag_move,
             camera_drag_end,
