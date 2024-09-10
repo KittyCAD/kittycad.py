@@ -221,7 +221,7 @@ from kittycad.models.add_org_member import AddOrgMember
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
-from kittycad.models.base64_data import Base64Data
+from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
@@ -3402,7 +3402,7 @@ def test_update_org_saml_idp():
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
                 base64_encoded_xml(
-                    data=Base64Data("<uuid>"),
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -3424,7 +3424,7 @@ def test_update_org_saml_idp():
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
                     base64_encoded_xml(
-                        data=Base64Data("<uuid>"),
+                        data=Base64Data(b"<bytes>"),
                     )
                 ),
                 technical_contact_email="<string>",
@@ -3448,7 +3448,7 @@ async def test_update_org_saml_idp_async():
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
                 base64_encoded_xml(
-                    data=Base64Data("<uuid>"),
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -3464,7 +3464,7 @@ async def test_update_org_saml_idp_async():
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
                 base64_encoded_xml(
-                    data=Base64Data("<uuid>"),
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -3483,7 +3483,7 @@ def test_create_org_saml_idp():
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
                 base64_encoded_xml(
-                    data=Base64Data("<uuid>"),
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -3505,7 +3505,7 @@ def test_create_org_saml_idp():
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
                     base64_encoded_xml(
-                        data=Base64Data("<uuid>"),
+                        data=Base64Data(b"<bytes>"),
                     )
                 ),
                 technical_contact_email="<string>",
@@ -3529,7 +3529,7 @@ async def test_create_org_saml_idp_async():
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
                 base64_encoded_xml(
-                    data=Base64Data("<uuid>"),
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -3545,7 +3545,7 @@ async def test_create_org_saml_idp_async():
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
                 base64_encoded_xml(
-                    data=Base64Data("<uuid>"),
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",

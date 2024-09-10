@@ -225,17 +225,17 @@ def generateTypeAndExamplePython(
 
                 example_imports = (
                     example_imports
-                    + "from kittycad.models.base64_data import Base64Data\n"
+                    + "from kittycad.models.base64data import Base64Data\n"
                 )
 
-                parameter_example = parameter_type + 'Base64Data("<bytes>")'
+                parameter_example = parameter_type + 'Base64Data(b"<bytes>")'
             else:
                 example_imports = (
                     example_imports
-                    + "from kittycad.models.base64_data import Base64Data\n"
+                    + "from kittycad.models.base64data import Base64Data\n"
                 )
                 parameter_type = "Base64Data"
-                parameter_example = 'Base64Data("<uuid>")'
+                parameter_example = 'Base64Data(b"<bytes>")'
 
         elif (
             schema["type"] == "string" and "enum" in schema and len(schema["enum"]) > 0
@@ -1752,6 +1752,8 @@ def generateObjectTypeCode(
                                 + str(property_schema["default"])
                                 + '"""))'
                             )
+                        elif isinstance(property_schema["default"], str):
+                            field_type += ' = "' + property_schema["default"] + '"'
                         else:
                             field_type += " = " + str(property_schema["default"])
                     else:
