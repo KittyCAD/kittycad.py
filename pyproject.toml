@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kittycad"
-version = "0.6.24"
+version = "0.7.0"
 description = "A client library for accessing KittyCAD"
 
 authors = []
@@ -81,7 +81,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 "examples_test.py" = ["F841"]
 
 [tool.mypy]
-exclude = []
+exclude = ["venv"]
 show_error_codes = true
 ignore_missing_imports = true
 check_untyped_defs = true

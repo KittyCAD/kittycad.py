@@ -24,7 +24,7 @@ class Invoice(BaseModel):
 
     created_at: datetime.datetime
 
-    currency: Currency = "usd"
+    currency: Currency = "usd"  # type: ignore
 
     customer_email: Optional[str] = None
 

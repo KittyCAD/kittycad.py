@@ -8,7 +8,7 @@ from ..models.kcl_code_completion_params import KclCodeCompletionParams
 class KclCodeCompletionRequest(BaseModel):
     """A request to generate KCL code completions."""
 
-    extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}
+    extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}  # type: ignore
 
     max_tokens: Optional[int] = None
 

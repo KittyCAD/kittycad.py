@@ -674,7 +674,7 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 class solid3d_fillet_edge(BaseModel):
     """Fillets the given edge with the specified radius."""
 
-    cut_type: CutType = "fillet"
+    cut_type: CutType = "fillet"  # type: ignore
 
     edge_id: str
 

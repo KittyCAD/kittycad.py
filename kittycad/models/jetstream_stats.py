@@ -8,7 +8,7 @@ class JetstreamStats(BaseModel):
 
     accounts: int = 0
 
-    api: JetstreamApiStats = {"errors": 0, "inflight": 0, "total": 0}
+    api: JetstreamApiStats = {"errors": 0, "inflight": 0, "total": 0}  # type: ignore
 
     ha_assets: int = 0
 

@@ -16,7 +16,7 @@ class Customer(BaseModel):
 
     created_at: datetime.datetime
 
-    currency: Currency = "usd"
+    currency: Currency = "usd"  # type: ignore
 
     delinquent: bool = False
 

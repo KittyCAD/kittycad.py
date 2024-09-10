@@ -1,3 +1,4 @@
+import datetime
 from typing import List, Optional, Union
 
 import pytest
@@ -220,14 +221,15 @@ from kittycad.models.add_org_member import AddOrgMember
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
+from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
-from kittycad.models.event import modeling_app_event
+from kittycad.models.event import Event, modeling_app_event
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import base64_encoded_xml
+from kittycad.models.idp_metadata_source import IdpMetadataSource, base64_encoded_xml
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.ml_feedback import MlFeedback
@@ -251,7 +253,7 @@ from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
-from kittycad.models.subscription_tier_price import per_user
+from kittycad.models.subscription_tier_price import SubscriptionTierPrice, per_user
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.unit_angle import UnitAngle
@@ -573,7 +575,7 @@ def test_get_api_call():
 
     result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call.sync(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -587,7 +589,7 @@ def test_get_api_call():
     response: Response[Optional[Union[ApiCallWithPrice, Error]]] = (
         get_api_call.sync_detailed(
             client=client,
-            id="<uuid>",
+            id="<string>",
         )
     )
 
@@ -601,7 +603,7 @@ async def test_get_api_call_async():
 
     result: Optional[Union[ApiCallWithPrice, Error]] = await get_api_call.asyncio(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     # OR run async with more info
@@ -609,7 +611,7 @@ async def test_get_api_call_async():
         Optional[Union[ApiCallWithPrice, Error]]
     ] = await get_api_call.asyncio_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -820,7 +822,7 @@ def test_get_async_operation():
         ]
     ] = get_async_operation.sync(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -856,7 +858,7 @@ def test_get_async_operation():
         ]
     ] = get_async_operation.sync_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -881,7 +883,7 @@ async def test_get_async_operation_async():
         ]
     ] = await get_async_operation.asyncio(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     # OR run async with more info
@@ -901,7 +903,7 @@ async def test_get_async_operation_async():
         ]
     ] = await get_async_operation.asyncio_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -1020,7 +1022,7 @@ def test_get_auth_saml():
 
     result: Optional[Error] = get_auth_saml.sync(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         callback_url=None,  # Optional[str]
     )
 
@@ -1034,7 +1036,7 @@ def test_get_auth_saml():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Error]] = get_auth_saml.sync_detailed(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         callback_url=None,  # Optional[str]
     )
 
@@ -1048,14 +1050,14 @@ async def test_get_auth_saml_async():
 
     result: Optional[Error] = await get_auth_saml.asyncio(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         callback_url=None,  # Optional[str]
     )
 
     # OR run async with more info
     response: Response[Optional[Error]] = await get_auth_saml.asyncio_detailed(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         callback_url=None,  # Optional[str]
     )
 
@@ -1067,7 +1069,7 @@ def test_post_auth_saml():
 
     result: Optional[Error] = post_auth_saml.sync(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1081,7 +1083,7 @@ def test_post_auth_saml():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Error]] = post_auth_saml.sync_detailed(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1095,14 +1097,14 @@ async def test_post_auth_saml_async():
 
     result: Optional[Error] = await post_auth_saml.asyncio(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         body=bytes("some bytes", "utf-8"),
     )
 
     # OR run async with more info
     response: Response[Optional[Error]] = await post_auth_saml.asyncio_detailed(
         client=client,
-        provider_id=Uuid("<uuid>"),
+        provider_id=Uuid("<string>"),
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -1157,12 +1159,14 @@ def test_create_event():
 
     result: Optional[Error] = create_event.sync(
         client=client,
-        body=modeling_app_event(
-            created_at="<string>",
-            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
-            project_name="<string>",
-            source_id="<uuid>",
-            user_id="<string>",
+        body=Event(
+            modeling_app_event(
+                created_at=datetime.datetime.now(),
+                event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+                project_name="<string>",
+                source_id="<string>",
+                user_id="<string>",
+            )
         ),
     )
 
@@ -1176,12 +1180,14 @@ def test_create_event():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Error]] = create_event.sync_detailed(
         client=client,
-        body=modeling_app_event(
-            created_at="<string>",
-            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
-            project_name="<string>",
-            source_id="<uuid>",
-            user_id="<string>",
+        body=Event(
+            modeling_app_event(
+                created_at=datetime.datetime.now(),
+                event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+                project_name="<string>",
+                source_id="<string>",
+                user_id="<string>",
+            )
         ),
     )
 
@@ -1195,24 +1201,28 @@ async def test_create_event_async():
 
     result: Optional[Error] = await create_event.asyncio(
         client=client,
-        body=modeling_app_event(
-            created_at="<string>",
-            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
-            project_name="<string>",
-            source_id="<uuid>",
-            user_id="<string>",
+        body=Event(
+            modeling_app_event(
+                created_at=datetime.datetime.now(),
+                event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+                project_name="<string>",
+                source_id="<string>",
+                user_id="<string>",
+            )
         ),
     )
 
     # OR run async with more info
     response: Response[Optional[Error]] = await create_event.asyncio_detailed(
         client=client,
-        body=modeling_app_event(
-            created_at="<string>",
-            event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
-            project_name="<string>",
-            source_id="<uuid>",
-            user_id="<string>",
+        body=Event(
+            modeling_app_event(
+                created_at=datetime.datetime.now(),
+                event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
+                project_name="<string>",
+                source_id="<string>",
+                user_id="<string>",
+            )
         ),
     )
 
@@ -1776,7 +1786,7 @@ def test_get_ml_prompt():
 
     result: Optional[Union[MlPrompt, Error]] = get_ml_prompt.sync(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -1789,7 +1799,7 @@ def test_get_ml_prompt():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Union[MlPrompt, Error]]] = get_ml_prompt.sync_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -1802,7 +1812,7 @@ async def test_get_ml_prompt_async():
 
     result: Optional[Union[MlPrompt, Error]] = await get_ml_prompt.asyncio(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     # OR run async with more info
@@ -1810,7 +1820,7 @@ async def test_get_ml_prompt_async():
         Optional[Union[MlPrompt, Error]]
     ] = await get_ml_prompt.asyncio_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -2282,7 +2292,7 @@ def test_get_api_call_for_org():
 
     result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call_for_org.sync(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -2296,7 +2306,7 @@ def test_get_api_call_for_org():
     response: Response[Optional[Union[ApiCallWithPrice, Error]]] = (
         get_api_call_for_org.sync_detailed(
             client=client,
-            id="<uuid>",
+            id="<string>",
         )
     )
 
@@ -2312,7 +2322,7 @@ async def test_get_api_call_for_org_async():
         Union[ApiCallWithPrice, Error]
     ] = await get_api_call_for_org.asyncio(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     # OR run async with more info
@@ -2320,7 +2330,7 @@ async def test_get_api_call_for_org_async():
         Optional[Union[ApiCallWithPrice, Error]]
     ] = await get_api_call_for_org.asyncio_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -2451,7 +2461,7 @@ def test_get_org_member():
 
     result: Optional[Union[OrgMember, Error]] = get_org_member.sync(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -2465,7 +2475,7 @@ def test_get_org_member():
     response: Response[Optional[Union[OrgMember, Error]]] = (
         get_org_member.sync_detailed(
             client=client,
-            user_id=Uuid("<uuid>"),
+            user_id=Uuid("<string>"),
         )
     )
 
@@ -2479,7 +2489,7 @@ async def test_get_org_member_async():
 
     result: Optional[Union[OrgMember, Error]] = await get_org_member.asyncio(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
     )
 
     # OR run async with more info
@@ -2487,7 +2497,7 @@ async def test_get_org_member_async():
         Optional[Union[OrgMember, Error]]
     ] = await get_org_member.asyncio_detailed(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
     )
 
 
@@ -2498,7 +2508,7 @@ def test_update_org_member():
 
     result: Optional[Union[OrgMember, Error]] = update_org_member.sync(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
         body=UpdateMemberToOrgBody(
             role=UserOrgRole.ADMIN,
         ),
@@ -2515,7 +2525,7 @@ def test_update_org_member():
     response: Response[Optional[Union[OrgMember, Error]]] = (
         update_org_member.sync_detailed(
             client=client,
-            user_id=Uuid("<uuid>"),
+            user_id=Uuid("<string>"),
             body=UpdateMemberToOrgBody(
                 role=UserOrgRole.ADMIN,
             ),
@@ -2532,7 +2542,7 @@ async def test_update_org_member_async():
 
     result: Optional[Union[OrgMember, Error]] = await update_org_member.asyncio(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
         body=UpdateMemberToOrgBody(
             role=UserOrgRole.ADMIN,
         ),
@@ -2543,7 +2553,7 @@ async def test_update_org_member_async():
         Optional[Union[OrgMember, Error]]
     ] = await update_org_member.asyncio_detailed(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
         body=UpdateMemberToOrgBody(
             role=UserOrgRole.ADMIN,
         ),
@@ -2557,7 +2567,7 @@ def test_delete_org_member():
 
     result: Optional[Error] = delete_org_member.sync(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -2570,7 +2580,7 @@ def test_delete_org_member():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Error]] = delete_org_member.sync_detailed(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
     )
 
 
@@ -2583,13 +2593,13 @@ async def test_delete_org_member_async():
 
     result: Optional[Error] = await delete_org_member.asyncio(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
     )
 
     # OR run async with more info
     response: Response[Optional[Error]] = await delete_org_member.asyncio_detailed(
         client=client,
-        user_id=Uuid("<uuid>"),
+        user_id=Uuid("<string>"),
     )
 
 
@@ -3390,8 +3400,10 @@ def test_update_org_saml_idp():
         client=client,
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
-            idp_metadata_source=base64_encoded_xml(
-                data="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                base64_encoded_xml(
+                    data=Base64Data(b"<bytes>"),
+                )
             ),
             technical_contact_email="<string>",
         ),
@@ -3410,8 +3422,10 @@ def test_update_org_saml_idp():
             client=client,
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
-                idp_metadata_source=base64_encoded_xml(
-                    data="<string>",
+                idp_metadata_source=IdpMetadataSource(
+                    base64_encoded_xml(
+                        data=Base64Data(b"<bytes>"),
+                    )
                 ),
                 technical_contact_email="<string>",
             ),
@@ -3432,8 +3446,10 @@ async def test_update_org_saml_idp_async():
         client=client,
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
-            idp_metadata_source=base64_encoded_xml(
-                data="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                base64_encoded_xml(
+                    data=Base64Data(b"<bytes>"),
+                )
             ),
             technical_contact_email="<string>",
         ),
@@ -3446,8 +3462,10 @@ async def test_update_org_saml_idp_async():
         client=client,
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
-            idp_metadata_source=base64_encoded_xml(
-                data="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                base64_encoded_xml(
+                    data=Base64Data(b"<bytes>"),
+                )
             ),
             technical_contact_email="<string>",
         ),
@@ -3463,8 +3481,10 @@ def test_create_org_saml_idp():
         client=client,
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
-            idp_metadata_source=base64_encoded_xml(
-                data="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                base64_encoded_xml(
+                    data=Base64Data(b"<bytes>"),
+                )
             ),
             technical_contact_email="<string>",
         ),
@@ -3483,8 +3503,10 @@ def test_create_org_saml_idp():
             client=client,
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
-                idp_metadata_source=base64_encoded_xml(
-                    data="<string>",
+                idp_metadata_source=IdpMetadataSource(
+                    base64_encoded_xml(
+                        data=Base64Data(b"<bytes>"),
+                    )
                 ),
                 technical_contact_email="<string>",
             ),
@@ -3505,8 +3527,10 @@ async def test_create_org_saml_idp_async():
         client=client,
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
-            idp_metadata_source=base64_encoded_xml(
-                data="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                base64_encoded_xml(
+                    data=Base64Data(b"<bytes>"),
+                )
             ),
             technical_contact_email="<string>",
         ),
@@ -3519,8 +3543,10 @@ async def test_create_org_saml_idp_async():
         client=client,
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
-            idp_metadata_source=base64_encoded_xml(
-                data="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                base64_encoded_xml(
+                    data=Base64Data(b"<bytes>"),
+                )
             ),
             technical_contact_email="<string>",
         ),
@@ -3832,7 +3858,7 @@ def test_get_any_org():
 
     result: Optional[Union[Org, Error]] = get_any_org.sync(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -3845,7 +3871,7 @@ def test_get_any_org():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Union[Org, Error]]] = get_any_org.sync_detailed(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
 
@@ -3858,7 +3884,7 @@ async def test_get_any_org_async():
 
     result: Optional[Union[Org, Error]] = await get_any_org.asyncio(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
     # OR run async with more info
@@ -3866,7 +3892,7 @@ async def test_get_any_org_async():
         Optional[Union[Org, Error]]
     ] = await get_any_org.asyncio_detailed(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
 
@@ -3878,10 +3904,12 @@ def test_update_enterprise_pricing_for_org():
     result: Optional[Union[ZooProductSubscriptions, Error]] = (
         update_enterprise_pricing_for_org.sync(
             client=client,
-            id=Uuid("<uuid>"),
-            body=per_user(
-                interval=PlanInterval.DAY,
-                price=3.14,
+            id=Uuid("<string>"),
+            body=SubscriptionTierPrice(
+                per_user(
+                    interval=PlanInterval.DAY,
+                    price=3.14,
+                )
             ),
         )
     )
@@ -3897,10 +3925,12 @@ def test_update_enterprise_pricing_for_org():
     response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
         update_enterprise_pricing_for_org.sync_detailed(
             client=client,
-            id=Uuid("<uuid>"),
-            body=per_user(
-                interval=PlanInterval.DAY,
-                price=3.14,
+            id=Uuid("<string>"),
+            body=SubscriptionTierPrice(
+                per_user(
+                    interval=PlanInterval.DAY,
+                    price=3.14,
+                )
             ),
         )
     )
@@ -3917,10 +3947,12 @@ async def test_update_enterprise_pricing_for_org_async():
         Union[ZooProductSubscriptions, Error]
     ] = await update_enterprise_pricing_for_org.asyncio(
         client=client,
-        id=Uuid("<uuid>"),
-        body=per_user(
-            interval=PlanInterval.DAY,
-            price=3.14,
+        id=Uuid("<string>"),
+        body=SubscriptionTierPrice(
+            per_user(
+                interval=PlanInterval.DAY,
+                price=3.14,
+            )
         ),
     )
 
@@ -3929,10 +3961,12 @@ async def test_update_enterprise_pricing_for_org_async():
         Optional[Union[ZooProductSubscriptions, Error]]
     ] = await update_enterprise_pricing_for_org.asyncio_detailed(
         client=client,
-        id=Uuid("<uuid>"),
-        body=per_user(
-            interval=PlanInterval.DAY,
-            price=3.14,
+        id=Uuid("<string>"),
+        body=SubscriptionTierPrice(
+            per_user(
+                interval=PlanInterval.DAY,
+                price=3.14,
+            )
         ),
     )
 
@@ -3945,7 +3979,7 @@ def test_get_payment_balance_for_any_org():
     result: Optional[Union[CustomerBalance, Error]] = (
         get_payment_balance_for_any_org.sync(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
         )
     )
 
@@ -3960,7 +3994,7 @@ def test_get_payment_balance_for_any_org():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         get_payment_balance_for_any_org.sync_detailed(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
         )
     )
 
@@ -3976,7 +4010,7 @@ async def test_get_payment_balance_for_any_org_async():
         Union[CustomerBalance, Error]
     ] = await get_payment_balance_for_any_org.asyncio(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
     # OR run async with more info
@@ -3984,7 +4018,7 @@ async def test_get_payment_balance_for_any_org_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await get_payment_balance_for_any_org.asyncio_detailed(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
 
@@ -3996,7 +4030,7 @@ def test_update_payment_balance_for_any_org():
     result: Optional[Union[CustomerBalance, Error]] = (
         update_payment_balance_for_any_org.sync(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
             body=UpdatePaymentBalance(),
         )
     )
@@ -4012,7 +4046,7 @@ def test_update_payment_balance_for_any_org():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         update_payment_balance_for_any_org.sync_detailed(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
             body=UpdatePaymentBalance(),
         )
     )
@@ -4029,7 +4063,7 @@ async def test_update_payment_balance_for_any_org_async():
         Union[CustomerBalance, Error]
     ] = await update_payment_balance_for_any_org.asyncio(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
         body=UpdatePaymentBalance(),
     )
 
@@ -4038,7 +4072,7 @@ async def test_update_payment_balance_for_any_org_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await update_payment_balance_for_any_org.asyncio_detailed(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
         body=UpdatePaymentBalance(),
     )
 
@@ -5155,7 +5189,7 @@ def test_get_api_call_for_user():
 
     result: Optional[Union[ApiCallWithPrice, Error]] = get_api_call_for_user.sync(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -5169,7 +5203,7 @@ def test_get_api_call_for_user():
     response: Response[Optional[Union[ApiCallWithPrice, Error]]] = (
         get_api_call_for_user.sync_detailed(
             client=client,
-            id="<uuid>",
+            id="<string>",
         )
     )
 
@@ -5185,7 +5219,7 @@ async def test_get_api_call_for_user_async():
         Union[ApiCallWithPrice, Error]
     ] = await get_api_call_for_user.asyncio(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     # OR run async with more info
@@ -5193,7 +5227,7 @@ async def test_get_api_call_for_user_async():
         Optional[Union[ApiCallWithPrice, Error]]
     ] = await get_api_call_for_user.asyncio_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -6433,7 +6467,7 @@ def test_get_text_to_cad_model_for_user():
 
     result: Optional[Union[TextToCad, Error]] = get_text_to_cad_model_for_user.sync(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     if isinstance(result, Error) or result is None:
@@ -6447,7 +6481,7 @@ def test_get_text_to_cad_model_for_user():
     response: Response[Optional[Union[TextToCad, Error]]] = (
         get_text_to_cad_model_for_user.sync_detailed(
             client=client,
-            id="<uuid>",
+            id="<string>",
         )
     )
 
@@ -6463,7 +6497,7 @@ async def test_get_text_to_cad_model_for_user_async():
         Union[TextToCad, Error]
     ] = await get_text_to_cad_model_for_user.asyncio(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
     # OR run async with more info
@@ -6471,7 +6505,7 @@ async def test_get_text_to_cad_model_for_user_async():
         Optional[Union[TextToCad, Error]]
     ] = await get_text_to_cad_model_for_user.asyncio_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
     )
 
 
@@ -6482,7 +6516,7 @@ def test_create_text_to_cad_model_feedback():
 
     result: Optional[Error] = create_text_to_cad_model_feedback.sync(
         client=client,
-        id="<uuid>",
+        id="<string>",
         feedback=MlFeedback.THUMBS_UP,
     )
 
@@ -6497,7 +6531,7 @@ def test_create_text_to_cad_model_feedback():
     response: Response[Optional[Error]] = (
         create_text_to_cad_model_feedback.sync_detailed(
             client=client,
-            id="<uuid>",
+            id="<string>",
             feedback=MlFeedback.THUMBS_UP,
         )
     )
@@ -6512,7 +6546,7 @@ async def test_create_text_to_cad_model_feedback_async():
 
     result: Optional[Error] = await create_text_to_cad_model_feedback.asyncio(
         client=client,
-        id="<uuid>",
+        id="<string>",
         feedback=MlFeedback.THUMBS_UP,
     )
 
@@ -6521,7 +6555,7 @@ async def test_create_text_to_cad_model_feedback_async():
         Optional[Error]
     ] = await create_text_to_cad_model_feedback.asyncio_detailed(
         client=client,
-        id="<uuid>",
+        id="<string>",
         feedback=MlFeedback.THUMBS_UP,
     )
 
@@ -6799,7 +6833,7 @@ def test_get_payment_balance_for_any_user():
     result: Optional[Union[CustomerBalance, Error]] = (
         get_payment_balance_for_any_user.sync(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
         )
     )
 
@@ -6814,7 +6848,7 @@ def test_get_payment_balance_for_any_user():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         get_payment_balance_for_any_user.sync_detailed(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
         )
     )
 
@@ -6830,7 +6864,7 @@ async def test_get_payment_balance_for_any_user_async():
         Union[CustomerBalance, Error]
     ] = await get_payment_balance_for_any_user.asyncio(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
     # OR run async with more info
@@ -6838,7 +6872,7 @@ async def test_get_payment_balance_for_any_user_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await get_payment_balance_for_any_user.asyncio_detailed(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
     )
 
 
@@ -6850,7 +6884,7 @@ def test_update_payment_balance_for_any_user():
     result: Optional[Union[CustomerBalance, Error]] = (
         update_payment_balance_for_any_user.sync(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
             body=UpdatePaymentBalance(),
         )
     )
@@ -6866,7 +6900,7 @@ def test_update_payment_balance_for_any_user():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         update_payment_balance_for_any_user.sync_detailed(
             client=client,
-            id=Uuid("<uuid>"),
+            id=Uuid("<string>"),
             body=UpdatePaymentBalance(),
         )
     )
@@ -6883,7 +6917,7 @@ async def test_update_payment_balance_for_any_user_async():
         Union[CustomerBalance, Error]
     ] = await update_payment_balance_for_any_user.asyncio(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
         body=UpdatePaymentBalance(),
     )
 
@@ -6892,7 +6926,7 @@ async def test_update_payment_balance_for_any_user_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await update_payment_balance_for_any_user.asyncio_detailed(
         client=client,
-        id=Uuid("<uuid>"),
+        id=Uuid("<string>"),
         body=UpdatePaymentBalance(),
     )
 
