@@ -178,6 +178,40 @@ def generateTypeAndExamplePython(
             else:
                 parameter_type = "str"
                 parameter_example = '"<uuid>"'
+        elif "format" in schema and schema["format"] == "byte":
+            if name != "":
+                parameter_type = name
+                if import_path is None:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + camel_to_snake(parameter_type)
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+                else:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + ip
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+
+                example_imports = (
+                    example_imports
+                    + "from kittycad.models.base64_data import Base64Data\n"
+                )
+
+                parameter_example = parameter_type + 'Base64Data("<bytes>")'
+            else:
+                example_imports = (
+                    example_imports
+                    + "from kittycad.models.base64_data import Base64Data\n"
+                )
+                parameter_type = "Base64Data"
+                parameter_example = 'Base64Data("<uuid>")'
+
         elif (
             schema["type"] == "string" and "enum" in schema and len(schema["enum"]) > 0
         ):
@@ -368,9 +402,6 @@ def generateTypeAndExamplePython(
         parameter_type = schema["$ref"].replace("#/components/schemas/", "")
         # Get the schema for the reference.
         ref_schema = data["components"]["schemas"][parameter_type]
-
-        if parameter_type == "IdpMetadataSource":
-            print(ref_schema)
 
         return generateTypeAndExamplePython(
             parameter_type, ref_schema, data, None, None
