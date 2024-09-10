@@ -13,6 +13,8 @@ on:
       - .github/workflows/build-test.yml
       - 'pyproject.toml'
       - 'spec.json'
+  workflow_dispatch:
+    inputs:
 jobs:
   build-test:
 
