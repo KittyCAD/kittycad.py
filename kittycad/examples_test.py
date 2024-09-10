@@ -219,6 +219,7 @@ from kittycad.models import (
 from kittycad.models.add_org_member import AddOrgMember
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
+from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
@@ -244,6 +245,8 @@ from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.rtc_sdp_type import RtcSdpType
 from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.service_account_token_uuid import ServiceAccountTokenUuid
+from kittycad.models.session_token_uuid import SessionTokenUuid
 from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
@@ -3680,7 +3683,7 @@ def test_get_service_account_for_org():
 
     result: Optional[Union[ServiceAccount, Error]] = get_service_account_for_org.sync(
         client=client,
-        token="<uuid>",
+        token=ServiceAccountTokenUuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -3694,7 +3697,7 @@ def test_get_service_account_for_org():
     response: Response[Optional[Union[ServiceAccount, Error]]] = (
         get_service_account_for_org.sync_detailed(
             client=client,
-            token="<uuid>",
+            token=ServiceAccountTokenUuid("<string>"),
         )
     )
 
@@ -3709,7 +3712,7 @@ async def test_get_service_account_for_org_async():
     result: Optional[Union[ServiceAccount, Error]] = (
         await get_service_account_for_org.asyncio(
             client=client,
-            token="<uuid>",
+            token=ServiceAccountTokenUuid("<string>"),
         )
     )
 
@@ -3717,7 +3720,7 @@ async def test_get_service_account_for_org_async():
     response: Response[Optional[Union[ServiceAccount, Error]]] = (
         await get_service_account_for_org.asyncio_detailed(
             client=client,
-            token="<uuid>",
+            token=ServiceAccountTokenUuid("<string>"),
         )
     )
 
@@ -3729,7 +3732,7 @@ def test_delete_service_account_for_org():
 
     result: Optional[Error] = delete_service_account_for_org.sync(
         client=client,
-        token="<uuid>",
+        token=ServiceAccountTokenUuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -3742,7 +3745,7 @@ def test_delete_service_account_for_org():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Error]] = delete_service_account_for_org.sync_detailed(
         client=client,
-        token="<uuid>",
+        token=ServiceAccountTokenUuid("<string>"),
     )
 
 
@@ -3755,14 +3758,14 @@ async def test_delete_service_account_for_org_async():
 
     result: Optional[Error] = await delete_service_account_for_org.asyncio(
         client=client,
-        token="<uuid>",
+        token=ServiceAccountTokenUuid("<string>"),
     )
 
     # OR run async with more info
     response: Response[Optional[Error]] = (
         await delete_service_account_for_org.asyncio_detailed(
             client=client,
-            token="<uuid>",
+            token=ServiceAccountTokenUuid("<string>"),
         )
     )
 
@@ -5305,7 +5308,7 @@ def test_get_api_token_for_user():
 
     result: Optional[Union[ApiToken, Error]] = get_api_token_for_user.sync(
         client=client,
-        token="<uuid>",
+        token=ApiTokenUuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -5319,7 +5322,7 @@ def test_get_api_token_for_user():
     response: Response[Optional[Union[ApiToken, Error]]] = (
         get_api_token_for_user.sync_detailed(
             client=client,
-            token="<uuid>",
+            token=ApiTokenUuid("<string>"),
         )
     )
 
@@ -5333,14 +5336,14 @@ async def test_get_api_token_for_user_async():
 
     result: Optional[Union[ApiToken, Error]] = await get_api_token_for_user.asyncio(
         client=client,
-        token="<uuid>",
+        token=ApiTokenUuid("<string>"),
     )
 
     # OR run async with more info
     response: Response[Optional[Union[ApiToken, Error]]] = (
         await get_api_token_for_user.asyncio_detailed(
             client=client,
-            token="<uuid>",
+            token=ApiTokenUuid("<string>"),
         )
     )
 
@@ -5352,7 +5355,7 @@ def test_delete_api_token_for_user():
 
     result: Optional[Error] = delete_api_token_for_user.sync(
         client=client,
-        token="<uuid>",
+        token=ApiTokenUuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -5365,7 +5368,7 @@ def test_delete_api_token_for_user():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Error]] = delete_api_token_for_user.sync_detailed(
         client=client,
-        token="<uuid>",
+        token=ApiTokenUuid("<string>"),
     )
 
 
@@ -5378,14 +5381,14 @@ async def test_delete_api_token_for_user_async():
 
     result: Optional[Error] = await delete_api_token_for_user.asyncio(
         client=client,
-        token="<uuid>",
+        token=ApiTokenUuid("<string>"),
     )
 
     # OR run async with more info
     response: Response[Optional[Error]] = (
         await delete_api_token_for_user.asyncio_detailed(
             client=client,
-            token="<uuid>",
+            token=ApiTokenUuid("<string>"),
         )
     )
 
@@ -6320,7 +6323,7 @@ def test_get_session_for_user():
 
     result: Optional[Union[Session, Error]] = get_session_for_user.sync(
         client=client,
-        token="<uuid>",
+        token=SessionTokenUuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -6334,7 +6337,7 @@ def test_get_session_for_user():
     response: Response[Optional[Union[Session, Error]]] = (
         get_session_for_user.sync_detailed(
             client=client,
-            token="<uuid>",
+            token=SessionTokenUuid("<string>"),
         )
     )
 
@@ -6348,14 +6351,14 @@ async def test_get_session_for_user_async():
 
     result: Optional[Union[Session, Error]] = await get_session_for_user.asyncio(
         client=client,
-        token="<uuid>",
+        token=SessionTokenUuid("<string>"),
     )
 
     # OR run async with more info
     response: Response[Optional[Union[Session, Error]]] = (
         await get_session_for_user.asyncio_detailed(
             client=client,
-            token="<uuid>",
+            token=SessionTokenUuid("<string>"),
         )
     )
 
