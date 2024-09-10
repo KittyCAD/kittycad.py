@@ -1744,16 +1744,16 @@ def generateObjectTypeCode(
                     if "default" in property_schema:
                         if field_type == "str":
                             field_type += ' = "' + property_schema["default"] + '"'
+                        elif isinstance(property_schema["default"], str):
+                            field_type += (
+                                ' = "' + property_schema["default"] + '" # type: ignore'
+                            )
                         elif "allOf" in property_schema:
                             field_type += (
                                 " = "
-                                + field_type
-                                + '(**json.loads("""'
                                 + str(property_schema["default"])
-                                + '"""))'
+                                + " # type: ignore"
                             )
-                        elif isinstance(property_schema["default"], str):
-                            field_type += ' = "' + property_schema["default"] + '"'
                         else:
                             field_type += " = " + str(property_schema["default"])
                     else:

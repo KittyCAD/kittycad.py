@@ -1,5 +1,4 @@
 import datetime
-import json
 from typing import Dict
 
 from pydantic import BaseModel, ConfigDict
@@ -17,11 +16,14 @@ class Connection(BaseModel):
 
     auth_timeout: int = 0
 
-    cluster: Cluster = Cluster(
-        **json.loads(
-            """{'addr': None, 'auth_timeout': 0, 'cluster_port': 0, 'name': '', 'tls_timeout': 0, 'urls': []}"""
-        )
-    )
+    cluster: Cluster = {
+        "addr": None,
+        "auth_timeout": 0,
+        "cluster_port": 0,
+        "name": "",
+        "tls_timeout": 0,
+        "urls": [],
+    }  # type: ignore
 
     config_load_time: datetime.datetime
 
@@ -31,11 +33,13 @@ class Connection(BaseModel):
 
     cpu: float = 0.0
 
-    gateway: Gateway = Gateway(
-        **json.loads(
-            """{'auth_timeout': 0, 'host': '', 'name': '', 'port': 0, 'tls_timeout': 0}"""
-        )
-    )
+    gateway: Gateway = {
+        "auth_timeout": 0,
+        "host": "",
+        "name": "",
+        "port": 0,
+        "tls_timeout": 0,
+    }  # type: ignore
 
     git_commit: str = ""
 
@@ -59,15 +63,21 @@ class Connection(BaseModel):
 
     in_msgs: int = 0
 
-    jetstream: Jetstream = Jetstream(
-        **json.loads(
-            """{'config': {'domain': '', 'max_memory': 0, 'max_storage': 0, 'store_dir': ''}, 'meta': {'cluster_size': 0, 'leader': '', 'name': ''}, 'stats': {'accounts': 0, 'api': {'errors': 0, 'inflight': 0, 'total': 0}, 'ha_assets': 0, 'memory': 0, 'reserved_memory': 0, 'reserved_store': 0, 'store': 0}}"""
-        )
-    )
+    jetstream: Jetstream = {
+        "config": {"domain": "", "max_memory": 0, "max_storage": 0, "store_dir": ""},
+        "meta": {"cluster_size": 0, "leader": "", "name": ""},
+        "stats": {
+            "accounts": 0,
+            "api": {"errors": 0, "inflight": 0, "total": 0},
+            "ha_assets": 0,
+            "memory": 0,
+            "reserved_memory": 0,
+            "reserved_store": 0,
+            "store": 0,
+        },
+    }  # type: ignore
 
-    leaf: LeafNode = LeafNode(
-        **json.loads("""{'auth_timeout': 0, 'host': '', 'port': 0, 'tls_timeout': 0}""")
-    )
+    leaf: LeafNode = {"auth_timeout": 0, "host": "", "port": 0, "tls_timeout": 0}  # type: ignore
 
     leafnodes: int = 0
 

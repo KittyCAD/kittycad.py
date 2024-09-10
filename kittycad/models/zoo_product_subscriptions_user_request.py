@@ -1,5 +1,3 @@
-import json
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.modeling_app_individual_subscription_tier import (
@@ -10,8 +8,6 @@ from ..models.modeling_app_individual_subscription_tier import (
 class ZooProductSubscriptionsUserRequest(BaseModel):
     """A struct of Zoo product subscriptions a user can request."""
 
-    modeling_app: ModelingAppIndividualSubscriptionTier = (
-        ModelingAppIndividualSubscriptionTier(**json.loads("""free"""))
-    )
+    modeling_app: ModelingAppIndividualSubscriptionTier = "free"  # type: ignore
 
     model_config = ConfigDict(protected_namespaces=())

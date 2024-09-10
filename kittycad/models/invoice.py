@@ -1,5 +1,4 @@
 import datetime
-import json
 from typing import Dict, List, Optional
 
 from pydantic import BaseModel, ConfigDict
@@ -25,7 +24,7 @@ class Invoice(BaseModel):
 
     created_at: datetime.datetime
 
-    currency: Currency = Currency(**json.loads("""usd"""))
+    currency: Currency = "usd"  # type: ignore
 
     customer_email: Optional[str] = None
 

@@ -1,4 +1,3 @@
-import json
 from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
@@ -9,9 +8,7 @@ from ..models.kcl_code_completion_params import KclCodeCompletionParams
 class KclCodeCompletionRequest(BaseModel):
     """A request to generate KCL code completions."""
 
-    extra: KclCodeCompletionParams = KclCodeCompletionParams(
-        **json.loads("""{'language': '', 'trim_by_indentation': False}""")
-    )
+    extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}  # type: ignore
 
     max_tokens: Optional[int] = None
 
