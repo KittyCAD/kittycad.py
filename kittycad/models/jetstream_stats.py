@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.jetstream_api_stats import JetstreamApiStats

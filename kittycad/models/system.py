@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.axis_direction_pair import AxisDirectionPair

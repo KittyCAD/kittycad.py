@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.user_org_role import UserOrgRole

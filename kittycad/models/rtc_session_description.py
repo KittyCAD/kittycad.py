@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.rtc_sdp_type import RtcSdpType

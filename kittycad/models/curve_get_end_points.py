@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.point3d import Point3d
