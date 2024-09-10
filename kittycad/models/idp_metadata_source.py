@@ -9,7 +9,7 @@ from .base64data import Base64Data
 class OptionUrl(BaseModel):
     """A URL to the identity provider metadata descriptor."""
 
-    type: Literal["option_url"] = "option_url"
+    type: Literal["url"] = "url"
 
     url: str
 
@@ -21,7 +21,7 @@ class OptionBase64EncodedXml(BaseModel):
 
     data: Base64Data
 
-    type: Literal["option_base64_encoded_xml"] = "option_base64_encoded_xml"
+    type: Literal["base64_encoded_xml"] = "base64_encoded_xml"
 
     model_config = ConfigDict(protected_namespaces=())
 

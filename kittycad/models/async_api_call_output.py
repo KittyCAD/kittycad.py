@@ -47,7 +47,7 @@ class OptionFileConversion(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["option_file_conversion"] = "option_file_conversion"
+    type: Literal["file_conversion"] = "file_conversion"
 
     updated_at: datetime.datetime
 
@@ -77,7 +77,7 @@ class OptionFileCenterOfMass(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["option_file_center_of_mass"] = "option_file_center_of_mass"
+    type: Literal["file_center_of_mass"] = "file_center_of_mass"
 
     updated_at: datetime.datetime
 
@@ -111,7 +111,7 @@ class OptionFileMass(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["option_file_mass"] = "option_file_mass"
+    type: Literal["file_mass"] = "file_mass"
 
     updated_at: datetime.datetime
 
@@ -139,7 +139,7 @@ class OptionFileVolume(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["option_file_volume"] = "option_file_volume"
+    type: Literal["file_volume"] = "file_volume"
 
     updated_at: datetime.datetime
 
@@ -175,7 +175,7 @@ class OptionFileDensity(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["option_file_density"] = "option_file_density"
+    type: Literal["file_density"] = "file_density"
 
     updated_at: datetime.datetime
 
@@ -205,7 +205,7 @@ class OptionFileSurfaceArea(BaseModel):
 
     surface_area: Optional[float] = None
 
-    type: Literal["option_file_surface_area"] = "option_file_surface_area"
+    type: Literal["file_surface_area"] = "file_surface_area"
 
     updated_at: datetime.datetime
 
@@ -243,7 +243,7 @@ class OptionTextToCad(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["option_text_to_cad"] = "option_text_to_cad"
+    type: Literal["text_to_cad"] = "text_to_cad"
 
     updated_at: datetime.datetime
 
@@ -281,7 +281,7 @@ class OptionTextToCadIteration(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["option_text_to_cad_iteration"] = "option_text_to_cad_iteration"
+    type: Literal["text_to_cad_iteration"] = "text_to_cad_iteration"
 
     updated_at: datetime.datetime
 

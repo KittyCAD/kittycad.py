@@ -36,7 +36,7 @@ from ..models.unit_volume import UnitVolume
 class OptionStartPath(BaseModel):
     """Start a new path."""
 
-    type: Literal["option_start_path"] = "option_start_path"
+    type: Literal["start_path"] = "start_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -48,7 +48,7 @@ class OptionMovePathPen(BaseModel):
 
     to: Point3d
 
-    type: Literal["option_move_path_pen"] = "option_move_path_pen"
+    type: Literal["move_path_pen"] = "move_path_pen"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -60,7 +60,7 @@ class OptionExtendPath(BaseModel):
 
     segment: PathSegment
 
-    type: Literal["option_extend_path"] = "option_extend_path"
+    type: Literal["extend_path"] = "extend_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -72,7 +72,7 @@ class OptionExtrude(BaseModel):
 
     target: ModelingCmdId
 
-    type: Literal["option_extrude"] = "option_extrude"
+    type: Literal["extrude"] = "extrude"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -92,7 +92,7 @@ class OptionRevolve(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["option_revolve"] = "option_revolve"
+    type: Literal["revolve"] = "revolve"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -108,7 +108,7 @@ class OptionSolid3DShellFace(BaseModel):
 
     shell_thickness: LengthUnit
 
-    type: Literal["option_solid3d_shell_face"] = "option_solid3d_shell_face"
+    type: Literal["solid3d_shell_face"] = "solid3d_shell_face"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -124,7 +124,7 @@ class OptionRevolveAboutEdge(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["option_revolve_about_edge"] = "option_revolve_about_edge"
+    type: Literal["revolve_about_edge"] = "revolve_about_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -140,7 +140,7 @@ class OptionLoft(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["option_loft"] = "option_loft"
+    type: Literal["loft"] = "loft"
 
     v_degree: int
 
@@ -152,7 +152,7 @@ class OptionClosePath(BaseModel):
 
     path_id: str
 
-    type: Literal["option_close_path"] = "option_close_path"
+    type: Literal["close_path"] = "close_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -162,7 +162,7 @@ class OptionCameraDragStart(BaseModel):
 
     interaction: CameraDragInteractionType
 
-    type: Literal["option_camera_drag_start"] = "option_camera_drag_start"
+    type: Literal["camera_drag_start"] = "camera_drag_start"
 
     window: Point2d
 
@@ -176,7 +176,7 @@ class OptionCameraDragMove(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal["option_camera_drag_move"] = "option_camera_drag_move"
+    type: Literal["camera_drag_move"] = "camera_drag_move"
 
     window: Point2d
 
@@ -188,7 +188,7 @@ class OptionCameraDragEnd(BaseModel):
 
     interaction: CameraDragInteractionType
 
-    type: Literal["option_camera_drag_end"] = "option_camera_drag_end"
+    type: Literal["camera_drag_end"] = "camera_drag_end"
 
     window: Point2d
 
@@ -198,9 +198,7 @@ class OptionCameraDragEnd(BaseModel):
 class OptionDefaultCameraGetSettings(BaseModel):
     """Gets the default camera's camera settings"""
 
-    type: Literal["option_default_camera_get_settings"] = (
-        "option_default_camera_get_settings"
-    )
+    type: Literal["default_camera_get_settings"] = "default_camera_get_settings"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -212,7 +210,7 @@ class OptionDefaultCameraLookAt(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal["option_default_camera_look_at"] = "option_default_camera_look_at"
+    type: Literal["default_camera_look_at"] = "default_camera_look_at"
 
     up: Point3d
 
@@ -230,8 +228,8 @@ class OptionDefaultCameraPerspectiveSettings(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal["option_default_camera_perspective_settings"] = (
-        "option_default_camera_perspective_settings"
+    type: Literal["default_camera_perspective_settings"] = (
+        "default_camera_perspective_settings"
     )
 
     up: Point3d
@@ -250,7 +248,7 @@ class OptionDefaultCameraZoom(BaseModel):
 
     magnitude: float
 
-    type: Literal["option_default_camera_zoom"] = "option_default_camera_zoom"
+    type: Literal["default_camera_zoom"] = "default_camera_zoom"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -262,7 +260,7 @@ class OptionExport(BaseModel):
 
     format: OutputFormat
 
-    type: Literal["option_export"] = "option_export"
+    type: Literal["export"] = "export"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -272,7 +270,7 @@ class OptionEntityGetParentId(BaseModel):
 
     entity_id: str
 
-    type: Literal["option_entity_get_parent_id"] = "option_entity_get_parent_id"
+    type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -282,7 +280,7 @@ class OptionEntityGetNumChildren(BaseModel):
 
     entity_id: str
 
-    type: Literal["option_entity_get_num_children"] = "option_entity_get_num_children"
+    type: Literal["entity_get_num_children"] = "entity_get_num_children"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -294,7 +292,7 @@ class OptionEntityGetChildUuid(BaseModel):
 
     entity_id: str
 
-    type: Literal["option_entity_get_child_uuid"] = "option_entity_get_child_uuid"
+    type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -304,9 +302,7 @@ class OptionEntityGetAllChildUuids(BaseModel):
 
     entity_id: str
 
-    type: Literal["option_entity_get_all_child_uuids"] = (
-        "option_entity_get_all_child_uuids"
-    )
+    type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -316,7 +312,7 @@ class OptionEntityGetSketchPaths(BaseModel):
 
     entity_id: str
 
-    type: Literal["option_entity_get_sketch_paths"] = "option_entity_get_sketch_paths"
+    type: Literal["entity_get_sketch_paths"] = "entity_get_sketch_paths"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -330,7 +326,7 @@ class OptionEntityGetDistance(BaseModel):
 
     entity_id2: str
 
-    type: Literal["option_entity_get_distance"] = "option_entity_get_distance"
+    type: Literal["entity_get_distance"] = "entity_get_distance"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -342,9 +338,7 @@ class OptionEntityLinearPatternTransform(BaseModel):
 
     transform: List[Transform]
 
-    type: Literal["option_entity_linear_pattern_transform"] = (
-        "option_entity_linear_pattern_transform"
-    )
+    type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -360,7 +354,7 @@ class OptionEntityLinearPattern(BaseModel):
 
     spacing: LengthUnit
 
-    type: Literal["option_entity_linear_pattern"] = "option_entity_linear_pattern"
+    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -380,7 +374,7 @@ class OptionEntityCircularPattern(BaseModel):
 
     rotate_duplicates: bool
 
-    type: Literal["option_entity_circular_pattern"] = "option_entity_circular_pattern"
+    type: Literal["entity_circular_pattern"] = "entity_circular_pattern"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -398,7 +392,7 @@ class OptionEntityMakeHelix(BaseModel):
 
     start_angle: Angle
 
-    type: Literal["option_entity_make_helix"] = "option_entity_make_helix"
+    type: Literal["entity_make_helix"] = "entity_make_helix"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -412,7 +406,7 @@ class OptionEntityMirror(BaseModel):
 
     point: Point3d
 
-    type: Literal["option_entity_mirror"] = "option_entity_mirror"
+    type: Literal["entity_mirror"] = "entity_mirror"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -424,9 +418,7 @@ class OptionEntityMirrorAcrossEdge(BaseModel):
 
     ids: List[str]
 
-    type: Literal["option_entity_mirror_across_edge"] = (
-        "option_entity_mirror_across_edge"
-    )
+    type: Literal["entity_mirror_across_edge"] = "entity_mirror_across_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -436,7 +428,7 @@ class OptionEditModeEnter(BaseModel):
 
     target: str
 
-    type: Literal["option_edit_mode_enter"] = "option_edit_mode_enter"
+    type: Literal["edit_mode_enter"] = "edit_mode_enter"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -448,7 +440,7 @@ class OptionSelectWithPoint(BaseModel):
 
     selection_type: SceneSelectionType
 
-    type: Literal["option_select_with_point"] = "option_select_with_point"
+    type: Literal["select_with_point"] = "select_with_point"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -458,7 +450,7 @@ class OptionSelectAdd(BaseModel):
 
     entities: List[str]
 
-    type: Literal["option_select_add"] = "option_select_add"
+    type: Literal["select_add"] = "select_add"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -468,7 +460,7 @@ class OptionSelectRemove(BaseModel):
 
     entities: List[str]
 
-    type: Literal["option_select_remove"] = "option_select_remove"
+    type: Literal["select_remove"] = "select_remove"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -476,7 +468,7 @@ class OptionSelectRemove(BaseModel):
 class OptionSceneClearAll(BaseModel):
     """Removes all of the Objects in the scene"""
 
-    type: Literal["option_scene_clear_all"] = "option_scene_clear_all"
+    type: Literal["scene_clear_all"] = "scene_clear_all"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -486,7 +478,7 @@ class OptionSelectReplace(BaseModel):
 
     entities: List[str]
 
-    type: Literal["option_select_replace"] = "option_select_replace"
+    type: Literal["select_replace"] = "select_replace"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -498,7 +490,7 @@ class OptionHighlightSetEntity(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal["option_highlight_set_entity"] = "option_highlight_set_entity"
+    type: Literal["highlight_set_entity"] = "highlight_set_entity"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -508,7 +500,7 @@ class OptionHighlightSetEntities(BaseModel):
 
     entities: List[str]
 
-    type: Literal["option_highlight_set_entities"] = "option_highlight_set_entities"
+    type: Literal["highlight_set_entities"] = "highlight_set_entities"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -522,7 +514,7 @@ class OptionNewAnnotation(BaseModel):
 
     options: AnnotationOptions
 
-    type: Literal["option_new_annotation"] = "option_new_annotation"
+    type: Literal["new_annotation"] = "new_annotation"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -534,7 +526,7 @@ class OptionUpdateAnnotation(BaseModel):
 
     options: AnnotationOptions
 
-    type: Literal["option_update_annotation"] = "option_update_annotation"
+    type: Literal["update_annotation"] = "update_annotation"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -544,7 +536,7 @@ class OptionEdgeLinesVisible(BaseModel):
 
     hidden: bool
 
-    type: Literal["option_edge_lines_visible"] = "option_edge_lines_visible"
+    type: Literal["edge_lines_visible"] = "edge_lines_visible"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -556,7 +548,7 @@ class OptionObjectVisible(BaseModel):
 
     object_id: str
 
-    type: Literal["option_object_visible"] = "option_object_visible"
+    type: Literal["object_visible"] = "object_visible"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -566,7 +558,7 @@ class OptionObjectBringToFront(BaseModel):
 
     object_id: str
 
-    type: Literal["option_object_bring_to_front"] = "option_object_bring_to_front"
+    type: Literal["object_bring_to_front"] = "object_bring_to_front"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -584,9 +576,7 @@ class OptionObjectSetMaterialParamsPbr(BaseModel):
 
     roughness: float
 
-    type: Literal["option_object_set_material_params_pbr"] = (
-        "option_object_set_material_params_pbr"
-    )
+    type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -596,7 +586,7 @@ class OptionGetEntityType(BaseModel):
 
     entity_id: str
 
-    type: Literal["option_get_entity_type"] = "option_get_entity_type"
+    type: Literal["get_entity_type"] = "get_entity_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -608,9 +598,7 @@ class OptionSolid3DGetAllEdgeFaces(BaseModel):
 
     object_id: str
 
-    type: Literal["option_solid3d_get_all_edge_faces"] = (
-        "option_solid3d_get_all_edge_faces"
-    )
+    type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -622,7 +610,7 @@ class OptionSolid2DAddHole(BaseModel):
 
     object_id: str
 
-    type: Literal["option_solid2d_add_hole"] = "option_solid2d_add_hole"
+    type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -636,9 +624,7 @@ class OptionSolid3DGetAllOppositeEdges(BaseModel):
 
     object_id: str
 
-    type: Literal["option_solid3d_get_all_opposite_edges"] = (
-        "option_solid3d_get_all_opposite_edges"
-    )
+    type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -652,9 +638,7 @@ class OptionSolid3DGetOppositeEdge(BaseModel):
 
     object_id: str
 
-    type: Literal["option_solid3d_get_opposite_edge"] = (
-        "option_solid3d_get_opposite_edge"
-    )
+    type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -668,9 +652,7 @@ class OptionSolid3DGetNextAdjacentEdge(BaseModel):
 
     object_id: str
 
-    type: Literal["option_solid3d_get_next_adjacent_edge"] = (
-        "option_solid3d_get_next_adjacent_edge"
-    )
+    type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -684,9 +666,7 @@ class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
 
     object_id: str
 
-    type: Literal["option_solid3d_get_prev_adjacent_edge"] = (
-        "option_solid3d_get_prev_adjacent_edge"
-    )
+    type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -706,7 +686,7 @@ class OptionSolid3DFilletEdge(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["option_solid3d_fillet_edge"] = "option_solid3d_fillet_edge"
+    type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -716,7 +696,7 @@ class OptionFaceIsPlanar(BaseModel):
 
     object_id: str
 
-    type: Literal["option_face_is_planar"] = "option_face_is_planar"
+    type: Literal["face_is_planar"] = "face_is_planar"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -726,7 +706,7 @@ class OptionFaceGetPosition(BaseModel):
 
     object_id: str
 
-    type: Literal["option_face_get_position"] = "option_face_get_position"
+    type: Literal["face_get_position"] = "face_get_position"
 
     uv: Point2d
 
@@ -738,7 +718,7 @@ class OptionFaceGetCenter(BaseModel):
 
     object_id: str
 
-    type: Literal["option_face_get_center"] = "option_face_get_center"
+    type: Literal["face_get_center"] = "face_get_center"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -748,7 +728,7 @@ class OptionFaceGetGradient(BaseModel):
 
     object_id: str
 
-    type: Literal["option_face_get_gradient"] = "option_face_get_gradient"
+    type: Literal["face_get_gradient"] = "face_get_gradient"
 
     uv: Point2d
 
@@ -762,7 +742,7 @@ class OptionSendObject(BaseModel):
 
     object_id: str
 
-    type: Literal["option_send_object"] = "option_send_object"
+    type: Literal["send_object"] = "send_object"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -774,7 +754,7 @@ class OptionEntitySetOpacity(BaseModel):
 
     opacity: float
 
-    type: Literal["option_entity_set_opacity"] = "option_entity_set_opacity"
+    type: Literal["entity_set_opacity"] = "entity_set_opacity"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -788,7 +768,7 @@ class OptionEntityFade(BaseModel):
 
     fade_in: bool
 
-    type: Literal["option_entity_fade"] = "option_entity_fade"
+    type: Literal["entity_fade"] = "entity_fade"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -804,7 +784,7 @@ class OptionMakePlane(BaseModel):
 
     size: LengthUnit
 
-    type: Literal["option_make_plane"] = "option_make_plane"
+    type: Literal["make_plane"] = "make_plane"
 
     x_axis: Point3d
 
@@ -820,7 +800,7 @@ class OptionPlaneSetColor(BaseModel):
 
     plane_id: str
 
-    type: Literal["option_plane_set_color"] = "option_plane_set_color"
+    type: Literal["plane_set_color"] = "plane_set_color"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -830,7 +810,7 @@ class OptionSetTool(BaseModel):
 
     tool: SceneToolType
 
-    type: Literal["option_set_tool"] = "option_set_tool"
+    type: Literal["set_tool"] = "set_tool"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -840,7 +820,7 @@ class OptionMouseMove(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal["option_mouse_move"] = "option_mouse_move"
+    type: Literal["mouse_move"] = "mouse_move"
 
     window: Point2d
 
@@ -850,7 +830,7 @@ class OptionMouseMove(BaseModel):
 class OptionMouseClick(BaseModel):
     """Send a mouse click event Updates modified/selected entities."""
 
-    type: Literal["option_mouse_click"] = "option_mouse_click"
+    type: Literal["mouse_click"] = "mouse_click"
 
     window: Point2d
 
@@ -860,7 +840,7 @@ class OptionMouseClick(BaseModel):
 class OptionSketchModeDisable(BaseModel):
     """Disable sketch mode. If you are sketching on a face, be sure to not disable sketch mode until you have extruded. Otherwise, your object will not be fused with the face."""
 
-    type: Literal["option_sketch_mode_disable"] = "option_sketch_mode_disable"
+    type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -868,7 +848,7 @@ class OptionSketchModeDisable(BaseModel):
 class OptionGetSketchModePlane(BaseModel):
     """Get the plane for sketch mode."""
 
-    type: Literal["option_get_sketch_mode_plane"] = "option_get_sketch_mode_plane"
+    type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -882,7 +862,7 @@ class OptionCurveSetConstraint(BaseModel):
 
     object_id: str
 
-    type: Literal["option_curve_set_constraint"] = "option_curve_set_constraint"
+    type: Literal["curve_set_constraint"] = "curve_set_constraint"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -900,7 +880,7 @@ class OptionEnableSketchMode(BaseModel):
 
     planar_normal: Optional[Point3d] = None
 
-    type: Literal["option_enable_sketch_mode"] = "option_enable_sketch_mode"
+    type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -910,7 +890,7 @@ class OptionSetBackgroundColor(BaseModel):
 
     color: Color
 
-    type: Literal["option_set_background_color"] = "option_set_background_color"
+    type: Literal["set_background_color"] = "set_background_color"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -920,9 +900,7 @@ class OptionSetCurrentToolProperties(BaseModel):
 
     color: Optional[Color] = None
 
-    type: Literal["option_set_current_tool_properties"] = (
-        "option_set_current_tool_properties"
-    )
+    type: Literal["set_current_tool_properties"] = "set_current_tool_properties"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -932,9 +910,7 @@ class OptionSetDefaultSystemProperties(BaseModel):
 
     color: Optional[Color] = None
 
-    type: Literal["option_set_default_system_properties"] = (
-        "option_set_default_system_properties"
-    )
+    type: Literal["set_default_system_properties"] = "set_default_system_properties"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -944,7 +920,7 @@ class OptionCurveGetType(BaseModel):
 
     curve_id: str
 
-    type: Literal["option_curve_get_type"] = "option_curve_get_type"
+    type: Literal["curve_get_type"] = "curve_get_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -954,7 +930,7 @@ class OptionCurveGetControlPoints(BaseModel):
 
     curve_id: str
 
-    type: Literal["option_curve_get_control_points"] = "option_curve_get_control_points"
+    type: Literal["curve_get_control_points"] = "curve_get_control_points"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -964,7 +940,7 @@ class OptionTakeSnapshot(BaseModel):
 
     format: ImageFormat
 
-    type: Literal["option_take_snapshot"] = "option_take_snapshot"
+    type: Literal["take_snapshot"] = "take_snapshot"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -976,7 +952,7 @@ class OptionMakeAxesGizmo(BaseModel):
 
     gizmo_mode: bool
 
-    type: Literal["option_make_axes_gizmo"] = "option_make_axes_gizmo"
+    type: Literal["make_axes_gizmo"] = "make_axes_gizmo"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -986,7 +962,7 @@ class OptionPathGetInfo(BaseModel):
 
     path_id: str
 
-    type: Literal["option_path_get_info"] = "option_path_get_info"
+    type: Literal["path_get_info"] = "path_get_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -996,8 +972,8 @@ class OptionPathGetCurveUuidsForVertices(BaseModel):
 
     path_id: str
 
-    type: Literal["option_path_get_curve_uuids_for_vertices"] = (
-        "option_path_get_curve_uuids_for_vertices"
+    type: Literal["path_get_curve_uuids_for_vertices"] = (
+        "path_get_curve_uuids_for_vertices"
     )
 
     vertex_ids: List[str]
@@ -1012,7 +988,7 @@ class OptionPathGetCurveUuid(BaseModel):
 
     path_id: str
 
-    type: Literal["option_path_get_curve_uuid"] = "option_path_get_curve_uuid"
+    type: Literal["path_get_curve_uuid"] = "path_get_curve_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1022,7 +998,7 @@ class OptionPathGetVertexUuids(BaseModel):
 
     path_id: str
 
-    type: Literal["option_path_get_vertex_uuids"] = "option_path_get_vertex_uuids"
+    type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1032,9 +1008,7 @@ class OptionPathGetSketchTargetUuid(BaseModel):
 
     path_id: str
 
-    type: Literal["option_path_get_sketch_target_uuid"] = (
-        "option_path_get_sketch_target_uuid"
-    )
+    type: Literal["path_get_sketch_target_uuid"] = "path_get_sketch_target_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1042,7 +1016,7 @@ class OptionPathGetSketchTargetUuid(BaseModel):
 class OptionHandleMouseDragStart(BaseModel):
     """Start dragging the mouse."""
 
-    type: Literal["option_handle_mouse_drag_start"] = "option_handle_mouse_drag_start"
+    type: Literal["handle_mouse_drag_start"] = "handle_mouse_drag_start"
 
     window: Point2d
 
@@ -1054,7 +1028,7 @@ class OptionHandleMouseDragMove(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal["option_handle_mouse_drag_move"] = "option_handle_mouse_drag_move"
+    type: Literal["handle_mouse_drag_move"] = "handle_mouse_drag_move"
 
     window: Point2d
 
@@ -1064,7 +1038,7 @@ class OptionHandleMouseDragMove(BaseModel):
 class OptionHandleMouseDragEnd(BaseModel):
     """Stop dragging the mouse."""
 
-    type: Literal["option_handle_mouse_drag_end"] = "option_handle_mouse_drag_end"
+    type: Literal["handle_mouse_drag_end"] = "handle_mouse_drag_end"
 
     window: Point2d
 
@@ -1076,7 +1050,7 @@ class OptionRemoveSceneObjects(BaseModel):
 
     object_ids: List[str]
 
-    type: Literal["option_remove_scene_objects"] = "option_remove_scene_objects"
+    type: Literal["remove_scene_objects"] = "remove_scene_objects"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1086,9 +1060,7 @@ class OptionPlaneIntersectAndProject(BaseModel):
 
     plane_id: str
 
-    type: Literal["option_plane_intersect_and_project"] = (
-        "option_plane_intersect_and_project"
-    )
+    type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
 
     window: Point2d
 
@@ -1100,7 +1072,7 @@ class OptionCurveGetEndPoints(BaseModel):
 
     curve_id: str
 
-    type: Literal["option_curve_get_end_points"] = "option_curve_get_end_points"
+    type: Literal["curve_get_end_points"] = "curve_get_end_points"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1112,7 +1084,7 @@ class OptionReconfigureStream(BaseModel):
 
     height: int
 
-    type: Literal["option_reconfigure_stream"] = "option_reconfigure_stream"
+    type: Literal["reconfigure_stream"] = "reconfigure_stream"
 
     width: int
 
@@ -1126,7 +1098,7 @@ class OptionImportFiles(BaseModel):
 
     format: InputFormat
 
-    type: Literal["option_import_files"] = "option_import_files"
+    type: Literal["import_files"] = "import_files"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1134,7 +1106,7 @@ class OptionImportFiles(BaseModel):
 class OptionSetSceneUnits(BaseModel):
     """Set the units of the scene. For all following commands, the units will be interpreted as the given units."""
 
-    type: Literal["option_set_scene_units"] = "option_set_scene_units"
+    type: Literal["set_scene_units"] = "set_scene_units"
 
     unit: UnitLength
 
@@ -1152,7 +1124,7 @@ class OptionMass(BaseModel):
 
     output_unit: UnitMass
 
-    type: Literal["option_mass"] = "option_mass"
+    type: Literal["mass"] = "mass"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1168,7 +1140,7 @@ class OptionDensity(BaseModel):
 
     output_unit: UnitDensity
 
-    type: Literal["option_density"] = "option_density"
+    type: Literal["density"] = "density"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1180,7 +1152,7 @@ class OptionVolume(BaseModel):
 
     output_unit: UnitVolume
 
-    type: Literal["option_volume"] = "option_volume"
+    type: Literal["volume"] = "volume"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1192,7 +1164,7 @@ class OptionCenterOfMass(BaseModel):
 
     output_unit: UnitLength
 
-    type: Literal["option_center_of_mass"] = "option_center_of_mass"
+    type: Literal["center_of_mass"] = "center_of_mass"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1204,7 +1176,7 @@ class OptionSurfaceArea(BaseModel):
 
     output_unit: UnitArea
 
-    type: Literal["option_surface_area"] = "option_surface_area"
+    type: Literal["surface_area"] = "surface_area"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1212,7 +1184,7 @@ class OptionSurfaceArea(BaseModel):
 class OptionDefaultCameraFocusOn(BaseModel):
     """Focus the default camera upon an object in the scene."""
 
-    type: Literal["option_default_camera_focus_on"] = "option_default_camera_focus_on"
+    type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
 
     uuid: str
 
@@ -1224,7 +1196,7 @@ class OptionSetSelectionType(BaseModel):
 
     selection_type: SceneSelectionType
 
-    type: Literal["option_set_selection_type"] = "option_set_selection_type"
+    type: Literal["set_selection_type"] = "set_selection_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1234,7 +1206,7 @@ class OptionSetSelectionFilter(BaseModel):
 
     filter: List[EntityType]
 
-    type: Literal["option_set_selection_filter"] = "option_set_selection_filter"
+    type: Literal["set_selection_filter"] = "set_selection_filter"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1242,9 +1214,7 @@ class OptionSetSelectionFilter(BaseModel):
 class OptionDefaultCameraSetOrthographic(BaseModel):
     """Use orthographic projection."""
 
-    type: Literal["option_default_camera_set_orthographic"] = (
-        "option_default_camera_set_orthographic"
-    )
+    type: Literal["default_camera_set_orthographic"] = "default_camera_set_orthographic"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1254,9 +1224,7 @@ class OptionDefaultCameraSetPerspective(BaseModel):
 
     parameters: Optional[PerspectiveCameraParameters] = None
 
-    type: Literal["option_default_camera_set_perspective"] = (
-        "option_default_camera_set_perspective"
-    )
+    type: Literal["default_camera_set_perspective"] = "default_camera_set_perspective"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1268,7 +1236,7 @@ class OptionZoomToFit(BaseModel):
 
     padding: float
 
-    type: Literal["option_zoom_to_fit"] = "option_zoom_to_fit"
+    type: Literal["zoom_to_fit"] = "zoom_to_fit"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1278,7 +1246,7 @@ class OptionViewIsometric(BaseModel):
 
     padding: float = 0.0
 
-    type: Literal["option_view_isometric"] = "option_view_isometric"
+    type: Literal["view_isometric"] = "view_isometric"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1290,9 +1258,7 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
 
     object_id: str
 
-    type: Literal["option_solid3d_get_extrusion_face_info"] = (
-        "option_solid3d_get_extrusion_face_info"
-    )
+    type: Literal["solid3d_get_extrusion_face_info"] = "solid3d_get_extrusion_face_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1300,7 +1266,7 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
 class OptionEditModeExit(BaseModel):
     """Exit edit mode"""
 
-    type: Literal["option_edit_mode_exit"] = "option_edit_mode_exit"
+    type: Literal["edit_mode_exit"] = "edit_mode_exit"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1308,7 +1274,7 @@ class OptionEditModeExit(BaseModel):
 class OptionSelectClear(BaseModel):
     """Clear the selection"""
 
-    type: Literal["option_select_clear"] = "option_select_clear"
+    type: Literal["select_clear"] = "select_clear"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1316,7 +1282,7 @@ class OptionSelectClear(BaseModel):
 class OptionSelectGet(BaseModel):
     """Find all IDs of selected entities"""
 
-    type: Literal["option_select_get"] = "option_select_get"
+    type: Literal["select_get"] = "select_get"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1324,7 +1290,7 @@ class OptionSelectGet(BaseModel):
 class OptionGetNumObjects(BaseModel):
     """Get the number of objects in the scene"""
 
-    type: Literal["option_get_num_objects"] = "option_get_num_objects"
+    type: Literal["get_num_objects"] = "get_num_objects"
 
     model_config = ConfigDict(protected_namespaces=())
 

@@ -16,7 +16,7 @@ class OptionTrickleIce(BaseModel):
 
     candidate: RtcIceCandidateInit
 
-    type: Literal["option_trickle_ice"] = "option_trickle_ice"
+    type: Literal["trickle_ice"] = "trickle_ice"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -26,7 +26,7 @@ class OptionSdpOffer(BaseModel):
 
     offer: RtcSessionDescription
 
-    type: Literal["option_sdp_offer"] = "option_sdp_offer"
+    type: Literal["sdp_offer"] = "sdp_offer"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -38,7 +38,7 @@ class OptionModelingCmdReq(BaseModel):
 
     cmd_id: ModelingCmdId
 
-    type: Literal["option_modeling_cmd_req"] = "option_modeling_cmd_req"
+    type: Literal["modeling_cmd_req"] = "modeling_cmd_req"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -52,7 +52,7 @@ class OptionModelingCmdBatchReq(BaseModel):
 
     responses: bool = False
 
-    type: Literal["option_modeling_cmd_batch_req"] = "option_modeling_cmd_batch_req"
+    type: Literal["modeling_cmd_batch_req"] = "modeling_cmd_batch_req"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -60,7 +60,7 @@ class OptionModelingCmdBatchReq(BaseModel):
 class OptionPing(BaseModel):
     """The client-to-server Ping to ensure the WebSocket stays alive."""
 
-    type: Literal["option_ping"] = "option_ping"
+    type: Literal["ping"] = "ping"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -70,7 +70,7 @@ class OptionMetricsResponse(BaseModel):
 
     metrics: ClientMetrics
 
-    type: Literal["option_metrics_response"] = "option_metrics_response"
+    type: Literal["metrics_response"] = "metrics_response"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -80,7 +80,7 @@ class OptionHeaders(BaseModel):
 
     headers: Dict[str, str]
 
-    type: Literal["option_headers"] = "option_headers"
+    type: Literal["headers"] = "headers"
 
     model_config = ConfigDict(protected_namespaces=())
 

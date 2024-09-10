@@ -16,7 +16,7 @@ class OptionLine(BaseModel):
 
     relative: bool
 
-    type: Literal["option_line"] = "option_line"
+    type: Literal["line"] = "line"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -34,7 +34,7 @@ class OptionArc(BaseModel):
 
     start: Angle
 
-    type: Literal["option_arc"] = "option_arc"
+    type: Literal["arc"] = "arc"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -50,7 +50,7 @@ class OptionBezier(BaseModel):
 
     relative: bool
 
-    type: Literal["option_bezier"] = "option_bezier"
+    type: Literal["bezier"] = "bezier"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -62,7 +62,7 @@ class OptionTangentialArc(BaseModel):
 
     radius: LengthUnit
 
-    type: Literal["option_tangential_arc"] = "option_tangential_arc"
+    type: Literal["tangential_arc"] = "tangential_arc"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -74,7 +74,7 @@ class OptionTangentialArcTo(BaseModel):
 
     to: Point3d
 
-    type: Literal["option_tangential_arc_to"] = "option_tangential_arc_to"
+    type: Literal["tangential_arc_to"] = "tangential_arc_to"
 
     model_config = ConfigDict(protected_namespaces=())
 

@@ -9,7 +9,7 @@ from ..models.global_axis import GlobalAxis
 class OptionEuclidean(BaseModel):
     """Euclidean Distance."""
 
-    type: Literal["option_euclidean"] = "option_euclidean"
+    type: Literal["euclidean"] = "euclidean"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -19,7 +19,7 @@ class OptionOnAxis(BaseModel):
 
     axis: GlobalAxis
 
-    type: Literal["option_on_axis"] = "option_on_axis"
+    type: Literal["on_axis"] = "on_axis"
 
     model_config = ConfigDict(protected_namespaces=())
 

@@ -63,7 +63,7 @@ from ..models.zoom_to_fit import ZoomToFit
 class OptionEmpty(BaseModel):
     """An empty response, used for any command that does not explicitly have a response defined here."""
 
-    type: Literal["option_empty"] = "option_empty"
+    type: Literal["empty"] = "empty"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -73,7 +73,7 @@ class OptionExport(BaseModel):
 
     data: Export
 
-    type: Literal["option_export"] = "option_export"
+    type: Literal["export"] = "export"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -83,7 +83,7 @@ class OptionSelectWithPoint(BaseModel):
 
     data: SelectWithPoint
 
-    type: Literal["option_select_with_point"] = "option_select_with_point"
+    type: Literal["select_with_point"] = "select_with_point"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -93,7 +93,7 @@ class OptionHighlightSetEntity(BaseModel):
 
     data: HighlightSetEntity
 
-    type: Literal["option_highlight_set_entity"] = "option_highlight_set_entity"
+    type: Literal["highlight_set_entity"] = "highlight_set_entity"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -103,7 +103,7 @@ class OptionEntityGetChildUuid(BaseModel):
 
     data: EntityGetChildUuid
 
-    type: Literal["option_entity_get_child_uuid"] = "option_entity_get_child_uuid"
+    type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -113,7 +113,7 @@ class OptionEntityGetNumChildren(BaseModel):
 
     data: EntityGetNumChildren
 
-    type: Literal["option_entity_get_num_children"] = "option_entity_get_num_children"
+    type: Literal["entity_get_num_children"] = "entity_get_num_children"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -123,7 +123,7 @@ class OptionEntityGetParentId(BaseModel):
 
     data: EntityGetParentId
 
-    type: Literal["option_entity_get_parent_id"] = "option_entity_get_parent_id"
+    type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -133,9 +133,7 @@ class OptionEntityGetAllChildUuids(BaseModel):
 
     data: EntityGetAllChildUuids
 
-    type: Literal["option_entity_get_all_child_uuids"] = (
-        "option_entity_get_all_child_uuids"
-    )
+    type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -145,7 +143,7 @@ class OptionEntityGetSketchPaths(BaseModel):
 
     data: EntityGetSketchPaths
 
-    type: Literal["option_entity_get_sketch_paths"] = "option_entity_get_sketch_paths"
+    type: Literal["entity_get_sketch_paths"] = "entity_get_sketch_paths"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -155,7 +153,7 @@ class OptionLoft(BaseModel):
 
     data: Loft
 
-    type: Literal["option_loft"] = "option_loft"
+    type: Literal["loft"] = "loft"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -165,7 +163,7 @@ class OptionClosePath(BaseModel):
 
     data: ClosePath
 
-    type: Literal["option_close_path"] = "option_close_path"
+    type: Literal["close_path"] = "close_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -175,7 +173,7 @@ class OptionCameraDragMove(BaseModel):
 
     data: CameraDragMove
 
-    type: Literal["option_camera_drag_move"] = "option_camera_drag_move"
+    type: Literal["camera_drag_move"] = "camera_drag_move"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -185,7 +183,7 @@ class OptionCameraDragEnd(BaseModel):
 
     data: CameraDragEnd
 
-    type: Literal["option_camera_drag_end"] = "option_camera_drag_end"
+    type: Literal["camera_drag_end"] = "camera_drag_end"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -195,9 +193,7 @@ class OptionDefaultCameraGetSettings(BaseModel):
 
     data: DefaultCameraGetSettings
 
-    type: Literal["option_default_camera_get_settings"] = (
-        "option_default_camera_get_settings"
-    )
+    type: Literal["default_camera_get_settings"] = "default_camera_get_settings"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -207,7 +203,7 @@ class OptionDefaultCameraZoom(BaseModel):
 
     data: DefaultCameraZoom
 
-    type: Literal["option_default_camera_zoom"] = "option_default_camera_zoom"
+    type: Literal["default_camera_zoom"] = "default_camera_zoom"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -217,7 +213,7 @@ class OptionZoomToFit(BaseModel):
 
     data: ZoomToFit
 
-    type: Literal["option_zoom_to_fit"] = "option_zoom_to_fit"
+    type: Literal["zoom_to_fit"] = "zoom_to_fit"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -227,7 +223,7 @@ class OptionViewIsometric(BaseModel):
 
     data: ViewIsometric
 
-    type: Literal["option_view_isometric"] = "option_view_isometric"
+    type: Literal["view_isometric"] = "view_isometric"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -237,7 +233,7 @@ class OptionGetNumObjects(BaseModel):
 
     data: GetNumObjects
 
-    type: Literal["option_get_num_objects"] = "option_get_num_objects"
+    type: Literal["get_num_objects"] = "get_num_objects"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -247,7 +243,7 @@ class OptionDefaultCameraFocusOn(BaseModel):
 
     data: DefaultCameraFocusOn
 
-    type: Literal["option_default_camera_focus_on"] = "option_default_camera_focus_on"
+    type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -257,7 +253,7 @@ class OptionSelectGet(BaseModel):
 
     data: SelectGet
 
-    type: Literal["option_select_get"] = "option_select_get"
+    type: Literal["select_get"] = "select_get"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -267,9 +263,7 @@ class OptionSolid3DGetAllEdgeFaces(BaseModel):
 
     data: Solid3dGetAllEdgeFaces
 
-    type: Literal["option_solid3d_get_all_edge_faces"] = (
-        "option_solid3d_get_all_edge_faces"
-    )
+    type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -279,9 +273,7 @@ class OptionSolid3DGetAllOppositeEdges(BaseModel):
 
     data: Solid3dGetAllOppositeEdges
 
-    type: Literal["option_solid3d_get_all_opposite_edges"] = (
-        "option_solid3d_get_all_opposite_edges"
-    )
+    type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -291,9 +283,7 @@ class OptionSolid3DGetOppositeEdge(BaseModel):
 
     data: Solid3dGetOppositeEdge
 
-    type: Literal["option_solid3d_get_opposite_edge"] = (
-        "option_solid3d_get_opposite_edge"
-    )
+    type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -303,9 +293,7 @@ class OptionSolid3DGetNextAdjacentEdge(BaseModel):
 
     data: Solid3dGetNextAdjacentEdge
 
-    type: Literal["option_solid3d_get_next_adjacent_edge"] = (
-        "option_solid3d_get_next_adjacent_edge"
-    )
+    type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -315,9 +303,7 @@ class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
 
     data: Solid3dGetPrevAdjacentEdge
 
-    type: Literal["option_solid3d_get_prev_adjacent_edge"] = (
-        "option_solid3d_get_prev_adjacent_edge"
-    )
+    type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -327,7 +313,7 @@ class OptionGetEntityType(BaseModel):
 
     data: GetEntityType
 
-    type: Literal["option_get_entity_type"] = "option_get_entity_type"
+    type: Literal["get_entity_type"] = "get_entity_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -337,7 +323,7 @@ class OptionCurveGetControlPoints(BaseModel):
 
     data: CurveGetControlPoints
 
-    type: Literal["option_curve_get_control_points"] = "option_curve_get_control_points"
+    type: Literal["curve_get_control_points"] = "curve_get_control_points"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -347,7 +333,7 @@ class OptionCurveGetType(BaseModel):
 
     data: CurveGetType
 
-    type: Literal["option_curve_get_type"] = "option_curve_get_type"
+    type: Literal["curve_get_type"] = "curve_get_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -357,7 +343,7 @@ class OptionMouseClick(BaseModel):
 
     data: MouseClick
 
-    type: Literal["option_mouse_click"] = "option_mouse_click"
+    type: Literal["mouse_click"] = "mouse_click"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -367,7 +353,7 @@ class OptionTakeSnapshot(BaseModel):
 
     data: TakeSnapshot
 
-    type: Literal["option_take_snapshot"] = "option_take_snapshot"
+    type: Literal["take_snapshot"] = "take_snapshot"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -377,7 +363,7 @@ class OptionPathGetInfo(BaseModel):
 
     data: PathGetInfo
 
-    type: Literal["option_path_get_info"] = "option_path_get_info"
+    type: Literal["path_get_info"] = "path_get_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -387,7 +373,7 @@ class OptionPathSegmentInfo(BaseModel):
 
     data: PathSegmentInfo
 
-    type: Literal["option_path_segment_info"] = "option_path_segment_info"
+    type: Literal["path_segment_info"] = "path_segment_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -397,8 +383,8 @@ class OptionPathGetCurveUuidsForVertices(BaseModel):
 
     data: PathGetCurveUuidsForVertices
 
-    type: Literal["option_path_get_curve_uuids_for_vertices"] = (
-        "option_path_get_curve_uuids_for_vertices"
+    type: Literal["path_get_curve_uuids_for_vertices"] = (
+        "path_get_curve_uuids_for_vertices"
     )
 
     model_config = ConfigDict(protected_namespaces=())
@@ -409,7 +395,7 @@ class OptionPathGetCurveUuid(BaseModel):
 
     data: PathGetCurveUuid
 
-    type: Literal["option_path_get_curve_uuid"] = "option_path_get_curve_uuid"
+    type: Literal["path_get_curve_uuid"] = "path_get_curve_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -419,7 +405,7 @@ class OptionPathGetVertexUuids(BaseModel):
 
     data: PathGetVertexUuids
 
-    type: Literal["option_path_get_vertex_uuids"] = "option_path_get_vertex_uuids"
+    type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -429,9 +415,7 @@ class OptionPathGetSketchTargetUuid(BaseModel):
 
     data: PathGetSketchTargetUuid
 
-    type: Literal["option_path_get_sketch_target_uuid"] = (
-        "option_path_get_sketch_target_uuid"
-    )
+    type: Literal["path_get_sketch_target_uuid"] = "path_get_sketch_target_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -441,7 +425,7 @@ class OptionCurveGetEndPoints(BaseModel):
 
     data: CurveGetEndPoints
 
-    type: Literal["option_curve_get_end_points"] = "option_curve_get_end_points"
+    type: Literal["curve_get_end_points"] = "curve_get_end_points"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -451,7 +435,7 @@ class OptionFaceIsPlanar(BaseModel):
 
     data: FaceIsPlanar
 
-    type: Literal["option_face_is_planar"] = "option_face_is_planar"
+    type: Literal["face_is_planar"] = "face_is_planar"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -461,7 +445,7 @@ class OptionFaceGetPosition(BaseModel):
 
     data: FaceGetPosition
 
-    type: Literal["option_face_get_position"] = "option_face_get_position"
+    type: Literal["face_get_position"] = "face_get_position"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -471,7 +455,7 @@ class OptionFaceGetCenter(BaseModel):
 
     data: FaceGetCenter
 
-    type: Literal["option_face_get_center"] = "option_face_get_center"
+    type: Literal["face_get_center"] = "face_get_center"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -481,7 +465,7 @@ class OptionFaceGetGradient(BaseModel):
 
     data: FaceGetGradient
 
-    type: Literal["option_face_get_gradient"] = "option_face_get_gradient"
+    type: Literal["face_get_gradient"] = "face_get_gradient"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -491,9 +475,7 @@ class OptionPlaneIntersectAndProject(BaseModel):
 
     data: PlaneIntersectAndProject
 
-    type: Literal["option_plane_intersect_and_project"] = (
-        "option_plane_intersect_and_project"
-    )
+    type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -503,7 +485,7 @@ class OptionImportFiles(BaseModel):
 
     data: ImportFiles
 
-    type: Literal["option_import_files"] = "option_import_files"
+    type: Literal["import_files"] = "import_files"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -513,7 +495,7 @@ class OptionImportedGeometry(BaseModel):
 
     data: ImportedGeometry
 
-    type: Literal["option_imported_geometry"] = "option_imported_geometry"
+    type: Literal["imported_geometry"] = "imported_geometry"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -523,7 +505,7 @@ class OptionMass(BaseModel):
 
     data: Mass
 
-    type: Literal["option_mass"] = "option_mass"
+    type: Literal["mass"] = "mass"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -533,7 +515,7 @@ class OptionVolume(BaseModel):
 
     data: Volume
 
-    type: Literal["option_volume"] = "option_volume"
+    type: Literal["volume"] = "volume"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -543,7 +525,7 @@ class OptionDensity(BaseModel):
 
     data: Density
 
-    type: Literal["option_density"] = "option_density"
+    type: Literal["density"] = "density"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -553,7 +535,7 @@ class OptionSurfaceArea(BaseModel):
 
     data: SurfaceArea
 
-    type: Literal["option_surface_area"] = "option_surface_area"
+    type: Literal["surface_area"] = "surface_area"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -563,7 +545,7 @@ class OptionCenterOfMass(BaseModel):
 
     data: CenterOfMass
 
-    type: Literal["option_center_of_mass"] = "option_center_of_mass"
+    type: Literal["center_of_mass"] = "center_of_mass"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -573,7 +555,7 @@ class OptionGetSketchModePlane(BaseModel):
 
     data: GetSketchModePlane
 
-    type: Literal["option_get_sketch_mode_plane"] = "option_get_sketch_mode_plane"
+    type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -583,7 +565,7 @@ class OptionEntityGetDistance(BaseModel):
 
     data: EntityGetDistance
 
-    type: Literal["option_entity_get_distance"] = "option_entity_get_distance"
+    type: Literal["entity_get_distance"] = "entity_get_distance"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -593,9 +575,7 @@ class OptionEntityLinearPatternTransform(BaseModel):
 
     data: EntityLinearPatternTransform
 
-    type: Literal["option_entity_linear_pattern_transform"] = (
-        "option_entity_linear_pattern_transform"
-    )
+    type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -605,7 +585,7 @@ class OptionEntityLinearPattern(BaseModel):
 
     data: EntityLinearPattern
 
-    type: Literal["option_entity_linear_pattern"] = "option_entity_linear_pattern"
+    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -615,7 +595,7 @@ class OptionEntityCircularPattern(BaseModel):
 
     data: EntityCircularPattern
 
-    type: Literal["option_entity_circular_pattern"] = "option_entity_circular_pattern"
+    type: Literal["entity_circular_pattern"] = "entity_circular_pattern"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -625,9 +605,7 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
 
     data: Solid3dGetExtrusionFaceInfo
 
-    type: Literal["option_solid3d_get_extrusion_face_info"] = (
-        "option_solid3d_get_extrusion_face_info"
-    )
+    type: Literal["solid3d_get_extrusion_face_info"] = "solid3d_get_extrusion_face_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -637,7 +615,7 @@ class OptionExtrusionFaceInfo(BaseModel):
 
     data: ExtrusionFaceInfo
 
-    type: Literal["option_extrusion_face_info"] = "option_extrusion_face_info"
+    type: Literal["extrusion_face_info"] = "extrusion_face_info"
 
     model_config = ConfigDict(protected_namespaces=())
 

@@ -7,7 +7,7 @@ from typing_extensions import Annotated
 class OptionIndividual(BaseModel):
     """A subscription tier that can be applied to individuals only."""
 
-    type: Literal["option_individual"] = "option_individual"
+    type: Literal["individual"] = "individual"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -17,7 +17,7 @@ class OptionOrganization(BaseModel):
 
     saml_sso: bool
 
-    type: Literal["option_organization"] = "option_organization"
+    type: Literal["organization"] = "organization"
 
     model_config = ConfigDict(protected_namespaces=())
 

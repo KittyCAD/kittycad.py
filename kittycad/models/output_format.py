@@ -18,7 +18,7 @@ class OptionFbx(BaseModel):
 
     storage: FbxStorage
 
-    type: Literal["option_fbx"] = "option_fbx"
+    type: Literal["fbx"] = "fbx"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -30,7 +30,7 @@ class OptionGltf(BaseModel):
 
     storage: GltfStorage
 
-    type: Literal["option_gltf"] = "option_gltf"
+    type: Literal["gltf"] = "gltf"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -40,7 +40,7 @@ class OptionObj(BaseModel):
 
     coords: System
 
-    type: Literal["option_obj"] = "option_obj"
+    type: Literal["obj"] = "obj"
 
     units: UnitLength
 
@@ -56,7 +56,7 @@ class OptionPly(BaseModel):
 
     storage: PlyStorage
 
-    type: Literal["option_ply"] = "option_ply"
+    type: Literal["ply"] = "ply"
 
     units: UnitLength
 
@@ -68,7 +68,7 @@ class OptionStep(BaseModel):
 
     coords: System
 
-    type: Literal["option_step"] = "option_step"
+    type: Literal["step"] = "step"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -82,7 +82,7 @@ class OptionStl(BaseModel):
 
     storage: StlStorage
 
-    type: Literal["option_stl"] = "option_stl"
+    type: Literal["stl"] = "stl"
 
     units: UnitLength
 

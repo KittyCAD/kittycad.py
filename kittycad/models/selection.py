@@ -7,7 +7,7 @@ from typing_extensions import Annotated
 class OptionDefaultScene(BaseModel):
     """Visit the default scene."""
 
-    type: Literal["option_default_scene"] = "option_default_scene"
+    type: Literal["default_scene"] = "default_scene"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -17,7 +17,7 @@ class OptionSceneByIndex(BaseModel):
 
     index: int
 
-    type: Literal["option_scene_by_index"] = "option_scene_by_index"
+    type: Literal["scene_by_index"] = "scene_by_index"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -27,7 +27,7 @@ class OptionSceneByName(BaseModel):
 
     name: str
 
-    type: Literal["option_scene_by_name"] = "option_scene_by_name"
+    type: Literal["scene_by_name"] = "scene_by_name"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -37,7 +37,7 @@ class OptionMeshByIndex(BaseModel):
 
     index: int
 
-    type: Literal["option_mesh_by_index"] = "option_mesh_by_index"
+    type: Literal["mesh_by_index"] = "mesh_by_index"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -47,7 +47,7 @@ class OptionMeshByName(BaseModel):
 
     name: str
 
-    type: Literal["option_mesh_by_name"] = "option_mesh_by_name"
+    type: Literal["mesh_by_name"] = "mesh_by_name"
 
     model_config = ConfigDict(protected_namespaces=())
 

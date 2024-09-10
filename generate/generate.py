@@ -1612,7 +1612,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
-            object_name = "option_" + one_of["properties"][tag]["enum"][0]
+            object_name = one_of["properties"][tag]["enum"][0]
             # Generate the type for the object.
             content_code = generateObjectTypeCode(
                 snake_to_title(object_name) + "Data",
@@ -1625,27 +1625,22 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             f.write(content_code)
             f.write("\n")
             object_code = generateObjectTypeCode(
-                object_name, one_of, "object", data, tag, content
+                object_name, one_of, "object", data, tag, content, True
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(object_name)
+            all_options.append("option_" + object_name)
     elif tag is not None:
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
-            object_name = "option_" + one_of["properties"][tag]["enum"][0]
+            object_name = one_of["properties"][tag]["enum"][0]
             object_code = generateObjectTypeCode(
-                object_name,
-                one_of,
-                "object",
-                data,
-                tag,
-                None,
+                object_name, one_of, "object", data, tag, None, True
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(object_name)
+            all_options.append("option_" + object_name)
     elif schema["oneOf"].__len__() == 1:
         description = getOneOfDescription(schema)
         object_code = generateObjectTypeCode(
@@ -1703,6 +1698,7 @@ def generateObjectTypeCode(
     data: dict,
     tag: Optional[str],
     content: Optional[str],
+    is_option: bool = False,
 ) -> str:
     FieldType = TypedDict(
         "FieldType",
@@ -1780,10 +1776,13 @@ def generateObjectTypeCode(
                 }
                 fields.append(field2)
 
+    name = snake_to_title(name)
+    if is_option:
+        name = "Option" + name
     template_info: TemplateType = {
         "fields": fields,
         "description": description,
-        "name": snake_to_title(name),
+        "name": name,
         "imports": imports,
     }
 

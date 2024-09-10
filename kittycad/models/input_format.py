@@ -10,7 +10,7 @@ from ..models.unit_length import UnitLength
 class OptionFbx(BaseModel):
     """Autodesk Filmbox (FBX) format."""
 
-    type: Literal["option_fbx"] = "option_fbx"
+    type: Literal["fbx"] = "fbx"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -18,7 +18,7 @@ class OptionFbx(BaseModel):
 class OptionGltf(BaseModel):
     """Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb)."""
 
-    type: Literal["option_gltf"] = "option_gltf"
+    type: Literal["gltf"] = "gltf"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -28,7 +28,7 @@ class OptionObj(BaseModel):
 
     coords: System
 
-    type: Literal["option_obj"] = "option_obj"
+    type: Literal["obj"] = "obj"
 
     units: UnitLength
 
@@ -40,7 +40,7 @@ class OptionPly(BaseModel):
 
     coords: System
 
-    type: Literal["option_ply"] = "option_ply"
+    type: Literal["ply"] = "ply"
 
     units: UnitLength
 
@@ -52,7 +52,7 @@ class OptionSldprt(BaseModel):
 
     split_closed_faces: bool = False
 
-    type: Literal["option_sldprt"] = "option_sldprt"
+    type: Literal["sldprt"] = "sldprt"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -62,7 +62,7 @@ class OptionStep(BaseModel):
 
     split_closed_faces: bool = False
 
-    type: Literal["option_step"] = "option_step"
+    type: Literal["step"] = "step"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -72,7 +72,7 @@ class OptionStl(BaseModel):
 
     coords: System
 
-    type: Literal["option_stl"] = "option_stl"
+    type: Literal["stl"] = "stl"
 
     units: UnitLength
 

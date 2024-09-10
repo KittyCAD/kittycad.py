@@ -13,7 +13,7 @@ class OptionFlat(BaseModel):
 
     price: float
 
-    type: Literal["option_flat"] = "option_flat"
+    type: Literal["flat"] = "flat"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -25,7 +25,7 @@ class OptionPerUser(BaseModel):
 
     price: float
 
-    type: Literal["option_per_user"] = "option_per_user"
+    type: Literal["per_user"] = "per_user"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -33,7 +33,7 @@ class OptionPerUser(BaseModel):
 class OptionEnterprise(BaseModel):
     """Enterprise: The price is not listed and the user needs to contact sales."""
 
-    type: Literal["option_enterprise"] = "option_enterprise"
+    type: Literal["enterprise"] = "enterprise"
 
     model_config = ConfigDict(protected_namespaces=())
 

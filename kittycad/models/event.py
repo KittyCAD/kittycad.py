@@ -24,7 +24,7 @@ class OptionModelingAppEvent(BaseModel):
 
     source_id: str
 
-    type: Literal["option_modeling_app_event"] = "option_modeling_app_event"
+    type: Literal["modeling_app_event"] = "modeling_app_event"
 
     user_id: str
 
