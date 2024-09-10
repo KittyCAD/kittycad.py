@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kittycad"
-version = "0.6.23"
+version = "0.6.24"
 description = "A client library for accessing KittyCAD"
 
 authors = []
@@ -22,7 +22,7 @@ python = ">=3.9,<4.0"
 python-dateutil = "^2.8.0"
 websockets = "^11.0.3"
 pymongo = "^4.6.0"
-pydantic = ">=2.5.2,<2.8.3"
+pydantic = "^2.9.1"
 pydantic-extra-types = "^2.1.0"
 
 [tool.poetry.dev-dependencies]

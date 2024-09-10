@@ -537,6 +537,20 @@ def test_serialize_deserialize():
     assert model_dump["resp"]["data"]["modeling_response"]["data"]["object_id"] == "f61ac02e-77bd-468f-858f-fd4141a26acd"  # type: ignore
 
 
+def test_deserialize_null_request_id():
+    json_str = """{"success":true,"request_id":null,"resp":{"type":"modeling_session_data","data":{"session":{"api_call_id":"91f7fd17-8846-4593-97ff-6400a81b8cdd"}}}}"""
+    d = json.loads(json_str)
+    print(d)
+    message = WebSocketResponse(**d)
+    model_dump = message.model_dump()
+    print(model_dump)
+    assert model_dump["success"] is True  # type: ignore
+    assert model_dump["success"] is True  # type: ignore
+    assert model_dump["request_id"] is None  # type: ignore
+    assert model_dump["resp"]["type"] == "modeling_session_data"  # type: ignore
+    assert model_dump["resp"]["data"]["session"]["api_call_id"] == "91f7fd17-8846-4593-97ff-6400a81b8cdd"  # type: ignore
+
+
 def test_text_to_cad():
     # Create our client.
     client = ClientFromEnv()
