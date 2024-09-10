@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta property="og:title" content="kittycad.models.base64data" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="_autosummary/kittycad.models.base64data.html" />
 <meta property="og:site_name" content="kittycad" />
 <meta property="og:description" content="Classes" />
-<meta property="og:image:width" content="1146" />
-<meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary__autosummary_kittycad.models.base64data_752de7e7.png" />
-<meta property="og:image:alt" content="Classes" />
 <meta name="description" content="Classes" />
-<meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.models.base64data &mdash; kittycad v0.6.21 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/autoclasstoc.css" type="text/css" />
+  <title>kittycad.models.base64data &mdash; kittycad v0.6.24 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d10597a4" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/autoclasstoc.css?v=08871587" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
         <script src="../_static/jquery.js?v=5d32c60e"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=64aa1715"></script>
+        <script src="../_static/documentation_options.js?v=3ca389ab"></script>
         <script src="../_static/doctools.js?v=9a2dae69"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -51,7 +48,7 @@
             kittycad
           </a>
               <div class="version">
-                v0.6.21
+                v0.6.24
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -96,14 +93,77 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.base64data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.base64data.Base64Data.html">kittycad.models.base64data.Base64Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#kittycad.models.base64data.Base64Data"><code class="docutils literal notranslate"><span class="pre">Base64Data</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__add__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__add__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__annotations__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__annotations__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__buffer__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__buffer__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__bytes__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__bytes__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__contains__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__contains__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__dict__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__dict__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__eq__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__ge__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__ge__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__get_pydantic_core_schema__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__get_pydantic_core_schema__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__init__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__getattribute__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__getattribute__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__getitem__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__getnewargs__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__getnewargs__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__gt__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__gt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__hash__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__hash__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__iter__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__iter__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__le__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__le__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__len__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__lt__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__lt__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__mod__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__mod__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__module__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__module__</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.get_decoded"><code class="docutils literal notranslate"><span class="pre">Base64Data.get_decoded()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.get_encoded"><code class="docutils literal notranslate"><span class="pre">Base64Data.get_encoded()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.is_base64"><code class="docutils literal notranslate"><span class="pre">Base64Data.is_base64()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__mul__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__ne__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__ne__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__new__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__new__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__repr__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__rmod__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__rmod__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__rmul__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.__str__"><code class="docutils literal notranslate"><span class="pre">Base64Data.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.capitalize"><code class="docutils literal notranslate"><span class="pre">Base64Data.capitalize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.center"><code class="docutils literal notranslate"><span class="pre">Base64Data.center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.count"><code class="docutils literal notranslate"><span class="pre">Base64Data.count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.decode"><code class="docutils literal notranslate"><span class="pre">Base64Data.decode()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.endswith"><code class="docutils literal notranslate"><span class="pre">Base64Data.endswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.expandtabs"><code class="docutils literal notranslate"><span class="pre">Base64Data.expandtabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.find"><code class="docutils literal notranslate"><span class="pre">Base64Data.find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.fromhex"><code class="docutils literal notranslate"><span class="pre">Base64Data.fromhex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.hex"><code class="docutils literal notranslate"><span class="pre">Base64Data.hex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.index"><code class="docutils literal notranslate"><span class="pre">Base64Data.index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.isalnum"><code class="docutils literal notranslate"><span class="pre">Base64Data.isalnum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.isalpha"><code class="docutils literal notranslate"><span class="pre">Base64Data.isalpha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.isascii"><code class="docutils literal notranslate"><span class="pre">Base64Data.isascii()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.isdigit"><code class="docutils literal notranslate"><span class="pre">Base64Data.isdigit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.islower"><code class="docutils literal notranslate"><span class="pre">Base64Data.islower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.isspace"><code class="docutils literal notranslate"><span class="pre">Base64Data.isspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.istitle"><code class="docutils literal notranslate"><span class="pre">Base64Data.istitle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.isupper"><code class="docutils literal notranslate"><span class="pre">Base64Data.isupper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.join"><code class="docutils literal notranslate"><span class="pre">Base64Data.join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.ljust"><code class="docutils literal notranslate"><span class="pre">Base64Data.ljust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.lower"><code class="docutils literal notranslate"><span class="pre">Base64Data.lower()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.lstrip"><code class="docutils literal notranslate"><span class="pre">Base64Data.lstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.maketrans"><code class="docutils literal notranslate"><span class="pre">Base64Data.maketrans()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.partition"><code class="docutils literal notranslate"><span class="pre">Base64Data.partition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.removeprefix"><code class="docutils literal notranslate"><span class="pre">Base64Data.removeprefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.removesuffix"><code class="docutils literal notranslate"><span class="pre">Base64Data.removesuffix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.replace"><code class="docutils literal notranslate"><span class="pre">Base64Data.replace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.rfind"><code class="docutils literal notranslate"><span class="pre">Base64Data.rfind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.rindex"><code class="docutils literal notranslate"><span class="pre">Base64Data.rindex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.rjust"><code class="docutils literal notranslate"><span class="pre">Base64Data.rjust()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.rpartition"><code class="docutils literal notranslate"><span class="pre">Base64Data.rpartition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.rsplit"><code class="docutils literal notranslate"><span class="pre">Base64Data.rsplit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.rstrip"><code class="docutils literal notranslate"><span class="pre">Base64Data.rstrip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.serialize"><code class="docutils literal notranslate"><span class="pre">Base64Data.serialize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.split"><code class="docutils literal notranslate"><span class="pre">Base64Data.split()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.splitlines"><code class="docutils literal notranslate"><span class="pre">Base64Data.splitlines()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.startswith"><code class="docutils literal notranslate"><span class="pre">Base64Data.startswith()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.strip"><code class="docutils literal notranslate"><span class="pre">Base64Data.strip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.swapcase"><code class="docutils literal notranslate"><span class="pre">Base64Data.swapcase()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.title"><code class="docutils literal notranslate"><span class="pre">Base64Data.title()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.translate"><code class="docutils literal notranslate"><span class="pre">Base64Data.translate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.upper"><code class="docutils literal notranslate"><span class="pre">Base64Data.upper()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.validate"><code class="docutils literal notranslate"><span class="pre">Base64Data.validate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.base64data.Base64Data.zfill"><code class="docutils literal notranslate"><span class="pre">Base64Data.zfill()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -397,43 +457,127 @@
 <p class="rubric">Classes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.base64data.Base64Data.html#kittycad.models.base64data.Base64Data" title="kittycad.models.base64data.Base64Data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Base64Data</span></code></a>(data)</p></td>
-<td><p>Initializes the object.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="kittycad.models.base64data.Base64Data.html#kittycad.models.base64data.Base64Data" title="kittycad.models.base64data.Base64Data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Base64Data</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.base64data.</span></span><span class="sig-name descname"><span class="pre">Base64Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data" title="Link to this definition"></a></dt>
-<dd><p>Initializes the object.</p>
-<p>If the provided data is already in base64 encoded format, it will store it.
-If the data is a regular byte string, it will encode and then store it.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.base64data.</span></span><span class="sig-name descname"><span class="pre">Base64Data</span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__add__">
+<span class="sig-name descname"><span class="pre">__add__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__add__" title="Link to this definition"></a></dt>
+<dd><p>Return self+value.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__annotations__">
 <span class="sig-name descname"><span class="pre">__annotations__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__annotations__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__buffer__">
+<span class="sig-name descname"><span class="pre">__buffer__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__buffer__" title="Link to this definition"></a></dt>
+<dd><p>Return a buffer object that exposes the underlying memory of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__bytes__">
+<span class="sig-name descname"><span class="pre">__bytes__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__bytes__" title="Link to this definition"></a></dt>
+<dd><p>Convert this value to exact type bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__contains__">
+<span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__contains__" title="Link to this definition"></a></dt>
+<dd><p>Return bool(key in self).</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__dict__">
-<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.models.base64data',</span> <span class="pre">'__init__':</span> <span class="pre">&lt;function</span> <span class="pre">Base64Data.__init__&gt;,</span> <span class="pre">'is_base64':</span> <span class="pre">&lt;staticmethod(&lt;function</span> <span class="pre">Base64Data.is_base64&gt;)&gt;,</span> <span class="pre">'get_encoded':</span> <span class="pre">&lt;function</span> <span class="pre">Base64Data.get_encoded&gt;,</span> <span class="pre">'get_decoded':</span> <span class="pre">&lt;function</span> <span class="pre">Base64Data.get_decoded&gt;,</span> <span class="pre">'__get_pydantic_core_schema__':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Base64Data.__get_pydantic_core_schema__&gt;)&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Base64Data'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Base64Data'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__doc__':</span> <span class="pre">None,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__dict__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.models.base64data',</span> <span class="pre">'__get_pydantic_core_schema__':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Base64Data.__get_pydantic_core_schema__&gt;)&gt;,</span> <span class="pre">'validate':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Base64Data.validate&gt;)&gt;,</span> <span class="pre">'serialize':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Base64Data.serialize&gt;)&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Base64Data'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__doc__':</span> <span class="pre">None,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__dict__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__eq__">
+<span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__eq__" title="Link to this definition"></a></dt>
+<dd><p>Return self==value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__ge__">
+<span class="sig-name descname"><span class="pre">__ge__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__ge__" title="Link to this definition"></a></dt>
+<dd><p>Return self&gt;=value.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__get_pydantic_core_schema__">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__get_pydantic_core_schema__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.__get_pydantic_core_schema__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__get_pydantic_core_schema__" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__get_pydantic_core_schema__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.__get_pydantic_core_schema__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__get_pydantic_core_schema__" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AnySchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NoneSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BoolSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">IntSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">FloatSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DecimalSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">StringSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BytesSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DateSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DatetimeSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TimedeltaSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">LiteralSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">EnumSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">IsInstanceSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">IsSubclassSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CallableSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ListSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TupleSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">SetSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenSetSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GeneratorSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DictSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">AfterValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BeforeValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">WrapValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PlainValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">WithDefaultSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NullableSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UnionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TaggedUnionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ChainSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">LaxOrStrictSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonOrPythonSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDictSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelFieldsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataclassArgsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataclassSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CallSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CustomErrorSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UrlSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiHostUrlSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DefinitionsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DefinitionReferenceSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UuidSchema</span></code>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">AnySchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NoneSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BoolSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">IntSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">FloatSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DecimalSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">StringSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BytesSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DateSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DatetimeSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TimedeltaSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">LiteralSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">EnumSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">IsInstanceSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">IsSubclassSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CallableSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ListSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TupleSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">SetSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenSetSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">GeneratorSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DictSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">AfterValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BeforeValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">WrapValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">PlainValidatorFunctionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">WithDefaultSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">NullableSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UnionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TaggedUnionSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ChainSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">LaxOrStrictSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonOrPythonSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDictSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelFieldsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataclassArgsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataclassSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CallSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">CustomErrorSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">JsonSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UrlSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">MultiHostUrlSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DefinitionsSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DefinitionReferenceSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UuidSchema</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ComplexSchema</span></code>]</span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initializes the object.</p>
-<p>If the provided data is already in base64 encoded format, it will store it.
-If the data is a regular byte string, it will encode and then store it.</p>
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__getattribute__">
+<span class="sig-name descname"><span class="pre">__getattribute__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__getattribute__" title="Link to this definition"></a></dt>
+<dd><p>Return getattr(self, name).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Return self[key].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__getnewargs__">
+<span class="sig-name descname"><span class="pre">__getnewargs__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__getnewargs__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__gt__">
+<span class="sig-name descname"><span class="pre">__gt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__gt__" title="Link to this definition"></a></dt>
+<dd><p>Return self&gt;value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__hash__" title="Link to this definition"></a></dt>
+<dd><p>Return hash(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Implement iter(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__le__">
+<span class="sig-name descname"><span class="pre">__le__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__le__" title="Link to this definition"></a></dt>
+<dd><p>Return self&lt;=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__len__" title="Link to this definition"></a></dt>
+<dd><p>Return len(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__lt__">
+<span class="sig-name descname"><span class="pre">__lt__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__lt__" title="Link to this definition"></a></dt>
+<dd><p>Return self&lt;value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__mod__">
+<span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__mod__" title="Link to this definition"></a></dt>
+<dd><p>Return self%value.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -442,10 +586,355 @@ If the data is a regular byte string, it will encode and then store it.</p>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.get_decoded">
-<span class="sig-name descname"><span class="pre">get_decoded</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.get_decoded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.get_decoded" title="Link to this definition"></a></dt>
-<dd><p>Returns the decoded byte string.</p>
-<dl class="field-list simple">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__mul__">
+<span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__mul__" title="Link to this definition"></a></dt>
+<dd><p>Return self*value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__ne__">
+<span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__ne__" title="Link to this definition"></a></dt>
+<dd><p>Return self!=value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__new__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__repr__" title="Link to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__rmod__">
+<span class="sig-name descname"><span class="pre">__rmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__rmod__" title="Link to this definition"></a></dt>
+<dd><p>Return value%self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__rmul__">
+<span class="sig-name descname"><span class="pre">__rmul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__rmul__" title="Link to this definition"></a></dt>
+<dd><p>Return value*self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.__str__" title="Link to this definition"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.capitalize">
+<span class="sig-name descname"><span class="pre">capitalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">copy</span> <span class="pre">of</span> <span class="pre">B</span></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.capitalize" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of B with only its first character capitalized (ASCII)
+and the rest lower-cased.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.center">
+<span class="sig-name descname"><span class="pre">center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">b'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.center" title="Link to this definition"></a></dt>
+<dd><p>Return a centered string of length width.</p>
+<p>Padding is done using the specified fill character.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.count" title="Link to this definition"></a></dt>
+<dd><p>Return the number of non-overlapping occurrences of subsection sub in
+bytes B[start:end].  Optional arguments start and end are interpreted
+as in slice notation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.decode">
+<span class="sig-name descname"><span class="pre">decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'utf-8'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'strict'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.decode" title="Link to this definition"></a></dt>
+<dd><p>Decode the bytes using the codec registered for encoding.</p>
+<dl class="simple">
+<dt>encoding</dt><dd><p>The encoding with which to decode the bytes.</p>
+</dd>
+<dt>errors</dt><dd><p>The error handling scheme to use for the handling of decoding errors.
+The default is ‘strict’ meaning that decoding errors raise a
+UnicodeDecodeError. Other possible values are ‘ignore’ and ‘replace’
+as well as any other name registered with codecs.register_error that
+can handle UnicodeDecodeErrors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.endswith">
+<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.endswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if B ends with the specified suffix, False otherwise.
+With optional start, test B beginning at that position.
+With optional end, stop comparing B at that position.
+suffix can also be a tuple of bytes to try.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.expandtabs">
+<span class="sig-name descname"><span class="pre">expandtabs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tabsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.expandtabs" title="Link to this definition"></a></dt>
+<dd><p>Return a copy where all tab characters are expanded using spaces.</p>
+<p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.find">
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.find" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in B where subsection sub is found,
+such that sub is contained within B[start,end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.fromhex">
+<span class="sig-name descname"><span class="pre">fromhex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.fromhex" title="Link to this definition"></a></dt>
+<dd><p>Create a bytes object from a string of hexadecimal numbers.</p>
+<p>Spaces between two numbers are accepted.
+Example: bytes.fromhex(‘B9 01EF’) -&gt; b’\xb9\x01\xef’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.hex">
+<span class="sig-name descname"><span class="pre">hex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.hex" title="Link to this definition"></a></dt>
+<dd><p>Create a string of hexadecimal numbers from a bytes object.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>sep</dt><dd><p>An optional single character or byte to separate hex bytes.</p>
+</dd>
+<dt>bytes_per_sep</dt><dd><p>How many bytes between separators.  Positive values count from the
+right, negative values count from the left.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Example:
+&gt;&gt;&gt; value = b’xb9x01xef’
+&gt;&gt;&gt; value.hex()
+‘b901ef’
+&gt;&gt;&gt; value.hex(‘:’)
+‘b9:01:ef’
+&gt;&gt;&gt; value.hex(‘:’, 2)
+‘b9:01ef’
+&gt;&gt;&gt; value.hex(‘:’, -2)
+‘b901:ef’</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.index">
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.index" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in B where subsection sub is found,
+such that sub is contained within B[start,end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the subsection is not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.isalnum">
+<span class="sig-name descname"><span class="pre">isalnum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.isalnum" title="Link to this definition"></a></dt>
+<dd><p>Return True if all characters in B are alphanumeric
+and there is at least one character in B, False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.isalpha">
+<span class="sig-name descname"><span class="pre">isalpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.isalpha" title="Link to this definition"></a></dt>
+<dd><p>Return True if all characters in B are alphabetic
+and there is at least one character in B, False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.isascii">
+<span class="sig-name descname"><span class="pre">isascii</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.isascii" title="Link to this definition"></a></dt>
+<dd><p>Return True if B is empty or all characters in B are ASCII,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.isdigit">
+<span class="sig-name descname"><span class="pre">isdigit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.isdigit" title="Link to this definition"></a></dt>
+<dd><p>Return True if all characters in B are digits
+and there is at least one character in B, False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.islower">
+<span class="sig-name descname"><span class="pre">islower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.islower" title="Link to this definition"></a></dt>
+<dd><p>Return True if all cased characters in B are lowercase and there is
+at least one cased character in B, False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.isspace">
+<span class="sig-name descname"><span class="pre">isspace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.isspace" title="Link to this definition"></a></dt>
+<dd><p>Return True if all characters in B are whitespace
+and there is at least one character in B, False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.istitle">
+<span class="sig-name descname"><span class="pre">istitle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.istitle" title="Link to this definition"></a></dt>
+<dd><p>Return True if B is a titlecased string and there is at least one
+character in B, i.e. uppercase characters may only follow uncased
+characters and lowercase characters only cased ones. Return False
+otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.isupper">
+<span class="sig-name descname"><span class="pre">isupper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.isupper" title="Link to this definition"></a></dt>
+<dd><p>Return True if all cased characters in B are uppercase and there is
+at least one cased character in B, False otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable_of_bytes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.join" title="Link to this definition"></a></dt>
+<dd><p>Concatenate any number of bytes objects.</p>
+<p>The bytes whose method is called is inserted in between each pair.</p>
+<p>The result is returned as a new bytes object.</p>
+<p>Example: b’.’.join([b’ab’, b’pq’, b’rs’]) -&gt; b’ab.pq.rs’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.ljust">
+<span class="sig-name descname"><span class="pre">ljust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">b'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.ljust" title="Link to this definition"></a></dt>
+<dd><p>Return a left-justified string of length width.</p>
+<p>Padding is done using the specified fill character.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.lower">
+<span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">copy</span> <span class="pre">of</span> <span class="pre">B</span></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.lower" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of B with all ASCII characters converted to lowercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.lstrip">
+<span class="sig-name descname"><span class="pre">lstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.lstrip" title="Link to this definition"></a></dt>
+<dd><p>Strip leading bytes contained in the argument.</p>
+<p>If the argument is omitted or None, strip leading  ASCII whitespace.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.maketrans">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maketrans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.maketrans" title="Link to this definition"></a></dt>
+<dd><p>Return a translation table useable for the bytes or bytearray translate method.</p>
+<p>The returned table will be one where each byte in frm is mapped to the byte at
+the same position in to.</p>
+<p>The bytes objects frm and to must be of the same length.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.partition">
+<span class="sig-name descname"><span class="pre">partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.partition" title="Link to this definition"></a></dt>
+<dd><p>Partition the bytes into three parts using the given separator.</p>
+<p>This will search for the separator sep in the bytes. If the separator is found,
+returns a 3-tuple containing the part before the separator, the separator
+itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing the original bytes
+object and two empty bytes objects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.removeprefix">
+<span class="sig-name descname"><span class="pre">removeprefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.removeprefix" title="Link to this definition"></a></dt>
+<dd><p>Return a bytes object with the given prefix string removed if present.</p>
+<p>If the bytes starts with the prefix string, return bytes[len(prefix):].
+Otherwise, return a copy of the original bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.removesuffix">
+<span class="sig-name descname"><span class="pre">removesuffix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.removesuffix" title="Link to this definition"></a></dt>
+<dd><p>Return a bytes object with the given suffix string removed if present.</p>
+<p>If the bytes ends with the suffix string and that suffix is not empty,
+return bytes[:-len(prefix)].  Otherwise, return a copy of the original
+bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.replace">
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.replace" title="Link to this definition"></a></dt>
+<dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>count</dt><dd><p>Maximum number of occurrences to replace.
+-1 (the default value) means replace all occurrences.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>If the optional argument count is given, only the first count occurrences are
+replaced.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.rfind">
+<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.rfind" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in B where subsection sub is found,
+such that sub is contained within B[start,end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.rindex">
+<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.rindex" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in B where subsection sub is found,
+such that sub is contained within B[start,end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raise ValueError when the subsection is not found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.rjust">
+<span class="sig-name descname"><span class="pre">rjust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillchar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">b'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.rjust" title="Link to this definition"></a></dt>
+<dd><p>Return a right-justified string of length width.</p>
+<p>Padding is done using the specified fill character.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.rpartition">
+<span class="sig-name descname"><span class="pre">rpartition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.rpartition" title="Link to this definition"></a></dt>
+<dd><p>Partition the bytes into three parts using the given separator.</p>
+<p>This will search for the separator sep in the bytes, starting at the end. If
+the separator is found, returns a 3-tuple containing the part before the
+separator, the separator itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing two empty bytes
+objects and the original bytes object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.rsplit">
+<span class="sig-name descname"><span class="pre">rsplit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.rsplit" title="Link to this definition"></a></dt>
+<dd><p>Return a list of the sections in the bytes, using sep as the delimiter.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>sep</dt><dd><p>The delimiter according which to split the bytes.
+None (the default value) means split on ASCII whitespace characters
+(space, tab, return, newline, formfeed, vertical tab).</p>
+</dd>
+<dt>maxsplit</dt><dd><p>Maximum number of splits to do.
+-1 (the default value) means no limit.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Splitting is done starting at the end of the bytes and working to the front.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.rstrip">
+<span class="sig-name descname"><span class="pre">rstrip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.rstrip" title="Link to this definition"></a></dt>
+<dd><p>Strip trailing bytes contained in the argument.</p>
+<p>If the argument is omitted or None, strip trailing ASCII whitespace.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.serialize">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.serialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.serialize" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
 </dd>
@@ -453,25 +942,88 @@ If the data is a regular byte string, it will encode and then store it.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.get_encoded">
-<span class="sig-name descname"><span class="pre">get_encoded</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.get_encoded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.get_encoded" title="Link to this definition"></a></dt>
-<dd><p>Returns the stored base64 encoded data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsplit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.split" title="Link to this definition"></a></dt>
+<dd><p>Return a list of the sections in the bytes, using sep as the delimiter.</p>
+<dl class="simple">
+<dt>sep</dt><dd><p>The delimiter according which to split the bytes.
+None (the default value) means split on ASCII whitespace characters
+(space, tab, return, newline, formfeed, vertical tab).</p>
+</dd>
+<dt>maxsplit</dt><dd><p>Maximum number of splits to do.
+-1 (the default value) means no limit.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.is_base64">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_base64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.is_base64"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.is_base64" title="Link to this definition"></a></dt>
-<dd><p>Checks if given data is base64 encoded.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.splitlines">
+<span class="sig-name descname"><span class="pre">splitlines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keepends</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.splitlines" title="Link to this definition"></a></dt>
+<dd><p>Return a list of the lines in the bytes, breaking at line boundaries.</p>
+<p>Line breaks are not included in the resulting list unless keepends is given and
+true.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.startswith">
+<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.startswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if B starts with the specified prefix, False otherwise.
+With optional start, test B beginning at that position.
+With optional end, stop comparing B at that position.
+prefix can also be a tuple of bytes to try.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.strip">
+<span class="sig-name descname"><span class="pre">strip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.strip" title="Link to this definition"></a></dt>
+<dd><p>Strip leading and trailing bytes contained in the argument.</p>
+<p>If the argument is omitted or None, strip leading and trailing ASCII whitespace.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.swapcase">
+<span class="sig-name descname"><span class="pre">swapcase</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">copy</span> <span class="pre">of</span> <span class="pre">B</span></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.swapcase" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of B with uppercase ASCII characters converted
+to lowercase ASCII and vice versa.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.title">
+<span class="sig-name descname"><span class="pre">title</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">copy</span> <span class="pre">of</span> <span class="pre">B</span></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.title" title="Link to this definition"></a></dt>
+<dd><p>Return a titlecased version of B, i.e. ASCII words start with uppercase
+characters, all remaining cased characters have lowercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">b''</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.translate" title="Link to this definition"></a></dt>
+<dd><p>Return a copy with each character mapped by the given translation table.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>table</dt><dd><p>Translation table, which must be a bytes object of length 256.</p>
 </dd>
 </dl>
+</div></blockquote>
+<p>All characters occurring in the optional argument delete are removed.
+The remaining characters are mapped through the given translation table.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.upper">
+<span class="sig-name descname"><span class="pre">upper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">copy</span> <span class="pre">of</span> <span class="pre">B</span></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.upper" title="Link to this definition"></a></dt>
+<dd><p>Return a copy of B with all ASCII characters converted to uppercase.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.validate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/base64data.html#Base64Data.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.validate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kittycad.models.base64data.Base64Data.zfill">
+<span class="sig-name descname"><span class="pre">zfill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/base64data.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.base64data.Base64Data.zfill" title="Link to this definition"></a></dt>
+<dd><p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
+<p>The original string is never truncated.</p>
 </dd></dl>
 
 </dd></dl>
