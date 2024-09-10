@@ -6,8 +6,7 @@ class Method(str, Enum):
 
     This type also contains constants for a number of common HTTP methods such as GET, POST, etc.
 
-    Currently includes 8 variants representing the 8 methods defined in [RFC 7230](https://tools.ietf.org/html/rfc7231#section-4.1), plus PATCH, and an Extension variant for all extensions.
-    """  # noqa: E501
+    Currently includes 8 variants representing the 8 methods defined in [RFC 7230](https://tools.ietf.org/html/rfc7231#section-4.1), plus PATCH, and an Extension variant for all extensions."""  # noqa: E501
 
     """# The `OPTIONS` method as defined in [RFC 7231](https://tools.ietf.org/html/rfc7231#section-4.2.1). """  # noqa: E501
     OPTIONS = "OPTIONS"

@@ -22,28 +22,24 @@ def _get_kwargs(
     )  # noqa: E501
 
     if limit is not None:
-
         if "?" in url:
             url = url + "&limit=" + str(limit)
         else:
             url = url + "?limit=" + str(limit)
 
     if page_token is not None:
-
         if "?" in url:
             url = url + "&page_token=" + str(page_token)
         else:
             url = url + "?page_token=" + str(page_token)
 
     if sort_by is not None:
-
         if "?" in url:
             url = url + "&sort_by=" + str(sort_by)
         else:
             url = url + "?sort_by=" + str(sort_by)
 
     if no_models is not None:
-
         if "?" in url:
             url = url + "&no_models=" + str(no_models)
         else:
@@ -120,8 +116,7 @@ def sync(
 ) -> Optional[Union[TextToCadResultsPage, Error]]:
     """This will always return the STEP file contents as well as the format the user originally requested.
     This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
-    The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
-    """  # noqa: E501
+    The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
@@ -164,8 +159,7 @@ async def asyncio(
 ) -> Optional[Union[TextToCadResultsPage, Error]]:
     """This will always return the STEP file contents as well as the format the user originally requested.
     This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
-    The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
-    """  # noqa: E501
+    The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

@@ -174,13 +174,13 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    result: Optional[Union[FileConversion, Error]] = (
-        await create_file_conversion.asyncio(
-            client=client,
-            body=content,
-            src_format=FileImportFormat.STL,
-            output_format=FileExportFormat.OBJ,
-        )
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ,
     )
 
     assert isinstance(result, FileConversion)
@@ -213,13 +213,13 @@ async def test_file_convert_obj_async():
     file.close()
 
     # Get the fc.
-    result: Optional[Union[FileConversion, Error]] = (
-        await create_file_conversion.asyncio(
-            client=client,
-            body=content,
-            src_format=FileImportFormat.OBJ,
-            output_format=FileExportFormat.STL,
-        )
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_format=FileExportFormat.STL,
     )
 
     assert isinstance(result, FileConversion)
@@ -534,7 +534,10 @@ def test_serialize_deserialize():
     assert model_dump["request_id"] == "16a06065-6ca3-4a96-a042-d0bec6b161a6"  # type: ignore
     assert model_dump["resp"]["type"] == "modeling"  # type: ignore
     assert model_dump["resp"]["data"]["modeling_response"]["type"] == "import_files"  # type: ignore
-    assert model_dump["resp"]["data"]["modeling_response"]["data"]["object_id"] == "f61ac02e-77bd-468f-858f-fd4141a26acd"  # type: ignore
+    assert (
+        model_dump["resp"]["data"]["modeling_response"]["data"]["object_id"]
+        == "f61ac02e-77bd-468f-858f-fd4141a26acd"
+    )  # type: ignore
 
 
 def test_deserialize_null_request_id():
@@ -548,7 +551,10 @@ def test_deserialize_null_request_id():
     assert model_dump["success"] is True  # type: ignore
     assert model_dump["request_id"] is None  # type: ignore
     assert model_dump["resp"]["type"] == "modeling_session_data"  # type: ignore
-    assert model_dump["resp"]["data"]["session"]["api_call_id"] == "91f7fd17-8846-4593-97ff-6400a81b8cdd"  # type: ignore
+    assert (
+        model_dump["resp"]["data"]["session"]["api_call_id"]
+        == "91f7fd17-8846-4593-97ff-6400a81b8cdd"
+    )  # type: ignore
 
 
 def test_text_to_cad():

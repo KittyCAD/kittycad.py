@@ -11,8 +11,7 @@ class System(BaseModel):
 
     See [cglearn.eu] for background reading.
 
-    [cglearn.eu](https://cglearn.eu/pub/computer-graphics/introduction-to-geometry#material-coordinate-systems-1)
-    """
+    [cglearn.eu](https://cglearn.eu/pub/computer-graphics/introduction-to-geometry#material-coordinate-systems-1)"""
 
     forward: AxisDirectionPair
 

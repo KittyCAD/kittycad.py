@@ -67,8 +67,7 @@ def sync(
     client: Client,
 ) -> Optional[Error]:
     """This is different than OAuth 2.0 authentication for users. This endpoint grants access for Zoo to access user's repos.
-    The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos.
-    """  # noqa: E501
+    The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""  # noqa: E501
 
     return sync_detailed(
         client=client,
@@ -94,8 +93,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Error]:
     """This is different than OAuth 2.0 authentication for users. This endpoint grants access for Zoo to access user's repos.
-    The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos.
-    """  # noqa: E501
+    The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""  # noqa: E501
 
     return (
         await asyncio_detailed(

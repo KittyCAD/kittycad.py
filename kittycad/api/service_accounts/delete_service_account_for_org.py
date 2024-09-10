@@ -73,8 +73,7 @@ def sync(
     client: Client,
 ) -> Optional[Error]:
     """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
-    This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
-    """  # noqa: E501
+    This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""  # noqa: E501
 
     return sync_detailed(
         token=token,
@@ -104,8 +103,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Error]:
     """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
-    This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
-    """  # noqa: E501
+    This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""  # noqa: E501
 
     return (
         await asyncio_detailed(

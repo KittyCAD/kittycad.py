@@ -55,30 +55,6 @@ types-toml = "^0.10.8"
 requires = ["poetry>=1.0"]
 build-backend = "poetry.masonry.api"
 
-[tool.black]
-line-length = 88
-target_version = ['py36', 'py37', 'py38']
-exclude = '''
-(
-  /(
-    | \.git
-    | \.venv
-    | \.mypy_cache
-	| kittycad/__pycache__
-	| docs/html
-  )/
-)
-'''
-include = '''
-(
-  /(
-    | generate/generate.py
-    | kittycad
-    | docs/*.py
-  )/
-)
-'''
-
 [tool.isort]
 line_length = 88
 profile = "black"

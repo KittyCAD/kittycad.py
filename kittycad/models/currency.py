@@ -7,8 +7,7 @@ from pydantic_core import CoreSchema, core_schema
 class Currency(str):
     """Currency is the list of supported currencies. Always lowercase.
 
-    This comes from the Stripe API docs: For more details see <https://support.stripe.com/questions/which-currencies-does-stripe-support>.
-    """
+    This comes from the Stripe API docs: For more details see <https://support.stripe.com/questions/which-currencies-does-stripe-support>."""
 
     def __str__(self) -> str:
         return self

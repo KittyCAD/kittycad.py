@@ -1,4 +1,4 @@
-""" Contains all the data models used in inputs/outputs """
+"""Contains all the data models used in inputs/outputs"""
 
 from .account_provider import AccountProvider
 from .add_org_member import AddOrgMember

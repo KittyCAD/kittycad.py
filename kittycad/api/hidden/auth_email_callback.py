@@ -19,21 +19,18 @@ def _get_kwargs(
     )  # noqa: E501
 
     if callback_url is not None:
-
         if "?" in url:
             url = url + "&callback_url=" + str(callback_url)
         else:
             url = url + "?callback_url=" + str(callback_url)
 
     if email is not None:
-
         if "?" in url:
             url = url + "&email=" + str(email)
         else:
             url = url + "?email=" + str(email)
 
     if token is not None:
-
         if "?" in url:
             url = url + "&token=" + str(token)
         else:
@@ -99,7 +96,6 @@ def sync(
     client: Client,
     callback_url: Optional[str] = None,
 ) -> Optional[Error]:
-
     return sync_detailed(
         callback_url=callback_url,
         email=email,
@@ -135,7 +131,6 @@ async def asyncio(
     client: Client,
     callback_url: Optional[str] = None,
 ) -> Optional[Error]:
-
     return (
         await asyncio_detailed(
             callback_url=callback_url,
