@@ -1,45 +1,32 @@
 import base64
-import binascii
-from typing import Any
+from typing import Any, Type
 
 from pydantic import GetCoreSchemaHandler
-from pydantic_core import CoreSchema, core_schema
+from pydantic_core import core_schema
 
 
-class Base64Data:
-    def __init__(self, data: bytes):
-        """
-        Initializes the object.
-
-        If the provided data is already in base64 encoded format, it will store it.
-        If the data is a regular byte string, it will encode and then store it.
-        """
-        if self.is_base64(data):
-            self._data = str(data, "utf-8")
-        else:
-            encoded = base64.b64encode(data)
-            self._data = str(encoded, "utf-8")
-
-    @staticmethod
-    def is_base64(data: bytes) -> bool:
-        """Checks if given data is base64 encoded."""
-        try:
-            str_data = str(data, "utf-8")
-            _ = base64.urlsafe_b64decode(str_data.strip("=") + "===")
-            return True
-        except binascii.Error:
-            return False
-
-    def get_encoded(self) -> str:
-        """Returns the stored base64 encoded data."""
-        return self._data
-
-    def get_decoded(self) -> bytes:
-        """Returns the decoded byte string."""
-        return base64.urlsafe_b64decode(self._data.strip("=") + "===")
-
+class Base64Data(bytes):
     @classmethod
     def __get_pydantic_core_schema__(
-        cls, source_type: Any, handler: GetCoreSchemaHandler
-    ) -> CoreSchema:
-        return core_schema.no_info_after_validator_function(cls, handler(bytes))
+        cls, source: Type[Any], handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls.validate,
+            core_schema.union_schema(
+                [
+                    core_schema.str_schema(),
+                    core_schema.bytes_schema(),
+                ]
+            ),
+            serialization=core_schema.plain_serializer_function_ser_schema(
+                cls.serialize
+            ),
+        )
+
+    @classmethod
+    def validate(cls, v):
+        return base64.urlsafe_b64decode(v.strip("=") + "===")
+
+    @classmethod
+    def serialize(cls, v: "Base64Data") -> bytes:
+        return v

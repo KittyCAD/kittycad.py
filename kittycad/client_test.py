@@ -160,7 +160,7 @@ def test_file_convert_stl():
 
     # Make sure the bytes are not empty.
     for key, value in fc.outputs.items():
-        assert len(value.get_decoded()) > 0
+        assert len(value) > 0
 
 
 @pytest.mark.asyncio
@@ -199,7 +199,7 @@ async def test_file_convert_stl_async():
 
     # Make sure the bytes are not empty.
     for key, value in fc.outputs.items():
-        assert len(value.get_decoded()) > 0
+        assert len(value) > 0
 
 
 @pytest.mark.asyncio
@@ -238,7 +238,7 @@ async def test_file_convert_obj_async():
 
     # Make sure the bytes are not empty.
     for key, value in fc.outputs.items():
-        assert len(value.get_decoded()) > 0
+        assert len(value) > 0
 
 
 def test_file_mass():
@@ -508,7 +508,7 @@ def test_ws_import():
                 # Break since now we know it was a success.
                 png_contents = message_dict["resp"]["data"]["modeling_response"][
                     "data"
-                ]["contents"].get_decoded()
+                ]["contents"]
                 break
 
         # Save the contents to a file.
