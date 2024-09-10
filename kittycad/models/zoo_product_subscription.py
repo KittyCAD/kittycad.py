@@ -1,6 +1,6 @@
-from typing import List, Optional, Union
+from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict, RootModel
+from pydantic import BaseModel, ConfigDict
 
 from ..models.modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from ..models.subscription_tier_feature import SubscriptionTierFeature
@@ -13,7 +13,7 @@ from ..models.support_tier import SupportTier
 from ..models.zoo_tool import ZooTool
 
 
-class ZooProductSubscription0(BaseModel):
+class ZooProductSubscription(BaseModel):
     """A subscription to the modeling app."""
 
     description: str
@@ -35,6 +35,3 @@ class ZooProductSubscription0(BaseModel):
     zoo_tools_included: Optional[List[ZooTool]] = None
 
     model_config = ConfigDict(protected_namespaces=())
-
-
-ZooProductSubscription = RootModel[Union[ZooProductSubscription0,]]

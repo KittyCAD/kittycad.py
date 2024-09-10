@@ -11,7 +11,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 
 
-class trickle_ice(BaseModel):
+class OptionTrickleIce(BaseModel):
     """The trickle ICE candidate request."""
 
     candidate: RtcIceCandidateInit
@@ -21,7 +21,7 @@ class trickle_ice(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sdp_offer(BaseModel):
+class OptionSdpOffer(BaseModel):
     """The SDP offer request."""
 
     offer: RtcSessionDescription
@@ -31,7 +31,7 @@ class sdp_offer(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_cmd_req(BaseModel):
+class OptionModelingCmdReq(BaseModel):
     """The modeling command request."""
 
     cmd: ModelingCmd
@@ -43,7 +43,7 @@ class modeling_cmd_req(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_cmd_batch_req(BaseModel):
+class OptionModelingCmdBatchReq(BaseModel):
     """A sequence of modeling requests. If any request fails, following requests will not be tried."""
 
     batch_id: ModelingCmdId
@@ -57,7 +57,7 @@ class modeling_cmd_batch_req(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ping(BaseModel):
+class OptionPing(BaseModel):
     """The client-to-server Ping to ensure the WebSocket stays alive."""
 
     type: Literal["ping"] = "ping"
@@ -65,7 +65,7 @@ class ping(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class metrics_response(BaseModel):
+class OptionMetricsResponse(BaseModel):
     """The response to a metrics collection request from the server."""
 
     metrics: ClientMetrics
@@ -75,7 +75,7 @@ class metrics_response(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class headers(BaseModel):
+class OptionHeaders(BaseModel):
     """Authentication header request."""
 
     headers: Dict[str, str]
@@ -88,13 +88,13 @@ class headers(BaseModel):
 WebSocketRequest = RootModel[
     Annotated[
         Union[
-            trickle_ice,
-            sdp_offer,
-            modeling_cmd_req,
-            modeling_cmd_batch_req,
-            ping,
-            metrics_response,
-            headers,
+            OptionTrickleIce,
+            OptionSdpOffer,
+            OptionModelingCmdReq,
+            OptionModelingCmdBatchReq,
+            OptionPing,
+            OptionMetricsResponse,
+            OptionHeaders,
         ],
         Field(discriminator="type"),
     ]

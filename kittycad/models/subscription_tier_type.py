@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 
-class individual(BaseModel):
+class OptionIndividual(BaseModel):
     """A subscription tier that can be applied to individuals only."""
 
     type: Literal["individual"] = "individual"
@@ -12,7 +12,7 @@ class individual(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class organization(BaseModel):
+class OptionOrganization(BaseModel):
     """An subscription tier that can be applied to organizations only."""
 
     saml_sso: bool
@@ -25,8 +25,8 @@ class organization(BaseModel):
 SubscriptionTierType = RootModel[
     Annotated[
         Union[
-            individual,
-            organization,
+            OptionIndividual,
+            OptionOrganization,
         ],
         Field(discriminator="type"),
     ]

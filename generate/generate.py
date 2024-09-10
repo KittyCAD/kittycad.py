@@ -412,7 +412,7 @@ def generateTypeAndExamplePython(
             and "enum" in one_of["properties"]["type"]
         ):
             return generateTypeAndExamplePython(
-                one_of["properties"]["type"]["enum"][0],
+                snake_to_title("option_" + one_of["properties"]["type"]["enum"][0]),
                 one_of,
                 data,
                 camel_to_snake(name),
@@ -1508,7 +1508,7 @@ def generateUnionType(
         else:
             template_info["types"].append(
                 {
-                    "name": rename_if_keyword(type),
+                    "name": snake_to_title(type),
                     "var0": randletter(),
                     "var1": randletter(),
                     "check": "type",
@@ -1625,27 +1625,37 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             f.write(content_code)
             f.write("\n")
             object_code = generateObjectTypeCode(
-                object_name, one_of, "object", data, tag, content
+                object_name, one_of, "object", data, tag, content, True
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(object_name)
+            all_options.append("option_" + object_name)
     elif tag is not None:
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
             object_name = one_of["properties"][tag]["enum"][0]
             object_code = generateObjectTypeCode(
-                object_name,
-                one_of,
-                "object",
-                data,
-                tag,
-                None,
+                object_name, one_of, "object", data, tag, None, True
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(object_name)
+            all_options.append("option_" + object_name)
+    elif schema["oneOf"].__len__() == 1:
+        description = getOneOfDescription(schema)
+        object_code = generateObjectTypeCode(
+            name,
+            schema["oneOf"][0],
+            "object",
+            data,
+            None,
+            None,
+        )
+        f.write(object_code)
+        f.write("\n")
+        f.close()
+        # return early.
+        return
     else:
         # Generate each of the options from the tag.
         i = 0
@@ -1688,6 +1698,7 @@ def generateObjectTypeCode(
     data: dict,
     tag: Optional[str],
     content: Optional[str],
+    is_option: bool = False,
 ) -> str:
     FieldType = TypedDict(
         "FieldType",
@@ -1765,10 +1776,13 @@ def generateObjectTypeCode(
                 }
                 fields.append(field2)
 
+    name = snake_to_title(name)
+    if is_option:
+        name = "Option" + name
     template_info: TemplateType = {
         "fields": fields,
         "description": description,
-        "name": rename_if_keyword(name),
+        "name": name,
         "imports": imports,
     }
 
@@ -2049,7 +2063,9 @@ def camel_to_screaming_snake(name: str):
 
 # Change `file_conversion` to `FileConversion`
 def snake_to_title(name: str):
-    return name.title().replace("_", "").replace("3D", "3d")
+    if "_" in name or name.islower():
+        return "".join([word.title() for word in name.split("_")])
+    return name
 
 
 def get_function_parameters(

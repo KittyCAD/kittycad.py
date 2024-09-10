@@ -13,7 +13,7 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 
 
-class fbx(BaseModel):
+class OptionFbx(BaseModel):
     """Autodesk Filmbox (FBX) format."""
 
     storage: FbxStorage
@@ -23,7 +23,7 @@ class fbx(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class gltf(BaseModel):
+class OptionGltf(BaseModel):
     """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ASCII output, you can set that option for the export."""
 
     presentation: GltfPresentation
@@ -35,7 +35,7 @@ class gltf(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class obj(BaseModel):
+class OptionObj(BaseModel):
     """Wavefront OBJ format."""
 
     coords: System
@@ -47,7 +47,7 @@ class obj(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ply(BaseModel):
+class OptionPly(BaseModel):
     """The PLY Polygon File Format."""
 
     coords: System
@@ -63,7 +63,7 @@ class ply(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class step(BaseModel):
+class OptionStep(BaseModel):
     """ISO 10303-21 (STEP) format."""
 
     coords: System
@@ -73,7 +73,7 @@ class step(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class stl(BaseModel):
+class OptionStl(BaseModel):
     """*ST**ereo**L**ithography format."""
 
     coords: System
@@ -92,12 +92,12 @@ class stl(BaseModel):
 OutputFormat = RootModel[
     Annotated[
         Union[
-            fbx,
-            gltf,
-            obj,
-            ply,
-            step,
-            stl,
+            OptionFbx,
+            OptionGltf,
+            OptionObj,
+            OptionPly,
+            OptionStep,
+            OptionStl,
         ],
         Field(discriminator="type"),
     ]

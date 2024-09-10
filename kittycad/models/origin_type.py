@@ -6,7 +6,7 @@ from typing_extensions import Annotated
 from ..models.point3d import Point3d
 
 
-class local(BaseModel):
+class OptionLocal(BaseModel):
     """Local Origin (center of object bounding box)."""
 
     type: Literal["local"] = "local"
@@ -14,7 +14,7 @@ class local(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class global_(BaseModel):
+class OptionGlobal(BaseModel):
     """Global Origin (0, 0, 0)."""
 
     type: Literal["global"] = "global"
@@ -22,7 +22,7 @@ class global_(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class custom(BaseModel):
+class OptionCustom(BaseModel):
     """Custom Origin (user specified point)."""
 
     origin: Point3d
@@ -35,9 +35,9 @@ class custom(BaseModel):
 OriginType = RootModel[
     Annotated[
         Union[
-            local,
-            global_,
-            custom,
+            OptionLocal,
+            OptionGlobal,
+            OptionCustom,
         ],
         Field(discriminator="type"),
     ]
