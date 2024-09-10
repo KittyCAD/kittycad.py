@@ -82,6 +82,7 @@ client = ClientFromEnv()
 
     f = open(examples_test_path, "w")
     f.write("import pytest\n\n")
+    f.write("import datetime\n\n")
     f.write("\n\n".join(examples))
     f.close()
 
@@ -178,6 +179,30 @@ def generateTypeAndExamplePython(
             else:
                 parameter_type = "str"
                 parameter_example = '"<uuid>"'
+        if "format" in schema and schema["format"] == "date-time":
+            if name != "":
+                parameter_type = name
+                if import_path is None:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + camel_to_snake(parameter_type)
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+                else:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + ip
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+
+                parameter_example = parameter_type + "(datetime.datetime.now())"
+            else:
+                parameter_type = "datetime"
+                parameter_example = "datetime.datetime.now()"
         elif "format" in schema and schema["format"] == "byte":
             if name != "":
                 parameter_type = name
