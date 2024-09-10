@@ -10,7 +10,7 @@ class CardDetails(BaseModel):
 
     brand: Optional[str] = None
 
-    checks: PaymentMethodCardChecks = {}
+    checks: PaymentMethodCardChecks = {}  # type: ignore
 
     country: Optional[str] = None
 

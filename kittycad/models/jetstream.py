@@ -13,9 +13,9 @@ class Jetstream(BaseModel):
         "max_memory": 0,
         "max_storage": 0,
         "store_dir": "",
-    }
+    }  # type: ignore
 
-    meta: MetaClusterInfo = {"cluster_size": 0, "leader": "", "name": ""}
+    meta: MetaClusterInfo = {"cluster_size": 0, "leader": "", "name": ""}  # type: ignore
 
     stats: JetstreamStats = {
         "accounts": 0,
@@ -25,6 +25,6 @@ class Jetstream(BaseModel):
         "reserved_memory": 0,
         "reserved_store": 0,
         "store": 0,
-    }
+    }  # type: ignore
 
     model_config = ConfigDict(protected_namespaces=())

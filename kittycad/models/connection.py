@@ -23,7 +23,7 @@ class Connection(BaseModel):
         "name": "",
         "tls_timeout": 0,
         "urls": [],
-    }
+    }  # type: ignore
 
     config_load_time: datetime.datetime
 
@@ -39,7 +39,7 @@ class Connection(BaseModel):
         "name": "",
         "port": 0,
         "tls_timeout": 0,
-    }
+    }  # type: ignore
 
     git_commit: str = ""
 
@@ -75,9 +75,9 @@ class Connection(BaseModel):
             "reserved_store": 0,
             "store": 0,
         },
-    }
+    }  # type: ignore
 
-    leaf: LeafNode = {"auth_timeout": 0, "host": "", "port": 0, "tls_timeout": 0}
+    leaf: LeafNode = {"auth_timeout": 0, "host": "", "port": 0, "tls_timeout": 0}  # type: ignore
 
     leafnodes: int = 0
 

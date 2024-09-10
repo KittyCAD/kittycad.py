@@ -82,6 +82,7 @@ client = ClientFromEnv()
 
     f = open(examples_test_path, "w")
     f.write("import pytest\n\n")
+    f.write("import datetime\n\n")
     f.write("\n\n".join(examples))
     f.close()
 
@@ -140,7 +141,12 @@ def generatePaths(cwd: str, parser: dict) -> dict:
 
 
 def generateTypeAndExamplePython(
-    name: str, schema: dict, data: dict, import_path: Optional[str], tag: Optional[str]
+    name: str,
+    schema: dict,
+    data: dict,
+    import_path: Optional[str],
+    tag: Optional[str],
+    wrapper: Optional[str] = None,
 ) -> Tuple[str, str, str]:
     parameter_type = ""
     parameter_example = ""
@@ -173,6 +179,64 @@ def generateTypeAndExamplePython(
             else:
                 parameter_type = "str"
                 parameter_example = '"<uuid>"'
+        if "format" in schema and schema["format"] == "date-time":
+            if name != "":
+                parameter_type = name
+                if import_path is None:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + camel_to_snake(parameter_type)
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+                else:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + ip
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+
+                parameter_example = parameter_type + "(datetime.datetime.now())"
+            else:
+                parameter_type = "datetime"
+                parameter_example = "datetime.datetime.now()"
+        elif "format" in schema and schema["format"] == "byte":
+            if name != "":
+                parameter_type = name
+                if import_path is None:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + camel_to_snake(parameter_type)
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+                else:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + ip
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+
+                example_imports = (
+                    example_imports
+                    + "from kittycad.models.base64data import Base64Data\n"
+                )
+
+                parameter_example = parameter_type + 'Base64Data(b"<bytes>")'
+            else:
+                example_imports = (
+                    example_imports
+                    + "from kittycad.models.base64data import Base64Data\n"
+                )
+                parameter_type = "Base64Data"
+                parameter_example = 'Base64Data(b"<bytes>")'
+
         elif (
             schema["type"] == "string" and "enum" in schema and len(schema["enum"]) > 0
         ):
@@ -300,6 +364,13 @@ def generateTypeAndExamplePython(
                     )
 
             parameter_example = parameter_example + ")"
+
+            if wrapper is not None:
+                if wrapper != "WebSocketRequest":
+                    example_imports = example_imports + (
+                        "from kittycad.models." + ip + " import " + wrapper + "\n"
+                    )
+                    parameter_example = wrapper + "(" + parameter_example + ")"
         elif (
             schema["type"] == "object"
             and "additionalProperties" in schema
@@ -346,6 +417,7 @@ def generateTypeAndExamplePython(
                 data,
                 camel_to_snake(name),
                 tag,
+                name,
             )
         else:
             return generateTypeAndExamplePython(name, one_of, data, None, None)
@@ -1670,12 +1742,20 @@ def generateObjectTypeCode(
                 field_type = getTypeName(property_schema)
                 if property_name not in required:
                     if "default" in property_schema:
-                        field_type += (
-                            ' = "' + property_schema["default"] + '"'
-                            if field_type == "str"
-                            or isinstance(property_schema["default"], str)
-                            else " = " + str(property_schema["default"])
-                        )
+                        if field_type == "str":
+                            field_type += ' = "' + property_schema["default"] + '"'
+                        elif isinstance(property_schema["default"], str):
+                            field_type += (
+                                ' = "' + property_schema["default"] + '" # type: ignore'
+                            )
+                        elif "allOf" in property_schema:
+                            field_type += (
+                                " = "
+                                + str(property_schema["default"])
+                                + " # type: ignore"
+                            )
+                        else:
+                            field_type += " = " + str(property_schema["default"])
                     else:
                         field_type = "Optional[" + field_type + "] = None"
                 field2: FieldType = {
