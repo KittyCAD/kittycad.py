@@ -22,7 +22,7 @@ python = ">=3.9,<4.0"
 python-dateutil = "^2.8.0"
 websockets = "^11.0.3"
 pymongo = "^4.6.0"
-pydantic = ">=2.5.2,<2.9.0"
+pydantic = ">=2.5.2,<2.8.3"
 pydantic-extra-types = "^2.1.0"
 
 [tool.poetry.dev-dependencies]

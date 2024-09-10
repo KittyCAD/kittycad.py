@@ -6,12 +6,14 @@ on:
       - '**.py'
       - .github/workflows/build-test.yml
       - 'pyproject.toml'
+      - 'poetry.lock'
       - 'spec.json'
   pull_request:
     paths:
       - '**.py'
       - .github/workflows/build-test.yml
       - 'pyproject.toml'
+      - 'poetry.lock'
       - 'spec.json'
   workflow_dispatch:
     inputs:
