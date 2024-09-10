@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.annotation_text_alignment_x import AnnotationTextAlignmentX

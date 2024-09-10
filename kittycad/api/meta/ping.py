@@ -71,7 +71,6 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Pong, Error]]:
-
     return sync_detailed(
         client=client,
     ).parsed
@@ -95,7 +94,6 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Pong, Error]]:
-
     return (
         await asyncio_detailed(
             client=client,

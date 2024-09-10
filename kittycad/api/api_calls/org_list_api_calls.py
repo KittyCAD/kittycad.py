@@ -21,21 +21,18 @@ def _get_kwargs(
     )  # noqa: E501
 
     if limit is not None:
-
         if "?" in url:
             url = url + "&limit=" + str(limit)
         else:
             url = url + "?limit=" + str(limit)
 
     if page_token is not None:
-
         if "?" in url:
             url = url + "&page_token=" + str(page_token)
         else:
             url = url + "?page_token=" + str(page_token)
 
     if sort_by is not None:
-
         if "?" in url:
             url = url + "&sort_by=" + str(sort_by)
         else:
@@ -109,8 +106,7 @@ def sync(
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This includes all API calls that were made by users in the org.
     This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
-    The API calls are returned in order of creation, with the most recently created API calls first.
-    """  # noqa: E501
+    The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
@@ -149,8 +145,7 @@ async def asyncio(
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This includes all API calls that were made by users in the org.
     This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
-    The API calls are returned in order of creation, with the most recently created API calls first.
-    """  # noqa: E501
+    The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

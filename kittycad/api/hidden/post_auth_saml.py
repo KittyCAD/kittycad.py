@@ -77,7 +77,6 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Error]:
-
     return sync_detailed(
         provider_id=provider_id,
         body=body,
@@ -109,7 +108,6 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Error]:
-
     return (
         await asyncio_detailed(
             provider_id=provider_id,

@@ -27,63 +27,54 @@ def _get_kwargs(
     url = "{}/ws/modeling/commands".format(client.base_url)  # noqa: E501
 
     if fps is not None:
-
         if "?" in url:
             url = url + "&fps=" + str(fps)
         else:
             url = url + "?fps=" + str(fps)
 
     if pool is not None:
-
         if "?" in url:
             url = url + "&pool=" + str(pool)
         else:
             url = url + "?pool=" + str(pool)
 
     if post_effect is not None:
-
         if "?" in url:
             url = url + "&post_effect=" + str(post_effect)
         else:
             url = url + "?post_effect=" + str(post_effect)
 
     if replay is not None:
-
         if "?" in url:
             url = url + "&replay=" + str(replay)
         else:
             url = url + "?replay=" + str(replay)
 
     if show_grid is not None:
-
         if "?" in url:
             url = url + "&show_grid=" + str(show_grid).lower()
         else:
             url = url + "?show_grid=" + str(show_grid).lower()
 
     if unlocked_framerate is not None:
-
         if "?" in url:
             url = url + "&unlocked_framerate=" + str(unlocked_framerate).lower()
         else:
             url = url + "?unlocked_framerate=" + str(unlocked_framerate).lower()
 
     if video_res_height is not None:
-
         if "?" in url:
             url = url + "&video_res_height=" + str(video_res_height)
         else:
             url = url + "?video_res_height=" + str(video_res_height)
 
     if video_res_width is not None:
-
         if "?" in url:
             url = url + "&video_res_width=" + str(video_res_width)
         else:
             url = url + "?video_res_width=" + str(video_res_width)
 
     if webrtc is not None:
-
         if "?" in url:
             url = url + "&webrtc=" + str(webrtc).lower()
         else:
@@ -128,7 +119,12 @@ def sync(
         client=client,
     )
 
-    return ws_connect(kwargs["url"].replace("http", "ws"), additional_headers=kwargs["headers"], close_timeout=120, max_size=None)  # type: ignore
+    return ws_connect(
+        kwargs["url"].replace("http", "ws"),
+        additional_headers=kwargs["headers"],
+        close_timeout=120,
+        max_size=None,
+    )  # type: ignore
 
 
 async def asyncio(

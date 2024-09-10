@@ -3,7 +3,6 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-
 class MouseClick(BaseModel):
     """The response from the `MouseClick` command."""
 

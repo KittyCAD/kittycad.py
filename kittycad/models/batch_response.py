@@ -3,7 +3,6 @@ from typing import Union
 from pydantic import BaseModel, ConfigDict, RootModel
 
 
-
 class response(BaseModel):
     """Response to the modeling command."""
 

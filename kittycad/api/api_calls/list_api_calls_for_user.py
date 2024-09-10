@@ -23,21 +23,18 @@ def _get_kwargs(
     )  # noqa: E501
 
     if limit is not None:
-
         if "?" in url:
             url = url + "&limit=" + str(limit)
         else:
             url = url + "?limit=" + str(limit)
 
     if page_token is not None:
-
         if "?" in url:
             url = url + "&page_token=" + str(page_token)
         else:
             url = url + "?page_token=" + str(page_token)
 
     if sort_by is not None:
-
         if "?" in url:
             url = url + "&sort_by=" + str(sort_by)
         else:
@@ -115,8 +112,7 @@ def sync(
     """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
     If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
-    The API calls are returned in order of creation, with the most recently created API calls first.
-    """  # noqa: E501
+    The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -160,8 +156,7 @@ async def asyncio(
     """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
     Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
     If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
-    The API calls are returned in order of creation, with the most recently created API calls first.
-    """  # noqa: E501
+    The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

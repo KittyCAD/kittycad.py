@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-
 class AppClientInfo(BaseModel):
     """Information about a third party app client."""
 

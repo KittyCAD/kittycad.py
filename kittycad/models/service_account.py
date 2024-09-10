@@ -12,8 +12,7 @@ class ServiceAccount(BaseModel):
 
     These are used to authenticate orgs with Bearer authentication.
 
-    This works just like an API token, but it is tied to an organization versus an individual user.
-    """
+    This works just like an API token, but it is tied to an organization versus an individual user."""
 
     created_at: datetime.datetime
 

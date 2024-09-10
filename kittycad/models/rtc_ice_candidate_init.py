@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-
 class RtcIceCandidateInit(BaseModel):
     """ICECandidateInit is used to serialize ice candidates"""
 

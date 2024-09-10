@@ -21,21 +21,18 @@ def _get_kwargs(
     )  # noqa: E501
 
     if limit is not None:
-
         if "?" in url:
             url = url + "&limit=" + str(limit)
         else:
             url = url + "?limit=" + str(limit)
 
     if page_token is not None:
-
         if "?" in url:
             url = url + "&page_token=" + str(page_token)
         else:
             url = url + "?page_token=" + str(page_token)
 
     if sort_by is not None:
-
         if "?" in url:
             url = url + "&sort_by=" + str(sort_by)
         else:
@@ -108,8 +105,7 @@ def sync(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ServiceAccountResultsPage, Error]]:
     """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
-    The service accounts are returned in order of creation, with the most recently created service accounts first.
-    """  # noqa: E501
+    The service accounts are returned in order of creation, with the most recently created service accounts first."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
@@ -147,8 +143,7 @@ async def asyncio(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ServiceAccountResultsPage, Error]]:
     """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
-    The service accounts are returned in order of creation, with the most recently created service accounts first.
-    """  # noqa: E501
+    The service accounts are returned in order of creation, with the most recently created service accounts first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

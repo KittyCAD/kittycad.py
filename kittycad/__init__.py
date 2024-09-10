@@ -1,1 +1,1 @@
-""" A client library for accessing KittyCAD """
+"""A client library for accessing KittyCAD"""

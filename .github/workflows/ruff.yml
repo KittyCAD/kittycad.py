@@ -36,3 +36,4 @@ jobs:
         shell: bash
         run: |
           poetry run ruff check --output-format=github .
+          poetry run ruff format --check

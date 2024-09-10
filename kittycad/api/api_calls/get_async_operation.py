@@ -36,7 +36,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[
     Union[
         FileConversion,
         FileCenterOfMass,
@@ -132,7 +134,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[
     return Error(**response.json())
 
 
-def _build_response(*, response: httpx.Response) -> Response[
+def _build_response(
+    *, response: httpx.Response
+) -> Response[
     Optional[
         Union[
             FileConversion,
@@ -207,8 +211,7 @@ def sync(
     """Get the status and output of an async operation.
     This endpoint requires authentication by any Zoo user. It returns details of the requested async operation for the user.
     If the user is not authenticated to view the specified async operation, then it is not returned.
-    Only Zoo employees with the proper access can view async operations for other users.
-    """  # noqa: E501
+    Only Zoo employees with the proper access can view async operations for other users."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -266,8 +269,7 @@ async def asyncio(
     """Get the status and output of an async operation.
     This endpoint requires authentication by any Zoo user. It returns details of the requested async operation for the user.
     If the user is not authenticated to view the specified async operation, then it is not returned.
-    Only Zoo employees with the proper access can view async operations for other users.
-    """  # noqa: E501
+    Only Zoo employees with the proper access can view async operations for other users."""  # noqa: E501
 
     return (
         await asyncio_detailed(

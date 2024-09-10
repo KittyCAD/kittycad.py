@@ -3,7 +3,6 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-
 class EntityLinearPatternTransform(BaseModel):
     """The response from the `EntityLinearPatternTransform` command."""
 

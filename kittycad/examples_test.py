@@ -349,10 +349,10 @@ async def test_get_metadata_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Metadata, Error]]] = (
-        await get_metadata.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[Metadata, Error]]
+    ] = await get_metadata.asyncio_detailed(
+        client=client,
     )
 
 
@@ -390,10 +390,10 @@ async def test_get_ipinfo_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[IpAddrInfo, Error]]] = (
-        await get_ipinfo.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[IpAddrInfo, Error]]
+    ] = await get_ipinfo.asyncio_detailed(
+        client=client,
     )
 
 
@@ -448,15 +448,15 @@ async def test_create_text_to_cad_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[TextToCad, Error]]] = (
-        await create_text_to_cad.asyncio_detailed(
-            client=client,
-            output_format=FileExportFormat.FBX,
-            kcl=None,  # Optional[bool]
-            body=TextToCadCreateBody(
-                prompt="<string>",
-            ),
-        )
+    response: Response[
+        Optional[Union[TextToCad, Error]]
+    ] = await create_text_to_cad.asyncio_detailed(
+        client=client,
+        output_format=FileExportFormat.FBX,
+        kcl=None,  # Optional[bool]
+        body=TextToCadCreateBody(
+            prompt="<string>",
+        ),
     )
 
 
@@ -493,19 +493,19 @@ async def test_get_api_call_metrics_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[List[ApiCallQueryGroup], Error]] = (
-        await get_api_call_metrics.asyncio(
-            client=client,
-            group_by=ApiCallQueryGroupBy.EMAIL,
-        )
+    result: Optional[
+        Union[List[ApiCallQueryGroup], Error]
+    ] = await get_api_call_metrics.asyncio(
+        client=client,
+        group_by=ApiCallQueryGroupBy.EMAIL,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[List[ApiCallQueryGroup], Error]]] = (
-        await get_api_call_metrics.asyncio_detailed(
-            client=client,
-            group_by=ApiCallQueryGroupBy.EMAIL,
-        )
+    response: Response[
+        Optional[Union[List[ApiCallQueryGroup], Error]]
+    ] = await get_api_call_metrics.asyncio_detailed(
+        client=client,
+        group_by=ApiCallQueryGroupBy.EMAIL,
     )
 
 
@@ -546,23 +546,23 @@ async def test_list_api_calls_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiCallWithPriceResultsPage, Error]] = (
-        await list_api_calls.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ApiCallWithPriceResultsPage, Error]
+    ] = await list_api_calls.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]] = (
-        await list_api_calls.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ApiCallWithPriceResultsPage, Error]]
+    ] = await list_api_calls.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -605,11 +605,11 @@ async def test_get_api_call_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiCallWithPrice, Error]]] = (
-        await get_api_call.asyncio_detailed(
-            client=client,
-            id="<uuid>",
-        )
+    response: Response[
+        Optional[Union[ApiCallWithPrice, Error]]
+    ] = await get_api_call.asyncio_detailed(
+        client=client,
+        id="<uuid>",
     )
 
 
@@ -688,10 +688,10 @@ async def test_apps_github_consent_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[AppClientInfo, Error]]] = (
-        await apps_github_consent.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[AppClientInfo, Error]]
+    ] = await apps_github_consent.asyncio_detailed(
+        client=client,
     )
 
 
@@ -779,25 +779,25 @@ async def test_list_async_operations_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[AsyncApiCallResultsPage, Error]] = (
-        await list_async_operations.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            status=ApiCallStatus.QUEUED,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[AsyncApiCallResultsPage, Error]
+    ] = await list_async_operations.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        status=ApiCallStatus.QUEUED,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[AsyncApiCallResultsPage, Error]]] = (
-        await list_async_operations.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            status=ApiCallStatus.QUEUED,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[AsyncApiCallResultsPage, Error]]
+    ] = await list_async_operations.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        status=ApiCallStatus.QUEUED,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -942,23 +942,23 @@ async def test_auth_email_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[VerificationTokenResponse, Error]] = (
-        await auth_email.asyncio(
-            client=client,
-            body=EmailAuthenticationForm(
-                email="<string>",
-            ),
-        )
+    result: Optional[
+        Union[VerificationTokenResponse, Error]
+    ] = await auth_email.asyncio(
+        client=client,
+        body=EmailAuthenticationForm(
+            email="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[VerificationTokenResponse, Error]]] = (
-        await auth_email.asyncio_detailed(
-            client=client,
-            body=EmailAuthenticationForm(
-                email="<string>",
-            ),
-        )
+    response: Response[
+        Optional[Union[VerificationTokenResponse, Error]]
+    ] = await auth_email.asyncio_detailed(
+        client=client,
+        body=EmailAuthenticationForm(
+            email="<string>",
+        ),
     )
 
 
@@ -1143,10 +1143,10 @@ async def test_create_debug_uploads_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[List[str], Error]]] = (
-        await create_debug_uploads.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[List[str], Error]]
+    ] = await create_debug_uploads.asyncio_detailed(
+        client=client,
     )
 
 
@@ -1254,23 +1254,23 @@ async def test_create_file_center_of_mass_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[FileCenterOfMass, Error]] = (
-        await create_file_center_of_mass.asyncio(
-            client=client,
-            output_unit=UnitLength.CM,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    result: Optional[
+        Union[FileCenterOfMass, Error]
+    ] = await create_file_center_of_mass.asyncio(
+        client=client,
+        output_unit=UnitLength.CM,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[FileCenterOfMass, Error]]] = (
-        await create_file_center_of_mass.asyncio_detailed(
-            client=client,
-            output_unit=UnitLength.CM,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    response: Response[
+        Optional[Union[FileCenterOfMass, Error]]
+    ] = await create_file_center_of_mass.asyncio_detailed(
+        client=client,
+        output_unit=UnitLength.CM,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
 
@@ -1311,23 +1311,23 @@ async def test_create_file_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[FileConversion, Error]] = (
-        await create_file_conversion.asyncio(
-            client=client,
-            output_format=FileExportFormat.FBX,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
+        client=client,
+        output_format=FileExportFormat.FBX,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[FileConversion, Error]]] = (
-        await create_file_conversion.asyncio_detailed(
-            client=client,
-            output_format=FileExportFormat.FBX,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    response: Response[
+        Optional[Union[FileConversion, Error]]
+    ] = await create_file_conversion.asyncio_detailed(
+        client=client,
+        output_format=FileExportFormat.FBX,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
 
@@ -1382,15 +1382,15 @@ async def test_create_file_density_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[FileDensity, Error]]] = (
-        await create_file_density.asyncio_detailed(
-            client=client,
-            material_mass=3.14,
-            material_mass_unit=UnitMass.G,
-            output_unit=UnitDensity.LB_FT3,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    response: Response[
+        Optional[Union[FileDensity, Error]]
+    ] = await create_file_density.asyncio_detailed(
+        client=client,
+        material_mass=3.14,
+        material_mass_unit=UnitMass.G,
+        output_unit=UnitDensity.LB_FT3,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
 
@@ -1439,13 +1439,13 @@ async def test_create_file_execution_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[CodeOutput, Error]]] = (
-        await create_file_execution.asyncio_detailed(
-            client=client,
-            lang=CodeLanguage.GO,
-            output=None,  # Optional[str]
-            body=bytes("some bytes", "utf-8"),
-        )
+    response: Response[
+        Optional[Union[CodeOutput, Error]]
+    ] = await create_file_execution.asyncio_detailed(
+        client=client,
+        lang=CodeLanguage.GO,
+        output=None,  # Optional[str]
+        body=bytes("some bytes", "utf-8"),
     )
 
 
@@ -1500,15 +1500,15 @@ async def test_create_file_mass_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[FileMass, Error]]] = (
-        await create_file_mass.asyncio_detailed(
-            client=client,
-            material_density=3.14,
-            material_density_unit=UnitDensity.LB_FT3,
-            output_unit=UnitMass.G,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    response: Response[
+        Optional[Union[FileMass, Error]]
+    ] = await create_file_mass.asyncio_detailed(
+        client=client,
+        material_density=3.14,
+        material_density_unit=UnitDensity.LB_FT3,
+        output_unit=UnitMass.G,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
 
@@ -1549,23 +1549,23 @@ async def test_create_file_surface_area_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[FileSurfaceArea, Error]] = (
-        await create_file_surface_area.asyncio(
-            client=client,
-            output_unit=UnitArea.CM2,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    result: Optional[
+        Union[FileSurfaceArea, Error]
+    ] = await create_file_surface_area.asyncio(
+        client=client,
+        output_unit=UnitArea.CM2,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[FileSurfaceArea, Error]]] = (
-        await create_file_surface_area.asyncio_detailed(
-            client=client,
-            output_unit=UnitArea.CM2,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    response: Response[
+        Optional[Union[FileSurfaceArea, Error]]
+    ] = await create_file_surface_area.asyncio_detailed(
+        client=client,
+        output_unit=UnitArea.CM2,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
 
@@ -1614,13 +1614,13 @@ async def test_create_file_volume_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[FileVolume, Error]]] = (
-        await create_file_volume.asyncio_detailed(
-            client=client,
-            output_unit=UnitVolume.CM3,
-            src_format=FileImportFormat.FBX,
-            body=bytes("some bytes", "utf-8"),
-        )
+    response: Response[
+        Optional[Union[FileVolume, Error]]
+    ] = await create_file_volume.asyncio_detailed(
+        client=client,
+        output_unit=UnitVolume.CM3,
+        src_format=FileImportFormat.FBX,
+        body=bytes("some bytes", "utf-8"),
     )
 
 
@@ -1659,19 +1659,19 @@ async def test_internal_get_api_token_for_discord_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiToken, Error]] = (
-        await internal_get_api_token_for_discord_user.asyncio(
-            client=client,
-            discord_id="<string>",
-        )
+    result: Optional[
+        Union[ApiToken, Error]
+    ] = await internal_get_api_token_for_discord_user.asyncio(
+        client=client,
+        discord_id="<string>",
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiToken, Error]]] = (
-        await internal_get_api_token_for_discord_user.asyncio_detailed(
-            client=client,
-            discord_id="<string>",
-        )
+    response: Response[
+        Optional[Union[ApiToken, Error]]
+    ] = await internal_get_api_token_for_discord_user.asyncio_detailed(
+        client=client,
+        discord_id="<string>",
     )
 
 
@@ -1759,13 +1759,13 @@ async def test_list_ml_prompts_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[MlPromptResultsPage, Error]]] = (
-        await list_ml_prompts.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[MlPromptResultsPage, Error]]
+    ] = await list_ml_prompts.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -1806,11 +1806,11 @@ async def test_get_ml_prompt_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[MlPrompt, Error]]] = (
-        await get_ml_prompt.asyncio_detailed(
-            client=client,
-            id="<uuid>",
-        )
+    response: Response[
+        Optional[Union[MlPrompt, Error]]
+    ] = await get_ml_prompt.asyncio_detailed(
+        client=client,
+        id="<uuid>",
     )
 
 
@@ -1867,37 +1867,37 @@ async def test_create_kcl_code_completions_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[KclCodeCompletionResponse, Error]] = (
-        await create_kcl_code_completions.asyncio(
-            client=client,
-            body=KclCodeCompletionRequest(
-                extra=KclCodeCompletionParams(
-                    language="<string>",
-                    trim_by_indentation=False,
-                ),
-                prompt="<string>",
-                stop=["<string>"],
-                stream=False,
-                suffix="<string>",
+    result: Optional[
+        Union[KclCodeCompletionResponse, Error]
+    ] = await create_kcl_code_completions.asyncio(
+        client=client,
+        body=KclCodeCompletionRequest(
+            extra=KclCodeCompletionParams(
+                language="<string>",
+                trim_by_indentation=False,
             ),
-        )
+            prompt="<string>",
+            stop=["<string>"],
+            stream=False,
+            suffix="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[KclCodeCompletionResponse, Error]]] = (
-        await create_kcl_code_completions.asyncio_detailed(
-            client=client,
-            body=KclCodeCompletionRequest(
-                extra=KclCodeCompletionParams(
-                    language="<string>",
-                    trim_by_indentation=False,
-                ),
-                prompt="<string>",
-                stop=["<string>"],
-                stream=False,
-                suffix="<string>",
+    response: Response[
+        Optional[Union[KclCodeCompletionResponse, Error]]
+    ] = await create_kcl_code_completions.asyncio_detailed(
+        client=client,
+        body=KclCodeCompletionRequest(
+            extra=KclCodeCompletionParams(
+                language="<string>",
+                trim_by_indentation=False,
             ),
-        )
+            prompt="<string>",
+            stop=["<string>"],
+            stream=False,
+            suffix="<string>",
+        ),
     )
 
 
@@ -1970,53 +1970,53 @@ async def test_create_text_to_cad_iteration_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[TextToCadIteration, Error]] = (
-        await create_text_to_cad_iteration.asyncio(
-            client=client,
-            body=TextToCadIterationBody(
-                original_source_code="<string>",
-                source_ranges=[
-                    SourceRangePrompt(
-                        prompt="<string>",
-                        range=SourceRange(
-                            end=SourcePosition(
-                                column=10,
-                                line=10,
-                            ),
-                            start=SourcePosition(
-                                column=10,
-                                line=10,
-                            ),
+    result: Optional[
+        Union[TextToCadIteration, Error]
+    ] = await create_text_to_cad_iteration.asyncio(
+        client=client,
+        body=TextToCadIterationBody(
+            original_source_code="<string>",
+            source_ranges=[
+                SourceRangePrompt(
+                    prompt="<string>",
+                    range=SourceRange(
+                        end=SourcePosition(
+                            column=10,
+                            line=10,
                         ),
-                    )
-                ],
-            ),
-        )
+                        start=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                    ),
+                )
+            ],
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[TextToCadIteration, Error]]] = (
-        await create_text_to_cad_iteration.asyncio_detailed(
-            client=client,
-            body=TextToCadIterationBody(
-                original_source_code="<string>",
-                source_ranges=[
-                    SourceRangePrompt(
-                        prompt="<string>",
-                        range=SourceRange(
-                            end=SourcePosition(
-                                column=10,
-                                line=10,
-                            ),
-                            start=SourcePosition(
-                                column=10,
-                                line=10,
-                            ),
+    response: Response[
+        Optional[Union[TextToCadIteration, Error]]
+    ] = await create_text_to_cad_iteration.asyncio_detailed(
+        client=client,
+        body=TextToCadIterationBody(
+            original_source_code="<string>",
+            source_ranges=[
+                SourceRangePrompt(
+                    prompt="<string>",
+                    range=SourceRange(
+                        end=SourcePosition(
+                            column=10,
+                            line=10,
                         ),
-                    )
-                ],
-            ),
-        )
+                        start=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                    ),
+                )
+            ],
+        ),
     )
 
 
@@ -2255,23 +2255,23 @@ async def test_org_list_api_calls_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiCallWithPriceResultsPage, Error]] = (
-        await org_list_api_calls.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ApiCallWithPriceResultsPage, Error]
+    ] = await org_list_api_calls.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]] = (
-        await org_list_api_calls.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ApiCallWithPriceResultsPage, Error]]
+    ] = await org_list_api_calls.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -2308,19 +2308,19 @@ async def test_get_api_call_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiCallWithPrice, Error]] = (
-        await get_api_call_for_org.asyncio(
-            client=client,
-            id="<uuid>",
-        )
+    result: Optional[
+        Union[ApiCallWithPrice, Error]
+    ] = await get_api_call_for_org.asyncio(
+        client=client,
+        id="<uuid>",
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiCallWithPrice, Error]]] = (
-        await get_api_call_for_org.asyncio_detailed(
-            client=client,
-            id="<uuid>",
-        )
+    response: Response[
+        Optional[Union[ApiCallWithPrice, Error]]
+    ] = await get_api_call_for_org.asyncio_detailed(
+        client=client,
+        id="<uuid>",
     )
 
 
@@ -2363,25 +2363,25 @@ async def test_list_org_members_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[OrgMemberResultsPage, Error]] = (
-        await list_org_members.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            role=UserOrgRole.ADMIN,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[OrgMemberResultsPage, Error]
+    ] = await list_org_members.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        role=UserOrgRole.ADMIN,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[OrgMemberResultsPage, Error]]] = (
-        await list_org_members.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            role=UserOrgRole.ADMIN,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[OrgMemberResultsPage, Error]]
+    ] = await list_org_members.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        role=UserOrgRole.ADMIN,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -2433,14 +2433,14 @@ async def test_create_org_member_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[OrgMember, Error]]] = (
-        await create_org_member.asyncio_detailed(
-            client=client,
-            body=AddOrgMember(
-                email="<string>",
-                role=UserOrgRole.ADMIN,
-            ),
-        )
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = await create_org_member.asyncio_detailed(
+        client=client,
+        body=AddOrgMember(
+            email="<string>",
+            role=UserOrgRole.ADMIN,
+        ),
     )
 
 
@@ -2483,11 +2483,11 @@ async def test_get_org_member_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[OrgMember, Error]]] = (
-        await get_org_member.asyncio_detailed(
-            client=client,
-            user_id=Uuid("<uuid>"),
-        )
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = await get_org_member.asyncio_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
     )
 
 
@@ -2539,14 +2539,14 @@ async def test_update_org_member_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[OrgMember, Error]]] = (
-        await update_org_member.asyncio_detailed(
-            client=client,
-            user_id=Uuid("<uuid>"),
-            body=UpdateMemberToOrgBody(
-                role=UserOrgRole.ADMIN,
-            ),
-        )
+    response: Response[
+        Optional[Union[OrgMember, Error]]
+    ] = await update_org_member.asyncio_detailed(
+        client=client,
+        user_id=Uuid("<uuid>"),
+        body=UpdateMemberToOrgBody(
+            role=UserOrgRole.ADMIN,
+        ),
     )
 
 
@@ -2624,17 +2624,17 @@ async def test_get_payment_information_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Customer, Error]] = (
-        await get_payment_information_for_org.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[Customer, Error]
+    ] = await get_payment_information_for_org.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Customer, Error]]] = (
-        await get_payment_information_for_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await get_payment_information_for_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -2677,25 +2677,25 @@ async def test_update_payment_information_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Customer, Error]] = (
-        await update_payment_information_for_org.asyncio(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    result: Optional[
+        Union[Customer, Error]
+    ] = await update_payment_information_for_org.asyncio(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Customer, Error]]] = (
-        await update_payment_information_for_org.asyncio_detailed(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await update_payment_information_for_org.asyncio_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -2738,25 +2738,25 @@ async def test_create_payment_information_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Customer, Error]] = (
-        await create_payment_information_for_org.asyncio(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    result: Optional[
+        Union[Customer, Error]
+    ] = await create_payment_information_for_org.asyncio(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Customer, Error]]] = (
-        await create_payment_information_for_org.asyncio_detailed(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await create_payment_information_for_org.asyncio_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -2796,10 +2796,10 @@ async def test_delete_payment_information_for_org_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await delete_payment_information_for_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_information_for_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -2834,17 +2834,17 @@ async def test_get_payment_balance_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[CustomerBalance, Error]] = (
-        await get_payment_balance_for_org.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[CustomerBalance, Error]
+    ] = await get_payment_balance_for_org.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[CustomerBalance, Error]]] = (
-        await get_payment_balance_for_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = await get_payment_balance_for_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -2879,17 +2879,17 @@ async def test_create_payment_intent_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[PaymentIntent, Error]] = (
-        await create_payment_intent_for_org.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[PaymentIntent, Error]
+    ] = await create_payment_intent_for_org.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[PaymentIntent, Error]]] = (
-        await create_payment_intent_for_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[PaymentIntent, Error]]
+    ] = await create_payment_intent_for_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -2929,10 +2929,10 @@ async def test_list_invoices_for_org_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[List[Invoice], Error]]] = (
-        await list_invoices_for_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[List[Invoice], Error]]
+    ] = await list_invoices_for_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -2969,17 +2969,17 @@ async def test_list_payment_methods_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[List[PaymentMethod], Error]] = (
-        await list_payment_methods_for_org.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[List[PaymentMethod], Error]
+    ] = await list_payment_methods_for_org.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[List[PaymentMethod], Error]]] = (
-        await list_payment_methods_for_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[List[PaymentMethod], Error]]
+    ] = await list_payment_methods_for_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -3020,11 +3020,11 @@ async def test_delete_payment_method_for_org_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await delete_payment_method_for_org.asyncio_detailed(
-            client=client,
-            id="<string>",
-        )
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_method_for_org.asyncio_detailed(
+        client=client,
+        id="<string>",
     )
 
 
@@ -3059,17 +3059,17 @@ async def test_get_org_subscription_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        await get_org_subscription.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await get_org_subscription.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        await get_org_subscription.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await get_org_subscription.asyncio_detailed(
+        client=client,
     )
 
 
@@ -3112,23 +3112,23 @@ async def test_update_org_subscription_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        await update_org_subscription.asyncio(
-            client=client,
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            ),
-        )
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await update_org_subscription.asyncio(
+        client=client,
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        await update_org_subscription.asyncio_detailed(
-            client=client,
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            ),
-        )
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await update_org_subscription.asyncio_detailed(
+        client=client,
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+        ),
     )
 
 
@@ -3171,23 +3171,23 @@ async def test_create_org_subscription_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        await create_org_subscription.asyncio(
-            client=client,
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            ),
-        )
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await create_org_subscription.asyncio(
+        client=client,
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        await create_org_subscription.asyncio_detailed(
-            client=client,
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            ),
-        )
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await create_org_subscription.asyncio_detailed(
+        client=client,
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+        ),
     )
 
 
@@ -3227,10 +3227,10 @@ async def test_validate_customer_tax_information_for_org_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await validate_customer_tax_information_for_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Error]
+    ] = await validate_customer_tax_information_for_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -3265,17 +3265,17 @@ async def test_get_org_privacy_settings_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[PrivacySettings, Error]] = (
-        await get_org_privacy_settings.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[PrivacySettings, Error]
+    ] = await get_org_privacy_settings.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[PrivacySettings, Error]]] = (
-        await get_org_privacy_settings.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[PrivacySettings, Error]]
+    ] = await get_org_privacy_settings.asyncio_detailed(
+        client=client,
     )
 
 
@@ -3316,23 +3316,23 @@ async def test_update_org_privacy_settings_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[PrivacySettings, Error]] = (
-        await update_org_privacy_settings.asyncio(
-            client=client,
-            body=PrivacySettings(
-                can_train_on_data=False,
-            ),
-        )
+    result: Optional[
+        Union[PrivacySettings, Error]
+    ] = await update_org_privacy_settings.asyncio(
+        client=client,
+        body=PrivacySettings(
+            can_train_on_data=False,
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[PrivacySettings, Error]]] = (
-        await update_org_privacy_settings.asyncio_detailed(
-            client=client,
-            body=PrivacySettings(
-                can_train_on_data=False,
-            ),
-        )
+    response: Response[
+        Optional[Union[PrivacySettings, Error]]
+    ] = await update_org_privacy_settings.asyncio_detailed(
+        client=client,
+        body=PrivacySettings(
+            can_train_on_data=False,
+        ),
     )
 
 
@@ -3367,17 +3367,17 @@ async def test_get_org_saml_idp_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[SamlIdentityProvider, Error]] = (
-        await get_org_saml_idp.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[SamlIdentityProvider, Error]
+    ] = await get_org_saml_idp.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[SamlIdentityProvider, Error]]] = (
-        await get_org_saml_idp.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[SamlIdentityProvider, Error]]
+    ] = await get_org_saml_idp.asyncio_detailed(
+        client=client,
     )
 
 
@@ -3426,31 +3426,31 @@ async def test_update_org_saml_idp_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[SamlIdentityProvider, Error]] = (
-        await update_org_saml_idp.asyncio(
-            client=client,
-            body=SamlIdentityProviderCreate(
-                idp_entity_id="<string>",
-                idp_metadata_source=base64_encoded_xml(
-                    data="<string>",
-                ),
-                technical_contact_email="<string>",
+    result: Optional[
+        Union[SamlIdentityProvider, Error]
+    ] = await update_org_saml_idp.asyncio(
+        client=client,
+        body=SamlIdentityProviderCreate(
+            idp_entity_id="<string>",
+            idp_metadata_source=base64_encoded_xml(
+                data="<string>",
             ),
-        )
+            technical_contact_email="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[SamlIdentityProvider, Error]]] = (
-        await update_org_saml_idp.asyncio_detailed(
-            client=client,
-            body=SamlIdentityProviderCreate(
-                idp_entity_id="<string>",
-                idp_metadata_source=base64_encoded_xml(
-                    data="<string>",
-                ),
-                technical_contact_email="<string>",
+    response: Response[
+        Optional[Union[SamlIdentityProvider, Error]]
+    ] = await update_org_saml_idp.asyncio_detailed(
+        client=client,
+        body=SamlIdentityProviderCreate(
+            idp_entity_id="<string>",
+            idp_metadata_source=base64_encoded_xml(
+                data="<string>",
             ),
-        )
+            technical_contact_email="<string>",
+        ),
     )
 
 
@@ -3499,31 +3499,31 @@ async def test_create_org_saml_idp_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[SamlIdentityProvider, Error]] = (
-        await create_org_saml_idp.asyncio(
-            client=client,
-            body=SamlIdentityProviderCreate(
-                idp_entity_id="<string>",
-                idp_metadata_source=base64_encoded_xml(
-                    data="<string>",
-                ),
-                technical_contact_email="<string>",
+    result: Optional[
+        Union[SamlIdentityProvider, Error]
+    ] = await create_org_saml_idp.asyncio(
+        client=client,
+        body=SamlIdentityProviderCreate(
+            idp_entity_id="<string>",
+            idp_metadata_source=base64_encoded_xml(
+                data="<string>",
             ),
-        )
+            technical_contact_email="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[SamlIdentityProvider, Error]]] = (
-        await create_org_saml_idp.asyncio_detailed(
-            client=client,
-            body=SamlIdentityProviderCreate(
-                idp_entity_id="<string>",
-                idp_metadata_source=base64_encoded_xml(
-                    data="<string>",
-                ),
-                technical_contact_email="<string>",
+    response: Response[
+        Optional[Union[SamlIdentityProvider, Error]]
+    ] = await create_org_saml_idp.asyncio_detailed(
+        client=client,
+        body=SamlIdentityProviderCreate(
+            idp_entity_id="<string>",
+            idp_metadata_source=base64_encoded_xml(
+                data="<string>",
             ),
-        )
+            technical_contact_email="<string>",
+        ),
     )
 
 
@@ -3605,23 +3605,23 @@ async def test_list_service_accounts_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ServiceAccountResultsPage, Error]] = (
-        await list_service_accounts_for_org.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ServiceAccountResultsPage, Error]
+    ] = await list_service_accounts_for_org.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ServiceAccountResultsPage, Error]]] = (
-        await list_service_accounts_for_org.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ServiceAccountResultsPage, Error]]
+    ] = await list_service_accounts_for_org.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -3660,19 +3660,19 @@ async def test_create_service_account_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ServiceAccount, Error]] = (
-        await create_service_account_for_org.asyncio(
-            client=client,
-            label=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ServiceAccount, Error]
+    ] = await create_service_account_for_org.asyncio(
+        client=client,
+        label=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ServiceAccount, Error]]] = (
-        await create_service_account_for_org.asyncio_detailed(
-            client=client,
-            label=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ServiceAccount, Error]]
+    ] = await create_service_account_for_org.asyncio_detailed(
+        client=client,
+        label=None,  # Optional[str]
     )
 
 
@@ -3709,19 +3709,19 @@ async def test_get_service_account_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ServiceAccount, Error]] = (
-        await get_service_account_for_org.asyncio(
-            client=client,
-            token=ServiceAccountTokenUuid("<string>"),
-        )
+    result: Optional[
+        Union[ServiceAccount, Error]
+    ] = await get_service_account_for_org.asyncio(
+        client=client,
+        token=ServiceAccountTokenUuid("<string>"),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ServiceAccount, Error]]] = (
-        await get_service_account_for_org.asyncio_detailed(
-            client=client,
-            token=ServiceAccountTokenUuid("<string>"),
-        )
+    response: Response[
+        Optional[Union[ServiceAccount, Error]]
+    ] = await get_service_account_for_org.asyncio_detailed(
+        client=client,
+        token=ServiceAccountTokenUuid("<string>"),
     )
 
 
@@ -3762,11 +3762,11 @@ async def test_delete_service_account_for_org_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await delete_service_account_for_org.asyncio_detailed(
-            client=client,
-            token=ServiceAccountTokenUuid("<string>"),
-        )
+    response: Response[
+        Optional[Error]
+    ] = await delete_service_account_for_org.asyncio_detailed(
+        client=client,
+        token=ServiceAccountTokenUuid("<string>"),
     )
 
 
@@ -3815,13 +3815,13 @@ async def test_list_orgs_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[OrgResultsPage, Error]]] = (
-        await list_orgs.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[OrgResultsPage, Error]]
+    ] = await list_orgs.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -3862,11 +3862,11 @@ async def test_get_any_org_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Org, Error]]] = (
-        await get_any_org.asyncio_detailed(
-            client=client,
-            id=Uuid("<uuid>"),
-        )
+    response: Response[
+        Optional[Union[Org, Error]]
+    ] = await get_any_org.asyncio_detailed(
+        client=client,
+        id=Uuid("<uuid>"),
     )
 
 
@@ -3913,27 +3913,27 @@ async def test_update_enterprise_pricing_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        await update_enterprise_pricing_for_org.asyncio(
-            client=client,
-            id=Uuid("<uuid>"),
-            body=per_user(
-                interval=PlanInterval.DAY,
-                price=3.14,
-            ),
-        )
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await update_enterprise_pricing_for_org.asyncio(
+        client=client,
+        id=Uuid("<uuid>"),
+        body=per_user(
+            interval=PlanInterval.DAY,
+            price=3.14,
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        await update_enterprise_pricing_for_org.asyncio_detailed(
-            client=client,
-            id=Uuid("<uuid>"),
-            body=per_user(
-                interval=PlanInterval.DAY,
-                price=3.14,
-            ),
-        )
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await update_enterprise_pricing_for_org.asyncio_detailed(
+        client=client,
+        id=Uuid("<uuid>"),
+        body=per_user(
+            interval=PlanInterval.DAY,
+            price=3.14,
+        ),
     )
 
 
@@ -3972,19 +3972,19 @@ async def test_get_payment_balance_for_any_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[CustomerBalance, Error]] = (
-        await get_payment_balance_for_any_org.asyncio(
-            client=client,
-            id=Uuid("<uuid>"),
-        )
+    result: Optional[
+        Union[CustomerBalance, Error]
+    ] = await get_payment_balance_for_any_org.asyncio(
+        client=client,
+        id=Uuid("<uuid>"),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[CustomerBalance, Error]]] = (
-        await get_payment_balance_for_any_org.asyncio_detailed(
-            client=client,
-            id=Uuid("<uuid>"),
-        )
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = await get_payment_balance_for_any_org.asyncio_detailed(
+        client=client,
+        id=Uuid("<uuid>"),
     )
 
 
@@ -4025,21 +4025,21 @@ async def test_update_payment_balance_for_any_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[CustomerBalance, Error]] = (
-        await update_payment_balance_for_any_org.asyncio(
-            client=client,
-            id=Uuid("<uuid>"),
-            body=UpdatePaymentBalance(),
-        )
+    result: Optional[
+        Union[CustomerBalance, Error]
+    ] = await update_payment_balance_for_any_org.asyncio(
+        client=client,
+        id=Uuid("<uuid>"),
+        body=UpdatePaymentBalance(),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[CustomerBalance, Error]]] = (
-        await update_payment_balance_for_any_org.asyncio_detailed(
-            client=client,
-            id=Uuid("<uuid>"),
-            body=UpdatePaymentBalance(),
-        )
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = await update_payment_balance_for_any_org.asyncio_detailed(
+        client=client,
+        id=Uuid("<uuid>"),
+        body=UpdatePaymentBalance(),
     )
 
 
@@ -4159,13 +4159,13 @@ async def test_create_store_coupon_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[DiscountCode, Error]]] = (
-        await create_store_coupon.asyncio_detailed(
-            client=client,
-            body=StoreCouponParams(
-                percent_off=10,
-            ),
-        )
+    response: Response[
+        Optional[Union[DiscountCode, Error]]
+    ] = await create_store_coupon.asyncio_detailed(
+        client=client,
+        body=StoreCouponParams(
+            percent_off=10,
+        ),
     )
 
 
@@ -4208,23 +4208,23 @@ async def test_get_angle_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitAngleConversion, Error]] = (
-        await get_angle_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitAngle.DEGREES,
-            output_unit=UnitAngle.DEGREES,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitAngleConversion, Error]
+    ] = await get_angle_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitAngle.DEGREES,
+        output_unit=UnitAngle.DEGREES,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitAngleConversion, Error]]] = (
-        await get_angle_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitAngle.DEGREES,
-            output_unit=UnitAngle.DEGREES,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitAngleConversion, Error]]
+    ] = await get_angle_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitAngle.DEGREES,
+        output_unit=UnitAngle.DEGREES,
+        value=3.14,
     )
 
 
@@ -4265,23 +4265,23 @@ async def test_get_area_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitAreaConversion, Error]] = (
-        await get_area_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitArea.CM2,
-            output_unit=UnitArea.CM2,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitAreaConversion, Error]
+    ] = await get_area_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitArea.CM2,
+        output_unit=UnitArea.CM2,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitAreaConversion, Error]]] = (
-        await get_area_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitArea.CM2,
-            output_unit=UnitArea.CM2,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitAreaConversion, Error]]
+    ] = await get_area_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitArea.CM2,
+        output_unit=UnitArea.CM2,
+        value=3.14,
     )
 
 
@@ -4324,23 +4324,23 @@ async def test_get_current_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitCurrentConversion, Error]] = (
-        await get_current_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitCurrent.AMPERES,
-            output_unit=UnitCurrent.AMPERES,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitCurrentConversion, Error]
+    ] = await get_current_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitCurrent.AMPERES,
+        output_unit=UnitCurrent.AMPERES,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitCurrentConversion, Error]]] = (
-        await get_current_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitCurrent.AMPERES,
-            output_unit=UnitCurrent.AMPERES,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitCurrentConversion, Error]]
+    ] = await get_current_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitCurrent.AMPERES,
+        output_unit=UnitCurrent.AMPERES,
+        value=3.14,
     )
 
 
@@ -4383,23 +4383,23 @@ async def test_get_energy_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitEnergyConversion, Error]] = (
-        await get_energy_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitEnergy.BTU,
-            output_unit=UnitEnergy.BTU,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitEnergyConversion, Error]
+    ] = await get_energy_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitEnergy.BTU,
+        output_unit=UnitEnergy.BTU,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitEnergyConversion, Error]]] = (
-        await get_energy_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitEnergy.BTU,
-            output_unit=UnitEnergy.BTU,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitEnergyConversion, Error]]
+    ] = await get_energy_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitEnergy.BTU,
+        output_unit=UnitEnergy.BTU,
+        value=3.14,
     )
 
 
@@ -4442,23 +4442,23 @@ async def test_get_force_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitForceConversion, Error]] = (
-        await get_force_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitForce.DYNES,
-            output_unit=UnitForce.DYNES,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitForceConversion, Error]
+    ] = await get_force_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitForce.DYNES,
+        output_unit=UnitForce.DYNES,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitForceConversion, Error]]] = (
-        await get_force_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitForce.DYNES,
-            output_unit=UnitForce.DYNES,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitForceConversion, Error]]
+    ] = await get_force_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitForce.DYNES,
+        output_unit=UnitForce.DYNES,
+        value=3.14,
     )
 
 
@@ -4501,23 +4501,23 @@ async def test_get_frequency_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitFrequencyConversion, Error]] = (
-        await get_frequency_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitFrequency.GIGAHERTZ,
-            output_unit=UnitFrequency.GIGAHERTZ,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitFrequencyConversion, Error]
+    ] = await get_frequency_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitFrequency.GIGAHERTZ,
+        output_unit=UnitFrequency.GIGAHERTZ,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitFrequencyConversion, Error]]] = (
-        await get_frequency_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitFrequency.GIGAHERTZ,
-            output_unit=UnitFrequency.GIGAHERTZ,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitFrequencyConversion, Error]]
+    ] = await get_frequency_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitFrequency.GIGAHERTZ,
+        output_unit=UnitFrequency.GIGAHERTZ,
+        value=3.14,
     )
 
 
@@ -4560,23 +4560,23 @@ async def test_get_length_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitLengthConversion, Error]] = (
-        await get_length_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitLength.CM,
-            output_unit=UnitLength.CM,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitLengthConversion, Error]
+    ] = await get_length_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitLength.CM,
+        output_unit=UnitLength.CM,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitLengthConversion, Error]]] = (
-        await get_length_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitLength.CM,
-            output_unit=UnitLength.CM,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitLengthConversion, Error]]
+    ] = await get_length_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitLength.CM,
+        output_unit=UnitLength.CM,
+        value=3.14,
     )
 
 
@@ -4617,23 +4617,23 @@ async def test_get_mass_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitMassConversion, Error]] = (
-        await get_mass_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitMass.G,
-            output_unit=UnitMass.G,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitMassConversion, Error]
+    ] = await get_mass_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitMass.G,
+        output_unit=UnitMass.G,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitMassConversion, Error]]] = (
-        await get_mass_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitMass.G,
-            output_unit=UnitMass.G,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitMassConversion, Error]]
+    ] = await get_mass_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitMass.G,
+        output_unit=UnitMass.G,
+        value=3.14,
     )
 
 
@@ -4676,23 +4676,23 @@ async def test_get_power_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitPowerConversion, Error]] = (
-        await get_power_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitPower.BTU_PER_MINUTE,
-            output_unit=UnitPower.BTU_PER_MINUTE,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitPowerConversion, Error]
+    ] = await get_power_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitPower.BTU_PER_MINUTE,
+        output_unit=UnitPower.BTU_PER_MINUTE,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitPowerConversion, Error]]] = (
-        await get_power_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitPower.BTU_PER_MINUTE,
-            output_unit=UnitPower.BTU_PER_MINUTE,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitPowerConversion, Error]]
+    ] = await get_power_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitPower.BTU_PER_MINUTE,
+        output_unit=UnitPower.BTU_PER_MINUTE,
+        value=3.14,
     )
 
 
@@ -4735,23 +4735,23 @@ async def test_get_pressure_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitPressureConversion, Error]] = (
-        await get_pressure_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitPressure.ATMOSPHERES,
-            output_unit=UnitPressure.ATMOSPHERES,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitPressureConversion, Error]
+    ] = await get_pressure_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitPressure.ATMOSPHERES,
+        output_unit=UnitPressure.ATMOSPHERES,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitPressureConversion, Error]]] = (
-        await get_pressure_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitPressure.ATMOSPHERES,
-            output_unit=UnitPressure.ATMOSPHERES,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitPressureConversion, Error]]
+    ] = await get_pressure_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitPressure.ATMOSPHERES,
+        output_unit=UnitPressure.ATMOSPHERES,
+        value=3.14,
     )
 
 
@@ -4794,23 +4794,23 @@ async def test_get_temperature_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitTemperatureConversion, Error]] = (
-        await get_temperature_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitTemperature.CELSIUS,
-            output_unit=UnitTemperature.CELSIUS,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitTemperatureConversion, Error]
+    ] = await get_temperature_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitTemperature.CELSIUS,
+        output_unit=UnitTemperature.CELSIUS,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitTemperatureConversion, Error]]] = (
-        await get_temperature_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitTemperature.CELSIUS,
-            output_unit=UnitTemperature.CELSIUS,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitTemperatureConversion, Error]]
+    ] = await get_temperature_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitTemperature.CELSIUS,
+        output_unit=UnitTemperature.CELSIUS,
+        value=3.14,
     )
 
 
@@ -4853,23 +4853,23 @@ async def test_get_torque_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitTorqueConversion, Error]] = (
-        await get_torque_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitTorque.NEWTON_METRES,
-            output_unit=UnitTorque.NEWTON_METRES,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitTorqueConversion, Error]
+    ] = await get_torque_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitTorque.NEWTON_METRES,
+        output_unit=UnitTorque.NEWTON_METRES,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitTorqueConversion, Error]]] = (
-        await get_torque_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitTorque.NEWTON_METRES,
-            output_unit=UnitTorque.NEWTON_METRES,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitTorqueConversion, Error]]
+    ] = await get_torque_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitTorque.NEWTON_METRES,
+        output_unit=UnitTorque.NEWTON_METRES,
+        value=3.14,
     )
 
 
@@ -4912,23 +4912,23 @@ async def test_get_volume_unit_conversion_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[UnitVolumeConversion, Error]] = (
-        await get_volume_unit_conversion.asyncio(
-            client=client,
-            input_unit=UnitVolume.CM3,
-            output_unit=UnitVolume.CM3,
-            value=3.14,
-        )
+    result: Optional[
+        Union[UnitVolumeConversion, Error]
+    ] = await get_volume_unit_conversion.asyncio(
+        client=client,
+        input_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.CM3,
+        value=3.14,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UnitVolumeConversion, Error]]] = (
-        await get_volume_unit_conversion.asyncio_detailed(
-            client=client,
-            input_unit=UnitVolume.CM3,
-            output_unit=UnitVolume.CM3,
-            value=3.14,
-        )
+    response: Response[
+        Optional[Union[UnitVolumeConversion, Error]]
+    ] = await get_volume_unit_conversion.asyncio_detailed(
+        client=client,
+        input_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.CM3,
+        value=3.14,
     )
 
 
@@ -4966,10 +4966,10 @@ async def test_get_user_self_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[User, Error]]] = (
-        await get_user_self.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[User, Error]]
+    ] = await get_user_self.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5034,19 +5034,19 @@ async def test_update_user_self_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[User, Error]]] = (
-        await update_user_self.asyncio_detailed(
-            client=client,
-            body=UpdateUser(
-                company="<string>",
-                discord="<string>",
-                first_name="<string>",
-                github="<string>",
-                image="<string>",
-                last_name="<string>",
-                phone="<string>",
-            ),
-        )
+    response: Response[
+        Optional[Union[User, Error]]
+    ] = await update_user_self.asyncio_detailed(
+        client=client,
+        body=UpdateUser(
+            company="<string>",
+            discord="<string>",
+            first_name="<string>",
+            github="<string>",
+            image="<string>",
+            last_name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -5128,23 +5128,23 @@ async def test_user_list_api_calls_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiCallWithPriceResultsPage, Error]] = (
-        await user_list_api_calls.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ApiCallWithPriceResultsPage, Error]
+    ] = await user_list_api_calls.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]] = (
-        await user_list_api_calls.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ApiCallWithPriceResultsPage, Error]]
+    ] = await user_list_api_calls.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -5181,19 +5181,19 @@ async def test_get_api_call_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiCallWithPrice, Error]] = (
-        await get_api_call_for_user.asyncio(
-            client=client,
-            id="<uuid>",
-        )
+    result: Optional[
+        Union[ApiCallWithPrice, Error]
+    ] = await get_api_call_for_user.asyncio(
+        client=client,
+        id="<uuid>",
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiCallWithPrice, Error]]] = (
-        await get_api_call_for_user.asyncio_detailed(
-            client=client,
-            id="<uuid>",
-        )
+    response: Response[
+        Optional[Union[ApiCallWithPrice, Error]]
+    ] = await get_api_call_for_user.asyncio_detailed(
+        client=client,
+        id="<uuid>",
     )
 
 
@@ -5234,23 +5234,23 @@ async def test_list_api_tokens_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiTokenResultsPage, Error]] = (
-        await list_api_tokens_for_user.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ApiTokenResultsPage, Error]
+    ] = await list_api_tokens_for_user.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiTokenResultsPage, Error]]] = (
-        await list_api_tokens_for_user.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ApiTokenResultsPage, Error]]
+    ] = await list_api_tokens_for_user.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -5293,11 +5293,11 @@ async def test_create_api_token_for_user_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiToken, Error]]] = (
-        await create_api_token_for_user.asyncio_detailed(
-            client=client,
-            label=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ApiToken, Error]]
+    ] = await create_api_token_for_user.asyncio_detailed(
+        client=client,
+        label=None,  # Optional[str]
     )
 
 
@@ -5340,11 +5340,11 @@ async def test_get_api_token_for_user_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiToken, Error]]] = (
-        await get_api_token_for_user.asyncio_detailed(
-            client=client,
-            token=ApiTokenUuid("<string>"),
-        )
+    response: Response[
+        Optional[Union[ApiToken, Error]]
+    ] = await get_api_token_for_user.asyncio_detailed(
+        client=client,
+        token=ApiTokenUuid("<string>"),
     )
 
 
@@ -5385,11 +5385,11 @@ async def test_delete_api_token_for_user_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await delete_api_token_for_user.asyncio_detailed(
-            client=client,
-            token=ApiTokenUuid("<string>"),
-        )
+    response: Response[
+        Optional[Error]
+    ] = await delete_api_token_for_user.asyncio_detailed(
+        client=client,
+        token=ApiTokenUuid("<string>"),
     )
 
 
@@ -5429,10 +5429,10 @@ async def test_get_user_self_extended_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ExtendedUser, Error]]] = (
-        await get_user_self_extended.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[ExtendedUser, Error]]
+    ] = await get_user_self_extended.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5469,17 +5469,17 @@ async def test_get_oauth2_providers_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[List[AccountProvider], Error]] = (
-        await get_oauth2_providers_for_user.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[List[AccountProvider], Error]
+    ] = await get_oauth2_providers_for_user.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[List[AccountProvider], Error]]] = (
-        await get_oauth2_providers_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[List[AccountProvider], Error]]
+    ] = await get_oauth2_providers_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5519,10 +5519,10 @@ async def test_get_user_onboarding_self_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Onboarding, Error]]] = (
-        await get_user_onboarding_self.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[Onboarding, Error]]
+    ] = await get_user_onboarding_self.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5562,10 +5562,10 @@ async def test_get_user_org_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UserOrgInfo, Error]]] = (
-        await get_user_org.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[UserOrgInfo, Error]]
+    ] = await get_user_org.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5600,17 +5600,17 @@ async def test_get_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Customer, Error]] = (
-        await get_payment_information_for_user.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[Customer, Error]
+    ] = await get_payment_information_for_user.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Customer, Error]]] = (
-        await get_payment_information_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await get_payment_information_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5653,25 +5653,25 @@ async def test_update_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Customer, Error]] = (
-        await update_payment_information_for_user.asyncio(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    result: Optional[
+        Union[Customer, Error]
+    ] = await update_payment_information_for_user.asyncio(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Customer, Error]]] = (
-        await update_payment_information_for_user.asyncio_detailed(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await update_payment_information_for_user.asyncio_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -5714,25 +5714,25 @@ async def test_create_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[Customer, Error]] = (
-        await create_payment_information_for_user.asyncio(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    result: Optional[
+        Union[Customer, Error]
+    ] = await create_payment_information_for_user.asyncio(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Customer, Error]]] = (
-        await create_payment_information_for_user.asyncio_detailed(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
+    response: Response[
+        Optional[Union[Customer, Error]]
+    ] = await create_payment_information_for_user.asyncio_detailed(
+        client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -5772,10 +5772,10 @@ async def test_delete_payment_information_for_user_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await delete_payment_information_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_information_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5810,17 +5810,17 @@ async def test_get_payment_balance_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[CustomerBalance, Error]] = (
-        await get_payment_balance_for_user.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[CustomerBalance, Error]
+    ] = await get_payment_balance_for_user.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[CustomerBalance, Error]]] = (
-        await get_payment_balance_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = await get_payment_balance_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5855,17 +5855,17 @@ async def test_create_payment_intent_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[PaymentIntent, Error]] = (
-        await create_payment_intent_for_user.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[PaymentIntent, Error]
+    ] = await create_payment_intent_for_user.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[PaymentIntent, Error]]] = (
-        await create_payment_intent_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[PaymentIntent, Error]]
+    ] = await create_payment_intent_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5900,17 +5900,17 @@ async def test_list_invoices_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[List[Invoice], Error]] = (
-        await list_invoices_for_user.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[List[Invoice], Error]
+    ] = await list_invoices_for_user.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[List[Invoice], Error]]] = (
-        await list_invoices_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[List[Invoice], Error]]
+    ] = await list_invoices_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5947,17 +5947,17 @@ async def test_list_payment_methods_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[List[PaymentMethod], Error]] = (
-        await list_payment_methods_for_user.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[List[PaymentMethod], Error]
+    ] = await list_payment_methods_for_user.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[List[PaymentMethod], Error]]] = (
-        await list_payment_methods_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[List[PaymentMethod], Error]]
+    ] = await list_payment_methods_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -5998,11 +5998,11 @@ async def test_delete_payment_method_for_user_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await delete_payment_method_for_user.asyncio_detailed(
-            client=client,
-            id="<string>",
-        )
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_method_for_user.asyncio_detailed(
+        client=client,
+        id="<string>",
     )
 
 
@@ -6039,17 +6039,17 @@ async def test_get_user_subscription_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        await get_user_subscription.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await get_user_subscription.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        await get_user_subscription.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await get_user_subscription.asyncio_detailed(
+        client=client,
     )
 
 
@@ -6092,23 +6092,23 @@ async def test_update_user_subscription_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        await update_user_subscription.asyncio(
-            client=client,
-            body=ZooProductSubscriptionsUserRequest(
-                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-            ),
-        )
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await update_user_subscription.asyncio(
+        client=client,
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        await update_user_subscription.asyncio_detailed(
-            client=client,
-            body=ZooProductSubscriptionsUserRequest(
-                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-            ),
-        )
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await update_user_subscription.asyncio_detailed(
+        client=client,
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
     )
 
 
@@ -6151,23 +6151,23 @@ async def test_create_user_subscription_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        await create_user_subscription.asyncio(
-            client=client,
-            body=ZooProductSubscriptionsUserRequest(
-                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-            ),
-        )
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await create_user_subscription.asyncio(
+        client=client,
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        await create_user_subscription.asyncio_detailed(
-            client=client,
-            body=ZooProductSubscriptionsUserRequest(
-                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-            ),
-        )
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await create_user_subscription.asyncio_detailed(
+        client=client,
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
     )
 
 
@@ -6207,10 +6207,10 @@ async def test_validate_customer_tax_information_for_user_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await validate_customer_tax_information_for_user.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Error]
+    ] = await validate_customer_tax_information_for_user.asyncio_detailed(
+        client=client,
     )
 
 
@@ -6245,17 +6245,17 @@ async def test_get_user_privacy_settings_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[PrivacySettings, Error]] = (
-        await get_user_privacy_settings.asyncio(
-            client=client,
-        )
+    result: Optional[
+        Union[PrivacySettings, Error]
+    ] = await get_user_privacy_settings.asyncio(
+        client=client,
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[PrivacySettings, Error]]] = (
-        await get_user_privacy_settings.asyncio_detailed(
-            client=client,
-        )
+    response: Response[
+        Optional[Union[PrivacySettings, Error]]
+    ] = await get_user_privacy_settings.asyncio_detailed(
+        client=client,
     )
 
 
@@ -6296,23 +6296,23 @@ async def test_update_user_privacy_settings_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[PrivacySettings, Error]] = (
-        await update_user_privacy_settings.asyncio(
-            client=client,
-            body=PrivacySettings(
-                can_train_on_data=False,
-            ),
-        )
+    result: Optional[
+        Union[PrivacySettings, Error]
+    ] = await update_user_privacy_settings.asyncio(
+        client=client,
+        body=PrivacySettings(
+            can_train_on_data=False,
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[PrivacySettings, Error]]] = (
-        await update_user_privacy_settings.asyncio_detailed(
-            client=client,
-            body=PrivacySettings(
-                can_train_on_data=False,
-            ),
-        )
+    response: Response[
+        Optional[Union[PrivacySettings, Error]]
+    ] = await update_user_privacy_settings.asyncio_detailed(
+        client=client,
+        body=PrivacySettings(
+            can_train_on_data=False,
+        ),
     )
 
 
@@ -6355,11 +6355,11 @@ async def test_get_session_for_user_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[Session, Error]]] = (
-        await get_session_for_user.asyncio_detailed(
-            client=client,
-            token=SessionTokenUuid("<string>"),
-        )
+    response: Response[
+        Optional[Union[Session, Error]]
+    ] = await get_session_for_user.asyncio_detailed(
+        client=client,
+        token=SessionTokenUuid("<string>"),
     )
 
 
@@ -6404,25 +6404,25 @@ async def test_list_text_to_cad_models_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[TextToCadResultsPage, Error]] = (
-        await list_text_to_cad_models_for_user.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-            no_models=None,  # Optional[bool]
-        )
+    result: Optional[
+        Union[TextToCadResultsPage, Error]
+    ] = await list_text_to_cad_models_for_user.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+        no_models=None,  # Optional[bool]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[TextToCadResultsPage, Error]]] = (
-        await list_text_to_cad_models_for_user.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-            no_models=None,  # Optional[bool]
-        )
+    response: Response[
+        Optional[Union[TextToCadResultsPage, Error]]
+    ] = await list_text_to_cad_models_for_user.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+        no_models=None,  # Optional[bool]
     )
 
 
@@ -6459,19 +6459,19 @@ async def test_get_text_to_cad_model_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[TextToCad, Error]] = (
-        await get_text_to_cad_model_for_user.asyncio(
-            client=client,
-            id="<uuid>",
-        )
+    result: Optional[
+        Union[TextToCad, Error]
+    ] = await get_text_to_cad_model_for_user.asyncio(
+        client=client,
+        id="<uuid>",
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[TextToCad, Error]]] = (
-        await get_text_to_cad_model_for_user.asyncio_detailed(
-            client=client,
-            id="<uuid>",
-        )
+    response: Response[
+        Optional[Union[TextToCad, Error]]
+    ] = await get_text_to_cad_model_for_user.asyncio_detailed(
+        client=client,
+        id="<uuid>",
     )
 
 
@@ -6517,12 +6517,12 @@ async def test_create_text_to_cad_model_feedback_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = (
-        await create_text_to_cad_model_feedback.asyncio_detailed(
-            client=client,
-            id="<uuid>",
-            feedback=MlFeedback.THUMBS_UP,
-        )
+    response: Response[
+        Optional[Error]
+    ] = await create_text_to_cad_model_feedback.asyncio_detailed(
+        client=client,
+        id="<uuid>",
+        feedback=MlFeedback.THUMBS_UP,
     )
 
 
@@ -6571,13 +6571,13 @@ async def test_list_users_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[UserResultsPage, Error]]] = (
-        await list_users.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[UserResultsPage, Error]]
+    ] = await list_users.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -6618,23 +6618,23 @@ async def test_list_users_extended_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ExtendedUserResultsPage, Error]] = (
-        await list_users_extended.asyncio(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ExtendedUserResultsPage, Error]
+    ] = await list_users_extended.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ExtendedUserResultsPage, Error]]] = (
-        await list_users_extended.asyncio_detailed(
-            client=client,
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ExtendedUserResultsPage, Error]]
+    ] = await list_users_extended.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -6677,11 +6677,11 @@ async def test_get_user_extended_async():
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ExtendedUser, Error]]] = (
-        await get_user_extended.asyncio_detailed(
-            client=client,
-            id="<string>",
-        )
+    response: Response[
+        Optional[Union[ExtendedUser, Error]]
+    ] = await get_user_extended.asyncio_detailed(
+        client=client,
+        id="<string>",
     )
 
 
@@ -6769,25 +6769,25 @@ async def test_list_api_calls_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[ApiCallWithPriceResultsPage, Error]] = (
-        await list_api_calls_for_user.asyncio(
-            client=client,
-            id="<string>",
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    result: Optional[
+        Union[ApiCallWithPriceResultsPage, Error]
+    ] = await list_api_calls_for_user.asyncio(
+        client=client,
+        id="<string>",
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]] = (
-        await list_api_calls_for_user.asyncio_detailed(
-            client=client,
-            id="<string>",
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,  # Optional[int]
-            page_token=None,  # Optional[str]
-        )
+    response: Response[
+        Optional[Union[ApiCallWithPriceResultsPage, Error]]
+    ] = await list_api_calls_for_user.asyncio_detailed(
+        client=client,
+        id="<string>",
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -6826,19 +6826,19 @@ async def test_get_payment_balance_for_any_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[CustomerBalance, Error]] = (
-        await get_payment_balance_for_any_user.asyncio(
-            client=client,
-            id=Uuid("<uuid>"),
-        )
+    result: Optional[
+        Union[CustomerBalance, Error]
+    ] = await get_payment_balance_for_any_user.asyncio(
+        client=client,
+        id=Uuid("<uuid>"),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[CustomerBalance, Error]]] = (
-        await get_payment_balance_for_any_user.asyncio_detailed(
-            client=client,
-            id=Uuid("<uuid>"),
-        )
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = await get_payment_balance_for_any_user.asyncio_detailed(
+        client=client,
+        id=Uuid("<uuid>"),
     )
 
 
@@ -6879,21 +6879,21 @@ async def test_update_payment_balance_for_any_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[CustomerBalance, Error]] = (
-        await update_payment_balance_for_any_user.asyncio(
-            client=client,
-            id=Uuid("<uuid>"),
-            body=UpdatePaymentBalance(),
-        )
+    result: Optional[
+        Union[CustomerBalance, Error]
+    ] = await update_payment_balance_for_any_user.asyncio(
+        client=client,
+        id=Uuid("<uuid>"),
+        body=UpdatePaymentBalance(),
     )
 
     # OR run async with more info
-    response: Response[Optional[Union[CustomerBalance, Error]]] = (
-        await update_payment_balance_for_any_user.asyncio_detailed(
-            client=client,
-            id=Uuid("<uuid>"),
-            body=UpdatePaymentBalance(),
-        )
+    response: Response[
+        Optional[Union[CustomerBalance, Error]]
+    ] = await update_payment_balance_for_any_user.asyncio_detailed(
+        client=client,
+        id=Uuid("<uuid>"),
+        body=UpdatePaymentBalance(),
     )
 
 
@@ -6906,7 +6906,6 @@ def test_create_executor_term():
     with create_executor_term.sync(
         client=client,
     ) as websocket:
-
         # Send a message.
         websocket.send("{}")
 
@@ -6953,7 +6952,6 @@ def test_modeling_commands_ws():
         pool=None,  # Optional[str]
         replay=None,  # Optional[str]
     ) as websocket:
-
         # Send a message.
         websocket.send(
             WebSocketRequest(
