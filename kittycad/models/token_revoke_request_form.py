@@ -2,6 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from ..models.device_access_token_uuid import DeviceAccessTokenUuid
 
 
 class TokenRevokeRequestForm(BaseModel):
@@ -11,6 +12,6 @@ class TokenRevokeRequestForm(BaseModel):
 
     client_secret: Optional[str] = None
 
-    token: str
+    token: DeviceAccessTokenUuid
 
     model_config = ConfigDict(protected_namespaces=())

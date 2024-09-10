@@ -15,7 +15,6 @@ from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format import InputFormat
 from ..models.length_unit import LengthUnit
-from ..models.linear_transform import LinearTransform
 from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.output_format import OutputFormat
 from ..models.path_component_constraint_bound import PathComponentConstraintBound
@@ -26,6 +25,7 @@ from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 from ..models.scene_selection_type import SceneSelectionType
 from ..models.scene_tool_type import SceneToolType
+from ..models.transform import Transform
 from ..models.unit_area import UnitArea
 from ..models.unit_density import UnitDensity
 from ..models.unit_length import UnitLength
@@ -42,7 +42,7 @@ class start_path(BaseModel):
 
 
 class move_path_pen(BaseModel):
-    """Move the path's \"pen\"."""
+    """Move the path's \"pen\". If you're in sketch mode, these coordinates are in the local coordinate system, not the world's coordinate system. For example, say you're sketching on the plane {x: (1,0,0), y: (0,1,0), origin: (0, 0, 50)}. In other words, the plane 50 units above the default XY plane. Then, moving the pen to (1, 1, 0) with this command uses local coordinates. So, it would move the pen to (1, 1, 50) in global coordinates."""
 
     path: ModelingCmdId
 
@@ -67,8 +67,6 @@ class extend_path(BaseModel):
 
 class extrude(BaseModel):
     """Command for extruding a solid 2d."""
-
-    cap: bool
 
     distance: LengthUnit
 
@@ -334,11 +332,11 @@ class entity_get_distance(BaseModel):
 
 
 class entity_linear_pattern_transform(BaseModel):
-    """Create a pattern using this entity by specifying the transform for each desired repetition."""
+    """Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate."""
 
     entity_id: str
 
-    transform: List[LinearTransform]
+    transform: List[Transform]
 
     type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
 
@@ -679,6 +677,8 @@ class solid3d_fillet_edge(BaseModel):
     cut_type: CutType = "fillet"
 
     edge_id: str
+
+    face_id: Optional[str] = None
 
     object_id: str
 

@@ -19,6 +19,7 @@ from .api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from .api_error import ApiError
 from .api_token import ApiToken
 from .api_token_results_page import ApiTokenResultsPage
+from .api_token_uuid import ApiTokenUuid
 from .app_client_info import AppClientInfo
 from .async_api_call import AsyncApiCall
 from .async_api_call_output import AsyncApiCallOutput
@@ -61,6 +62,7 @@ from .default_camera_zoom import DefaultCameraZoom
 from .density import Density
 from .der_encoded_key_pair import DerEncodedKeyPair
 from .device_access_token_request_form import DeviceAccessTokenRequestForm
+from .device_access_token_uuid import DeviceAccessTokenUuid
 from .device_auth_request_form import DeviceAuthRequestForm
 from .device_auth_verify_params import DeviceAuthVerifyParams
 from .direction import Direction
@@ -132,7 +134,6 @@ from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
 from .leaf_node import LeafNode
 from .length_unit import LengthUnit
-from .linear_transform import LinearTransform
 from .loft import Loft
 from .mass import Mass
 from .meta_cluster_info import MetaClusterInfo
@@ -168,6 +169,7 @@ from .org_member import OrgMember
 from .org_member_results_page import OrgMemberResultsPage
 from .org_results_page import OrgResultsPage
 from .org_role import OrgRole
+from .origin_type import OriginType
 from .output_file import OutputFile
 from .output_format import OutputFormat
 from .path_command import PathCommand
@@ -195,6 +197,7 @@ from .pong import Pong
 from .post_effect_type import PostEffectType
 from .privacy_settings import PrivacySettings
 from .raw_file import RawFile
+from .rotation import Rotation
 from .rtc_ice_candidate_init import RtcIceCandidateInit
 from .rtc_sdp_type import RtcSdpType
 from .rtc_session_description import RtcSessionDescription
@@ -207,6 +210,7 @@ from .select_with_point import SelectWithPoint
 from .selection import Selection
 from .service_account import ServiceAccount
 from .service_account_results_page import ServiceAccountResultsPage
+from .service_account_token_uuid import ServiceAccountTokenUuid
 from .session import Session
 from .session_token_uuid import SessionTokenUuid
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
@@ -220,7 +224,6 @@ from .source_range import SourceRange
 from .source_range_prompt import SourceRangePrompt
 from .stl_storage import StlStorage
 from .store_coupon_params import StoreCouponParams
-from .string_uuid import StringUuid
 from .subscription_tier_feature import SubscriptionTierFeature
 from .subscription_tier_price import SubscriptionTierPrice
 from .subscription_tier_type import SubscriptionTierType
@@ -237,6 +240,7 @@ from .text_to_cad_iteration_body import TextToCadIterationBody
 from .text_to_cad_model import TextToCadModel
 from .text_to_cad_results_page import TextToCadResultsPage
 from .token_revoke_request_form import TokenRevokeRequestForm
+from .transform import Transform
 from .unit_angle import UnitAngle
 from .unit_angle_conversion import UnitAngleConversion
 from .unit_area import UnitArea

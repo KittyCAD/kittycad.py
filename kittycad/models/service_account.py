@@ -3,7 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
-from ..models.string_uuid import StringUuid
+from ..models.service_account_token_uuid import ServiceAccountTokenUuid
 from ..models.uuid import Uuid
 
 
@@ -25,7 +25,7 @@ class ServiceAccount(BaseModel):
 
     org_id: Uuid
 
-    token: StringUuid
+    token: ServiceAccountTokenUuid
 
     updated_at: datetime.datetime
 
