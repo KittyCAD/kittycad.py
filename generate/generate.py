@@ -1436,7 +1436,7 @@ def generateUnionType(
         else:
             template_info["types"].append(
                 {
-                    "name": type,
+                    "name": rename_if_keyword(type),
                     "var0": randletter(),
                     "var1": randletter(),
                     "check": "type",
@@ -1688,7 +1688,7 @@ def generateObjectTypeCode(
     template_info: TemplateType = {
         "fields": fields,
         "description": description,
-        "name": name,
+        "name": rename_if_keyword(name),
         "imports": imports,
     }
 
@@ -1941,6 +1941,14 @@ def to_camel_case(s: str):
 
 def clean_parameter_name(name: str):
     return camel_to_snake(name).replace("from", "from_")
+
+
+def rename_if_keyword(name: str):
+    """Rename a name if it is also a Python keyword."""
+    KEYWORDS = ["global"]  # there are more, but this is the only one we overlap now
+    if name in KEYWORDS:
+        return name + "_"
+    return name
 
 
 def camel_to_snake(name: str):
