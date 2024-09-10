@@ -33,51 +33,51 @@ from ..models.unit_mass import UnitMass
 from ..models.unit_volume import UnitVolume
 
 
-class start_path(BaseModel):
+class OptionStartPath(BaseModel):
     """Start a new path."""
 
-    type: Literal["start_path"] = "start_path"
+    type: Literal["option_start_path"] = "option_start_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class move_path_pen(BaseModel):
+class OptionMovePathPen(BaseModel):
     """Move the path's \"pen\". If you're in sketch mode, these coordinates are in the local coordinate system, not the world's coordinate system. For example, say you're sketching on the plane {x: (1,0,0), y: (0,1,0), origin: (0, 0, 50)}. In other words, the plane 50 units above the default XY plane. Then, moving the pen to (1, 1, 0) with this command uses local coordinates. So, it would move the pen to (1, 1, 50) in global coordinates."""
 
     path: ModelingCmdId
 
     to: Point3d
 
-    type: Literal["move_path_pen"] = "move_path_pen"
+    type: Literal["option_move_path_pen"] = "option_move_path_pen"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class extend_path(BaseModel):
+class OptionExtendPath(BaseModel):
     """Extend a path by adding a new segment which starts at the path's \"pen\". If no \"pen\" location has been set before (via `MovePen`), then the pen is at the origin."""
 
     path: ModelingCmdId
 
     segment: PathSegment
 
-    type: Literal["extend_path"] = "extend_path"
+    type: Literal["option_extend_path"] = "option_extend_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class extrude(BaseModel):
+class OptionExtrude(BaseModel):
     """Command for extruding a solid 2d."""
 
     distance: LengthUnit
 
     target: ModelingCmdId
 
-    type: Literal["extrude"] = "extrude"
+    type: Literal["option_extrude"] = "option_extrude"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class revolve(BaseModel):
+class OptionRevolve(BaseModel):
     """Command for revolving a solid 2d."""
 
     angle: Angle
@@ -92,12 +92,12 @@ class revolve(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["revolve"] = "revolve"
+    type: Literal["option_revolve"] = "option_revolve"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_shell_face(BaseModel):
+class OptionSolid3DShellFace(BaseModel):
     """Command for shelling a solid3d face"""
 
     face_ids: List[str]
@@ -108,12 +108,12 @@ class solid3d_shell_face(BaseModel):
 
     shell_thickness: LengthUnit
 
-    type: Literal["solid3d_shell_face"] = "solid3d_shell_face"
+    type: Literal["option_solid3d_shell_face"] = "option_solid3d_shell_face"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class revolve_about_edge(BaseModel):
+class OptionRevolveAboutEdge(BaseModel):
     """Command for revolving a solid 2d about a brep edge"""
 
     angle: Angle
@@ -124,12 +124,12 @@ class revolve_about_edge(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["revolve_about_edge"] = "revolve_about_edge"
+    type: Literal["option_revolve_about_edge"] = "option_revolve_about_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class loft(BaseModel):
+class OptionLoft(BaseModel):
     """Command for lofting sections to create a solid"""
 
     base_curve_index: Optional[int] = None
@@ -140,77 +140,79 @@ class loft(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["loft"] = "loft"
+    type: Literal["option_loft"] = "option_loft"
 
     v_degree: int
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class close_path(BaseModel):
+class OptionClosePath(BaseModel):
     """Closes a path, converting it to a 2D solid."""
 
     path_id: str
 
-    type: Literal["close_path"] = "close_path"
+    type: Literal["option_close_path"] = "option_close_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class camera_drag_start(BaseModel):
+class OptionCameraDragStart(BaseModel):
     """Camera drag started."""
 
     interaction: CameraDragInteractionType
 
-    type: Literal["camera_drag_start"] = "camera_drag_start"
+    type: Literal["option_camera_drag_start"] = "option_camera_drag_start"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class camera_drag_move(BaseModel):
+class OptionCameraDragMove(BaseModel):
     """Camera drag continued."""
 
     interaction: CameraDragInteractionType
 
     sequence: Optional[int] = None
 
-    type: Literal["camera_drag_move"] = "camera_drag_move"
+    type: Literal["option_camera_drag_move"] = "option_camera_drag_move"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class camera_drag_end(BaseModel):
+class OptionCameraDragEnd(BaseModel):
     """Camera drag ended"""
 
     interaction: CameraDragInteractionType
 
-    type: Literal["camera_drag_end"] = "camera_drag_end"
+    type: Literal["option_camera_drag_end"] = "option_camera_drag_end"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_get_settings(BaseModel):
+class OptionDefaultCameraGetSettings(BaseModel):
     """Gets the default camera's camera settings"""
 
-    type: Literal["default_camera_get_settings"] = "default_camera_get_settings"
+    type: Literal["option_default_camera_get_settings"] = (
+        "option_default_camera_get_settings"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_look_at(BaseModel):
+class OptionDefaultCameraLookAt(BaseModel):
     """Change what the default camera is looking at."""
 
     center: Point3d
 
     sequence: Optional[int] = None
 
-    type: Literal["default_camera_look_at"] = "default_camera_look_at"
+    type: Literal["option_default_camera_look_at"] = "option_default_camera_look_at"
 
     up: Point3d
 
@@ -219,7 +221,7 @@ class default_camera_look_at(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_perspective_settings(BaseModel):
+class OptionDefaultCameraPerspectiveSettings(BaseModel):
     """Change what the default camera is looking at."""
 
     center: Point3d
@@ -228,8 +230,8 @@ class default_camera_perspective_settings(BaseModel):
 
     sequence: Optional[int] = None
 
-    type: Literal["default_camera_perspective_settings"] = (
-        "default_camera_perspective_settings"
+    type: Literal["option_default_camera_perspective_settings"] = (
+        "option_default_camera_perspective_settings"
     )
 
     up: Point3d
@@ -243,81 +245,83 @@ class default_camera_perspective_settings(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_zoom(BaseModel):
+class OptionDefaultCameraZoom(BaseModel):
     """Adjust zoom of the default camera."""
 
     magnitude: float
 
-    type: Literal["default_camera_zoom"] = "default_camera_zoom"
+    type: Literal["option_default_camera_zoom"] = "option_default_camera_zoom"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class export(BaseModel):
+class OptionExport(BaseModel):
     """Export the scene to a file."""
 
     entity_ids: List[str]
 
     format: OutputFormat
 
-    type: Literal["export"] = "export"
+    type: Literal["option_export"] = "option_export"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_parent_id(BaseModel):
+class OptionEntityGetParentId(BaseModel):
     """What is this entity's parent?"""
 
     entity_id: str
 
-    type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
+    type: Literal["option_entity_get_parent_id"] = "option_entity_get_parent_id"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_num_children(BaseModel):
+class OptionEntityGetNumChildren(BaseModel):
     """How many children does the entity have?"""
 
     entity_id: str
 
-    type: Literal["entity_get_num_children"] = "entity_get_num_children"
+    type: Literal["option_entity_get_num_children"] = "option_entity_get_num_children"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_child_uuid(BaseModel):
+class OptionEntityGetChildUuid(BaseModel):
     """What is the UUID of this entity's n-th child?"""
 
     child_index: int
 
     entity_id: str
 
-    type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
+    type: Literal["option_entity_get_child_uuid"] = "option_entity_get_child_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_all_child_uuids(BaseModel):
+class OptionEntityGetAllChildUuids(BaseModel):
     """What are all UUIDs of this entity's children?"""
 
     entity_id: str
 
-    type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
+    type: Literal["option_entity_get_all_child_uuids"] = (
+        "option_entity_get_all_child_uuids"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_sketch_paths(BaseModel):
+class OptionEntityGetSketchPaths(BaseModel):
     """What are all UUIDs of all the paths sketched on top of this entity?"""
 
     entity_id: str
 
-    type: Literal["entity_get_sketch_paths"] = "entity_get_sketch_paths"
+    type: Literal["option_entity_get_sketch_paths"] = "option_entity_get_sketch_paths"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_distance(BaseModel):
+class OptionEntityGetDistance(BaseModel):
     """What is the distance between these two entities?"""
 
     distance_type: DistanceType
@@ -326,24 +330,26 @@ class entity_get_distance(BaseModel):
 
     entity_id2: str
 
-    type: Literal["entity_get_distance"] = "entity_get_distance"
+    type: Literal["option_entity_get_distance"] = "option_entity_get_distance"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_linear_pattern_transform(BaseModel):
+class OptionEntityLinearPatternTransform(BaseModel):
     """Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate."""
 
     entity_id: str
 
     transform: List[Transform]
 
-    type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
+    type: Literal["option_entity_linear_pattern_transform"] = (
+        "option_entity_linear_pattern_transform"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_linear_pattern(BaseModel):
+class OptionEntityLinearPattern(BaseModel):
     """Create a linear pattern using this entity."""
 
     axis: Point3d
@@ -354,12 +360,12 @@ class entity_linear_pattern(BaseModel):
 
     spacing: LengthUnit
 
-    type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
+    type: Literal["option_entity_linear_pattern"] = "option_entity_linear_pattern"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_circular_pattern(BaseModel):
+class OptionEntityCircularPattern(BaseModel):
     """Create a circular pattern using this entity."""
 
     arc_degrees: float
@@ -374,12 +380,12 @@ class entity_circular_pattern(BaseModel):
 
     rotate_duplicates: bool
 
-    type: Literal["entity_circular_pattern"] = "entity_circular_pattern"
+    type: Literal["option_entity_circular_pattern"] = "option_entity_circular_pattern"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_make_helix(BaseModel):
+class OptionEntityMakeHelix(BaseModel):
     """Create a helix using the input cylinder and other specified parameters."""
 
     cylinder_id: str
@@ -392,12 +398,12 @@ class entity_make_helix(BaseModel):
 
     start_angle: Angle
 
-    type: Literal["entity_make_helix"] = "entity_make_helix"
+    type: Literal["option_entity_make_helix"] = "option_entity_make_helix"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_mirror(BaseModel):
+class OptionEntityMirror(BaseModel):
     """Mirror the input entities over the specified axis. (Currently only supports sketches)"""
 
     axis: Point3d
@@ -406,106 +412,108 @@ class entity_mirror(BaseModel):
 
     point: Point3d
 
-    type: Literal["entity_mirror"] = "entity_mirror"
+    type: Literal["option_entity_mirror"] = "option_entity_mirror"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_mirror_across_edge(BaseModel):
+class OptionEntityMirrorAcrossEdge(BaseModel):
     """Mirror the input entities over the specified edge. (Currently only supports sketches)"""
 
     edge_id: str
 
     ids: List[str]
 
-    type: Literal["entity_mirror_across_edge"] = "entity_mirror_across_edge"
+    type: Literal["option_entity_mirror_across_edge"] = (
+        "option_entity_mirror_across_edge"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class edit_mode_enter(BaseModel):
+class OptionEditModeEnter(BaseModel):
     """Enter edit mode"""
 
     target: str
 
-    type: Literal["edit_mode_enter"] = "edit_mode_enter"
+    type: Literal["option_edit_mode_enter"] = "option_edit_mode_enter"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_with_point(BaseModel):
+class OptionSelectWithPoint(BaseModel):
     """Modifies the selection by simulating a \"mouse click\" at the given x,y window coordinate Returns ID of whatever was selected."""
 
     selected_at_window: Point2d
 
     selection_type: SceneSelectionType
 
-    type: Literal["select_with_point"] = "select_with_point"
+    type: Literal["option_select_with_point"] = "option_select_with_point"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_add(BaseModel):
+class OptionSelectAdd(BaseModel):
     """Adds one or more entities (by UUID) to the selection."""
 
     entities: List[str]
 
-    type: Literal["select_add"] = "select_add"
+    type: Literal["option_select_add"] = "option_select_add"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_remove(BaseModel):
+class OptionSelectRemove(BaseModel):
     """Removes one or more entities (by UUID) from the selection."""
 
     entities: List[str]
 
-    type: Literal["select_remove"] = "select_remove"
+    type: Literal["option_select_remove"] = "option_select_remove"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class scene_clear_all(BaseModel):
+class OptionSceneClearAll(BaseModel):
     """Removes all of the Objects in the scene"""
 
-    type: Literal["scene_clear_all"] = "scene_clear_all"
+    type: Literal["option_scene_clear_all"] = "option_scene_clear_all"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_replace(BaseModel):
+class OptionSelectReplace(BaseModel):
     """Replaces current selection with these entities (by UUID)."""
 
     entities: List[str]
 
-    type: Literal["select_replace"] = "select_replace"
+    type: Literal["option_select_replace"] = "option_select_replace"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class highlight_set_entity(BaseModel):
+class OptionHighlightSetEntity(BaseModel):
     """Changes the current highlighted entity to whichever one is at the given window coordinate. If there's no entity at this location, clears the highlight."""
 
     selected_at_window: Point2d
 
     sequence: Optional[int] = None
 
-    type: Literal["highlight_set_entity"] = "highlight_set_entity"
+    type: Literal["option_highlight_set_entity"] = "option_highlight_set_entity"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class highlight_set_entities(BaseModel):
+class OptionHighlightSetEntities(BaseModel):
     """Changes the current highlighted entity to these entities."""
 
     entities: List[str]
 
-    type: Literal["highlight_set_entities"] = "highlight_set_entities"
+    type: Literal["option_highlight_set_entities"] = "option_highlight_set_entities"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class new_annotation(BaseModel):
+class OptionNewAnnotation(BaseModel):
     """Create a new annotation"""
 
     annotation_type: AnnotationType
@@ -514,56 +522,56 @@ class new_annotation(BaseModel):
 
     options: AnnotationOptions
 
-    type: Literal["new_annotation"] = "new_annotation"
+    type: Literal["option_new_annotation"] = "option_new_annotation"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class update_annotation(BaseModel):
+class OptionUpdateAnnotation(BaseModel):
     """Update an annotation"""
 
     annotation_id: str
 
     options: AnnotationOptions
 
-    type: Literal["update_annotation"] = "update_annotation"
+    type: Literal["option_update_annotation"] = "option_update_annotation"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class edge_lines_visible(BaseModel):
+class OptionEdgeLinesVisible(BaseModel):
     """Changes visibility of scene-wide edge lines on brep solids"""
 
     hidden: bool
 
-    type: Literal["edge_lines_visible"] = "edge_lines_visible"
+    type: Literal["option_edge_lines_visible"] = "option_edge_lines_visible"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class object_visible(BaseModel):
+class OptionObjectVisible(BaseModel):
     """Hide or show an object"""
 
     hidden: bool
 
     object_id: str
 
-    type: Literal["object_visible"] = "object_visible"
+    type: Literal["option_object_visible"] = "option_object_visible"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class object_bring_to_front(BaseModel):
+class OptionObjectBringToFront(BaseModel):
     """Bring an object to the front of the scene"""
 
     object_id: str
 
-    type: Literal["object_bring_to_front"] = "object_bring_to_front"
+    type: Literal["option_object_bring_to_front"] = "option_object_bring_to_front"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class object_set_material_params_pbr(BaseModel):
+class OptionObjectSetMaterialParamsPbr(BaseModel):
     """Set the material properties of an object"""
 
     ambient_occlusion: float
@@ -576,46 +584,50 @@ class object_set_material_params_pbr(BaseModel):
 
     roughness: float
 
-    type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
+    type: Literal["option_object_set_material_params_pbr"] = (
+        "option_object_set_material_params_pbr"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_entity_type(BaseModel):
+class OptionGetEntityType(BaseModel):
     """What type of entity is this?"""
 
     entity_id: str
 
-    type: Literal["get_entity_type"] = "get_entity_type"
+    type: Literal["option_get_entity_type"] = "option_get_entity_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_all_edge_faces(BaseModel):
+class OptionSolid3DGetAllEdgeFaces(BaseModel):
     """Gets all faces which use the given edge."""
 
     edge_id: str
 
     object_id: str
 
-    type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
+    type: Literal["option_solid3d_get_all_edge_faces"] = (
+        "option_solid3d_get_all_edge_faces"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid2d_add_hole(BaseModel):
+class OptionSolid2DAddHole(BaseModel):
     """Add a hole to a Solid2d object before extruding it."""
 
     hole_id: str
 
     object_id: str
 
-    type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
+    type: Literal["option_solid2d_add_hole"] = "option_solid2d_add_hole"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_all_opposite_edges(BaseModel):
+class OptionSolid3DGetAllOppositeEdges(BaseModel):
     """Gets all edges which are opposite the given edge, across all possible faces."""
 
     along_vector: Optional[Point3d] = None
@@ -624,12 +636,14 @@ class solid3d_get_all_opposite_edges(BaseModel):
 
     object_id: str
 
-    type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
+    type: Literal["option_solid3d_get_all_opposite_edges"] = (
+        "option_solid3d_get_all_opposite_edges"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_opposite_edge(BaseModel):
+class OptionSolid3DGetOppositeEdge(BaseModel):
     """Gets the edge opposite the given edge, along the given face."""
 
     edge_id: str
@@ -638,12 +652,14 @@ class solid3d_get_opposite_edge(BaseModel):
 
     object_id: str
 
-    type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
+    type: Literal["option_solid3d_get_opposite_edge"] = (
+        "option_solid3d_get_opposite_edge"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_next_adjacent_edge(BaseModel):
+class OptionSolid3DGetNextAdjacentEdge(BaseModel):
     """Gets the next adjacent edge for the given edge, along the given face."""
 
     edge_id: str
@@ -652,12 +668,14 @@ class solid3d_get_next_adjacent_edge(BaseModel):
 
     object_id: str
 
-    type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
+    type: Literal["option_solid3d_get_next_adjacent_edge"] = (
+        "option_solid3d_get_next_adjacent_edge"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_prev_adjacent_edge(BaseModel):
+class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
     """Gets the previous adjacent edge for the given edge, along the given face."""
 
     edge_id: str
@@ -666,12 +684,14 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 
     object_id: str
 
-    type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
+    type: Literal["option_solid3d_get_prev_adjacent_edge"] = (
+        "option_solid3d_get_prev_adjacent_edge"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_fillet_edge(BaseModel):
+class OptionSolid3DFilletEdge(BaseModel):
     """Fillets the given edge with the specified radius."""
 
     cut_type: CutType = "fillet"  # type: ignore
@@ -686,80 +706,80 @@ class solid3d_fillet_edge(BaseModel):
 
     tolerance: LengthUnit
 
-    type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
+    type: Literal["option_solid3d_fillet_edge"] = "option_solid3d_fillet_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_is_planar(BaseModel):
+class OptionFaceIsPlanar(BaseModel):
     """Determines whether a brep face is planar and returns its surface-local planar axes if so"""
 
     object_id: str
 
-    type: Literal["face_is_planar"] = "face_is_planar"
+    type: Literal["option_face_is_planar"] = "option_face_is_planar"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_get_position(BaseModel):
+class OptionFaceGetPosition(BaseModel):
     """Determines a position on a brep face evaluated by parameters u,v"""
 
     object_id: str
 
-    type: Literal["face_get_position"] = "face_get_position"
+    type: Literal["option_face_get_position"] = "option_face_get_position"
 
     uv: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_get_center(BaseModel):
+class OptionFaceGetCenter(BaseModel):
     """Obtains the surface \"center of mass\" """
 
     object_id: str
 
-    type: Literal["face_get_center"] = "face_get_center"
+    type: Literal["option_face_get_center"] = "option_face_get_center"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_get_gradient(BaseModel):
+class OptionFaceGetGradient(BaseModel):
     """Determines the gradient (dFdu, dFdv) + normal vector on a brep face evaluated by parameters u,v"""
 
     object_id: str
 
-    type: Literal["face_get_gradient"] = "face_get_gradient"
+    type: Literal["option_face_get_gradient"] = "option_face_get_gradient"
 
     uv: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class send_object(BaseModel):
+class OptionSendObject(BaseModel):
     """Send object to front or back."""
 
     front: bool
 
     object_id: str
 
-    type: Literal["send_object"] = "send_object"
+    type: Literal["option_send_object"] = "option_send_object"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_set_opacity(BaseModel):
+class OptionEntitySetOpacity(BaseModel):
     """Set opacity of the entity."""
 
     entity_id: str
 
     opacity: float
 
-    type: Literal["entity_set_opacity"] = "entity_set_opacity"
+    type: Literal["option_entity_set_opacity"] = "option_entity_set_opacity"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_fade(BaseModel):
+class OptionEntityFade(BaseModel):
     """Fade entity in or out."""
 
     duration_seconds: float = 0.4000000059604645
@@ -768,12 +788,12 @@ class entity_fade(BaseModel):
 
     fade_in: bool
 
-    type: Literal["entity_fade"] = "entity_fade"
+    type: Literal["option_entity_fade"] = "option_entity_fade"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class make_plane(BaseModel):
+class OptionMakePlane(BaseModel):
     """Make a new plane"""
 
     clobber: bool
@@ -784,7 +804,7 @@ class make_plane(BaseModel):
 
     size: LengthUnit
 
-    type: Literal["make_plane"] = "make_plane"
+    type: Literal["option_make_plane"] = "option_make_plane"
 
     x_axis: Point3d
 
@@ -793,67 +813,67 @@ class make_plane(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class plane_set_color(BaseModel):
+class OptionPlaneSetColor(BaseModel):
     """Set the color of a plane."""
 
     color: Color
 
     plane_id: str
 
-    type: Literal["plane_set_color"] = "plane_set_color"
+    type: Literal["option_plane_set_color"] = "option_plane_set_color"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class set_tool(BaseModel):
+class OptionSetTool(BaseModel):
     """Set the current tool."""
 
     tool: SceneToolType
 
-    type: Literal["set_tool"] = "set_tool"
+    type: Literal["option_set_tool"] = "option_set_tool"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mouse_move(BaseModel):
+class OptionMouseMove(BaseModel):
     """Send a mouse move event"""
 
     sequence: Optional[int] = None
 
-    type: Literal["mouse_move"] = "mouse_move"
+    type: Literal["option_mouse_move"] = "option_mouse_move"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mouse_click(BaseModel):
+class OptionMouseClick(BaseModel):
     """Send a mouse click event Updates modified/selected entities."""
 
-    type: Literal["mouse_click"] = "mouse_click"
+    type: Literal["option_mouse_click"] = "option_mouse_click"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sketch_mode_disable(BaseModel):
+class OptionSketchModeDisable(BaseModel):
     """Disable sketch mode. If you are sketching on a face, be sure to not disable sketch mode until you have extruded. Otherwise, your object will not be fused with the face."""
 
-    type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
+    type: Literal["option_sketch_mode_disable"] = "option_sketch_mode_disable"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_sketch_mode_plane(BaseModel):
+class OptionGetSketchModePlane(BaseModel):
     """Get the plane for sketch mode."""
 
-    type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
+    type: Literal["option_get_sketch_mode_plane"] = "option_get_sketch_mode_plane"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_set_constraint(BaseModel):
+class OptionCurveSetConstraint(BaseModel):
     """Get the plane for sketch mode."""
 
     constraint_bound: PathComponentConstraintBound
@@ -862,12 +882,12 @@ class curve_set_constraint(BaseModel):
 
     object_id: str
 
-    type: Literal["curve_set_constraint"] = "curve_set_constraint"
+    type: Literal["option_curve_set_constraint"] = "option_curve_set_constraint"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class enable_sketch_mode(BaseModel):
+class OptionEnableSketchMode(BaseModel):
     """Sketch on some entity (e.g. a plane, a face)."""
 
     adjust_camera: bool
@@ -880,100 +900,104 @@ class enable_sketch_mode(BaseModel):
 
     planar_normal: Optional[Point3d] = None
 
-    type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
+    type: Literal["option_enable_sketch_mode"] = "option_enable_sketch_mode"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class set_background_color(BaseModel):
+class OptionSetBackgroundColor(BaseModel):
     """Set the background color of the scene."""
 
     color: Color
 
-    type: Literal["set_background_color"] = "set_background_color"
+    type: Literal["option_set_background_color"] = "option_set_background_color"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class set_current_tool_properties(BaseModel):
+class OptionSetCurrentToolProperties(BaseModel):
     """Set the properties of the tool lines for the scene."""
 
     color: Optional[Color] = None
 
-    type: Literal["set_current_tool_properties"] = "set_current_tool_properties"
+    type: Literal["option_set_current_tool_properties"] = (
+        "option_set_current_tool_properties"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class set_default_system_properties(BaseModel):
+class OptionSetDefaultSystemProperties(BaseModel):
     """Set the default system properties used when a specific property isn't set."""
 
     color: Optional[Color] = None
 
-    type: Literal["set_default_system_properties"] = "set_default_system_properties"
+    type: Literal["option_set_default_system_properties"] = (
+        "option_set_default_system_properties"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_get_type(BaseModel):
+class OptionCurveGetType(BaseModel):
     """Get type of the given curve."""
 
     curve_id: str
 
-    type: Literal["curve_get_type"] = "curve_get_type"
+    type: Literal["option_curve_get_type"] = "option_curve_get_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_get_control_points(BaseModel):
+class OptionCurveGetControlPoints(BaseModel):
     """Get control points of the given curve."""
 
     curve_id: str
 
-    type: Literal["curve_get_control_points"] = "curve_get_control_points"
+    type: Literal["option_curve_get_control_points"] = "option_curve_get_control_points"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class take_snapshot(BaseModel):
+class OptionTakeSnapshot(BaseModel):
     """Take a snapshot of the current view."""
 
     format: ImageFormat
 
-    type: Literal["take_snapshot"] = "take_snapshot"
+    type: Literal["option_take_snapshot"] = "option_take_snapshot"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class make_axes_gizmo(BaseModel):
+class OptionMakeAxesGizmo(BaseModel):
     """Add a gizmo showing the axes."""
 
     clobber: bool
 
     gizmo_mode: bool
 
-    type: Literal["make_axes_gizmo"] = "make_axes_gizmo"
+    type: Literal["option_make_axes_gizmo"] = "option_make_axes_gizmo"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_info(BaseModel):
+class OptionPathGetInfo(BaseModel):
     """Query the given path."""
 
     path_id: str
 
-    type: Literal["path_get_info"] = "path_get_info"
+    type: Literal["option_path_get_info"] = "option_path_get_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_curve_uuids_for_vertices(BaseModel):
+class OptionPathGetCurveUuidsForVertices(BaseModel):
     """Obtain curve ids for vertex ids"""
 
     path_id: str
 
-    type: Literal["path_get_curve_uuids_for_vertices"] = (
-        "path_get_curve_uuids_for_vertices"
+    type: Literal["option_path_get_curve_uuids_for_vertices"] = (
+        "option_path_get_curve_uuids_for_vertices"
     )
 
     vertex_ids: List[str]
@@ -981,139 +1005,143 @@ class path_get_curve_uuids_for_vertices(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_curve_uuid(BaseModel):
+class OptionPathGetCurveUuid(BaseModel):
     """Obtain curve id by index"""
 
     index: int
 
     path_id: str
 
-    type: Literal["path_get_curve_uuid"] = "path_get_curve_uuid"
+    type: Literal["option_path_get_curve_uuid"] = "option_path_get_curve_uuid"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_vertex_uuids(BaseModel):
+class OptionPathGetVertexUuids(BaseModel):
     """Obtain vertex ids for a path"""
 
     path_id: str
 
-    type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
+    type: Literal["option_path_get_vertex_uuids"] = "option_path_get_vertex_uuids"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_sketch_target_uuid(BaseModel):
+class OptionPathGetSketchTargetUuid(BaseModel):
     """Obtain the sketch target id (if the path was drawn in sketchmode) for a path"""
 
     path_id: str
 
-    type: Literal["path_get_sketch_target_uuid"] = "path_get_sketch_target_uuid"
+    type: Literal["option_path_get_sketch_target_uuid"] = (
+        "option_path_get_sketch_target_uuid"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class handle_mouse_drag_start(BaseModel):
+class OptionHandleMouseDragStart(BaseModel):
     """Start dragging the mouse."""
 
-    type: Literal["handle_mouse_drag_start"] = "handle_mouse_drag_start"
+    type: Literal["option_handle_mouse_drag_start"] = "option_handle_mouse_drag_start"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class handle_mouse_drag_move(BaseModel):
+class OptionHandleMouseDragMove(BaseModel):
     """Continue dragging the mouse."""
 
     sequence: Optional[int] = None
 
-    type: Literal["handle_mouse_drag_move"] = "handle_mouse_drag_move"
+    type: Literal["option_handle_mouse_drag_move"] = "option_handle_mouse_drag_move"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class handle_mouse_drag_end(BaseModel):
+class OptionHandleMouseDragEnd(BaseModel):
     """Stop dragging the mouse."""
 
-    type: Literal["handle_mouse_drag_end"] = "handle_mouse_drag_end"
+    type: Literal["option_handle_mouse_drag_end"] = "option_handle_mouse_drag_end"
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class remove_scene_objects(BaseModel):
+class OptionRemoveSceneObjects(BaseModel):
     """Remove scene objects."""
 
     object_ids: List[str]
 
-    type: Literal["remove_scene_objects"] = "remove_scene_objects"
+    type: Literal["option_remove_scene_objects"] = "option_remove_scene_objects"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class plane_intersect_and_project(BaseModel):
+class OptionPlaneIntersectAndProject(BaseModel):
     """Utility method. Performs both a ray cast and projection to plane-local coordinates. Returns the plane coordinates for the given window coordinates."""
 
     plane_id: str
 
-    type: Literal["plane_intersect_and_project"] = "plane_intersect_and_project"
+    type: Literal["option_plane_intersect_and_project"] = (
+        "option_plane_intersect_and_project"
+    )
 
     window: Point2d
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_get_end_points(BaseModel):
+class OptionCurveGetEndPoints(BaseModel):
     """Find the start and end of a curve."""
 
     curve_id: str
 
-    type: Literal["curve_get_end_points"] = "curve_get_end_points"
+    type: Literal["option_curve_get_end_points"] = "option_curve_get_end_points"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class reconfigure_stream(BaseModel):
+class OptionReconfigureStream(BaseModel):
     """Reconfigure the stream."""
 
     fps: int
 
     height: int
 
-    type: Literal["reconfigure_stream"] = "reconfigure_stream"
+    type: Literal["option_reconfigure_stream"] = "option_reconfigure_stream"
 
     width: int
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class import_files(BaseModel):
+class OptionImportFiles(BaseModel):
     """Import files to the current model."""
 
     files: List[ImportFile]
 
     format: InputFormat
 
-    type: Literal["import_files"] = "import_files"
+    type: Literal["option_import_files"] = "option_import_files"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class set_scene_units(BaseModel):
+class OptionSetSceneUnits(BaseModel):
     """Set the units of the scene. For all following commands, the units will be interpreted as the given units."""
 
-    type: Literal["set_scene_units"] = "set_scene_units"
+    type: Literal["option_set_scene_units"] = "option_set_scene_units"
 
     unit: UnitLength
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mass(BaseModel):
+class OptionMass(BaseModel):
     """Get the mass of entities in the scene or the default scene."""
 
     entity_ids: List[str]
@@ -1124,12 +1152,12 @@ class mass(BaseModel):
 
     output_unit: UnitMass
 
-    type: Literal["mass"] = "mass"
+    type: Literal["option_mass"] = "option_mass"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class density(BaseModel):
+class OptionDensity(BaseModel):
     """Get the density of entities in the scene or the default scene."""
 
     entity_ids: List[str]
@@ -1140,157 +1168,163 @@ class density(BaseModel):
 
     output_unit: UnitDensity
 
-    type: Literal["density"] = "density"
+    type: Literal["option_density"] = "option_density"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class volume(BaseModel):
+class OptionVolume(BaseModel):
     """Get the volume of entities in the scene or the default scene."""
 
     entity_ids: List[str]
 
     output_unit: UnitVolume
 
-    type: Literal["volume"] = "volume"
+    type: Literal["option_volume"] = "option_volume"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class center_of_mass(BaseModel):
+class OptionCenterOfMass(BaseModel):
     """Get the center of mass of entities in the scene or the default scene."""
 
     entity_ids: List[str]
 
     output_unit: UnitLength
 
-    type: Literal["center_of_mass"] = "center_of_mass"
+    type: Literal["option_center_of_mass"] = "option_center_of_mass"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class surface_area(BaseModel):
+class OptionSurfaceArea(BaseModel):
     """Get the surface area of entities in the scene or the default scene."""
 
     entity_ids: List[str]
 
     output_unit: UnitArea
 
-    type: Literal["surface_area"] = "surface_area"
+    type: Literal["option_surface_area"] = "option_surface_area"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_focus_on(BaseModel):
+class OptionDefaultCameraFocusOn(BaseModel):
     """Focus the default camera upon an object in the scene."""
 
-    type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
+    type: Literal["option_default_camera_focus_on"] = "option_default_camera_focus_on"
 
     uuid: str
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class set_selection_type(BaseModel):
+class OptionSetSelectionType(BaseModel):
     """When you select some entity with the current tool, what should happen to the entity?"""
 
     selection_type: SceneSelectionType
 
-    type: Literal["set_selection_type"] = "set_selection_type"
+    type: Literal["option_set_selection_type"] = "option_set_selection_type"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class set_selection_filter(BaseModel):
+class OptionSetSelectionFilter(BaseModel):
     """What kind of entities can be selected?"""
 
     filter: List[EntityType]
 
-    type: Literal["set_selection_filter"] = "set_selection_filter"
+    type: Literal["option_set_selection_filter"] = "option_set_selection_filter"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_set_orthographic(BaseModel):
+class OptionDefaultCameraSetOrthographic(BaseModel):
     """Use orthographic projection."""
 
-    type: Literal["default_camera_set_orthographic"] = "default_camera_set_orthographic"
+    type: Literal["option_default_camera_set_orthographic"] = (
+        "option_default_camera_set_orthographic"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_set_perspective(BaseModel):
+class OptionDefaultCameraSetPerspective(BaseModel):
     """Use perspective projection."""
 
     parameters: Optional[PerspectiveCameraParameters] = None
 
-    type: Literal["default_camera_set_perspective"] = "default_camera_set_perspective"
+    type: Literal["option_default_camera_set_perspective"] = (
+        "option_default_camera_set_perspective"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class zoom_to_fit(BaseModel):
+class OptionZoomToFit(BaseModel):
     """Fit the view to the specified object(s)."""
 
     object_ids: List[str] = []
 
     padding: float
 
-    type: Literal["zoom_to_fit"] = "zoom_to_fit"
+    type: Literal["option_zoom_to_fit"] = "option_zoom_to_fit"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class view_isometric(BaseModel):
+class OptionViewIsometric(BaseModel):
     """Fit the view to the scene with an isometric view."""
 
     padding: float = 0.0
 
-    type: Literal["view_isometric"] = "view_isometric"
+    type: Literal["option_view_isometric"] = "option_view_isometric"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_extrusion_face_info(BaseModel):
+class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     """Get a concise description of all of an extrusion's faces."""
 
     edge_id: str
 
     object_id: str
 
-    type: Literal["solid3d_get_extrusion_face_info"] = "solid3d_get_extrusion_face_info"
+    type: Literal["option_solid3d_get_extrusion_face_info"] = (
+        "option_solid3d_get_extrusion_face_info"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class edit_mode_exit(BaseModel):
+class OptionEditModeExit(BaseModel):
     """Exit edit mode"""
 
-    type: Literal["edit_mode_exit"] = "edit_mode_exit"
+    type: Literal["option_edit_mode_exit"] = "option_edit_mode_exit"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_clear(BaseModel):
+class OptionSelectClear(BaseModel):
     """Clear the selection"""
 
-    type: Literal["select_clear"] = "select_clear"
+    type: Literal["option_select_clear"] = "option_select_clear"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_get(BaseModel):
+class OptionSelectGet(BaseModel):
     """Find all IDs of selected entities"""
 
-    type: Literal["select_get"] = "select_get"
+    type: Literal["option_select_get"] = "option_select_get"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_num_objects(BaseModel):
+class OptionGetNumObjects(BaseModel):
     """Get the number of objects in the scene"""
 
-    type: Literal["get_num_objects"] = "get_num_objects"
+    type: Literal["option_get_num_objects"] = "option_get_num_objects"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1298,111 +1332,111 @@ class get_num_objects(BaseModel):
 ModelingCmd = RootModel[
     Annotated[
         Union[
-            start_path,
-            move_path_pen,
-            extend_path,
-            extrude,
-            revolve,
-            solid3d_shell_face,
-            revolve_about_edge,
-            loft,
-            close_path,
-            camera_drag_start,
-            camera_drag_move,
-            camera_drag_end,
-            default_camera_get_settings,
-            default_camera_look_at,
-            default_camera_perspective_settings,
-            default_camera_zoom,
-            export,
-            entity_get_parent_id,
-            entity_get_num_children,
-            entity_get_child_uuid,
-            entity_get_all_child_uuids,
-            entity_get_sketch_paths,
-            entity_get_distance,
-            entity_linear_pattern_transform,
-            entity_linear_pattern,
-            entity_circular_pattern,
-            entity_make_helix,
-            entity_mirror,
-            entity_mirror_across_edge,
-            edit_mode_enter,
-            select_with_point,
-            select_add,
-            select_remove,
-            scene_clear_all,
-            select_replace,
-            highlight_set_entity,
-            highlight_set_entities,
-            new_annotation,
-            update_annotation,
-            edge_lines_visible,
-            object_visible,
-            object_bring_to_front,
-            object_set_material_params_pbr,
-            get_entity_type,
-            solid3d_get_all_edge_faces,
-            solid2d_add_hole,
-            solid3d_get_all_opposite_edges,
-            solid3d_get_opposite_edge,
-            solid3d_get_next_adjacent_edge,
-            solid3d_get_prev_adjacent_edge,
-            solid3d_fillet_edge,
-            face_is_planar,
-            face_get_position,
-            face_get_center,
-            face_get_gradient,
-            send_object,
-            entity_set_opacity,
-            entity_fade,
-            make_plane,
-            plane_set_color,
-            set_tool,
-            mouse_move,
-            mouse_click,
-            sketch_mode_disable,
-            get_sketch_mode_plane,
-            curve_set_constraint,
-            enable_sketch_mode,
-            set_background_color,
-            set_current_tool_properties,
-            set_default_system_properties,
-            curve_get_type,
-            curve_get_control_points,
-            take_snapshot,
-            make_axes_gizmo,
-            path_get_info,
-            path_get_curve_uuids_for_vertices,
-            path_get_curve_uuid,
-            path_get_vertex_uuids,
-            path_get_sketch_target_uuid,
-            handle_mouse_drag_start,
-            handle_mouse_drag_move,
-            handle_mouse_drag_end,
-            remove_scene_objects,
-            plane_intersect_and_project,
-            curve_get_end_points,
-            reconfigure_stream,
-            import_files,
-            set_scene_units,
-            mass,
-            density,
-            volume,
-            center_of_mass,
-            surface_area,
-            default_camera_focus_on,
-            set_selection_type,
-            set_selection_filter,
-            default_camera_set_orthographic,
-            default_camera_set_perspective,
-            zoom_to_fit,
-            view_isometric,
-            solid3d_get_extrusion_face_info,
-            edit_mode_exit,
-            select_clear,
-            select_get,
-            get_num_objects,
+            OptionStartPath,
+            OptionMovePathPen,
+            OptionExtendPath,
+            OptionExtrude,
+            OptionRevolve,
+            OptionSolid3DShellFace,
+            OptionRevolveAboutEdge,
+            OptionLoft,
+            OptionClosePath,
+            OptionCameraDragStart,
+            OptionCameraDragMove,
+            OptionCameraDragEnd,
+            OptionDefaultCameraGetSettings,
+            OptionDefaultCameraLookAt,
+            OptionDefaultCameraPerspectiveSettings,
+            OptionDefaultCameraZoom,
+            OptionExport,
+            OptionEntityGetParentId,
+            OptionEntityGetNumChildren,
+            OptionEntityGetChildUuid,
+            OptionEntityGetAllChildUuids,
+            OptionEntityGetSketchPaths,
+            OptionEntityGetDistance,
+            OptionEntityLinearPatternTransform,
+            OptionEntityLinearPattern,
+            OptionEntityCircularPattern,
+            OptionEntityMakeHelix,
+            OptionEntityMirror,
+            OptionEntityMirrorAcrossEdge,
+            OptionEditModeEnter,
+            OptionSelectWithPoint,
+            OptionSelectAdd,
+            OptionSelectRemove,
+            OptionSceneClearAll,
+            OptionSelectReplace,
+            OptionHighlightSetEntity,
+            OptionHighlightSetEntities,
+            OptionNewAnnotation,
+            OptionUpdateAnnotation,
+            OptionEdgeLinesVisible,
+            OptionObjectVisible,
+            OptionObjectBringToFront,
+            OptionObjectSetMaterialParamsPbr,
+            OptionGetEntityType,
+            OptionSolid3DGetAllEdgeFaces,
+            OptionSolid2DAddHole,
+            OptionSolid3DGetAllOppositeEdges,
+            OptionSolid3DGetOppositeEdge,
+            OptionSolid3DGetNextAdjacentEdge,
+            OptionSolid3DGetPrevAdjacentEdge,
+            OptionSolid3DFilletEdge,
+            OptionFaceIsPlanar,
+            OptionFaceGetPosition,
+            OptionFaceGetCenter,
+            OptionFaceGetGradient,
+            OptionSendObject,
+            OptionEntitySetOpacity,
+            OptionEntityFade,
+            OptionMakePlane,
+            OptionPlaneSetColor,
+            OptionSetTool,
+            OptionMouseMove,
+            OptionMouseClick,
+            OptionSketchModeDisable,
+            OptionGetSketchModePlane,
+            OptionCurveSetConstraint,
+            OptionEnableSketchMode,
+            OptionSetBackgroundColor,
+            OptionSetCurrentToolProperties,
+            OptionSetDefaultSystemProperties,
+            OptionCurveGetType,
+            OptionCurveGetControlPoints,
+            OptionTakeSnapshot,
+            OptionMakeAxesGizmo,
+            OptionPathGetInfo,
+            OptionPathGetCurveUuidsForVertices,
+            OptionPathGetCurveUuid,
+            OptionPathGetVertexUuids,
+            OptionPathGetSketchTargetUuid,
+            OptionHandleMouseDragStart,
+            OptionHandleMouseDragMove,
+            OptionHandleMouseDragEnd,
+            OptionRemoveSceneObjects,
+            OptionPlaneIntersectAndProject,
+            OptionCurveGetEndPoints,
+            OptionReconfigureStream,
+            OptionImportFiles,
+            OptionSetSceneUnits,
+            OptionMass,
+            OptionDensity,
+            OptionVolume,
+            OptionCenterOfMass,
+            OptionSurfaceArea,
+            OptionDefaultCameraFocusOn,
+            OptionSetSelectionType,
+            OptionSetSelectionFilter,
+            OptionDefaultCameraSetOrthographic,
+            OptionDefaultCameraSetPerspective,
+            OptionZoomToFit,
+            OptionViewIsometric,
+            OptionSolid3DGetExtrusionFaceInfo,
+            OptionEditModeExit,
+            OptionSelectClear,
+            OptionSelectGet,
+            OptionGetNumObjects,
         ],
         Field(discriminator="type"),
     ]

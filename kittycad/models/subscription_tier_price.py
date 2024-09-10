@@ -6,34 +6,34 @@ from typing_extensions import Annotated
 from ..models.plan_interval import PlanInterval
 
 
-class flat(BaseModel):
+class OptionFlat(BaseModel):
     """A flat price that we publicly list."""
 
     interval: PlanInterval
 
     price: float
 
-    type: Literal["flat"] = "flat"
+    type: Literal["option_flat"] = "option_flat"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class per_user(BaseModel):
+class OptionPerUser(BaseModel):
     """A per user price that we publicly list."""
 
     interval: PlanInterval
 
     price: float
 
-    type: Literal["per_user"] = "per_user"
+    type: Literal["option_per_user"] = "option_per_user"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class enterprise(BaseModel):
+class OptionEnterprise(BaseModel):
     """Enterprise: The price is not listed and the user needs to contact sales."""
 
-    type: Literal["enterprise"] = "enterprise"
+    type: Literal["option_enterprise"] = "option_enterprise"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -41,9 +41,9 @@ class enterprise(BaseModel):
 SubscriptionTierPrice = RootModel[
     Annotated[
         Union[
-            flat,
-            per_user,
-            enterprise,
+            OptionFlat,
+            OptionPerUser,
+            OptionEnterprise,
         ],
         Field(discriminator="type"),
     ]

@@ -13,41 +13,41 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 
 
-class fbx(BaseModel):
+class OptionFbx(BaseModel):
     """Autodesk Filmbox (FBX) format."""
 
     storage: FbxStorage
 
-    type: Literal["fbx"] = "fbx"
+    type: Literal["option_fbx"] = "option_fbx"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class gltf(BaseModel):
+class OptionGltf(BaseModel):
     """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ASCII output, you can set that option for the export."""
 
     presentation: GltfPresentation
 
     storage: GltfStorage
 
-    type: Literal["gltf"] = "gltf"
+    type: Literal["option_gltf"] = "option_gltf"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class obj(BaseModel):
+class OptionObj(BaseModel):
     """Wavefront OBJ format."""
 
     coords: System
 
-    type: Literal["obj"] = "obj"
+    type: Literal["option_obj"] = "option_obj"
 
     units: UnitLength
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ply(BaseModel):
+class OptionPly(BaseModel):
     """The PLY Polygon File Format."""
 
     coords: System
@@ -56,24 +56,24 @@ class ply(BaseModel):
 
     storage: PlyStorage
 
-    type: Literal["ply"] = "ply"
+    type: Literal["option_ply"] = "option_ply"
 
     units: UnitLength
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class step(BaseModel):
+class OptionStep(BaseModel):
     """ISO 10303-21 (STEP) format."""
 
     coords: System
 
-    type: Literal["step"] = "step"
+    type: Literal["option_step"] = "option_step"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class stl(BaseModel):
+class OptionStl(BaseModel):
     """*ST**ereo**L**ithography format."""
 
     coords: System
@@ -82,7 +82,7 @@ class stl(BaseModel):
 
     storage: StlStorage
 
-    type: Literal["stl"] = "stl"
+    type: Literal["option_stl"] = "option_stl"
 
     units: UnitLength
 
@@ -92,12 +92,12 @@ class stl(BaseModel):
 OutputFormat = RootModel[
     Annotated[
         Union[
-            fbx,
-            gltf,
-            obj,
-            ply,
-            step,
-            stl,
+            OptionFbx,
+            OptionGltf,
+            OptionObj,
+            OptionPly,
+            OptionStep,
+            OptionStl,
         ],
         Field(discriminator="type"),
     ]

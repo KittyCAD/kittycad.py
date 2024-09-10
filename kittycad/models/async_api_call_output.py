@@ -22,7 +22,7 @@ from ..models.uuid import Uuid
 from .base64data import Base64Data
 
 
-class file_conversion(BaseModel):
+class OptionFileConversion(BaseModel):
     """A file conversion."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -47,7 +47,7 @@ class file_conversion(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["file_conversion"] = "file_conversion"
+    type: Literal["option_file_conversion"] = "option_file_conversion"
 
     updated_at: datetime.datetime
 
@@ -56,7 +56,7 @@ class file_conversion(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class file_center_of_mass(BaseModel):
+class OptionFileCenterOfMass(BaseModel):
     """File center of mass."""
 
     center_of_mass: Optional[Point3d] = None
@@ -77,7 +77,7 @@ class file_center_of_mass(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["file_center_of_mass"] = "file_center_of_mass"
+    type: Literal["option_file_center_of_mass"] = "option_file_center_of_mass"
 
     updated_at: datetime.datetime
 
@@ -86,7 +86,7 @@ class file_center_of_mass(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class file_mass(BaseModel):
+class OptionFileMass(BaseModel):
     """A file mass."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -111,7 +111,7 @@ class file_mass(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["file_mass"] = "file_mass"
+    type: Literal["option_file_mass"] = "option_file_mass"
 
     updated_at: datetime.datetime
 
@@ -120,7 +120,7 @@ class file_mass(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class file_volume(BaseModel):
+class OptionFileVolume(BaseModel):
     """A file volume."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -139,7 +139,7 @@ class file_volume(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["file_volume"] = "file_volume"
+    type: Literal["option_file_volume"] = "option_file_volume"
 
     updated_at: datetime.datetime
 
@@ -150,7 +150,7 @@ class file_volume(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class file_density(BaseModel):
+class OptionFileDensity(BaseModel):
     """A file density."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -175,7 +175,7 @@ class file_density(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["file_density"] = "file_density"
+    type: Literal["option_file_density"] = "option_file_density"
 
     updated_at: datetime.datetime
 
@@ -184,7 +184,7 @@ class file_density(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class file_surface_area(BaseModel):
+class OptionFileSurfaceArea(BaseModel):
     """A file surface area."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -205,7 +205,7 @@ class file_surface_area(BaseModel):
 
     surface_area: Optional[float] = None
 
-    type: Literal["file_surface_area"] = "file_surface_area"
+    type: Literal["option_file_surface_area"] = "option_file_surface_area"
 
     updated_at: datetime.datetime
 
@@ -214,7 +214,7 @@ class file_surface_area(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class text_to_cad(BaseModel):
+class OptionTextToCad(BaseModel):
     """Text to CAD."""
 
     code: Optional[str] = None
@@ -243,7 +243,7 @@ class text_to_cad(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["text_to_cad"] = "text_to_cad"
+    type: Literal["option_text_to_cad"] = "option_text_to_cad"
 
     updated_at: datetime.datetime
 
@@ -252,7 +252,7 @@ class text_to_cad(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class text_to_cad_iteration(BaseModel):
+class OptionTextToCadIteration(BaseModel):
     """Text to CAD iteration."""
 
     code: str
@@ -281,7 +281,7 @@ class text_to_cad_iteration(BaseModel):
 
     status: ApiCallStatus
 
-    type: Literal["text_to_cad_iteration"] = "text_to_cad_iteration"
+    type: Literal["option_text_to_cad_iteration"] = "option_text_to_cad_iteration"
 
     updated_at: datetime.datetime
 
@@ -293,14 +293,14 @@ class text_to_cad_iteration(BaseModel):
 AsyncApiCallOutput = RootModel[
     Annotated[
         Union[
-            file_conversion,
-            file_center_of_mass,
-            file_mass,
-            file_volume,
-            file_density,
-            file_surface_area,
-            text_to_cad,
-            text_to_cad_iteration,
+            OptionFileConversion,
+            OptionFileCenterOfMass,
+            OptionFileMass,
+            OptionFileVolume,
+            OptionFileDensity,
+            OptionFileSurfaceArea,
+            OptionTextToCad,
+            OptionTextToCadIteration,
         ],
         Field(discriminator="type"),
     ]

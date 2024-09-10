@@ -11,39 +11,39 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 
 
-class trickle_ice(BaseModel):
+class OptionTrickleIce(BaseModel):
     """The trickle ICE candidate request."""
 
     candidate: RtcIceCandidateInit
 
-    type: Literal["trickle_ice"] = "trickle_ice"
+    type: Literal["option_trickle_ice"] = "option_trickle_ice"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sdp_offer(BaseModel):
+class OptionSdpOffer(BaseModel):
     """The SDP offer request."""
 
     offer: RtcSessionDescription
 
-    type: Literal["sdp_offer"] = "sdp_offer"
+    type: Literal["option_sdp_offer"] = "option_sdp_offer"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_cmd_req(BaseModel):
+class OptionModelingCmdReq(BaseModel):
     """The modeling command request."""
 
     cmd: ModelingCmd
 
     cmd_id: ModelingCmdId
 
-    type: Literal["modeling_cmd_req"] = "modeling_cmd_req"
+    type: Literal["option_modeling_cmd_req"] = "option_modeling_cmd_req"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_cmd_batch_req(BaseModel):
+class OptionModelingCmdBatchReq(BaseModel):
     """A sequence of modeling requests. If any request fails, following requests will not be tried."""
 
     batch_id: ModelingCmdId
@@ -52,35 +52,35 @@ class modeling_cmd_batch_req(BaseModel):
 
     responses: bool = False
 
-    type: Literal["modeling_cmd_batch_req"] = "modeling_cmd_batch_req"
+    type: Literal["option_modeling_cmd_batch_req"] = "option_modeling_cmd_batch_req"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ping(BaseModel):
+class OptionPing(BaseModel):
     """The client-to-server Ping to ensure the WebSocket stays alive."""
 
-    type: Literal["ping"] = "ping"
+    type: Literal["option_ping"] = "option_ping"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class metrics_response(BaseModel):
+class OptionMetricsResponse(BaseModel):
     """The response to a metrics collection request from the server."""
 
     metrics: ClientMetrics
 
-    type: Literal["metrics_response"] = "metrics_response"
+    type: Literal["option_metrics_response"] = "option_metrics_response"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class headers(BaseModel):
+class OptionHeaders(BaseModel):
     """Authentication header request."""
 
     headers: Dict[str, str]
 
-    type: Literal["headers"] = "headers"
+    type: Literal["option_headers"] = "option_headers"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -88,13 +88,13 @@ class headers(BaseModel):
 WebSocketRequest = RootModel[
     Annotated[
         Union[
-            trickle_ice,
-            sdp_offer,
-            modeling_cmd_req,
-            modeling_cmd_batch_req,
-            ping,
-            metrics_response,
-            headers,
+            OptionTrickleIce,
+            OptionSdpOffer,
+            OptionModelingCmdReq,
+            OptionModelingCmdBatchReq,
+            OptionPing,
+            OptionMetricsResponse,
+            OptionHeaders,
         ],
         Field(discriminator="type"),
     ]

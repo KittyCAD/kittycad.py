@@ -3,13 +3,13 @@ from typing import Union
 from pydantic import BaseModel, ConfigDict, RootModel
 
 
-class response(BaseModel):
+class Response(BaseModel):
     """Response to the modeling command."""
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class errors(BaseModel):
+class Errors(BaseModel):
     """Errors that occurred during the modeling command."""
 
     model_config = ConfigDict(protected_namespaces=())
@@ -17,7 +17,7 @@ class errors(BaseModel):
 
 BatchResponse = RootModel[
     Union[
-        response,
-        errors,
+        Response,
+        Errors,
     ]
 ]

@@ -6,20 +6,20 @@ from typing_extensions import Annotated
 from ..models.global_axis import GlobalAxis
 
 
-class euclidean(BaseModel):
+class OptionEuclidean(BaseModel):
     """Euclidean Distance."""
 
-    type: Literal["euclidean"] = "euclidean"
+    type: Literal["option_euclidean"] = "option_euclidean"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class on_axis(BaseModel):
+class OptionOnAxis(BaseModel):
     """The distance between objects along the specified axis"""
 
     axis: GlobalAxis
 
-    type: Literal["on_axis"] = "on_axis"
+    type: Literal["option_on_axis"] = "option_on_axis"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -27,8 +27,8 @@ class on_axis(BaseModel):
 DistanceType = RootModel[
     Annotated[
         Union[
-            euclidean,
-            on_axis,
+            OptionEuclidean,
+            OptionOnAxis,
         ],
         Field(discriminator="type"),
     ]

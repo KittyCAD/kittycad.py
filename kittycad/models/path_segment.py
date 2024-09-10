@@ -9,19 +9,19 @@ from ..models.point2d import Point2d
 from ..models.point3d import Point3d
 
 
-class line(BaseModel):
+class OptionLine(BaseModel):
     """A straight line segment. Goes from the current path \"pen\" to the given endpoint."""
 
     end: Point3d
 
     relative: bool
 
-    type: Literal["line"] = "line"
+    type: Literal["option_line"] = "option_line"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class arc(BaseModel):
+class OptionArc(BaseModel):
     """A circular arc segment. Arcs can be drawn clockwise when start > end."""
 
     center: Point2d
@@ -34,12 +34,12 @@ class arc(BaseModel):
 
     start: Angle
 
-    type: Literal["arc"] = "arc"
+    type: Literal["option_arc"] = "option_arc"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class bezier(BaseModel):
+class OptionBezier(BaseModel):
     """A cubic bezier curve segment. Start at the end of the current line, go through control point 1 and 2, then end at a given point."""
 
     control1: Point3d
@@ -50,31 +50,31 @@ class bezier(BaseModel):
 
     relative: bool
 
-    type: Literal["bezier"] = "bezier"
+    type: Literal["option_bezier"] = "option_bezier"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class tangential_arc(BaseModel):
+class OptionTangentialArc(BaseModel):
     """Adds a tangent arc from current pen position with the given radius and angle."""
 
     offset: Angle
 
     radius: LengthUnit
 
-    type: Literal["tangential_arc"] = "tangential_arc"
+    type: Literal["option_tangential_arc"] = "option_tangential_arc"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class tangential_arc_to(BaseModel):
+class OptionTangentialArcTo(BaseModel):
     """Adds a tangent arc from current pen position to the new position. Arcs will choose a clockwise or counter-clockwise direction based on the arc end position."""
 
     angle_snap_increment: Optional[Angle] = None
 
     to: Point3d
 
-    type: Literal["tangential_arc_to"] = "tangential_arc_to"
+    type: Literal["option_tangential_arc_to"] = "option_tangential_arc_to"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -82,11 +82,11 @@ class tangential_arc_to(BaseModel):
 PathSegment = RootModel[
     Annotated[
         Union[
-            line,
-            arc,
-            bezier,
-            tangential_arc,
-            tangential_arc_to,
+            OptionLine,
+            OptionArc,
+            OptionBezier,
+            OptionTangentialArc,
+            OptionTangentialArcTo,
         ],
         Field(discriminator="type"),
     ]

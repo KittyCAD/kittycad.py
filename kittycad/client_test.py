@@ -51,14 +51,14 @@ from .models import (
     WebSocketRequest,
     WebSocketResponse,
 )
-from .models.input_format import obj
+from .models.input_format import OptionObj
 from .models.modeling_cmd import (
-    default_camera_focus_on,
-    import_files,
-    start_path,
-    take_snapshot,
+    OptionDefaultCameraFocusOn,
+    OptionImportFiles,
+    OptionStartPath,
+    OptionTakeSnapshot,
 )
-from .models.web_socket_request import modeling_cmd_req
+from .models.web_socket_request import OptionModelingCmdReq
 from .types import Unset
 
 
@@ -367,7 +367,9 @@ def test_ws_simple():
         # Send a message.
         id = uuid.uuid4()
         req = WebSocketRequest(
-            modeling_cmd_req(cmd=ModelingCmd(start_path()), cmd_id=ModelingCmdId(id))
+            OptionModelingCmdReq(
+                cmd=ModelingCmd(OptionStartPath()), cmd_id=ModelingCmdId(id)
+            )
         )
         websocket.send(req)
 
@@ -403,12 +405,12 @@ def test_ws_import():
         ImportFile(data=content, path=file_name)
         # form the request
         req = WebSocketRequest(
-            modeling_cmd_req(
+            OptionModelingCmdReq(
                 cmd=ModelingCmd(
-                    import_files(
+                    OptionImportFiles(
                         files=[ImportFile(data=content, path=file_name)],
                         format=InputFormat(
-                            obj(
+                            OptionObj(
                                 units=UnitLength.M,
                                 coords=System(
                                     forward=AxisDirectionPair(
@@ -457,8 +459,8 @@ def test_ws_import():
         cmd_id = uuid.uuid4()
         # form the request
         req = WebSocketRequest(
-            modeling_cmd_req(
-                cmd=ModelingCmd(default_camera_focus_on(uuid=object_id)),
+            OptionModelingCmdReq(
+                cmd=ModelingCmd(OptionDefaultCameraFocusOn(uuid=object_id)),
                 cmd_id=ModelingCmdId(cmd_id),
             )
         )
@@ -482,8 +484,8 @@ def test_ws_import():
         # form the request
         # form the request
         req = WebSocketRequest(
-            modeling_cmd_req(
-                cmd=ModelingCmd(take_snapshot(format=ImageFormat.PNG)),
+            OptionModelingCmdReq(
+                cmd=ModelingCmd(OptionTakeSnapshot(format=ImageFormat.PNG)),
                 cmd_id=ModelingCmdId(cmd_id),
             )
         )

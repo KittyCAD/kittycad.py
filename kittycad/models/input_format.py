@@ -7,72 +7,72 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 
 
-class fbx(BaseModel):
+class OptionFbx(BaseModel):
     """Autodesk Filmbox (FBX) format."""
 
-    type: Literal["fbx"] = "fbx"
+    type: Literal["option_fbx"] = "option_fbx"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class gltf(BaseModel):
+class OptionGltf(BaseModel):
     """Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb)."""
 
-    type: Literal["gltf"] = "gltf"
+    type: Literal["option_gltf"] = "option_gltf"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class obj(BaseModel):
+class OptionObj(BaseModel):
     """Wavefront OBJ format."""
 
     coords: System
 
-    type: Literal["obj"] = "obj"
+    type: Literal["option_obj"] = "option_obj"
 
     units: UnitLength
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ply(BaseModel):
+class OptionPly(BaseModel):
     """The PLY Polygon File Format."""
 
     coords: System
 
-    type: Literal["ply"] = "ply"
+    type: Literal["option_ply"] = "option_ply"
 
     units: UnitLength
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sldprt(BaseModel):
+class OptionSldprt(BaseModel):
     """SolidWorks part (SLDPRT) format."""
 
     split_closed_faces: bool = False
 
-    type: Literal["sldprt"] = "sldprt"
+    type: Literal["option_sldprt"] = "option_sldprt"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class step(BaseModel):
+class OptionStep(BaseModel):
     """ISO 10303-21 (STEP) format."""
 
     split_closed_faces: bool = False
 
-    type: Literal["step"] = "step"
+    type: Literal["option_step"] = "option_step"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class stl(BaseModel):
+class OptionStl(BaseModel):
     """*ST**ereo**L**ithography format."""
 
     coords: System
 
-    type: Literal["stl"] = "stl"
+    type: Literal["option_stl"] = "option_stl"
 
     units: UnitLength
 
@@ -82,13 +82,13 @@ class stl(BaseModel):
 InputFormat = RootModel[
     Annotated[
         Union[
-            fbx,
-            gltf,
-            obj,
-            ply,
-            sldprt,
-            step,
-            stl,
+            OptionFbx,
+            OptionGltf,
+            OptionObj,
+            OptionPly,
+            OptionSldprt,
+            OptionStep,
+            OptionStl,
         ],
         Field(discriminator="type"),
     ]

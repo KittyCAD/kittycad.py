@@ -12,7 +12,7 @@ from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
 
 
-class IceServerInfoData(BaseModel):
+class OptionIceServerInfoData(BaseModel):
     """"""
 
     ice_servers: List[IceServer]
@@ -20,17 +20,17 @@ class IceServerInfoData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ice_server_info(BaseModel):
+class OptionIceServerInfo(BaseModel):
     """Information about the ICE servers."""
 
-    data: IceServerInfoData
+    data: OptionIceServerInfoData
 
-    type: Literal["ice_server_info"] = "ice_server_info"
+    type: Literal["option_ice_server_info"] = "option_ice_server_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class TrickleIceData(BaseModel):
+class OptionTrickleIceData(BaseModel):
     """"""
 
     candidate: RtcIceCandidateInit
@@ -38,17 +38,17 @@ class TrickleIceData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class trickle_ice(BaseModel):
+class OptionTrickleIce(BaseModel):
     """The trickle ICE candidate response."""
 
-    data: TrickleIceData
+    data: OptionTrickleIceData
 
-    type: Literal["trickle_ice"] = "trickle_ice"
+    type: Literal["option_trickle_ice"] = "option_trickle_ice"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class SdpAnswerData(BaseModel):
+class OptionSdpAnswerData(BaseModel):
     """"""
 
     answer: RtcSessionDescription
@@ -56,17 +56,17 @@ class SdpAnswerData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sdp_answer(BaseModel):
+class OptionSdpAnswer(BaseModel):
     """The SDP answer response."""
 
-    data: SdpAnswerData
+    data: OptionSdpAnswerData
 
-    type: Literal["sdp_answer"] = "sdp_answer"
+    type: Literal["option_sdp_answer"] = "option_sdp_answer"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ModelingData(BaseModel):
+class OptionModelingData(BaseModel):
     """"""
 
     modeling_response: OkModelingCmdResponse
@@ -74,17 +74,17 @@ class ModelingData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling(BaseModel):
+class OptionModeling(BaseModel):
     """The modeling command response."""
 
-    data: ModelingData
+    data: OptionModelingData
 
-    type: Literal["modeling"] = "modeling"
+    type: Literal["option_modeling"] = "option_modeling"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ModelingBatchData(BaseModel):
+class OptionModelingBatchData(BaseModel):
     """"""
 
     responses: Dict[str, BatchResponse]
@@ -92,17 +92,17 @@ class ModelingBatchData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_batch(BaseModel):
+class OptionModelingBatch(BaseModel):
     """Response to a ModelingBatch."""
 
-    data: ModelingBatchData
+    data: OptionModelingBatchData
 
-    type: Literal["modeling_batch"] = "modeling_batch"
+    type: Literal["option_modeling_batch"] = "option_modeling_batch"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ExportData(BaseModel):
+class OptionExportData(BaseModel):
     """"""
 
     files: List[RawFile]
@@ -110,33 +110,33 @@ class ExportData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class export(BaseModel):
+class OptionExport(BaseModel):
     """The exported files."""
 
-    data: ExportData
+    data: OptionExportData
 
-    type: Literal["export"] = "export"
+    type: Literal["option_export"] = "option_export"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class MetricsRequestData(BaseModel):
+class OptionMetricsRequestData(BaseModel):
     """"""
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class metrics_request(BaseModel):
+class OptionMetricsRequest(BaseModel):
     """Request a collection of metrics, to include WebRTC."""
 
-    data: MetricsRequestData
+    data: OptionMetricsRequestData
 
-    type: Literal["metrics_request"] = "metrics_request"
+    type: Literal["option_metrics_request"] = "option_metrics_request"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ModelingSessionDataData(BaseModel):
+class OptionModelingSessionDataData(BaseModel):
     """"""
 
     session: ModelingSessionData
@@ -144,28 +144,28 @@ class ModelingSessionDataData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_session_data(BaseModel):
+class OptionModelingSessionData(BaseModel):
     """Data about the Modeling Session (application-level)."""
 
-    data: ModelingSessionDataData
+    data: OptionModelingSessionDataData
 
-    type: Literal["modeling_session_data"] = "modeling_session_data"
+    type: Literal["option_modeling_session_data"] = "option_modeling_session_data"
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class PongData(BaseModel):
+class OptionPongData(BaseModel):
     """"""
 
     model_config = ConfigDict(protected_namespaces=())
 
 
-class pong(BaseModel):
+class OptionPong(BaseModel):
     """Pong response to a Ping message."""
 
-    data: PongData
+    data: OptionPongData
 
-    type: Literal["pong"] = "pong"
+    type: Literal["option_pong"] = "option_pong"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -173,15 +173,15 @@ class pong(BaseModel):
 OkWebSocketResponseData = RootModel[
     Annotated[
         Union[
-            ice_server_info,
-            trickle_ice,
-            sdp_answer,
-            modeling,
-            modeling_batch,
-            export,
-            metrics_request,
-            modeling_session_data,
-            pong,
+            OptionIceServerInfo,
+            OptionTrickleIce,
+            OptionSdpAnswer,
+            OptionModeling,
+            OptionModelingBatch,
+            OptionExport,
+            OptionMetricsRequest,
+            OptionModelingSessionData,
+            OptionPong,
         ],
         Field(discriminator="type"),
     ]
