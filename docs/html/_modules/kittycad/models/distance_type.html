@@ -89,9 +89,9 @@
 <span class="kn">from</span> <span class="nn">..models.global_axis</span> <span class="kn">import</span> <span class="n">GlobalAxis</span>
 
 
-<div class="viewcode-block" id="euclidean">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.distance_type.euclidean.html#kittycad.models.distance_type.euclidean">[docs]</a>
-<span class="k">class</span> <span class="nc">euclidean</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEuclidean">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.distance_type.OptionEuclidean.html#kittycad.models.distance_type.OptionEuclidean">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEuclidean</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Euclidean Distance.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euclidean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
@@ -100,9 +100,9 @@
 
 
 
-<div class="viewcode-block" id="on_axis">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.distance_type.on_axis.html#kittycad.models.distance_type.on_axis">[docs]</a>
-<span class="k">class</span> <span class="nc">on_axis</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionOnAxis">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.distance_type.OptionOnAxis.html#kittycad.models.distance_type.OptionOnAxis">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionOnAxis</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The distance between objects along the specified axis&quot;&quot;&quot;</span>
 
     <span class="n">axis</span><span class="p">:</span> <span class="n">GlobalAxis</span>
@@ -116,8 +116,8 @@
 <span class="n">DistanceType</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">euclidean</span><span class="p">,</span>
-            <span class="n">on_axis</span><span class="p">,</span>
+            <span class="n">OptionEuclidean</span><span class="p">,</span>
+            <span class="n">OptionOnAxis</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>

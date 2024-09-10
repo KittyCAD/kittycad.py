@@ -81,9 +81,9 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.zoo_product_subscription</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">RootModel</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
 <span class="kn">from</span> <span class="nn">..models.modeling_app_subscription_tier_name</span> <span class="kn">import</span> <span class="n">ModelingAppSubscriptionTierName</span>
 <span class="kn">from</span> <span class="nn">..models.subscription_tier_feature</span> <span class="kn">import</span> <span class="n">SubscriptionTierFeature</span>
@@ -96,9 +96,9 @@
 <span class="kn">from</span> <span class="nn">..models.zoo_tool</span> <span class="kn">import</span> <span class="n">ZooTool</span>
 
 
-<div class="viewcode-block" id="ZooProductSubscription0">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.zoo_product_subscription.ZooProductSubscription0.html#kittycad.models.zoo_product_subscription.ZooProductSubscription0">[docs]</a>
-<span class="k">class</span> <span class="nc">ZooProductSubscription0</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ZooProductSubscription">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.zoo_product_subscription.ZooProductSubscription.html#kittycad.models.zoo_product_subscription.ZooProductSubscription">[docs]</a>
+<span class="k">class</span> <span class="nc">ZooProductSubscription</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A subscription to the modeling app.&quot;&quot;&quot;</span>
 
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
@@ -121,9 +121,6 @@
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
-
-
-<span class="n">ZooProductSubscription</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ZooProductSubscription0</span><span class="p">,]]</span>
 </pre></div>
 
            </div>

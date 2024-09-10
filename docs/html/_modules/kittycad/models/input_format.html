@@ -90,9 +90,9 @@
 <span class="kn">from</span> <span class="nn">..models.unit_length</span> <span class="kn">import</span> <span class="n">UnitLength</span>
 
 
-<div class="viewcode-block" id="fbx">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.fbx.html#kittycad.models.input_format.fbx">[docs]</a>
-<span class="k">class</span> <span class="nc">fbx</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionFbx">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.OptionFbx.html#kittycad.models.input_format.OptionFbx">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionFbx</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Autodesk Filmbox (FBX) format.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;fbx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fbx&quot;</span>
@@ -101,9 +101,9 @@
 
 
 
-<div class="viewcode-block" id="gltf">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.gltf.html#kittycad.models.input_format.gltf">[docs]</a>
-<span class="k">class</span> <span class="nc">gltf</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionGltf">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.OptionGltf.html#kittycad.models.input_format.OptionGltf">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionGltf</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb).&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;gltf&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;gltf&quot;</span>
@@ -112,9 +112,9 @@
 
 
 
-<div class="viewcode-block" id="obj">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.obj.html#kittycad.models.input_format.obj">[docs]</a>
-<span class="k">class</span> <span class="nc">obj</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionObj">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.OptionObj.html#kittycad.models.input_format.OptionObj">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionObj</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Wavefront OBJ format.&quot;&quot;&quot;</span>
 
     <span class="n">coords</span><span class="p">:</span> <span class="n">System</span>
@@ -127,9 +127,9 @@
 
 
 
-<div class="viewcode-block" id="ply">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.ply.html#kittycad.models.input_format.ply">[docs]</a>
-<span class="k">class</span> <span class="nc">ply</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPly">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.OptionPly.html#kittycad.models.input_format.OptionPly">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPly</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The PLY Polygon File Format.&quot;&quot;&quot;</span>
 
     <span class="n">coords</span><span class="p">:</span> <span class="n">System</span>
@@ -142,9 +142,9 @@
 
 
 
-<div class="viewcode-block" id="sldprt">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.sldprt.html#kittycad.models.input_format.sldprt">[docs]</a>
-<span class="k">class</span> <span class="nc">sldprt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSldprt">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.OptionSldprt.html#kittycad.models.input_format.OptionSldprt">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSldprt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;SolidWorks part (SLDPRT) format.&quot;&quot;&quot;</span>
 
     <span class="n">split_closed_faces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
@@ -155,9 +155,9 @@
 
 
 
-<div class="viewcode-block" id="step">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.step.html#kittycad.models.input_format.step">[docs]</a>
-<span class="k">class</span> <span class="nc">step</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionStep">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.OptionStep.html#kittycad.models.input_format.OptionStep">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionStep</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;ISO 10303-21 (STEP) format.&quot;&quot;&quot;</span>
 
     <span class="n">split_closed_faces</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
@@ -168,9 +168,9 @@
 
 
 
-<div class="viewcode-block" id="stl">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.stl.html#kittycad.models.input_format.stl">[docs]</a>
-<span class="k">class</span> <span class="nc">stl</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionStl">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.input_format.OptionStl.html#kittycad.models.input_format.OptionStl">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionStl</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;*ST**ereo**L**ithography format.&quot;&quot;&quot;</span>
 
     <span class="n">coords</span><span class="p">:</span> <span class="n">System</span>
@@ -186,13 +186,13 @@
 <span class="n">InputFormat</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">fbx</span><span class="p">,</span>
-            <span class="n">gltf</span><span class="p">,</span>
-            <span class="n">obj</span><span class="p">,</span>
-            <span class="n">ply</span><span class="p">,</span>
-            <span class="n">sldprt</span><span class="p">,</span>
-            <span class="n">step</span><span class="p">,</span>
-            <span class="n">stl</span><span class="p">,</span>
+            <span class="n">OptionFbx</span><span class="p">,</span>
+            <span class="n">OptionGltf</span><span class="p">,</span>
+            <span class="n">OptionObj</span><span class="p">,</span>
+            <span class="n">OptionPly</span><span class="p">,</span>
+            <span class="n">OptionSldprt</span><span class="p">,</span>
+            <span class="n">OptionStep</span><span class="p">,</span>
+            <span class="n">OptionStl</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>

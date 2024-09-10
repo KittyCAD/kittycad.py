@@ -87,9 +87,9 @@
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
 
 
-<div class="viewcode-block" id="default_scene">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.default_scene.html#kittycad.models.selection.default_scene">[docs]</a>
-<span class="k">class</span> <span class="nc">default_scene</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultScene">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.OptionDefaultScene.html#kittycad.models.selection.OptionDefaultScene">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultScene</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Visit the default scene.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_scene&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_scene&quot;</span>
@@ -98,9 +98,9 @@
 
 
 
-<div class="viewcode-block" id="scene_by_index">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.scene_by_index.html#kittycad.models.selection.scene_by_index">[docs]</a>
-<span class="k">class</span> <span class="nc">scene_by_index</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSceneByIndex">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.OptionSceneByIndex.html#kittycad.models.selection.OptionSceneByIndex">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSceneByIndex</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Visit the indexed scene.&quot;&quot;&quot;</span>
 
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
@@ -111,9 +111,9 @@
 
 
 
-<div class="viewcode-block" id="scene_by_name">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.scene_by_name.html#kittycad.models.selection.scene_by_name">[docs]</a>
-<span class="k">class</span> <span class="nc">scene_by_name</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSceneByName">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.OptionSceneByName.html#kittycad.models.selection.OptionSceneByName">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSceneByName</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Visit the first scene with the given name.&quot;&quot;&quot;</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -124,9 +124,9 @@
 
 
 
-<div class="viewcode-block" id="mesh_by_index">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.mesh_by_index.html#kittycad.models.selection.mesh_by_index">[docs]</a>
-<span class="k">class</span> <span class="nc">mesh_by_index</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMeshByIndex">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.OptionMeshByIndex.html#kittycad.models.selection.OptionMeshByIndex">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMeshByIndex</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Visit the indexed mesh.&quot;&quot;&quot;</span>
 
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
@@ -137,9 +137,9 @@
 
 
 
-<div class="viewcode-block" id="mesh_by_name">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.mesh_by_name.html#kittycad.models.selection.mesh_by_name">[docs]</a>
-<span class="k">class</span> <span class="nc">mesh_by_name</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMeshByName">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.selection.OptionMeshByName.html#kittycad.models.selection.OptionMeshByName">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMeshByName</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Visit the first mesh with the given name.&quot;&quot;&quot;</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -153,11 +153,11 @@
 <span class="n">Selection</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">default_scene</span><span class="p">,</span>
-            <span class="n">scene_by_index</span><span class="p">,</span>
-            <span class="n">scene_by_name</span><span class="p">,</span>
-            <span class="n">mesh_by_index</span><span class="p">,</span>
-            <span class="n">mesh_by_name</span><span class="p">,</span>
+            <span class="n">OptionDefaultScene</span><span class="p">,</span>
+            <span class="n">OptionSceneByIndex</span><span class="p">,</span>
+            <span class="n">OptionSceneByName</span><span class="p">,</span>
+            <span class="n">OptionMeshByIndex</span><span class="p">,</span>
+            <span class="n">OptionMeshByName</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>

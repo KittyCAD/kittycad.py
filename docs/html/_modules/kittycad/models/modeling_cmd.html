@@ -116,9 +116,9 @@
 <span class="kn">from</span> <span class="nn">..models.unit_volume</span> <span class="kn">import</span> <span class="n">UnitVolume</span>
 
 
-<div class="viewcode-block" id="start_path">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.start_path.html#kittycad.models.modeling_cmd.start_path">[docs]</a>
-<span class="k">class</span> <span class="nc">start_path</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionStartPath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionStartPath.html#kittycad.models.modeling_cmd.OptionStartPath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionStartPath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Start a new path.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;start_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;start_path&quot;</span>
@@ -127,9 +127,9 @@
 
 
 
-<div class="viewcode-block" id="move_path_pen">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.move_path_pen.html#kittycad.models.modeling_cmd.move_path_pen">[docs]</a>
-<span class="k">class</span> <span class="nc">move_path_pen</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMovePathPen">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMovePathPen.html#kittycad.models.modeling_cmd.OptionMovePathPen">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMovePathPen</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Move the path&#39;s \&quot;pen\&quot;. If you&#39;re in sketch mode, these coordinates are in the local coordinate system, not the world&#39;s coordinate system. For example, say you&#39;re sketching on the plane {x: (1,0,0), y: (0,1,0), origin: (0, 0, 50)}. In other words, the plane 50 units above the default XY plane. Then, moving the pen to (1, 1, 0) with this command uses local coordinates. So, it would move the pen to (1, 1, 50) in global coordinates.&quot;&quot;&quot;</span>
 
     <span class="n">path</span><span class="p">:</span> <span class="n">ModelingCmdId</span>
@@ -142,9 +142,9 @@
 
 
 
-<div class="viewcode-block" id="extend_path">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.extend_path.html#kittycad.models.modeling_cmd.extend_path">[docs]</a>
-<span class="k">class</span> <span class="nc">extend_path</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionExtendPath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionExtendPath.html#kittycad.models.modeling_cmd.OptionExtendPath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionExtendPath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extend a path by adding a new segment which starts at the path&#39;s \&quot;pen\&quot;. If no \&quot;pen\&quot; location has been set before (via `MovePen`), then the pen is at the origin.&quot;&quot;&quot;</span>
 
     <span class="n">path</span><span class="p">:</span> <span class="n">ModelingCmdId</span>
@@ -157,9 +157,9 @@
 
 
 
-<div class="viewcode-block" id="extrude">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.extrude.html#kittycad.models.modeling_cmd.extrude">[docs]</a>
-<span class="k">class</span> <span class="nc">extrude</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionExtrude">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionExtrude.html#kittycad.models.modeling_cmd.OptionExtrude">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionExtrude</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for extruding a solid 2d.&quot;&quot;&quot;</span>
 
     <span class="n">distance</span><span class="p">:</span> <span class="n">LengthUnit</span>
@@ -172,9 +172,9 @@
 
 
 
-<div class="viewcode-block" id="revolve">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.revolve.html#kittycad.models.modeling_cmd.revolve">[docs]</a>
-<span class="k">class</span> <span class="nc">revolve</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionRevolve">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionRevolve.html#kittycad.models.modeling_cmd.OptionRevolve">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionRevolve</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for revolving a solid 2d.&quot;&quot;&quot;</span>
 
     <span class="n">angle</span><span class="p">:</span> <span class="n">Angle</span>
@@ -195,9 +195,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_shell_face">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_shell_face.html#kittycad.models.modeling_cmd.solid3d_shell_face">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_shell_face</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DShellFace">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DShellFace.html#kittycad.models.modeling_cmd.OptionSolid3DShellFace">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DShellFace</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for shelling a solid3d face&quot;&quot;&quot;</span>
 
     <span class="n">face_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -214,9 +214,9 @@
 
 
 
-<div class="viewcode-block" id="revolve_about_edge">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.revolve_about_edge.html#kittycad.models.modeling_cmd.revolve_about_edge">[docs]</a>
-<span class="k">class</span> <span class="nc">revolve_about_edge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionRevolveAboutEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionRevolveAboutEdge.html#kittycad.models.modeling_cmd.OptionRevolveAboutEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionRevolveAboutEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for revolving a solid 2d about a brep edge&quot;&quot;&quot;</span>
 
     <span class="n">angle</span><span class="p">:</span> <span class="n">Angle</span>
@@ -233,9 +233,9 @@
 
 
 
-<div class="viewcode-block" id="loft">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.loft.html#kittycad.models.modeling_cmd.loft">[docs]</a>
-<span class="k">class</span> <span class="nc">loft</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionLoft">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionLoft.html#kittycad.models.modeling_cmd.OptionLoft">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionLoft</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for lofting sections to create a solid&quot;&quot;&quot;</span>
 
     <span class="n">base_curve_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -254,9 +254,9 @@
 
 
 
-<div class="viewcode-block" id="close_path">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.close_path.html#kittycad.models.modeling_cmd.close_path">[docs]</a>
-<span class="k">class</span> <span class="nc">close_path</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionClosePath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionClosePath.html#kittycad.models.modeling_cmd.OptionClosePath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionClosePath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Closes a path, converting it to a 2D solid.&quot;&quot;&quot;</span>
 
     <span class="n">path_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -267,9 +267,9 @@
 
 
 
-<div class="viewcode-block" id="camera_drag_start">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.camera_drag_start.html#kittycad.models.modeling_cmd.camera_drag_start">[docs]</a>
-<span class="k">class</span> <span class="nc">camera_drag_start</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCameraDragStart">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCameraDragStart.html#kittycad.models.modeling_cmd.OptionCameraDragStart">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCameraDragStart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Camera drag started.&quot;&quot;&quot;</span>
 
     <span class="n">interaction</span><span class="p">:</span> <span class="n">CameraDragInteractionType</span>
@@ -282,9 +282,9 @@
 
 
 
-<div class="viewcode-block" id="camera_drag_move">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.camera_drag_move.html#kittycad.models.modeling_cmd.camera_drag_move">[docs]</a>
-<span class="k">class</span> <span class="nc">camera_drag_move</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCameraDragMove">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCameraDragMove.html#kittycad.models.modeling_cmd.OptionCameraDragMove">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCameraDragMove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Camera drag continued.&quot;&quot;&quot;</span>
 
     <span class="n">interaction</span><span class="p">:</span> <span class="n">CameraDragInteractionType</span>
@@ -299,9 +299,9 @@
 
 
 
-<div class="viewcode-block" id="camera_drag_end">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.camera_drag_end.html#kittycad.models.modeling_cmd.camera_drag_end">[docs]</a>
-<span class="k">class</span> <span class="nc">camera_drag_end</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCameraDragEnd">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCameraDragEnd.html#kittycad.models.modeling_cmd.OptionCameraDragEnd">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCameraDragEnd</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Camera drag ended&quot;&quot;&quot;</span>
 
     <span class="n">interaction</span><span class="p">:</span> <span class="n">CameraDragInteractionType</span>
@@ -314,9 +314,9 @@
 
 
 
-<div class="viewcode-block" id="default_camera_get_settings">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.default_camera_get_settings.html#kittycad.models.modeling_cmd.default_camera_get_settings">[docs]</a>
-<span class="k">class</span> <span class="nc">default_camera_get_settings</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraGetSettings">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraGetSettings.html#kittycad.models.modeling_cmd.OptionDefaultCameraGetSettings">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraGetSettings</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets the default camera&#39;s camera settings&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_get_settings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_get_settings&quot;</span>
@@ -325,9 +325,9 @@
 
 
 
-<div class="viewcode-block" id="default_camera_look_at">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.default_camera_look_at.html#kittycad.models.modeling_cmd.default_camera_look_at">[docs]</a>
-<span class="k">class</span> <span class="nc">default_camera_look_at</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraLookAt">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraLookAt.html#kittycad.models.modeling_cmd.OptionDefaultCameraLookAt">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraLookAt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Change what the default camera is looking at.&quot;&quot;&quot;</span>
 
     <span class="n">center</span><span class="p">:</span> <span class="n">Point3d</span>
@@ -344,9 +344,9 @@
 
 
 
-<div class="viewcode-block" id="default_camera_perspective_settings">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.default_camera_perspective_settings.html#kittycad.models.modeling_cmd.default_camera_perspective_settings">[docs]</a>
-<span class="k">class</span> <span class="nc">default_camera_perspective_settings</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraPerspectiveSettings">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraPerspectiveSettings.html#kittycad.models.modeling_cmd.OptionDefaultCameraPerspectiveSettings">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraPerspectiveSettings</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Change what the default camera is looking at.&quot;&quot;&quot;</span>
 
     <span class="n">center</span><span class="p">:</span> <span class="n">Point3d</span>
@@ -371,9 +371,9 @@
 
 
 
-<div class="viewcode-block" id="default_camera_zoom">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.default_camera_zoom.html#kittycad.models.modeling_cmd.default_camera_zoom">[docs]</a>
-<span class="k">class</span> <span class="nc">default_camera_zoom</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraZoom">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraZoom.html#kittycad.models.modeling_cmd.OptionDefaultCameraZoom">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraZoom</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Adjust zoom of the default camera.&quot;&quot;&quot;</span>
 
     <span class="n">magnitude</span><span class="p">:</span> <span class="nb">float</span>
@@ -384,9 +384,9 @@
 
 
 
-<div class="viewcode-block" id="export">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.export.html#kittycad.models.modeling_cmd.export">[docs]</a>
-<span class="k">class</span> <span class="nc">export</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionExport">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionExport.html#kittycad.models.modeling_cmd.OptionExport">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionExport</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Export the scene to a file.&quot;&quot;&quot;</span>
 
     <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -399,9 +399,9 @@
 
 
 
-<div class="viewcode-block" id="entity_get_parent_id">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_get_parent_id.html#kittycad.models.modeling_cmd.entity_get_parent_id">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_get_parent_id</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityGetParentId">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityGetParentId.html#kittycad.models.modeling_cmd.OptionEntityGetParentId">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityGetParentId</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;What is this entity&#39;s parent?&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -412,9 +412,9 @@
 
 
 
-<div class="viewcode-block" id="entity_get_num_children">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_get_num_children.html#kittycad.models.modeling_cmd.entity_get_num_children">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_get_num_children</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityGetNumChildren">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityGetNumChildren.html#kittycad.models.modeling_cmd.OptionEntityGetNumChildren">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityGetNumChildren</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;How many children does the entity have?&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -425,9 +425,9 @@
 
 
 
-<div class="viewcode-block" id="entity_get_child_uuid">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_get_child_uuid.html#kittycad.models.modeling_cmd.entity_get_child_uuid">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_get_child_uuid</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityGetChildUuid">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityGetChildUuid.html#kittycad.models.modeling_cmd.OptionEntityGetChildUuid">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityGetChildUuid</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;What is the UUID of this entity&#39;s n-th child?&quot;&quot;&quot;</span>
 
     <span class="n">child_index</span><span class="p">:</span> <span class="nb">int</span>
@@ -440,9 +440,9 @@
 
 
 
-<div class="viewcode-block" id="entity_get_all_child_uuids">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_get_all_child_uuids.html#kittycad.models.modeling_cmd.entity_get_all_child_uuids">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_get_all_child_uuids</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityGetAllChildUuids">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityGetAllChildUuids.html#kittycad.models.modeling_cmd.OptionEntityGetAllChildUuids">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityGetAllChildUuids</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;What are all UUIDs of this entity&#39;s children?&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -453,9 +453,9 @@
 
 
 
-<div class="viewcode-block" id="entity_get_sketch_paths">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_get_sketch_paths.html#kittycad.models.modeling_cmd.entity_get_sketch_paths">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_get_sketch_paths</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityGetSketchPaths">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityGetSketchPaths.html#kittycad.models.modeling_cmd.OptionEntityGetSketchPaths">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityGetSketchPaths</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;What are all UUIDs of all the paths sketched on top of this entity?&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -466,9 +466,9 @@
 
 
 
-<div class="viewcode-block" id="entity_get_distance">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_get_distance.html#kittycad.models.modeling_cmd.entity_get_distance">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_get_distance</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityGetDistance">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityGetDistance.html#kittycad.models.modeling_cmd.OptionEntityGetDistance">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityGetDistance</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;What is the distance between these two entities?&quot;&quot;&quot;</span>
 
     <span class="n">distance_type</span><span class="p">:</span> <span class="n">DistanceType</span>
@@ -483,9 +483,9 @@
 
 
 
-<div class="viewcode-block" id="entity_linear_pattern_transform">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_linear_pattern_transform.html#kittycad.models.modeling_cmd.entity_linear_pattern_transform">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_linear_pattern_transform</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityLinearPatternTransform">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityLinearPatternTransform.html#kittycad.models.modeling_cmd.OptionEntityLinearPatternTransform">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityLinearPatternTransform</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate.&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -498,9 +498,9 @@
 
 
 
-<div class="viewcode-block" id="entity_linear_pattern">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_linear_pattern.html#kittycad.models.modeling_cmd.entity_linear_pattern">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_linear_pattern</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityLinearPattern">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityLinearPattern.html#kittycad.models.modeling_cmd.OptionEntityLinearPattern">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityLinearPattern</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a linear pattern using this entity.&quot;&quot;&quot;</span>
 
     <span class="n">axis</span><span class="p">:</span> <span class="n">Point3d</span>
@@ -517,9 +517,9 @@
 
 
 
-<div class="viewcode-block" id="entity_circular_pattern">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_circular_pattern.html#kittycad.models.modeling_cmd.entity_circular_pattern">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_circular_pattern</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityCircularPattern">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityCircularPattern.html#kittycad.models.modeling_cmd.OptionEntityCircularPattern">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityCircularPattern</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a circular pattern using this entity.&quot;&quot;&quot;</span>
 
     <span class="n">arc_degrees</span><span class="p">:</span> <span class="nb">float</span>
@@ -540,9 +540,9 @@
 
 
 
-<div class="viewcode-block" id="entity_make_helix">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_make_helix.html#kittycad.models.modeling_cmd.entity_make_helix">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_make_helix</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityMakeHelix">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityMakeHelix.html#kittycad.models.modeling_cmd.OptionEntityMakeHelix">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMakeHelix</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a helix using the input cylinder and other specified parameters.&quot;&quot;&quot;</span>
 
     <span class="n">cylinder_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -561,9 +561,9 @@
 
 
 
-<div class="viewcode-block" id="entity_mirror">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_mirror.html#kittycad.models.modeling_cmd.entity_mirror">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_mirror</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityMirror">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityMirror.html#kittycad.models.modeling_cmd.OptionEntityMirror">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMirror</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mirror the input entities over the specified axis. (Currently only supports sketches)&quot;&quot;&quot;</span>
 
     <span class="n">axis</span><span class="p">:</span> <span class="n">Point3d</span>
@@ -578,9 +578,9 @@
 
 
 
-<div class="viewcode-block" id="entity_mirror_across_edge">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_mirror_across_edge.html#kittycad.models.modeling_cmd.entity_mirror_across_edge">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_mirror_across_edge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityMirrorAcrossEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityMirrorAcrossEdge.html#kittycad.models.modeling_cmd.OptionEntityMirrorAcrossEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMirrorAcrossEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mirror the input entities over the specified edge. (Currently only supports sketches)&quot;&quot;&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -593,9 +593,9 @@
 
 
 
-<div class="viewcode-block" id="edit_mode_enter">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.edit_mode_enter.html#kittycad.models.modeling_cmd.edit_mode_enter">[docs]</a>
-<span class="k">class</span> <span class="nc">edit_mode_enter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEditModeEnter">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEditModeEnter.html#kittycad.models.modeling_cmd.OptionEditModeEnter">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEditModeEnter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Enter edit mode&quot;&quot;&quot;</span>
 
     <span class="n">target</span><span class="p">:</span> <span class="nb">str</span>
@@ -606,9 +606,9 @@
 
 
 
-<div class="viewcode-block" id="select_with_point">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.select_with_point.html#kittycad.models.modeling_cmd.select_with_point">[docs]</a>
-<span class="k">class</span> <span class="nc">select_with_point</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSelectWithPoint">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSelectWithPoint.html#kittycad.models.modeling_cmd.OptionSelectWithPoint">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectWithPoint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Modifies the selection by simulating a \&quot;mouse click\&quot; at the given x,y window coordinate Returns ID of whatever was selected.&quot;&quot;&quot;</span>
 
     <span class="n">selected_at_window</span><span class="p">:</span> <span class="n">Point2d</span>
@@ -621,9 +621,9 @@
 
 
 
-<div class="viewcode-block" id="select_add">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.select_add.html#kittycad.models.modeling_cmd.select_add">[docs]</a>
-<span class="k">class</span> <span class="nc">select_add</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSelectAdd">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSelectAdd.html#kittycad.models.modeling_cmd.OptionSelectAdd">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectAdd</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds one or more entities (by UUID) to the selection.&quot;&quot;&quot;</span>
 
     <span class="n">entities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -634,9 +634,9 @@
 
 
 
-<div class="viewcode-block" id="select_remove">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.select_remove.html#kittycad.models.modeling_cmd.select_remove">[docs]</a>
-<span class="k">class</span> <span class="nc">select_remove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSelectRemove">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSelectRemove.html#kittycad.models.modeling_cmd.OptionSelectRemove">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectRemove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Removes one or more entities (by UUID) from the selection.&quot;&quot;&quot;</span>
 
     <span class="n">entities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -647,9 +647,9 @@
 
 
 
-<div class="viewcode-block" id="scene_clear_all">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.scene_clear_all.html#kittycad.models.modeling_cmd.scene_clear_all">[docs]</a>
-<span class="k">class</span> <span class="nc">scene_clear_all</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSceneClearAll">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSceneClearAll.html#kittycad.models.modeling_cmd.OptionSceneClearAll">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSceneClearAll</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Removes all of the Objects in the scene&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;scene_clear_all&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;scene_clear_all&quot;</span>
@@ -658,9 +658,9 @@
 
 
 
-<div class="viewcode-block" id="select_replace">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.select_replace.html#kittycad.models.modeling_cmd.select_replace">[docs]</a>
-<span class="k">class</span> <span class="nc">select_replace</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSelectReplace">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSelectReplace.html#kittycad.models.modeling_cmd.OptionSelectReplace">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectReplace</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Replaces current selection with these entities (by UUID).&quot;&quot;&quot;</span>
 
     <span class="n">entities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -671,9 +671,9 @@
 
 
 
-<div class="viewcode-block" id="highlight_set_entity">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.highlight_set_entity.html#kittycad.models.modeling_cmd.highlight_set_entity">[docs]</a>
-<span class="k">class</span> <span class="nc">highlight_set_entity</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionHighlightSetEntity">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionHighlightSetEntity.html#kittycad.models.modeling_cmd.OptionHighlightSetEntity">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHighlightSetEntity</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Changes the current highlighted entity to whichever one is at the given window coordinate. If there&#39;s no entity at this location, clears the highlight.&quot;&quot;&quot;</span>
 
     <span class="n">selected_at_window</span><span class="p">:</span> <span class="n">Point2d</span>
@@ -686,9 +686,9 @@
 
 
 
-<div class="viewcode-block" id="highlight_set_entities">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.highlight_set_entities.html#kittycad.models.modeling_cmd.highlight_set_entities">[docs]</a>
-<span class="k">class</span> <span class="nc">highlight_set_entities</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionHighlightSetEntities">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionHighlightSetEntities.html#kittycad.models.modeling_cmd.OptionHighlightSetEntities">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHighlightSetEntities</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Changes the current highlighted entity to these entities.&quot;&quot;&quot;</span>
 
     <span class="n">entities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -699,9 +699,9 @@
 
 
 
-<div class="viewcode-block" id="new_annotation">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.new_annotation.html#kittycad.models.modeling_cmd.new_annotation">[docs]</a>
-<span class="k">class</span> <span class="nc">new_annotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionNewAnnotation">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionNewAnnotation.html#kittycad.models.modeling_cmd.OptionNewAnnotation">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionNewAnnotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a new annotation&quot;&quot;&quot;</span>
 
     <span class="n">annotation_type</span><span class="p">:</span> <span class="n">AnnotationType</span>
@@ -716,9 +716,9 @@
 
 
 
-<div class="viewcode-block" id="update_annotation">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.update_annotation.html#kittycad.models.modeling_cmd.update_annotation">[docs]</a>
-<span class="k">class</span> <span class="nc">update_annotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionUpdateAnnotation">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionUpdateAnnotation.html#kittycad.models.modeling_cmd.OptionUpdateAnnotation">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionUpdateAnnotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update an annotation&quot;&quot;&quot;</span>
 
     <span class="n">annotation_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -731,9 +731,9 @@
 
 
 
-<div class="viewcode-block" id="edge_lines_visible">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.edge_lines_visible.html#kittycad.models.modeling_cmd.edge_lines_visible">[docs]</a>
-<span class="k">class</span> <span class="nc">edge_lines_visible</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEdgeLinesVisible">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEdgeLinesVisible.html#kittycad.models.modeling_cmd.OptionEdgeLinesVisible">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEdgeLinesVisible</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Changes visibility of scene-wide edge lines on brep solids&quot;&quot;&quot;</span>
 
     <span class="n">hidden</span><span class="p">:</span> <span class="nb">bool</span>
@@ -744,9 +744,9 @@
 
 
 
-<div class="viewcode-block" id="object_visible">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.object_visible.html#kittycad.models.modeling_cmd.object_visible">[docs]</a>
-<span class="k">class</span> <span class="nc">object_visible</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionObjectVisible">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionObjectVisible.html#kittycad.models.modeling_cmd.OptionObjectVisible">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionObjectVisible</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Hide or show an object&quot;&quot;&quot;</span>
 
     <span class="n">hidden</span><span class="p">:</span> <span class="nb">bool</span>
@@ -759,9 +759,9 @@
 
 
 
-<div class="viewcode-block" id="object_bring_to_front">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.object_bring_to_front.html#kittycad.models.modeling_cmd.object_bring_to_front">[docs]</a>
-<span class="k">class</span> <span class="nc">object_bring_to_front</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionObjectBringToFront">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionObjectBringToFront.html#kittycad.models.modeling_cmd.OptionObjectBringToFront">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionObjectBringToFront</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Bring an object to the front of the scene&quot;&quot;&quot;</span>
 
     <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -772,9 +772,9 @@
 
 
 
-<div class="viewcode-block" id="object_set_material_params_pbr">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.object_set_material_params_pbr.html#kittycad.models.modeling_cmd.object_set_material_params_pbr">[docs]</a>
-<span class="k">class</span> <span class="nc">object_set_material_params_pbr</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionObjectSetMaterialParamsPbr">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionObjectSetMaterialParamsPbr.html#kittycad.models.modeling_cmd.OptionObjectSetMaterialParamsPbr">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionObjectSetMaterialParamsPbr</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the material properties of an object&quot;&quot;&quot;</span>
 
     <span class="n">ambient_occlusion</span><span class="p">:</span> <span class="nb">float</span>
@@ -793,9 +793,9 @@
 
 
 
-<div class="viewcode-block" id="get_entity_type">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.get_entity_type.html#kittycad.models.modeling_cmd.get_entity_type">[docs]</a>
-<span class="k">class</span> <span class="nc">get_entity_type</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionGetEntityType">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionGetEntityType.html#kittycad.models.modeling_cmd.OptionGetEntityType">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionGetEntityType</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;What type of entity is this?&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -806,9 +806,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_get_all_edge_faces">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_get_all_edge_faces.html#kittycad.models.modeling_cmd.solid3d_get_all_edge_faces">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_get_all_edge_faces</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DGetAllEdgeFaces">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DGetAllEdgeFaces.html#kittycad.models.modeling_cmd.OptionSolid3DGetAllEdgeFaces">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DGetAllEdgeFaces</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets all faces which use the given edge.&quot;&quot;&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -821,9 +821,9 @@
 
 
 
-<div class="viewcode-block" id="solid2d_add_hole">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid2d_add_hole.html#kittycad.models.modeling_cmd.solid2d_add_hole">[docs]</a>
-<span class="k">class</span> <span class="nc">solid2d_add_hole</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid2DAddHole">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid2DAddHole.html#kittycad.models.modeling_cmd.OptionSolid2DAddHole">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid2DAddHole</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a hole to a Solid2d object before extruding it.&quot;&quot;&quot;</span>
 
     <span class="n">hole_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -836,9 +836,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_get_all_opposite_edges">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_get_all_opposite_edges.html#kittycad.models.modeling_cmd.solid3d_get_all_opposite_edges">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_get_all_opposite_edges</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DGetAllOppositeEdges">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DGetAllOppositeEdges.html#kittycad.models.modeling_cmd.OptionSolid3DGetAllOppositeEdges">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DGetAllOppositeEdges</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets all edges which are opposite the given edge, across all possible faces.&quot;&quot;&quot;</span>
 
     <span class="n">along_vector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Point3d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -853,9 +853,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_get_opposite_edge">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_get_opposite_edge.html#kittycad.models.modeling_cmd.solid3d_get_opposite_edge">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_get_opposite_edge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DGetOppositeEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DGetOppositeEdge.html#kittycad.models.modeling_cmd.OptionSolid3DGetOppositeEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DGetOppositeEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets the edge opposite the given edge, along the given face.&quot;&quot;&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -870,9 +870,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_get_next_adjacent_edge">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_get_next_adjacent_edge.html#kittycad.models.modeling_cmd.solid3d_get_next_adjacent_edge">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_get_next_adjacent_edge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DGetNextAdjacentEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DGetNextAdjacentEdge.html#kittycad.models.modeling_cmd.OptionSolid3DGetNextAdjacentEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DGetNextAdjacentEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets the next adjacent edge for the given edge, along the given face.&quot;&quot;&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -887,9 +887,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_get_prev_adjacent_edge">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_get_prev_adjacent_edge.html#kittycad.models.modeling_cmd.solid3d_get_prev_adjacent_edge">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_get_prev_adjacent_edge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DGetPrevAdjacentEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DGetPrevAdjacentEdge.html#kittycad.models.modeling_cmd.OptionSolid3DGetPrevAdjacentEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DGetPrevAdjacentEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets the previous adjacent edge for the given edge, along the given face.&quot;&quot;&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -904,9 +904,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_fillet_edge">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_fillet_edge.html#kittycad.models.modeling_cmd.solid3d_fillet_edge">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_fillet_edge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DFilletEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DFilletEdge.html#kittycad.models.modeling_cmd.OptionSolid3DFilletEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DFilletEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fillets the given edge with the specified radius.&quot;&quot;&quot;</span>
 
     <span class="n">cut_type</span><span class="p">:</span> <span class="n">CutType</span> <span class="o">=</span> <span class="s2">&quot;fillet&quot;</span>  <span class="c1"># type: ignore</span>
@@ -927,9 +927,9 @@
 
 
 
-<div class="viewcode-block" id="face_is_planar">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.face_is_planar.html#kittycad.models.modeling_cmd.face_is_planar">[docs]</a>
-<span class="k">class</span> <span class="nc">face_is_planar</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionFaceIsPlanar">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionFaceIsPlanar.html#kittycad.models.modeling_cmd.OptionFaceIsPlanar">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionFaceIsPlanar</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Determines whether a brep face is planar and returns its surface-local planar axes if so&quot;&quot;&quot;</span>
 
     <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -940,9 +940,9 @@
 
 
 
-<div class="viewcode-block" id="face_get_position">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.face_get_position.html#kittycad.models.modeling_cmd.face_get_position">[docs]</a>
-<span class="k">class</span> <span class="nc">face_get_position</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionFaceGetPosition">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionFaceGetPosition.html#kittycad.models.modeling_cmd.OptionFaceGetPosition">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionFaceGetPosition</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Determines a position on a brep face evaluated by parameters u,v&quot;&quot;&quot;</span>
 
     <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -955,9 +955,9 @@
 
 
 
-<div class="viewcode-block" id="face_get_center">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.face_get_center.html#kittycad.models.modeling_cmd.face_get_center">[docs]</a>
-<span class="k">class</span> <span class="nc">face_get_center</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionFaceGetCenter">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionFaceGetCenter.html#kittycad.models.modeling_cmd.OptionFaceGetCenter">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionFaceGetCenter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Obtains the surface \&quot;center of mass\&quot; &quot;&quot;&quot;</span>
 
     <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -968,9 +968,9 @@
 
 
 
-<div class="viewcode-block" id="face_get_gradient">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.face_get_gradient.html#kittycad.models.modeling_cmd.face_get_gradient">[docs]</a>
-<span class="k">class</span> <span class="nc">face_get_gradient</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionFaceGetGradient">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionFaceGetGradient.html#kittycad.models.modeling_cmd.OptionFaceGetGradient">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionFaceGetGradient</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Determines the gradient (dFdu, dFdv) + normal vector on a brep face evaluated by parameters u,v&quot;&quot;&quot;</span>
 
     <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -983,9 +983,9 @@
 
 
 
-<div class="viewcode-block" id="send_object">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.send_object.html#kittycad.models.modeling_cmd.send_object">[docs]</a>
-<span class="k">class</span> <span class="nc">send_object</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSendObject">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSendObject.html#kittycad.models.modeling_cmd.OptionSendObject">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSendObject</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Send object to front or back.&quot;&quot;&quot;</span>
 
     <span class="n">front</span><span class="p">:</span> <span class="nb">bool</span>
@@ -998,9 +998,9 @@
 
 
 
-<div class="viewcode-block" id="entity_set_opacity">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_set_opacity.html#kittycad.models.modeling_cmd.entity_set_opacity">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_set_opacity</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntitySetOpacity">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntitySetOpacity.html#kittycad.models.modeling_cmd.OptionEntitySetOpacity">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntitySetOpacity</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set opacity of the entity.&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1013,9 +1013,9 @@
 
 
 
-<div class="viewcode-block" id="entity_fade">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_fade.html#kittycad.models.modeling_cmd.entity_fade">[docs]</a>
-<span class="k">class</span> <span class="nc">entity_fade</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEntityFade">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityFade.html#kittycad.models.modeling_cmd.OptionEntityFade">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityFade</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fade entity in or out.&quot;&quot;&quot;</span>
 
     <span class="n">duration_seconds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.4000000059604645</span>
@@ -1030,9 +1030,9 @@
 
 
 
-<div class="viewcode-block" id="make_plane">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.make_plane.html#kittycad.models.modeling_cmd.make_plane">[docs]</a>
-<span class="k">class</span> <span class="nc">make_plane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMakePlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMakePlane.html#kittycad.models.modeling_cmd.OptionMakePlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMakePlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a new plane&quot;&quot;&quot;</span>
 
     <span class="n">clobber</span><span class="p">:</span> <span class="nb">bool</span>
@@ -1053,9 +1053,9 @@
 
 
 
-<div class="viewcode-block" id="plane_set_color">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.plane_set_color.html#kittycad.models.modeling_cmd.plane_set_color">[docs]</a>
-<span class="k">class</span> <span class="nc">plane_set_color</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPlaneSetColor">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionPlaneSetColor.html#kittycad.models.modeling_cmd.OptionPlaneSetColor">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPlaneSetColor</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the color of a plane.&quot;&quot;&quot;</span>
 
     <span class="n">color</span><span class="p">:</span> <span class="n">Color</span>
@@ -1068,9 +1068,9 @@
 
 
 
-<div class="viewcode-block" id="set_tool">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.set_tool.html#kittycad.models.modeling_cmd.set_tool">[docs]</a>
-<span class="k">class</span> <span class="nc">set_tool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSetTool">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetTool.html#kittycad.models.modeling_cmd.OptionSetTool">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetTool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the current tool.&quot;&quot;&quot;</span>
 
     <span class="n">tool</span><span class="p">:</span> <span class="n">SceneToolType</span>
@@ -1081,9 +1081,9 @@
 
 
 
-<div class="viewcode-block" id="mouse_move">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.mouse_move.html#kittycad.models.modeling_cmd.mouse_move">[docs]</a>
-<span class="k">class</span> <span class="nc">mouse_move</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMouseMove">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMouseMove.html#kittycad.models.modeling_cmd.OptionMouseMove">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMouseMove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Send a mouse move event&quot;&quot;&quot;</span>
 
     <span class="n">sequence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1096,9 +1096,9 @@
 
 
 
-<div class="viewcode-block" id="mouse_click">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.mouse_click.html#kittycad.models.modeling_cmd.mouse_click">[docs]</a>
-<span class="k">class</span> <span class="nc">mouse_click</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMouseClick">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMouseClick.html#kittycad.models.modeling_cmd.OptionMouseClick">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMouseClick</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Send a mouse click event Updates modified/selected entities.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;mouse_click&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mouse_click&quot;</span>
@@ -1109,9 +1109,9 @@
 
 
 
-<div class="viewcode-block" id="sketch_mode_disable">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.sketch_mode_disable.html#kittycad.models.modeling_cmd.sketch_mode_disable">[docs]</a>
-<span class="k">class</span> <span class="nc">sketch_mode_disable</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSketchModeDisable">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSketchModeDisable.html#kittycad.models.modeling_cmd.OptionSketchModeDisable">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSketchModeDisable</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Disable sketch mode. If you are sketching on a face, be sure to not disable sketch mode until you have extruded. Otherwise, your object will not be fused with the face.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;sketch_mode_disable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sketch_mode_disable&quot;</span>
@@ -1120,9 +1120,9 @@
 
 
 
-<div class="viewcode-block" id="get_sketch_mode_plane">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.get_sketch_mode_plane.html#kittycad.models.modeling_cmd.get_sketch_mode_plane">[docs]</a>
-<span class="k">class</span> <span class="nc">get_sketch_mode_plane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionGetSketchModePlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionGetSketchModePlane.html#kittycad.models.modeling_cmd.OptionGetSketchModePlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionGetSketchModePlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the plane for sketch mode.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;get_sketch_mode_plane&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;get_sketch_mode_plane&quot;</span>
@@ -1131,9 +1131,9 @@
 
 
 
-<div class="viewcode-block" id="curve_set_constraint">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.curve_set_constraint.html#kittycad.models.modeling_cmd.curve_set_constraint">[docs]</a>
-<span class="k">class</span> <span class="nc">curve_set_constraint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCurveSetConstraint">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCurveSetConstraint.html#kittycad.models.modeling_cmd.OptionCurveSetConstraint">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCurveSetConstraint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the plane for sketch mode.&quot;&quot;&quot;</span>
 
     <span class="n">constraint_bound</span><span class="p">:</span> <span class="n">PathComponentConstraintBound</span>
@@ -1148,9 +1148,9 @@
 
 
 
-<div class="viewcode-block" id="enable_sketch_mode">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.enable_sketch_mode.html#kittycad.models.modeling_cmd.enable_sketch_mode">[docs]</a>
-<span class="k">class</span> <span class="nc">enable_sketch_mode</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEnableSketchMode">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEnableSketchMode.html#kittycad.models.modeling_cmd.OptionEnableSketchMode">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEnableSketchMode</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sketch on some entity (e.g. a plane, a face).&quot;&quot;&quot;</span>
 
     <span class="n">adjust_camera</span><span class="p">:</span> <span class="nb">bool</span>
@@ -1169,9 +1169,9 @@
 
 
 
-<div class="viewcode-block" id="set_background_color">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.set_background_color.html#kittycad.models.modeling_cmd.set_background_color">[docs]</a>
-<span class="k">class</span> <span class="nc">set_background_color</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSetBackgroundColor">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetBackgroundColor.html#kittycad.models.modeling_cmd.OptionSetBackgroundColor">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetBackgroundColor</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the background color of the scene.&quot;&quot;&quot;</span>
 
     <span class="n">color</span><span class="p">:</span> <span class="n">Color</span>
@@ -1182,9 +1182,9 @@
 
 
 
-<div class="viewcode-block" id="set_current_tool_properties">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.set_current_tool_properties.html#kittycad.models.modeling_cmd.set_current_tool_properties">[docs]</a>
-<span class="k">class</span> <span class="nc">set_current_tool_properties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSetCurrentToolProperties">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetCurrentToolProperties.html#kittycad.models.modeling_cmd.OptionSetCurrentToolProperties">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetCurrentToolProperties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the properties of the tool lines for the scene.&quot;&quot;&quot;</span>
 
     <span class="n">color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Color</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1195,9 +1195,9 @@
 
 
 
-<div class="viewcode-block" id="set_default_system_properties">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.set_default_system_properties.html#kittycad.models.modeling_cmd.set_default_system_properties">[docs]</a>
-<span class="k">class</span> <span class="nc">set_default_system_properties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSetDefaultSystemProperties">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetDefaultSystemProperties.html#kittycad.models.modeling_cmd.OptionSetDefaultSystemProperties">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetDefaultSystemProperties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the default system properties used when a specific property isn&#39;t set.&quot;&quot;&quot;</span>
 
     <span class="n">color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Color</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1208,9 +1208,9 @@
 
 
 
-<div class="viewcode-block" id="curve_get_type">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.curve_get_type.html#kittycad.models.modeling_cmd.curve_get_type">[docs]</a>
-<span class="k">class</span> <span class="nc">curve_get_type</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCurveGetType">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCurveGetType.html#kittycad.models.modeling_cmd.OptionCurveGetType">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCurveGetType</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get type of the given curve.&quot;&quot;&quot;</span>
 
     <span class="n">curve_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1221,9 +1221,9 @@
 
 
 
-<div class="viewcode-block" id="curve_get_control_points">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.curve_get_control_points.html#kittycad.models.modeling_cmd.curve_get_control_points">[docs]</a>
-<span class="k">class</span> <span class="nc">curve_get_control_points</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCurveGetControlPoints">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCurveGetControlPoints.html#kittycad.models.modeling_cmd.OptionCurveGetControlPoints">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCurveGetControlPoints</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get control points of the given curve.&quot;&quot;&quot;</span>
 
     <span class="n">curve_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1234,9 +1234,9 @@
 
 
 
-<div class="viewcode-block" id="take_snapshot">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.take_snapshot.html#kittycad.models.modeling_cmd.take_snapshot">[docs]</a>
-<span class="k">class</span> <span class="nc">take_snapshot</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionTakeSnapshot">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionTakeSnapshot.html#kittycad.models.modeling_cmd.OptionTakeSnapshot">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionTakeSnapshot</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Take a snapshot of the current view.&quot;&quot;&quot;</span>
 
     <span class="nb">format</span><span class="p">:</span> <span class="n">ImageFormat</span>
@@ -1247,9 +1247,9 @@
 
 
 
-<div class="viewcode-block" id="make_axes_gizmo">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.make_axes_gizmo.html#kittycad.models.modeling_cmd.make_axes_gizmo">[docs]</a>
-<span class="k">class</span> <span class="nc">make_axes_gizmo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMakeAxesGizmo">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMakeAxesGizmo.html#kittycad.models.modeling_cmd.OptionMakeAxesGizmo">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMakeAxesGizmo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Add a gizmo showing the axes.&quot;&quot;&quot;</span>
 
     <span class="n">clobber</span><span class="p">:</span> <span class="nb">bool</span>
@@ -1262,9 +1262,9 @@
 
 
 
-<div class="viewcode-block" id="path_get_info">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.path_get_info.html#kittycad.models.modeling_cmd.path_get_info">[docs]</a>
-<span class="k">class</span> <span class="nc">path_get_info</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPathGetInfo">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionPathGetInfo.html#kittycad.models.modeling_cmd.OptionPathGetInfo">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPathGetInfo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Query the given path.&quot;&quot;&quot;</span>
 
     <span class="n">path_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1275,9 +1275,9 @@
 
 
 
-<div class="viewcode-block" id="path_get_curve_uuids_for_vertices">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.path_get_curve_uuids_for_vertices.html#kittycad.models.modeling_cmd.path_get_curve_uuids_for_vertices">[docs]</a>
-<span class="k">class</span> <span class="nc">path_get_curve_uuids_for_vertices</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPathGetCurveUuidsForVertices">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionPathGetCurveUuidsForVertices.html#kittycad.models.modeling_cmd.OptionPathGetCurveUuidsForVertices">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPathGetCurveUuidsForVertices</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Obtain curve ids for vertex ids&quot;&quot;&quot;</span>
 
     <span class="n">path_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1292,9 +1292,9 @@
 
 
 
-<div class="viewcode-block" id="path_get_curve_uuid">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.path_get_curve_uuid.html#kittycad.models.modeling_cmd.path_get_curve_uuid">[docs]</a>
-<span class="k">class</span> <span class="nc">path_get_curve_uuid</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPathGetCurveUuid">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionPathGetCurveUuid.html#kittycad.models.modeling_cmd.OptionPathGetCurveUuid">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPathGetCurveUuid</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Obtain curve id by index&quot;&quot;&quot;</span>
 
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span>
@@ -1307,9 +1307,9 @@
 
 
 
-<div class="viewcode-block" id="path_get_vertex_uuids">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.path_get_vertex_uuids.html#kittycad.models.modeling_cmd.path_get_vertex_uuids">[docs]</a>
-<span class="k">class</span> <span class="nc">path_get_vertex_uuids</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPathGetVertexUuids">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionPathGetVertexUuids.html#kittycad.models.modeling_cmd.OptionPathGetVertexUuids">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPathGetVertexUuids</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Obtain vertex ids for a path&quot;&quot;&quot;</span>
 
     <span class="n">path_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1320,9 +1320,9 @@
 
 
 
-<div class="viewcode-block" id="path_get_sketch_target_uuid">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.path_get_sketch_target_uuid.html#kittycad.models.modeling_cmd.path_get_sketch_target_uuid">[docs]</a>
-<span class="k">class</span> <span class="nc">path_get_sketch_target_uuid</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPathGetSketchTargetUuid">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionPathGetSketchTargetUuid.html#kittycad.models.modeling_cmd.OptionPathGetSketchTargetUuid">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPathGetSketchTargetUuid</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Obtain the sketch target id (if the path was drawn in sketchmode) for a path&quot;&quot;&quot;</span>
 
     <span class="n">path_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1333,9 +1333,9 @@
 
 
 
-<div class="viewcode-block" id="handle_mouse_drag_start">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.handle_mouse_drag_start.html#kittycad.models.modeling_cmd.handle_mouse_drag_start">[docs]</a>
-<span class="k">class</span> <span class="nc">handle_mouse_drag_start</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionHandleMouseDragStart">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionHandleMouseDragStart.html#kittycad.models.modeling_cmd.OptionHandleMouseDragStart">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHandleMouseDragStart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Start dragging the mouse.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;handle_mouse_drag_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;handle_mouse_drag_start&quot;</span>
@@ -1346,9 +1346,9 @@
 
 
 
-<div class="viewcode-block" id="handle_mouse_drag_move">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.handle_mouse_drag_move.html#kittycad.models.modeling_cmd.handle_mouse_drag_move">[docs]</a>
-<span class="k">class</span> <span class="nc">handle_mouse_drag_move</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionHandleMouseDragMove">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionHandleMouseDragMove.html#kittycad.models.modeling_cmd.OptionHandleMouseDragMove">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHandleMouseDragMove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Continue dragging the mouse.&quot;&quot;&quot;</span>
 
     <span class="n">sequence</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1361,9 +1361,9 @@
 
 
 
-<div class="viewcode-block" id="handle_mouse_drag_end">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.handle_mouse_drag_end.html#kittycad.models.modeling_cmd.handle_mouse_drag_end">[docs]</a>
-<span class="k">class</span> <span class="nc">handle_mouse_drag_end</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionHandleMouseDragEnd">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionHandleMouseDragEnd.html#kittycad.models.modeling_cmd.OptionHandleMouseDragEnd">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHandleMouseDragEnd</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Stop dragging the mouse.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;handle_mouse_drag_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;handle_mouse_drag_end&quot;</span>
@@ -1374,9 +1374,9 @@
 
 
 
-<div class="viewcode-block" id="remove_scene_objects">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.remove_scene_objects.html#kittycad.models.modeling_cmd.remove_scene_objects">[docs]</a>
-<span class="k">class</span> <span class="nc">remove_scene_objects</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionRemoveSceneObjects">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionRemoveSceneObjects.html#kittycad.models.modeling_cmd.OptionRemoveSceneObjects">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionRemoveSceneObjects</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove scene objects.&quot;&quot;&quot;</span>
 
     <span class="n">object_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -1387,9 +1387,9 @@
 
 
 
-<div class="viewcode-block" id="plane_intersect_and_project">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.plane_intersect_and_project.html#kittycad.models.modeling_cmd.plane_intersect_and_project">[docs]</a>
-<span class="k">class</span> <span class="nc">plane_intersect_and_project</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionPlaneIntersectAndProject">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionPlaneIntersectAndProject.html#kittycad.models.modeling_cmd.OptionPlaneIntersectAndProject">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPlaneIntersectAndProject</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Utility method. Performs both a ray cast and projection to plane-local coordinates. Returns the plane coordinates for the given window coordinates.&quot;&quot;&quot;</span>
 
     <span class="n">plane_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1402,9 +1402,9 @@
 
 
 
-<div class="viewcode-block" id="curve_get_end_points">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.curve_get_end_points.html#kittycad.models.modeling_cmd.curve_get_end_points">[docs]</a>
-<span class="k">class</span> <span class="nc">curve_get_end_points</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCurveGetEndPoints">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCurveGetEndPoints.html#kittycad.models.modeling_cmd.OptionCurveGetEndPoints">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCurveGetEndPoints</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Find the start and end of a curve.&quot;&quot;&quot;</span>
 
     <span class="n">curve_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1415,9 +1415,9 @@
 
 
 
-<div class="viewcode-block" id="reconfigure_stream">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.reconfigure_stream.html#kittycad.models.modeling_cmd.reconfigure_stream">[docs]</a>
-<span class="k">class</span> <span class="nc">reconfigure_stream</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionReconfigureStream">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionReconfigureStream.html#kittycad.models.modeling_cmd.OptionReconfigureStream">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionReconfigureStream</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Reconfigure the stream.&quot;&quot;&quot;</span>
 
     <span class="n">fps</span><span class="p">:</span> <span class="nb">int</span>
@@ -1432,9 +1432,9 @@
 
 
 
-<div class="viewcode-block" id="import_files">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.import_files.html#kittycad.models.modeling_cmd.import_files">[docs]</a>
-<span class="k">class</span> <span class="nc">import_files</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionImportFiles">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionImportFiles.html#kittycad.models.modeling_cmd.OptionImportFiles">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionImportFiles</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Import files to the current model.&quot;&quot;&quot;</span>
 
     <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ImportFile</span><span class="p">]</span>
@@ -1447,9 +1447,9 @@
 
 
 
-<div class="viewcode-block" id="set_scene_units">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.set_scene_units.html#kittycad.models.modeling_cmd.set_scene_units">[docs]</a>
-<span class="k">class</span> <span class="nc">set_scene_units</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSetSceneUnits">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetSceneUnits.html#kittycad.models.modeling_cmd.OptionSetSceneUnits">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetSceneUnits</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the units of the scene. For all following commands, the units will be interpreted as the given units.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_scene_units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_scene_units&quot;</span>
@@ -1460,9 +1460,9 @@
 
 
 
-<div class="viewcode-block" id="mass">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.mass.html#kittycad.models.modeling_cmd.mass">[docs]</a>
-<span class="k">class</span> <span class="nc">mass</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionMass">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMass.html#kittycad.models.modeling_cmd.OptionMass">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMass</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the mass of entities in the scene or the default scene.&quot;&quot;&quot;</span>
 
     <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -1479,9 +1479,9 @@
 
 
 
-<div class="viewcode-block" id="density">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.density.html#kittycad.models.modeling_cmd.density">[docs]</a>
-<span class="k">class</span> <span class="nc">density</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDensity">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDensity.html#kittycad.models.modeling_cmd.OptionDensity">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDensity</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the density of entities in the scene or the default scene.&quot;&quot;&quot;</span>
 
     <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -1498,9 +1498,9 @@
 
 
 
-<div class="viewcode-block" id="volume">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.volume.html#kittycad.models.modeling_cmd.volume">[docs]</a>
-<span class="k">class</span> <span class="nc">volume</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionVolume">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionVolume.html#kittycad.models.modeling_cmd.OptionVolume">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionVolume</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the volume of entities in the scene or the default scene.&quot;&quot;&quot;</span>
 
     <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -1513,9 +1513,9 @@
 
 
 
-<div class="viewcode-block" id="center_of_mass">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.center_of_mass.html#kittycad.models.modeling_cmd.center_of_mass">[docs]</a>
-<span class="k">class</span> <span class="nc">center_of_mass</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCenterOfMass">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionCenterOfMass.html#kittycad.models.modeling_cmd.OptionCenterOfMass">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCenterOfMass</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the center of mass of entities in the scene or the default scene.&quot;&quot;&quot;</span>
 
     <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -1528,9 +1528,9 @@
 
 
 
-<div class="viewcode-block" id="surface_area">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.surface_area.html#kittycad.models.modeling_cmd.surface_area">[docs]</a>
-<span class="k">class</span> <span class="nc">surface_area</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSurfaceArea">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSurfaceArea.html#kittycad.models.modeling_cmd.OptionSurfaceArea">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSurfaceArea</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the surface area of entities in the scene or the default scene.&quot;&quot;&quot;</span>
 
     <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
@@ -1543,9 +1543,9 @@
 
 
 
-<div class="viewcode-block" id="default_camera_focus_on">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.default_camera_focus_on.html#kittycad.models.modeling_cmd.default_camera_focus_on">[docs]</a>
-<span class="k">class</span> <span class="nc">default_camera_focus_on</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraFocusOn">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraFocusOn.html#kittycad.models.modeling_cmd.OptionDefaultCameraFocusOn">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraFocusOn</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Focus the default camera upon an object in the scene.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_focus_on&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_focus_on&quot;</span>
@@ -1556,9 +1556,9 @@
 
 
 
-<div class="viewcode-block" id="set_selection_type">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.set_selection_type.html#kittycad.models.modeling_cmd.set_selection_type">[docs]</a>
-<span class="k">class</span> <span class="nc">set_selection_type</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSetSelectionType">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetSelectionType.html#kittycad.models.modeling_cmd.OptionSetSelectionType">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetSelectionType</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;When you select some entity with the current tool, what should happen to the entity?&quot;&quot;&quot;</span>
 
     <span class="n">selection_type</span><span class="p">:</span> <span class="n">SceneSelectionType</span>
@@ -1569,9 +1569,9 @@
 
 
 
-<div class="viewcode-block" id="set_selection_filter">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.set_selection_filter.html#kittycad.models.modeling_cmd.set_selection_filter">[docs]</a>
-<span class="k">class</span> <span class="nc">set_selection_filter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSetSelectionFilter">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetSelectionFilter.html#kittycad.models.modeling_cmd.OptionSetSelectionFilter">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetSelectionFilter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;What kind of entities can be selected?&quot;&quot;&quot;</span>
 
     <span class="nb">filter</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">EntityType</span><span class="p">]</span>
@@ -1582,9 +1582,9 @@
 
 
 
-<div class="viewcode-block" id="default_camera_set_orthographic">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.default_camera_set_orthographic.html#kittycad.models.modeling_cmd.default_camera_set_orthographic">[docs]</a>
-<span class="k">class</span> <span class="nc">default_camera_set_orthographic</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraSetOrthographic">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraSetOrthographic.html#kittycad.models.modeling_cmd.OptionDefaultCameraSetOrthographic">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraSetOrthographic</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use orthographic projection.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_set_orthographic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_set_orthographic&quot;</span>
@@ -1593,9 +1593,9 @@
 
 
 
-<div class="viewcode-block" id="default_camera_set_perspective">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.default_camera_set_perspective.html#kittycad.models.modeling_cmd.default_camera_set_perspective">[docs]</a>
-<span class="k">class</span> <span class="nc">default_camera_set_perspective</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraSetPerspective">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraSetPerspective.html#kittycad.models.modeling_cmd.OptionDefaultCameraSetPerspective">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraSetPerspective</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Use perspective projection.&quot;&quot;&quot;</span>
 
     <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PerspectiveCameraParameters</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1606,9 +1606,9 @@
 
 
 
-<div class="viewcode-block" id="zoom_to_fit">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.zoom_to_fit.html#kittycad.models.modeling_cmd.zoom_to_fit">[docs]</a>
-<span class="k">class</span> <span class="nc">zoom_to_fit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionZoomToFit">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionZoomToFit.html#kittycad.models.modeling_cmd.OptionZoomToFit">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionZoomToFit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the view to the specified object(s).&quot;&quot;&quot;</span>
 
     <span class="n">object_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1621,9 +1621,9 @@
 
 
 
-<div class="viewcode-block" id="view_isometric">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.view_isometric.html#kittycad.models.modeling_cmd.view_isometric">[docs]</a>
-<span class="k">class</span> <span class="nc">view_isometric</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionViewIsometric">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionViewIsometric.html#kittycad.models.modeling_cmd.OptionViewIsometric">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionViewIsometric</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit the view to the scene with an isometric view.&quot;&quot;&quot;</span>
 
     <span class="n">padding</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -1634,9 +1634,9 @@
 
 
 
-<div class="viewcode-block" id="solid3d_get_extrusion_face_info">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.solid3d_get_extrusion_face_info.html#kittycad.models.modeling_cmd.solid3d_get_extrusion_face_info">[docs]</a>
-<span class="k">class</span> <span class="nc">solid3d_get_extrusion_face_info</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSolid3DGetExtrusionFaceInfo">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSolid3DGetExtrusionFaceInfo.html#kittycad.models.modeling_cmd.OptionSolid3DGetExtrusionFaceInfo">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DGetExtrusionFaceInfo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a concise description of all of an extrusion&#39;s faces.&quot;&quot;&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -1649,9 +1649,9 @@
 
 
 
-<div class="viewcode-block" id="edit_mode_exit">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.edit_mode_exit.html#kittycad.models.modeling_cmd.edit_mode_exit">[docs]</a>
-<span class="k">class</span> <span class="nc">edit_mode_exit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionEditModeExit">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEditModeExit.html#kittycad.models.modeling_cmd.OptionEditModeExit">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEditModeExit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Exit edit mode&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edit_mode_exit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edit_mode_exit&quot;</span>
@@ -1660,9 +1660,9 @@
 
 
 
-<div class="viewcode-block" id="select_clear">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.select_clear.html#kittycad.models.modeling_cmd.select_clear">[docs]</a>
-<span class="k">class</span> <span class="nc">select_clear</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSelectClear">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSelectClear.html#kittycad.models.modeling_cmd.OptionSelectClear">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectClear</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Clear the selection&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;select_clear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;select_clear&quot;</span>
@@ -1671,9 +1671,9 @@
 
 
 
-<div class="viewcode-block" id="select_get">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.select_get.html#kittycad.models.modeling_cmd.select_get">[docs]</a>
-<span class="k">class</span> <span class="nc">select_get</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionSelectGet">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSelectGet.html#kittycad.models.modeling_cmd.OptionSelectGet">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectGet</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Find all IDs of selected entities&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;select_get&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;select_get&quot;</span>
@@ -1682,9 +1682,9 @@
 
 
 
-<div class="viewcode-block" id="get_num_objects">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.get_num_objects.html#kittycad.models.modeling_cmd.get_num_objects">[docs]</a>
-<span class="k">class</span> <span class="nc">get_num_objects</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionGetNumObjects">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionGetNumObjects.html#kittycad.models.modeling_cmd.OptionGetNumObjects">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionGetNumObjects</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the number of objects in the scene&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;get_num_objects&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;get_num_objects&quot;</span>
@@ -1696,111 +1696,111 @@
 <span class="n">ModelingCmd</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">start_path</span><span class="p">,</span>
-            <span class="n">move_path_pen</span><span class="p">,</span>
-            <span class="n">extend_path</span><span class="p">,</span>
-            <span class="n">extrude</span><span class="p">,</span>
-            <span class="n">revolve</span><span class="p">,</span>
-            <span class="n">solid3d_shell_face</span><span class="p">,</span>
-            <span class="n">revolve_about_edge</span><span class="p">,</span>
-            <span class="n">loft</span><span class="p">,</span>
-            <span class="n">close_path</span><span class="p">,</span>
-            <span class="n">camera_drag_start</span><span class="p">,</span>
-            <span class="n">camera_drag_move</span><span class="p">,</span>
-            <span class="n">camera_drag_end</span><span class="p">,</span>
-            <span class="n">default_camera_get_settings</span><span class="p">,</span>
-            <span class="n">default_camera_look_at</span><span class="p">,</span>
-            <span class="n">default_camera_perspective_settings</span><span class="p">,</span>
-            <span class="n">default_camera_zoom</span><span class="p">,</span>
-            <span class="n">export</span><span class="p">,</span>
-            <span class="n">entity_get_parent_id</span><span class="p">,</span>
-            <span class="n">entity_get_num_children</span><span class="p">,</span>
-            <span class="n">entity_get_child_uuid</span><span class="p">,</span>
-            <span class="n">entity_get_all_child_uuids</span><span class="p">,</span>
-            <span class="n">entity_get_sketch_paths</span><span class="p">,</span>
-            <span class="n">entity_get_distance</span><span class="p">,</span>
-            <span class="n">entity_linear_pattern_transform</span><span class="p">,</span>
-            <span class="n">entity_linear_pattern</span><span class="p">,</span>
-            <span class="n">entity_circular_pattern</span><span class="p">,</span>
-            <span class="n">entity_make_helix</span><span class="p">,</span>
-            <span class="n">entity_mirror</span><span class="p">,</span>
-            <span class="n">entity_mirror_across_edge</span><span class="p">,</span>
-            <span class="n">edit_mode_enter</span><span class="p">,</span>
-            <span class="n">select_with_point</span><span class="p">,</span>
-            <span class="n">select_add</span><span class="p">,</span>
-            <span class="n">select_remove</span><span class="p">,</span>
-            <span class="n">scene_clear_all</span><span class="p">,</span>
-            <span class="n">select_replace</span><span class="p">,</span>
-            <span class="n">highlight_set_entity</span><span class="p">,</span>
-            <span class="n">highlight_set_entities</span><span class="p">,</span>
-            <span class="n">new_annotation</span><span class="p">,</span>
-            <span class="n">update_annotation</span><span class="p">,</span>
-            <span class="n">edge_lines_visible</span><span class="p">,</span>
-            <span class="n">object_visible</span><span class="p">,</span>
-            <span class="n">object_bring_to_front</span><span class="p">,</span>
-            <span class="n">object_set_material_params_pbr</span><span class="p">,</span>
-            <span class="n">get_entity_type</span><span class="p">,</span>
-            <span class="n">solid3d_get_all_edge_faces</span><span class="p">,</span>
-            <span class="n">solid2d_add_hole</span><span class="p">,</span>
-            <span class="n">solid3d_get_all_opposite_edges</span><span class="p">,</span>
-            <span class="n">solid3d_get_opposite_edge</span><span class="p">,</span>
-            <span class="n">solid3d_get_next_adjacent_edge</span><span class="p">,</span>
-            <span class="n">solid3d_get_prev_adjacent_edge</span><span class="p">,</span>
-            <span class="n">solid3d_fillet_edge</span><span class="p">,</span>
-            <span class="n">face_is_planar</span><span class="p">,</span>
-            <span class="n">face_get_position</span><span class="p">,</span>
-            <span class="n">face_get_center</span><span class="p">,</span>
-            <span class="n">face_get_gradient</span><span class="p">,</span>
-            <span class="n">send_object</span><span class="p">,</span>
-            <span class="n">entity_set_opacity</span><span class="p">,</span>
-            <span class="n">entity_fade</span><span class="p">,</span>
-            <span class="n">make_plane</span><span class="p">,</span>
-            <span class="n">plane_set_color</span><span class="p">,</span>
-            <span class="n">set_tool</span><span class="p">,</span>
-            <span class="n">mouse_move</span><span class="p">,</span>
-            <span class="n">mouse_click</span><span class="p">,</span>
-            <span class="n">sketch_mode_disable</span><span class="p">,</span>
-            <span class="n">get_sketch_mode_plane</span><span class="p">,</span>
-            <span class="n">curve_set_constraint</span><span class="p">,</span>
-            <span class="n">enable_sketch_mode</span><span class="p">,</span>
-            <span class="n">set_background_color</span><span class="p">,</span>
-            <span class="n">set_current_tool_properties</span><span class="p">,</span>
-            <span class="n">set_default_system_properties</span><span class="p">,</span>
-            <span class="n">curve_get_type</span><span class="p">,</span>
-            <span class="n">curve_get_control_points</span><span class="p">,</span>
-            <span class="n">take_snapshot</span><span class="p">,</span>
-            <span class="n">make_axes_gizmo</span><span class="p">,</span>
-            <span class="n">path_get_info</span><span class="p">,</span>
-            <span class="n">path_get_curve_uuids_for_vertices</span><span class="p">,</span>
-            <span class="n">path_get_curve_uuid</span><span class="p">,</span>
-            <span class="n">path_get_vertex_uuids</span><span class="p">,</span>
-            <span class="n">path_get_sketch_target_uuid</span><span class="p">,</span>
-            <span class="n">handle_mouse_drag_start</span><span class="p">,</span>
-            <span class="n">handle_mouse_drag_move</span><span class="p">,</span>
-            <span class="n">handle_mouse_drag_end</span><span class="p">,</span>
-            <span class="n">remove_scene_objects</span><span class="p">,</span>
-            <span class="n">plane_intersect_and_project</span><span class="p">,</span>
-            <span class="n">curve_get_end_points</span><span class="p">,</span>
-            <span class="n">reconfigure_stream</span><span class="p">,</span>
-            <span class="n">import_files</span><span class="p">,</span>
-            <span class="n">set_scene_units</span><span class="p">,</span>
-            <span class="n">mass</span><span class="p">,</span>
-            <span class="n">density</span><span class="p">,</span>
-            <span class="n">volume</span><span class="p">,</span>
-            <span class="n">center_of_mass</span><span class="p">,</span>
-            <span class="n">surface_area</span><span class="p">,</span>
-            <span class="n">default_camera_focus_on</span><span class="p">,</span>
-            <span class="n">set_selection_type</span><span class="p">,</span>
-            <span class="n">set_selection_filter</span><span class="p">,</span>
-            <span class="n">default_camera_set_orthographic</span><span class="p">,</span>
-            <span class="n">default_camera_set_perspective</span><span class="p">,</span>
-            <span class="n">zoom_to_fit</span><span class="p">,</span>
-            <span class="n">view_isometric</span><span class="p">,</span>
-            <span class="n">solid3d_get_extrusion_face_info</span><span class="p">,</span>
-            <span class="n">edit_mode_exit</span><span class="p">,</span>
-            <span class="n">select_clear</span><span class="p">,</span>
-            <span class="n">select_get</span><span class="p">,</span>
-            <span class="n">get_num_objects</span><span class="p">,</span>
+            <span class="n">OptionStartPath</span><span class="p">,</span>
+            <span class="n">OptionMovePathPen</span><span class="p">,</span>
+            <span class="n">OptionExtendPath</span><span class="p">,</span>
+            <span class="n">OptionExtrude</span><span class="p">,</span>
+            <span class="n">OptionRevolve</span><span class="p">,</span>
+            <span class="n">OptionSolid3DShellFace</span><span class="p">,</span>
+            <span class="n">OptionRevolveAboutEdge</span><span class="p">,</span>
+            <span class="n">OptionLoft</span><span class="p">,</span>
+            <span class="n">OptionClosePath</span><span class="p">,</span>
+            <span class="n">OptionCameraDragStart</span><span class="p">,</span>
+            <span class="n">OptionCameraDragMove</span><span class="p">,</span>
+            <span class="n">OptionCameraDragEnd</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraGetSettings</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraLookAt</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraPerspectiveSettings</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraZoom</span><span class="p">,</span>
+            <span class="n">OptionExport</span><span class="p">,</span>
+            <span class="n">OptionEntityGetParentId</span><span class="p">,</span>
+            <span class="n">OptionEntityGetNumChildren</span><span class="p">,</span>
+            <span class="n">OptionEntityGetChildUuid</span><span class="p">,</span>
+            <span class="n">OptionEntityGetAllChildUuids</span><span class="p">,</span>
+            <span class="n">OptionEntityGetSketchPaths</span><span class="p">,</span>
+            <span class="n">OptionEntityGetDistance</span><span class="p">,</span>
+            <span class="n">OptionEntityLinearPatternTransform</span><span class="p">,</span>
+            <span class="n">OptionEntityLinearPattern</span><span class="p">,</span>
+            <span class="n">OptionEntityCircularPattern</span><span class="p">,</span>
+            <span class="n">OptionEntityMakeHelix</span><span class="p">,</span>
+            <span class="n">OptionEntityMirror</span><span class="p">,</span>
+            <span class="n">OptionEntityMirrorAcrossEdge</span><span class="p">,</span>
+            <span class="n">OptionEditModeEnter</span><span class="p">,</span>
+            <span class="n">OptionSelectWithPoint</span><span class="p">,</span>
+            <span class="n">OptionSelectAdd</span><span class="p">,</span>
+            <span class="n">OptionSelectRemove</span><span class="p">,</span>
+            <span class="n">OptionSceneClearAll</span><span class="p">,</span>
+            <span class="n">OptionSelectReplace</span><span class="p">,</span>
+            <span class="n">OptionHighlightSetEntity</span><span class="p">,</span>
+            <span class="n">OptionHighlightSetEntities</span><span class="p">,</span>
+            <span class="n">OptionNewAnnotation</span><span class="p">,</span>
+            <span class="n">OptionUpdateAnnotation</span><span class="p">,</span>
+            <span class="n">OptionEdgeLinesVisible</span><span class="p">,</span>
+            <span class="n">OptionObjectVisible</span><span class="p">,</span>
+            <span class="n">OptionObjectBringToFront</span><span class="p">,</span>
+            <span class="n">OptionObjectSetMaterialParamsPbr</span><span class="p">,</span>
+            <span class="n">OptionGetEntityType</span><span class="p">,</span>
+            <span class="n">OptionSolid3DGetAllEdgeFaces</span><span class="p">,</span>
+            <span class="n">OptionSolid2DAddHole</span><span class="p">,</span>
+            <span class="n">OptionSolid3DGetAllOppositeEdges</span><span class="p">,</span>
+            <span class="n">OptionSolid3DGetOppositeEdge</span><span class="p">,</span>
+            <span class="n">OptionSolid3DGetNextAdjacentEdge</span><span class="p">,</span>
+            <span class="n">OptionSolid3DGetPrevAdjacentEdge</span><span class="p">,</span>
+            <span class="n">OptionSolid3DFilletEdge</span><span class="p">,</span>
+            <span class="n">OptionFaceIsPlanar</span><span class="p">,</span>
+            <span class="n">OptionFaceGetPosition</span><span class="p">,</span>
+            <span class="n">OptionFaceGetCenter</span><span class="p">,</span>
+            <span class="n">OptionFaceGetGradient</span><span class="p">,</span>
+            <span class="n">OptionSendObject</span><span class="p">,</span>
+            <span class="n">OptionEntitySetOpacity</span><span class="p">,</span>
+            <span class="n">OptionEntityFade</span><span class="p">,</span>
+            <span class="n">OptionMakePlane</span><span class="p">,</span>
+            <span class="n">OptionPlaneSetColor</span><span class="p">,</span>
+            <span class="n">OptionSetTool</span><span class="p">,</span>
+            <span class="n">OptionMouseMove</span><span class="p">,</span>
+            <span class="n">OptionMouseClick</span><span class="p">,</span>
+            <span class="n">OptionSketchModeDisable</span><span class="p">,</span>
+            <span class="n">OptionGetSketchModePlane</span><span class="p">,</span>
+            <span class="n">OptionCurveSetConstraint</span><span class="p">,</span>
+            <span class="n">OptionEnableSketchMode</span><span class="p">,</span>
+            <span class="n">OptionSetBackgroundColor</span><span class="p">,</span>
+            <span class="n">OptionSetCurrentToolProperties</span><span class="p">,</span>
+            <span class="n">OptionSetDefaultSystemProperties</span><span class="p">,</span>
+            <span class="n">OptionCurveGetType</span><span class="p">,</span>
+            <span class="n">OptionCurveGetControlPoints</span><span class="p">,</span>
+            <span class="n">OptionTakeSnapshot</span><span class="p">,</span>
+            <span class="n">OptionMakeAxesGizmo</span><span class="p">,</span>
+            <span class="n">OptionPathGetInfo</span><span class="p">,</span>
+            <span class="n">OptionPathGetCurveUuidsForVertices</span><span class="p">,</span>
+            <span class="n">OptionPathGetCurveUuid</span><span class="p">,</span>
+            <span class="n">OptionPathGetVertexUuids</span><span class="p">,</span>
+            <span class="n">OptionPathGetSketchTargetUuid</span><span class="p">,</span>
+            <span class="n">OptionHandleMouseDragStart</span><span class="p">,</span>
+            <span class="n">OptionHandleMouseDragMove</span><span class="p">,</span>
+            <span class="n">OptionHandleMouseDragEnd</span><span class="p">,</span>
+            <span class="n">OptionRemoveSceneObjects</span><span class="p">,</span>
+            <span class="n">OptionPlaneIntersectAndProject</span><span class="p">,</span>
+            <span class="n">OptionCurveGetEndPoints</span><span class="p">,</span>
+            <span class="n">OptionReconfigureStream</span><span class="p">,</span>
+            <span class="n">OptionImportFiles</span><span class="p">,</span>
+            <span class="n">OptionSetSceneUnits</span><span class="p">,</span>
+            <span class="n">OptionMass</span><span class="p">,</span>
+            <span class="n">OptionDensity</span><span class="p">,</span>
+            <span class="n">OptionVolume</span><span class="p">,</span>
+            <span class="n">OptionCenterOfMass</span><span class="p">,</span>
+            <span class="n">OptionSurfaceArea</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraFocusOn</span><span class="p">,</span>
+            <span class="n">OptionSetSelectionType</span><span class="p">,</span>
+            <span class="n">OptionSetSelectionFilter</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraSetOrthographic</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraSetPerspective</span><span class="p">,</span>
+            <span class="n">OptionZoomToFit</span><span class="p">,</span>
+            <span class="n">OptionViewIsometric</span><span class="p">,</span>
+            <span class="n">OptionSolid3DGetExtrusionFaceInfo</span><span class="p">,</span>
+            <span class="n">OptionEditModeExit</span><span class="p">,</span>
+            <span class="n">OptionSelectClear</span><span class="p">,</span>
+            <span class="n">OptionSelectGet</span><span class="p">,</span>
+            <span class="n">OptionGetNumObjects</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>

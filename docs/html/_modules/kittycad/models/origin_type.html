@@ -89,9 +89,9 @@
 <span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
 
 
-<div class="viewcode-block" id="local">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.origin_type.local.html#kittycad.models.origin_type.local">[docs]</a>
-<span class="k">class</span> <span class="nc">local</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionLocal">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.origin_type.OptionLocal.html#kittycad.models.origin_type.OptionLocal">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionLocal</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Local Origin (center of object bounding box).&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;local&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;local&quot;</span>
@@ -100,9 +100,9 @@
 
 
 
-<div class="viewcode-block" id="global_">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.origin_type.global_.html#kittycad.models.origin_type.global_">[docs]</a>
-<span class="k">class</span> <span class="nc">global_</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionGlobal">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.origin_type.OptionGlobal.html#kittycad.models.origin_type.OptionGlobal">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionGlobal</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Global Origin (0, 0, 0).&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;global&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;global&quot;</span>
@@ -111,9 +111,9 @@
 
 
 
-<div class="viewcode-block" id="custom">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.origin_type.custom.html#kittycad.models.origin_type.custom">[docs]</a>
-<span class="k">class</span> <span class="nc">custom</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionCustom">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.origin_type.OptionCustom.html#kittycad.models.origin_type.OptionCustom">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCustom</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom Origin (user specified point).&quot;&quot;&quot;</span>
 
     <span class="n">origin</span><span class="p">:</span> <span class="n">Point3d</span>
@@ -127,9 +127,9 @@
 <span class="n">OriginType</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">local</span><span class="p">,</span>
-            <span class="n">global_</span><span class="p">,</span>
-            <span class="n">custom</span><span class="p">,</span>
+            <span class="n">OptionLocal</span><span class="p">,</span>
+            <span class="n">OptionGlobal</span><span class="p">,</span>
+            <span class="n">OptionCustom</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>

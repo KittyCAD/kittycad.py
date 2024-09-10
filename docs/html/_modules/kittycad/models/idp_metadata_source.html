@@ -89,9 +89,9 @@
 <span class="kn">from</span> <span class="nn">.base64data</span> <span class="kn">import</span> <span class="n">Base64Data</span>
 
 
-<div class="viewcode-block" id="url">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.idp_metadata_source.url.html#kittycad.models.idp_metadata_source.url">[docs]</a>
-<span class="k">class</span> <span class="nc">url</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionUrl">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.idp_metadata_source.OptionUrl.html#kittycad.models.idp_metadata_source.OptionUrl">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionUrl</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A URL to the identity provider metadata descriptor.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;url&quot;</span>
@@ -102,9 +102,9 @@
 
 
 
-<div class="viewcode-block" id="base64_encoded_xml">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.idp_metadata_source.base64_encoded_xml.html#kittycad.models.idp_metadata_source.base64_encoded_xml">[docs]</a>
-<span class="k">class</span> <span class="nc">base64_encoded_xml</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionBase64EncodedXml">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.idp_metadata_source.OptionBase64EncodedXml.html#kittycad.models.idp_metadata_source.OptionBase64EncodedXml">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionBase64EncodedXml</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A base64 encoded XML document containing the identity provider metadata descriptor.&quot;&quot;&quot;</span>
 
     <span class="n">data</span><span class="p">:</span> <span class="n">Base64Data</span>
@@ -118,8 +118,8 @@
 <span class="n">IdpMetadataSource</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">url</span><span class="p">,</span>
-            <span class="n">base64_encoded_xml</span><span class="p">,</span>
+            <span class="n">OptionUrl</span><span class="p">,</span>
+            <span class="n">OptionBase64EncodedXml</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>

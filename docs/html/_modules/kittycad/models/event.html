@@ -90,9 +90,9 @@
 <span class="kn">from</span> <span class="nn">..models.modeling_app_event_type</span> <span class="kn">import</span> <span class="n">ModelingAppEventType</span>
 
 
-<div class="viewcode-block" id="modeling_app_event">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.event.modeling_app_event.html#kittycad.models.event.modeling_app_event">[docs]</a>
-<span class="k">class</span> <span class="nc">modeling_app_event</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionModelingAppEvent">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.event.OptionModelingAppEvent.html#kittycad.models.event.OptionModelingAppEvent">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionModelingAppEvent</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An event related to modeling app files&quot;&quot;&quot;</span>
 
     <span class="n">attachment_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -117,7 +117,9 @@
 
 
 
-<span class="n">Event</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span><span class="n">Annotated</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">modeling_app_event</span><span class="p">,],</span> <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">)]]</span>
+<span class="n">Event</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
+    <span class="n">Annotated</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">OptionModelingAppEvent</span><span class="p">,],</span> <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">)]</span>
+<span class="p">]</span>
 </pre></div>
 
            </div>

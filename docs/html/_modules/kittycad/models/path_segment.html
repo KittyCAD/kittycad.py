@@ -92,9 +92,9 @@
 <span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
 
 
-<div class="viewcode-block" id="line">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.line.html#kittycad.models.path_segment.line">[docs]</a>
-<span class="k">class</span> <span class="nc">line</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionLine">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.OptionLine.html#kittycad.models.path_segment.OptionLine">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionLine</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A straight line segment. Goes from the current path \&quot;pen\&quot; to the given endpoint.&quot;&quot;&quot;</span>
 
     <span class="n">end</span><span class="p">:</span> <span class="n">Point3d</span>
@@ -107,9 +107,9 @@
 
 
 
-<div class="viewcode-block" id="arc">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.arc.html#kittycad.models.path_segment.arc">[docs]</a>
-<span class="k">class</span> <span class="nc">arc</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionArc">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.OptionArc.html#kittycad.models.path_segment.OptionArc">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionArc</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A circular arc segment. Arcs can be drawn clockwise when start &gt; end.&quot;&quot;&quot;</span>
 
     <span class="n">center</span><span class="p">:</span> <span class="n">Point2d</span>
@@ -128,9 +128,9 @@
 
 
 
-<div class="viewcode-block" id="bezier">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.bezier.html#kittycad.models.path_segment.bezier">[docs]</a>
-<span class="k">class</span> <span class="nc">bezier</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionBezier">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.OptionBezier.html#kittycad.models.path_segment.OptionBezier">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionBezier</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A cubic bezier curve segment. Start at the end of the current line, go through control point 1 and 2, then end at a given point.&quot;&quot;&quot;</span>
 
     <span class="n">control1</span><span class="p">:</span> <span class="n">Point3d</span>
@@ -147,9 +147,9 @@
 
 
 
-<div class="viewcode-block" id="tangential_arc">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.tangential_arc.html#kittycad.models.path_segment.tangential_arc">[docs]</a>
-<span class="k">class</span> <span class="nc">tangential_arc</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionTangentialArc">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.OptionTangentialArc.html#kittycad.models.path_segment.OptionTangentialArc">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionTangentialArc</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a tangent arc from current pen position with the given radius and angle.&quot;&quot;&quot;</span>
 
     <span class="n">offset</span><span class="p">:</span> <span class="n">Angle</span>
@@ -162,9 +162,9 @@
 
 
 
-<div class="viewcode-block" id="tangential_arc_to">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.tangential_arc_to.html#kittycad.models.path_segment.tangential_arc_to">[docs]</a>
-<span class="k">class</span> <span class="nc">tangential_arc_to</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionTangentialArcTo">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.OptionTangentialArcTo.html#kittycad.models.path_segment.OptionTangentialArcTo">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionTangentialArcTo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a tangent arc from current pen position to the new position. Arcs will choose a clockwise or counter-clockwise direction based on the arc end position.&quot;&quot;&quot;</span>
 
     <span class="n">angle_snap_increment</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Angle</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -180,11 +180,11 @@
 <span class="n">PathSegment</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">line</span><span class="p">,</span>
-            <span class="n">arc</span><span class="p">,</span>
-            <span class="n">bezier</span><span class="p">,</span>
-            <span class="n">tangential_arc</span><span class="p">,</span>
-            <span class="n">tangential_arc_to</span><span class="p">,</span>
+            <span class="n">OptionLine</span><span class="p">,</span>
+            <span class="n">OptionArc</span><span class="p">,</span>
+            <span class="n">OptionBezier</span><span class="p">,</span>
+            <span class="n">OptionTangentialArc</span><span class="p">,</span>
+            <span class="n">OptionTangentialArcTo</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>
