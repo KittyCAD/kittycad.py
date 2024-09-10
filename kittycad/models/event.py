@@ -7,7 +7,7 @@ from typing_extensions import Annotated
 from ..models.modeling_app_event_type import ModelingAppEventType
 
 
-class modeling_app_event(BaseModel):
+class OptionModelingAppEvent(BaseModel):
     """An event related to modeling app files"""
 
     attachment_uri: Optional[str] = None
@@ -31,4 +31,6 @@ class modeling_app_event(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-Event = RootModel[Annotated[Union[modeling_app_event,], Field(discriminator="type")]]
+Event = RootModel[
+    Annotated[Union[OptionModelingAppEvent,], Field(discriminator="type")]
+]

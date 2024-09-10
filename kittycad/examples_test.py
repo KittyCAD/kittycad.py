@@ -226,10 +226,13 @@ from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
-from kittycad.models.event import Event, modeling_app_event
+from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import IdpMetadataSource, base64_encoded_xml
+from kittycad.models.idp_metadata_source import (
+    IdpMetadataSource,
+    OptionBase64EncodedXml,
+)
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.ml_feedback import MlFeedback
@@ -253,7 +256,7 @@ from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
-from kittycad.models.subscription_tier_price import SubscriptionTierPrice, per_user
+from kittycad.models.subscription_tier_price import OptionPerUser, SubscriptionTierPrice
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.unit_angle import UnitAngle
@@ -275,7 +278,7 @@ from kittycad.models.update_payment_balance import UpdatePaymentBalance
 from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import sdp_offer
+from kittycad.models.web_socket_request import OptionSdpOffer
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -1160,7 +1163,7 @@ def test_create_event():
     result: Optional[Error] = create_event.sync(
         client=client,
         body=Event(
-            modeling_app_event(
+            OptionModelingAppEvent(
                 created_at=datetime.datetime.now(),
                 event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
                 project_name="<string>",
@@ -1181,7 +1184,7 @@ def test_create_event():
     response: Response[Optional[Error]] = create_event.sync_detailed(
         client=client,
         body=Event(
-            modeling_app_event(
+            OptionModelingAppEvent(
                 created_at=datetime.datetime.now(),
                 event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
                 project_name="<string>",
@@ -1202,7 +1205,7 @@ async def test_create_event_async():
     result: Optional[Error] = await create_event.asyncio(
         client=client,
         body=Event(
-            modeling_app_event(
+            OptionModelingAppEvent(
                 created_at=datetime.datetime.now(),
                 event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
                 project_name="<string>",
@@ -1216,7 +1219,7 @@ async def test_create_event_async():
     response: Response[Optional[Error]] = await create_event.asyncio_detailed(
         client=client,
         body=Event(
-            modeling_app_event(
+            OptionModelingAppEvent(
                 created_at=datetime.datetime.now(),
                 event_type=ModelingAppEventType.SUCCESSFUL_COMPILE_BEFORE_CLOSE,
                 project_name="<string>",
@@ -3401,7 +3404,7 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                base64_encoded_xml(
+                OptionBase64EncodedXml(
                     data=Base64Data(b"<bytes>"),
                 )
             ),
@@ -3423,7 +3426,7 @@ def test_update_org_saml_idp():
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
-                    base64_encoded_xml(
+                    OptionBase64EncodedXml(
                         data=Base64Data(b"<bytes>"),
                     )
                 ),
@@ -3447,7 +3450,7 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                base64_encoded_xml(
+                OptionBase64EncodedXml(
                     data=Base64Data(b"<bytes>"),
                 )
             ),
@@ -3463,7 +3466,7 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                base64_encoded_xml(
+                OptionBase64EncodedXml(
                     data=Base64Data(b"<bytes>"),
                 )
             ),
@@ -3482,7 +3485,7 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                base64_encoded_xml(
+                OptionBase64EncodedXml(
                     data=Base64Data(b"<bytes>"),
                 )
             ),
@@ -3504,7 +3507,7 @@ def test_create_org_saml_idp():
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
-                    base64_encoded_xml(
+                    OptionBase64EncodedXml(
                         data=Base64Data(b"<bytes>"),
                     )
                 ),
@@ -3528,7 +3531,7 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                base64_encoded_xml(
+                OptionBase64EncodedXml(
                     data=Base64Data(b"<bytes>"),
                 )
             ),
@@ -3544,7 +3547,7 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                base64_encoded_xml(
+                OptionBase64EncodedXml(
                     data=Base64Data(b"<bytes>"),
                 )
             ),
@@ -3906,7 +3909,7 @@ def test_update_enterprise_pricing_for_org():
             client=client,
             id=Uuid("<string>"),
             body=SubscriptionTierPrice(
-                per_user(
+                OptionPerUser(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -3927,7 +3930,7 @@ def test_update_enterprise_pricing_for_org():
             client=client,
             id=Uuid("<string>"),
             body=SubscriptionTierPrice(
-                per_user(
+                OptionPerUser(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -3949,7 +3952,7 @@ async def test_update_enterprise_pricing_for_org_async():
         client=client,
         id=Uuid("<string>"),
         body=SubscriptionTierPrice(
-            per_user(
+            OptionPerUser(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )
@@ -3963,7 +3966,7 @@ async def test_update_enterprise_pricing_for_org_async():
         client=client,
         id=Uuid("<string>"),
         body=SubscriptionTierPrice(
-            per_user(
+            OptionPerUser(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )
@@ -6989,7 +6992,7 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                sdp_offer(
+                OptionSdpOffer(
                     offer=RtcSessionDescription(
                         sdp="<string>",
                         type=RtcSdpType.UNSPECIFIED,

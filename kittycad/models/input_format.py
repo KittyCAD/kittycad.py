@@ -7,7 +7,7 @@ from ..models.system import System
 from ..models.unit_length import UnitLength
 
 
-class fbx(BaseModel):
+class OptionFbx(BaseModel):
     """Autodesk Filmbox (FBX) format."""
 
     type: Literal["fbx"] = "fbx"
@@ -15,7 +15,7 @@ class fbx(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class gltf(BaseModel):
+class OptionGltf(BaseModel):
     """Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb)."""
 
     type: Literal["gltf"] = "gltf"
@@ -23,7 +23,7 @@ class gltf(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class obj(BaseModel):
+class OptionObj(BaseModel):
     """Wavefront OBJ format."""
 
     coords: System
@@ -35,7 +35,7 @@ class obj(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ply(BaseModel):
+class OptionPly(BaseModel):
     """The PLY Polygon File Format."""
 
     coords: System
@@ -47,7 +47,7 @@ class ply(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sldprt(BaseModel):
+class OptionSldprt(BaseModel):
     """SolidWorks part (SLDPRT) format."""
 
     split_closed_faces: bool = False
@@ -57,7 +57,7 @@ class sldprt(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class step(BaseModel):
+class OptionStep(BaseModel):
     """ISO 10303-21 (STEP) format."""
 
     split_closed_faces: bool = False
@@ -67,7 +67,7 @@ class step(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class stl(BaseModel):
+class OptionStl(BaseModel):
     """*ST**ereo**L**ithography format."""
 
     coords: System
@@ -82,13 +82,13 @@ class stl(BaseModel):
 InputFormat = RootModel[
     Annotated[
         Union[
-            fbx,
-            gltf,
-            obj,
-            ply,
-            sldprt,
-            step,
-            stl,
+            OptionFbx,
+            OptionGltf,
+            OptionObj,
+            OptionPly,
+            OptionSldprt,
+            OptionStep,
+            OptionStl,
         ],
         Field(discriminator="type"),
     ]

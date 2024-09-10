@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 
-class default_scene(BaseModel):
+class OptionDefaultScene(BaseModel):
     """Visit the default scene."""
 
     type: Literal["default_scene"] = "default_scene"
@@ -12,7 +12,7 @@ class default_scene(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class scene_by_index(BaseModel):
+class OptionSceneByIndex(BaseModel):
     """Visit the indexed scene."""
 
     index: int
@@ -22,7 +22,7 @@ class scene_by_index(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class scene_by_name(BaseModel):
+class OptionSceneByName(BaseModel):
     """Visit the first scene with the given name."""
 
     name: str
@@ -32,7 +32,7 @@ class scene_by_name(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mesh_by_index(BaseModel):
+class OptionMeshByIndex(BaseModel):
     """Visit the indexed mesh."""
 
     index: int
@@ -42,7 +42,7 @@ class mesh_by_index(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mesh_by_name(BaseModel):
+class OptionMeshByName(BaseModel):
     """Visit the first mesh with the given name."""
 
     name: str
@@ -55,11 +55,11 @@ class mesh_by_name(BaseModel):
 Selection = RootModel[
     Annotated[
         Union[
-            default_scene,
-            scene_by_index,
-            scene_by_name,
-            mesh_by_index,
-            mesh_by_name,
+            OptionDefaultScene,
+            OptionSceneByIndex,
+            OptionSceneByName,
+            OptionMeshByIndex,
+            OptionMeshByName,
         ],
         Field(discriminator="type"),
     ]

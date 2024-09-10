@@ -20,7 +20,7 @@ class IceServerInfoData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class ice_server_info(BaseModel):
+class OptionIceServerInfo(BaseModel):
     """Information about the ICE servers."""
 
     data: IceServerInfoData
@@ -38,7 +38,7 @@ class TrickleIceData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class trickle_ice(BaseModel):
+class OptionTrickleIce(BaseModel):
     """The trickle ICE candidate response."""
 
     data: TrickleIceData
@@ -56,7 +56,7 @@ class SdpAnswerData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class sdp_answer(BaseModel):
+class OptionSdpAnswer(BaseModel):
     """The SDP answer response."""
 
     data: SdpAnswerData
@@ -74,7 +74,7 @@ class ModelingData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling(BaseModel):
+class OptionModeling(BaseModel):
     """The modeling command response."""
 
     data: ModelingData
@@ -92,7 +92,7 @@ class ModelingBatchData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_batch(BaseModel):
+class OptionModelingBatch(BaseModel):
     """Response to a ModelingBatch."""
 
     data: ModelingBatchData
@@ -110,7 +110,7 @@ class ExportData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class export(BaseModel):
+class OptionExport(BaseModel):
     """The exported files."""
 
     data: ExportData
@@ -126,7 +126,7 @@ class MetricsRequestData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class metrics_request(BaseModel):
+class OptionMetricsRequest(BaseModel):
     """Request a collection of metrics, to include WebRTC."""
 
     data: MetricsRequestData
@@ -144,7 +144,7 @@ class ModelingSessionDataData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class modeling_session_data(BaseModel):
+class OptionModelingSessionData(BaseModel):
     """Data about the Modeling Session (application-level)."""
 
     data: ModelingSessionDataData
@@ -160,7 +160,7 @@ class PongData(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class pong(BaseModel):
+class OptionPong(BaseModel):
     """Pong response to a Ping message."""
 
     data: PongData
@@ -173,15 +173,15 @@ class pong(BaseModel):
 OkWebSocketResponseData = RootModel[
     Annotated[
         Union[
-            ice_server_info,
-            trickle_ice,
-            sdp_answer,
-            modeling,
-            modeling_batch,
-            export,
-            metrics_request,
-            modeling_session_data,
-            pong,
+            OptionIceServerInfo,
+            OptionTrickleIce,
+            OptionSdpAnswer,
+            OptionModeling,
+            OptionModelingBatch,
+            OptionExport,
+            OptionMetricsRequest,
+            OptionModelingSessionData,
+            OptionPong,
         ],
         Field(discriminator="type"),
     ]

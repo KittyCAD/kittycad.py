@@ -60,7 +60,7 @@ from ..models.volume import Volume
 from ..models.zoom_to_fit import ZoomToFit
 
 
-class empty(BaseModel):
+class OptionEmpty(BaseModel):
     """An empty response, used for any command that does not explicitly have a response defined here."""
 
     type: Literal["empty"] = "empty"
@@ -68,7 +68,7 @@ class empty(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class export(BaseModel):
+class OptionExport(BaseModel):
     """The response to the 'Export' endpoint"""
 
     data: Export
@@ -78,7 +78,7 @@ class export(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_with_point(BaseModel):
+class OptionSelectWithPoint(BaseModel):
     """The response to the 'SelectWithPoint' endpoint"""
 
     data: SelectWithPoint
@@ -88,7 +88,7 @@ class select_with_point(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class highlight_set_entity(BaseModel):
+class OptionHighlightSetEntity(BaseModel):
     """The response to the 'HighlightSetEntity' endpoint"""
 
     data: HighlightSetEntity
@@ -98,7 +98,7 @@ class highlight_set_entity(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_child_uuid(BaseModel):
+class OptionEntityGetChildUuid(BaseModel):
     """The response to the 'EntityGetChildUuid' endpoint"""
 
     data: EntityGetChildUuid
@@ -108,7 +108,7 @@ class entity_get_child_uuid(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_num_children(BaseModel):
+class OptionEntityGetNumChildren(BaseModel):
     """The response to the 'EntityGetNumChildren' endpoint"""
 
     data: EntityGetNumChildren
@@ -118,7 +118,7 @@ class entity_get_num_children(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_parent_id(BaseModel):
+class OptionEntityGetParentId(BaseModel):
     """The response to the 'EntityGetParentId' endpoint"""
 
     data: EntityGetParentId
@@ -128,7 +128,7 @@ class entity_get_parent_id(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_all_child_uuids(BaseModel):
+class OptionEntityGetAllChildUuids(BaseModel):
     """The response to the 'EntityGetAllChildUuids' endpoint"""
 
     data: EntityGetAllChildUuids
@@ -138,7 +138,7 @@ class entity_get_all_child_uuids(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_sketch_paths(BaseModel):
+class OptionEntityGetSketchPaths(BaseModel):
     """The response to the 'EntityGetSketchPaths' endpoint"""
 
     data: EntityGetSketchPaths
@@ -148,7 +148,7 @@ class entity_get_sketch_paths(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class loft(BaseModel):
+class OptionLoft(BaseModel):
     """The response to the 'Loft' endpoint"""
 
     data: Loft
@@ -158,7 +158,7 @@ class loft(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class close_path(BaseModel):
+class OptionClosePath(BaseModel):
     """The response to the 'ClosePath' endpoint"""
 
     data: ClosePath
@@ -168,7 +168,7 @@ class close_path(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class camera_drag_move(BaseModel):
+class OptionCameraDragMove(BaseModel):
     """The response to the 'CameraDragMove' endpoint"""
 
     data: CameraDragMove
@@ -178,7 +178,7 @@ class camera_drag_move(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class camera_drag_end(BaseModel):
+class OptionCameraDragEnd(BaseModel):
     """The response to the 'CameraDragEnd' endpoint"""
 
     data: CameraDragEnd
@@ -188,7 +188,7 @@ class camera_drag_end(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_get_settings(BaseModel):
+class OptionDefaultCameraGetSettings(BaseModel):
     """The response to the 'DefaultCameraGetSettings' endpoint"""
 
     data: DefaultCameraGetSettings
@@ -198,7 +198,7 @@ class default_camera_get_settings(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_zoom(BaseModel):
+class OptionDefaultCameraZoom(BaseModel):
     """The response to the 'DefaultCameraZoom' endpoint"""
 
     data: DefaultCameraZoom
@@ -208,7 +208,7 @@ class default_camera_zoom(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class zoom_to_fit(BaseModel):
+class OptionZoomToFit(BaseModel):
     """The response to the 'ZoomToFit' endpoint"""
 
     data: ZoomToFit
@@ -218,7 +218,7 @@ class zoom_to_fit(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class view_isometric(BaseModel):
+class OptionViewIsometric(BaseModel):
     """The response to the 'ViewIsometric' endpoint"""
 
     data: ViewIsometric
@@ -228,7 +228,7 @@ class view_isometric(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_num_objects(BaseModel):
+class OptionGetNumObjects(BaseModel):
     """The response to the 'GetNumObjects' endpoint"""
 
     data: GetNumObjects
@@ -238,7 +238,7 @@ class get_num_objects(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class default_camera_focus_on(BaseModel):
+class OptionDefaultCameraFocusOn(BaseModel):
     """The response to the 'DefaultCameraFocusOn' endpoint"""
 
     data: DefaultCameraFocusOn
@@ -248,7 +248,7 @@ class default_camera_focus_on(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class select_get(BaseModel):
+class OptionSelectGet(BaseModel):
     """The response to the 'SelectGet' endpoint"""
 
     data: SelectGet
@@ -258,7 +258,7 @@ class select_get(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_all_edge_faces(BaseModel):
+class OptionSolid3DGetAllEdgeFaces(BaseModel):
     """The response to the 'Solid3dGetAllEdgeFaces' endpoint"""
 
     data: Solid3dGetAllEdgeFaces
@@ -268,7 +268,7 @@ class solid3d_get_all_edge_faces(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_all_opposite_edges(BaseModel):
+class OptionSolid3DGetAllOppositeEdges(BaseModel):
     """The response to the 'Solid3dGetAllOppositeEdges' endpoint"""
 
     data: Solid3dGetAllOppositeEdges
@@ -278,7 +278,7 @@ class solid3d_get_all_opposite_edges(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_opposite_edge(BaseModel):
+class OptionSolid3DGetOppositeEdge(BaseModel):
     """The response to the 'Solid3dGetOppositeEdge' endpoint"""
 
     data: Solid3dGetOppositeEdge
@@ -288,7 +288,7 @@ class solid3d_get_opposite_edge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_next_adjacent_edge(BaseModel):
+class OptionSolid3DGetNextAdjacentEdge(BaseModel):
     """The response to the 'Solid3dGetNextAdjacentEdge' endpoint"""
 
     data: Solid3dGetNextAdjacentEdge
@@ -298,7 +298,7 @@ class solid3d_get_next_adjacent_edge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_prev_adjacent_edge(BaseModel):
+class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
     """The response to the 'Solid3dGetPrevAdjacentEdge' endpoint"""
 
     data: Solid3dGetPrevAdjacentEdge
@@ -308,7 +308,7 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_entity_type(BaseModel):
+class OptionGetEntityType(BaseModel):
     """The response to the 'GetEntityType' endpoint"""
 
     data: GetEntityType
@@ -318,7 +318,7 @@ class get_entity_type(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_get_control_points(BaseModel):
+class OptionCurveGetControlPoints(BaseModel):
     """The response to the 'CurveGetControlPoints' endpoint"""
 
     data: CurveGetControlPoints
@@ -328,7 +328,7 @@ class curve_get_control_points(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_get_type(BaseModel):
+class OptionCurveGetType(BaseModel):
     """The response to the 'CurveGetType' endpoint"""
 
     data: CurveGetType
@@ -338,7 +338,7 @@ class curve_get_type(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mouse_click(BaseModel):
+class OptionMouseClick(BaseModel):
     """The response to the 'MouseClick' endpoint"""
 
     data: MouseClick
@@ -348,7 +348,7 @@ class mouse_click(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class take_snapshot(BaseModel):
+class OptionTakeSnapshot(BaseModel):
     """The response to the 'TakeSnapshot' endpoint"""
 
     data: TakeSnapshot
@@ -358,7 +358,7 @@ class take_snapshot(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_info(BaseModel):
+class OptionPathGetInfo(BaseModel):
     """The response to the 'PathGetInfo' endpoint"""
 
     data: PathGetInfo
@@ -368,7 +368,7 @@ class path_get_info(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_segment_info(BaseModel):
+class OptionPathSegmentInfo(BaseModel):
     """The response to the 'PathSegmentInfo' endpoint"""
 
     data: PathSegmentInfo
@@ -378,7 +378,7 @@ class path_segment_info(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_curve_uuids_for_vertices(BaseModel):
+class OptionPathGetCurveUuidsForVertices(BaseModel):
     """The response to the 'PathGetCurveUuidsForVertices' endpoint"""
 
     data: PathGetCurveUuidsForVertices
@@ -390,7 +390,7 @@ class path_get_curve_uuids_for_vertices(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_curve_uuid(BaseModel):
+class OptionPathGetCurveUuid(BaseModel):
     """The response to the 'PathGetCurveUuid' endpoint"""
 
     data: PathGetCurveUuid
@@ -400,7 +400,7 @@ class path_get_curve_uuid(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_vertex_uuids(BaseModel):
+class OptionPathGetVertexUuids(BaseModel):
     """The response to the 'PathGetVertexUuids' endpoint"""
 
     data: PathGetVertexUuids
@@ -410,7 +410,7 @@ class path_get_vertex_uuids(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class path_get_sketch_target_uuid(BaseModel):
+class OptionPathGetSketchTargetUuid(BaseModel):
     """The response to the 'PathGetSketchTargetUuid' endpoint"""
 
     data: PathGetSketchTargetUuid
@@ -420,7 +420,7 @@ class path_get_sketch_target_uuid(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class curve_get_end_points(BaseModel):
+class OptionCurveGetEndPoints(BaseModel):
     """The response to the 'CurveGetEndPoints' endpoint"""
 
     data: CurveGetEndPoints
@@ -430,7 +430,7 @@ class curve_get_end_points(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_is_planar(BaseModel):
+class OptionFaceIsPlanar(BaseModel):
     """The response to the 'FaceIsPlanar' endpoint"""
 
     data: FaceIsPlanar
@@ -440,7 +440,7 @@ class face_is_planar(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_get_position(BaseModel):
+class OptionFaceGetPosition(BaseModel):
     """The response to the 'FaceGetPosition' endpoint"""
 
     data: FaceGetPosition
@@ -450,7 +450,7 @@ class face_get_position(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_get_center(BaseModel):
+class OptionFaceGetCenter(BaseModel):
     """The response to the 'FaceGetCenter' endpoint"""
 
     data: FaceGetCenter
@@ -460,7 +460,7 @@ class face_get_center(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class face_get_gradient(BaseModel):
+class OptionFaceGetGradient(BaseModel):
     """The response to the 'FaceGetGradient' endpoint"""
 
     data: FaceGetGradient
@@ -470,7 +470,7 @@ class face_get_gradient(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class plane_intersect_and_project(BaseModel):
+class OptionPlaneIntersectAndProject(BaseModel):
     """The response to the 'PlaneIntersectAndProject' endpoint"""
 
     data: PlaneIntersectAndProject
@@ -480,7 +480,7 @@ class plane_intersect_and_project(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class import_files(BaseModel):
+class OptionImportFiles(BaseModel):
     """The response to the 'ImportFiles' endpoint"""
 
     data: ImportFiles
@@ -490,7 +490,7 @@ class import_files(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class imported_geometry(BaseModel):
+class OptionImportedGeometry(BaseModel):
     """The response to the 'ImportedGeometry' endpoint"""
 
     data: ImportedGeometry
@@ -500,7 +500,7 @@ class imported_geometry(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class mass(BaseModel):
+class OptionMass(BaseModel):
     """The response to the 'Mass' endpoint"""
 
     data: Mass
@@ -510,7 +510,7 @@ class mass(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class volume(BaseModel):
+class OptionVolume(BaseModel):
     """The response to the 'Volume' endpoint"""
 
     data: Volume
@@ -520,7 +520,7 @@ class volume(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class density(BaseModel):
+class OptionDensity(BaseModel):
     """The response to the 'Density' endpoint"""
 
     data: Density
@@ -530,7 +530,7 @@ class density(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class surface_area(BaseModel):
+class OptionSurfaceArea(BaseModel):
     """The response to the 'SurfaceArea' endpoint"""
 
     data: SurfaceArea
@@ -540,7 +540,7 @@ class surface_area(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class center_of_mass(BaseModel):
+class OptionCenterOfMass(BaseModel):
     """The response to the 'CenterOfMass' endpoint"""
 
     data: CenterOfMass
@@ -550,7 +550,7 @@ class center_of_mass(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class get_sketch_mode_plane(BaseModel):
+class OptionGetSketchModePlane(BaseModel):
     """The response to the 'GetSketchModePlane' endpoint"""
 
     data: GetSketchModePlane
@@ -560,7 +560,7 @@ class get_sketch_mode_plane(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_get_distance(BaseModel):
+class OptionEntityGetDistance(BaseModel):
     """The response to the 'EntityGetDistance' endpoint"""
 
     data: EntityGetDistance
@@ -570,7 +570,7 @@ class entity_get_distance(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_linear_pattern_transform(BaseModel):
+class OptionEntityLinearPatternTransform(BaseModel):
     """The response to the 'EntityLinearPatternTransform' endpoint"""
 
     data: EntityLinearPatternTransform
@@ -580,7 +580,7 @@ class entity_linear_pattern_transform(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_linear_pattern(BaseModel):
+class OptionEntityLinearPattern(BaseModel):
     """The response to the 'EntityLinearPattern' endpoint"""
 
     data: EntityLinearPattern
@@ -590,7 +590,7 @@ class entity_linear_pattern(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class entity_circular_pattern(BaseModel):
+class OptionEntityCircularPattern(BaseModel):
     """The response to the 'EntityCircularPattern' endpoint"""
 
     data: EntityCircularPattern
@@ -600,7 +600,7 @@ class entity_circular_pattern(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class solid3d_get_extrusion_face_info(BaseModel):
+class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     """The response to the 'Solid3dGetExtrusionFaceInfo' endpoint"""
 
     data: Solid3dGetExtrusionFaceInfo
@@ -610,7 +610,7 @@ class solid3d_get_extrusion_face_info(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class extrusion_face_info(BaseModel):
+class OptionExtrusionFaceInfo(BaseModel):
     """The response to the 'ExtrusionFaceInfo' endpoint"""
 
     data: ExtrusionFaceInfo
@@ -623,62 +623,62 @@ class extrusion_face_info(BaseModel):
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
-            empty,
-            export,
-            select_with_point,
-            highlight_set_entity,
-            entity_get_child_uuid,
-            entity_get_num_children,
-            entity_get_parent_id,
-            entity_get_all_child_uuids,
-            entity_get_sketch_paths,
-            loft,
-            close_path,
-            camera_drag_move,
-            camera_drag_end,
-            default_camera_get_settings,
-            default_camera_zoom,
-            zoom_to_fit,
-            view_isometric,
-            get_num_objects,
-            default_camera_focus_on,
-            select_get,
-            solid3d_get_all_edge_faces,
-            solid3d_get_all_opposite_edges,
-            solid3d_get_opposite_edge,
-            solid3d_get_next_adjacent_edge,
-            solid3d_get_prev_adjacent_edge,
-            get_entity_type,
-            curve_get_control_points,
-            curve_get_type,
-            mouse_click,
-            take_snapshot,
-            path_get_info,
-            path_segment_info,
-            path_get_curve_uuids_for_vertices,
-            path_get_curve_uuid,
-            path_get_vertex_uuids,
-            path_get_sketch_target_uuid,
-            curve_get_end_points,
-            face_is_planar,
-            face_get_position,
-            face_get_center,
-            face_get_gradient,
-            plane_intersect_and_project,
-            import_files,
-            imported_geometry,
-            mass,
-            volume,
-            density,
-            surface_area,
-            center_of_mass,
-            get_sketch_mode_plane,
-            entity_get_distance,
-            entity_linear_pattern_transform,
-            entity_linear_pattern,
-            entity_circular_pattern,
-            solid3d_get_extrusion_face_info,
-            extrusion_face_info,
+            OptionEmpty,
+            OptionExport,
+            OptionSelectWithPoint,
+            OptionHighlightSetEntity,
+            OptionEntityGetChildUuid,
+            OptionEntityGetNumChildren,
+            OptionEntityGetParentId,
+            OptionEntityGetAllChildUuids,
+            OptionEntityGetSketchPaths,
+            OptionLoft,
+            OptionClosePath,
+            OptionCameraDragMove,
+            OptionCameraDragEnd,
+            OptionDefaultCameraGetSettings,
+            OptionDefaultCameraZoom,
+            OptionZoomToFit,
+            OptionViewIsometric,
+            OptionGetNumObjects,
+            OptionDefaultCameraFocusOn,
+            OptionSelectGet,
+            OptionSolid3DGetAllEdgeFaces,
+            OptionSolid3DGetAllOppositeEdges,
+            OptionSolid3DGetOppositeEdge,
+            OptionSolid3DGetNextAdjacentEdge,
+            OptionSolid3DGetPrevAdjacentEdge,
+            OptionGetEntityType,
+            OptionCurveGetControlPoints,
+            OptionCurveGetType,
+            OptionMouseClick,
+            OptionTakeSnapshot,
+            OptionPathGetInfo,
+            OptionPathSegmentInfo,
+            OptionPathGetCurveUuidsForVertices,
+            OptionPathGetCurveUuid,
+            OptionPathGetVertexUuids,
+            OptionPathGetSketchTargetUuid,
+            OptionCurveGetEndPoints,
+            OptionFaceIsPlanar,
+            OptionFaceGetPosition,
+            OptionFaceGetCenter,
+            OptionFaceGetGradient,
+            OptionPlaneIntersectAndProject,
+            OptionImportFiles,
+            OptionImportedGeometry,
+            OptionMass,
+            OptionVolume,
+            OptionDensity,
+            OptionSurfaceArea,
+            OptionCenterOfMass,
+            OptionGetSketchModePlane,
+            OptionEntityGetDistance,
+            OptionEntityLinearPatternTransform,
+            OptionEntityLinearPattern,
+            OptionEntityCircularPattern,
+            OptionSolid3DGetExtrusionFaceInfo,
+            OptionExtrusionFaceInfo,
         ],
         Field(discriminator="type"),
     ]
