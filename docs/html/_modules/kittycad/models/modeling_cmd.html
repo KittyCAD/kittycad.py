@@ -96,7 +96,6 @@
 <span class="kn">from</span> <span class="nn">..models.import_file</span> <span class="kn">import</span> <span class="n">ImportFile</span>
 <span class="kn">from</span> <span class="nn">..models.input_format</span> <span class="kn">import</span> <span class="n">InputFormat</span>
 <span class="kn">from</span> <span class="nn">..models.length_unit</span> <span class="kn">import</span> <span class="n">LengthUnit</span>
-<span class="kn">from</span> <span class="nn">..models.linear_transform</span> <span class="kn">import</span> <span class="n">LinearTransform</span>
 <span class="kn">from</span> <span class="nn">..models.modeling_cmd_id</span> <span class="kn">import</span> <span class="n">ModelingCmdId</span>
 <span class="kn">from</span> <span class="nn">..models.output_format</span> <span class="kn">import</span> <span class="n">OutputFormat</span>
 <span class="kn">from</span> <span class="nn">..models.path_component_constraint_bound</span> <span class="kn">import</span> <span class="n">PathComponentConstraintBound</span>
@@ -107,6 +106,7 @@
 <span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
 <span class="kn">from</span> <span class="nn">..models.scene_selection_type</span> <span class="kn">import</span> <span class="n">SceneSelectionType</span>
 <span class="kn">from</span> <span class="nn">..models.scene_tool_type</span> <span class="kn">import</span> <span class="n">SceneToolType</span>
+<span class="kn">from</span> <span class="nn">..models.transform</span> <span class="kn">import</span> <span class="n">Transform</span>
 <span class="kn">from</span> <span class="nn">..models.unit_area</span> <span class="kn">import</span> <span class="n">UnitArea</span>
 <span class="kn">from</span> <span class="nn">..models.unit_density</span> <span class="kn">import</span> <span class="n">UnitDensity</span>
 <span class="kn">from</span> <span class="nn">..models.unit_length</span> <span class="kn">import</span> <span class="n">UnitLength</span>
@@ -128,7 +128,7 @@
 <div class="viewcode-block" id="move_path_pen">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.move_path_pen.html#kittycad.models.modeling_cmd.move_path_pen">[docs]</a>
 <span class="k">class</span> <span class="nc">move_path_pen</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Move the path&#39;s \&quot;pen\&quot;.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Move the path&#39;s \&quot;pen\&quot;. If you&#39;re in sketch mode, these coordinates are in the local coordinate system, not the world&#39;s coordinate system. For example, say you&#39;re sketching on the plane {x: (1,0,0), y: (0,1,0), origin: (0, 0, 50)}. In other words, the plane 50 units above the default XY plane. Then, moving the pen to (1, 1, 0) with this command uses local coordinates. So, it would move the pen to (1, 1, 50) in global coordinates.&quot;&quot;&quot;</span>
 
     <span class="n">path</span><span class="p">:</span> <span class="n">ModelingCmdId</span>
 
@@ -159,8 +159,6 @@
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.extrude.html#kittycad.models.modeling_cmd.extrude">[docs]</a>
 <span class="k">class</span> <span class="nc">extrude</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Command for extruding a solid 2d.&quot;&quot;&quot;</span>
-
-    <span class="n">cap</span><span class="p">:</span> <span class="nb">bool</span>
 
     <span class="n">distance</span><span class="p">:</span> <span class="n">LengthUnit</span>
 
@@ -486,11 +484,11 @@
 <div class="viewcode-block" id="entity_linear_pattern_transform">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.entity_linear_pattern_transform.html#kittycad.models.modeling_cmd.entity_linear_pattern_transform">[docs]</a>
 <span class="k">class</span> <span class="nc">entity_linear_pattern_transform</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a pattern using this entity by specifying the transform for each desired repetition.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate.&quot;&quot;&quot;</span>
 
     <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
 
-    <span class="n">transform</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">LinearTransform</span><span class="p">]</span>
+    <span class="n">transform</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Transform</span><span class="p">]</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_linear_pattern_transform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_linear_pattern_transform&quot;</span>
 
@@ -912,6 +910,8 @@
     <span class="n">cut_type</span><span class="p">:</span> <span class="n">CutType</span> <span class="o">=</span> <span class="s2">&quot;fillet&quot;</span>
 
     <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">face_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
 
