@@ -412,7 +412,7 @@ def generateTypeAndExamplePython(
             and "enum" in one_of["properties"]["type"]
         ):
             return generateTypeAndExamplePython(
-                one_of["properties"]["type"]["enum"][0],
+                snake_to_title("option_" + one_of["properties"]["type"]["enum"][0]),
                 one_of,
                 data,
                 camel_to_snake(name),
