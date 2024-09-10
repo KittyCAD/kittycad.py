@@ -22,7 +22,6 @@ def _get_kwargs(
     )  # noqa: E501
 
     if output is not None:
-
         if "?" in url:
             url = url + "&output=" + str(output)
         else:
@@ -93,7 +92,6 @@ def sync(
     client: Client,
     output: Optional[str] = None,
 ) -> Optional[Union[CodeOutput, Error]]:
-
     return sync_detailed(
         lang=lang,
         output=output,
@@ -129,7 +127,6 @@ async def asyncio(
     client: Client,
     output: Optional[str] = None,
 ) -> Optional[Union[CodeOutput, Error]]:
-
     return (
         await asyncio_detailed(
             lang=lang,

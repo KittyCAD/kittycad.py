@@ -3,7 +3,6 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-
 class SelectGet(BaseModel):
     """The response from the `SelectGet` command."""
 

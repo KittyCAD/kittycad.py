@@ -4,7 +4,6 @@ from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 
-
 class individual(BaseModel):
     """A subscription tier that can be applied to individuals only."""
 

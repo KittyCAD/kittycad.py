@@ -22,14 +22,12 @@ def _get_kwargs(
     )  # noqa: E501
 
     if output_unit is not None:
-
         if "?" in url:
             url = url + "&output_unit=" + str(output_unit)
         else:
             url = url + "?output_unit=" + str(output_unit)
 
     if src_format is not None:
-
         if "?" in url:
             url = url + "&src_format=" + str(src_format)
         else:
@@ -104,8 +102,7 @@ def sync(
     This endpoint returns the cubic measure units.
     In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
     Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-    """  # noqa: E501
+    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
     return sync_detailed(
         output_unit=output_unit,
@@ -146,8 +143,7 @@ async def asyncio(
     This endpoint returns the cubic measure units.
     In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
     Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
-    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-    """  # noqa: E501
+    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
     return (
         await asyncio_detailed(

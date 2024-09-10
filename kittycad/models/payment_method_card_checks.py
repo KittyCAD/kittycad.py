@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-
 class PaymentMethodCardChecks(BaseModel):
     """Card checks."""
 

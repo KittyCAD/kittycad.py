@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-
 class UpdateUser(BaseModel):
     """The user-modifiable parts of a User."""
 

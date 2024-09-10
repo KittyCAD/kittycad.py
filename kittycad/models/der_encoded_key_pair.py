@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from .base64data import Base64Data

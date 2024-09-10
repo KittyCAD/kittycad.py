@@ -1,4 +1,4 @@
-""" Contains some shared types for properties """
+"""Contains some shared types for properties"""
 
 from typing import (
     BinaryIO,

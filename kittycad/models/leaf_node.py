@@ -1,6 +1,4 @@
-
 from pydantic import BaseModel, ConfigDict
-
 
 
 class LeafNode(BaseModel):

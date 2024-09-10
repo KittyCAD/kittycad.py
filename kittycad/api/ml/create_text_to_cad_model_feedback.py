@@ -20,7 +20,6 @@ def _get_kwargs(
     )  # noqa: E501
 
     if feedback is not None:
-
         if "?" in url:
             url = url + "&feedback=" + str(feedback)
         else:

@@ -78,8 +78,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[Customer, Error]]:
     """This includes billing address, phone, and name.
-    This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org.
-    """  # noqa: E501
+    This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org."""  # noqa: E501
 
     return sync_detailed(
         body=body,
@@ -109,8 +108,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[Customer, Error]]:
     """This includes billing address, phone, and name.
-    This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org.
-    """  # noqa: E501
+    This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org."""  # noqa: E501
 
     return (
         await asyncio_detailed(

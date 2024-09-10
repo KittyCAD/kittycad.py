@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 from ..models.o_auth2_grant_type import OAuth2GrantType

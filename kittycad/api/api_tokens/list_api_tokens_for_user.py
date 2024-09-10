@@ -21,21 +21,18 @@ def _get_kwargs(
     )  # noqa: E501
 
     if limit is not None:
-
         if "?" in url:
             url = url + "&limit=" + str(limit)
         else:
             url = url + "?limit=" + str(limit)
 
     if page_token is not None:
-
         if "?" in url:
             url = url + "&page_token=" + str(page_token)
         else:
             url = url + "?page_token=" + str(page_token)
 
     if sort_by is not None:
-
         if "?" in url:
             url = url + "&sort_by=" + str(sort_by)
         else:
@@ -108,8 +105,7 @@ def sync(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiTokenResultsPage, Error]]:
     """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
-    The API tokens are returned in order of creation, with the most recently created API tokens first.
-    """  # noqa: E501
+    The API tokens are returned in order of creation, with the most recently created API tokens first."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
@@ -147,8 +143,7 @@ async def asyncio(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiTokenResultsPage, Error]]:
     """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
-    The API tokens are returned in order of creation, with the most recently created API tokens first.
-    """  # noqa: E501
+    The API tokens are returned in order of creation, with the most recently created API tokens first."""  # noqa: E501
 
     return (
         await asyncio_detailed(

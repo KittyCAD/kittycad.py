@@ -20,7 +20,6 @@ def _get_kwargs(
     )  # noqa: E501
 
     if callback_url is not None:
-
         if "?" in url:
             url = url + "&callback_url=" + str(callback_url)
         else:

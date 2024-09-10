@@ -3,7 +3,6 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-
 class EntityGetAllChildUuids(BaseModel):
     """The response from the `EntityGetAllChildUuids` command."""
 

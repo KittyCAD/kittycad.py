@@ -4,7 +4,6 @@ from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 
-
 class default_scene(BaseModel):
     """Visit the default scene."""
 

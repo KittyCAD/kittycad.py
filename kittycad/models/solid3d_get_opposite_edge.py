@@ -1,6 +1,4 @@
-
 from pydantic import BaseModel, ConfigDict
-
 
 
 class Solid3dGetOppositeEdge(BaseModel):
