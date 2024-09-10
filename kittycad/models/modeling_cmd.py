@@ -1,3 +1,4 @@
+import json
 from typing import List, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
@@ -674,7 +675,7 @@ class solid3d_get_prev_adjacent_edge(BaseModel):
 class solid3d_fillet_edge(BaseModel):
     """Fillets the given edge with the specified radius."""
 
-    cut_type: CutType = "fillet"
+    cut_type: CutType = CutType(**json.loads("""fillet"""))
 
     edge_id: str
 

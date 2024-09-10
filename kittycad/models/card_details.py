@@ -1,3 +1,4 @@
+import json
 from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
@@ -10,7 +11,7 @@ class CardDetails(BaseModel):
 
     brand: Optional[str] = None
 
-    checks: PaymentMethodCardChecks = {}
+    checks: PaymentMethodCardChecks = PaymentMethodCardChecks(**json.loads("""{}"""))
 
     country: Optional[str] = None
 

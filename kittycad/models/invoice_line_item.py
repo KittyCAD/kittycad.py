@@ -1,3 +1,4 @@
+import json
 from typing import Dict, Optional
 
 from pydantic import BaseModel, ConfigDict
@@ -10,7 +11,7 @@ class InvoiceLineItem(BaseModel):
 
     amount: float = 0.0
 
-    currency: Currency = "usd"
+    currency: Currency = Currency(**json.loads("""usd"""))
 
     description: Optional[str] = None
 

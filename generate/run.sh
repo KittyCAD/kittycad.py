@@ -22,7 +22,7 @@ poetry run python generate/generate.py
 poetry run isort .
 poetry run ruff check --fix .
 poetry run ruff format
-poetry run mypy . --exclude venv || true
+poetry run mypy .
 
 
 # Run the tests.

@@ -1670,12 +1670,18 @@ def generateObjectTypeCode(
                 field_type = getTypeName(property_schema)
                 if property_name not in required:
                     if "default" in property_schema:
-                        field_type += (
-                            ' = "' + property_schema["default"] + '"'
-                            if field_type == "str"
-                            or isinstance(property_schema["default"], str)
-                            else " = " + str(property_schema["default"])
-                        )
+                        if field_type == "str":
+                            field_type += ' = "' + property_schema["default"] + '"'
+                        elif "allOf" in property_schema:
+                            field_type += (
+                                " = "
+                                + field_type
+                                + '(**json.loads("""'
+                                + str(property_schema["default"])
+                                + '"""))'
+                            )
+                        else:
+                            field_type += " = " + str(property_schema["default"])
                     else:
                         field_type = "Optional[" + field_type + "] = None"
                 field2: FieldType = {
