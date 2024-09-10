@@ -140,7 +140,12 @@ def generatePaths(cwd: str, parser: dict) -> dict:
 
 
 def generateTypeAndExamplePython(
-    name: str, schema: dict, data: dict, import_path: Optional[str], tag: Optional[str]
+    name: str,
+    schema: dict,
+    data: dict,
+    import_path: Optional[str],
+    tag: Optional[str],
+    wrapper: Optional[str] = None,
 ) -> Tuple[str, str, str]:
     parameter_type = ""
     parameter_example = ""
@@ -300,6 +305,13 @@ def generateTypeAndExamplePython(
                     )
 
             parameter_example = parameter_example + ")"
+
+            if wrapper is not None:
+                if wrapper != "WebSocketRequest":
+                    example_imports = example_imports + (
+                        "from kittycad.models." + ip + " import " + wrapper + "\n"
+                    )
+                    parameter_example = wrapper + "(" + parameter_example + ")"
         elif (
             schema["type"] == "object"
             and "additionalProperties" in schema
@@ -346,6 +358,7 @@ def generateTypeAndExamplePython(
                 data,
                 camel_to_snake(name),
                 tag,
+                name,
             )
         else:
             return generateTypeAndExamplePython(name, one_of, data, None, None)
@@ -355,6 +368,9 @@ def generateTypeAndExamplePython(
         parameter_type = schema["$ref"].replace("#/components/schemas/", "")
         # Get the schema for the reference.
         ref_schema = data["components"]["schemas"][parameter_type]
+
+        if parameter_type == "IdpMetadataSource":
+            print(ref_schema)
 
         return generateTypeAndExamplePython(
             parameter_type, ref_schema, data, None, None
