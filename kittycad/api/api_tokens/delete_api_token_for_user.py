@@ -3,12 +3,13 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
+from ...models.api_token_uuid import ApiTokenUuid
 from ...models.error import Error
 from ...types import Response
 
 
 def _get_kwargs(
-    token: str,
+    token: ApiTokenUuid,
     *,
     client: Client,
 ) -> Dict[str, Any]:
@@ -49,7 +50,7 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 
 
 def sync_detailed(
-    token: str,
+    token: ApiTokenUuid,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
@@ -67,7 +68,7 @@ def sync_detailed(
 
 
 def sync(
-    token: str,
+    token: ApiTokenUuid,
     *,
     client: Client,
 ) -> Optional[Error]:
@@ -82,7 +83,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    token: str,
+    token: ApiTokenUuid,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
@@ -98,7 +99,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    token: str,
+    token: ApiTokenUuid,
     *,
     client: Client,
 ) -> Optional[Error]:
