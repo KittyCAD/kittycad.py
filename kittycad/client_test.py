@@ -175,13 +175,13 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    result: Optional[Union[FileConversion, Error]] = (
-        await create_file_conversion.asyncio(
-            client=client,
-            body=content,
-            src_format=FileImportFormat.STL,
-            output_format=FileExportFormat.OBJ,
-        )
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ,
     )
 
     assert isinstance(result, FileConversion)
@@ -214,13 +214,13 @@ async def test_file_convert_obj_async():
     file.close()
 
     # Get the fc.
-    result: Optional[Union[FileConversion, Error]] = (
-        await create_file_conversion.asyncio(
-            client=client,
-            body=content,
-            src_format=FileImportFormat.OBJ,
-            output_format=FileExportFormat.STL,
-        )
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion.asyncio(
+        client=client,
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_format=FileExportFormat.STL,
     )
 
     assert isinstance(result, FileConversion)
@@ -383,7 +383,7 @@ def test_ws_simple():
 
 def test_ws_import():
     max_retries = 3
-    for attempt in range(max_retries):
+    for attempt in range(1, max_retries + 1):
         try:
             # Create our client.
             client = ClientFromEnv()
@@ -402,9 +402,9 @@ def test_ws_import():
                 # read the content of the file
                 dir_path = os.path.dirname(os.path.realpath(__file__))
                 file_name = "ORIGINALVOXEL-3.obj"
-                file = open(os.path.join(dir_path, "..", "assets", file_name), "rb")
-                content = file.read()
-                file.close()
+                file_path = os.path.join(dir_path, "..", "assets", file_name)
+                with open(file_path, "rb") as file:
+                    content = file.read()
                 cmd_id = uuid.uuid4()
                 ImportFile(data=content, path=file_name)
                 # form the request
@@ -437,7 +437,6 @@ def test_ws_import():
                 websocket.send_binary(req)
 
                 # Get the success message.
-                object_id = ""
                 for message in websocket:
                     message_dict = message.model_dump()
                     if message_dict["success"] is not True:
@@ -497,7 +496,6 @@ def test_ws_import():
                 websocket.send(req)
 
                 # Get the success message.
-                png_contents = b""
                 for message in websocket:
                     message_dict = message.model_dump()
                     if message_dict["success"] is not True:
