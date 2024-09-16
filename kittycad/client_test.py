@@ -175,13 +175,13 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the fc.
-    result: Optional[
-        Union[FileConversion, Error]
-    ] = await create_file_conversion.asyncio(
-        client=client,
-        body=content,
-        src_format=FileImportFormat.STL,
-        output_format=FileExportFormat.OBJ,
+    result: Optional[Union[FileConversion, Error]] = (
+        await create_file_conversion.asyncio(
+            client=client,
+            body=content,
+            src_format=FileImportFormat.STL,
+            output_format=FileExportFormat.OBJ,
+        )
     )
 
     assert isinstance(result, FileConversion)
@@ -214,13 +214,13 @@ async def test_file_convert_obj_async():
     file.close()
 
     # Get the fc.
-    result: Optional[
-        Union[FileConversion, Error]
-    ] = await create_file_conversion.asyncio(
-        client=client,
-        body=content,
-        src_format=FileImportFormat.OBJ,
-        output_format=FileExportFormat.STL,
+    result: Optional[Union[FileConversion, Error]] = (
+        await create_file_conversion.asyncio(
+            client=client,
+            body=content,
+            src_format=FileImportFormat.OBJ,
+            output_format=FileExportFormat.STL,
+        )
     )
 
     assert isinstance(result, FileConversion)
