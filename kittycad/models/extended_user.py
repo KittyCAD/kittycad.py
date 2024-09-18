@@ -28,8 +28,6 @@ class ExtendedUser(BaseModel):
 
     first_name: Optional[str] = None
 
-    front_id: Optional[str] = None
-
     github: Optional[str] = None
 
     id: Uuid
