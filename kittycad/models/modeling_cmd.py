@@ -1232,6 +1232,8 @@ class OptionDefaultCameraSetPerspective(BaseModel):
 class OptionZoomToFit(BaseModel):
     """Fit the view to the specified object(s)."""
 
+    animated: bool = False
+
     object_ids: List[str] = []
 
     padding: float
