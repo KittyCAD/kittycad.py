@@ -30,6 +30,8 @@ class ExtendedUser(BaseModel):
 
     github: Optional[str] = None
 
+    hubspot_contact_id: Optional[str] = None
+
     id: Uuid
 
     image: str
