@@ -5,16 +5,29 @@ from typing_extensions import Annotated
 
 from ..models.camera_drag_end import CameraDragEnd
 from ..models.camera_drag_move import CameraDragMove
+from ..models.camera_drag_start import CameraDragStart
 from ..models.center_of_mass import CenterOfMass
 from ..models.close_path import ClosePath
 from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
+from ..models.curve_set_constraint import CurveSetConstraint
 from ..models.default_camera_focus_on import DefaultCameraFocusOn
 from ..models.default_camera_get_settings import DefaultCameraGetSettings
+from ..models.default_camera_look_at import DefaultCameraLookAt
+from ..models.default_camera_perspective_settings import (
+    DefaultCameraPerspectiveSettings,
+)
+from ..models.default_camera_set_orthographic import DefaultCameraSetOrthographic
+from ..models.default_camera_set_perspective import DefaultCameraSetPerspective
 from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
+from ..models.edge_lines_visible import EdgeLinesVisible
+from ..models.edit_mode_enter import EditModeEnter
+from ..models.edit_mode_exit import EditModeExit
+from ..models.enable_sketch_mode import EnableSketchMode
 from ..models.entity_circular_pattern import EntityCircularPattern
+from ..models.entity_fade import EntityFade
 from ..models.entity_get_all_child_uuids import EntityGetAllChildUuids
 from ..models.entity_get_child_uuid import EntityGetChildUuid
 from ..models.entity_get_distance import EntityGetDistance
@@ -23,7 +36,13 @@ from ..models.entity_get_parent_id import EntityGetParentId
 from ..models.entity_get_sketch_paths import EntityGetSketchPaths
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.entity_linear_pattern_transform import EntityLinearPatternTransform
+from ..models.entity_make_helix import EntityMakeHelix
+from ..models.entity_mirror import EntityMirror
+from ..models.entity_mirror_across_edge import EntityMirrorAcrossEdge
+from ..models.entity_set_opacity import EntitySetOpacity
 from ..models.export import Export
+from ..models.extend_path import ExtendPath
+from ..models.extrude import Extrude
 from ..models.extrusion_face_info import ExtrusionFaceInfo
 from ..models.face_get_center import FaceGetCenter
 from ..models.face_get_gradient import FaceGetGradient
@@ -32,12 +51,24 @@ from ..models.face_is_planar import FaceIsPlanar
 from ..models.get_entity_type import GetEntityType
 from ..models.get_num_objects import GetNumObjects
 from ..models.get_sketch_mode_plane import GetSketchModePlane
+from ..models.handle_mouse_drag_end import HandleMouseDragEnd
+from ..models.handle_mouse_drag_move import HandleMouseDragMove
+from ..models.handle_mouse_drag_start import HandleMouseDragStart
+from ..models.highlight_set_entities import HighlightSetEntities
 from ..models.highlight_set_entity import HighlightSetEntity
 from ..models.import_files import ImportFiles
 from ..models.imported_geometry import ImportedGeometry
 from ..models.loft import Loft
+from ..models.make_axes_gizmo import MakeAxesGizmo
+from ..models.make_plane import MakePlane
 from ..models.mass import Mass
 from ..models.mouse_click import MouseClick
+from ..models.mouse_move import MouseMove
+from ..models.move_path_pen import MovePathPen
+from ..models.new_annotation import NewAnnotation
+from ..models.object_bring_to_front import ObjectBringToFront
+from ..models.object_set_material_params_pbr import ObjectSetMaterialParamsPbr
+from ..models.object_visible import ObjectVisible
 from ..models.path_get_curve_uuid import PathGetCurveUuid
 from ..models.path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from ..models.path_get_info import PathGetInfo
@@ -45,16 +76,40 @@ from ..models.path_get_sketch_target_uuid import PathGetSketchTargetUuid
 from ..models.path_get_vertex_uuids import PathGetVertexUuids
 from ..models.path_segment_info import PathSegmentInfo
 from ..models.plane_intersect_and_project import PlaneIntersectAndProject
+from ..models.plane_set_color import PlaneSetColor
+from ..models.reconfigure_stream import ReconfigureStream
+from ..models.remove_scene_objects import RemoveSceneObjects
+from ..models.revolve import Revolve
+from ..models.revolve_about_edge import RevolveAboutEdge
+from ..models.scene_clear_all import SceneClearAll
+from ..models.select_add import SelectAdd
+from ..models.select_clear import SelectClear
 from ..models.select_get import SelectGet
+from ..models.select_remove import SelectRemove
+from ..models.select_replace import SelectReplace
 from ..models.select_with_point import SelectWithPoint
+from ..models.send_object import SendObject
+from ..models.set_background_color import SetBackgroundColor
+from ..models.set_current_tool_properties import SetCurrentToolProperties
+from ..models.set_default_system_properties import SetDefaultSystemProperties
+from ..models.set_scene_units import SetSceneUnits
+from ..models.set_selection_filter import SetSelectionFilter
+from ..models.set_selection_type import SetSelectionType
+from ..models.set_tool import SetTool
+from ..models.sketch_mode_disable import SketchModeDisable
+from ..models.solid2d_add_hole import Solid2dAddHole
+from ..models.solid3d_fillet_edge import Solid3dFilletEdge
 from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from ..models.solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
 from ..models.solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
 from ..models.solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
+from ..models.solid3d_shell_face import Solid3dShellFace
+from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
 from ..models.take_snapshot import TakeSnapshot
+from ..models.update_annotation import UpdateAnnotation
 from ..models.view_isometric import ViewIsometric
 from ..models.volume import Volume
 from ..models.zoom_to_fit import ZoomToFit
@@ -64,6 +119,538 @@ class OptionEmpty(BaseModel):
     """An empty response, used for any command that does not explicitly have a response defined here."""
 
     type: Literal["empty"] = "empty"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionStartPath(BaseModel):
+    """The response to the 'StartPath' endpoint"""
+
+    data: StartPath
+
+    type: Literal["start_path"] = "start_path"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionMovePathPen(BaseModel):
+    """The response to the 'MovePathPen' endpoint"""
+
+    data: MovePathPen
+
+    type: Literal["move_path_pen"] = "move_path_pen"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionExtendPath(BaseModel):
+    """The response to the 'ExtendPath' endpoint"""
+
+    data: ExtendPath
+
+    type: Literal["extend_path"] = "extend_path"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionExtrude(BaseModel):
+    """The response to the 'Extrude' endpoint"""
+
+    data: Extrude
+
+    type: Literal["extrude"] = "extrude"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionRevolve(BaseModel):
+    """The response to the 'Revolve' endpoint"""
+
+    data: Revolve
+
+    type: Literal["revolve"] = "revolve"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSolid3DShellFace(BaseModel):
+    """The response to the 'Solid3dShellFace' endpoint"""
+
+    data: Solid3dShellFace
+
+    type: Literal["solid3d_shell_face"] = "solid3d_shell_face"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionRevolveAboutEdge(BaseModel):
+    """The response to the 'RevolveAboutEdge' endpoint"""
+
+    data: RevolveAboutEdge
+
+    type: Literal["revolve_about_edge"] = "revolve_about_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionCameraDragStart(BaseModel):
+    """The response to the 'CameraDragStart' endpoint"""
+
+    data: CameraDragStart
+
+    type: Literal["camera_drag_start"] = "camera_drag_start"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraLookAt(BaseModel):
+    """The response to the 'DefaultCameraLookAt' endpoint"""
+
+    data: DefaultCameraLookAt
+
+    type: Literal["default_camera_look_at"] = "default_camera_look_at"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraPerspectiveSettings(BaseModel):
+    """The response to the 'DefaultCameraPerspectiveSettings' endpoint"""
+
+    data: DefaultCameraPerspectiveSettings
+
+    type: Literal["default_camera_perspective_settings"] = (
+        "default_camera_perspective_settings"
+    )
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMakeHelix(BaseModel):
+    """The response to the 'EntityMakeHelix' endpoint"""
+
+    data: EntityMakeHelix
+
+    type: Literal["entity_make_helix"] = "entity_make_helix"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMirror(BaseModel):
+    """The response to the 'EntityMirror' endpoint"""
+
+    data: EntityMirror
+
+    type: Literal["entity_mirror"] = "entity_mirror"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMirrorAcrossEdge(BaseModel):
+    """The response to the 'EntityMirrorAcrossEdge' endpoint"""
+
+    data: EntityMirrorAcrossEdge
+
+    type: Literal["entity_mirror_across_edge"] = "entity_mirror_across_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEditModeEnter(BaseModel):
+    """The response to the 'EditModeEnter' endpoint"""
+
+    data: EditModeEnter
+
+    type: Literal["edit_mode_enter"] = "edit_mode_enter"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSelectAdd(BaseModel):
+    """The response to the 'SelectAdd' endpoint"""
+
+    data: SelectAdd
+
+    type: Literal["select_add"] = "select_add"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSelectRemove(BaseModel):
+    """The response to the 'SelectRemove' endpoint"""
+
+    data: SelectRemove
+
+    type: Literal["select_remove"] = "select_remove"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSceneClearAll(BaseModel):
+    """The response to the 'SceneClearAll' endpoint"""
+
+    data: SceneClearAll
+
+    type: Literal["scene_clear_all"] = "scene_clear_all"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSelectReplace(BaseModel):
+    """The response to the 'SelectReplace' endpoint"""
+
+    data: SelectReplace
+
+    type: Literal["select_replace"] = "select_replace"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionHighlightSetEntities(BaseModel):
+    """The response to the 'HighlightSetEntities' endpoint"""
+
+    data: HighlightSetEntities
+
+    type: Literal["highlight_set_entities"] = "highlight_set_entities"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionNewAnnotation(BaseModel):
+    """The response to the 'NewAnnotation' endpoint"""
+
+    data: NewAnnotation
+
+    type: Literal["new_annotation"] = "new_annotation"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionUpdateAnnotation(BaseModel):
+    """The response to the 'UpdateAnnotation' endpoint"""
+
+    data: UpdateAnnotation
+
+    type: Literal["update_annotation"] = "update_annotation"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEdgeLinesVisible(BaseModel):
+    """The response to the 'EdgeLinesVisible' endpoint"""
+
+    data: EdgeLinesVisible
+
+    type: Literal["edge_lines_visible"] = "edge_lines_visible"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionObjectVisible(BaseModel):
+    """The response to the 'ObjectVisible' endpoint"""
+
+    data: ObjectVisible
+
+    type: Literal["object_visible"] = "object_visible"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionObjectBringToFront(BaseModel):
+    """The response to the 'ObjectBringToFront' endpoint"""
+
+    data: ObjectBringToFront
+
+    type: Literal["object_bring_to_front"] = "object_bring_to_front"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionObjectSetMaterialParamsPbr(BaseModel):
+    """The response to the 'ObjectSetMaterialParamsPbr' endpoint"""
+
+    data: ObjectSetMaterialParamsPbr
+
+    type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSolid2DAddHole(BaseModel):
+    """The response to the 'Solid2dAddHole' endpoint"""
+
+    data: Solid2dAddHole
+
+    type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSolid3DFilletEdge(BaseModel):
+    """The response to the 'Solid3dFilletEdge' endpoint"""
+
+    data: Solid3dFilletEdge
+
+    type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSendObject(BaseModel):
+    """The response to the 'SendObject' endpoint"""
+
+    data: SendObject
+
+    type: Literal["send_object"] = "send_object"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntitySetOpacity(BaseModel):
+    """The response to the 'EntitySetOpacity' endpoint"""
+
+    data: EntitySetOpacity
+
+    type: Literal["entity_set_opacity"] = "entity_set_opacity"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityFade(BaseModel):
+    """The response to the 'EntityFade' endpoint"""
+
+    data: EntityFade
+
+    type: Literal["entity_fade"] = "entity_fade"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionMakePlane(BaseModel):
+    """The response to the 'MakePlane' endpoint"""
+
+    data: MakePlane
+
+    type: Literal["make_plane"] = "make_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionPlaneSetColor(BaseModel):
+    """The response to the 'PlaneSetColor' endpoint"""
+
+    data: PlaneSetColor
+
+    type: Literal["plane_set_color"] = "plane_set_color"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetTool(BaseModel):
+    """The response to the 'SetTool' endpoint"""
+
+    data: SetTool
+
+    type: Literal["set_tool"] = "set_tool"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionMouseMove(BaseModel):
+    """The response to the 'MouseMove' endpoint"""
+
+    data: MouseMove
+
+    type: Literal["mouse_move"] = "mouse_move"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSketchModeDisable(BaseModel):
+    """The response to the 'SketchModeDisable' endpoint"""
+
+    data: SketchModeDisable
+
+    type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionCurveSetConstraint(BaseModel):
+    """The response to the 'CurveSetConstraint' endpoint"""
+
+    data: CurveSetConstraint
+
+    type: Literal["curve_set_constraint"] = "curve_set_constraint"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEnableSketchMode(BaseModel):
+    """The response to the 'EnableSketchMode' endpoint"""
+
+    data: EnableSketchMode
+
+    type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetBackgroundColor(BaseModel):
+    """The response to the 'SetBackgroundColor' endpoint"""
+
+    data: SetBackgroundColor
+
+    type: Literal["set_background_color"] = "set_background_color"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetCurrentToolProperties(BaseModel):
+    """The response to the 'SetCurrentToolProperties' endpoint"""
+
+    data: SetCurrentToolProperties
+
+    type: Literal["set_current_tool_properties"] = "set_current_tool_properties"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetDefaultSystemProperties(BaseModel):
+    """The response to the 'SetDefaultSystemProperties' endpoint"""
+
+    data: SetDefaultSystemProperties
+
+    type: Literal["set_default_system_properties"] = "set_default_system_properties"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionMakeAxesGizmo(BaseModel):
+    """The response to the 'MakeAxesGizmo' endpoint"""
+
+    data: MakeAxesGizmo
+
+    type: Literal["make_axes_gizmo"] = "make_axes_gizmo"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionHandleMouseDragStart(BaseModel):
+    """The response to the 'HandleMouseDragStart' endpoint"""
+
+    data: HandleMouseDragStart
+
+    type: Literal["handle_mouse_drag_start"] = "handle_mouse_drag_start"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionHandleMouseDragMove(BaseModel):
+    """The response to the 'HandleMouseDragMove' endpoint"""
+
+    data: HandleMouseDragMove
+
+    type: Literal["handle_mouse_drag_move"] = "handle_mouse_drag_move"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionHandleMouseDragEnd(BaseModel):
+    """The response to the 'HandleMouseDragEnd' endpoint"""
+
+    data: HandleMouseDragEnd
+
+    type: Literal["handle_mouse_drag_end"] = "handle_mouse_drag_end"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionRemoveSceneObjects(BaseModel):
+    """The response to the 'RemoveSceneObjects' endpoint"""
+
+    data: RemoveSceneObjects
+
+    type: Literal["remove_scene_objects"] = "remove_scene_objects"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionReconfigureStream(BaseModel):
+    """The response to the 'ReconfigureStream' endpoint"""
+
+    data: ReconfigureStream
+
+    type: Literal["reconfigure_stream"] = "reconfigure_stream"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetSceneUnits(BaseModel):
+    """The response to the 'SetSceneUnits' endpoint"""
+
+    data: SetSceneUnits
+
+    type: Literal["set_scene_units"] = "set_scene_units"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetSelectionType(BaseModel):
+    """The response to the 'SetSelectionType' endpoint"""
+
+    data: SetSelectionType
+
+    type: Literal["set_selection_type"] = "set_selection_type"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetSelectionFilter(BaseModel):
+    """The response to the 'SetSelectionFilter' endpoint"""
+
+    data: SetSelectionFilter
+
+    type: Literal["set_selection_filter"] = "set_selection_filter"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraSetOrthographic(BaseModel):
+    """The response to the 'DefaultCameraSetOrthographic' endpoint"""
+
+    data: DefaultCameraSetOrthographic
+
+    type: Literal["default_camera_set_orthographic"] = "default_camera_set_orthographic"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraSetPerspective(BaseModel):
+    """The response to the 'DefaultCameraSetPerspective' endpoint"""
+
+    data: DefaultCameraSetPerspective
+
+    type: Literal["default_camera_set_perspective"] = "default_camera_set_perspective"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEditModeExit(BaseModel):
+    """The response to the 'EditModeExit' endpoint"""
+
+    data: EditModeExit
+
+    type: Literal["edit_mode_exit"] = "edit_mode_exit"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSelectClear(BaseModel):
+    """The response to the 'SelectClear' endpoint"""
+
+    data: SelectClear
+
+    type: Literal["select_clear"] = "select_clear"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -624,6 +1211,59 @@ OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
             OptionEmpty,
+            OptionStartPath,
+            OptionMovePathPen,
+            OptionExtendPath,
+            OptionExtrude,
+            OptionRevolve,
+            OptionSolid3DShellFace,
+            OptionRevolveAboutEdge,
+            OptionCameraDragStart,
+            OptionDefaultCameraLookAt,
+            OptionDefaultCameraPerspectiveSettings,
+            OptionEntityMakeHelix,
+            OptionEntityMirror,
+            OptionEntityMirrorAcrossEdge,
+            OptionEditModeEnter,
+            OptionSelectAdd,
+            OptionSelectRemove,
+            OptionSceneClearAll,
+            OptionSelectReplace,
+            OptionHighlightSetEntities,
+            OptionNewAnnotation,
+            OptionUpdateAnnotation,
+            OptionEdgeLinesVisible,
+            OptionObjectVisible,
+            OptionObjectBringToFront,
+            OptionObjectSetMaterialParamsPbr,
+            OptionSolid2DAddHole,
+            OptionSolid3DFilletEdge,
+            OptionSendObject,
+            OptionEntitySetOpacity,
+            OptionEntityFade,
+            OptionMakePlane,
+            OptionPlaneSetColor,
+            OptionSetTool,
+            OptionMouseMove,
+            OptionSketchModeDisable,
+            OptionCurveSetConstraint,
+            OptionEnableSketchMode,
+            OptionSetBackgroundColor,
+            OptionSetCurrentToolProperties,
+            OptionSetDefaultSystemProperties,
+            OptionMakeAxesGizmo,
+            OptionHandleMouseDragStart,
+            OptionHandleMouseDragMove,
+            OptionHandleMouseDragEnd,
+            OptionRemoveSceneObjects,
+            OptionReconfigureStream,
+            OptionSetSceneUnits,
+            OptionSetSelectionType,
+            OptionSetSelectionFilter,
+            OptionDefaultCameraSetOrthographic,
+            OptionDefaultCameraSetPerspective,
+            OptionEditModeExit,
+            OptionSelectClear,
             OptionExport,
             OptionSelectWithPoint,
             OptionHighlightSetEntity,
