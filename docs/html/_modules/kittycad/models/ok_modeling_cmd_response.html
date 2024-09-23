@@ -88,16 +88,29 @@
 
 <span class="kn">from</span> <span class="nn">..models.camera_drag_end</span> <span class="kn">import</span> <span class="n">CameraDragEnd</span>
 <span class="kn">from</span> <span class="nn">..models.camera_drag_move</span> <span class="kn">import</span> <span class="n">CameraDragMove</span>
+<span class="kn">from</span> <span class="nn">..models.camera_drag_start</span> <span class="kn">import</span> <span class="n">CameraDragStart</span>
 <span class="kn">from</span> <span class="nn">..models.center_of_mass</span> <span class="kn">import</span> <span class="n">CenterOfMass</span>
 <span class="kn">from</span> <span class="nn">..models.close_path</span> <span class="kn">import</span> <span class="n">ClosePath</span>
 <span class="kn">from</span> <span class="nn">..models.curve_get_control_points</span> <span class="kn">import</span> <span class="n">CurveGetControlPoints</span>
 <span class="kn">from</span> <span class="nn">..models.curve_get_end_points</span> <span class="kn">import</span> <span class="n">CurveGetEndPoints</span>
 <span class="kn">from</span> <span class="nn">..models.curve_get_type</span> <span class="kn">import</span> <span class="n">CurveGetType</span>
+<span class="kn">from</span> <span class="nn">..models.curve_set_constraint</span> <span class="kn">import</span> <span class="n">CurveSetConstraint</span>
 <span class="kn">from</span> <span class="nn">..models.default_camera_focus_on</span> <span class="kn">import</span> <span class="n">DefaultCameraFocusOn</span>
 <span class="kn">from</span> <span class="nn">..models.default_camera_get_settings</span> <span class="kn">import</span> <span class="n">DefaultCameraGetSettings</span>
+<span class="kn">from</span> <span class="nn">..models.default_camera_look_at</span> <span class="kn">import</span> <span class="n">DefaultCameraLookAt</span>
+<span class="kn">from</span> <span class="nn">..models.default_camera_perspective_settings</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DefaultCameraPerspectiveSettings</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..models.default_camera_set_orthographic</span> <span class="kn">import</span> <span class="n">DefaultCameraSetOrthographic</span>
+<span class="kn">from</span> <span class="nn">..models.default_camera_set_perspective</span> <span class="kn">import</span> <span class="n">DefaultCameraSetPerspective</span>
 <span class="kn">from</span> <span class="nn">..models.default_camera_zoom</span> <span class="kn">import</span> <span class="n">DefaultCameraZoom</span>
 <span class="kn">from</span> <span class="nn">..models.density</span> <span class="kn">import</span> <span class="n">Density</span>
+<span class="kn">from</span> <span class="nn">..models.edge_lines_visible</span> <span class="kn">import</span> <span class="n">EdgeLinesVisible</span>
+<span class="kn">from</span> <span class="nn">..models.edit_mode_enter</span> <span class="kn">import</span> <span class="n">EditModeEnter</span>
+<span class="kn">from</span> <span class="nn">..models.edit_mode_exit</span> <span class="kn">import</span> <span class="n">EditModeExit</span>
+<span class="kn">from</span> <span class="nn">..models.enable_sketch_mode</span> <span class="kn">import</span> <span class="n">EnableSketchMode</span>
 <span class="kn">from</span> <span class="nn">..models.entity_circular_pattern</span> <span class="kn">import</span> <span class="n">EntityCircularPattern</span>
+<span class="kn">from</span> <span class="nn">..models.entity_fade</span> <span class="kn">import</span> <span class="n">EntityFade</span>
 <span class="kn">from</span> <span class="nn">..models.entity_get_all_child_uuids</span> <span class="kn">import</span> <span class="n">EntityGetAllChildUuids</span>
 <span class="kn">from</span> <span class="nn">..models.entity_get_child_uuid</span> <span class="kn">import</span> <span class="n">EntityGetChildUuid</span>
 <span class="kn">from</span> <span class="nn">..models.entity_get_distance</span> <span class="kn">import</span> <span class="n">EntityGetDistance</span>
@@ -106,7 +119,13 @@
 <span class="kn">from</span> <span class="nn">..models.entity_get_sketch_paths</span> <span class="kn">import</span> <span class="n">EntityGetSketchPaths</span>
 <span class="kn">from</span> <span class="nn">..models.entity_linear_pattern</span> <span class="kn">import</span> <span class="n">EntityLinearPattern</span>
 <span class="kn">from</span> <span class="nn">..models.entity_linear_pattern_transform</span> <span class="kn">import</span> <span class="n">EntityLinearPatternTransform</span>
+<span class="kn">from</span> <span class="nn">..models.entity_make_helix</span> <span class="kn">import</span> <span class="n">EntityMakeHelix</span>
+<span class="kn">from</span> <span class="nn">..models.entity_mirror</span> <span class="kn">import</span> <span class="n">EntityMirror</span>
+<span class="kn">from</span> <span class="nn">..models.entity_mirror_across_edge</span> <span class="kn">import</span> <span class="n">EntityMirrorAcrossEdge</span>
+<span class="kn">from</span> <span class="nn">..models.entity_set_opacity</span> <span class="kn">import</span> <span class="n">EntitySetOpacity</span>
 <span class="kn">from</span> <span class="nn">..models.export</span> <span class="kn">import</span> <span class="n">Export</span>
+<span class="kn">from</span> <span class="nn">..models.extend_path</span> <span class="kn">import</span> <span class="n">ExtendPath</span>
+<span class="kn">from</span> <span class="nn">..models.extrude</span> <span class="kn">import</span> <span class="n">Extrude</span>
 <span class="kn">from</span> <span class="nn">..models.extrusion_face_info</span> <span class="kn">import</span> <span class="n">ExtrusionFaceInfo</span>
 <span class="kn">from</span> <span class="nn">..models.face_get_center</span> <span class="kn">import</span> <span class="n">FaceGetCenter</span>
 <span class="kn">from</span> <span class="nn">..models.face_get_gradient</span> <span class="kn">import</span> <span class="n">FaceGetGradient</span>
@@ -115,12 +134,24 @@
 <span class="kn">from</span> <span class="nn">..models.get_entity_type</span> <span class="kn">import</span> <span class="n">GetEntityType</span>
 <span class="kn">from</span> <span class="nn">..models.get_num_objects</span> <span class="kn">import</span> <span class="n">GetNumObjects</span>
 <span class="kn">from</span> <span class="nn">..models.get_sketch_mode_plane</span> <span class="kn">import</span> <span class="n">GetSketchModePlane</span>
+<span class="kn">from</span> <span class="nn">..models.handle_mouse_drag_end</span> <span class="kn">import</span> <span class="n">HandleMouseDragEnd</span>
+<span class="kn">from</span> <span class="nn">..models.handle_mouse_drag_move</span> <span class="kn">import</span> <span class="n">HandleMouseDragMove</span>
+<span class="kn">from</span> <span class="nn">..models.handle_mouse_drag_start</span> <span class="kn">import</span> <span class="n">HandleMouseDragStart</span>
+<span class="kn">from</span> <span class="nn">..models.highlight_set_entities</span> <span class="kn">import</span> <span class="n">HighlightSetEntities</span>
 <span class="kn">from</span> <span class="nn">..models.highlight_set_entity</span> <span class="kn">import</span> <span class="n">HighlightSetEntity</span>
 <span class="kn">from</span> <span class="nn">..models.import_files</span> <span class="kn">import</span> <span class="n">ImportFiles</span>
 <span class="kn">from</span> <span class="nn">..models.imported_geometry</span> <span class="kn">import</span> <span class="n">ImportedGeometry</span>
 <span class="kn">from</span> <span class="nn">..models.loft</span> <span class="kn">import</span> <span class="n">Loft</span>
+<span class="kn">from</span> <span class="nn">..models.make_axes_gizmo</span> <span class="kn">import</span> <span class="n">MakeAxesGizmo</span>
+<span class="kn">from</span> <span class="nn">..models.make_plane</span> <span class="kn">import</span> <span class="n">MakePlane</span>
 <span class="kn">from</span> <span class="nn">..models.mass</span> <span class="kn">import</span> <span class="n">Mass</span>
 <span class="kn">from</span> <span class="nn">..models.mouse_click</span> <span class="kn">import</span> <span class="n">MouseClick</span>
+<span class="kn">from</span> <span class="nn">..models.mouse_move</span> <span class="kn">import</span> <span class="n">MouseMove</span>
+<span class="kn">from</span> <span class="nn">..models.move_path_pen</span> <span class="kn">import</span> <span class="n">MovePathPen</span>
+<span class="kn">from</span> <span class="nn">..models.new_annotation</span> <span class="kn">import</span> <span class="n">NewAnnotation</span>
+<span class="kn">from</span> <span class="nn">..models.object_bring_to_front</span> <span class="kn">import</span> <span class="n">ObjectBringToFront</span>
+<span class="kn">from</span> <span class="nn">..models.object_set_material_params_pbr</span> <span class="kn">import</span> <span class="n">ObjectSetMaterialParamsPbr</span>
+<span class="kn">from</span> <span class="nn">..models.object_visible</span> <span class="kn">import</span> <span class="n">ObjectVisible</span>
 <span class="kn">from</span> <span class="nn">..models.path_get_curve_uuid</span> <span class="kn">import</span> <span class="n">PathGetCurveUuid</span>
 <span class="kn">from</span> <span class="nn">..models.path_get_curve_uuids_for_vertices</span> <span class="kn">import</span> <span class="n">PathGetCurveUuidsForVertices</span>
 <span class="kn">from</span> <span class="nn">..models.path_get_info</span> <span class="kn">import</span> <span class="n">PathGetInfo</span>
@@ -128,16 +159,40 @@
 <span class="kn">from</span> <span class="nn">..models.path_get_vertex_uuids</span> <span class="kn">import</span> <span class="n">PathGetVertexUuids</span>
 <span class="kn">from</span> <span class="nn">..models.path_segment_info</span> <span class="kn">import</span> <span class="n">PathSegmentInfo</span>
 <span class="kn">from</span> <span class="nn">..models.plane_intersect_and_project</span> <span class="kn">import</span> <span class="n">PlaneIntersectAndProject</span>
+<span class="kn">from</span> <span class="nn">..models.plane_set_color</span> <span class="kn">import</span> <span class="n">PlaneSetColor</span>
+<span class="kn">from</span> <span class="nn">..models.reconfigure_stream</span> <span class="kn">import</span> <span class="n">ReconfigureStream</span>
+<span class="kn">from</span> <span class="nn">..models.remove_scene_objects</span> <span class="kn">import</span> <span class="n">RemoveSceneObjects</span>
+<span class="kn">from</span> <span class="nn">..models.revolve</span> <span class="kn">import</span> <span class="n">Revolve</span>
+<span class="kn">from</span> <span class="nn">..models.revolve_about_edge</span> <span class="kn">import</span> <span class="n">RevolveAboutEdge</span>
+<span class="kn">from</span> <span class="nn">..models.scene_clear_all</span> <span class="kn">import</span> <span class="n">SceneClearAll</span>
+<span class="kn">from</span> <span class="nn">..models.select_add</span> <span class="kn">import</span> <span class="n">SelectAdd</span>
+<span class="kn">from</span> <span class="nn">..models.select_clear</span> <span class="kn">import</span> <span class="n">SelectClear</span>
 <span class="kn">from</span> <span class="nn">..models.select_get</span> <span class="kn">import</span> <span class="n">SelectGet</span>
+<span class="kn">from</span> <span class="nn">..models.select_remove</span> <span class="kn">import</span> <span class="n">SelectRemove</span>
+<span class="kn">from</span> <span class="nn">..models.select_replace</span> <span class="kn">import</span> <span class="n">SelectReplace</span>
 <span class="kn">from</span> <span class="nn">..models.select_with_point</span> <span class="kn">import</span> <span class="n">SelectWithPoint</span>
+<span class="kn">from</span> <span class="nn">..models.send_object</span> <span class="kn">import</span> <span class="n">SendObject</span>
+<span class="kn">from</span> <span class="nn">..models.set_background_color</span> <span class="kn">import</span> <span class="n">SetBackgroundColor</span>
+<span class="kn">from</span> <span class="nn">..models.set_current_tool_properties</span> <span class="kn">import</span> <span class="n">SetCurrentToolProperties</span>
+<span class="kn">from</span> <span class="nn">..models.set_default_system_properties</span> <span class="kn">import</span> <span class="n">SetDefaultSystemProperties</span>
+<span class="kn">from</span> <span class="nn">..models.set_scene_units</span> <span class="kn">import</span> <span class="n">SetSceneUnits</span>
+<span class="kn">from</span> <span class="nn">..models.set_selection_filter</span> <span class="kn">import</span> <span class="n">SetSelectionFilter</span>
+<span class="kn">from</span> <span class="nn">..models.set_selection_type</span> <span class="kn">import</span> <span class="n">SetSelectionType</span>
+<span class="kn">from</span> <span class="nn">..models.set_tool</span> <span class="kn">import</span> <span class="n">SetTool</span>
+<span class="kn">from</span> <span class="nn">..models.sketch_mode_disable</span> <span class="kn">import</span> <span class="n">SketchModeDisable</span>
+<span class="kn">from</span> <span class="nn">..models.solid2d_add_hole</span> <span class="kn">import</span> <span class="n">Solid2dAddHole</span>
+<span class="kn">from</span> <span class="nn">..models.solid3d_fillet_edge</span> <span class="kn">import</span> <span class="n">Solid3dFilletEdge</span>
 <span class="kn">from</span> <span class="nn">..models.solid3d_get_all_edge_faces</span> <span class="kn">import</span> <span class="n">Solid3dGetAllEdgeFaces</span>
 <span class="kn">from</span> <span class="nn">..models.solid3d_get_all_opposite_edges</span> <span class="kn">import</span> <span class="n">Solid3dGetAllOppositeEdges</span>
 <span class="kn">from</span> <span class="nn">..models.solid3d_get_extrusion_face_info</span> <span class="kn">import</span> <span class="n">Solid3dGetExtrusionFaceInfo</span>
 <span class="kn">from</span> <span class="nn">..models.solid3d_get_next_adjacent_edge</span> <span class="kn">import</span> <span class="n">Solid3dGetNextAdjacentEdge</span>
 <span class="kn">from</span> <span class="nn">..models.solid3d_get_opposite_edge</span> <span class="kn">import</span> <span class="n">Solid3dGetOppositeEdge</span>
 <span class="kn">from</span> <span class="nn">..models.solid3d_get_prev_adjacent_edge</span> <span class="kn">import</span> <span class="n">Solid3dGetPrevAdjacentEdge</span>
+<span class="kn">from</span> <span class="nn">..models.solid3d_shell_face</span> <span class="kn">import</span> <span class="n">Solid3dShellFace</span>
+<span class="kn">from</span> <span class="nn">..models.start_path</span> <span class="kn">import</span> <span class="n">StartPath</span>
 <span class="kn">from</span> <span class="nn">..models.surface_area</span> <span class="kn">import</span> <span class="n">SurfaceArea</span>
 <span class="kn">from</span> <span class="nn">..models.take_snapshot</span> <span class="kn">import</span> <span class="n">TakeSnapshot</span>
+<span class="kn">from</span> <span class="nn">..models.update_annotation</span> <span class="kn">import</span> <span class="n">UpdateAnnotation</span>
 <span class="kn">from</span> <span class="nn">..models.view_isometric</span> <span class="kn">import</span> <span class="n">ViewIsometric</span>
 <span class="kn">from</span> <span class="nn">..models.volume</span> <span class="kn">import</span> <span class="n">Volume</span>
 <span class="kn">from</span> <span class="nn">..models.zoom_to_fit</span> <span class="kn">import</span> <span class="n">ZoomToFit</span>
@@ -149,6 +204,697 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An empty response, used for any command that does not explicitly have a response defined here.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;empty&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;empty&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionStartPath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionStartPath.html#kittycad.models.ok_modeling_cmd_response.OptionStartPath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionStartPath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;StartPath&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">StartPath</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;start_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;start_path&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionMovePathPen">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionMovePathPen.html#kittycad.models.ok_modeling_cmd_response.OptionMovePathPen">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMovePathPen</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;MovePathPen&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">MovePathPen</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;move_path_pen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;move_path_pen&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionExtendPath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionExtendPath.html#kittycad.models.ok_modeling_cmd_response.OptionExtendPath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionExtendPath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;ExtendPath&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ExtendPath</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;extend_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;extend_path&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionExtrude">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionExtrude.html#kittycad.models.ok_modeling_cmd_response.OptionExtrude">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionExtrude</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;Extrude&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">Extrude</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;extrude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;extrude&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionRevolve">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionRevolve.html#kittycad.models.ok_modeling_cmd_response.OptionRevolve">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionRevolve</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;Revolve&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">Revolve</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;revolve&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;revolve&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSolid3DShellFace">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSolid3DShellFace.html#kittycad.models.ok_modeling_cmd_response.OptionSolid3DShellFace">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DShellFace</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;Solid3dShellFace&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">Solid3dShellFace</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;solid3d_shell_face&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;solid3d_shell_face&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionRevolveAboutEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionRevolveAboutEdge.html#kittycad.models.ok_modeling_cmd_response.OptionRevolveAboutEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionRevolveAboutEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;RevolveAboutEdge&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">RevolveAboutEdge</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;revolve_about_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;revolve_about_edge&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionCameraDragStart">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionCameraDragStart.html#kittycad.models.ok_modeling_cmd_response.OptionCameraDragStart">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCameraDragStart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;CameraDragStart&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">CameraDragStart</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;camera_drag_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;camera_drag_start&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionDefaultCameraLookAt">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraLookAt.html#kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraLookAt">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraLookAt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;DefaultCameraLookAt&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">DefaultCameraLookAt</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_look_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_look_at&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionDefaultCameraPerspectiveSettings">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraPerspectiveSettings.html#kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraPerspectiveSettings">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraPerspectiveSettings</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;DefaultCameraPerspectiveSettings&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">DefaultCameraPerspectiveSettings</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_perspective_settings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;default_camera_perspective_settings&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityMakeHelix">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelix.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelix">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMakeHelix</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EntityMakeHelix&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMakeHelix</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_make_helix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_make_helix&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityMirror">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMirror.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMirror">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMirror</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EntityMirror&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMirror</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_mirror&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_mirror&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityMirrorAcrossEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMirrorAcrossEdge.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMirrorAcrossEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMirrorAcrossEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EntityMirrorAcrossEdge&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMirrorAcrossEdge</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_mirror_across_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_mirror_across_edge&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEditModeEnter">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEditModeEnter.html#kittycad.models.ok_modeling_cmd_response.OptionEditModeEnter">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEditModeEnter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EditModeEnter&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EditModeEnter</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edit_mode_enter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edit_mode_enter&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSelectAdd">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSelectAdd.html#kittycad.models.ok_modeling_cmd_response.OptionSelectAdd">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectAdd</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SelectAdd&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SelectAdd</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;select_add&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;select_add&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSelectRemove">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSelectRemove.html#kittycad.models.ok_modeling_cmd_response.OptionSelectRemove">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectRemove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SelectRemove&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SelectRemove</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;select_remove&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;select_remove&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSceneClearAll">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSceneClearAll.html#kittycad.models.ok_modeling_cmd_response.OptionSceneClearAll">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSceneClearAll</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SceneClearAll&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SceneClearAll</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;scene_clear_all&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;scene_clear_all&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSelectReplace">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSelectReplace.html#kittycad.models.ok_modeling_cmd_response.OptionSelectReplace">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectReplace</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SelectReplace&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SelectReplace</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;select_replace&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;select_replace&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionHighlightSetEntities">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionHighlightSetEntities.html#kittycad.models.ok_modeling_cmd_response.OptionHighlightSetEntities">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHighlightSetEntities</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;HighlightSetEntities&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">HighlightSetEntities</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;highlight_set_entities&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;highlight_set_entities&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionNewAnnotation">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionNewAnnotation.html#kittycad.models.ok_modeling_cmd_response.OptionNewAnnotation">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionNewAnnotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;NewAnnotation&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">NewAnnotation</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;new_annotation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;new_annotation&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionUpdateAnnotation">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionUpdateAnnotation.html#kittycad.models.ok_modeling_cmd_response.OptionUpdateAnnotation">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionUpdateAnnotation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;UpdateAnnotation&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">UpdateAnnotation</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;update_annotation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;update_annotation&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEdgeLinesVisible">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEdgeLinesVisible.html#kittycad.models.ok_modeling_cmd_response.OptionEdgeLinesVisible">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEdgeLinesVisible</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EdgeLinesVisible&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EdgeLinesVisible</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edge_lines_visible&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edge_lines_visible&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionObjectVisible">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionObjectVisible.html#kittycad.models.ok_modeling_cmd_response.OptionObjectVisible">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionObjectVisible</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;ObjectVisible&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ObjectVisible</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;object_visible&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;object_visible&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionObjectBringToFront">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionObjectBringToFront.html#kittycad.models.ok_modeling_cmd_response.OptionObjectBringToFront">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionObjectBringToFront</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;ObjectBringToFront&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ObjectBringToFront</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;object_bring_to_front&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;object_bring_to_front&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionObjectSetMaterialParamsPbr">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionObjectSetMaterialParamsPbr.html#kittycad.models.ok_modeling_cmd_response.OptionObjectSetMaterialParamsPbr">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionObjectSetMaterialParamsPbr</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;ObjectSetMaterialParamsPbr&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ObjectSetMaterialParamsPbr</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;object_set_material_params_pbr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;object_set_material_params_pbr&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSolid2DAddHole">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSolid2DAddHole.html#kittycad.models.ok_modeling_cmd_response.OptionSolid2DAddHole">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid2DAddHole</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;Solid2dAddHole&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">Solid2dAddHole</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;solid2d_add_hole&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;solid2d_add_hole&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSolid3DFilletEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSolid3DFilletEdge.html#kittycad.models.ok_modeling_cmd_response.OptionSolid3DFilletEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSolid3DFilletEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;Solid3dFilletEdge&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">Solid3dFilletEdge</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;solid3d_fillet_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;solid3d_fillet_edge&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSendObject">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSendObject.html#kittycad.models.ok_modeling_cmd_response.OptionSendObject">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSendObject</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SendObject&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SendObject</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;send_object&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;send_object&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntitySetOpacity">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntitySetOpacity.html#kittycad.models.ok_modeling_cmd_response.OptionEntitySetOpacity">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntitySetOpacity</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EntitySetOpacity&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntitySetOpacity</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_set_opacity&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_set_opacity&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityFade">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityFade.html#kittycad.models.ok_modeling_cmd_response.OptionEntityFade">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityFade</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EntityFade&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityFade</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_fade&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_fade&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionMakePlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionMakePlane.html#kittycad.models.ok_modeling_cmd_response.OptionMakePlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMakePlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;MakePlane&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">MakePlane</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;make_plane&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;make_plane&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionPlaneSetColor">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionPlaneSetColor.html#kittycad.models.ok_modeling_cmd_response.OptionPlaneSetColor">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionPlaneSetColor</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;PlaneSetColor&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">PlaneSetColor</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;plane_set_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;plane_set_color&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSetTool">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSetTool.html#kittycad.models.ok_modeling_cmd_response.OptionSetTool">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetTool</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SetTool&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SetTool</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_tool&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_tool&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionMouseMove">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionMouseMove.html#kittycad.models.ok_modeling_cmd_response.OptionMouseMove">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMouseMove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;MouseMove&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">MouseMove</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;mouse_move&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mouse_move&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSketchModeDisable">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSketchModeDisable.html#kittycad.models.ok_modeling_cmd_response.OptionSketchModeDisable">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSketchModeDisable</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SketchModeDisable&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SketchModeDisable</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;sketch_mode_disable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sketch_mode_disable&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionCurveSetConstraint">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionCurveSetConstraint.html#kittycad.models.ok_modeling_cmd_response.OptionCurveSetConstraint">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionCurveSetConstraint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;CurveSetConstraint&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">CurveSetConstraint</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;curve_set_constraint&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;curve_set_constraint&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEnableSketchMode">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEnableSketchMode.html#kittycad.models.ok_modeling_cmd_response.OptionEnableSketchMode">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEnableSketchMode</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EnableSketchMode&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EnableSketchMode</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;enable_sketch_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;enable_sketch_mode&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSetBackgroundColor">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSetBackgroundColor.html#kittycad.models.ok_modeling_cmd_response.OptionSetBackgroundColor">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetBackgroundColor</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SetBackgroundColor&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SetBackgroundColor</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_background_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_background_color&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSetCurrentToolProperties">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSetCurrentToolProperties.html#kittycad.models.ok_modeling_cmd_response.OptionSetCurrentToolProperties">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetCurrentToolProperties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SetCurrentToolProperties&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SetCurrentToolProperties</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_current_tool_properties&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_current_tool_properties&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSetDefaultSystemProperties">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSetDefaultSystemProperties.html#kittycad.models.ok_modeling_cmd_response.OptionSetDefaultSystemProperties">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetDefaultSystemProperties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SetDefaultSystemProperties&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SetDefaultSystemProperties</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_default_system_properties&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_default_system_properties&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionMakeAxesGizmo">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionMakeAxesGizmo.html#kittycad.models.ok_modeling_cmd_response.OptionMakeAxesGizmo">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMakeAxesGizmo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;MakeAxesGizmo&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">MakeAxesGizmo</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;make_axes_gizmo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;make_axes_gizmo&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionHandleMouseDragStart">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionHandleMouseDragStart.html#kittycad.models.ok_modeling_cmd_response.OptionHandleMouseDragStart">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHandleMouseDragStart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;HandleMouseDragStart&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">HandleMouseDragStart</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;handle_mouse_drag_start&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;handle_mouse_drag_start&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionHandleMouseDragMove">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionHandleMouseDragMove.html#kittycad.models.ok_modeling_cmd_response.OptionHandleMouseDragMove">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHandleMouseDragMove</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;HandleMouseDragMove&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">HandleMouseDragMove</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;handle_mouse_drag_move&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;handle_mouse_drag_move&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionHandleMouseDragEnd">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionHandleMouseDragEnd.html#kittycad.models.ok_modeling_cmd_response.OptionHandleMouseDragEnd">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionHandleMouseDragEnd</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;HandleMouseDragEnd&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">HandleMouseDragEnd</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;handle_mouse_drag_end&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;handle_mouse_drag_end&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionRemoveSceneObjects">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionRemoveSceneObjects.html#kittycad.models.ok_modeling_cmd_response.OptionRemoveSceneObjects">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionRemoveSceneObjects</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;RemoveSceneObjects&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">RemoveSceneObjects</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;remove_scene_objects&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;remove_scene_objects&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionReconfigureStream">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionReconfigureStream.html#kittycad.models.ok_modeling_cmd_response.OptionReconfigureStream">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionReconfigureStream</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;ReconfigureStream&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ReconfigureStream</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;reconfigure_stream&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reconfigure_stream&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSetSceneUnits">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSetSceneUnits.html#kittycad.models.ok_modeling_cmd_response.OptionSetSceneUnits">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetSceneUnits</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SetSceneUnits&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SetSceneUnits</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_scene_units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_scene_units&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSetSelectionType">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSetSelectionType.html#kittycad.models.ok_modeling_cmd_response.OptionSetSelectionType">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetSelectionType</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SetSelectionType&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SetSelectionType</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_selection_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_selection_type&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSetSelectionFilter">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSetSelectionFilter.html#kittycad.models.ok_modeling_cmd_response.OptionSetSelectionFilter">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetSelectionFilter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SetSelectionFilter&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SetSelectionFilter</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_selection_filter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_selection_filter&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionDefaultCameraSetOrthographic">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraSetOrthographic.html#kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraSetOrthographic">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraSetOrthographic</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;DefaultCameraSetOrthographic&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">DefaultCameraSetOrthographic</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_set_orthographic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_set_orthographic&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionDefaultCameraSetPerspective">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraSetPerspective.html#kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraSetPerspective">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraSetPerspective</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;DefaultCameraSetPerspective&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">DefaultCameraSetPerspective</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_set_perspective&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_set_perspective&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEditModeExit">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEditModeExit.html#kittycad.models.ok_modeling_cmd_response.OptionEditModeExit">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEditModeExit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;EditModeExit&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EditModeExit</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edit_mode_exit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edit_mode_exit&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionSelectClear">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSelectClear.html#kittycad.models.ok_modeling_cmd_response.OptionSelectClear">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSelectClear</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The response to the &#39;SelectClear&#39; endpoint&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">SelectClear</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;select_clear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;select_clear&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -875,6 +1621,59 @@
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
             <span class="n">OptionEmpty</span><span class="p">,</span>
+            <span class="n">OptionStartPath</span><span class="p">,</span>
+            <span class="n">OptionMovePathPen</span><span class="p">,</span>
+            <span class="n">OptionExtendPath</span><span class="p">,</span>
+            <span class="n">OptionExtrude</span><span class="p">,</span>
+            <span class="n">OptionRevolve</span><span class="p">,</span>
+            <span class="n">OptionSolid3DShellFace</span><span class="p">,</span>
+            <span class="n">OptionRevolveAboutEdge</span><span class="p">,</span>
+            <span class="n">OptionCameraDragStart</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraLookAt</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraPerspectiveSettings</span><span class="p">,</span>
+            <span class="n">OptionEntityMakeHelix</span><span class="p">,</span>
+            <span class="n">OptionEntityMirror</span><span class="p">,</span>
+            <span class="n">OptionEntityMirrorAcrossEdge</span><span class="p">,</span>
+            <span class="n">OptionEditModeEnter</span><span class="p">,</span>
+            <span class="n">OptionSelectAdd</span><span class="p">,</span>
+            <span class="n">OptionSelectRemove</span><span class="p">,</span>
+            <span class="n">OptionSceneClearAll</span><span class="p">,</span>
+            <span class="n">OptionSelectReplace</span><span class="p">,</span>
+            <span class="n">OptionHighlightSetEntities</span><span class="p">,</span>
+            <span class="n">OptionNewAnnotation</span><span class="p">,</span>
+            <span class="n">OptionUpdateAnnotation</span><span class="p">,</span>
+            <span class="n">OptionEdgeLinesVisible</span><span class="p">,</span>
+            <span class="n">OptionObjectVisible</span><span class="p">,</span>
+            <span class="n">OptionObjectBringToFront</span><span class="p">,</span>
+            <span class="n">OptionObjectSetMaterialParamsPbr</span><span class="p">,</span>
+            <span class="n">OptionSolid2DAddHole</span><span class="p">,</span>
+            <span class="n">OptionSolid3DFilletEdge</span><span class="p">,</span>
+            <span class="n">OptionSendObject</span><span class="p">,</span>
+            <span class="n">OptionEntitySetOpacity</span><span class="p">,</span>
+            <span class="n">OptionEntityFade</span><span class="p">,</span>
+            <span class="n">OptionMakePlane</span><span class="p">,</span>
+            <span class="n">OptionPlaneSetColor</span><span class="p">,</span>
+            <span class="n">OptionSetTool</span><span class="p">,</span>
+            <span class="n">OptionMouseMove</span><span class="p">,</span>
+            <span class="n">OptionSketchModeDisable</span><span class="p">,</span>
+            <span class="n">OptionCurveSetConstraint</span><span class="p">,</span>
+            <span class="n">OptionEnableSketchMode</span><span class="p">,</span>
+            <span class="n">OptionSetBackgroundColor</span><span class="p">,</span>
+            <span class="n">OptionSetCurrentToolProperties</span><span class="p">,</span>
+            <span class="n">OptionSetDefaultSystemProperties</span><span class="p">,</span>
+            <span class="n">OptionMakeAxesGizmo</span><span class="p">,</span>
+            <span class="n">OptionHandleMouseDragStart</span><span class="p">,</span>
+            <span class="n">OptionHandleMouseDragMove</span><span class="p">,</span>
+            <span class="n">OptionHandleMouseDragEnd</span><span class="p">,</span>
+            <span class="n">OptionRemoveSceneObjects</span><span class="p">,</span>
+            <span class="n">OptionReconfigureStream</span><span class="p">,</span>
+            <span class="n">OptionSetSceneUnits</span><span class="p">,</span>
+            <span class="n">OptionSetSelectionType</span><span class="p">,</span>
+            <span class="n">OptionSetSelectionFilter</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraSetOrthographic</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraSetPerspective</span><span class="p">,</span>
+            <span class="n">OptionEditModeExit</span><span class="p">,</span>
+            <span class="n">OptionSelectClear</span><span class="p">,</span>
             <span class="n">OptionExport</span><span class="p">,</span>
             <span class="n">OptionSelectWithPoint</span><span class="p">,</span>
             <span class="n">OptionHighlightSetEntity</span><span class="p">,</span>
