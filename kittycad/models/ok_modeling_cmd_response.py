@@ -124,7 +124,7 @@ class OptionEmpty(BaseModel):
 
 
 class OptionStartPath(BaseModel):
-    """The response to the 'StartPath' endpoint"""
+    """"""
 
     data: StartPath
 
@@ -134,7 +134,7 @@ class OptionStartPath(BaseModel):
 
 
 class OptionMovePathPen(BaseModel):
-    """The response to the 'MovePathPen' endpoint"""
+    """"""
 
     data: MovePathPen
 
@@ -144,7 +144,7 @@ class OptionMovePathPen(BaseModel):
 
 
 class OptionExtendPath(BaseModel):
-    """The response to the 'ExtendPath' endpoint"""
+    """"""
 
     data: ExtendPath
 
@@ -154,7 +154,7 @@ class OptionExtendPath(BaseModel):
 
 
 class OptionExtrude(BaseModel):
-    """The response to the 'Extrude' endpoint"""
+    """"""
 
     data: Extrude
 
@@ -164,7 +164,7 @@ class OptionExtrude(BaseModel):
 
 
 class OptionRevolve(BaseModel):
-    """The response to the 'Revolve' endpoint"""
+    """"""
 
     data: Revolve
 
@@ -174,7 +174,7 @@ class OptionRevolve(BaseModel):
 
 
 class OptionSolid3DShellFace(BaseModel):
-    """The response to the 'Solid3dShellFace' endpoint"""
+    """"""
 
     data: Solid3dShellFace
 
@@ -184,7 +184,7 @@ class OptionSolid3DShellFace(BaseModel):
 
 
 class OptionRevolveAboutEdge(BaseModel):
-    """The response to the 'RevolveAboutEdge' endpoint"""
+    """"""
 
     data: RevolveAboutEdge
 
@@ -194,7 +194,7 @@ class OptionRevolveAboutEdge(BaseModel):
 
 
 class OptionCameraDragStart(BaseModel):
-    """The response to the 'CameraDragStart' endpoint"""
+    """"""
 
     data: CameraDragStart
 
@@ -204,7 +204,7 @@ class OptionCameraDragStart(BaseModel):
 
 
 class OptionDefaultCameraLookAt(BaseModel):
-    """The response to the 'DefaultCameraLookAt' endpoint"""
+    """"""
 
     data: DefaultCameraLookAt
 
@@ -214,7 +214,7 @@ class OptionDefaultCameraLookAt(BaseModel):
 
 
 class OptionDefaultCameraPerspectiveSettings(BaseModel):
-    """The response to the 'DefaultCameraPerspectiveSettings' endpoint"""
+    """"""
 
     data: DefaultCameraPerspectiveSettings
 
@@ -226,7 +226,7 @@ class OptionDefaultCameraPerspectiveSettings(BaseModel):
 
 
 class OptionEntityMakeHelix(BaseModel):
-    """The response to the 'EntityMakeHelix' endpoint"""
+    """"""
 
     data: EntityMakeHelix
 
@@ -236,7 +236,7 @@ class OptionEntityMakeHelix(BaseModel):
 
 
 class OptionEntityMirror(BaseModel):
-    """The response to the 'EntityMirror' endpoint"""
+    """"""
 
     data: EntityMirror
 
@@ -246,7 +246,7 @@ class OptionEntityMirror(BaseModel):
 
 
 class OptionEntityMirrorAcrossEdge(BaseModel):
-    """The response to the 'EntityMirrorAcrossEdge' endpoint"""
+    """"""
 
     data: EntityMirrorAcrossEdge
 
@@ -256,7 +256,7 @@ class OptionEntityMirrorAcrossEdge(BaseModel):
 
 
 class OptionEditModeEnter(BaseModel):
-    """The response to the 'EditModeEnter' endpoint"""
+    """"""
 
     data: EditModeEnter
 
@@ -266,7 +266,7 @@ class OptionEditModeEnter(BaseModel):
 
 
 class OptionSelectAdd(BaseModel):
-    """The response to the 'SelectAdd' endpoint"""
+    """"""
 
     data: SelectAdd
 
@@ -276,7 +276,7 @@ class OptionSelectAdd(BaseModel):
 
 
 class OptionSelectRemove(BaseModel):
-    """The response to the 'SelectRemove' endpoint"""
+    """"""
 
     data: SelectRemove
 
@@ -286,7 +286,7 @@ class OptionSelectRemove(BaseModel):
 
 
 class OptionSceneClearAll(BaseModel):
-    """The response to the 'SceneClearAll' endpoint"""
+    """"""
 
     data: SceneClearAll
 
@@ -296,7 +296,7 @@ class OptionSceneClearAll(BaseModel):
 
 
 class OptionSelectReplace(BaseModel):
-    """The response to the 'SelectReplace' endpoint"""
+    """"""
 
     data: SelectReplace
 
@@ -306,7 +306,7 @@ class OptionSelectReplace(BaseModel):
 
 
 class OptionHighlightSetEntities(BaseModel):
-    """The response to the 'HighlightSetEntities' endpoint"""
+    """"""
 
     data: HighlightSetEntities
 
@@ -316,7 +316,7 @@ class OptionHighlightSetEntities(BaseModel):
 
 
 class OptionNewAnnotation(BaseModel):
-    """The response to the 'NewAnnotation' endpoint"""
+    """"""
 
     data: NewAnnotation
 
@@ -326,7 +326,7 @@ class OptionNewAnnotation(BaseModel):
 
 
 class OptionUpdateAnnotation(BaseModel):
-    """The response to the 'UpdateAnnotation' endpoint"""
+    """"""
 
     data: UpdateAnnotation
 
@@ -336,7 +336,7 @@ class OptionUpdateAnnotation(BaseModel):
 
 
 class OptionEdgeLinesVisible(BaseModel):
-    """The response to the 'EdgeLinesVisible' endpoint"""
+    """"""
 
     data: EdgeLinesVisible
 
@@ -346,7 +346,7 @@ class OptionEdgeLinesVisible(BaseModel):
 
 
 class OptionObjectVisible(BaseModel):
-    """The response to the 'ObjectVisible' endpoint"""
+    """"""
 
     data: ObjectVisible
 
@@ -356,7 +356,7 @@ class OptionObjectVisible(BaseModel):
 
 
 class OptionObjectBringToFront(BaseModel):
-    """The response to the 'ObjectBringToFront' endpoint"""
+    """"""
 
     data: ObjectBringToFront
 
@@ -366,7 +366,7 @@ class OptionObjectBringToFront(BaseModel):
 
 
 class OptionObjectSetMaterialParamsPbr(BaseModel):
-    """The response to the 'ObjectSetMaterialParamsPbr' endpoint"""
+    """"""
 
     data: ObjectSetMaterialParamsPbr
 
@@ -376,7 +376,7 @@ class OptionObjectSetMaterialParamsPbr(BaseModel):
 
 
 class OptionSolid2DAddHole(BaseModel):
-    """The response to the 'Solid2dAddHole' endpoint"""
+    """"""
 
     data: Solid2dAddHole
 
@@ -386,7 +386,7 @@ class OptionSolid2DAddHole(BaseModel):
 
 
 class OptionSolid3DFilletEdge(BaseModel):
-    """The response to the 'Solid3dFilletEdge' endpoint"""
+    """"""
 
     data: Solid3dFilletEdge
 
@@ -396,7 +396,7 @@ class OptionSolid3DFilletEdge(BaseModel):
 
 
 class OptionSendObject(BaseModel):
-    """The response to the 'SendObject' endpoint"""
+    """"""
 
     data: SendObject
 
@@ -406,7 +406,7 @@ class OptionSendObject(BaseModel):
 
 
 class OptionEntitySetOpacity(BaseModel):
-    """The response to the 'EntitySetOpacity' endpoint"""
+    """"""
 
     data: EntitySetOpacity
 
@@ -416,7 +416,7 @@ class OptionEntitySetOpacity(BaseModel):
 
 
 class OptionEntityFade(BaseModel):
-    """The response to the 'EntityFade' endpoint"""
+    """"""
 
     data: EntityFade
 
@@ -426,7 +426,7 @@ class OptionEntityFade(BaseModel):
 
 
 class OptionMakePlane(BaseModel):
-    """The response to the 'MakePlane' endpoint"""
+    """"""
 
     data: MakePlane
 
@@ -436,7 +436,7 @@ class OptionMakePlane(BaseModel):
 
 
 class OptionPlaneSetColor(BaseModel):
-    """The response to the 'PlaneSetColor' endpoint"""
+    """"""
 
     data: PlaneSetColor
 
@@ -446,7 +446,7 @@ class OptionPlaneSetColor(BaseModel):
 
 
 class OptionSetTool(BaseModel):
-    """The response to the 'SetTool' endpoint"""
+    """"""
 
     data: SetTool
 
@@ -456,7 +456,7 @@ class OptionSetTool(BaseModel):
 
 
 class OptionMouseMove(BaseModel):
-    """The response to the 'MouseMove' endpoint"""
+    """"""
 
     data: MouseMove
 
@@ -466,7 +466,7 @@ class OptionMouseMove(BaseModel):
 
 
 class OptionSketchModeDisable(BaseModel):
-    """The response to the 'SketchModeDisable' endpoint"""
+    """"""
 
     data: SketchModeDisable
 
@@ -476,7 +476,7 @@ class OptionSketchModeDisable(BaseModel):
 
 
 class OptionCurveSetConstraint(BaseModel):
-    """The response to the 'CurveSetConstraint' endpoint"""
+    """"""
 
     data: CurveSetConstraint
 
@@ -486,7 +486,7 @@ class OptionCurveSetConstraint(BaseModel):
 
 
 class OptionEnableSketchMode(BaseModel):
-    """The response to the 'EnableSketchMode' endpoint"""
+    """"""
 
     data: EnableSketchMode
 
@@ -496,7 +496,7 @@ class OptionEnableSketchMode(BaseModel):
 
 
 class OptionSetBackgroundColor(BaseModel):
-    """The response to the 'SetBackgroundColor' endpoint"""
+    """"""
 
     data: SetBackgroundColor
 
@@ -506,7 +506,7 @@ class OptionSetBackgroundColor(BaseModel):
 
 
 class OptionSetCurrentToolProperties(BaseModel):
-    """The response to the 'SetCurrentToolProperties' endpoint"""
+    """"""
 
     data: SetCurrentToolProperties
 
@@ -516,7 +516,7 @@ class OptionSetCurrentToolProperties(BaseModel):
 
 
 class OptionSetDefaultSystemProperties(BaseModel):
-    """The response to the 'SetDefaultSystemProperties' endpoint"""
+    """"""
 
     data: SetDefaultSystemProperties
 
@@ -526,7 +526,7 @@ class OptionSetDefaultSystemProperties(BaseModel):
 
 
 class OptionMakeAxesGizmo(BaseModel):
-    """The response to the 'MakeAxesGizmo' endpoint"""
+    """"""
 
     data: MakeAxesGizmo
 
@@ -536,7 +536,7 @@ class OptionMakeAxesGizmo(BaseModel):
 
 
 class OptionHandleMouseDragStart(BaseModel):
-    """The response to the 'HandleMouseDragStart' endpoint"""
+    """"""
 
     data: HandleMouseDragStart
 
@@ -546,7 +546,7 @@ class OptionHandleMouseDragStart(BaseModel):
 
 
 class OptionHandleMouseDragMove(BaseModel):
-    """The response to the 'HandleMouseDragMove' endpoint"""
+    """"""
 
     data: HandleMouseDragMove
 
@@ -556,7 +556,7 @@ class OptionHandleMouseDragMove(BaseModel):
 
 
 class OptionHandleMouseDragEnd(BaseModel):
-    """The response to the 'HandleMouseDragEnd' endpoint"""
+    """"""
 
     data: HandleMouseDragEnd
 
@@ -566,7 +566,7 @@ class OptionHandleMouseDragEnd(BaseModel):
 
 
 class OptionRemoveSceneObjects(BaseModel):
-    """The response to the 'RemoveSceneObjects' endpoint"""
+    """"""
 
     data: RemoveSceneObjects
 
@@ -576,7 +576,7 @@ class OptionRemoveSceneObjects(BaseModel):
 
 
 class OptionReconfigureStream(BaseModel):
-    """The response to the 'ReconfigureStream' endpoint"""
+    """"""
 
     data: ReconfigureStream
 
@@ -586,7 +586,7 @@ class OptionReconfigureStream(BaseModel):
 
 
 class OptionSetSceneUnits(BaseModel):
-    """The response to the 'SetSceneUnits' endpoint"""
+    """"""
 
     data: SetSceneUnits
 
@@ -596,7 +596,7 @@ class OptionSetSceneUnits(BaseModel):
 
 
 class OptionSetSelectionType(BaseModel):
-    """The response to the 'SetSelectionType' endpoint"""
+    """"""
 
     data: SetSelectionType
 
@@ -606,7 +606,7 @@ class OptionSetSelectionType(BaseModel):
 
 
 class OptionSetSelectionFilter(BaseModel):
-    """The response to the 'SetSelectionFilter' endpoint"""
+    """"""
 
     data: SetSelectionFilter
 
@@ -616,7 +616,7 @@ class OptionSetSelectionFilter(BaseModel):
 
 
 class OptionDefaultCameraSetOrthographic(BaseModel):
-    """The response to the 'DefaultCameraSetOrthographic' endpoint"""
+    """"""
 
     data: DefaultCameraSetOrthographic
 
@@ -626,7 +626,7 @@ class OptionDefaultCameraSetOrthographic(BaseModel):
 
 
 class OptionDefaultCameraSetPerspective(BaseModel):
-    """The response to the 'DefaultCameraSetPerspective' endpoint"""
+    """"""
 
     data: DefaultCameraSetPerspective
 
@@ -636,7 +636,7 @@ class OptionDefaultCameraSetPerspective(BaseModel):
 
 
 class OptionEditModeExit(BaseModel):
-    """The response to the 'EditModeExit' endpoint"""
+    """"""
 
     data: EditModeExit
 
@@ -646,7 +646,7 @@ class OptionEditModeExit(BaseModel):
 
 
 class OptionSelectClear(BaseModel):
-    """The response to the 'SelectClear' endpoint"""
+    """"""
 
     data: SelectClear
 
@@ -656,7 +656,7 @@ class OptionSelectClear(BaseModel):
 
 
 class OptionExport(BaseModel):
-    """The response to the 'Export' endpoint"""
+    """"""
 
     data: Export
 
@@ -666,7 +666,7 @@ class OptionExport(BaseModel):
 
 
 class OptionSelectWithPoint(BaseModel):
-    """The response to the 'SelectWithPoint' endpoint"""
+    """"""
 
     data: SelectWithPoint
 
@@ -676,7 +676,7 @@ class OptionSelectWithPoint(BaseModel):
 
 
 class OptionHighlightSetEntity(BaseModel):
-    """The response to the 'HighlightSetEntity' endpoint"""
+    """"""
 
     data: HighlightSetEntity
 
@@ -686,7 +686,7 @@ class OptionHighlightSetEntity(BaseModel):
 
 
 class OptionEntityGetChildUuid(BaseModel):
-    """The response to the 'EntityGetChildUuid' endpoint"""
+    """"""
 
     data: EntityGetChildUuid
 
@@ -696,7 +696,7 @@ class OptionEntityGetChildUuid(BaseModel):
 
 
 class OptionEntityGetNumChildren(BaseModel):
-    """The response to the 'EntityGetNumChildren' endpoint"""
+    """"""
 
     data: EntityGetNumChildren
 
@@ -706,7 +706,7 @@ class OptionEntityGetNumChildren(BaseModel):
 
 
 class OptionEntityGetParentId(BaseModel):
-    """The response to the 'EntityGetParentId' endpoint"""
+    """"""
 
     data: EntityGetParentId
 
@@ -716,7 +716,7 @@ class OptionEntityGetParentId(BaseModel):
 
 
 class OptionEntityGetAllChildUuids(BaseModel):
-    """The response to the 'EntityGetAllChildUuids' endpoint"""
+    """"""
 
     data: EntityGetAllChildUuids
 
@@ -726,7 +726,7 @@ class OptionEntityGetAllChildUuids(BaseModel):
 
 
 class OptionEntityGetSketchPaths(BaseModel):
-    """The response to the 'EntityGetSketchPaths' endpoint"""
+    """"""
 
     data: EntityGetSketchPaths
 
@@ -736,7 +736,7 @@ class OptionEntityGetSketchPaths(BaseModel):
 
 
 class OptionLoft(BaseModel):
-    """The response to the 'Loft' endpoint"""
+    """"""
 
     data: Loft
 
@@ -746,7 +746,7 @@ class OptionLoft(BaseModel):
 
 
 class OptionClosePath(BaseModel):
-    """The response to the 'ClosePath' endpoint"""
+    """"""
 
     data: ClosePath
 
@@ -756,7 +756,7 @@ class OptionClosePath(BaseModel):
 
 
 class OptionCameraDragMove(BaseModel):
-    """The response to the 'CameraDragMove' endpoint"""
+    """"""
 
     data: CameraDragMove
 
@@ -766,7 +766,7 @@ class OptionCameraDragMove(BaseModel):
 
 
 class OptionCameraDragEnd(BaseModel):
-    """The response to the 'CameraDragEnd' endpoint"""
+    """"""
 
     data: CameraDragEnd
 
@@ -776,7 +776,7 @@ class OptionCameraDragEnd(BaseModel):
 
 
 class OptionDefaultCameraGetSettings(BaseModel):
-    """The response to the 'DefaultCameraGetSettings' endpoint"""
+    """"""
 
     data: DefaultCameraGetSettings
 
@@ -786,7 +786,7 @@ class OptionDefaultCameraGetSettings(BaseModel):
 
 
 class OptionDefaultCameraZoom(BaseModel):
-    """The response to the 'DefaultCameraZoom' endpoint"""
+    """"""
 
     data: DefaultCameraZoom
 
@@ -796,7 +796,7 @@ class OptionDefaultCameraZoom(BaseModel):
 
 
 class OptionZoomToFit(BaseModel):
-    """The response to the 'ZoomToFit' endpoint"""
+    """"""
 
     data: ZoomToFit
 
@@ -806,7 +806,7 @@ class OptionZoomToFit(BaseModel):
 
 
 class OptionViewIsometric(BaseModel):
-    """The response to the 'ViewIsometric' endpoint"""
+    """"""
 
     data: ViewIsometric
 
@@ -816,7 +816,7 @@ class OptionViewIsometric(BaseModel):
 
 
 class OptionGetNumObjects(BaseModel):
-    """The response to the 'GetNumObjects' endpoint"""
+    """"""
 
     data: GetNumObjects
 
@@ -826,7 +826,7 @@ class OptionGetNumObjects(BaseModel):
 
 
 class OptionDefaultCameraFocusOn(BaseModel):
-    """The response to the 'DefaultCameraFocusOn' endpoint"""
+    """"""
 
     data: DefaultCameraFocusOn
 
@@ -836,7 +836,7 @@ class OptionDefaultCameraFocusOn(BaseModel):
 
 
 class OptionSelectGet(BaseModel):
-    """The response to the 'SelectGet' endpoint"""
+    """"""
 
     data: SelectGet
 
@@ -846,7 +846,7 @@ class OptionSelectGet(BaseModel):
 
 
 class OptionSolid3DGetAllEdgeFaces(BaseModel):
-    """The response to the 'Solid3dGetAllEdgeFaces' endpoint"""
+    """"""
 
     data: Solid3dGetAllEdgeFaces
 
@@ -856,7 +856,7 @@ class OptionSolid3DGetAllEdgeFaces(BaseModel):
 
 
 class OptionSolid3DGetAllOppositeEdges(BaseModel):
-    """The response to the 'Solid3dGetAllOppositeEdges' endpoint"""
+    """"""
 
     data: Solid3dGetAllOppositeEdges
 
@@ -866,7 +866,7 @@ class OptionSolid3DGetAllOppositeEdges(BaseModel):
 
 
 class OptionSolid3DGetOppositeEdge(BaseModel):
-    """The response to the 'Solid3dGetOppositeEdge' endpoint"""
+    """"""
 
     data: Solid3dGetOppositeEdge
 
@@ -876,7 +876,7 @@ class OptionSolid3DGetOppositeEdge(BaseModel):
 
 
 class OptionSolid3DGetNextAdjacentEdge(BaseModel):
-    """The response to the 'Solid3dGetNextAdjacentEdge' endpoint"""
+    """"""
 
     data: Solid3dGetNextAdjacentEdge
 
@@ -886,7 +886,7 @@ class OptionSolid3DGetNextAdjacentEdge(BaseModel):
 
 
 class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
-    """The response to the 'Solid3dGetPrevAdjacentEdge' endpoint"""
+    """"""
 
     data: Solid3dGetPrevAdjacentEdge
 
@@ -896,7 +896,7 @@ class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
 
 
 class OptionGetEntityType(BaseModel):
-    """The response to the 'GetEntityType' endpoint"""
+    """"""
 
     data: GetEntityType
 
@@ -906,7 +906,7 @@ class OptionGetEntityType(BaseModel):
 
 
 class OptionCurveGetControlPoints(BaseModel):
-    """The response to the 'CurveGetControlPoints' endpoint"""
+    """"""
 
     data: CurveGetControlPoints
 
@@ -916,7 +916,7 @@ class OptionCurveGetControlPoints(BaseModel):
 
 
 class OptionCurveGetType(BaseModel):
-    """The response to the 'CurveGetType' endpoint"""
+    """"""
 
     data: CurveGetType
 
@@ -926,7 +926,7 @@ class OptionCurveGetType(BaseModel):
 
 
 class OptionMouseClick(BaseModel):
-    """The response to the 'MouseClick' endpoint"""
+    """"""
 
     data: MouseClick
 
@@ -936,7 +936,7 @@ class OptionMouseClick(BaseModel):
 
 
 class OptionTakeSnapshot(BaseModel):
-    """The response to the 'TakeSnapshot' endpoint"""
+    """"""
 
     data: TakeSnapshot
 
@@ -946,7 +946,7 @@ class OptionTakeSnapshot(BaseModel):
 
 
 class OptionPathGetInfo(BaseModel):
-    """The response to the 'PathGetInfo' endpoint"""
+    """"""
 
     data: PathGetInfo
 
@@ -956,7 +956,7 @@ class OptionPathGetInfo(BaseModel):
 
 
 class OptionPathSegmentInfo(BaseModel):
-    """The response to the 'PathSegmentInfo' endpoint"""
+    """"""
 
     data: PathSegmentInfo
 
@@ -966,7 +966,7 @@ class OptionPathSegmentInfo(BaseModel):
 
 
 class OptionPathGetCurveUuidsForVertices(BaseModel):
-    """The response to the 'PathGetCurveUuidsForVertices' endpoint"""
+    """"""
 
     data: PathGetCurveUuidsForVertices
 
@@ -978,7 +978,7 @@ class OptionPathGetCurveUuidsForVertices(BaseModel):
 
 
 class OptionPathGetCurveUuid(BaseModel):
-    """The response to the 'PathGetCurveUuid' endpoint"""
+    """"""
 
     data: PathGetCurveUuid
 
@@ -988,7 +988,7 @@ class OptionPathGetCurveUuid(BaseModel):
 
 
 class OptionPathGetVertexUuids(BaseModel):
-    """The response to the 'PathGetVertexUuids' endpoint"""
+    """"""
 
     data: PathGetVertexUuids
 
@@ -998,7 +998,7 @@ class OptionPathGetVertexUuids(BaseModel):
 
 
 class OptionPathGetSketchTargetUuid(BaseModel):
-    """The response to the 'PathGetSketchTargetUuid' endpoint"""
+    """"""
 
     data: PathGetSketchTargetUuid
 
@@ -1008,7 +1008,7 @@ class OptionPathGetSketchTargetUuid(BaseModel):
 
 
 class OptionCurveGetEndPoints(BaseModel):
-    """The response to the 'CurveGetEndPoints' endpoint"""
+    """"""
 
     data: CurveGetEndPoints
 
@@ -1018,7 +1018,7 @@ class OptionCurveGetEndPoints(BaseModel):
 
 
 class OptionFaceIsPlanar(BaseModel):
-    """The response to the 'FaceIsPlanar' endpoint"""
+    """"""
 
     data: FaceIsPlanar
 
@@ -1028,7 +1028,7 @@ class OptionFaceIsPlanar(BaseModel):
 
 
 class OptionFaceGetPosition(BaseModel):
-    """The response to the 'FaceGetPosition' endpoint"""
+    """"""
 
     data: FaceGetPosition
 
@@ -1038,7 +1038,7 @@ class OptionFaceGetPosition(BaseModel):
 
 
 class OptionFaceGetCenter(BaseModel):
-    """The response to the 'FaceGetCenter' endpoint"""
+    """"""
 
     data: FaceGetCenter
 
@@ -1048,7 +1048,7 @@ class OptionFaceGetCenter(BaseModel):
 
 
 class OptionFaceGetGradient(BaseModel):
-    """The response to the 'FaceGetGradient' endpoint"""
+    """"""
 
     data: FaceGetGradient
 
@@ -1058,7 +1058,7 @@ class OptionFaceGetGradient(BaseModel):
 
 
 class OptionPlaneIntersectAndProject(BaseModel):
-    """The response to the 'PlaneIntersectAndProject' endpoint"""
+    """"""
 
     data: PlaneIntersectAndProject
 
@@ -1068,7 +1068,7 @@ class OptionPlaneIntersectAndProject(BaseModel):
 
 
 class OptionImportFiles(BaseModel):
-    """The response to the 'ImportFiles' endpoint"""
+    """"""
 
     data: ImportFiles
 
@@ -1078,7 +1078,7 @@ class OptionImportFiles(BaseModel):
 
 
 class OptionImportedGeometry(BaseModel):
-    """The response to the 'ImportedGeometry' endpoint"""
+    """"""
 
     data: ImportedGeometry
 
@@ -1088,7 +1088,7 @@ class OptionImportedGeometry(BaseModel):
 
 
 class OptionMass(BaseModel):
-    """The response to the 'Mass' endpoint"""
+    """"""
 
     data: Mass
 
@@ -1098,7 +1098,7 @@ class OptionMass(BaseModel):
 
 
 class OptionVolume(BaseModel):
-    """The response to the 'Volume' endpoint"""
+    """"""
 
     data: Volume
 
@@ -1108,7 +1108,7 @@ class OptionVolume(BaseModel):
 
 
 class OptionDensity(BaseModel):
-    """The response to the 'Density' endpoint"""
+    """"""
 
     data: Density
 
@@ -1118,7 +1118,7 @@ class OptionDensity(BaseModel):
 
 
 class OptionSurfaceArea(BaseModel):
-    """The response to the 'SurfaceArea' endpoint"""
+    """"""
 
     data: SurfaceArea
 
@@ -1128,7 +1128,7 @@ class OptionSurfaceArea(BaseModel):
 
 
 class OptionCenterOfMass(BaseModel):
-    """The response to the 'CenterOfMass' endpoint"""
+    """"""
 
     data: CenterOfMass
 
@@ -1138,7 +1138,7 @@ class OptionCenterOfMass(BaseModel):
 
 
 class OptionGetSketchModePlane(BaseModel):
-    """The response to the 'GetSketchModePlane' endpoint"""
+    """"""
 
     data: GetSketchModePlane
 
@@ -1148,7 +1148,7 @@ class OptionGetSketchModePlane(BaseModel):
 
 
 class OptionEntityGetDistance(BaseModel):
-    """The response to the 'EntityGetDistance' endpoint"""
+    """"""
 
     data: EntityGetDistance
 
@@ -1158,7 +1158,7 @@ class OptionEntityGetDistance(BaseModel):
 
 
 class OptionEntityLinearPatternTransform(BaseModel):
-    """The response to the 'EntityLinearPatternTransform' endpoint"""
+    """"""
 
     data: EntityLinearPatternTransform
 
@@ -1168,7 +1168,7 @@ class OptionEntityLinearPatternTransform(BaseModel):
 
 
 class OptionEntityLinearPattern(BaseModel):
-    """The response to the 'EntityLinearPattern' endpoint"""
+    """"""
 
     data: EntityLinearPattern
 
@@ -1178,7 +1178,7 @@ class OptionEntityLinearPattern(BaseModel):
 
 
 class OptionEntityCircularPattern(BaseModel):
-    """The response to the 'EntityCircularPattern' endpoint"""
+    """"""
 
     data: EntityCircularPattern
 
@@ -1188,7 +1188,7 @@ class OptionEntityCircularPattern(BaseModel):
 
 
 class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
-    """The response to the 'Solid3dGetExtrusionFaceInfo' endpoint"""
+    """"""
 
     data: Solid3dGetExtrusionFaceInfo
 
@@ -1198,7 +1198,7 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
 
 
 class OptionExtrusionFaceInfo(BaseModel):
-    """The response to the 'ExtrusionFaceInfo' endpoint"""
+    """"""
 
     data: ExtrusionFaceInfo
 
