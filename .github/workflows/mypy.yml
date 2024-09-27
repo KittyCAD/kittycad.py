@@ -16,15 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
-      # Installation instructions are from: https://python-poetry.org/docs/
-      - name: Install dependencies
-        shell: bash
+      - name: Install Poetry
         run: |
-          pip install \
-          poetry
+          curl -sSL https://install.python-poetry.org | python3 -
 
       - name: Build
         shell: bash
