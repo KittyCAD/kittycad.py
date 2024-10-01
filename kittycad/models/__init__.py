@@ -250,9 +250,9 @@ from .selection import Selection
 from .send_object import SendObject
 from .service_account import ServiceAccount
 from .service_account_results_page import ServiceAccountResultsPage
-from .service_account_token_uuid import ServiceAccountTokenUuid
+from .service_account_uuid import ServiceAccountUuid
 from .session import Session
-from .session_token_uuid import SessionTokenUuid
+from .session_uuid import SessionUuid
 from .set_background_color import SetBackgroundColor
 from .set_current_tool_properties import SetCurrentToolProperties
 from .set_default_system_properties import SetDefaultSystemProperties
