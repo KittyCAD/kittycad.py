@@ -4,7 +4,7 @@ from pydantic import GetCoreSchemaHandler
 from pydantic_core import CoreSchema, core_schema
 
 
-class ServiceAccountTokenUuid(str):
+class ServiceAccountUuid(str):
     """An auth token. A uuid with a prefix of svc-"""
 
     def __str__(self) -> str:
