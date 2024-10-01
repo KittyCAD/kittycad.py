@@ -4,12 +4,12 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...models.service_account_token_uuid import ServiceAccountTokenUuid
+from ...models.service_account_uuid import ServiceAccountUuid
 from ...types import Response
 
 
 def _get_kwargs(
-    token: ServiceAccountTokenUuid,
+    token: ServiceAccountUuid,
     *,
     client: Client,
 ) -> Dict[str, Any]:
@@ -50,7 +50,7 @@ def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
 
 
 def sync_detailed(
-    token: ServiceAccountTokenUuid,
+    token: ServiceAccountUuid,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
@@ -68,7 +68,7 @@ def sync_detailed(
 
 
 def sync(
-    token: ServiceAccountTokenUuid,
+    token: ServiceAccountUuid,
     *,
     client: Client,
 ) -> Optional[Error]:
@@ -82,7 +82,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    token: ServiceAccountTokenUuid,
+    token: ServiceAccountUuid,
     *,
     client: Client,
 ) -> Response[Optional[Error]]:
@@ -98,7 +98,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    token: ServiceAccountTokenUuid,
+    token: ServiceAccountUuid,
     *,
     client: Client,
 ) -> Optional[Error]:
