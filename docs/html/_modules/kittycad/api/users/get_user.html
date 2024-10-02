@@ -174,7 +174,9 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">User</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.</span>
+
 <span class="sd">    Alternatively, to get information about the authenticated user, use `/user` endpoint.</span>
+
 <span class="sd">    To get information about any Zoo user, you must be a Zoo employee.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
@@ -211,7 +213,9 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">User</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.</span>
+
 <span class="sd">    Alternatively, to get information about the authenticated user, use `/user` endpoint.</span>
+
 <span class="sd">    To get information about any Zoo user, you must be a Zoo employee.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>

@@ -593,19 +593,6 @@
 
 
 
-<div class="viewcode-block" id="OptionEditModeEnter">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEditModeEnter.html#kittycad.models.modeling_cmd.OptionEditModeEnter">[docs]</a>
-<span class="k">class</span> <span class="nc">OptionEditModeEnter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enter edit mode&quot;&quot;&quot;</span>
-
-    <span class="n">target</span><span class="p">:</span> <span class="nb">str</span>
-
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edit_mode_enter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edit_mode_enter&quot;</span>
-
-    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
-
-
-
 <div class="viewcode-block" id="OptionSelectWithPoint">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSelectWithPoint.html#kittycad.models.modeling_cmd.OptionSelectWithPoint">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionSelectWithPoint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1169,6 +1156,28 @@
 
 
 
+<div class="viewcode-block" id="OptionEnableDryRun">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEnableDryRun.html#kittycad.models.modeling_cmd.OptionEnableDryRun">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEnableDryRun</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets whether or not changes to the scene or its objects will be done as a \&quot;dry run\&quot; In a dry run, successful commands won&#39;t actually change the model. This is useful for catching errors before actually making the change.&quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;enable_dry_run&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;enable_dry_run&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionDisableDryRun">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDisableDryRun.html#kittycad.models.modeling_cmd.OptionDisableDryRun">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDisableDryRun</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets whether or not changes to the scene or its objects will be done as a \&quot;dry run\&quot; In a dry run, successful commands won&#39;t actually change the model. This is useful for catching errors before actually making the change.&quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;disable_dry_run&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;disable_dry_run&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionSetBackgroundColor">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetBackgroundColor.html#kittycad.models.modeling_cmd.OptionSetBackgroundColor">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionSetBackgroundColor</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1606,6 +1615,19 @@
 
 
 
+<div class="viewcode-block" id="OptionDefaultCameraCenterToSelection">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraCenterToSelection.html#kittycad.models.modeling_cmd.OptionDefaultCameraCenterToSelection">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraCenterToSelection</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates the camera to center to the center of the current selection (or the origin if nothing is selected)&quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_center_to_selection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;default_camera_center_to_selection&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionZoomToFit">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionZoomToFit.html#kittycad.models.modeling_cmd.OptionZoomToFit">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionZoomToFit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1646,17 +1668,6 @@
     <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;solid3d_get_extrusion_face_info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;solid3d_get_extrusion_face_info&quot;</span>
-
-    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
-
-
-
-<div class="viewcode-block" id="OptionEditModeExit">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEditModeExit.html#kittycad.models.modeling_cmd.OptionEditModeExit">[docs]</a>
-<span class="k">class</span> <span class="nc">OptionEditModeExit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exit edit mode&quot;&quot;&quot;</span>
-
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edit_mode_exit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edit_mode_exit&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -1727,7 +1738,6 @@
             <span class="n">OptionEntityMakeHelix</span><span class="p">,</span>
             <span class="n">OptionEntityMirror</span><span class="p">,</span>
             <span class="n">OptionEntityMirrorAcrossEdge</span><span class="p">,</span>
-            <span class="n">OptionEditModeEnter</span><span class="p">,</span>
             <span class="n">OptionSelectWithPoint</span><span class="p">,</span>
             <span class="n">OptionSelectAdd</span><span class="p">,</span>
             <span class="n">OptionSelectRemove</span><span class="p">,</span>
@@ -1765,6 +1775,8 @@
             <span class="n">OptionGetSketchModePlane</span><span class="p">,</span>
             <span class="n">OptionCurveSetConstraint</span><span class="p">,</span>
             <span class="n">OptionEnableSketchMode</span><span class="p">,</span>
+            <span class="n">OptionEnableDryRun</span><span class="p">,</span>
+            <span class="n">OptionDisableDryRun</span><span class="p">,</span>
             <span class="n">OptionSetBackgroundColor</span><span class="p">,</span>
             <span class="n">OptionSetCurrentToolProperties</span><span class="p">,</span>
             <span class="n">OptionSetDefaultSystemProperties</span><span class="p">,</span>
@@ -1796,10 +1808,10 @@
             <span class="n">OptionSetSelectionFilter</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraSetOrthographic</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraSetPerspective</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraCenterToSelection</span><span class="p">,</span>
             <span class="n">OptionZoomToFit</span><span class="p">,</span>
             <span class="n">OptionViewIsometric</span><span class="p">,</span>
             <span class="n">OptionSolid3DGetExtrusionFaceInfo</span><span class="p">,</span>
-            <span class="n">OptionEditModeExit</span><span class="p">,</span>
             <span class="n">OptionSelectClear</span><span class="p">,</span>
             <span class="n">OptionSelectGet</span><span class="p">,</span>
             <span class="n">OptionGetNumObjects</span><span class="p">,</span>

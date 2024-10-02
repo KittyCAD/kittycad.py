@@ -164,7 +164,9 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;In order to delete an org, you must first delete all of its members, except yourself.</span>
+
 <span class="sd">    You must also have no outstanding invoices or unpaid balances.</span>
+
 <span class="sd">    This endpoint requires authentication by an org admin. It deletes the authenticated user&#39;s org.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
@@ -197,7 +199,9 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;In order to delete an org, you must first delete all of its members, except yourself.</span>
+
 <span class="sd">    You must also have no outstanding invoices or unpaid balances.</span>
+
 <span class="sd">    This endpoint requires authentication by an org admin. It deletes the authenticated user&#39;s org.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>

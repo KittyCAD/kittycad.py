@@ -202,7 +202,9 @@
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This includes all API calls that were made by users in the org.</span>
+
 <span class="sd">    This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user&#39;s org.</span>
+
 <span class="sd">    The API calls are returned in order of creation, with the most recently created API calls first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
@@ -247,7 +249,9 @@
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ApiCallWithPriceResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This includes all API calls that were made by users in the org.</span>
+
 <span class="sd">    This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user&#39;s org.</span>
+
 <span class="sd">    The API calls are returned in order of creation, with the most recently created API calls first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>

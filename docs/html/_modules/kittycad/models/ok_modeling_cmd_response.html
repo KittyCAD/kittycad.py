@@ -95,6 +95,7 @@
 <span class="kn">from</span> <span class="nn">..models.curve_get_end_points</span> <span class="kn">import</span> <span class="n">CurveGetEndPoints</span>
 <span class="kn">from</span> <span class="nn">..models.curve_get_type</span> <span class="kn">import</span> <span class="n">CurveGetType</span>
 <span class="kn">from</span> <span class="nn">..models.curve_set_constraint</span> <span class="kn">import</span> <span class="n">CurveSetConstraint</span>
+<span class="kn">from</span> <span class="nn">..models.default_camera_center_to_selection</span> <span class="kn">import</span> <span class="n">DefaultCameraCenterToSelection</span>
 <span class="kn">from</span> <span class="nn">..models.default_camera_focus_on</span> <span class="kn">import</span> <span class="n">DefaultCameraFocusOn</span>
 <span class="kn">from</span> <span class="nn">..models.default_camera_get_settings</span> <span class="kn">import</span> <span class="n">DefaultCameraGetSettings</span>
 <span class="kn">from</span> <span class="nn">..models.default_camera_look_at</span> <span class="kn">import</span> <span class="n">DefaultCameraLookAt</span>
@@ -105,9 +106,9 @@
 <span class="kn">from</span> <span class="nn">..models.default_camera_set_perspective</span> <span class="kn">import</span> <span class="n">DefaultCameraSetPerspective</span>
 <span class="kn">from</span> <span class="nn">..models.default_camera_zoom</span> <span class="kn">import</span> <span class="n">DefaultCameraZoom</span>
 <span class="kn">from</span> <span class="nn">..models.density</span> <span class="kn">import</span> <span class="n">Density</span>
+<span class="kn">from</span> <span class="nn">..models.disable_dry_run</span> <span class="kn">import</span> <span class="n">DisableDryRun</span>
 <span class="kn">from</span> <span class="nn">..models.edge_lines_visible</span> <span class="kn">import</span> <span class="n">EdgeLinesVisible</span>
-<span class="kn">from</span> <span class="nn">..models.edit_mode_enter</span> <span class="kn">import</span> <span class="n">EditModeEnter</span>
-<span class="kn">from</span> <span class="nn">..models.edit_mode_exit</span> <span class="kn">import</span> <span class="n">EditModeExit</span>
+<span class="kn">from</span> <span class="nn">..models.enable_dry_run</span> <span class="kn">import</span> <span class="n">EnableDryRun</span>
 <span class="kn">from</span> <span class="nn">..models.enable_sketch_mode</span> <span class="kn">import</span> <span class="n">EnableSketchMode</span>
 <span class="kn">from</span> <span class="nn">..models.entity_circular_pattern</span> <span class="kn">import</span> <span class="n">EntityCircularPattern</span>
 <span class="kn">from</span> <span class="nn">..models.entity_fade</span> <span class="kn">import</span> <span class="n">EntityFade</span>
@@ -375,19 +376,6 @@
     <span class="n">data</span><span class="p">:</span> <span class="n">EntityMirrorAcrossEdge</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_mirror_across_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_mirror_across_edge&quot;</span>
-
-    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
-
-
-
-<div class="viewcode-block" id="OptionEditModeEnter">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEditModeEnter.html#kittycad.models.ok_modeling_cmd_response.OptionEditModeEnter">[docs]</a>
-<span class="k">class</span> <span class="nc">OptionEditModeEnter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
-
-    <span class="n">data</span><span class="p">:</span> <span class="n">EditModeEnter</span>
-
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edit_mode_enter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edit_mode_enter&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -666,6 +654,32 @@
 
 
 
+<div class="viewcode-block" id="OptionEnableDryRun">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEnableDryRun.html#kittycad.models.ok_modeling_cmd_response.OptionEnableDryRun">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEnableDryRun</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EnableDryRun</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;enable_dry_run&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;enable_dry_run&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionDisableDryRun">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDisableDryRun.html#kittycad.models.ok_modeling_cmd_response.OptionDisableDryRun">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDisableDryRun</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">DisableDryRun</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;disable_dry_run&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;disable_dry_run&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionCurveSetConstraint">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionCurveSetConstraint.html#kittycad.models.ok_modeling_cmd_response.OptionCurveSetConstraint">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionCurveSetConstraint</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -874,14 +888,16 @@
 
 
 
-<div class="viewcode-block" id="OptionEditModeExit">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEditModeExit.html#kittycad.models.ok_modeling_cmd_response.OptionEditModeExit">[docs]</a>
-<span class="k">class</span> <span class="nc">OptionEditModeExit</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionDefaultCameraCenterToSelection">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraCenterToSelection.html#kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraCenterToSelection">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraCenterToSelection</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
 
-    <span class="n">data</span><span class="p">:</span> <span class="n">EditModeExit</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">DefaultCameraCenterToSelection</span>
 
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;edit_mode_exit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;edit_mode_exit&quot;</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_center_to_selection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;default_camera_center_to_selection&quot;</span>
+    <span class="p">)</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -1634,7 +1650,6 @@
             <span class="n">OptionEntityMakeHelix</span><span class="p">,</span>
             <span class="n">OptionEntityMirror</span><span class="p">,</span>
             <span class="n">OptionEntityMirrorAcrossEdge</span><span class="p">,</span>
-            <span class="n">OptionEditModeEnter</span><span class="p">,</span>
             <span class="n">OptionSelectAdd</span><span class="p">,</span>
             <span class="n">OptionSelectRemove</span><span class="p">,</span>
             <span class="n">OptionSceneClearAll</span><span class="p">,</span>
@@ -1656,6 +1671,8 @@
             <span class="n">OptionSetTool</span><span class="p">,</span>
             <span class="n">OptionMouseMove</span><span class="p">,</span>
             <span class="n">OptionSketchModeDisable</span><span class="p">,</span>
+            <span class="n">OptionEnableDryRun</span><span class="p">,</span>
+            <span class="n">OptionDisableDryRun</span><span class="p">,</span>
             <span class="n">OptionCurveSetConstraint</span><span class="p">,</span>
             <span class="n">OptionEnableSketchMode</span><span class="p">,</span>
             <span class="n">OptionSetBackgroundColor</span><span class="p">,</span>
@@ -1672,7 +1689,7 @@
             <span class="n">OptionSetSelectionFilter</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraSetOrthographic</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraSetPerspective</span><span class="p">,</span>
-            <span class="n">OptionEditModeExit</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraCenterToSelection</span><span class="p">,</span>
             <span class="n">OptionSelectClear</span><span class="p">,</span>
             <span class="n">OptionExport</span><span class="p">,</span>
             <span class="n">OptionSelectWithPoint</span><span class="p">,</span>

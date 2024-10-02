@@ -95,7 +95,7 @@
 <span class="k">class</span> <span class="nc">ExtendedUser</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extended user information.</span>
 
-<span class="sd">    This is mostly used for internal purposes. It returns a mapping of the user&#39;s information, including that of our third party services we use for users: MailChimp | Stripe&quot;&quot;&quot;</span>
+<span class="sd">    This is mostly used for internal purposes. It returns a mapping of the user&#39;s information, including that of our third party services we use for users: Stripe&quot;&quot;&quot;</span>
 
     <span class="n">block</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">BlockReason</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -124,8 +124,6 @@
     <span class="n">is_service_account</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">last_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="n">mailchimp_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 

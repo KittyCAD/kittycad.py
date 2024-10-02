@@ -196,11 +196,11 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.orgs.create_org_member.asyncio">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.orgs.create_org_member.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/orgs/create_org_member.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/orgs/create_org_member.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.orgs.create_org_member.asyncio" title="Link to this definition"></a></dt>
-<dd><p>If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.
-In both cases the user gets an email that they have been added to the org.
-If the user is already in your org, this will return a 400 and a message.
-If the user is already in a different org, this will return a 400 and a message.
-This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user’s org.</p>
+<dd><p>If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.</p>
+<p>In both cases the user gets an email that they have been added to the org.</p>
+<p>If the user is already in your org, this will return a 400 and a message.</p>
+<p>If the user is already in a different org, this will return a 400 and a message.</p>
+<p>This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user’s org.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="kittycad.models.org_member.OrgMember.html#kittycad.models.org_member.OrgMember" title="kittycad.models.org_member.OrgMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrgMember</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>
@@ -221,11 +221,11 @@ This endpoint requires authentication by an org admin. It adds the specified mem
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.orgs.create_org_member.sync">
 <span class="sig-prename descclassname"><span class="pre">kittycad.api.orgs.create_org_member.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/orgs/create_org_member.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/orgs/create_org_member.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.orgs.create_org_member.sync" title="Link to this definition"></a></dt>
-<dd><p>If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.
-In both cases the user gets an email that they have been added to the org.
-If the user is already in your org, this will return a 400 and a message.
-If the user is already in a different org, this will return a 400 and a message.
-This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user’s org.</p>
+<dd><p>If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.</p>
+<p>In both cases the user gets an email that they have been added to the org.</p>
+<p>If the user is already in your org, this will return a 400 and a message.</p>
+<p>If the user is already in a different org, this will return a 400 and a message.</p>
+<p>This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user’s org.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="kittycad.models.org_member.OrgMember.html#kittycad.models.org_member.OrgMember" title="kittycad.models.org_member.OrgMember"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrgMember</span></code></a>, <a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span></p>

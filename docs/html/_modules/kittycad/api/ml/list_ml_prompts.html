@@ -202,7 +202,9 @@
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">MlPromptResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.</span>
+
 <span class="sd">    This endpoint requires authentication by a Zoo employee.</span>
+
 <span class="sd">    The ML prompts are returned in order of creation, with the most recently created ML prompts first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
@@ -247,7 +249,9 @@
     <span class="n">page_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">MlPromptResultsPage</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.</span>
+
 <span class="sd">    This endpoint requires authentication by a Zoo employee.</span>
+
 <span class="sd">    The ML prompts are returned in order of creation, with the most recently created ML prompts first.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>

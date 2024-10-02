@@ -217,9 +217,13 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">FileDensity</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.</span>
+
 <span class="sd">    This endpoint assumes if you are giving a material mass in a specific mass units, we return a density in mass unit per cubic measure unit.</span>
+
 <span class="sd">    In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.</span>
+
 <span class="sd">    Get the density of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.</span>
+
 <span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
@@ -272,9 +276,13 @@
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">FileDensity</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.</span>
+
 <span class="sd">    This endpoint assumes if you are giving a material mass in a specific mass units, we return a density in mass unit per cubic measure unit.</span>
+
 <span class="sd">    In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.</span>
+
 <span class="sd">    Get the density of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.</span>
+
 <span class="sd">    If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>
