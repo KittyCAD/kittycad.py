@@ -105,7 +105,9 @@ def sync(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This includes all API calls that were made by users in the org.
+
     This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
+
     The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return sync_detailed(
@@ -144,7 +146,9 @@ async def asyncio(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ApiCallWithPriceResultsPage, Error]]:
     """This includes all API calls that were made by users in the org.
+
     This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
+
     The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
     return (

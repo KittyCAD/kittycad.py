@@ -209,8 +209,11 @@ def sync(
     ]
 ]:
     """Get the status and output of an async operation.
+
     This endpoint requires authentication by any Zoo user. It returns details of the requested async operation for the user.
+
     If the user is not authenticated to view the specified async operation, then it is not returned.
+
     Only Zoo employees with the proper access can view async operations for other users."""  # noqa: E501
 
     return sync_detailed(
@@ -267,8 +270,11 @@ async def asyncio(
     ]
 ]:
     """Get the status and output of an async operation.
+
     This endpoint requires authentication by any Zoo user. It returns details of the requested async operation for the user.
+
     If the user is not authenticated to view the specified async operation, then it is not returned.
+
     Only Zoo employees with the proper access can view async operations for other users."""  # noqa: E501
 
     return (

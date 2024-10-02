@@ -74,6 +74,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[List[AccountProvider], Error]]:
     """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
+
     This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""  # noqa: E501
 
     return sync_detailed(
@@ -100,6 +101,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[List[AccountProvider], Error]]:
     """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
+
     This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""  # noqa: E501
 
     return (

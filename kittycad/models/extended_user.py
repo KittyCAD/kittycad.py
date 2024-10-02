@@ -10,7 +10,7 @@ from ..models.uuid import Uuid
 class ExtendedUser(BaseModel):
     """Extended user information.
 
-    This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: MailChimp | Stripe"""
+    This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: Stripe"""
 
     block: Optional[BlockReason] = None
 
@@ -39,8 +39,6 @@ class ExtendedUser(BaseModel):
     is_service_account: bool = False
 
     last_name: Optional[str] = None
-
-    mailchimp_id: Optional[str] = None
 
     name: Optional[str] = None
 

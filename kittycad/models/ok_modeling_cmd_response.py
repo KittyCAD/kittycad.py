@@ -12,6 +12,7 @@ from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
 from ..models.curve_set_constraint import CurveSetConstraint
+from ..models.default_camera_center_to_selection import DefaultCameraCenterToSelection
 from ..models.default_camera_focus_on import DefaultCameraFocusOn
 from ..models.default_camera_get_settings import DefaultCameraGetSettings
 from ..models.default_camera_look_at import DefaultCameraLookAt
@@ -22,9 +23,9 @@ from ..models.default_camera_set_orthographic import DefaultCameraSetOrthographi
 from ..models.default_camera_set_perspective import DefaultCameraSetPerspective
 from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
+from ..models.disable_dry_run import DisableDryRun
 from ..models.edge_lines_visible import EdgeLinesVisible
-from ..models.edit_mode_enter import EditModeEnter
-from ..models.edit_mode_exit import EditModeExit
+from ..models.enable_dry_run import EnableDryRun
 from ..models.enable_sketch_mode import EnableSketchMode
 from ..models.entity_circular_pattern import EntityCircularPattern
 from ..models.entity_fade import EntityFade
@@ -255,16 +256,6 @@ class OptionEntityMirrorAcrossEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionEditModeEnter(BaseModel):
-    """"""
-
-    data: EditModeEnter
-
-    type: Literal["edit_mode_enter"] = "edit_mode_enter"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
 class OptionSelectAdd(BaseModel):
     """"""
 
@@ -475,6 +466,26 @@ class OptionSketchModeDisable(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionEnableDryRun(BaseModel):
+    """"""
+
+    data: EnableDryRun
+
+    type: Literal["enable_dry_run"] = "enable_dry_run"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDisableDryRun(BaseModel):
+    """"""
+
+    data: DisableDryRun
+
+    type: Literal["disable_dry_run"] = "disable_dry_run"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionCurveSetConstraint(BaseModel):
     """"""
 
@@ -635,12 +646,14 @@ class OptionDefaultCameraSetPerspective(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionEditModeExit(BaseModel):
+class OptionDefaultCameraCenterToSelection(BaseModel):
     """"""
 
-    data: EditModeExit
+    data: DefaultCameraCenterToSelection
 
-    type: Literal["edit_mode_exit"] = "edit_mode_exit"
+    type: Literal["default_camera_center_to_selection"] = (
+        "default_camera_center_to_selection"
+    )
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1224,7 +1237,6 @@ OkModelingCmdResponse = RootModel[
             OptionEntityMakeHelix,
             OptionEntityMirror,
             OptionEntityMirrorAcrossEdge,
-            OptionEditModeEnter,
             OptionSelectAdd,
             OptionSelectRemove,
             OptionSceneClearAll,
@@ -1246,6 +1258,8 @@ OkModelingCmdResponse = RootModel[
             OptionSetTool,
             OptionMouseMove,
             OptionSketchModeDisable,
+            OptionEnableDryRun,
+            OptionDisableDryRun,
             OptionCurveSetConstraint,
             OptionEnableSketchMode,
             OptionSetBackgroundColor,
@@ -1262,7 +1276,7 @@ OkModelingCmdResponse = RootModel[
             OptionSetSelectionFilter,
             OptionDefaultCameraSetOrthographic,
             OptionDefaultCameraSetPerspective,
-            OptionEditModeExit,
+            OptionDefaultCameraCenterToSelection,
             OptionSelectClear,
             OptionExport,
             OptionSelectWithPoint,

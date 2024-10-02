@@ -105,6 +105,7 @@ def sync(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ServiceAccountResultsPage, Error]]:
     """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
+
     The service accounts are returned in order of creation, with the most recently created service accounts first."""  # noqa: E501
 
     return sync_detailed(
@@ -143,6 +144,7 @@ async def asyncio(
     page_token: Optional[str] = None,
 ) -> Optional[Union[ServiceAccountResultsPage, Error]]:
     """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
+
     The service accounts are returned in order of creation, with the most recently created service accounts first."""  # noqa: E501
 
     return (

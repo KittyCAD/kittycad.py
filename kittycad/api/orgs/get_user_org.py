@@ -72,6 +72,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[UserOrgInfo, Error]]:
     """This endpoint requires authentication by any Zoo user. It gets the authenticated user's org.
+
     If the user is not a member of an org, this endpoint will return a 404."""  # noqa: E501
 
     return sync_detailed(
@@ -98,6 +99,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[UserOrgInfo, Error]]:
     """This endpoint requires authentication by any Zoo user. It gets the authenticated user's org.
+
     If the user is not a member of an org, this endpoint will return a 404."""  # noqa: E501
 
     return (

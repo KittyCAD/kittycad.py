@@ -423,16 +423,6 @@ class OptionEntityMirrorAcrossEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionEditModeEnter(BaseModel):
-    """Enter edit mode"""
-
-    target: str
-
-    type: Literal["edit_mode_enter"] = "edit_mode_enter"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
 class OptionSelectWithPoint(BaseModel):
     """Modifies the selection by simulating a \"mouse click\" at the given x,y window coordinate Returns ID of whatever was selected."""
 
@@ -885,6 +875,22 @@ class OptionEnableSketchMode(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionEnableDryRun(BaseModel):
+    """Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change."""
+
+    type: Literal["enable_dry_run"] = "enable_dry_run"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDisableDryRun(BaseModel):
+    """Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change."""
+
+    type: Literal["disable_dry_run"] = "disable_dry_run"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSetBackgroundColor(BaseModel):
     """Set the background color of the scene."""
 
@@ -1229,6 +1235,16 @@ class OptionDefaultCameraSetPerspective(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionDefaultCameraCenterToSelection(BaseModel):
+    """Updates the camera to center to the center of the current selection (or the origin if nothing is selected)"""
+
+    type: Literal["default_camera_center_to_selection"] = (
+        "default_camera_center_to_selection"
+    )
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionZoomToFit(BaseModel):
     """Fit the view to the specified object(s)."""
 
@@ -1261,14 +1277,6 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     object_id: str
 
     type: Literal["solid3d_get_extrusion_face_info"] = "solid3d_get_extrusion_face_info"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class OptionEditModeExit(BaseModel):
-    """Exit edit mode"""
-
-    type: Literal["edit_mode_exit"] = "edit_mode_exit"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1329,7 +1337,6 @@ ModelingCmd = RootModel[
             OptionEntityMakeHelix,
             OptionEntityMirror,
             OptionEntityMirrorAcrossEdge,
-            OptionEditModeEnter,
             OptionSelectWithPoint,
             OptionSelectAdd,
             OptionSelectRemove,
@@ -1367,6 +1374,8 @@ ModelingCmd = RootModel[
             OptionGetSketchModePlane,
             OptionCurveSetConstraint,
             OptionEnableSketchMode,
+            OptionEnableDryRun,
+            OptionDisableDryRun,
             OptionSetBackgroundColor,
             OptionSetCurrentToolProperties,
             OptionSetDefaultSystemProperties,
@@ -1398,10 +1407,10 @@ ModelingCmd = RootModel[
             OptionSetSelectionFilter,
             OptionDefaultCameraSetOrthographic,
             OptionDefaultCameraSetPerspective,
+            OptionDefaultCameraCenterToSelection,
             OptionZoomToFit,
             OptionViewIsometric,
             OptionSolid3DGetExtrusionFaceInfo,
-            OptionEditModeExit,
             OptionSelectClear,
             OptionSelectGet,
             OptionGetNumObjects,
