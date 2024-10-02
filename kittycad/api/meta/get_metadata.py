@@ -72,6 +72,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[Metadata, Error]]:
     """This includes information on any of our other distributed systems it is connected to.
+
     You must be a Zoo employee to perform this request."""  # noqa: E501
 
     return sync_detailed(
@@ -98,6 +99,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[Metadata, Error]]:
     """This includes information on any of our other distributed systems it is connected to.
+
     You must be a Zoo employee to perform this request."""  # noqa: E501
 
     return (

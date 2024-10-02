@@ -115,7 +115,9 @@ def sync(
     no_models: Optional[bool] = None,
 ) -> Optional[Union[TextToCadResultsPage, Error]]:
     """This will always return the STEP file contents as well as the format the user originally requested.
+
     This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
+
     The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""  # noqa: E501
 
     return sync_detailed(
@@ -158,7 +160,9 @@ async def asyncio(
     no_models: Optional[bool] = None,
 ) -> Optional[Union[TextToCadResultsPage, Error]]:
     """This will always return the STEP file contents as well as the format the user originally requested.
+
     This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
+
     The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""  # noqa: E501
 
     return (

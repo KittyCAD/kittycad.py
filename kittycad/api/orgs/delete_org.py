@@ -67,7 +67,9 @@ def sync(
     client: Client,
 ) -> Optional[Error]:
     """In order to delete an org, you must first delete all of its members, except yourself.
+
     You must also have no outstanding invoices or unpaid balances.
+
     This endpoint requires authentication by an org admin. It deletes the authenticated user's org."""  # noqa: E501
 
     return sync_detailed(
@@ -94,7 +96,9 @@ async def asyncio(
     client: Client,
 ) -> Optional[Error]:
     """In order to delete an org, you must first delete all of its members, except yourself.
+
     You must also have no outstanding invoices or unpaid balances.
+
     This endpoint requires authentication by an org admin. It deletes the authenticated user's org."""  # noqa: E501
 
     return (
