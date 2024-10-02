@@ -77,6 +77,7 @@ def sync(
     client: Client,
 ) -> Optional[Union[ApiToken, Error]]:
     """This endpoint allows us to run API calls from our discord bot on behalf of a user. The user must have a discord account linked to their Zoo Account via oauth2 for this to work.
+
     You must be a Zoo employee to use this endpoint."""  # noqa: E501
 
     return sync_detailed(
@@ -107,6 +108,7 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[ApiToken, Error]]:
     """This endpoint allows us to run API calls from our discord bot on behalf of a user. The user must have a discord account linked to their Zoo Account via oauth2 for this to work.
+
     You must be a Zoo employee to use this endpoint."""  # noqa: E501
 
     return (

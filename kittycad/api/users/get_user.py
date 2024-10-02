@@ -77,7 +77,9 @@ def sync(
     client: Client,
 ) -> Optional[Union[User, Error]]:
     """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
     Alternatively, to get information about the authenticated user, use `/user` endpoint.
+
     To get information about any Zoo user, you must be a Zoo employee."""  # noqa: E501
 
     return sync_detailed(
@@ -108,7 +110,9 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[User, Error]]:
     """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
     Alternatively, to get information about the authenticated user, use `/user` endpoint.
+
     To get information about any Zoo user, you must be a Zoo employee."""  # noqa: E501
 
     return (

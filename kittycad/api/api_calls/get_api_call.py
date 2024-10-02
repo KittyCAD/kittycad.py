@@ -79,7 +79,9 @@ def sync(
     client: Client,
 ) -> Optional[Union[ApiCallWithPrice, Error]]:
     """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user.
+
     If the user is not authenticated to view the specified API call, then it is not returned.
+
     Only Zoo employees can view API calls for other users."""  # noqa: E501
 
     return sync_detailed(
@@ -110,7 +112,9 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[ApiCallWithPrice, Error]]:
     """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user.
+
     If the user is not authenticated to view the specified API call, then it is not returned.
+
     Only Zoo employees can view API calls for other users."""  # noqa: E501
 
     return (

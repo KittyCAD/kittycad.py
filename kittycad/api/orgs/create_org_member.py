@@ -78,9 +78,13 @@ def sync(
     client: Client,
 ) -> Optional[Union[OrgMember, Error]]:
     """If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.
+
     In both cases the user gets an email that they have been added to the org.
+
     If the user is already in your org, this will return a 400 and a message.
+
     If the user is already in a different org, this will return a 400 and a message.
+
     This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user's org."""  # noqa: E501
 
     return sync_detailed(
@@ -111,9 +115,13 @@ async def asyncio(
     client: Client,
 ) -> Optional[Union[OrgMember, Error]]:
     """If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.
+
     In both cases the user gets an email that they have been added to the org.
+
     If the user is already in your org, this will return a 400 and a message.
+
     If the user is already in a different org, this will return a 400 and a message.
+
     This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user's org."""  # noqa: E501
 
     return (
