@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.api.users.redirect_user_shortlink &mdash; kittycad v0.7.1 documentation</title>
+  <title>kittycad.api.hidden.redirect_user_shortlink &mdash; kittycad v0.7.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
@@ -71,7 +71,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
-      <li class="breadcrumb-item active">kittycad.api.users.redirect_user_shortlink</li>
+      <li class="breadcrumb-item active">kittycad.api.hidden.redirect_user_shortlink</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -80,7 +80,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>Source code for kittycad.api.users.redirect_user_shortlink</h1><div class="highlight"><pre>
+  <h1>Source code for kittycad.api.hidden.redirect_user_shortlink</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">httpx</span>
@@ -91,7 +91,7 @@
 
 
 <div class="viewcode-block" id="_get_kwargs">
-<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.redirect_user_shortlink.html#kittycad.api.users.redirect_user_shortlink._get_kwargs">[docs]</a>
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.hidden.redirect_user_shortlink.html#kittycad.api.hidden.redirect_user_shortlink._get_kwargs">[docs]</a>
 <span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -115,7 +115,7 @@
 
 
 <div class="viewcode-block" id="_parse_response">
-<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.redirect_user_shortlink.html#kittycad.api.users.redirect_user_shortlink._parse_response">[docs]</a>
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.hidden.redirect_user_shortlink.html#kittycad.api.hidden.redirect_user_shortlink._parse_response">[docs]</a>
 <span class="k">def</span> <span class="nf">_parse_response</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
     <span class="k">return</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
@@ -129,7 +129,7 @@
 
 
 <div class="viewcode-block" id="_build_response">
-<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.redirect_user_shortlink.html#kittycad.api.users.redirect_user_shortlink._build_response">[docs]</a>
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.hidden.redirect_user_shortlink.html#kittycad.api.hidden.redirect_user_shortlink._build_response">[docs]</a>
 <span class="k">def</span> <span class="nf">_build_response</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]]:</span>
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
         <span class="n">status_code</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span>
@@ -141,7 +141,7 @@
 
 
 <div class="viewcode-block" id="sync_detailed">
-<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.redirect_user_shortlink.sync_detailed.html#kittycad.api.users.redirect_user_shortlink.sync_detailed">[docs]</a>
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.hidden.redirect_user_shortlink.sync_detailed.html#kittycad.api.hidden.redirect_user_shortlink.sync_detailed">[docs]</a>
 <span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -162,7 +162,7 @@
 
 
 <div class="viewcode-block" id="sync">
-<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.redirect_user_shortlink.sync.html#kittycad.api.users.redirect_user_shortlink.sync">[docs]</a>
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.hidden.redirect_user_shortlink.sync.html#kittycad.api.hidden.redirect_user_shortlink.sync">[docs]</a>
 <span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -178,7 +178,7 @@
 
 
 <div class="viewcode-block" id="asyncio_detailed">
-<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.redirect_user_shortlink.asyncio_detailed.html#kittycad.api.users.redirect_user_shortlink.asyncio_detailed">[docs]</a>
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.hidden.redirect_user_shortlink.asyncio_detailed.html#kittycad.api.hidden.redirect_user_shortlink.asyncio_detailed">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -197,7 +197,7 @@
 
 
 <div class="viewcode-block" id="asyncio">
-<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.redirect_user_shortlink.asyncio.html#kittycad.api.users.redirect_user_shortlink.asyncio">[docs]</a>
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.hidden.redirect_user_shortlink.asyncio.html#kittycad.api.hidden.redirect_user_shortlink.asyncio">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
