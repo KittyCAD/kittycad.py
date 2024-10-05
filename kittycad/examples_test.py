@@ -75,6 +75,7 @@ from kittycad.api.orgs import (
     get_org_member,
     get_org_privacy_settings,
     get_org_saml_idp,
+    get_org_shortlinks,
     get_user_org,
     list_org_members,
     list_orgs,
@@ -139,7 +140,9 @@ from kittycad.api.unit import (
     get_volume_unit_conversion,
 )
 from kittycad.api.users import (
+    create_user_shortlink,
     delete_user_self,
+    delete_user_shortlink,
     get_oauth2_providers_for_user,
     get_session_for_user,
     get_user,
@@ -148,10 +151,13 @@ from kittycad.api.users import (
     get_user_privacy_settings,
     get_user_self,
     get_user_self_extended,
+    get_user_shortlinks,
     list_users,
     list_users_extended,
+    redirect_user_shortlink,
     update_user_privacy_settings,
     update_user_self,
+    update_user_shortlink,
 )
 from kittycad.client import ClientFromEnv
 from kittycad.models import (
@@ -164,6 +170,7 @@ from kittycad.models import (
     AppClientInfo,
     AsyncApiCallResultsPage,
     CodeOutput,
+    CreateShortlinkResponse,
     Customer,
     CustomerBalance,
     DiscountCode,
@@ -194,6 +201,7 @@ from kittycad.models import (
     ServiceAccount,
     ServiceAccountResultsPage,
     Session,
+    ShortlinkResultsPage,
     TextToCad,
     TextToCadIteration,
     TextToCadResultsPage,
@@ -224,6 +232,7 @@ from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
+from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.event import Event, OptionModelingAppEvent
@@ -275,6 +284,7 @@ from kittycad.models.unit_torque import UnitTorque
 from kittycad.models.unit_volume import UnitVolume
 from kittycad.models.update_member_to_org_body import UpdateMemberToOrgBody
 from kittycad.models.update_payment_balance import UpdatePaymentBalance
+from kittycad.models.update_shortlink_request import UpdateShortlinkRequest
 from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
@@ -3800,6 +3810,63 @@ async def test_delete_service_account_for_org_async():
 
 
 @pytest.mark.skip
+def test_get_org_shortlinks():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ShortlinkResultsPage, Error]] = get_org_shortlinks.sync(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ShortlinkResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[ShortlinkResultsPage, Error]]] = (
+        get_org_shortlinks.sync_detailed(
+            client=client,
+            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            limit=None,  # Optional[int]
+            page_token=None,  # Optional[str]
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_shortlinks_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ShortlinkResultsPage, Error]
+    ] = await get_org_shortlinks.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ShortlinkResultsPage, Error]]
+    ] = await get_org_shortlinks.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
 def test_list_orgs():
     # Create our client.
     client = ClientFromEnv()
@@ -6397,6 +6464,269 @@ async def test_get_session_for_user_async():
     ] = await get_session_for_user.asyncio_detailed(
         client=client,
         token=SessionUuid("<string>"),
+    )
+
+
+@pytest.mark.skip
+def test_get_user_shortlinks():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ShortlinkResultsPage, Error]] = get_user_shortlinks.sync(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ShortlinkResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[ShortlinkResultsPage, Error]]] = (
+        get_user_shortlinks.sync_detailed(
+            client=client,
+            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            limit=None,  # Optional[int]
+            page_token=None,  # Optional[str]
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_shortlinks_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ShortlinkResultsPage, Error]
+    ] = await get_user_shortlinks.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ShortlinkResultsPage, Error]]
+    ] = await get_user_shortlinks.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
+def test_create_user_shortlink():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[CreateShortlinkResponse, Error]] = (
+        create_user_shortlink.sync(
+            client=client,
+            body=CreateShortlinkRequest(
+                restrict_to_org=False,
+                url="<string>",
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: CreateShortlinkResponse = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[CreateShortlinkResponse, Error]]] = (
+        create_user_shortlink.sync_detailed(
+            client=client,
+            body=CreateShortlinkRequest(
+                restrict_to_org=False,
+                url="<string>",
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_user_shortlink_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[CreateShortlinkResponse, Error]
+    ] = await create_user_shortlink.asyncio(
+        client=client,
+        body=CreateShortlinkRequest(
+            restrict_to_org=False,
+            url="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[CreateShortlinkResponse, Error]]
+    ] = await create_user_shortlink.asyncio_detailed(
+        client=client,
+        body=CreateShortlinkRequest(
+            restrict_to_org=False,
+            url="<string>",
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_redirect_user_shortlink():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = redirect_user_shortlink.sync(
+        client=client,
+        key="<string>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = redirect_user_shortlink.sync_detailed(
+        client=client,
+        key="<string>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_redirect_user_shortlink_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await redirect_user_shortlink.asyncio(
+        client=client,
+        key="<string>",
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await redirect_user_shortlink.asyncio_detailed(
+        client=client,
+        key="<string>",
+    )
+
+
+@pytest.mark.skip
+def test_update_user_shortlink():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = update_user_shortlink.sync(
+        client=client,
+        key="<string>",
+        body=UpdateShortlinkRequest(
+            restrict_to_org=False,
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = update_user_shortlink.sync_detailed(
+        client=client,
+        key="<string>",
+        body=UpdateShortlinkRequest(
+            restrict_to_org=False,
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_user_shortlink_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await update_user_shortlink.asyncio(
+        client=client,
+        key="<string>",
+        body=UpdateShortlinkRequest(
+            restrict_to_org=False,
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await update_user_shortlink.asyncio_detailed(
+        client=client,
+        key="<string>",
+        body=UpdateShortlinkRequest(
+            restrict_to_org=False,
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_delete_user_shortlink():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_user_shortlink.sync(
+        client=client,
+        key="<string>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_user_shortlink.sync_detailed(
+        client=client,
+        key="<string>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_user_shortlink_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_user_shortlink.asyncio(
+        client=client,
+        key="<string>",
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_user_shortlink.asyncio_detailed(
+        client=client,
+        key="<string>",
     )
 
 

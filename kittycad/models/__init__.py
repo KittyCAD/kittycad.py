@@ -48,6 +48,8 @@ from .color import Color
 from .connection import Connection
 from .country_code import CountryCode
 from .coupon import Coupon
+from .create_shortlink_request import CreateShortlinkRequest
+from .create_shortlink_response import CreateShortlinkResponse
 from .created_at_sort_mode import CreatedAtSortMode
 from .currency import Currency
 from .curve_get_control_points import CurveGetControlPoints
@@ -261,6 +263,8 @@ from .set_scene_units import SetSceneUnits
 from .set_selection_filter import SetSelectionFilter
 from .set_selection_type import SetSelectionType
 from .set_tool import SetTool
+from .shortlink import Shortlink
+from .shortlink_results_page import ShortlinkResultsPage
 from .sketch_mode_disable import SketchModeDisable
 from .solid2d_add_hole import Solid2dAddHole
 from .solid3d_fillet_edge import Solid3dFilletEdge
@@ -324,6 +328,7 @@ from .unit_volume_conversion import UnitVolumeConversion
 from .update_annotation import UpdateAnnotation
 from .update_member_to_org_body import UpdateMemberToOrgBody
 from .update_payment_balance import UpdatePaymentBalance
+from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .user import User
 from .user_org_info import UserOrgInfo
