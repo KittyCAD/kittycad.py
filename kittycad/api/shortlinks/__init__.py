@@ -1,0 +1,1 @@
+"""Contains methods for accessing the shortlinks API paths: Shortlinks are a way to create a short URL that redirects to a longer URL. This is useful for sharing links that are long and unwieldy."""  # noqa: E501
