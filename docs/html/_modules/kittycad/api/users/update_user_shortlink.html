@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>kittycad.api.users.update_user_shortlink &mdash; kittycad v0.7.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d10597a4" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/autoclasstoc.css?v=08871587" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=a1b19286"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            kittycad
+          </a>
+              <div class="version">
+                v0.7.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_autosummary/kittycad.api.html">kittycad.api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_autosummary/kittycad.client.html">kittycad.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_autosummary/kittycad.models.html">kittycad.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_autosummary/kittycad.types.html">kittycad.types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">kittycad</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">kittycad.api.users.update_user_shortlink</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for kittycad.api.users.update_user_shortlink</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">httpx</span>
+
+<span class="kn">from</span> <span class="nn">...client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">...models.error</span> <span class="kn">import</span> <span class="n">Error</span>
+<span class="kn">from</span> <span class="nn">...models.update_shortlink_request</span> <span class="kn">import</span> <span class="n">UpdateShortlinkRequest</span>
+<span class="kn">from</span> <span class="nn">...types</span> <span class="kn">import</span> <span class="n">Response</span>
+
+
+<div class="viewcode-block" id="_get_kwargs">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.update_user_shortlink.html#kittycad.api.users.update_user_shortlink._get_kwargs">[docs]</a>
+<span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">UpdateShortlinkRequest</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/user/shortlinks/</span><span class="si">{key}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+    <span class="p">)</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_headers</span><span class="p">()</span>
+    <span class="n">cookies</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_cookies</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+        <span class="s2">&quot;headers&quot;</span><span class="p">:</span> <span class="n">headers</span><span class="p">,</span>
+        <span class="s2">&quot;cookies&quot;</span><span class="p">:</span> <span class="n">cookies</span><span class="p">,</span>
+        <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">get_timeout</span><span class="p">(),</span>
+        <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">body</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">(),</span>
+    <span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="_parse_response">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.update_user_shortlink.html#kittycad.api.users.update_user_shortlink._parse_response">[docs]</a>
+<span class="k">def</span> <span class="nf">_parse_response</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+        <span class="n">response_4XX</span> <span class="o">=</span> <span class="n">Error</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">response_4XX</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
+        <span class="n">response_5XX</span> <span class="o">=</span> <span class="n">Error</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">response_5XX</span>
+    <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="o">**</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="_build_response">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.update_user_shortlink.html#kittycad.api.users.update_user_shortlink._build_response">[docs]</a>
+<span class="k">def</span> <span class="nf">_build_response</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]]:</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
+        <span class="n">status_code</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span>
+        <span class="n">content</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+        <span class="n">parsed</span><span class="o">=</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="sync_detailed">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.update_user_shortlink.sync_detailed.html#kittycad.api.users.update_user_shortlink.sync_detailed">[docs]</a>
+<span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">UpdateShortlinkRequest</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]]:</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+        <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+        <span class="n">verify</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">verify_ssl</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_build_response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="sync">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.update_user_shortlink.sync.html#kittycad.api.users.update_user_shortlink.sync">[docs]</a>
+<span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">UpdateShortlinkRequest</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.</span>
+
+<span class="sd">    This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+        <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">parsed</span></div>
+
+
+
+<div class="viewcode-block" id="asyncio_detailed">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.update_user_shortlink.asyncio_detailed.html#kittycad.api.users.update_user_shortlink.asyncio_detailed">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">UpdateShortlinkRequest</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]]:</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+        <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+        <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">verify</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">verify_ssl</span><span class="p">)</span> <span class="k">as</span> <span class="n">_client</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_client</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_build_response</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="asyncio">
+<a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.update_user_shortlink.asyncio.html#kittycad.api.users.update_user_shortlink.asyncio">[docs]</a>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">UpdateShortlinkRequest</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.</span>
+
+<span class="sd">    This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="k">await</span> <span class="n">asyncio_detailed</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+            <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">parsed</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

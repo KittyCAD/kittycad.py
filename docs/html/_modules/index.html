@@ -140,6 +140,7 @@
 <li><a href="kittycad/api/orgs/get_org_member.html">kittycad.api.orgs.get_org_member</a></li>
 <li><a href="kittycad/api/orgs/get_org_privacy_settings.html">kittycad.api.orgs.get_org_privacy_settings</a></li>
 <li><a href="kittycad/api/orgs/get_org_saml_idp.html">kittycad.api.orgs.get_org_saml_idp</a></li>
+<li><a href="kittycad/api/orgs/get_org_shortlinks.html">kittycad.api.orgs.get_org_shortlinks</a></li>
 <li><a href="kittycad/api/orgs/get_user_org.html">kittycad.api.orgs.get_user_org</a></li>
 <li><a href="kittycad/api/orgs/list_org_members.html">kittycad.api.orgs.list_org_members</a></li>
 <li><a href="kittycad/api/orgs/list_orgs.html">kittycad.api.orgs.list_orgs</a></li>
@@ -196,7 +197,9 @@
 <li><a href="kittycad/api/unit/get_temperature_unit_conversion.html">kittycad.api.unit.get_temperature_unit_conversion</a></li>
 <li><a href="kittycad/api/unit/get_torque_unit_conversion.html">kittycad.api.unit.get_torque_unit_conversion</a></li>
 <li><a href="kittycad/api/unit/get_volume_unit_conversion.html">kittycad.api.unit.get_volume_unit_conversion</a></li>
+<li><a href="kittycad/api/users/create_user_shortlink.html">kittycad.api.users.create_user_shortlink</a></li>
 <li><a href="kittycad/api/users/delete_user_self.html">kittycad.api.users.delete_user_self</a></li>
+<li><a href="kittycad/api/users/delete_user_shortlink.html">kittycad.api.users.delete_user_shortlink</a></li>
 <li><a href="kittycad/api/users/get_oauth2_providers_for_user.html">kittycad.api.users.get_oauth2_providers_for_user</a></li>
 <li><a href="kittycad/api/users/get_session_for_user.html">kittycad.api.users.get_session_for_user</a></li>
 <li><a href="kittycad/api/users/get_user.html">kittycad.api.users.get_user</a></li>
@@ -205,10 +208,13 @@
 <li><a href="kittycad/api/users/get_user_privacy_settings.html">kittycad.api.users.get_user_privacy_settings</a></li>
 <li><a href="kittycad/api/users/get_user_self.html">kittycad.api.users.get_user_self</a></li>
 <li><a href="kittycad/api/users/get_user_self_extended.html">kittycad.api.users.get_user_self_extended</a></li>
+<li><a href="kittycad/api/users/get_user_shortlinks.html">kittycad.api.users.get_user_shortlinks</a></li>
 <li><a href="kittycad/api/users/list_users.html">kittycad.api.users.list_users</a></li>
 <li><a href="kittycad/api/users/list_users_extended.html">kittycad.api.users.list_users_extended</a></li>
+<li><a href="kittycad/api/users/redirect_user_shortlink.html">kittycad.api.users.redirect_user_shortlink</a></li>
 <li><a href="kittycad/api/users/update_user_privacy_settings.html">kittycad.api.users.update_user_privacy_settings</a></li>
 <li><a href="kittycad/api/users/update_user_self.html">kittycad.api.users.update_user_self</a></li>
+<li><a href="kittycad/api/users/update_user_shortlink.html">kittycad.api.users.update_user_shortlink</a></li>
 <li><a href="kittycad/client.html">kittycad.client</a></li>
 <li><a href="kittycad/models/account_provider.html">kittycad.models.account_provider</a></li>
 <li><a href="kittycad/models/add_org_member.html">kittycad.models.add_org_member</a></li>
@@ -259,6 +265,8 @@
 <li><a href="kittycad/models/connection.html">kittycad.models.connection</a></li>
 <li><a href="kittycad/models/country_code.html">kittycad.models.country_code</a></li>
 <li><a href="kittycad/models/coupon.html">kittycad.models.coupon</a></li>
+<li><a href="kittycad/models/create_shortlink_request.html">kittycad.models.create_shortlink_request</a></li>
+<li><a href="kittycad/models/create_shortlink_response.html">kittycad.models.create_shortlink_response</a></li>
 <li><a href="kittycad/models/created_at_sort_mode.html">kittycad.models.created_at_sort_mode</a></li>
 <li><a href="kittycad/models/currency.html">kittycad.models.currency</a></li>
 <li><a href="kittycad/models/curve_get_control_points.html">kittycad.models.curve_get_control_points</a></li>
@@ -468,6 +476,8 @@
 <li><a href="kittycad/models/set_selection_filter.html">kittycad.models.set_selection_filter</a></li>
 <li><a href="kittycad/models/set_selection_type.html">kittycad.models.set_selection_type</a></li>
 <li><a href="kittycad/models/set_tool.html">kittycad.models.set_tool</a></li>
+<li><a href="kittycad/models/shortlink.html">kittycad.models.shortlink</a></li>
+<li><a href="kittycad/models/shortlink_results_page.html">kittycad.models.shortlink_results_page</a></li>
 <li><a href="kittycad/models/sketch_mode_disable.html">kittycad.models.sketch_mode_disable</a></li>
 <li><a href="kittycad/models/solid2d_add_hole.html">kittycad.models.solid2d_add_hole</a></li>
 <li><a href="kittycad/models/solid3d_fillet_edge.html">kittycad.models.solid3d_fillet_edge</a></li>
@@ -531,6 +541,7 @@
 <li><a href="kittycad/models/update_annotation.html">kittycad.models.update_annotation</a></li>
 <li><a href="kittycad/models/update_member_to_org_body.html">kittycad.models.update_member_to_org_body</a></li>
 <li><a href="kittycad/models/update_payment_balance.html">kittycad.models.update_payment_balance</a></li>
+<li><a href="kittycad/models/update_shortlink_request.html">kittycad.models.update_shortlink_request</a></li>
 <li><a href="kittycad/models/update_user.html">kittycad.models.update_user</a></li>
 <li><a href="kittycad/models/user.html">kittycad.models.user</a></li>
 <li><a href="kittycad/models/user_org_info.html">kittycad.models.user_org_info</a></li>
