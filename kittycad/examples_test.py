@@ -41,6 +41,7 @@ from kittycad.api.hidden import (
     get_auth_saml,
     logout,
     post_auth_saml,
+    redirect_user_shortlink,
 )
 from kittycad.api.meta import (
     create_debug_uploads,
@@ -154,7 +155,6 @@ from kittycad.api.users import (
     get_user_shortlinks,
     list_users,
     list_users_extended,
-    redirect_user_shortlink,
     update_user_privacy_settings,
     update_user_self,
     update_user_shortlink,
