@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -10,23 +12,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.models.code_language.CodeLanguage &mdash; kittycad v0.7.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d10597a4" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=7ab3649f" />
       <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/autoclasstoc.css?v=08871587" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=a1b19286"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-        <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a1b19286"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,9 +43,6 @@
           <a href="../index.html" class="icon icon-home">
             kittycad
           </a>
-              <div class="version">
-                v0.7.1
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -334,6 +329,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_fillet_edge.html">kittycad.models.solid3d_fillet_edge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_all_edge_faces.html">kittycad.models.solid3d_get_all_edge_faces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_all_opposite_edges.html">kittycad.models.solid3d_get_all_opposite_edges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_common_edge.html">kittycad.models.solid3d_get_common_edge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_extrusion_face_info.html">kittycad.models.solid3d_get_extrusion_face_info</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_next_adjacent_edge.html">kittycad.models.solid3d_get_next_adjacent_edge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_get_opposite_edge.html">kittycad.models.solid3d_get_opposite_edge</a></li>
@@ -445,7 +441,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.models.code_language.</span></span><span class="sig-name descname"><span class="pre">CodeLanguage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/code_language.html#CodeLanguage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
 <p>The language code is written in.</p>
 <p>&lt;details&gt;&lt;summary&gt;JSON schema&lt;/summary&gt;</p>
 <p><code class="docutils literal notranslate"><span class="pre">`json</span> <span class="pre">{</span> <span class="pre">&quot;description&quot;:</span> <span class="pre">&quot;The</span> <span class="pre">language</span> <span class="pre">code</span> <span class="pre">is</span> <span class="pre">written</span> <span class="pre">in.&quot;,</span> <span class="pre">&quot;oneOf&quot;:</span> <span class="pre">[</span> <span class="pre">{</span> <span class="pre">&quot;description&quot;:</span> <span class="pre">&quot;The</span> <span class="pre">`go`</span> <span class="pre">programming</span> <span class="pre">language.&quot;,</span> <span class="pre">&quot;type&quot;:</span> <span class="pre">&quot;string&quot;,</span> <span class="pre">&quot;enum&quot;:</span> <span class="pre">[</span> <span class="pre">&quot;go&quot;</span> <span class="pre">]</span> <span class="pre">},</span> <span class="pre">{</span> <span class="pre">&quot;description&quot;:</span> <span class="pre">&quot;The</span> <span class="pre">`python`</span> <span class="pre">programming</span> <span class="pre">language.&quot;,</span> <span class="pre">&quot;type&quot;:</span> <span class="pre">&quot;string&quot;,</span> <span class="pre">&quot;enum&quot;:</span> <span class="pre">[</span> <span class="pre">&quot;python&quot;</span> <span class="pre">]</span> <span class="pre">},</span> <span class="pre">{</span> <span class="pre">&quot;description&quot;:</span> <span class="pre">&quot;The</span> <span class="pre">`node`</span> <span class="pre">programming</span> <span class="pre">language.&quot;,</span> <span class="pre">&quot;type&quot;:</span> <span class="pre">&quot;string&quot;,</span> <span class="pre">&quot;enum&quot;:</span> <span class="pre">[</span> <span class="pre">&quot;node&quot;</span> <span class="pre">]</span> <span class="pre">}</span> <span class="pre">]</span> <span class="pre">}</span> <span class="pre">`</span></code> &lt;/details&gt;</p>
@@ -607,7 +603,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#kittycad.models.code_language.CodeLanguage.GO" title="kittycad.models.code_language.CodeLanguage.GO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GO</span></code></a></p></td>
-<td><p># The <a class="reference external" href="https://docs.python.org/3/library/python.html#python" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Runtime</span> <span class="pre">Services</span></code></a> programming language.</p></td>
+<td><p># The <a class="reference external" href="https://docs.python.org/3/library/python.html#python" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Runtime</span> <span class="pre">Services</span></code></a> programming language.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#kittycad.models.code_language.CodeLanguage.PYTHON" title="kittycad.models.code_language.CodeLanguage.PYTHON"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PYTHON</span></code></a></p></td>
 <td><p># The <code class="xref any docutils literal notranslate"><span class="pre">node</span></code> programming language.</p></td>
@@ -620,7 +616,7 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.GO">
 <span class="sig-name descname"><span class="pre">GO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'go'</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.GO" title="Link to this definition"></a></dt>
-<dd><p># The <a class="reference external" href="https://docs.python.org/3/library/python.html#python" title="(in Python v3.12)"><code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Runtime</span> <span class="pre">Services</span></code></a> programming language.</p>
+<dd><p># The <a class="reference external" href="https://docs.python.org/3/library/python.html#python" title="(in Python v3.13)"><code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Runtime</span> <span class="pre">Services</span></code></a> programming language.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -786,7 +782,7 @@
 <dd><p>Return str(self).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -814,7 +810,7 @@ case.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.count">
-<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.count" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.count" title="Link to this definition"></a></dt>
 <dd><p>Return the number of non-overlapping occurrences of substring sub in
 string S[start:end].  Optional arguments start and end are
 interpreted as in slice notation.</p>
@@ -838,7 +834,7 @@ codecs.register_error that can handle UnicodeEncodeErrors.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.endswith">
-<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.endswith" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.endswith" title="Link to this definition"></a></dt>
 <dd><p>Return True if S ends with the specified suffix, False otherwise.
 With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
@@ -854,7 +850,7 @@ suffix can also be a tuple of strings to try.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.find">
-<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.find" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.find" title="Link to this definition"></a></dt>
 <dd><p>Return the lowest index in S where substring sub is found,
 such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
@@ -863,21 +859,21 @@ arguments start and end are interpreted as in slice notation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.format">
-<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.format" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.format" title="Link to this definition"></a></dt>
 <dd><p>Return a formatted version of S, using substitutions from args and kwargs.
 The substitutions are identified by braces (‘{’ and ‘}’).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.format_map">
-<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.format_map" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.format_map" title="Link to this definition"></a></dt>
 <dd><p>Return a formatted version of S, using substitutions from mapping.
 The substitutions are identified by braces (‘{’ and ‘}’).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.index">
-<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.index" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.index" title="Link to this definition"></a></dt>
 <dd><p>Return the lowest index in S where substring sub is found,
 such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
@@ -1067,7 +1063,7 @@ replaced.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.rfind">
-<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.rfind" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.rfind" title="Link to this definition"></a></dt>
 <dd><p>Return the highest index in S where substring sub is found,
 such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
@@ -1076,7 +1072,7 @@ arguments start and end are interpreted as in slice notation.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.rindex">
-<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.rindex" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.rindex" title="Link to this definition"></a></dt>
 <dd><p>Return the highest index in S where substring sub is found,
 such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
@@ -1159,7 +1155,7 @@ true.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.code_language.CodeLanguage.startswith">
-<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.startswith" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/code_language.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.code_language.CodeLanguage.startswith" title="Link to this definition"></a></dt>
 <dd><p>Return True if S starts with the specified prefix, False otherwise.
 With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
