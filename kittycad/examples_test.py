@@ -286,6 +286,7 @@ from kittycad.models.update_member_to_org_body import UpdateMemberToOrgBody
 from kittycad.models.update_payment_balance import UpdatePaymentBalance
 from kittycad.models.update_shortlink_request import UpdateShortlinkRequest
 from kittycad.models.update_user import UpdateUser
+from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
 from kittycad.models.web_socket_request import OptionSdpOffer
@@ -7012,7 +7013,7 @@ def test_get_user_extended():
 
     result: Optional[Union[ExtendedUser, Error]] = get_user_extended.sync(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -7026,7 +7027,7 @@ def test_get_user_extended():
     response: Response[Optional[Union[ExtendedUser, Error]]] = (
         get_user_extended.sync_detailed(
             client=client,
-            id="<string>",
+            id=UserIdentifier("<string>"),
         )
     )
 
@@ -7040,7 +7041,7 @@ async def test_get_user_extended_async():
 
     result: Optional[Union[ExtendedUser, Error]] = await get_user_extended.asyncio(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
     )
 
     # OR run async with more info
@@ -7048,7 +7049,7 @@ async def test_get_user_extended_async():
         Optional[Union[ExtendedUser, Error]]
     ] = await get_user_extended.asyncio_detailed(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
     )
 
 
@@ -7059,7 +7060,7 @@ def test_get_user():
 
     result: Optional[Union[User, Error]] = get_user.sync(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -7072,7 +7073,7 @@ def test_get_user():
     # OR if you need more info (e.g. status_code)
     response: Response[Optional[Union[User, Error]]] = get_user.sync_detailed(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
     )
 
 
@@ -7085,13 +7086,13 @@ async def test_get_user_async():
 
     result: Optional[Union[User, Error]] = await get_user.asyncio(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
     )
 
     # OR run async with more info
     response: Response[Optional[Union[User, Error]]] = await get_user.asyncio_detailed(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
     )
 
 
@@ -7103,7 +7104,7 @@ def test_list_api_calls_for_user():
     result: Optional[Union[ApiCallWithPriceResultsPage, Error]] = (
         list_api_calls_for_user.sync(
             client=client,
-            id="<string>",
+            id=UserIdentifier("<string>"),
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
             limit=None,  # Optional[int]
             page_token=None,  # Optional[str]
@@ -7121,7 +7122,7 @@ def test_list_api_calls_for_user():
     response: Response[Optional[Union[ApiCallWithPriceResultsPage, Error]]] = (
         list_api_calls_for_user.sync_detailed(
             client=client,
-            id="<string>",
+            id=UserIdentifier("<string>"),
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
             limit=None,  # Optional[int]
             page_token=None,  # Optional[str]
@@ -7140,7 +7141,7 @@ async def test_list_api_calls_for_user_async():
         Union[ApiCallWithPriceResultsPage, Error]
     ] = await list_api_calls_for_user.asyncio(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
@@ -7151,7 +7152,7 @@ async def test_list_api_calls_for_user_async():
         Optional[Union[ApiCallWithPriceResultsPage, Error]]
     ] = await list_api_calls_for_user.asyncio_detailed(
         client=client,
-        id="<string>",
+        id=UserIdentifier("<string>"),
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
@@ -7166,7 +7167,7 @@ def test_get_payment_balance_for_any_user():
     result: Optional[Union[CustomerBalance, Error]] = (
         get_payment_balance_for_any_user.sync(
             client=client,
-            id=Uuid("<string>"),
+            id=UserIdentifier("<string>"),
         )
     )
 
@@ -7181,7 +7182,7 @@ def test_get_payment_balance_for_any_user():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         get_payment_balance_for_any_user.sync_detailed(
             client=client,
-            id=Uuid("<string>"),
+            id=UserIdentifier("<string>"),
         )
     )
 
@@ -7197,7 +7198,7 @@ async def test_get_payment_balance_for_any_user_async():
         Union[CustomerBalance, Error]
     ] = await get_payment_balance_for_any_user.asyncio(
         client=client,
-        id=Uuid("<string>"),
+        id=UserIdentifier("<string>"),
     )
 
     # OR run async with more info
@@ -7205,7 +7206,7 @@ async def test_get_payment_balance_for_any_user_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await get_payment_balance_for_any_user.asyncio_detailed(
         client=client,
-        id=Uuid("<string>"),
+        id=UserIdentifier("<string>"),
     )
 
 
@@ -7217,7 +7218,7 @@ def test_update_payment_balance_for_any_user():
     result: Optional[Union[CustomerBalance, Error]] = (
         update_payment_balance_for_any_user.sync(
             client=client,
-            id=Uuid("<string>"),
+            id=UserIdentifier("<string>"),
             body=UpdatePaymentBalance(),
         )
     )
@@ -7233,7 +7234,7 @@ def test_update_payment_balance_for_any_user():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         update_payment_balance_for_any_user.sync_detailed(
             client=client,
-            id=Uuid("<string>"),
+            id=UserIdentifier("<string>"),
             body=UpdatePaymentBalance(),
         )
     )
@@ -7250,7 +7251,7 @@ async def test_update_payment_balance_for_any_user_async():
         Union[CustomerBalance, Error]
     ] = await update_payment_balance_for_any_user.asyncio(
         client=client,
-        id=Uuid("<string>"),
+        id=UserIdentifier("<string>"),
         body=UpdatePaymentBalance(),
     )
 
@@ -7259,7 +7260,7 @@ async def test_update_payment_balance_for_any_user_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await update_payment_balance_for_any_user.asyncio_detailed(
         client=client,
-        id=Uuid("<string>"),
+        id=UserIdentifier("<string>"),
         body=UpdatePaymentBalance(),
     )
 
