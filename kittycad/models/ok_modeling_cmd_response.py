@@ -102,6 +102,7 @@ from ..models.solid2d_add_hole import Solid2dAddHole
 from ..models.solid3d_fillet_edge import Solid3dFilletEdge
 from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from ..models.solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
+from ..models.solid3d_get_common_edge import Solid3dGetCommonEdge
 from ..models.solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
 from ..models.solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
@@ -908,6 +909,16 @@ class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSolid3DGetCommonEdge(BaseModel):
+    """"""
+
+    data: Solid3dGetCommonEdge
+
+    type: Literal["solid3d_get_common_edge"] = "solid3d_get_common_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionGetEntityType(BaseModel):
     """"""
 
@@ -1302,6 +1313,7 @@ OkModelingCmdResponse = RootModel[
             OptionSolid3DGetOppositeEdge,
             OptionSolid3DGetNextAdjacentEdge,
             OptionSolid3DGetPrevAdjacentEdge,
+            OptionSolid3DGetCommonEdge,
             OptionGetEntityType,
             OptionCurveGetControlPoints,
             OptionCurveGetType,
