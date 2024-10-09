@@ -332,6 +332,7 @@ from .update_payment_balance import UpdatePaymentBalance
 from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .user import User
+from .user_identifier import UserIdentifier
 from .user_org_info import UserOrgInfo
 from .user_org_role import UserOrgRole
 from .user_results_page import UserResultsPage

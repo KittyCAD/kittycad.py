@@ -6,11 +6,12 @@ from ...client import Client
 from ...models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...models.error import Error
+from ...models.user_identifier import UserIdentifier
 from ...types import Response
 
 
 def _get_kwargs(
-    id: str,
+    id: UserIdentifier,
     sort_by: CreatedAtSortMode,
     *,
     client: Client,
@@ -78,7 +79,7 @@ def _build_response(
 
 
 def sync_detailed(
-    id: str,
+    id: UserIdentifier,
     sort_by: CreatedAtSortMode,
     *,
     client: Client,
@@ -102,7 +103,7 @@ def sync_detailed(
 
 
 def sync(
-    id: str,
+    id: UserIdentifier,
     sort_by: CreatedAtSortMode,
     *,
     client: Client,
@@ -127,7 +128,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    id: str,
+    id: UserIdentifier,
     sort_by: CreatedAtSortMode,
     *,
     client: Client,
@@ -149,7 +150,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    id: str,
+    id: UserIdentifier,
     sort_by: CreatedAtSortMode,
     *,
     client: Client,

@@ -5,11 +5,12 @@ import httpx
 from ...client import Client
 from ...models.error import Error
 from ...models.extended_user import ExtendedUser
+from ...models.user_identifier import UserIdentifier
 from ...types import Response
 
 
 def _get_kwargs(
-    id: str,
+    id: UserIdentifier,
     *,
     client: Client,
 ) -> Dict[str, Any]:
@@ -56,7 +57,7 @@ def _build_response(
 
 
 def sync_detailed(
-    id: str,
+    id: UserIdentifier,
     *,
     client: Client,
 ) -> Response[Optional[Union[ExtendedUser, Error]]]:
@@ -74,7 +75,7 @@ def sync_detailed(
 
 
 def sync(
-    id: str,
+    id: UserIdentifier,
     *,
     client: Client,
 ) -> Optional[Union[ExtendedUser, Error]]:
@@ -91,7 +92,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    id: str,
+    id: UserIdentifier,
     *,
     client: Client,
 ) -> Response[Optional[Union[ExtendedUser, Error]]]:
@@ -107,7 +108,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    id: str,
+    id: UserIdentifier,
     *,
     client: Client,
 ) -> Optional[Union[ExtendedUser, Error]]:
