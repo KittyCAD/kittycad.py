@@ -6,12 +6,12 @@ from ...client import Client
 from ...models.customer_balance import CustomerBalance
 from ...models.error import Error
 from ...models.update_payment_balance import UpdatePaymentBalance
-from ...models.uuid import Uuid
+from ...models.user_identifier import UserIdentifier
 from ...types import Response
 
 
 def _get_kwargs(
-    id: Uuid,
+    id: UserIdentifier,
     body: UpdatePaymentBalance,
     *,
     client: Client,
@@ -60,7 +60,7 @@ def _build_response(
 
 
 def sync_detailed(
-    id: Uuid,
+    id: UserIdentifier,
     body: UpdatePaymentBalance,
     *,
     client: Client,
@@ -80,7 +80,7 @@ def sync_detailed(
 
 
 def sync(
-    id: Uuid,
+    id: UserIdentifier,
     body: UpdatePaymentBalance,
     *,
     client: Client,
@@ -95,7 +95,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    id: Uuid,
+    id: UserIdentifier,
     body: UpdatePaymentBalance,
     *,
     client: Client,
@@ -113,7 +113,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    id: Uuid,
+    id: UserIdentifier,
     body: UpdatePaymentBalance,
     *,
     client: Client,
