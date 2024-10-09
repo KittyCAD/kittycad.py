@@ -270,6 +270,7 @@ from .solid2d_add_hole import Solid2dAddHole
 from .solid3d_fillet_edge import Solid3dFilletEdge
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from .solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
+from .solid3d_get_common_edge import Solid3dGetCommonEdge
 from .solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
 from .solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from .solid3d_get_opposite_edge import Solid3dGetOppositeEdge
