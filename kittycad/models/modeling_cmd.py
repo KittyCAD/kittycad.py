@@ -661,6 +661,18 @@ class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSolid3DGetCommonEdge(BaseModel):
+    """Gets the shared edge between these two faces if it exists"""
+
+    face_ids: List[str]
+
+    object_id: str
+
+    type: Literal["solid3d_get_common_edge"] = "solid3d_get_common_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSolid3DFilletEdge(BaseModel):
     """Fillets the given edge with the specified radius."""
 
@@ -1357,6 +1369,7 @@ ModelingCmd = RootModel[
             OptionSolid3DGetOppositeEdge,
             OptionSolid3DGetNextAdjacentEdge,
             OptionSolid3DGetPrevAdjacentEdge,
+            OptionSolid3DGetCommonEdge,
             OptionSolid3DFilletEdge,
             OptionFaceIsPlanar,
             OptionFaceGetPosition,
