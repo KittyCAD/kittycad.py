@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from ..models.modeling_app_share_links import ModelingAppShareLinks
 from ..models.modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from ..models.subscription_tier_feature import SubscriptionTierFeature
 from ..models.subscription_tier_price import SubscriptionTierPrice
@@ -25,6 +26,8 @@ class ModelingAppSubscriptionTier(BaseModel):
     pay_as_you_go_credits: float
 
     price: SubscriptionTierPrice
+
+    share_links: Optional[List[ModelingAppShareLinks]] = None
 
     support_tier: SupportTier
 

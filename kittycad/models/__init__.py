@@ -177,6 +177,7 @@ from .modeling_app_individual_subscription_tier import (
 from .modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
+from .modeling_app_share_links import ModelingAppShareLinks
 from .modeling_app_subscription_tier import ModelingAppSubscriptionTier
 from .modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from .modeling_cmd import ModelingCmd
