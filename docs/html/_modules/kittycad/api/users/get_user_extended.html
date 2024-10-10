@@ -83,13 +83,14 @@
 <span class="kn">from</span> <span class="nn">...client</span> <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">from</span> <span class="nn">...models.error</span> <span class="kn">import</span> <span class="n">Error</span>
 <span class="kn">from</span> <span class="nn">...models.extended_user</span> <span class="kn">import</span> <span class="n">ExtendedUser</span>
+<span class="kn">from</span> <span class="nn">...models.user_identifier</span> <span class="kn">import</span> <span class="n">UserIdentifier</span>
 <span class="kn">from</span> <span class="nn">...types</span> <span class="kn">import</span> <span class="n">Response</span>
 
 
 <div class="viewcode-block" id="_get_kwargs">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.get_user_extended.html#kittycad.api.users.get_user_extended._get_kwargs">[docs]</a>
 <span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -145,7 +146,7 @@
 <div class="viewcode-block" id="sync_detailed">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.get_user_extended.sync_detailed.html#kittycad.api.users.get_user_extended.sync_detailed">[docs]</a>
 <span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ExtendedUser</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
@@ -166,7 +167,7 @@
 <div class="viewcode-block" id="sync">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.get_user_extended.sync.html#kittycad.api.users.get_user_extended.sync">[docs]</a>
 <span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ExtendedUser</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
@@ -186,7 +187,7 @@
 <div class="viewcode-block" id="asyncio_detailed">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.get_user_extended.asyncio_detailed.html#kittycad.api.users.get_user_extended.asyncio_detailed">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ExtendedUser</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
@@ -205,7 +206,7 @@
 <div class="viewcode-block" id="asyncio">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.users.get_user_extended.asyncio.html#kittycad.api.users.get_user_extended.asyncio">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ExtendedUser</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>

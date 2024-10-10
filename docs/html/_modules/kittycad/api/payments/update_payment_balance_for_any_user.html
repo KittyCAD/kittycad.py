@@ -84,14 +84,14 @@
 <span class="kn">from</span> <span class="nn">...models.customer_balance</span> <span class="kn">import</span> <span class="n">CustomerBalance</span>
 <span class="kn">from</span> <span class="nn">...models.error</span> <span class="kn">import</span> <span class="n">Error</span>
 <span class="kn">from</span> <span class="nn">...models.update_payment_balance</span> <span class="kn">import</span> <span class="n">UpdatePaymentBalance</span>
-<span class="kn">from</span> <span class="nn">...models.uuid</span> <span class="kn">import</span> <span class="n">Uuid</span>
+<span class="kn">from</span> <span class="nn">...models.user_identifier</span> <span class="kn">import</span> <span class="n">UserIdentifier</span>
 <span class="kn">from</span> <span class="nn">...types</span> <span class="kn">import</span> <span class="n">Response</span>
 
 
 <div class="viewcode-block" id="_get_kwargs">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.payments.update_payment_balance_for_any_user.html#kittycad.api.payments.update_payment_balance_for_any_user._get_kwargs">[docs]</a>
 <span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="n">UpdatePaymentBalance</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
@@ -149,7 +149,7 @@
 <div class="viewcode-block" id="sync_detailed">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.payments.update_payment_balance_for_any_user.sync_detailed.html#kittycad.api.payments.update_payment_balance_for_any_user.sync_detailed">[docs]</a>
 <span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="n">UpdatePaymentBalance</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
@@ -172,7 +172,7 @@
 <div class="viewcode-block" id="sync">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.payments.update_payment_balance_for_any_user.sync.html#kittycad.api.payments.update_payment_balance_for_any_user.sync">[docs]</a>
 <span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="n">UpdatePaymentBalance</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
@@ -190,7 +190,7 @@
 <div class="viewcode-block" id="asyncio_detailed">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.payments.update_payment_balance_for_any_user.asyncio_detailed.html#kittycad.api.payments.update_payment_balance_for_any_user.asyncio_detailed">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="n">UpdatePaymentBalance</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
@@ -211,7 +211,7 @@
 <div class="viewcode-block" id="asyncio">
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.payments.update_payment_balance_for_any_user.asyncio.html#kittycad.api.payments.update_payment_balance_for_any_user.asyncio">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">UserIdentifier</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="n">UpdatePaymentBalance</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
