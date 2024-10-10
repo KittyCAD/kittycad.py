@@ -1,10 +1,14 @@
+from typing import Optional
+
 from pydantic import BaseModel, ConfigDict
 
 
 class CreateShortlinkRequest(BaseModel):
     """Request to create a shortlink."""
 
-    restrict_to_org: bool
+    password: Optional[str] = None
+
+    restrict_to_org: bool = False
 
     url: str
 
