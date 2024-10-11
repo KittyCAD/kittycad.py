@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>kittycad.models.zoo_product_subscription &mdash; kittycad v0.7.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d10597a4" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/autoclasstoc.css?v=08871587" />
@@ -80,6 +80,7 @@
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
+<span class="kn">from</span> <span class="nn">..models.modeling_app_share_links</span> <span class="kn">import</span> <span class="n">ModelingAppShareLinks</span>
 <span class="kn">from</span> <span class="nn">..models.modeling_app_subscription_tier_name</span> <span class="kn">import</span> <span class="n">ModelingAppSubscriptionTierName</span>
 <span class="kn">from</span> <span class="nn">..models.subscription_tier_feature</span> <span class="kn">import</span> <span class="n">SubscriptionTierFeature</span>
 <span class="kn">from</span> <span class="nn">..models.subscription_tier_price</span> <span class="kn">import</span> <span class="n">SubscriptionTierPrice</span>
@@ -105,6 +106,8 @@
     <span class="n">pay_as_you_go_credits</span><span class="p">:</span> <span class="nb">float</span>
 
     <span class="n">price</span><span class="p">:</span> <span class="n">SubscriptionTierPrice</span>
+
+    <span class="n">share_links</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">ModelingAppShareLinks</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">support_tier</span><span class="p">:</span> <span class="n">SupportTier</span>
 
