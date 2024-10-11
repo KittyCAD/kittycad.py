@@ -17,6 +17,8 @@ from ..models.zoo_tool import ZooTool
 class ModelingAppSubscriptionTier(BaseModel):
     """A subscription tier we offer for the Modeling App."""
 
+    annual_discount: Optional[int] = None
+
     description: str
 
     features: Optional[List[SubscriptionTierFeature]] = None
