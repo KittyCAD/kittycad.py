@@ -76,7 +76,9 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.zoo_product_subscriptions_org_request</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
 <span class="kn">from</span> <span class="nn">..models.modeling_app_organization_subscription_tier</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ModelingAppOrganizationSubscriptionTier</span><span class="p">,</span>
@@ -89,6 +91,8 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A struct of Zoo product subscriptions an organization can request.&quot;&quot;&quot;</span>
 
     <span class="n">modeling_app</span><span class="p">:</span> <span class="n">ModelingAppOrganizationSubscriptionTier</span> <span class="o">=</span> <span class="s2">&quot;team&quot;</span>  <span class="c1"># type: ignore</span>
+
+    <span class="n">pay_annually</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 

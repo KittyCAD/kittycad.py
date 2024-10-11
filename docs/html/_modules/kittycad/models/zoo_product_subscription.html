@@ -97,6 +97,8 @@
 <span class="k">class</span> <span class="nc">ZooProductSubscription</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A subscription to the modeling app.&quot;&quot;&quot;</span>
 
+    <span class="n">annual_discount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
 
     <span class="n">features</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">SubscriptionTierFeature</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
