@@ -104,13 +104,13 @@ reference = "pypi-public"
 
 [[package]]
 name = "autoclasstoc"
-version = "1.6.0"
+version = "1.7.0"
 description = "Add a succinct TOC to auto-documented classes."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "autoclasstoc-1.6.0-py3-none-any.whl", hash = "sha256:22a358d415fdcc6f3f4ca352d0828809dcd2384f61813256a0236779b352df2c"},
-    {file = "autoclasstoc-1.6.0.tar.gz", hash = "sha256:fb5efe64ff5013ea559a4934375f62f9d94e76deb6d59c0742d30190eadb8f0c"},
+    {file = "autoclasstoc-1.7.0-py3-none-any.whl", hash = "sha256:00d7f8450d9fb043a500a0ac5fe9cda3699d51d68211f183178734f14df526ec"},
+    {file = "autoclasstoc-1.7.0.tar.gz", hash = "sha256:93a604be070a1f0ab19b0a0dd9d03d3fb16377da8a7a49ed8919692ef882775a"},
 ]
 
 [package.dependencies]
@@ -120,7 +120,7 @@ sphinx = ">=3.0"
 
 [package.extras]
 docs = ["sphinx (>=3.1)", "sphinx_rtd_theme"]
-tests = ["coverage[toml]", "lxml", "parametrize_from_file", "pytest", "pytest_tmp_files", "re_assert"]
+tests = ["coverage[toml]", "coverage_enable_subprocess", "lxml", "parametrize_from_file", "pytest", "pytest_tmp_files", "re_assert", "tox"]
 
 [package.source]
 type = "legacy"
@@ -2830,4 +2830,4 @@ reference = "pypi-public"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "935241ae9855ba14ff0ac36ec003cb9b030476bd6c70a752b8160a6bd6f8e43b"
+content-hash = "06b19cf7e59db44dc3a6477717c5dc15584dc0c06d60848dfbf35276d43fe16b"
