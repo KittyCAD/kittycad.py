@@ -27,6 +27,7 @@ from ..models.disable_dry_run import DisableDryRun
 from ..models.edge_lines_visible import EdgeLinesVisible
 from ..models.enable_dry_run import EnableDryRun
 from ..models.enable_sketch_mode import EnableSketchMode
+from ..models.engine_util_evaluate_path import EngineUtilEvaluatePath
 from ..models.entity_circular_pattern import EntityCircularPattern
 from ..models.entity_fade import EntityFade
 from ..models.entity_get_all_child_uuids import EntityGetAllChildUuids
@@ -121,6 +122,16 @@ class OptionEmpty(BaseModel):
     """An empty response, used for any command that does not explicitly have a response defined here."""
 
     type: Literal["empty"] = "empty"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEngineUtilEvaluatePath(BaseModel):
+    """"""
+
+    data: EngineUtilEvaluatePath
+
+    type: Literal["engine_util_evaluate_path"] = "engine_util_evaluate_path"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1235,6 +1246,7 @@ OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
             OptionEmpty,
+            OptionEngineUtilEvaluatePath,
             OptionStartPath,
             OptionMovePathPen,
             OptionExtendPath,
