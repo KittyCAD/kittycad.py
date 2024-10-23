@@ -105,6 +105,7 @@
 <span class="kn">from</span> <span class="nn">..models.edge_lines_visible</span> <span class="kn">import</span> <span class="n">EdgeLinesVisible</span>
 <span class="kn">from</span> <span class="nn">..models.enable_dry_run</span> <span class="kn">import</span> <span class="n">EnableDryRun</span>
 <span class="kn">from</span> <span class="nn">..models.enable_sketch_mode</span> <span class="kn">import</span> <span class="n">EnableSketchMode</span>
+<span class="kn">from</span> <span class="nn">..models.engine_util_evaluate_path</span> <span class="kn">import</span> <span class="n">EngineUtilEvaluatePath</span>
 <span class="kn">from</span> <span class="nn">..models.entity_circular_pattern</span> <span class="kn">import</span> <span class="n">EntityCircularPattern</span>
 <span class="kn">from</span> <span class="nn">..models.entity_fade</span> <span class="kn">import</span> <span class="n">EntityFade</span>
 <span class="kn">from</span> <span class="nn">..models.entity_get_all_child_uuids</span> <span class="kn">import</span> <span class="n">EntityGetAllChildUuids</span>
@@ -201,6 +202,19 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;An empty response, used for any command that does not explicitly have a response defined here.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;empty&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;empty&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEngineUtilEvaluatePath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEngineUtilEvaluatePath.html#kittycad.models.ok_modeling_cmd_response.OptionEngineUtilEvaluatePath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEngineUtilEvaluatePath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EngineUtilEvaluatePath</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;engine_util_evaluate_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;engine_util_evaluate_path&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -1646,6 +1660,7 @@
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
             <span class="n">OptionEmpty</span><span class="p">,</span>
+            <span class="n">OptionEngineUtilEvaluatePath</span><span class="p">,</span>
             <span class="n">OptionStartPath</span><span class="p">,</span>
             <span class="n">OptionMovePathPen</span><span class="p">,</span>
             <span class="n">OptionExtendPath</span><span class="p">,</span>
