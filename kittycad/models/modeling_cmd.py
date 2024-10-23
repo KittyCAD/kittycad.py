@@ -33,6 +33,18 @@ from ..models.unit_mass import UnitMass
 from ..models.unit_volume import UnitVolume
 
 
+class OptionEngineUtilEvaluatePath(BaseModel):
+    """Evaluates the position of a path in one shot (engine utility for kcl executor)"""
+
+    path_json: str
+
+    t: float
+
+    type: Literal["engine_util_evaluate_path"] = "engine_util_evaluate_path"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionStartPath(BaseModel):
     """Start a new path."""
 
@@ -1264,7 +1276,7 @@ class OptionZoomToFit(BaseModel):
 
     object_ids: List[str] = []
 
-    padding: float
+    padding: float = 0.0
 
     type: Literal["zoom_to_fit"] = "zoom_to_fit"
 
@@ -1320,6 +1332,7 @@ class OptionGetNumObjects(BaseModel):
 ModelingCmd = RootModel[
     Annotated[
         Union[
+            OptionEngineUtilEvaluatePath,
             OptionStartPath,
             OptionMovePathPen,
             OptionExtendPath,
