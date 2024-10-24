@@ -235,6 +235,10 @@ from kittycad.models.code_language import CodeLanguage
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
+from kittycad.models.enterprise_subscription_tier_price import (
+    EnterpriseSubscriptionTierPrice,
+    OptionPerUser,
+)
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
@@ -265,7 +269,6 @@ from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
-from kittycad.models.subscription_tier_price import OptionPerUser, SubscriptionTierPrice
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.unit_angle import UnitAngle
@@ -3976,7 +3979,7 @@ def test_update_enterprise_pricing_for_org():
         update_enterprise_pricing_for_org.sync(
             client=client,
             id=Uuid("<string>"),
-            body=SubscriptionTierPrice(
+            body=EnterpriseSubscriptionTierPrice(
                 OptionPerUser(
                     interval=PlanInterval.DAY,
                     price=3.14,
@@ -3997,7 +4000,7 @@ def test_update_enterprise_pricing_for_org():
         update_enterprise_pricing_for_org.sync_detailed(
             client=client,
             id=Uuid("<string>"),
-            body=SubscriptionTierPrice(
+            body=EnterpriseSubscriptionTierPrice(
                 OptionPerUser(
                     interval=PlanInterval.DAY,
                     price=3.14,
@@ -4019,7 +4022,7 @@ async def test_update_enterprise_pricing_for_org_async():
     ] = await update_enterprise_pricing_for_org.asyncio(
         client=client,
         id=Uuid("<string>"),
-        body=SubscriptionTierPrice(
+        body=EnterpriseSubscriptionTierPrice(
             OptionPerUser(
                 interval=PlanInterval.DAY,
                 price=3.14,
@@ -4033,7 +4036,7 @@ async def test_update_enterprise_pricing_for_org_async():
     ] = await update_enterprise_pricing_for_org.asyncio_detailed(
         client=client,
         id=Uuid("<string>"),
-        body=SubscriptionTierPrice(
+        body=EnterpriseSubscriptionTierPrice(
             OptionPerUser(
                 interval=PlanInterval.DAY,
                 price=3.14,
