@@ -3,8 +3,8 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
+from ...models.enterprise_subscription_tier_price import EnterpriseSubscriptionTierPrice
 from ...models.error import Error
-from ...models.subscription_tier_price import SubscriptionTierPrice
 from ...models.uuid import Uuid
 from ...models.zoo_product_subscriptions import ZooProductSubscriptions
 from ...types import Response
@@ -12,7 +12,7 @@ from ...types import Response
 
 def _get_kwargs(
     id: Uuid,
-    body: SubscriptionTierPrice,
+    body: EnterpriseSubscriptionTierPrice,
     *,
     client: Client,
 ) -> Dict[str, Any]:
@@ -61,7 +61,7 @@ def _build_response(
 
 def sync_detailed(
     id: Uuid,
-    body: SubscriptionTierPrice,
+    body: EnterpriseSubscriptionTierPrice,
     *,
     client: Client,
 ) -> Response[Optional[Union[ZooProductSubscriptions, Error]]]:
@@ -81,7 +81,7 @@ def sync_detailed(
 
 def sync(
     id: Uuid,
-    body: SubscriptionTierPrice,
+    body: EnterpriseSubscriptionTierPrice,
     *,
     client: Client,
 ) -> Optional[Union[ZooProductSubscriptions, Error]]:
@@ -96,7 +96,7 @@ def sync(
 
 async def asyncio_detailed(
     id: Uuid,
-    body: SubscriptionTierPrice,
+    body: EnterpriseSubscriptionTierPrice,
     *,
     client: Client,
 ) -> Response[Optional[Union[ZooProductSubscriptions, Error]]]:
@@ -114,7 +114,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     id: Uuid,
-    body: SubscriptionTierPrice,
+    body: EnterpriseSubscriptionTierPrice,
     *,
     client: Client,
 ) -> Optional[Union[ZooProductSubscriptions, Error]]:
