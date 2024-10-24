@@ -81,8 +81,8 @@
 <span class="kn">import</span> <span class="nn">httpx</span>
 
 <span class="kn">from</span> <span class="nn">...client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">...models.enterprise_subscription_tier_price</span> <span class="kn">import</span> <span class="n">EnterpriseSubscriptionTierPrice</span>
 <span class="kn">from</span> <span class="nn">...models.error</span> <span class="kn">import</span> <span class="n">Error</span>
-<span class="kn">from</span> <span class="nn">...models.subscription_tier_price</span> <span class="kn">import</span> <span class="n">SubscriptionTierPrice</span>
 <span class="kn">from</span> <span class="nn">...models.uuid</span> <span class="kn">import</span> <span class="n">Uuid</span>
 <span class="kn">from</span> <span class="nn">...models.zoo_product_subscriptions</span> <span class="kn">import</span> <span class="n">ZooProductSubscriptions</span>
 <span class="kn">from</span> <span class="nn">...types</span> <span class="kn">import</span> <span class="n">Response</span>
@@ -92,7 +92,7 @@
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.orgs.update_enterprise_pricing_for_org.html#kittycad.api.orgs.update_enterprise_pricing_for_org._get_kwargs">[docs]</a>
 <span class="k">def</span> <span class="nf">_get_kwargs</span><span class="p">(</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
-    <span class="n">body</span><span class="p">:</span> <span class="n">SubscriptionTierPrice</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">EnterpriseSubscriptionTierPrice</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -150,7 +150,7 @@
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.orgs.update_enterprise_pricing_for_org.sync_detailed.html#kittycad.api.orgs.update_enterprise_pricing_for_org.sync_detailed">[docs]</a>
 <span class="k">def</span> <span class="nf">sync_detailed</span><span class="p">(</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
-    <span class="n">body</span><span class="p">:</span> <span class="n">SubscriptionTierPrice</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">EnterpriseSubscriptionTierPrice</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ZooProductSubscriptions</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
@@ -173,7 +173,7 @@
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.orgs.update_enterprise_pricing_for_org.sync.html#kittycad.api.orgs.update_enterprise_pricing_for_org.sync">[docs]</a>
 <span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
-    <span class="n">body</span><span class="p">:</span> <span class="n">SubscriptionTierPrice</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">EnterpriseSubscriptionTierPrice</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ZooProductSubscriptions</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
@@ -191,7 +191,7 @@
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.orgs.update_enterprise_pricing_for_org.asyncio_detailed.html#kittycad.api.orgs.update_enterprise_pricing_for_org.asyncio_detailed">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio_detailed</span><span class="p">(</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
-    <span class="n">body</span><span class="p">:</span> <span class="n">SubscriptionTierPrice</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">EnterpriseSubscriptionTierPrice</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ZooProductSubscriptions</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]]:</span>
@@ -212,7 +212,7 @@
 <a class="viewcode-back" href="../../../../_autosummary/kittycad.api.orgs.update_enterprise_pricing_for_org.asyncio.html#kittycad.api.orgs.update_enterprise_pricing_for_org.asyncio">[docs]</a>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Uuid</span><span class="p">,</span>
-    <span class="n">body</span><span class="p">:</span> <span class="n">SubscriptionTierPrice</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">EnterpriseSubscriptionTierPrice</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ZooProductSubscriptions</span><span class="p">,</span> <span class="n">Error</span><span class="p">]]:</span>
