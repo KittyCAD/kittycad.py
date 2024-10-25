@@ -4,13 +4,15 @@ from typing import Dict, Optional, Union
 
 import attr
 
+DEFAULT_BASE_URL = "https://api.zoo.dev"
+
 
 @attr.s(auto_attribs=True)
 class Client:
     """A Client which has been authenticated for use on secured endpoints of the KittyCAD API."""  # noqa: E501
 
     token: str = attr.ib(kw_only=True)
-    base_url: str = attr.ib(default="https://api.kittycad.io")
+    base_url: str = attr.ib(default=DEFAULT_BASE_URL)
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(120.0, kw_only=True)
@@ -45,18 +47,27 @@ class Client:
 
 @attr.s(auto_attribs=True)
 class ClientFromEnv(Client):
-    """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token."""  # noqa: E501
+    """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable for the authentication token.
+
+    Optionally, you can use `ZOO_HOST` to set the base url.
+    This implies you are hosting your own instance of the KittyCAD API.
+    """  # noqa: E501
 
     token: str = attr.field()
+    base_url: str = attr.ib(default=os.getenv("ZOO_HOST", DEFAULT_BASE_URL))
 
     @token.default
     def set_token(self):
         maybe_token: Optional[str] = os.getenv("KITTYCAD_API_TOKEN")
         if maybe_token is None:
-            raise ValueError(
-                "KITTYCAD_API_TOKEN environment variable must be set to use ClientFromEnv"
-            )
+            # Try the ZOO_API_TOKEN environment variable
+            maybe_token = os.getenv("ZOO_API_TOKEN")
+            if maybe_token is None:
+                raise ValueError(
+                    "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable must be set to use ClientFromEnv"
+                )
         token: str = maybe_token
+
         return token
 
     def get_headers(self) -> Dict[str, str]:
