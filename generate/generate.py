@@ -42,7 +42,10 @@ client = Client(token="$TOKEN")
 # - OR -
 
 # Create a new client with your token parsed from the environment variable:
-#   `KITTYCAD_API_TOKEN`.
+#   `KITTYCAD_API_TOKEN` or `ZOO_API_TOKEN`.
+# Optionally, you can pass in `ZOO_HOST` to specify the host. But this only
+# needs to be done if you are using a different host than the default,
+# which implies you are running your own instance of the API.
 from kittycad.client import ClientFromEnv
 
 client = ClientFromEnv()
@@ -50,7 +53,7 @@ client = ClientFromEnv()
 # NOTE: The python library additionally implements asyncio, however all the code samples we
 # show below use the sync functions for ease of use and understanding.
 # Check out the library docs at:
-# https://python.api.docs.kittycad.io/_autosummary/kittycad.api.html#module-kittycad.api
+# https://python.api.docs.zoo.dev/_autosummary/kittycad.api.html#module-kittycad.api
 # for more details.""",
         "install": "pip install kittycad",
     }
@@ -757,7 +760,7 @@ async def test_"""
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
         "example": cleaned_example.replace("def test_", "def example_"),
-        "libDocsLink": "https://python.api.docs.kittycad.io/_autosummary/kittycad.api."
+        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.api."
         + tag_name
         + "."
         + fn_name
