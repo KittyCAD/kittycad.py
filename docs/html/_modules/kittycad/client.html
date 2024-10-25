@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>kittycad.client &mdash; kittycad v0.7.1 documentation</title>
+  <title>kittycad.client &mdash; kittycad v0.7.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d10597a4" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=a1b19286"></script>
+      <script src="../../_static/documentation_options.js?v=964918ec"></script>
       <script src="../../_static/doctools.js?v=9a2dae69"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -82,6 +82,8 @@
 
 <span class="kn">import</span> <span class="nn">attr</span>
 
+<span class="n">DEFAULT_BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.zoo.dev&quot;</span>
+
 
 <div class="viewcode-block" id="Client">
 <a class="viewcode-back" href="../../_autosummary/kittycad.client.Client.html#kittycad.client.Client">[docs]</a>
@@ -90,7 +92,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A Client which has been authenticated for use on secured endpoints of the KittyCAD API.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;https://api.kittycad.io&quot;</span><span class="p">)</span>
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_BASE_URL</span><span class="p">)</span>
     <span class="n">cookies</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="mf">120.0</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -149,9 +151,14 @@
 <a class="viewcode-back" href="../../_autosummary/kittycad.client.ClientFromEnv.html#kittycad.client.ClientFromEnv">[docs]</a>
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ClientFromEnv</span><span class="p">(</span><span class="n">Client</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN environment variable for the authentication token.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable for the authentication token.</span>
+
+<span class="sd">    Optionally, you can use `ZOO_HOST` to set the base url.</span>
+<span class="sd">    This implies you are hosting your own instance of the KittyCAD API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">field</span><span class="p">()</span>
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZOO_HOST&quot;</span><span class="p">,</span> <span class="n">DEFAULT_BASE_URL</span><span class="p">))</span>
 
 <div class="viewcode-block" id="ClientFromEnv.set_token">
 <a class="viewcode-back" href="../../_autosummary/kittycad.client.ClientFromEnv.html#kittycad.client.ClientFromEnv.set_token">[docs]</a>
@@ -159,10 +166,14 @@
     <span class="k">def</span> <span class="nf">set_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">maybe_token</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;KITTYCAD_API_TOKEN&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">maybe_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;KITTYCAD_API_TOKEN environment variable must be set to use ClientFromEnv&quot;</span>
-            <span class="p">)</span>
+            <span class="c1"># Try the ZOO_API_TOKEN environment variable</span>
+            <span class="n">maybe_token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ZOO_API_TOKEN&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">maybe_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable must be set to use ClientFromEnv&quot;</span>
+                <span class="p">)</span>
         <span class="n">token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">maybe_token</span>
+
         <span class="k">return</span> <span class="n">token</span></div>
 
 
