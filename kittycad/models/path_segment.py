@@ -79,6 +79,20 @@ class OptionTangentialArcTo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionArcTo(BaseModel):
+    """Adds an arc from the current position that goes through the given interior point and ends at the given end position"""
+
+    end: Point3d
+
+    interior: Point3d
+
+    relative: bool
+
+    type: Literal["arc_to"] = "arc_to"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 PathSegment = RootModel[
     Annotated[
         Union[
@@ -87,6 +101,7 @@ PathSegment = RootModel[
             OptionBezier,
             OptionTangentialArc,
             OptionTangentialArcTo,
+            OptionArcTo,
         ],
         Field(discriminator="type"),
     ]

@@ -36,6 +36,7 @@ from .camera_drag_end import CameraDragEnd
 from .camera_drag_interaction_type import CameraDragInteractionType
 from .camera_drag_move import CameraDragMove
 from .camera_drag_start import CameraDragStart
+from .camera_movement import CameraMovement
 from .camera_settings import CameraSettings
 from .card_details import CardDetails
 from .center_of_mass import CenterOfMass
@@ -60,6 +61,7 @@ from .curve_type import CurveType
 from .customer import Customer
 from .customer_balance import CustomerBalance
 from .cut_type import CutType
+from .default_camera_center_to_scene import DefaultCameraCenterToScene
 from .default_camera_center_to_selection import DefaultCameraCenterToSelection
 from .default_camera_focus_on import DefaultCameraFocusOn
 from .default_camera_get_settings import DefaultCameraGetSettings
