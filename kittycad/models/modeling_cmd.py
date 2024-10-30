@@ -7,6 +7,7 @@ from ..models.angle import Angle
 from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
+from ..models.camera_movement import CameraMovement
 from ..models.color import Color
 from ..models.cut_type import CutType
 from ..models.distance_type import DistanceType
@@ -1110,6 +1111,8 @@ class OptionCurveGetEndPoints(BaseModel):
 class OptionReconfigureStream(BaseModel):
     """Reconfigure the stream."""
 
+    bitrate: Optional[int] = None
+
     fps: int
 
     height: int
@@ -1262,9 +1265,21 @@ class OptionDefaultCameraSetPerspective(BaseModel):
 class OptionDefaultCameraCenterToSelection(BaseModel):
     """Updates the camera to center to the center of the current selection (or the origin if nothing is selected)"""
 
+    camera_movement: CameraMovement = "vantage"  # type: ignore
+
     type: Literal["default_camera_center_to_selection"] = (
         "default_camera_center_to_selection"
     )
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraCenterToScene(BaseModel):
+    """Updates the camera to center to the center of the current scene's bounds"""
+
+    camera_movement: CameraMovement = "vantage"  # type: ignore
+
+    type: Literal["default_camera_center_to_scene"] = "default_camera_center_to_scene"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1434,6 +1449,7 @@ ModelingCmd = RootModel[
             OptionDefaultCameraSetOrthographic,
             OptionDefaultCameraSetPerspective,
             OptionDefaultCameraCenterToSelection,
+            OptionDefaultCameraCenterToScene,
             OptionZoomToFit,
             OptionViewIsometric,
             OptionSolid3DGetExtrusionFaceInfo,
