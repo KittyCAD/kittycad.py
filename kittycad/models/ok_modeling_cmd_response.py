@@ -12,6 +12,7 @@ from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
 from ..models.curve_set_constraint import CurveSetConstraint
+from ..models.default_camera_center_to_scene import DefaultCameraCenterToScene
 from ..models.default_camera_center_to_selection import DefaultCameraCenterToSelection
 from ..models.default_camera_focus_on import DefaultCameraFocusOn
 from ..models.default_camera_get_settings import DefaultCameraGetSettings
@@ -670,6 +671,16 @@ class OptionDefaultCameraCenterToSelection(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionDefaultCameraCenterToScene(BaseModel):
+    """"""
+
+    data: DefaultCameraCenterToScene
+
+    type: Literal["default_camera_center_to_scene"] = "default_camera_center_to_scene"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSelectClear(BaseModel):
     """"""
 
@@ -1300,6 +1311,7 @@ OkModelingCmdResponse = RootModel[
             OptionDefaultCameraSetOrthographic,
             OptionDefaultCameraSetPerspective,
             OptionDefaultCameraCenterToSelection,
+            OptionDefaultCameraCenterToScene,
             OptionSelectClear,
             OptionExport,
             OptionSelectWithPoint,
