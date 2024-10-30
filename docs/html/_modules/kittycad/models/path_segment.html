@@ -172,6 +172,23 @@
 
 
 
+<div class="viewcode-block" id="OptionArcTo">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.path_segment.OptionArcTo.html#kittycad.models.path_segment.OptionArcTo">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionArcTo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds an arc from the current position that goes through the given interior point and ends at the given end position&quot;&quot;&quot;</span>
+
+    <span class="n">end</span><span class="p">:</span> <span class="n">Point3d</span>
+
+    <span class="n">interior</span><span class="p">:</span> <span class="n">Point3d</span>
+
+    <span class="n">relative</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;arc_to&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;arc_to&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <span class="n">PathSegment</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
@@ -180,6 +197,7 @@
             <span class="n">OptionBezier</span><span class="p">,</span>
             <span class="n">OptionTangentialArc</span><span class="p">,</span>
             <span class="n">OptionTangentialArcTo</span><span class="p">,</span>
+            <span class="n">OptionArcTo</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>
