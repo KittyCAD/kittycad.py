@@ -164,6 +164,7 @@ from .leaf_node import LeafNode
 from .length_unit import LengthUnit
 from .loft import Loft
 from .make_axes_gizmo import MakeAxesGizmo
+from .make_offset_path import MakeOffsetPath
 from .make_plane import MakePlane
 from .mass import Mass
 from .meta_cluster_info import MetaClusterInfo

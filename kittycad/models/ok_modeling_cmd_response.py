@@ -63,6 +63,7 @@ from ..models.import_files import ImportFiles
 from ..models.imported_geometry import ImportedGeometry
 from ..models.loft import Loft
 from ..models.make_axes_gizmo import MakeAxesGizmo
+from ..models.make_offset_path import MakeOffsetPath
 from ..models.make_plane import MakePlane
 from ..models.mass import Mass
 from ..models.mouse_click import MouseClick
@@ -861,6 +862,16 @@ class OptionGetNumObjects(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionMakeOffsetPath(BaseModel):
+    """"""
+
+    data: MakeOffsetPath
+
+    type: Literal["make_offset_path"] = "make_offset_path"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionDefaultCameraFocusOn(BaseModel):
     """"""
 
@@ -1330,6 +1341,7 @@ OkModelingCmdResponse = RootModel[
             OptionZoomToFit,
             OptionViewIsometric,
             OptionGetNumObjects,
+            OptionMakeOffsetPath,
             OptionDefaultCameraFocusOn,
             OptionSelectGet,
             OptionSolid3DGetAllEdgeFaces,

@@ -1344,6 +1344,20 @@ class OptionGetNumObjects(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionMakeOffsetPath(BaseModel):
+    """Make a new path by offsetting an object by a given distance. The new path's ID will be the ID of this command."""
+
+    face_id: Optional[str] = None
+
+    object_id: str
+
+    offset: LengthUnit
+
+    type: Literal["make_offset_path"] = "make_offset_path"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1456,6 +1470,7 @@ ModelingCmd = RootModel[
             OptionSelectClear,
             OptionSelectGet,
             OptionGetNumObjects,
+            OptionMakeOffsetPath,
         ],
         Field(discriminator="type"),
     ]
