@@ -1749,6 +1749,23 @@
 
 
 
+<div class="viewcode-block" id="OptionMakeOffsetPath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMakeOffsetPath.html#kittycad.models.modeling_cmd.OptionMakeOffsetPath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMakeOffsetPath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a new path by offsetting an object by a given distance. The new path&#39;s ID will be the ID of this command.&quot;&quot;&quot;</span>
+
+    <span class="n">face_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">offset</span><span class="p">:</span> <span class="n">LengthUnit</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;make_offset_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;make_offset_path&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <span class="n">ModelingCmd</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
@@ -1861,6 +1878,7 @@
             <span class="n">OptionSelectClear</span><span class="p">,</span>
             <span class="n">OptionSelectGet</span><span class="p">,</span>
             <span class="n">OptionGetNumObjects</span><span class="p">,</span>
+            <span class="n">OptionMakeOffsetPath</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>

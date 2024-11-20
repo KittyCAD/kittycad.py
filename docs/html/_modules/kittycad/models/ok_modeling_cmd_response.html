@@ -141,6 +141,7 @@
 <span class="kn">from</span> <span class="nn">..models.imported_geometry</span> <span class="kn">import</span> <span class="n">ImportedGeometry</span>
 <span class="kn">from</span> <span class="nn">..models.loft</span> <span class="kn">import</span> <span class="n">Loft</span>
 <span class="kn">from</span> <span class="nn">..models.make_axes_gizmo</span> <span class="kn">import</span> <span class="n">MakeAxesGizmo</span>
+<span class="kn">from</span> <span class="nn">..models.make_offset_path</span> <span class="kn">import</span> <span class="n">MakeOffsetPath</span>
 <span class="kn">from</span> <span class="nn">..models.make_plane</span> <span class="kn">import</span> <span class="n">MakePlane</span>
 <span class="kn">from</span> <span class="nn">..models.mass</span> <span class="kn">import</span> <span class="n">Mass</span>
 <span class="kn">from</span> <span class="nn">..models.mouse_click</span> <span class="kn">import</span> <span class="n">MouseClick</span>
@@ -1161,6 +1162,19 @@
 
 
 
+<div class="viewcode-block" id="OptionMakeOffsetPath">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionMakeOffsetPath.html#kittycad.models.ok_modeling_cmd_response.OptionMakeOffsetPath">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionMakeOffsetPath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">MakeOffsetPath</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;make_offset_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;make_offset_path&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionDefaultCameraFocusOn">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraFocusOn.html#kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraFocusOn">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionDefaultCameraFocusOn</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1747,6 +1761,7 @@
             <span class="n">OptionZoomToFit</span><span class="p">,</span>
             <span class="n">OptionViewIsometric</span><span class="p">,</span>
             <span class="n">OptionGetNumObjects</span><span class="p">,</span>
+            <span class="n">OptionMakeOffsetPath</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraFocusOn</span><span class="p">,</span>
             <span class="n">OptionSelectGet</span><span class="p">,</span>
             <span class="n">OptionSolid3DGetAllEdgeFaces</span><span class="p">,</span>
