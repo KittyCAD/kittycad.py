@@ -1,7 +1,13 @@
 from typing import Any, Dict
 
-from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
-from websockets.sync.client import ClientConnection, connect as ws_connect
+from websockets.asyncio.client import (
+    ClientConnection as ClientConnectionAsync,
+    connect as ws_connect_async,
+)
+from websockets.sync.client import (
+    ClientConnection as ClientConnectionSync,
+    connect as ws_connect,
+)
 
 from ...client import Client
 
@@ -26,7 +32,7 @@ def _get_kwargs(
 def sync(
     *,
     client: Client,
-) -> ClientConnection:
+) -> ClientConnectionSync:
     """Attach to a docker container to create an interactive terminal."""  # noqa: E501
 
     kwargs = _get_kwargs(
@@ -44,7 +50,7 @@ def sync(
 async def asyncio(
     *,
     client: Client,
-) -> WebSocketClientProtocol:
+) -> ClientConnectionAsync:
     """Attach to a docker container to create an interactive terminal."""  # noqa: E501
 
     kwargs = _get_kwargs(
