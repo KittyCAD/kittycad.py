@@ -3,9 +3,9 @@ import json
 import bson
 
 from websockets.sync.client import connect as ws_connect
-from websockets.client import connect as ws_connect_async
-from websockets.sync.client import ClientConnection
-from websockets.client import WebSocketClientProtocol
+from websockets.asyncio.client import connect as ws_connect_async
+from websockets.sync.client import ClientConnection as ClientConnectionSync
+from websockets.asyncio.client import ClientConnection as ClientConnectionAsync
 
 
 from ...client import Client
@@ -81,7 +81,7 @@ def sync(
     {% endif %}
     {% endif %}
     {% endfor %}
-) -> ClientConnection:
+) -> ClientConnectionSync:
     {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
 
     kwargs = _get_kwargs(
@@ -114,7 +114,7 @@ async def asyncio(
     {% endif %}
     {% endif %}
     {% endfor %}
-) -> WebSocketClientProtocol:
+) -> ClientConnectionAsync:
     {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
 
     kwargs = _get_kwargs(
@@ -132,7 +132,7 @@ async def asyncio(
 {% if has_request_body %}
 class WebSocket:
     """A websocket connection to the API endpoint."""
-    ws:  ClientConnection
+    ws:  ClientConnectionSync
 
     def __init__(self,
         {% for arg in args %}
