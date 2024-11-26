@@ -78,8 +78,14 @@
   <h1>Source code for kittycad.api.executor.create_executor_term</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
-<span class="kn">from</span> <span class="nn">websockets.client</span> <span class="kn">import</span> <span class="n">WebSocketClientProtocol</span><span class="p">,</span> <span class="n">connect</span> <span class="k">as</span> <span class="n">ws_connect_async</span>
-<span class="kn">from</span> <span class="nn">websockets.sync.client</span> <span class="kn">import</span> <span class="n">ClientConnection</span><span class="p">,</span> <span class="n">connect</span> <span class="k">as</span> <span class="n">ws_connect</span>
+<span class="kn">from</span> <span class="nn">websockets.asyncio.client</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ClientConnection</span> <span class="k">as</span> <span class="n">ClientConnectionAsync</span><span class="p">,</span>
+    <span class="n">connect</span> <span class="k">as</span> <span class="n">ws_connect_async</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">websockets.sync.client</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ClientConnection</span> <span class="k">as</span> <span class="n">ClientConnectionSync</span><span class="p">,</span>
+    <span class="n">connect</span> <span class="k">as</span> <span class="n">ws_connect</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">...client</span> <span class="kn">import</span> <span class="n">Client</span>
 
@@ -109,7 +115,7 @@
 <span class="k">def</span> <span class="nf">sync</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientConnection</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientConnectionSync</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Attach to a docker container to create an interactive terminal.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
@@ -130,7 +136,7 @@
 <span class="k">async</span> <span class="k">def</span> <span class="nf">asyncio</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WebSocketClientProtocol</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClientConnectionAsync</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Attach to a docker container to create an interactive terminal.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="n">kwargs</span> <span class="o">=</span> <span class="n">_get_kwargs</span><span class="p">(</span>
