@@ -2,8 +2,14 @@ import json
 from typing import Any, Dict, Iterator, Optional
 
 import bson
-from websockets.client import WebSocketClientProtocol, connect as ws_connect_async
-from websockets.sync.client import ClientConnection, connect as ws_connect
+from websockets.asyncio.client import (
+    ClientConnection as ClientConnectionAsync,
+    connect as ws_connect_async,
+)
+from websockets.sync.client import (
+    ClientConnection as ClientConnectionSync,
+    connect as ws_connect,
+)
 
 from ...client import Client
 from ...models.post_effect_type import PostEffectType
@@ -103,7 +109,7 @@ def sync(
     client: Client,
     pool: Optional[str] = None,
     replay: Optional[str] = None,
-) -> ClientConnection:
+) -> ClientConnectionSync:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
@@ -139,7 +145,7 @@ async def asyncio(
     client: Client,
     pool: Optional[str] = None,
     replay: Optional[str] = None,
-) -> WebSocketClientProtocol:
+) -> ClientConnectionAsync:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
@@ -166,7 +172,7 @@ async def asyncio(
 class WebSocket:
     """A websocket connection to the API endpoint."""
 
-    ws: ClientConnection
+    ws: ClientConnectionSync
 
     def __init__(
         self,
