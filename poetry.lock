@@ -2255,13 +2255,13 @@ reference = "pypi-public"
 
 [[package]]
 name = "sphinx-autoapi"
-version = "3.3.3"
+version = "3.4.0"
 description = "Sphinx API documentation generator"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "sphinx_autoapi-3.3.3-py3-none-any.whl", hash = "sha256:5c7349b42d45a492a611cb81fb48583d5148e9eab7fc6b1f326dc9273b9191e3"},
-    {file = "sphinx_autoapi-3.3.3.tar.gz", hash = "sha256:c44fd719580e9a3684ff82019f4f7f39fc970e3030ffd325936654a6f4d31f22"},
+    {file = "sphinx_autoapi-3.4.0-py3-none-any.whl", hash = "sha256:4027fef2875a22c5f2a57107c71641d82f6166bf55beb407a47aaf3ef14e7b92"},
+    {file = "sphinx_autoapi-3.4.0.tar.gz", hash = "sha256:e6d5371f9411bbb9fca358c00a9e57aef3ac94cbfc5df4bab285946462f69e0c"},
 ]
 
 [package.dependencies]
@@ -2860,4 +2860,4 @@ reference = "pypi-public"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "be0622d40f25a17fe1f124e441fd596b006ff61e8fc84c0fb21a117c92d75b7d"
+content-hash = "3087e4135c68b0186038dc7adafe31470243d8702e08672121305bb65a90a7c2"
