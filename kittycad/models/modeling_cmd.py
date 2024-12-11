@@ -90,6 +90,22 @@ class OptionExtrude(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSweep(BaseModel):
+    """Extrude the object along a path."""
+
+    sectional: bool
+
+    target: ModelingCmdId
+
+    tolerance: LengthUnit
+
+    trajectory: ModelingCmdId
+
+    type: Literal["sweep"] = "sweep"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionRevolve(BaseModel):
     """Command for revolving a solid 2d."""
 
@@ -349,7 +365,9 @@ class OptionEntityLinearPatternTransform(BaseModel):
 
     entity_id: str
 
-    transform: List[Transform]
+    transform: List[Transform] = []
+
+    transforms: List[List[Transform]] = []
 
     type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
 
@@ -1366,6 +1384,7 @@ ModelingCmd = RootModel[
             OptionMovePathPen,
             OptionExtendPath,
             OptionExtrude,
+            OptionSweep,
             OptionRevolve,
             OptionSolid3DShellFace,
             OptionRevolveAboutEdge,

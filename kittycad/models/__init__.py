@@ -295,6 +295,7 @@ from .subscription_training_data_behavior import SubscriptionTrainingDataBehavio
 from .success_web_socket_response import SuccessWebSocketResponse
 from .support_tier import SupportTier
 from .surface_area import SurfaceArea
+from .sweep import Sweep
 from .system import System
 from .take_snapshot import TakeSnapshot
 from .text_to_cad import TextToCad

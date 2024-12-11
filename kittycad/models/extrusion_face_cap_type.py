@@ -10,6 +10,8 @@ class ExtrusionFaceCapType(str, Enum):
     TOP = "top"
     """# Capped below. """  # noqa: E501
     BOTTOM = "bottom"
+    """# Capped on both ends. """  # noqa: E501
+    BOTH = "both"
 
     def __str__(self) -> str:
         return str(self.value)

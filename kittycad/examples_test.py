@@ -44,6 +44,7 @@ from kittycad.api.hidden import (
     redirect_user_shortlink,
 )
 from kittycad.api.meta import (
+    community_sso,
     create_debug_uploads,
     create_event,
     get_ipinfo,
@@ -1123,6 +1124,53 @@ async def test_post_auth_saml_async():
         client=client,
         provider_id=Uuid("<string>"),
         body=bytes("some bytes", "utf-8"),
+    )
+
+
+@pytest.mark.skip
+def test_community_sso():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = community_sso.sync(
+        client=client,
+        sig="<string>",
+        sso="<string>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = community_sso.sync_detailed(
+        client=client,
+        sig="<string>",
+        sso="<string>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_community_sso_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await community_sso.asyncio(
+        client=client,
+        sig="<string>",
+        sso="<string>",
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await community_sso.asyncio_detailed(
+        client=client,
+        sig="<string>",
+        sso="<string>",
     )
 
 
