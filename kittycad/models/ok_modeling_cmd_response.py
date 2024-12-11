@@ -113,6 +113,7 @@ from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from ..models.solid3d_shell_face import Solid3dShellFace
 from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
+from ..models.sweep import Sweep
 from ..models.take_snapshot import TakeSnapshot
 from ..models.update_annotation import UpdateAnnotation
 from ..models.view_isometric import ViewIsometric
@@ -174,6 +175,16 @@ class OptionExtrude(BaseModel):
     data: Extrude
 
     type: Literal["extrude"] = "extrude"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSweep(BaseModel):
+    """"""
+
+    data: Sweep
+
+    type: Literal["sweep"] = "sweep"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1273,6 +1284,7 @@ OkModelingCmdResponse = RootModel[
             OptionMovePathPen,
             OptionExtendPath,
             OptionExtrude,
+            OptionSweep,
             OptionRevolve,
             OptionSolid3DShellFace,
             OptionRevolveAboutEdge,
