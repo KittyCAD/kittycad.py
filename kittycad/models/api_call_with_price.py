@@ -26,8 +26,6 @@ class ApiCallWithPrice(BaseModel):
 
     ip_address: str = ""
 
-    litterbox: Optional[bool] = None
-
     method: Method
 
     minutes: Optional[int] = None
