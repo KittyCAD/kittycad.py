@@ -79,7 +79,11 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[TextToCadIteration, Error]]:
-    """This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
+    """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
+
+    You always get the whole code back, even if you only changed a small part of it.
+
+    This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
     return sync_detailed(
         body=body,
@@ -108,7 +112,11 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[TextToCadIteration, Error]]:
-    """This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
+    """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
+
+    You always get the whole code back, even if you only changed a small part of it.
+
+    This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
     return (
         await asyncio_detailed(
