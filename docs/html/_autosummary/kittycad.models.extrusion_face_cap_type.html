@@ -31,7 +31,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="kittycad.models.extrusion_face_cap_type.ExtrusionFaceCapType" href="kittycad.models.extrusion_face_cap_type.ExtrusionFaceCapType.html" />
-    <link rel="prev" title="kittycad.models.extrude.Extrude" href="kittycad.models.extrude.Extrude.html" /> 
+    <link rel="prev" title="kittycad.models.extruded_face_info.ExtrudedFaceInfo" href="kittycad.models.extruded_face_info.ExtrudedFaceInfo.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,6 +58,7 @@
 <li class="toctree-l1"><a class="reference internal" href="kittycad.client.html">kittycad.client</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="kittycad.models.html">kittycad.models</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.account_provider.html">kittycad.models.account_provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.add_hole_from_offset.html">kittycad.models.add_hole_from_offset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.add_org_member.html">kittycad.models.add_org_member</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.address_details.html">kittycad.models.address_details</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.angle.html">kittycad.models.angle</a></li>
@@ -157,6 +158,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_linear_pattern.html">kittycad.models.entity_linear_pattern</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_linear_pattern_transform.html">kittycad.models.entity_linear_pattern_transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_make_helix.html">kittycad.models.entity_make_helix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_make_helix_from_params.html">kittycad.models.entity_make_helix_from_params</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_mirror.html">kittycad.models.entity_mirror</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_mirror_across_edge.html">kittycad.models.entity_mirror_across_edge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.entity_set_opacity.html">kittycad.models.entity_set_opacity</a></li>
@@ -171,6 +173,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user.html">kittycad.models.extended_user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.extended_user_results_page.html">kittycad.models.extended_user_results_page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.extrude.html">kittycad.models.extrude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.extruded_face_info.html">kittycad.models.extruded_face_info</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">kittycad.models.extrusion_face_cap_type</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="kittycad.models.extrusion_face_cap_type.ExtrusionFaceCapType.html">kittycad.models.extrusion_face_cap_type.ExtrusionFaceCapType</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#kittycad.models.extrusion_face_cap_type.ExtrusionFaceCapType"><code class="docutils literal notranslate"><span class="pre">ExtrusionFaceCapType</span></code></a><ul>
@@ -408,6 +411,7 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.set_tool.html">kittycad.models.set_tool</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.shortlink.html">kittycad.models.shortlink</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.shortlink_results_page.html">kittycad.models.shortlink_results_page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.side_face.html">kittycad.models.side_face</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.sketch_mode_disable.html">kittycad.models.sketch_mode_disable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid2d_add_hole.html">kittycad.models.solid2d_add_hole</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.solid3d_fillet_edge.html">kittycad.models.solid3d_fillet_edge</a></li>
@@ -1148,7 +1152,7 @@ left untouched.  Characters mapped to None are deleted.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="kittycad.models.extrude.Extrude.html" class="btn btn-neutral float-left" title="kittycad.models.extrude.Extrude" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="kittycad.models.extruded_face_info.ExtrudedFaceInfo.html" class="btn btn-neutral float-left" title="kittycad.models.extruded_face_info.ExtrudedFaceInfo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="kittycad.models.extrusion_face_cap_type.ExtrusionFaceCapType.html" class="btn btn-neutral float-right" title="kittycad.models.extrusion_face_cap_type.ExtrusionFaceCapType" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

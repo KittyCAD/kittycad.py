@@ -81,6 +81,7 @@
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">RootModel</span>
 <span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
 
+<span class="kn">from</span> <span class="nn">..models.add_hole_from_offset</span> <span class="kn">import</span> <span class="n">AddHoleFromOffset</span>
 <span class="kn">from</span> <span class="nn">..models.camera_drag_end</span> <span class="kn">import</span> <span class="n">CameraDragEnd</span>
 <span class="kn">from</span> <span class="nn">..models.camera_drag_move</span> <span class="kn">import</span> <span class="n">CameraDragMove</span>
 <span class="kn">from</span> <span class="nn">..models.camera_drag_start</span> <span class="kn">import</span> <span class="n">CameraDragStart</span>
@@ -118,6 +119,7 @@
 <span class="kn">from</span> <span class="nn">..models.entity_linear_pattern</span> <span class="kn">import</span> <span class="n">EntityLinearPattern</span>
 <span class="kn">from</span> <span class="nn">..models.entity_linear_pattern_transform</span> <span class="kn">import</span> <span class="n">EntityLinearPatternTransform</span>
 <span class="kn">from</span> <span class="nn">..models.entity_make_helix</span> <span class="kn">import</span> <span class="n">EntityMakeHelix</span>
+<span class="kn">from</span> <span class="nn">..models.entity_make_helix_from_params</span> <span class="kn">import</span> <span class="n">EntityMakeHelixFromParams</span>
 <span class="kn">from</span> <span class="nn">..models.entity_mirror</span> <span class="kn">import</span> <span class="n">EntityMirror</span>
 <span class="kn">from</span> <span class="nn">..models.entity_mirror_across_edge</span> <span class="kn">import</span> <span class="n">EntityMirrorAcrossEdge</span>
 <span class="kn">from</span> <span class="nn">..models.entity_set_opacity</span> <span class="kn">import</span> <span class="n">EntitySetOpacity</span>
@@ -363,45 +365,6 @@
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_perspective_settings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;default_camera_perspective_settings&quot;</span>
     <span class="p">)</span>
-
-    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
-
-
-
-<div class="viewcode-block" id="OptionEntityMakeHelix">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelix.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelix">[docs]</a>
-<span class="k">class</span> <span class="nc">OptionEntityMakeHelix</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
-
-    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMakeHelix</span>
-
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_make_helix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_make_helix&quot;</span>
-
-    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
-
-
-
-<div class="viewcode-block" id="OptionEntityMirror">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMirror.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMirror">[docs]</a>
-<span class="k">class</span> <span class="nc">OptionEntityMirror</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
-
-    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMirror</span>
-
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_mirror&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_mirror&quot;</span>
-
-    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
-
-
-
-<div class="viewcode-block" id="OptionEntityMirrorAcrossEdge">
-<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMirrorAcrossEdge.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMirrorAcrossEdge">[docs]</a>
-<span class="k">class</span> <span class="nc">OptionEntityMirrorAcrossEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
-
-    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMirrorAcrossEdge</span>
-
-    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_mirror_across_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_mirror_across_edge&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -1189,6 +1152,19 @@
 
 
 
+<div class="viewcode-block" id="OptionAddHoleFromOffset">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionAddHoleFromOffset.html#kittycad.models.ok_modeling_cmd_response.OptionAddHoleFromOffset">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionAddHoleFromOffset</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">AddHoleFromOffset</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;add_hole_from_offset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;add_hole_from_offset&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionDefaultCameraFocusOn">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraFocusOn.html#kittycad.models.ok_modeling_cmd_response.OptionDefaultCameraFocusOn">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionDefaultCameraFocusOn</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1672,6 +1648,58 @@
 
 
 
+<div class="viewcode-block" id="OptionEntityMirror">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMirror.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMirror">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMirror</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMirror</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_mirror&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_mirror&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityMirrorAcrossEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMirrorAcrossEdge.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMirrorAcrossEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMirrorAcrossEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMirrorAcrossEdge</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_mirror_across_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_mirror_across_edge&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityMakeHelix">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelix.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelix">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMakeHelix</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMakeHelix</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_make_helix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_make_helix&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityMakeHelixFromParams">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelixFromParams.html#kittycad.models.ok_modeling_cmd_response.OptionEntityMakeHelixFromParams">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMakeHelixFromParams</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">EntityMakeHelixFromParams</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_make_helix_from_params&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_make_helix_from_params&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionSolid3DGetExtrusionFaceInfo">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionSolid3DGetExtrusionFaceInfo.html#kittycad.models.ok_modeling_cmd_response.OptionSolid3DGetExtrusionFaceInfo">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionSolid3DGetExtrusionFaceInfo</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1714,9 +1742,6 @@
             <span class="n">OptionCameraDragStart</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraLookAt</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraPerspectiveSettings</span><span class="p">,</span>
-            <span class="n">OptionEntityMakeHelix</span><span class="p">,</span>
-            <span class="n">OptionEntityMirror</span><span class="p">,</span>
-            <span class="n">OptionEntityMirrorAcrossEdge</span><span class="p">,</span>
             <span class="n">OptionSelectAdd</span><span class="p">,</span>
             <span class="n">OptionSelectRemove</span><span class="p">,</span>
             <span class="n">OptionSceneClearAll</span><span class="p">,</span>
@@ -1777,6 +1802,7 @@
             <span class="n">OptionViewIsometric</span><span class="p">,</span>
             <span class="n">OptionGetNumObjects</span><span class="p">,</span>
             <span class="n">OptionMakeOffsetPath</span><span class="p">,</span>
+            <span class="n">OptionAddHoleFromOffset</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraFocusOn</span><span class="p">,</span>
             <span class="n">OptionSelectGet</span><span class="p">,</span>
             <span class="n">OptionSolid3DGetAllEdgeFaces</span><span class="p">,</span>
@@ -1814,6 +1840,10 @@
             <span class="n">OptionEntityLinearPatternTransform</span><span class="p">,</span>
             <span class="n">OptionEntityLinearPattern</span><span class="p">,</span>
             <span class="n">OptionEntityCircularPattern</span><span class="p">,</span>
+            <span class="n">OptionEntityMirror</span><span class="p">,</span>
+            <span class="n">OptionEntityMirrorAcrossEdge</span><span class="p">,</span>
+            <span class="n">OptionEntityMakeHelix</span><span class="p">,</span>
+            <span class="n">OptionEntityMakeHelixFromParams</span><span class="p">,</span>
             <span class="n">OptionSolid3DGetExtrusionFaceInfo</span><span class="p">,</span>
             <span class="n">OptionExtrusionFaceInfo</span><span class="p">,</span>
         <span class="p">],</span>
