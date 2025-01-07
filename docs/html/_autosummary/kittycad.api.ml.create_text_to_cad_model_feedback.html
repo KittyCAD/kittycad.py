@@ -135,13 +135,13 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.ml.create_text_to_cad_model_feedback.asyncio.html#kittycad.api.ml.create_text_to_cad_model_feedback.asyncio" title="kittycad.api.ml.create_text_to_cad_model_feedback.asyncio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio</span></code></a>(id, feedback, *, client)</p></td>
-<td><p>This endpoint requires authentication by any Zoo user.</p></td>
+<td><p>This can be a text-to-CAD creation or iteration.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.ml.create_text_to_cad_model_feedback.asyncio_detailed.html#kittycad.api.ml.create_text_to_cad_model_feedback.asyncio_detailed" title="kittycad.api.ml.create_text_to_cad_model_feedback.asyncio_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asyncio_detailed</span></code></a>(id, feedback, *, client)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="kittycad.api.ml.create_text_to_cad_model_feedback.sync.html#kittycad.api.ml.create_text_to_cad_model_feedback.sync" title="kittycad.api.ml.create_text_to_cad_model_feedback.sync"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync</span></code></a>(id, feedback, *, client)</p></td>
-<td><p>This endpoint requires authentication by any Zoo user.</p></td>
+<td><p>This can be a text-to-CAD creation or iteration.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="kittycad.api.ml.create_text_to_cad_model_feedback.sync_detailed.html#kittycad.api.ml.create_text_to_cad_model_feedback.sync_detailed" title="kittycad.api.ml.create_text_to_cad_model_feedback.sync_detailed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_detailed</span></code></a>(id, feedback, *, client)</p></td>
 <td><p></p></td>
@@ -181,7 +181,8 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.ml.create_text_to_cad_model_feedback.asyncio">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kittycad.api.ml.create_text_to_cad_model_feedback.</span></span><span class="sig-name descname"><span class="pre">asyncio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/ml/create_text_to_cad_model_feedback.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/ml/create_text_to_cad_model_feedback.html#asyncio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.ml.create_text_to_cad_model_feedback.asyncio" title="Link to this definition"></a></dt>
-<dd><p>This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model, in order to give feedback.</p>
+<dd><p>This can be a text-to-CAD creation or iteration.</p>
+<p>This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]</span></p>
@@ -202,7 +203,8 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="kittycad.api.ml.create_text_to_cad_model_feedback.sync">
 <span class="sig-prename descclassname"><span class="pre">kittycad.api.ml.create_text_to_cad_model_feedback.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/api/ml/create_text_to_cad_model_feedback.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/api/ml/create_text_to_cad_model_feedback.html#sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.api.ml.create_text_to_cad_model_feedback.sync" title="Link to this definition"></a></dt>
-<dd><p>This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model, in order to give feedback.</p>
+<dd><p>This can be a text-to-CAD creation or iteration.</p>
+<p>This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="kittycad.models.error.Error.html#kittycad.models.error.Error" title="kittycad.models.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]</span></p>
@@ -233,7 +235,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2025, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

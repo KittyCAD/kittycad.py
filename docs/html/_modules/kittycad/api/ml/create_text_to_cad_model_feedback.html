@@ -174,7 +174,9 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model, in order to give feedback.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This can be a text-to-CAD creation or iteration.</span>
+
+<span class="sd">    This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
         <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
@@ -213,7 +215,9 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">client</span><span class="p">:</span> <span class="n">Client</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Error</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model, in order to give feedback.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This can be a text-to-CAD creation or iteration.</span>
+
+<span class="sd">    This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>
         <span class="k">await</span> <span class="n">asyncio_detailed</span><span class="p">(</span>
@@ -232,7 +236,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, KittyCAD Team Members.</p>
+    <p>&#169; Copyright 2025, KittyCAD Team Members.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
