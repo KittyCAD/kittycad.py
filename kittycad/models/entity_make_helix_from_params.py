@@ -1,8 +1,8 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class EntityMakeHelix(BaseModel):
-    """The response from the `EntityMakeHelix` endpoint."""
+class EntityMakeHelixFromParams(BaseModel):
+    """The response from the `EntityMakeHelixFromParams` endpoint."""
 
     helix_id: str
 

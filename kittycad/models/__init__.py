@@ -1,6 +1,7 @@
 """Contains all the data models used in inputs/outputs"""
 
 from .account_provider import AccountProvider
+from .add_hole_from_offset import AddHoleFromOffset
 from .add_org_member import AddOrgMember
 from .address_details import AddressDetails
 from .angle import Angle
@@ -99,6 +100,7 @@ from .entity_get_sketch_paths import EntityGetSketchPaths
 from .entity_linear_pattern import EntityLinearPattern
 from .entity_linear_pattern_transform import EntityLinearPatternTransform
 from .entity_make_helix import EntityMakeHelix
+from .entity_make_helix_from_params import EntityMakeHelixFromParams
 from .entity_mirror import EntityMirror
 from .entity_mirror_across_edge import EntityMirrorAcrossEdge
 from .entity_set_opacity import EntitySetOpacity
@@ -113,6 +115,7 @@ from .extend_path import ExtendPath
 from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
 from .extrude import Extrude
+from .extruded_face_info import ExtrudedFaceInfo
 from .extrusion_face_cap_type import ExtrusionFaceCapType
 from .extrusion_face_info import ExtrusionFaceInfo
 from .face_get_center import FaceGetCenter
@@ -271,6 +274,7 @@ from .set_selection_type import SetSelectionType
 from .set_tool import SetTool
 from .shortlink import Shortlink
 from .shortlink_results_page import ShortlinkResultsPage
+from .side_face import SideFace
 from .sketch_mode_disable import SketchModeDisable
 from .solid2d_add_hole import Solid2dAddHole
 from .solid3d_fillet_edge import Solid3dFilletEdge
