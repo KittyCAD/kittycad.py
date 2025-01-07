@@ -12,6 +12,7 @@ from ..models.color import Color
 from ..models.cut_type import CutType
 from ..models.distance_type import DistanceType
 from ..models.entity_type import EntityType
+from ..models.extruded_face_info import ExtrudedFaceInfo
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format import InputFormat
@@ -82,6 +83,8 @@ class OptionExtrude(BaseModel):
     """Command for extruding a solid 2d."""
 
     distance: LengthUnit
+
+    faces: Optional[ExtrudedFaceInfo] = None
 
     target: ModelingCmdId
 
@@ -421,9 +424,31 @@ class OptionEntityMakeHelix(BaseModel):
 
     revolutions: float
 
-    start_angle: Angle
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore
 
     type: Literal["entity_make_helix"] = "entity_make_helix"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMakeHelixFromParams(BaseModel):
+    """Create a helix using the specified parameters."""
+
+    axis: Point3d
+
+    center: Point3d
+
+    is_clockwise: bool
+
+    length: LengthUnit
+
+    radius: float
+
+    revolutions: float
+
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore
+
+    type: Literal["entity_make_helix_from_params"] = "entity_make_helix_from_params"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1376,6 +1401,18 @@ class OptionMakeOffsetPath(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionAddHoleFromOffset(BaseModel):
+    """Add a hole to a closed path by offsetting it a uniform distance inward."""
+
+    object_id: str
+
+    offset: LengthUnit
+
+    type: Literal["add_hole_from_offset"] = "add_hole_from_offset"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1408,6 +1445,7 @@ ModelingCmd = RootModel[
             OptionEntityLinearPattern,
             OptionEntityCircularPattern,
             OptionEntityMakeHelix,
+            OptionEntityMakeHelixFromParams,
             OptionEntityMirror,
             OptionEntityMirrorAcrossEdge,
             OptionSelectWithPoint,
@@ -1490,6 +1528,7 @@ ModelingCmd = RootModel[
             OptionSelectGet,
             OptionGetNumObjects,
             OptionMakeOffsetPath,
+            OptionAddHoleFromOffset,
         ],
         Field(discriminator="type"),
     ]

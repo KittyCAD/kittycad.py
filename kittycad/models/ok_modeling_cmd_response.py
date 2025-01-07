@@ -3,6 +3,7 @@ from typing import Literal, Union
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.add_hole_from_offset import AddHoleFromOffset
 from ..models.camera_drag_end import CameraDragEnd
 from ..models.camera_drag_move import CameraDragMove
 from ..models.camera_drag_start import CameraDragStart
@@ -40,6 +41,7 @@ from ..models.entity_get_sketch_paths import EntityGetSketchPaths
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.entity_linear_pattern_transform import EntityLinearPatternTransform
 from ..models.entity_make_helix import EntityMakeHelix
+from ..models.entity_make_helix_from_params import EntityMakeHelixFromParams
 from ..models.entity_mirror import EntityMirror
 from ..models.entity_mirror_across_edge import EntityMirrorAcrossEdge
 from ..models.entity_set_opacity import EntitySetOpacity
@@ -247,36 +249,6 @@ class OptionDefaultCameraPerspectiveSettings(BaseModel):
     type: Literal["default_camera_perspective_settings"] = (
         "default_camera_perspective_settings"
     )
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class OptionEntityMakeHelix(BaseModel):
-    """"""
-
-    data: EntityMakeHelix
-
-    type: Literal["entity_make_helix"] = "entity_make_helix"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class OptionEntityMirror(BaseModel):
-    """"""
-
-    data: EntityMirror
-
-    type: Literal["entity_mirror"] = "entity_mirror"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class OptionEntityMirrorAcrossEdge(BaseModel):
-    """"""
-
-    data: EntityMirrorAcrossEdge
-
-    type: Literal["entity_mirror_across_edge"] = "entity_mirror_across_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -883,6 +855,16 @@ class OptionMakeOffsetPath(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionAddHoleFromOffset(BaseModel):
+    """"""
+
+    data: AddHoleFromOffset
+
+    type: Literal["add_hole_from_offset"] = "add_hole_from_offset"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionDefaultCameraFocusOn(BaseModel):
     """"""
 
@@ -1255,6 +1237,46 @@ class OptionEntityCircularPattern(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionEntityMirror(BaseModel):
+    """"""
+
+    data: EntityMirror
+
+    type: Literal["entity_mirror"] = "entity_mirror"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMirrorAcrossEdge(BaseModel):
+    """"""
+
+    data: EntityMirrorAcrossEdge
+
+    type: Literal["entity_mirror_across_edge"] = "entity_mirror_across_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMakeHelix(BaseModel):
+    """"""
+
+    data: EntityMakeHelix
+
+    type: Literal["entity_make_helix"] = "entity_make_helix"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMakeHelixFromParams(BaseModel):
+    """"""
+
+    data: EntityMakeHelixFromParams
+
+    type: Literal["entity_make_helix_from_params"] = "entity_make_helix_from_params"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     """"""
 
@@ -1291,9 +1313,6 @@ OkModelingCmdResponse = RootModel[
             OptionCameraDragStart,
             OptionDefaultCameraLookAt,
             OptionDefaultCameraPerspectiveSettings,
-            OptionEntityMakeHelix,
-            OptionEntityMirror,
-            OptionEntityMirrorAcrossEdge,
             OptionSelectAdd,
             OptionSelectRemove,
             OptionSceneClearAll,
@@ -1354,6 +1373,7 @@ OkModelingCmdResponse = RootModel[
             OptionViewIsometric,
             OptionGetNumObjects,
             OptionMakeOffsetPath,
+            OptionAddHoleFromOffset,
             OptionDefaultCameraFocusOn,
             OptionSelectGet,
             OptionSolid3DGetAllEdgeFaces,
@@ -1391,6 +1411,10 @@ OkModelingCmdResponse = RootModel[
             OptionEntityLinearPatternTransform,
             OptionEntityLinearPattern,
             OptionEntityCircularPattern,
+            OptionEntityMirror,
+            OptionEntityMirrorAcrossEdge,
+            OptionEntityMakeHelix,
+            OptionEntityMakeHelixFromParams,
             OptionSolid3DGetExtrusionFaceInfo,
             OptionExtrusionFaceInfo,
         ],

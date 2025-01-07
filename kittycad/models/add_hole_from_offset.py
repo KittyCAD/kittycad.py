@@ -3,8 +3,8 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class EntityMirrorAcrossEdge(BaseModel):
-    """The response from the `EntityMirrorAcrossEdge` endpoint."""
+class AddHoleFromOffset(BaseModel):
+    """The response from the `AddHoleFromOffset` command."""
 
     entity_ids: List[str]
 
