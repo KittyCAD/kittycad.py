@@ -82,7 +82,9 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model, in order to give feedback."""  # noqa: E501
+    """This can be a text-to-CAD creation or iteration.
+
+    This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -115,7 +117,9 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Error]:
-    """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model, in order to give feedback."""  # noqa: E501
+    """This can be a text-to-CAD creation or iteration.
+
+    This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""  # noqa: E501
 
     return (
         await asyncio_detailed(
