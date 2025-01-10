@@ -136,7 +136,7 @@ def linkcode_resolve(domain, info):
     if not info["module"]:
         return None
     filename = info["module"].replace(".", "/")
-    return "https://github.com/kittycad/kittycad.py/%s.py" % filename
+    return f"https://github.com/kittycad/kittycad.py/{filename}.py"
 
 
 # Spell checker.
@@ -144,7 +144,7 @@ try:
     import enchant  # noqa # pylint: disable=unused-import
 except ImportError as ex:
     print(
-        "enchant module import failed:\n" "{0}\n" "Spell checking disabled.".format(ex),
+        f"enchant module import failed:\n{ex}\nSpell checking disabled.",
         file=sys.stderr,
     )
 else:
