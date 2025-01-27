@@ -87,6 +87,7 @@
 <span class="kn">from</span> <span class="nn">..models.camera_drag_interaction_type</span> <span class="kn">import</span> <span class="n">CameraDragInteractionType</span>
 <span class="kn">from</span> <span class="nn">..models.camera_movement</span> <span class="kn">import</span> <span class="n">CameraMovement</span>
 <span class="kn">from</span> <span class="nn">..models.color</span> <span class="kn">import</span> <span class="n">Color</span>
+<span class="kn">from</span> <span class="nn">..models.component_transform</span> <span class="kn">import</span> <span class="n">ComponentTransform</span>
 <span class="kn">from</span> <span class="nn">..models.cut_type</span> <span class="kn">import</span> <span class="n">CutType</span>
 <span class="kn">from</span> <span class="nn">..models.distance_type</span> <span class="kn">import</span> <span class="n">DistanceType</span>
 <span class="kn">from</span> <span class="nn">..models.entity_type</span> <span class="kn">import</span> <span class="n">EntityType</span>
@@ -609,13 +610,36 @@
 
     <span class="n">length</span><span class="p">:</span> <span class="n">LengthUnit</span>
 
-    <span class="n">radius</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">radius</span><span class="p">:</span> <span class="n">LengthUnit</span>
 
     <span class="n">revolutions</span><span class="p">:</span> <span class="nb">float</span>
 
     <span class="n">start_angle</span><span class="p">:</span> <span class="n">Angle</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="s2">&quot;degrees&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_make_helix_from_params&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_make_helix_from_params&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityMakeHelixFromEdge">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityMakeHelixFromEdge.html#kittycad.models.modeling_cmd.OptionEntityMakeHelixFromEdge">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityMakeHelixFromEdge</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a helix using the specified parameters.&quot;&quot;&quot;</span>
+
+    <span class="n">edge_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">is_clockwise</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="n">length</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LengthUnit</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">radius</span><span class="p">:</span> <span class="n">LengthUnit</span>
+
+    <span class="n">revolutions</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="n">start_angle</span><span class="p">:</span> <span class="n">Angle</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="s2">&quot;degrees&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>  <span class="c1"># type: ignore</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_make_helix_from_edge&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_make_helix_from_edge&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -1798,6 +1822,21 @@
 
 
 
+<div class="viewcode-block" id="OptionSetObjectTransform">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetObjectTransform.html#kittycad.models.modeling_cmd.OptionSetObjectTransform">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetObjectTransform</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the transform of an object.&quot;&quot;&quot;</span>
+
+    <span class="n">object_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">transforms</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ComponentTransform</span><span class="p">]</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_object_transform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_object_transform&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionMakeOffsetPath">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionMakeOffsetPath.html#kittycad.models.modeling_cmd.OptionMakeOffsetPath">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionMakeOffsetPath</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1863,6 +1902,7 @@
             <span class="n">OptionEntityCircularPattern</span><span class="p">,</span>
             <span class="n">OptionEntityMakeHelix</span><span class="p">,</span>
             <span class="n">OptionEntityMakeHelixFromParams</span><span class="p">,</span>
+            <span class="n">OptionEntityMakeHelixFromEdge</span><span class="p">,</span>
             <span class="n">OptionEntityMirror</span><span class="p">,</span>
             <span class="n">OptionEntityMirrorAcrossEdge</span><span class="p">,</span>
             <span class="n">OptionSelectWithPoint</span><span class="p">,</span>
@@ -1944,6 +1984,7 @@
             <span class="n">OptionSelectClear</span><span class="p">,</span>
             <span class="n">OptionSelectGet</span><span class="p">,</span>
             <span class="n">OptionGetNumObjects</span><span class="p">,</span>
+            <span class="n">OptionSetObjectTransform</span><span class="p">,</span>
             <span class="n">OptionMakeOffsetPath</span><span class="p">,</span>
             <span class="n">OptionAddHoleFromOffset</span><span class="p">,</span>
         <span class="p">],</span>
