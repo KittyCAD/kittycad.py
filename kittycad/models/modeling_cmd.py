@@ -9,6 +9,7 @@ from ..models.annotation_type import AnnotationType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
 from ..models.camera_movement import CameraMovement
 from ..models.color import Color
+from ..models.component_transform import ComponentTransform
 from ..models.cut_type import CutType
 from ..models.distance_type import DistanceType
 from ..models.entity_type import EntityType
@@ -442,13 +443,33 @@ class OptionEntityMakeHelixFromParams(BaseModel):
 
     length: LengthUnit
 
-    radius: float
+    radius: LengthUnit
 
     revolutions: float
 
     start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore
 
     type: Literal["entity_make_helix_from_params"] = "entity_make_helix_from_params"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityMakeHelixFromEdge(BaseModel):
+    """Create a helix using the specified parameters."""
+
+    edge_id: str
+
+    is_clockwise: bool
+
+    length: Optional[LengthUnit] = None
+
+    radius: LengthUnit
+
+    revolutions: float
+
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore
+
+    type: Literal["entity_make_helix_from_edge"] = "entity_make_helix_from_edge"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1387,6 +1408,18 @@ class OptionGetNumObjects(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSetObjectTransform(BaseModel):
+    """Set the transform of an object."""
+
+    object_id: str
+
+    transforms: List[ComponentTransform]
+
+    type: Literal["set_object_transform"] = "set_object_transform"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionMakeOffsetPath(BaseModel):
     """Make a new path by offsetting an object by a given distance. The new path's ID will be the ID of this command."""
 
@@ -1446,6 +1479,7 @@ ModelingCmd = RootModel[
             OptionEntityCircularPattern,
             OptionEntityMakeHelix,
             OptionEntityMakeHelixFromParams,
+            OptionEntityMakeHelixFromEdge,
             OptionEntityMirror,
             OptionEntityMirrorAcrossEdge,
             OptionSelectWithPoint,
@@ -1527,6 +1561,7 @@ ModelingCmd = RootModel[
             OptionSelectClear,
             OptionSelectGet,
             OptionGetNumObjects,
+            OptionSetObjectTransform,
             OptionMakeOffsetPath,
             OptionAddHoleFromOffset,
         ],
