@@ -41,6 +41,7 @@ from ..models.entity_get_sketch_paths import EntityGetSketchPaths
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.entity_linear_pattern_transform import EntityLinearPatternTransform
 from ..models.entity_make_helix import EntityMakeHelix
+from ..models.entity_make_helix_from_edge import EntityMakeHelixFromEdge
 from ..models.entity_make_helix_from_params import EntityMakeHelixFromParams
 from ..models.entity_mirror import EntityMirror
 from ..models.entity_mirror_across_edge import EntityMirrorAcrossEdge
@@ -98,6 +99,7 @@ from ..models.send_object import SendObject
 from ..models.set_background_color import SetBackgroundColor
 from ..models.set_current_tool_properties import SetCurrentToolProperties
 from ..models.set_default_system_properties import SetDefaultSystemProperties
+from ..models.set_object_transform import SetObjectTransform
 from ..models.set_scene_units import SetSceneUnits
 from ..models.set_selection_filter import SetSelectionFilter
 from ..models.set_selection_type import SetSelectionType
@@ -855,6 +857,16 @@ class OptionMakeOffsetPath(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSetObjectTransform(BaseModel):
+    """"""
+
+    data: SetObjectTransform
+
+    type: Literal["set_object_transform"] = "set_object_transform"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionAddHoleFromOffset(BaseModel):
     """"""
 
@@ -1277,6 +1289,16 @@ class OptionEntityMakeHelixFromParams(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionEntityMakeHelixFromEdge(BaseModel):
+    """"""
+
+    data: EntityMakeHelixFromEdge
+
+    type: Literal["entity_make_helix_from_edge"] = "entity_make_helix_from_edge"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     """"""
 
@@ -1373,6 +1395,7 @@ OkModelingCmdResponse = RootModel[
             OptionViewIsometric,
             OptionGetNumObjects,
             OptionMakeOffsetPath,
+            OptionSetObjectTransform,
             OptionAddHoleFromOffset,
             OptionDefaultCameraFocusOn,
             OptionSelectGet,
@@ -1415,6 +1438,7 @@ OkModelingCmdResponse = RootModel[
             OptionEntityMirrorAcrossEdge,
             OptionEntityMakeHelix,
             OptionEntityMakeHelixFromParams,
+            OptionEntityMakeHelixFromEdge,
             OptionSolid3DGetExtrusionFaceInfo,
             OptionExtrusionFaceInfo,
         ],

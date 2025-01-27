@@ -47,6 +47,7 @@ from .cluster import Cluster
 from .code_language import CodeLanguage
 from .code_output import CodeOutput
 from .color import Color
+from .component_transform import ComponentTransform
 from .connection import Connection
 from .country_code import CountryCode
 from .coupon import Coupon
@@ -100,6 +101,7 @@ from .entity_get_sketch_paths import EntityGetSketchPaths
 from .entity_linear_pattern import EntityLinearPattern
 from .entity_linear_pattern_transform import EntityLinearPatternTransform
 from .entity_make_helix import EntityMakeHelix
+from .entity_make_helix_from_edge import EntityMakeHelixFromEdge
 from .entity_make_helix_from_params import EntityMakeHelixFromParams
 from .entity_mirror import EntityMirror
 from .entity_mirror_across_edge import EntityMirrorAcrossEdge
@@ -268,6 +270,7 @@ from .session_uuid import SessionUuid
 from .set_background_color import SetBackgroundColor
 from .set_current_tool_properties import SetCurrentToolProperties
 from .set_default_system_properties import SetDefaultSystemProperties
+from .set_object_transform import SetObjectTransform
 from .set_scene_units import SetSceneUnits
 from .set_selection_filter import SetSelectionFilter
 from .set_selection_type import SetSelectionType
@@ -310,6 +313,8 @@ from .text_to_cad_model import TextToCadModel
 from .text_to_cad_results_page import TextToCadResultsPage
 from .token_revoke_request_form import TokenRevokeRequestForm
 from .transform import Transform
+from .transform_by_for_point3d import TransformByForPoint3d
+from .transform_by_for_point4d import TransformByForPoint4d
 from .unit_angle import UnitAngle
 from .unit_angle_conversion import UnitAngleConversion
 from .unit_area import UnitArea
