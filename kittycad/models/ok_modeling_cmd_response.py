@@ -84,6 +84,8 @@ from ..models.path_get_vertex_uuids import PathGetVertexUuids
 from ..models.path_segment_info import PathSegmentInfo
 from ..models.plane_intersect_and_project import PlaneIntersectAndProject
 from ..models.plane_set_color import PlaneSetColor
+from ..models.project_entity_to_plane import ProjectEntityToPlane
+from ..models.project_points_to_plane import ProjectPointsToPlane
 from ..models.reconfigure_stream import ReconfigureStream
 from ..models.remove_scene_objects import RemoveSceneObjects
 from ..models.revolve import Revolve
@@ -977,6 +979,26 @@ class OptionCurveGetControlPoints(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionProjectEntityToPlane(BaseModel):
+    """"""
+
+    data: ProjectEntityToPlane
+
+    type: Literal["project_entity_to_plane"] = "project_entity_to_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionProjectPointsToPlane(BaseModel):
+    """"""
+
+    data: ProjectPointsToPlane
+
+    type: Literal["project_points_to_plane"] = "project_points_to_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionCurveGetType(BaseModel):
     """"""
 
@@ -1407,6 +1429,8 @@ OkModelingCmdResponse = RootModel[
             OptionSolid3DGetCommonEdge,
             OptionGetEntityType,
             OptionCurveGetControlPoints,
+            OptionProjectEntityToPlane,
+            OptionProjectPointsToPlane,
             OptionCurveGetType,
             OptionMouseClick,
             OptionTakeSnapshot,

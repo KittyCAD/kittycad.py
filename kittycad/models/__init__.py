@@ -240,6 +240,8 @@ from .point4d import Point4d
 from .pong import Pong
 from .post_effect_type import PostEffectType
 from .privacy_settings import PrivacySettings
+from .project_entity_to_plane import ProjectEntityToPlane
+from .project_points_to_plane import ProjectPointsToPlane
 from .raw_file import RawFile
 from .reconfigure_stream import ReconfigureStream
 from .remove_scene_objects import RemoveSceneObjects
