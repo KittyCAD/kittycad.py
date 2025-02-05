@@ -1030,6 +1030,34 @@ class OptionCurveGetControlPoints(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionProjectEntityToPlane(BaseModel):
+    """Project an entity on to a plane."""
+
+    entity_id: str
+
+    plane_id: str
+
+    type: Literal["project_entity_to_plane"] = "project_entity_to_plane"
+
+    use_plane_coords: bool
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionProjectPointsToPlane(BaseModel):
+    """Project a list of points on to a plane."""
+
+    plane_id: str
+
+    points: List[Point3d]
+
+    type: Literal["project_points_to_plane"] = "project_points_to_plane"
+
+    use_plane_coords: bool
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionTakeSnapshot(BaseModel):
     """Take a snapshot of the current view."""
 
@@ -1201,7 +1229,7 @@ class OptionImportFiles(BaseModel):
 
 
 class OptionSetSceneUnits(BaseModel):
-    """Set the units of the scene. For all following commands, the units will be interpreted as the given units."""
+    """Set the units of the scene. For all following commands, the units will be interpreted as the given units. Any previously executed commands will not be affected or have their units changed. They will remain in the units they were originally executed in."""
 
     type: Literal["set_scene_units"] = "set_scene_units"
 
@@ -1527,6 +1555,8 @@ ModelingCmd = RootModel[
             OptionSetDefaultSystemProperties,
             OptionCurveGetType,
             OptionCurveGetControlPoints,
+            OptionProjectEntityToPlane,
+            OptionProjectPointsToPlane,
             OptionTakeSnapshot,
             OptionMakeAxesGizmo,
             OptionPathGetInfo,
