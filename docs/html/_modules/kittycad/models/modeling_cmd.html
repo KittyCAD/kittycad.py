@@ -1342,6 +1342,40 @@
 
 
 
+<div class="viewcode-block" id="OptionProjectEntityToPlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionProjectEntityToPlane.html#kittycad.models.modeling_cmd.OptionProjectEntityToPlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionProjectEntityToPlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project an entity on to a plane.&quot;&quot;&quot;</span>
+
+    <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">plane_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;project_entity_to_plane&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;project_entity_to_plane&quot;</span>
+
+    <span class="n">use_plane_coords</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionProjectPointsToPlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionProjectPointsToPlane.html#kittycad.models.modeling_cmd.OptionProjectPointsToPlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionProjectPointsToPlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project a list of points on to a plane.&quot;&quot;&quot;</span>
+
+    <span class="n">plane_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">points</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Point3d</span><span class="p">]</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;project_points_to_plane&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;project_points_to_plane&quot;</span>
+
+    <span class="n">use_plane_coords</span><span class="p">:</span> <span class="nb">bool</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionTakeSnapshot">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionTakeSnapshot.html#kittycad.models.modeling_cmd.OptionTakeSnapshot">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionTakeSnapshot</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1560,7 +1594,7 @@
 <div class="viewcode-block" id="OptionSetSceneUnits">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetSceneUnits.html#kittycad.models.modeling_cmd.OptionSetSceneUnits">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionSetSceneUnits</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the units of the scene. For all following commands, the units will be interpreted as the given units.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the units of the scene. For all following commands, the units will be interpreted as the given units. Any previously executed commands will not be affected or have their units changed. They will remain in the units they were originally executed in.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_scene_units&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_scene_units&quot;</span>
 
@@ -1950,6 +1984,8 @@
             <span class="n">OptionSetDefaultSystemProperties</span><span class="p">,</span>
             <span class="n">OptionCurveGetType</span><span class="p">,</span>
             <span class="n">OptionCurveGetControlPoints</span><span class="p">,</span>
+            <span class="n">OptionProjectEntityToPlane</span><span class="p">,</span>
+            <span class="n">OptionProjectPointsToPlane</span><span class="p">,</span>
             <span class="n">OptionTakeSnapshot</span><span class="p">,</span>
             <span class="n">OptionMakeAxesGizmo</span><span class="p">,</span>
             <span class="n">OptionPathGetInfo</span><span class="p">,</span>

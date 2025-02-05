@@ -379,6 +379,8 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.pong.html">kittycad.models.pong</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.post_effect_type.html">kittycad.models.post_effect_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.privacy_settings.html">kittycad.models.privacy_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.project_entity_to_plane.html">kittycad.models.project_entity_to_plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.project_points_to_plane.html">kittycad.models.project_points_to_plane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.raw_file.html">kittycad.models.raw_file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.reconfigure_stream.html">kittycad.models.reconfigure_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.remove_scene_objects.html">kittycad.models.remove_scene_objects</a></li>
@@ -761,10 +763,9 @@ case.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.count">
-<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.count" title="Link to this definition"></a></dt>
-<dd><p>Return the number of non-overlapping occurrences of substring sub in
-string S[start:end].  Optional arguments start and end are
-interpreted as in slice notation.</p>
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.count" title="Link to this definition"></a></dt>
+<dd><p>Return the number of non-overlapping occurrences of substring sub in string S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -785,11 +786,16 @@ codecs.register_error that can handle UnicodeEncodeErrors.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.endswith">
-<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.endswith" title="Link to this definition"></a></dt>
-<dd><p>Return True if S ends with the specified suffix, False otherwise.
-With optional start, test S beginning at that position.
-With optional end, stop comparing S at that position.
-suffix can also be a tuple of strings to try.</p>
+<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.endswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string ends with the specified suffix, False otherwise.</p>
+<dl class="simple">
+<dt>suffix</dt><dd><p>A string or a tuple of strings to try.</p>
+</dd>
+<dt>start</dt><dd><p>Optional start position. Default: start of the string.</p>
+</dd>
+<dt>end</dt><dd><p>Optional stop position. Default: end of the string.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -801,34 +807,32 @@ suffix can also be a tuple of strings to try.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.find">
-<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.find" title="Link to this definition"></a></dt>
-<dd><p>Return the lowest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Return -1 on failure.</p>
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.find" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Return -1 on failure.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format">
-<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format" title="Link to this definition"></a></dt>
-<dd><p>Return a formatted version of S, using substitutions from args and kwargs.
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of the string, using substitutions from args and kwargs.
 The substitutions are identified by braces (‘{’ and ‘}’).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format_map">
-<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format_map" title="Link to this definition"></a></dt>
-<dd><p>Return a formatted version of S, using substitutions from mapping.
+<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.format_map" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of the string, using substitutions from mapping.
 The substitutions are identified by braces (‘{’ and ‘}’).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.index">
-<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.index" title="Link to this definition"></a></dt>
-<dd><p>Return the lowest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Raises ValueError when the substring is not found.</p>
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.index" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Raises ValueError when the substring is not found.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -999,7 +1003,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.replace" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.replace" title="Link to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -1014,20 +1018,18 @@ replaced.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rfind">
-<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rfind" title="Link to this definition"></a></dt>
-<dd><p>Return the highest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Return -1 on failure.</p>
+<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rfind" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Return -1 on failure.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rindex">
-<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rindex" title="Link to this definition"></a></dt>
-<dd><p>Return the highest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Raises ValueError when the substring is not found.</p>
+<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.rindex" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Raises ValueError when the substring is not found.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1106,11 +1108,16 @@ true.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.startswith">
-<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.startswith" title="Link to this definition"></a></dt>
-<dd><p>Return True if S starts with the specified prefix, False otherwise.
-With optional start, test S beginning at that position.
-With optional end, stop comparing S at that position.
-prefix can also be a tuple of strings to try.</p>
+<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/api_call_query_group_by.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.api_call_query_group_by.ApiCallQueryGroupBy.startswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string starts with the specified prefix, False otherwise.</p>
+<dl class="simple">
+<dt>prefix</dt><dd><p>A string or a tuple of strings to try.</p>
+</dd>
+<dt>start</dt><dd><p>Optional start position. Default: start of the string.</p>
+</dd>
+<dt>end</dt><dd><p>Optional stop position. Default: end of the string.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

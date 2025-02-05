@@ -294,6 +294,8 @@
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.pong.html">kittycad.models.pong</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.post_effect_type.html">kittycad.models.post_effect_type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.privacy_settings.html">kittycad.models.privacy_settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.project_entity_to_plane.html">kittycad.models.project_entity_to_plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kittycad.models.project_points_to_plane.html">kittycad.models.project_points_to_plane</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.raw_file.html">kittycad.models.raw_file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.reconfigure_stream.html">kittycad.models.reconfigure_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kittycad.models.remove_scene_objects.html">kittycad.models.remove_scene_objects</a></li>
@@ -414,6 +416,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__contains__"><code class="docutils literal notranslate"><span class="pre">Uuid.__contains__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__dict__"><code class="docutils literal notranslate"><span class="pre">Uuid.__dict__</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__eq__"><code class="docutils literal notranslate"><span class="pre">Uuid.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__firstlineno__"><code class="docutils literal notranslate"><span class="pre">Uuid.__firstlineno__</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__format__"><code class="docutils literal notranslate"><span class="pre">Uuid.__format__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__ge__"><code class="docutils literal notranslate"><span class="pre">Uuid.__ge__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__get_pydantic_core_schema__"><code class="docutils literal notranslate"><span class="pre">Uuid.__get_pydantic_core_schema__()</span></code></a></li>
@@ -434,6 +437,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__rmod__"><code class="docutils literal notranslate"><span class="pre">Uuid.__rmod__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__rmul__"><code class="docutils literal notranslate"><span class="pre">Uuid.__rmul__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__sizeof__"><code class="docutils literal notranslate"><span class="pre">Uuid.__sizeof__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__static_attributes__"><code class="docutils literal notranslate"><span class="pre">Uuid.__static_attributes__</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.__str__"><code class="docutils literal notranslate"><span class="pre">Uuid.__str__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.capitalize"><code class="docutils literal notranslate"><span class="pre">Uuid.capitalize()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#kittycad.models.uuid.Uuid.casefold"><code class="docutils literal notranslate"><span class="pre">Uuid.casefold()</span></code></a></li>
@@ -559,7 +563,7 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.__dict__">
-<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.models.uuid',</span> <span class="pre">'__doc__':</span> <span class="pre">'A</span> <span class="pre">UUID</span> <span class="pre">usually</span> <span class="pre">v4</span> <span class="pre">or</span> <span class="pre">v7',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">Uuid.__str__&gt;,</span> <span class="pre">'__get_pydantic_core_schema__':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Uuid.__get_pydantic_core_schema__&gt;)&gt;,</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Uuid'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Uuid'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.__dict__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__dict__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">mappingproxy({'__module__':</span> <span class="pre">'kittycad.models.uuid',</span> <span class="pre">'__firstlineno__':</span> <span class="pre">7,</span> <span class="pre">'__doc__':</span> <span class="pre">'A</span> <span class="pre">UUID</span> <span class="pre">usually</span> <span class="pre">v4</span> <span class="pre">or</span> <span class="pre">v7',</span> <span class="pre">'__str__':</span> <span class="pre">&lt;function</span> <span class="pre">Uuid.__str__&gt;,</span> <span class="pre">'__get_pydantic_core_schema__':</span> <span class="pre">&lt;classmethod(&lt;function</span> <span class="pre">Uuid.__get_pydantic_core_schema__&gt;)&gt;,</span> <span class="pre">'__static_attributes__':</span> <span class="pre">(),</span> <span class="pre">'__dict__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__dict__'</span> <span class="pre">of</span> <span class="pre">'Uuid'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__weakref__':</span> <span class="pre">&lt;attribute</span> <span class="pre">'__weakref__'</span> <span class="pre">of</span> <span class="pre">'Uuid'</span> <span class="pre">objects&gt;,</span> <span class="pre">'__annotations__':</span> <span class="pre">{}})</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.__dict__" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -567,6 +571,11 @@
 <span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.__eq__" title="Link to this definition"></a></dt>
 <dd><p>Return self==value.</p>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.__firstlineno__">
+<span class="sig-name descname"><span class="pre">__firstlineno__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.__firstlineno__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.__format__">
@@ -689,6 +698,11 @@
 <dd><p>Return the size of the string in memory, in bytes.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.__static_attributes__">
+<span class="sig-name descname"><span class="pre">__static_attributes__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">()</span></em><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.__static_attributes__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.__str__">
 <span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../_modules/kittycad/models/uuid.html#Uuid.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.__str__" title="Link to this definition"></a></dt>
@@ -723,10 +737,9 @@ case.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.count">
-<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.count" title="Link to this definition"></a></dt>
-<dd><p>Return the number of non-overlapping occurrences of substring sub in
-string S[start:end].  Optional arguments start and end are
-interpreted as in slice notation.</p>
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.count" title="Link to this definition"></a></dt>
+<dd><p>Return the number of non-overlapping occurrences of substring sub in string S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -747,11 +760,16 @@ codecs.register_error that can handle UnicodeEncodeErrors.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.endswith">
-<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.endswith" title="Link to this definition"></a></dt>
-<dd><p>Return True if S ends with the specified suffix, False otherwise.
-With optional start, test S beginning at that position.
-With optional end, stop comparing S at that position.
-suffix can also be a tuple of strings to try.</p>
+<span class="sig-name descname"><span class="pre">endswith</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.endswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string ends with the specified suffix, False otherwise.</p>
+<dl class="simple">
+<dt>suffix</dt><dd><p>A string or a tuple of strings to try.</p>
+</dd>
+<dt>start</dt><dd><p>Optional start position. Default: start of the string.</p>
+</dd>
+<dt>end</dt><dd><p>Optional stop position. Default: end of the string.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -763,34 +781,32 @@ suffix can also be a tuple of strings to try.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.find">
-<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.find" title="Link to this definition"></a></dt>
-<dd><p>Return the lowest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Return -1 on failure.</p>
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.find" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Return -1 on failure.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.format">
-<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.format" title="Link to this definition"></a></dt>
-<dd><p>Return a formatted version of S, using substitutions from args and kwargs.
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.format" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of the string, using substitutions from args and kwargs.
 The substitutions are identified by braces (‘{’ and ‘}’).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.format_map">
-<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.format_map" title="Link to this definition"></a></dt>
-<dd><p>Return a formatted version of S, using substitutions from mapping.
+<span class="sig-name descname"><span class="pre">format_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.format_map" title="Link to this definition"></a></dt>
+<dd><p>Return a formatted version of the string, using substitutions from mapping.
 The substitutions are identified by braces (‘{’ and ‘}’).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.index">
-<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.index" title="Link to this definition"></a></dt>
-<dd><p>Return the lowest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Raises ValueError when the substring is not found.</p>
+<span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.index" title="Link to this definition"></a></dt>
+<dd><p>Return the lowest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Raises ValueError when the substring is not found.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -961,7 +977,7 @@ string.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.replace">
-<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.replace" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">replace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.replace" title="Link to this definition"></a></dt>
 <dd><p>Return a copy with all occurrences of substring old replaced by new.</p>
 <blockquote>
 <div><dl class="simple">
@@ -976,20 +992,18 @@ replaced.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.rfind">
-<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.rfind" title="Link to this definition"></a></dt>
-<dd><p>Return the highest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Return -1 on failure.</p>
+<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.rfind" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Return -1 on failure.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.rindex">
-<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.rindex" title="Link to this definition"></a></dt>
-<dd><p>Return the highest index in S where substring sub is found,
-such that sub is contained within S[start:end].  Optional
-arguments start and end are interpreted as in slice notation.</p>
-<p>Raises ValueError when the substring is not found.</p>
+<span class="sig-name descname"><span class="pre">rindex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.rindex" title="Link to this definition"></a></dt>
+<dd><p>Return the highest index in S where substring sub is found, such that sub is contained within S[start:end].</p>
+<p>Optional arguments start and end are interpreted as in slice notation.
+Raises ValueError when the substring is not found.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1068,11 +1082,16 @@ true.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kittycad.models.uuid.Uuid.startswith">
-<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span></span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.startswith" title="Link to this definition"></a></dt>
-<dd><p>Return True if S starts with the specified prefix, False otherwise.
-With optional start, test S beginning at that position.
-With optional end, stop comparing S at that position.
-prefix can also be a tuple of strings to try.</p>
+<span class="sig-name descname"><span class="pre">startswith</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/kittycad/kittycad.py/kittycad/models/uuid.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kittycad.models.uuid.Uuid.startswith" title="Link to this definition"></a></dt>
+<dd><p>Return True if the string starts with the specified prefix, False otherwise.</p>
+<dl class="simple">
+<dt>prefix</dt><dd><p>A string or a tuple of strings to try.</p>
+</dd>
+<dt>start</dt><dd><p>Optional start position. Default: start of the string.</p>
+</dd>
+<dt>end</dt><dd><p>Optional stop position. Default: end of the string.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

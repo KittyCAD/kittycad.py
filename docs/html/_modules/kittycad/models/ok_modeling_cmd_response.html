@@ -162,6 +162,8 @@
 <span class="kn">from</span> <span class="nn">..models.path_segment_info</span> <span class="kn">import</span> <span class="n">PathSegmentInfo</span>
 <span class="kn">from</span> <span class="nn">..models.plane_intersect_and_project</span> <span class="kn">import</span> <span class="n">PlaneIntersectAndProject</span>
 <span class="kn">from</span> <span class="nn">..models.plane_set_color</span> <span class="kn">import</span> <span class="n">PlaneSetColor</span>
+<span class="kn">from</span> <span class="nn">..models.project_entity_to_plane</span> <span class="kn">import</span> <span class="n">ProjectEntityToPlane</span>
+<span class="kn">from</span> <span class="nn">..models.project_points_to_plane</span> <span class="kn">import</span> <span class="n">ProjectPointsToPlane</span>
 <span class="kn">from</span> <span class="nn">..models.reconfigure_stream</span> <span class="kn">import</span> <span class="n">ReconfigureStream</span>
 <span class="kn">from</span> <span class="nn">..models.remove_scene_objects</span> <span class="kn">import</span> <span class="n">RemoveSceneObjects</span>
 <span class="kn">from</span> <span class="nn">..models.revolve</span> <span class="kn">import</span> <span class="n">Revolve</span>
@@ -1310,6 +1312,32 @@
 
 
 
+<div class="viewcode-block" id="OptionProjectEntityToPlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionProjectEntityToPlane.html#kittycad.models.ok_modeling_cmd_response.OptionProjectEntityToPlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionProjectEntityToPlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ProjectEntityToPlane</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;project_entity_to_plane&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;project_entity_to_plane&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionProjectPointsToPlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionProjectPointsToPlane.html#kittycad.models.ok_modeling_cmd_response.OptionProjectPointsToPlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionProjectPointsToPlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">ProjectPointsToPlane</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;project_points_to_plane&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;project_points_to_plane&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionCurveGetType">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionCurveGetType.html#kittycad.models.ok_modeling_cmd_response.OptionCurveGetType">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionCurveGetType</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1842,6 +1870,8 @@
             <span class="n">OptionSolid3DGetCommonEdge</span><span class="p">,</span>
             <span class="n">OptionGetEntityType</span><span class="p">,</span>
             <span class="n">OptionCurveGetControlPoints</span><span class="p">,</span>
+            <span class="n">OptionProjectEntityToPlane</span><span class="p">,</span>
+            <span class="n">OptionProjectPointsToPlane</span><span class="p">,</span>
             <span class="n">OptionCurveGetType</span><span class="p">,</span>
             <span class="n">OptionMouseClick</span><span class="p">,</span>
             <span class="n">OptionTakeSnapshot</span><span class="p">,</span>
