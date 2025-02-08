@@ -20221,7 +20221,7 @@
                 ]
               },
               "units": {
-                "description": "The units of the input data. This is very important for correct scaling and when calculating physics properties like mass, etc.\n\nDefaults to meters.",
+                "description": "The units of the input data.\n\nThis is very important for correct scaling and when calculating physics properties like mass, etc.\n\nDefaults to millimeters.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/UnitLength"
@@ -20254,7 +20254,7 @@
                 ]
               },
               "units": {
-                "description": "The units of the input data. This is very important for correct scaling and when calculating physics properties like mass, etc.",
+                "description": "The units of the input data.\n\nThis is very important for correct scaling and when calculating physics properties like mass, etc.\n\nDefaults to millimeters.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/UnitLength"
@@ -20327,7 +20327,7 @@
                 ]
               },
               "units": {
-                "description": "The units of the input data. This is very important for correct scaling and when calculating physics properties like mass, etc.",
+                "description": "The units of the input data.\n\nThis is very important for correct scaling and when calculating physics properties like mass, etc.\n\nDefaults to millimeters.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/UnitLength"
@@ -28272,7 +28272,7 @@
                 ]
               },
               "units": {
-                "description": "Export length unit.\n\nDefaults to meters.",
+                "description": "Export length unit.\n\nDefaults to millimeters.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/UnitLength"
@@ -28321,7 +28321,7 @@
                 ]
               },
               "units": {
-                "description": "Export length unit.\n\nDefaults to meters.",
+                "description": "Export length unit.\n\nDefaults to millimeters.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/UnitLength"
@@ -28396,7 +28396,7 @@
                 ]
               },
               "units": {
-                "description": "Export length unit.\n\nDefaults to meters.",
+                "description": "Export length unit.\n\nDefaults to millimeters.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/UnitLength"
