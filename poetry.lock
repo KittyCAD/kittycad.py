@@ -2247,19 +2247,19 @@ reference = "pypi-public"
 
 [[package]]
 name = "sphinx-autoapi"
-version = "3.4.0"
+version = "3.5.0"
 description = "Sphinx API documentation generator"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "sphinx_autoapi-3.4.0-py3-none-any.whl", hash = "sha256:4027fef2875a22c5f2a57107c71641d82f6166bf55beb407a47aaf3ef14e7b92"},
-    {file = "sphinx_autoapi-3.4.0.tar.gz", hash = "sha256:e6d5371f9411bbb9fca358c00a9e57aef3ac94cbfc5df4bab285946462f69e0c"},
+    {file = "sphinx_autoapi-3.5.0-py3-none-any.whl", hash = "sha256:8676db32dded669dc6be9100696652640dc1e883e45b74710d74eb547a310114"},
+    {file = "sphinx_autoapi-3.5.0.tar.gz", hash = "sha256:10dcdf86e078ae1fb144f653341794459e86f5b23cf3e786a735def71f564089"},
 ]
 
 [package.dependencies]
 astroid = [
     {version = ">=2.7", markers = "python_version < \"3.12\""},
-    {version = ">=3.0.0a1", markers = "python_version >= \"3.12\""},
+    {version = ">=3", markers = "python_version >= \"3.12\""},
 ]
 Jinja2 = "*"
 PyYAML = "*"
@@ -2852,4 +2852,4 @@ reference = "pypi-public"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "2431e97a8a8cb77a7937c0719466d4f9f4f6d5f49a0a42da44a1efcdcdb4b824"
+content-hash = "5497d140b3e185d7b2cc4cd49d62daf5173eac0b4b3d95be6eb1ab6e5846ab20"
