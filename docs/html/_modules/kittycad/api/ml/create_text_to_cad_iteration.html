@@ -175,7 +175,9 @@
 
 <span class="sd">    You always get the whole code back, even if you only changed a small part of it.</span>
 
-<span class="sd">    This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="sd">    This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.</span>
+
+<span class="sd">    This endpoint will soon be deprecated in favor of the `/ml/text-to-cad/multi-file/iteration` endpoint. In that the endpoint path will remain but it will have the same behavior as `ml/text-to-cad/multi-file/iteration`.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="n">sync_detailed</span><span class="p">(</span>
         <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
@@ -214,7 +216,9 @@
 
 <span class="sd">    You always get the whole code back, even if you only changed a small part of it.</span>
 
-<span class="sd">    This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+<span class="sd">    This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.</span>
+
+<span class="sd">    This endpoint will soon be deprecated in favor of the `/ml/text-to-cad/multi-file/iteration` endpoint. In that the endpoint path will remain but it will have the same behavior as `ml/text-to-cad/multi-file/iteration`.&quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
 
     <span class="k">return</span> <span class="p">(</span>
         <span class="k">await</span> <span class="n">asyncio_detailed</span><span class="p">(</span>

@@ -76,7 +76,9 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.source_range_prompt</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
 <span class="kn">from</span> <span class="nn">..models.source_range</span> <span class="kn">import</span> <span class="n">SourceRange</span>
 
@@ -85,6 +87,8 @@
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.source_range_prompt.SourceRangePrompt.html#kittycad.models.source_range_prompt.SourceRangePrompt">[docs]</a>
 <span class="k">class</span> <span class="nc">SourceRangePrompt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A source range and prompt for a text to CAD iteration.&quot;&quot;&quot;</span>
+
+    <span class="n">file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span>
 
