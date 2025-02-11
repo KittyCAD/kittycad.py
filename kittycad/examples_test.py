@@ -59,6 +59,7 @@ from kittycad.api.ml import (
     create_text_to_cad,
     create_text_to_cad_iteration,
     create_text_to_cad_model_feedback,
+    create_text_to_cad_multi_file_iteration,
     get_ml_prompt,
     get_text_to_cad_model_for_user,
     list_ml_prompts,
@@ -205,6 +206,7 @@ from kittycad.models import (
     ShortlinkResultsPage,
     TextToCad,
     TextToCadIteration,
+    TextToCadMultiFileIteration,
     TextToCadResultsPage,
     UnitAngleConversion,
     UnitAreaConversion,
@@ -272,6 +274,9 @@ from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
+from kittycad.models.text_to_cad_multi_file_iteration_body import (
+    TextToCadMultiFileIterationBody,
+)
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -836,6 +841,7 @@ def test_get_async_operation():
             FileSurfaceArea,
             TextToCad,
             TextToCadIteration,
+            TextToCadMultiFileIteration,
             Error,
         ]
     ] = get_async_operation.sync(
@@ -856,6 +862,7 @@ def test_get_async_operation():
         FileSurfaceArea,
         TextToCad,
         TextToCadIteration,
+        TextToCadMultiFileIteration,
     ] = result
     print(body)
 
@@ -871,6 +878,7 @@ def test_get_async_operation():
                 FileSurfaceArea,
                 TextToCad,
                 TextToCadIteration,
+                TextToCadMultiFileIteration,
                 Error,
             ]
         ]
@@ -897,6 +905,7 @@ async def test_get_async_operation_async():
             FileSurfaceArea,
             TextToCad,
             TextToCadIteration,
+            TextToCadMultiFileIteration,
             Error,
         ]
     ] = await get_async_operation.asyncio(
@@ -916,6 +925,7 @@ async def test_get_async_operation_async():
                 FileSurfaceArea,
                 TextToCad,
                 TextToCadIteration,
+                TextToCadMultiFileIteration,
                 Error,
             ]
         ]
@@ -2076,6 +2086,121 @@ async def test_create_text_to_cad_iteration_async():
         client=client,
         body=TextToCadIterationBody(
             original_source_code="<string>",
+            source_ranges=[
+                SourceRangePrompt(
+                    prompt="<string>",
+                    range=SourceRange(
+                        end=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                        start=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                    ),
+                )
+            ],
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_create_text_to_cad_multi_file_iteration():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[TextToCadMultiFileIteration, Error]] = (
+        create_text_to_cad_multi_file_iteration.sync(
+            client=client,
+            body=TextToCadMultiFileIterationBody(
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: TextToCadMultiFileIteration = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[TextToCadMultiFileIteration, Error]]] = (
+        create_text_to_cad_multi_file_iteration.sync_detailed(
+            client=client,
+            body=TextToCadMultiFileIterationBody(
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_text_to_cad_multi_file_iteration_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[TextToCadMultiFileIteration, Error]
+    ] = await create_text_to_cad_multi_file_iteration.asyncio(
+        client=client,
+        body=TextToCadMultiFileIterationBody(
+            source_ranges=[
+                SourceRangePrompt(
+                    prompt="<string>",
+                    range=SourceRange(
+                        end=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                        start=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                    ),
+                )
+            ],
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[TextToCadMultiFileIteration, Error]]
+    ] = await create_text_to_cad_multi_file_iteration.asyncio_detailed(
+        client=client,
+        body=TextToCadMultiFileIterationBody(
             source_ranges=[
                 SourceRangePrompt(
                     prompt="<string>",

@@ -12,6 +12,7 @@ from ...models.file_surface_area import FileSurfaceArea
 from ...models.file_volume import FileVolume
 from ...models.text_to_cad import TextToCad
 from ...models.text_to_cad_iteration import TextToCadIteration
+from ...models.text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
 from ...types import Response
 
 
@@ -48,6 +49,7 @@ def _parse_response(
         FileSurfaceArea,
         TextToCad,
         TextToCadIteration,
+        TextToCadMultiFileIteration,
         Error,
     ]
 ]:
@@ -122,6 +124,17 @@ def _parse_response(
             option_text_to_cad_iteration = TextToCadIteration(**data)
             return option_text_to_cad_iteration
         except ValueError:
+            pass
+        except TypeError:
+            pass
+        try:
+            if not isinstance(data, dict):
+                raise TypeError()
+            option_text_to_cad_multi_file_iteration = TextToCadMultiFileIteration(
+                **data
+            )
+            return option_text_to_cad_multi_file_iteration
+        except ValueError:
             raise
         except TypeError:
             raise
@@ -147,6 +160,7 @@ def _build_response(
             FileSurfaceArea,
             TextToCad,
             TextToCadIteration,
+            TextToCadMultiFileIteration,
             Error,
         ]
     ]
@@ -174,6 +188,7 @@ def sync_detailed(
             FileSurfaceArea,
             TextToCad,
             TextToCadIteration,
+            TextToCadMultiFileIteration,
             Error,
         ]
     ]
@@ -205,6 +220,7 @@ def sync(
         FileSurfaceArea,
         TextToCad,
         TextToCadIteration,
+        TextToCadMultiFileIteration,
         Error,
     ]
 ]:
@@ -237,6 +253,7 @@ async def asyncio_detailed(
             FileSurfaceArea,
             TextToCad,
             TextToCadIteration,
+            TextToCadMultiFileIteration,
             Error,
         ]
     ]
@@ -266,6 +283,7 @@ async def asyncio(
         FileSurfaceArea,
         TextToCad,
         TextToCadIteration,
+        TextToCadMultiFileIteration,
         Error,
     ]
 ]:
