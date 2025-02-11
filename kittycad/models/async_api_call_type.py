@@ -20,6 +20,8 @@ class AsyncApiCallType(str, Enum):
     TEXT_TO_CAD = "text_to_cad"
     """# Text to CAD iteration. """  # noqa: E501
     TEXT_TO_CAD_ITERATION = "text_to_cad_iteration"
+    """# Text to CAD multi-file iteration. """  # noqa: E501
+    TEXT_TO_CAD_MULTI_FILE_ITERATION = "text_to_cad_multi_file_iteration"
 
     def __str__(self) -> str:
         return str(self.value)
