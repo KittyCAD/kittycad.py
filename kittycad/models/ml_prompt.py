@@ -23,11 +23,15 @@ class MlPrompt(BaseModel):
 
     id: Uuid
 
+    kcl_version: Optional[str] = None
+
     metadata: Optional[MlPromptMetadata] = None
 
     model_version: str
 
     output_file: Optional[str] = None
+
+    project_name: Optional[str] = None
 
     prompt: str
 
