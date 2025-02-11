@@ -290,6 +290,42 @@ class OptionTextToCadIteration(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionTextToCadMultiFileIteration(BaseModel):
+    """Text to CAD multi-file iteration."""
+
+    completed_at: Optional[datetime.datetime] = None
+
+    created_at: datetime.datetime
+
+    error: Optional[str] = None
+
+    feedback: Optional[MlFeedback] = None
+
+    id: Uuid
+
+    model: TextToCadModel
+
+    model_version: str
+
+    outputs: Optional[Dict[str, str]] = None
+
+    source_ranges: List[SourceRangePrompt]
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
+    type: Literal["text_to_cad_multi_file_iteration"] = (
+        "text_to_cad_multi_file_iteration"
+    )
+
+    updated_at: datetime.datetime
+
+    user_id: Uuid
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 AsyncApiCallOutput = RootModel[
     Annotated[
         Union[
@@ -301,6 +337,7 @@ AsyncApiCallOutput = RootModel[
             OptionFileSurfaceArea,
             OptionTextToCad,
             OptionTextToCadIteration,
+            OptionTextToCadMultiFileIteration,
         ],
         Field(discriminator="type"),
     ]
