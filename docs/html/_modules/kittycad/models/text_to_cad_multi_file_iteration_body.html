@@ -76,7 +76,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for kittycad.models.text_to_cad_multi_file_iteration_body</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
@@ -87,6 +87,10 @@
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.text_to_cad_multi_file_iteration_body.TextToCadMultiFileIterationBody.html#kittycad.models.text_to_cad_multi_file_iteration_body.TextToCadMultiFileIterationBody">[docs]</a>
 <span class="k">class</span> <span class="nc">TextToCadMultiFileIterationBody</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Body for generating models from text.&quot;&quot;&quot;</span>
+
+    <span class="n">kcl_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">project_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">source_ranges</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SourceRangePrompt</span><span class="p">]</span>
 
