@@ -154,6 +154,7 @@
 <span class="kn">from</span> <span class="nn">..models.object_bring_to_front</span> <span class="kn">import</span> <span class="n">ObjectBringToFront</span>
 <span class="kn">from</span> <span class="nn">..models.object_set_material_params_pbr</span> <span class="kn">import</span> <span class="n">ObjectSetMaterialParamsPbr</span>
 <span class="kn">from</span> <span class="nn">..models.object_visible</span> <span class="kn">import</span> <span class="n">ObjectVisible</span>
+<span class="kn">from</span> <span class="nn">..models.orient_to_face</span> <span class="kn">import</span> <span class="n">OrientToFace</span>
 <span class="kn">from</span> <span class="nn">..models.path_get_curve_uuid</span> <span class="kn">import</span> <span class="n">PathGetCurveUuid</span>
 <span class="kn">from</span> <span class="nn">..models.path_get_curve_uuids_for_vertices</span> <span class="kn">import</span> <span class="n">PathGetCurveUuidsForVertices</span>
 <span class="kn">from</span> <span class="nn">..models.path_get_info</span> <span class="kn">import</span> <span class="n">PathGetInfo</span>
@@ -1117,6 +1118,19 @@
 
 
 
+<div class="viewcode-block" id="OptionOrientToFace">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionOrientToFace.html#kittycad.models.ok_modeling_cmd_response.OptionOrientToFace">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionOrientToFace</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">OrientToFace</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;orient_to_face&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;orient_to_face&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionViewIsometric">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.ok_modeling_cmd_response.OptionViewIsometric.html#kittycad.models.ok_modeling_cmd_response.OptionViewIsometric">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionViewIsometric</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -1855,6 +1869,7 @@
             <span class="n">OptionDefaultCameraGetSettings</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraZoom</span><span class="p">,</span>
             <span class="n">OptionZoomToFit</span><span class="p">,</span>
+            <span class="n">OptionOrientToFace</span><span class="p">,</span>
             <span class="n">OptionViewIsometric</span><span class="p">,</span>
             <span class="n">OptionGetNumObjects</span><span class="p">,</span>
             <span class="n">OptionMakeOffsetPath</span><span class="p">,</span>
