@@ -212,6 +212,7 @@ from .org_member import OrgMember
 from .org_member_results_page import OrgMemberResultsPage
 from .org_results_page import OrgResultsPage
 from .org_role import OrgRole
+from .orient_to_face import OrientToFace
 from .origin_type import OriginType
 from .output_file import OutputFile
 from .output_format import OutputFormat
