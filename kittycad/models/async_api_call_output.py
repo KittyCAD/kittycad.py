@@ -229,6 +229,8 @@ class OptionTextToCad(BaseModel):
 
     id: Uuid
 
+    kcl_version: Optional[str] = None
+
     model: TextToCadModel
 
     model_version: str

@@ -76,6 +76,7 @@ from ..models.new_annotation import NewAnnotation
 from ..models.object_bring_to_front import ObjectBringToFront
 from ..models.object_set_material_params_pbr import ObjectSetMaterialParamsPbr
 from ..models.object_visible import ObjectVisible
+from ..models.orient_to_face import OrientToFace
 from ..models.path_get_curve_uuid import PathGetCurveUuid
 from ..models.path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
 from ..models.path_get_info import PathGetInfo
@@ -829,6 +830,16 @@ class OptionZoomToFit(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionOrientToFace(BaseModel):
+    """"""
+
+    data: OrientToFace
+
+    type: Literal["orient_to_face"] = "orient_to_face"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionViewIsometric(BaseModel):
     """"""
 
@@ -1414,6 +1425,7 @@ OkModelingCmdResponse = RootModel[
             OptionDefaultCameraGetSettings,
             OptionDefaultCameraZoom,
             OptionZoomToFit,
+            OptionOrientToFace,
             OptionViewIsometric,
             OptionGetNumObjects,
             OptionMakeOffsetPath,
