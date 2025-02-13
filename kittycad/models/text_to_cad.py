@@ -26,6 +26,8 @@ class TextToCad(BaseModel):
 
     id: Uuid
 
+    kcl_version: Optional[str] = None
+
     model: TextToCadModel
 
     model_version: str

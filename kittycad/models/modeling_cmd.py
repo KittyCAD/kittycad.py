@@ -1390,6 +1390,20 @@ class OptionZoomToFit(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionOrientToFace(BaseModel):
+    """Looks along the normal of the specified face (if it is planar!), and fits the view to it."""
+
+    animated: bool = False
+
+    face_id: str
+
+    padding: float = 0.0
+
+    type: Literal["orient_to_face"] = "orient_to_face"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionViewIsometric(BaseModel):
     """Fit the view to the scene with an isometric view."""
 
@@ -1586,6 +1600,7 @@ ModelingCmd = RootModel[
             OptionDefaultCameraCenterToSelection,
             OptionDefaultCameraCenterToScene,
             OptionZoomToFit,
+            OptionOrientToFace,
             OptionViewIsometric,
             OptionSolid3DGetExtrusionFaceInfo,
             OptionSelectClear,
