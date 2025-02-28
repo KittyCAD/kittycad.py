@@ -11,6 +11,8 @@ from ..models.uuid import Uuid
 class AsyncApiCall(BaseModel):
     """An async API call."""
 
+    attempts: int = 0
+
     completed_at: Optional[datetime.datetime] = None
 
     created_at: datetime.datetime
