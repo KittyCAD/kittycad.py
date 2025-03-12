@@ -85,9 +85,9 @@
 <span class="kn">from</span> <span class="nn">..models.api_call_status</span> <span class="kn">import</span> <span class="n">ApiCallStatus</span>
 <span class="kn">from</span> <span class="nn">..models.file_export_format</span> <span class="kn">import</span> <span class="n">FileExportFormat</span>
 <span class="kn">from</span> <span class="nn">..models.file_import_format</span> <span class="kn">import</span> <span class="n">FileImportFormat</span>
-<span class="kn">from</span> <span class="nn">..models.input_format</span> <span class="kn">import</span> <span class="n">InputFormat</span>
+<span class="kn">from</span> <span class="nn">..models.input_format3d</span> <span class="kn">import</span> <span class="n">InputFormat3d</span>
 <span class="kn">from</span> <span class="nn">..models.ml_feedback</span> <span class="kn">import</span> <span class="n">MlFeedback</span>
-<span class="kn">from</span> <span class="nn">..models.output_format</span> <span class="kn">import</span> <span class="n">OutputFormat</span>
+<span class="kn">from</span> <span class="nn">..models.output_format3d</span> <span class="kn">import</span> <span class="n">OutputFormat3d</span>
 <span class="kn">from</span> <span class="nn">..models.point3d</span> <span class="kn">import</span> <span class="n">Point3d</span>
 <span class="kn">from</span> <span class="nn">..models.source_range_prompt</span> <span class="kn">import</span> <span class="n">SourceRangePrompt</span>
 <span class="kn">from</span> <span class="nn">..models.text_to_cad_model</span> <span class="kn">import</span> <span class="n">TextToCadModel</span>
@@ -115,13 +115,13 @@
 
     <span class="n">output_format</span><span class="p">:</span> <span class="n">FileExportFormat</span>
 
-    <span class="n">output_format_options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OutputFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">output_format_options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OutputFormat3d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Base64Data</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">src_format</span><span class="p">:</span> <span class="n">FileImportFormat</span>
 
-    <span class="n">src_format_options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InputFormat</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">src_format_options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InputFormat3d</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">started_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 

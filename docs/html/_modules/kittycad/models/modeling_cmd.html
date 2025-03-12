@@ -86,6 +86,7 @@
 <span class="kn">from</span> <span class="nn">..models.annotation_type</span> <span class="kn">import</span> <span class="n">AnnotationType</span>
 <span class="kn">from</span> <span class="nn">..models.camera_drag_interaction_type</span> <span class="kn">import</span> <span class="n">CameraDragInteractionType</span>
 <span class="kn">from</span> <span class="nn">..models.camera_movement</span> <span class="kn">import</span> <span class="n">CameraMovement</span>
+<span class="kn">from</span> <span class="nn">..models.camera_view_state</span> <span class="kn">import</span> <span class="n">CameraViewState</span>
 <span class="kn">from</span> <span class="nn">..models.color</span> <span class="kn">import</span> <span class="n">Color</span>
 <span class="kn">from</span> <span class="nn">..models.component_transform</span> <span class="kn">import</span> <span class="n">ComponentTransform</span>
 <span class="kn">from</span> <span class="nn">..models.cut_type</span> <span class="kn">import</span> <span class="n">CutType</span>
@@ -94,10 +95,11 @@
 <span class="kn">from</span> <span class="nn">..models.extruded_face_info</span> <span class="kn">import</span> <span class="n">ExtrudedFaceInfo</span>
 <span class="kn">from</span> <span class="nn">..models.image_format</span> <span class="kn">import</span> <span class="n">ImageFormat</span>
 <span class="kn">from</span> <span class="nn">..models.import_file</span> <span class="kn">import</span> <span class="n">ImportFile</span>
-<span class="kn">from</span> <span class="nn">..models.input_format</span> <span class="kn">import</span> <span class="n">InputFormat</span>
+<span class="kn">from</span> <span class="nn">..models.input_format3d</span> <span class="kn">import</span> <span class="n">InputFormat3d</span>
 <span class="kn">from</span> <span class="nn">..models.length_unit</span> <span class="kn">import</span> <span class="n">LengthUnit</span>
 <span class="kn">from</span> <span class="nn">..models.modeling_cmd_id</span> <span class="kn">import</span> <span class="n">ModelingCmdId</span>
-<span class="kn">from</span> <span class="nn">..models.output_format</span> <span class="kn">import</span> <span class="n">OutputFormat</span>
+<span class="kn">from</span> <span class="nn">..models.output_format2d</span> <span class="kn">import</span> <span class="n">OutputFormat2d</span>
+<span class="kn">from</span> <span class="nn">..models.output_format3d</span> <span class="kn">import</span> <span class="n">OutputFormat3d</span>
 <span class="kn">from</span> <span class="nn">..models.path_component_constraint_bound</span> <span class="kn">import</span> <span class="n">PathComponentConstraintBound</span>
 <span class="kn">from</span> <span class="nn">..models.path_component_constraint_type</span> <span class="kn">import</span> <span class="n">PathComponentConstraintType</span>
 <span class="kn">from</span> <span class="nn">..models.path_segment</span> <span class="kn">import</span> <span class="n">PathSegment</span>
@@ -359,6 +361,30 @@
 
 
 
+<div class="viewcode-block" id="OptionDefaultCameraGetView">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraGetView.html#kittycad.models.modeling_cmd.OptionDefaultCameraGetView">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraGetView</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets the default camera&#39;s view state&quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_get_view&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_get_view&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionDefaultCameraSetView">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraSetView.html#kittycad.models.modeling_cmd.OptionDefaultCameraSetView">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionDefaultCameraSetView</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets the default camera&#39;s view state&quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;default_camera_set_view&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;default_camera_set_view&quot;</span>
+
+    <span class="n">view</span><span class="p">:</span> <span class="n">CameraViewState</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionDefaultCameraLookAt">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionDefaultCameraLookAt.html#kittycad.models.modeling_cmd.OptionDefaultCameraLookAt">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionDefaultCameraLookAt</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -418,6 +444,36 @@
 
 
 
+<div class="viewcode-block" id="OptionExport2D">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionExport2D.html#kittycad.models.modeling_cmd.OptionExport2D">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionExport2D</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export a sketch to a file.&quot;&quot;&quot;</span>
+
+    <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="nb">format</span><span class="p">:</span> <span class="n">OutputFormat2d</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;export2d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;export2d&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionExport3D">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionExport3D.html#kittycad.models.modeling_cmd.OptionExport3D">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionExport3D</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export the scene to a file.&quot;&quot;&quot;</span>
+
+    <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="nb">format</span><span class="p">:</span> <span class="n">OutputFormat3d</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;export3d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;export3d&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <div class="viewcode-block" id="OptionExport">
 <a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionExport.html#kittycad.models.modeling_cmd.OptionExport">[docs]</a>
 <span class="k">class</span> <span class="nc">OptionExport</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -425,7 +481,7 @@
 
     <span class="n">entity_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 
-    <span class="nb">format</span><span class="p">:</span> <span class="n">OutputFormat</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="n">OutputFormat3d</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;export&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;export&quot;</span>
 
@@ -512,6 +568,19 @@
     <span class="n">entity_id2</span><span class="p">:</span> <span class="nb">str</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_get_distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_get_distance&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="OptionEntityClone">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionEntityClone.html#kittycad.models.modeling_cmd.OptionEntityClone">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionEntityClone</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate.&quot;&quot;&quot;</span>
+
+    <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;entity_clone&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;entity_clone&quot;</span>
 
     <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
 
@@ -1583,7 +1652,7 @@
 
     <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ImportFile</span><span class="p">]</span>
 
-    <span class="nb">format</span><span class="p">:</span> <span class="n">InputFormat</span>
+    <span class="nb">format</span><span class="p">:</span> <span class="n">InputFormat3d</span>
 
     <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;import_files&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;import_files&quot;</span>
 
@@ -1920,6 +1989,21 @@
 
 
 
+<div class="viewcode-block" id="OptionSetGridReferencePlane">
+<a class="viewcode-back" href="../../../_autosummary/kittycad.models.modeling_cmd.OptionSetGridReferencePlane.html#kittycad.models.modeling_cmd.OptionSetGridReferencePlane">[docs]</a>
+<span class="k">class</span> <span class="nc">OptionSetGridReferencePlane</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Align the grid with a plane or a planar face.&quot;&quot;&quot;</span>
+
+    <span class="n">grid_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="n">reference_id</span><span class="p">:</span> <span class="nb">str</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;set_grid_reference_plane&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;set_grid_reference_plane&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">protected_namespaces</span><span class="o">=</span><span class="p">())</span></div>
+
+
+
 <span class="n">ModelingCmd</span> <span class="o">=</span> <span class="n">RootModel</span><span class="p">[</span>
     <span class="n">Annotated</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
@@ -1938,9 +2022,13 @@
             <span class="n">OptionCameraDragMove</span><span class="p">,</span>
             <span class="n">OptionCameraDragEnd</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraGetSettings</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraGetView</span><span class="p">,</span>
+            <span class="n">OptionDefaultCameraSetView</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraLookAt</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraPerspectiveSettings</span><span class="p">,</span>
             <span class="n">OptionDefaultCameraZoom</span><span class="p">,</span>
+            <span class="n">OptionExport2D</span><span class="p">,</span>
+            <span class="n">OptionExport3D</span><span class="p">,</span>
             <span class="n">OptionExport</span><span class="p">,</span>
             <span class="n">OptionEntityGetParentId</span><span class="p">,</span>
             <span class="n">OptionEntityGetNumChildren</span><span class="p">,</span>
@@ -1948,6 +2036,7 @@
             <span class="n">OptionEntityGetAllChildUuids</span><span class="p">,</span>
             <span class="n">OptionEntityGetSketchPaths</span><span class="p">,</span>
             <span class="n">OptionEntityGetDistance</span><span class="p">,</span>
+            <span class="n">OptionEntityClone</span><span class="p">,</span>
             <span class="n">OptionEntityLinearPatternTransform</span><span class="p">,</span>
             <span class="n">OptionEntityLinearPattern</span><span class="p">,</span>
             <span class="n">OptionEntityCircularPattern</span><span class="p">,</span>
@@ -2041,6 +2130,7 @@
             <span class="n">OptionSetObjectTransform</span><span class="p">,</span>
             <span class="n">OptionMakeOffsetPath</span><span class="p">,</span>
             <span class="n">OptionAddHoleFromOffset</span><span class="p">,</span>
+            <span class="n">OptionSetGridReferencePlane</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">Field</span><span class="p">(</span><span class="n">discriminator</span><span class="o">=</span><span class="s2">&quot;type&quot;</span><span class="p">),</span>
     <span class="p">]</span>
