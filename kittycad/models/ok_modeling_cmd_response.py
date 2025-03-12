@@ -17,12 +17,14 @@ from ..models.default_camera_center_to_scene import DefaultCameraCenterToScene
 from ..models.default_camera_center_to_selection import DefaultCameraCenterToSelection
 from ..models.default_camera_focus_on import DefaultCameraFocusOn
 from ..models.default_camera_get_settings import DefaultCameraGetSettings
+from ..models.default_camera_get_view import DefaultCameraGetView
 from ..models.default_camera_look_at import DefaultCameraLookAt
 from ..models.default_camera_perspective_settings import (
     DefaultCameraPerspectiveSettings,
 )
 from ..models.default_camera_set_orthographic import DefaultCameraSetOrthographic
 from ..models.default_camera_set_perspective import DefaultCameraSetPerspective
+from ..models.default_camera_set_view import DefaultCameraSetView
 from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
 from ..models.disable_dry_run import DisableDryRun
@@ -31,6 +33,7 @@ from ..models.enable_dry_run import EnableDryRun
 from ..models.enable_sketch_mode import EnableSketchMode
 from ..models.engine_util_evaluate_path import EngineUtilEvaluatePath
 from ..models.entity_circular_pattern import EntityCircularPattern
+from ..models.entity_clone import EntityClone
 from ..models.entity_fade import EntityFade
 from ..models.entity_get_all_child_uuids import EntityGetAllChildUuids
 from ..models.entity_get_child_uuid import EntityGetChildUuid
@@ -47,6 +50,8 @@ from ..models.entity_mirror import EntityMirror
 from ..models.entity_mirror_across_edge import EntityMirrorAcrossEdge
 from ..models.entity_set_opacity import EntitySetOpacity
 from ..models.export import Export
+from ..models.export2d import Export2d
+from ..models.export3d import Export3d
 from ..models.extend_path import ExtendPath
 from ..models.extrude import Extrude
 from ..models.extrusion_face_info import ExtrusionFaceInfo
@@ -102,6 +107,7 @@ from ..models.send_object import SendObject
 from ..models.set_background_color import SetBackgroundColor
 from ..models.set_current_tool_properties import SetCurrentToolProperties
 from ..models.set_default_system_properties import SetDefaultSystemProperties
+from ..models.set_grid_reference_plane import SetGridReferencePlane
 from ..models.set_object_transform import SetObjectTransform
 from ..models.set_scene_units import SetSceneUnits
 from ..models.set_selection_filter import SetSelectionFilter
@@ -680,6 +686,26 @@ class OptionSelectClear(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionExport2D(BaseModel):
+    """"""
+
+    data: Export2d
+
+    type: Literal["export2d"] = "export2d"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionExport3D(BaseModel):
+    """"""
+
+    data: Export3d
+
+    type: Literal["export3d"] = "export3d"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionExport(BaseModel):
     """"""
 
@@ -806,6 +832,26 @@ class OptionDefaultCameraGetSettings(BaseModel):
     data: DefaultCameraGetSettings
 
     type: Literal["default_camera_get_settings"] = "default_camera_get_settings"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraGetView(BaseModel):
+    """"""
+
+    data: DefaultCameraGetView
+
+    type: Literal["default_camera_get_view"] = "default_camera_get_view"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraSetView(BaseModel):
+    """"""
+
+    data: DefaultCameraSetView
+
+    type: Literal["default_camera_set_view"] = "default_camera_set_view"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1252,6 +1298,16 @@ class OptionEntityGetDistance(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionEntityClone(BaseModel):
+    """"""
+
+    data: EntityClone
+
+    type: Literal["entity_clone"] = "entity_clone"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionEntityLinearPatternTransform(BaseModel):
     """"""
 
@@ -1352,6 +1408,16 @@ class OptionExtrusionFaceInfo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSetGridReferencePlane(BaseModel):
+    """"""
+
+    data: SetGridReferencePlane
+
+    type: Literal["set_grid_reference_plane"] = "set_grid_reference_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1410,6 +1476,8 @@ OkModelingCmdResponse = RootModel[
             OptionDefaultCameraCenterToSelection,
             OptionDefaultCameraCenterToScene,
             OptionSelectClear,
+            OptionExport2D,
+            OptionExport3D,
             OptionExport,
             OptionSelectWithPoint,
             OptionHighlightSetEntity,
@@ -1423,6 +1491,8 @@ OkModelingCmdResponse = RootModel[
             OptionCameraDragMove,
             OptionCameraDragEnd,
             OptionDefaultCameraGetSettings,
+            OptionDefaultCameraGetView,
+            OptionDefaultCameraSetView,
             OptionDefaultCameraZoom,
             OptionZoomToFit,
             OptionOrientToFace,
@@ -1467,6 +1537,7 @@ OkModelingCmdResponse = RootModel[
             OptionCenterOfMass,
             OptionGetSketchModePlane,
             OptionEntityGetDistance,
+            OptionEntityClone,
             OptionEntityLinearPatternTransform,
             OptionEntityLinearPattern,
             OptionEntityCircularPattern,
@@ -1477,6 +1548,7 @@ OkModelingCmdResponse = RootModel[
             OptionEntityMakeHelixFromEdge,
             OptionSolid3DGetExtrusionFaceInfo,
             OptionExtrusionFaceInfo,
+            OptionSetGridReferencePlane,
         ],
         Field(discriminator="type"),
     ]

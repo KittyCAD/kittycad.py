@@ -8,6 +8,7 @@ from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
 from ..models.camera_movement import CameraMovement
+from ..models.camera_view_state import CameraViewState
 from ..models.color import Color
 from ..models.component_transform import ComponentTransform
 from ..models.cut_type import CutType
@@ -16,10 +17,11 @@ from ..models.entity_type import EntityType
 from ..models.extruded_face_info import ExtrudedFaceInfo
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
-from ..models.input_format import InputFormat
+from ..models.input_format3d import InputFormat3d
 from ..models.length_unit import LengthUnit
 from ..models.modeling_cmd_id import ModelingCmdId
-from ..models.output_format import OutputFormat
+from ..models.output_format2d import OutputFormat2d
+from ..models.output_format3d import OutputFormat3d
 from ..models.path_component_constraint_bound import PathComponentConstraintBound
 from ..models.path_component_constraint_type import PathComponentConstraintType
 from ..models.path_segment import PathSegment
@@ -236,6 +238,24 @@ class OptionDefaultCameraGetSettings(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionDefaultCameraGetView(BaseModel):
+    """Gets the default camera's view state"""
+
+    type: Literal["default_camera_get_view"] = "default_camera_get_view"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDefaultCameraSetView(BaseModel):
+    """Sets the default camera's view state"""
+
+    type: Literal["default_camera_set_view"] = "default_camera_set_view"
+
+    view: CameraViewState
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionDefaultCameraLookAt(BaseModel):
     """Change what the default camera is looking at."""
 
@@ -286,12 +306,36 @@ class OptionDefaultCameraZoom(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionExport2D(BaseModel):
+    """Export a sketch to a file."""
+
+    entity_ids: List[str]
+
+    format: OutputFormat2d
+
+    type: Literal["export2d"] = "export2d"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionExport3D(BaseModel):
+    """Export the scene to a file."""
+
+    entity_ids: List[str]
+
+    format: OutputFormat3d
+
+    type: Literal["export3d"] = "export3d"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionExport(BaseModel):
     """Export the scene to a file."""
 
     entity_ids: List[str]
 
-    format: OutputFormat
+    format: OutputFormat3d
 
     type: Literal["export"] = "export"
 
@@ -360,6 +404,16 @@ class OptionEntityGetDistance(BaseModel):
     entity_id2: str
 
     type: Literal["entity_get_distance"] = "entity_get_distance"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionEntityClone(BaseModel):
+    """Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate."""
+
+    entity_id: str
+
+    type: Literal["entity_clone"] = "entity_clone"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1221,7 +1275,7 @@ class OptionImportFiles(BaseModel):
 
     files: List[ImportFile]
 
-    format: InputFormat
+    format: InputFormat3d
 
     type: Literal["import_files"] = "import_files"
 
@@ -1488,6 +1542,18 @@ class OptionAddHoleFromOffset(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSetGridReferencePlane(BaseModel):
+    """Align the grid with a plane or a planar face."""
+
+    grid_id: str
+
+    reference_id: str
+
+    type: Literal["set_grid_reference_plane"] = "set_grid_reference_plane"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1506,9 +1572,13 @@ ModelingCmd = RootModel[
             OptionCameraDragMove,
             OptionCameraDragEnd,
             OptionDefaultCameraGetSettings,
+            OptionDefaultCameraGetView,
+            OptionDefaultCameraSetView,
             OptionDefaultCameraLookAt,
             OptionDefaultCameraPerspectiveSettings,
             OptionDefaultCameraZoom,
+            OptionExport2D,
+            OptionExport3D,
             OptionExport,
             OptionEntityGetParentId,
             OptionEntityGetNumChildren,
@@ -1516,6 +1586,7 @@ ModelingCmd = RootModel[
             OptionEntityGetAllChildUuids,
             OptionEntityGetSketchPaths,
             OptionEntityGetDistance,
+            OptionEntityClone,
             OptionEntityLinearPatternTransform,
             OptionEntityLinearPattern,
             OptionEntityCircularPattern,
@@ -1609,6 +1680,7 @@ ModelingCmd = RootModel[
             OptionSetObjectTransform,
             OptionMakeOffsetPath,
             OptionAddHoleFromOffset,
+            OptionSetGridReferencePlane,
         ],
         Field(discriminator="type"),
     ]

@@ -7,9 +7,9 @@ from typing_extensions import Annotated
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
-from ..models.input_format import InputFormat
+from ..models.input_format3d import InputFormat3d
 from ..models.ml_feedback import MlFeedback
-from ..models.output_format import OutputFormat
+from ..models.output_format3d import OutputFormat3d
 from ..models.point3d import Point3d
 from ..models.source_range_prompt import SourceRangePrompt
 from ..models.text_to_cad_model import TextToCadModel
@@ -35,13 +35,13 @@ class OptionFileConversion(BaseModel):
 
     output_format: FileExportFormat
 
-    output_format_options: Optional[OutputFormat] = None
+    output_format_options: Optional[OutputFormat3d] = None
 
     outputs: Optional[Dict[str, Base64Data]] = None
 
     src_format: FileImportFormat
 
-    src_format_options: Optional[InputFormat] = None
+    src_format_options: Optional[InputFormat3d] = None
 
     started_at: Optional[datetime.datetime] = None
 
