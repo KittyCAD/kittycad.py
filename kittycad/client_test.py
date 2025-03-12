@@ -52,7 +52,7 @@ from .models import (
     WebSocketRequest,
     WebSocketResponse,
 )
-from .models.input_format import OptionObj
+from .models.input_format3d import OptionObj
 from .models.modeling_cmd import (
     OptionDefaultCameraFocusOn,
     OptionImportFiles,
