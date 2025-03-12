@@ -36,7 +36,7 @@ from .models import (
     FileVolume,
     ImageFormat,
     ImportFile,
-    InputFormat,
+    InputFormat3d,
     ModelingCmd,
     ModelingCmdId,
     Pong,
@@ -52,7 +52,7 @@ from .models import (
     WebSocketRequest,
     WebSocketResponse,
 )
-from .models.input_format import OptionObj
+from .models.input_format3d import OptionObj
 from .models.modeling_cmd import (
     OptionDefaultCameraFocusOn,
     OptionImportFiles,
@@ -413,7 +413,7 @@ def test_ws_import():
                         cmd=ModelingCmd(
                             OptionImportFiles(
                                 files=[ImportFile(data=content, path=file_name)],
-                                format=InputFormat(
+                                format=InputFormat3d(
                                     OptionObj(
                                         units=UnitLength.M,
                                         coords=System(
