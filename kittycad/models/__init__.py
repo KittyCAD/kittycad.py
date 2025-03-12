@@ -39,6 +39,7 @@ from .camera_drag_move import CameraDragMove
 from .camera_drag_start import CameraDragStart
 from .camera_movement import CameraMovement
 from .camera_settings import CameraSettings
+from .camera_view_state import CameraViewState
 from .card_details import CardDetails
 from .center_of_mass import CenterOfMass
 from .client_metrics import ClientMetrics
@@ -67,10 +68,12 @@ from .default_camera_center_to_scene import DefaultCameraCenterToScene
 from .default_camera_center_to_selection import DefaultCameraCenterToSelection
 from .default_camera_focus_on import DefaultCameraFocusOn
 from .default_camera_get_settings import DefaultCameraGetSettings
+from .default_camera_get_view import DefaultCameraGetView
 from .default_camera_look_at import DefaultCameraLookAt
 from .default_camera_perspective_settings import DefaultCameraPerspectiveSettings
 from .default_camera_set_orthographic import DefaultCameraSetOrthographic
 from .default_camera_set_perspective import DefaultCameraSetPerspective
+from .default_camera_set_view import DefaultCameraSetView
 from .default_camera_zoom import DefaultCameraZoom
 from .density import Density
 from .der_encoded_key_pair import DerEncodedKeyPair
@@ -83,6 +86,7 @@ from .disable_dry_run import DisableDryRun
 from .discount import Discount
 from .discount_code import DiscountCode
 from .distance_type import DistanceType
+from .dxf_storage import DxfStorage
 from .edge_lines_visible import EdgeLinesVisible
 from .email_authentication_form import EmailAuthenticationForm
 from .empty import Empty
@@ -91,6 +95,7 @@ from .enable_sketch_mode import EnableSketchMode
 from .engine_util_evaluate_path import EngineUtilEvaluatePath
 from .enterprise_subscription_tier_price import EnterpriseSubscriptionTierPrice
 from .entity_circular_pattern import EntityCircularPattern
+from .entity_clone import EntityClone
 from .entity_fade import EntityFade
 from .entity_get_all_child_uuids import EntityGetAllChildUuids
 from .entity_get_child_uuid import EntityGetChildUuid
@@ -112,6 +117,8 @@ from .error import Error
 from .error_code import ErrorCode
 from .event import Event
 from .export import Export
+from .export2d import Export2d
+from .export3d import Export3d
 from .export_file import ExportFile
 from .extend_path import ExtendPath
 from .extended_user import ExtendedUser
@@ -153,7 +160,7 @@ from .image_format import ImageFormat
 from .import_file import ImportFile
 from .import_files import ImportFiles
 from .imported_geometry import ImportedGeometry
-from .input_format import InputFormat
+from .input_format3d import InputFormat3d
 from .invoice import Invoice
 from .invoice_line_item import InvoiceLineItem
 from .invoice_status import InvoiceStatus
@@ -215,7 +222,8 @@ from .org_role import OrgRole
 from .orient_to_face import OrientToFace
 from .origin_type import OriginType
 from .output_file import OutputFile
-from .output_format import OutputFormat
+from .output_format2d import OutputFormat2d
+from .output_format3d import OutputFormat3d
 from .path_command import PathCommand
 from .path_component_constraint_bound import PathComponentConstraintBound
 from .path_component_constraint_type import PathComponentConstraintType
@@ -273,6 +281,7 @@ from .session_uuid import SessionUuid
 from .set_background_color import SetBackgroundColor
 from .set_current_tool_properties import SetCurrentToolProperties
 from .set_default_system_properties import SetDefaultSystemProperties
+from .set_grid_reference_plane import SetGridReferencePlane
 from .set_object_transform import SetObjectTransform
 from .set_scene_units import SetSceneUnits
 from .set_selection_filter import SetSelectionFilter
@@ -363,6 +372,7 @@ from .view_isometric import ViewIsometric
 from .volume import Volume
 from .web_socket_request import WebSocketRequest
 from .web_socket_response import WebSocketResponse
+from .world_coordinate_system import WorldCoordinateSystem
 from .zoo_product_subscription import ZooProductSubscription
 from .zoo_product_subscriptions import ZooProductSubscriptions
 from .zoo_product_subscriptions_org_request import ZooProductSubscriptionsOrgRequest

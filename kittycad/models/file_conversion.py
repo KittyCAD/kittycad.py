@@ -6,8 +6,8 @@ from pydantic import BaseModel, ConfigDict
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
-from ..models.input_format import InputFormat
-from ..models.output_format import OutputFormat
+from ..models.input_format3d import InputFormat3d
+from ..models.output_format3d import OutputFormat3d
 from ..models.uuid import Uuid
 from .base64data import Base64Data
 
@@ -25,13 +25,13 @@ class FileConversion(BaseModel):
 
     output_format: FileExportFormat
 
-    output_format_options: Optional[OutputFormat] = None
+    output_format_options: Optional[OutputFormat3d] = None
 
     outputs: Optional[Dict[str, Base64Data]] = None
 
     src_format: FileImportFormat
 
-    src_format_options: Optional[InputFormat] = None
+    src_format_options: Optional[InputFormat3d] = None
 
     started_at: Optional[datetime.datetime] = None
 
