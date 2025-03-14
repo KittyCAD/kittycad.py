@@ -1,4 +1,5 @@
-from typing import Literal, Union
+import datetime
+from typing import Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
@@ -15,6 +16,8 @@ from ..models.unit_length import UnitLength
 
 class OptionFbx(BaseModel):
     """Autodesk Filmbox (FBX) format."""
+
+    created: Optional[datetime.datetime] = None
 
     storage: FbxStorage
 
@@ -67,6 +70,8 @@ class OptionStep(BaseModel):
     """ISO 10303-21 (STEP) format."""
 
     coords: System
+
+    created: Optional[datetime.datetime] = None
 
     type: Literal["step"] = "step"
 
