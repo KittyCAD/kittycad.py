@@ -29,6 +29,8 @@ class TextToCadMultiFileIteration(BaseModel):
 
     outputs: Optional[Dict[str, str]] = None
 
+    prompt: Optional[str] = None
+
     source_ranges: List[SourceRangePrompt]
 
     started_at: Optional[datetime.datetime] = None
