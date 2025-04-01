@@ -28,7 +28,7 @@ jobs:
 
       - name: Check for modified files
         id: git-check
-        run: echo "modified=$(if [[ -z $(git status --porcelain --untracked-files=no) ]]; then echo "false"; else echo "true"; fi)" >> "$GITHUB_OUTPUT"
+        run: echo "modified=$(if [[ -z $(git status --porcelain --untracked-files=no --ignore-submodules) ]]; then echo "false"; else echo "true"; fi)" >> "$GITHUB_OUTPUT"
 
       - name: Commit changes, if any
         if: steps.git-check.outputs.modified == 'true'
