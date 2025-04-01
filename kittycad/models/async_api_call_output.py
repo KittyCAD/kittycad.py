@@ -305,11 +305,15 @@ class OptionTextToCadMultiFileIteration(BaseModel):
 
     id: Uuid
 
+    kcl_version: Optional[str] = None
+
     model: TextToCadModel
 
     model_version: str
 
     outputs: Optional[Dict[str, str]] = None
+
+    project_name: Optional[str] = None
 
     prompt: Optional[str] = None
 
