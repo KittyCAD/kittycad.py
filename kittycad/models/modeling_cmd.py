@@ -811,8 +811,6 @@ class OptionSolid3DFilletEdge(BaseModel):
 
     edge_id: str
 
-    face_id: Optional[str] = None
-
     object_id: str
 
     radius: LengthUnit
