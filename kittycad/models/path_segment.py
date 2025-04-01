@@ -93,6 +93,22 @@ class OptionArcTo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionCircularInvolute(BaseModel):
+    """Adds a circular involute from the current position that goes through the given end_radius and is rotated around the current point by angle."""
+
+    angle: Angle
+
+    end_radius: LengthUnit
+
+    reverse: bool
+
+    start_radius: LengthUnit
+
+    type: Literal["circular_involute"] = "circular_involute"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 PathSegment = RootModel[
     Annotated[
         Union[
@@ -102,6 +118,7 @@ PathSegment = RootModel[
             OptionTangentialArc,
             OptionTangentialArcTo,
             OptionArcTo,
+            OptionCircularInvolute,
         ],
         Field(discriminator="type"),
     ]

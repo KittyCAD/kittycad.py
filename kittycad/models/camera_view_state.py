@@ -1,7 +1,7 @@
-from typing import List
-
 from pydantic import BaseModel, ConfigDict
 
+from ..models.point3d import Point3d
+from ..models.point4d import Point4d
 from ..models.world_coordinate_system import WorldCoordinateSystem
 
 
@@ -18,9 +18,9 @@ class CameraViewState(BaseModel):
 
     ortho_scale_factor: float
 
-    pivot_position: List[float]
+    pivot_position: Point3d
 
-    pivot_rotation: List[float]
+    pivot_rotation: Point4d
 
     world_coord_system: WorldCoordinateSystem
 
