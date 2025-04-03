@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from ..models.api_endpoint import ApiEndpoint
 from ..models.modeling_app_share_links import ModelingAppShareLinks
 from ..models.modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from ..models.subscription_tier_feature import SubscriptionTierFeature
@@ -20,6 +21,8 @@ class ZooProductSubscription(BaseModel):
     annual_discount: Optional[int] = None
 
     description: str
+
+    endpoints_included: Optional[List[ApiEndpoint]] = None
 
     features: Optional[List[SubscriptionTierFeature]] = None
 
