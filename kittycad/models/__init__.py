@@ -80,8 +80,8 @@ from .density import Density
 from .der_encoded_key_pair import DerEncodedKeyPair
 from .device_access_token_request_form import DeviceAccessTokenRequestForm
 from .device_access_token_uuid import DeviceAccessTokenUuid
+from .device_auth_confirm_params import DeviceAuthConfirmParams
 from .device_auth_request_form import DeviceAuthRequestForm
-from .device_auth_verify_params import DeviceAuthVerifyParams
 from .direction import Direction
 from .disable_dry_run import DisableDryRun
 from .discount import Discount
