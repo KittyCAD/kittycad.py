@@ -4,6 +4,9 @@ from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.add_hole_from_offset import AddHoleFromOffset
+from ..models.boolean_intersection import BooleanIntersection
+from ..models.boolean_subtract import BooleanSubtract
+from ..models.boolean_union import BooleanUnion
 from ..models.camera_drag_end import CameraDragEnd
 from ..models.camera_drag_move import CameraDragMove
 from ..models.camera_drag_start import CameraDragStart
@@ -1418,6 +1421,36 @@ class OptionSetGridReferencePlane(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionBooleanUnion(BaseModel):
+    """"""
+
+    data: BooleanUnion
+
+    type: Literal["boolean_union"] = "boolean_union"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionBooleanIntersection(BaseModel):
+    """"""
+
+    data: BooleanIntersection
+
+    type: Literal["boolean_intersection"] = "boolean_intersection"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionBooleanSubtract(BaseModel):
+    """"""
+
+    data: BooleanSubtract
+
+    type: Literal["boolean_subtract"] = "boolean_subtract"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1549,6 +1582,9 @@ OkModelingCmdResponse = RootModel[
             OptionSolid3DGetExtrusionFaceInfo,
             OptionExtrusionFaceInfo,
             OptionSetGridReferencePlane,
+            OptionBooleanUnion,
+            OptionBooleanIntersection,
+            OptionBooleanSubtract,
         ],
         Field(discriminator="type"),
     ]
