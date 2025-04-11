@@ -20,6 +20,8 @@ from ..models.import_file import ImportFile
 from ..models.input_format3d import InputFormat3d
 from ..models.length_unit import LengthUnit
 from ..models.modeling_cmd_id import ModelingCmdId
+from ..models.opposite_for_angle import OppositeForAngle
+from ..models.opposite_for_length_unit import OppositeForLengthUnit
 from ..models.output_format2d import OutputFormat2d
 from ..models.output_format3d import OutputFormat3d
 from ..models.path_component_constraint_bound import PathComponentConstraintBound
@@ -89,6 +91,8 @@ class OptionExtrude(BaseModel):
 
     faces: Optional[ExtrudedFaceInfo] = None
 
+    opposite: OppositeForLengthUnit = "None"  # type: ignore
+
     target: ModelingCmdId
 
     type: Literal["extrude"] = "extrude"
@@ -120,6 +124,8 @@ class OptionRevolve(BaseModel):
     axis: Point3d
 
     axis_is_2d: bool
+
+    opposite: OppositeForAngle = "None"  # type: ignore
 
     origin: Point3d
 
@@ -154,6 +160,8 @@ class OptionRevolveAboutEdge(BaseModel):
     angle: Angle
 
     edge_id: str
+
+    opposite: OppositeForAngle = "None"  # type: ignore
 
     target: ModelingCmdId
 
@@ -1514,6 +1522,44 @@ class OptionSetObjectTransform(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionBooleanUnion(BaseModel):
+    """Create a new solid from combining other smaller solids. In other words, every part of the input solids will be included in the output solid."""
+
+    solid_ids: List[str]
+
+    tolerance: LengthUnit
+
+    type: Literal["boolean_union"] = "boolean_union"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionBooleanIntersection(BaseModel):
+    """Create a new solid from intersecting several other solids. In other words, the part of the input solids where they all overlap will be the output solid."""
+
+    solid_ids: List[str]
+
+    tolerance: LengthUnit
+
+    type: Literal["boolean_intersection"] = "boolean_intersection"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionBooleanSubtract(BaseModel):
+    """Create a new solid from subtracting several other solids. The 'target' is what will be cut from. The 'tool' is what will be cut out from 'target'."""
+
+    target_ids: List[str]
+
+    tolerance: LengthUnit
+
+    tool_ids: List[str]
+
+    type: Literal["boolean_subtract"] = "boolean_subtract"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionMakeOffsetPath(BaseModel):
     """Make a new path by offsetting an object by a given distance. The new path's ID will be the ID of this command."""
 
@@ -1676,6 +1722,9 @@ ModelingCmd = RootModel[
             OptionSelectGet,
             OptionGetNumObjects,
             OptionSetObjectTransform,
+            OptionBooleanUnion,
+            OptionBooleanIntersection,
+            OptionBooleanSubtract,
             OptionMakeOffsetPath,
             OptionAddHoleFromOffset,
             OptionSetGridReferencePlane,

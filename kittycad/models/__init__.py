@@ -33,6 +33,9 @@ from .axis_direction_pair import AxisDirectionPair
 from .batch_response import BatchResponse
 from .billing_info import BillingInfo
 from .block_reason import BlockReason
+from .boolean_intersection import BooleanIntersection
+from .boolean_subtract import BooleanSubtract
+from .boolean_union import BooleanUnion
 from .cache_metadata import CacheMetadata
 from .camera_drag_end import CameraDragEnd
 from .camera_drag_interaction_type import CameraDragInteractionType
@@ -214,6 +217,8 @@ from .object_visible import ObjectVisible
 from .ok_modeling_cmd_response import OkModelingCmdResponse
 from .ok_web_socket_response_data import OkWebSocketResponseData
 from .onboarding import Onboarding
+from .opposite_for_angle import OppositeForAngle
+from .opposite_for_length_unit import OppositeForLengthUnit
 from .org import Org
 from .org_details import OrgDetails
 from .org_member import OrgMember
