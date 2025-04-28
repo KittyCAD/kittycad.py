@@ -20,6 +20,8 @@ class ExtendedUser(BaseModel):
 
     created_at: datetime.datetime
 
+    deletion_scheduled: bool = False
+
     discord: Optional[str] = None
 
     email: Optional[str] = None
