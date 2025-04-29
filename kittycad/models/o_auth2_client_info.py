@@ -8,6 +8,8 @@ class OAuth2ClientInfo(BaseModel):
 
     csrf_token: Optional[str] = None
 
+    oidc_nonce: Optional[str] = None
+
     pkce_code_verifier: Optional[str] = None
 
     url: Optional[str] = None
