@@ -170,6 +170,24 @@ class OptionPong(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class DebugData(BaseModel):
+    """"""
+
+    name: str
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionDebug(BaseModel):
+    """Information about the connected instance"""
+
+    data: DebugData
+
+    type: Literal["debug"] = "debug"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 OkWebSocketResponseData = RootModel[
     Annotated[
         Union[
@@ -182,6 +200,7 @@ OkWebSocketResponseData = RootModel[
             OptionMetricsRequest,
             OptionModelingSessionData,
             OptionPong,
+            OptionDebug,
         ],
         Field(discriminator="type"),
     ]
