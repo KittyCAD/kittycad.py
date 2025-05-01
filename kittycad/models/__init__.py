@@ -176,6 +176,7 @@ from .jetstream_stats import JetstreamStats
 from .kcl_code_completion_params import KclCodeCompletionParams
 from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
+from .kcl_model import KclModel
 from .leaf_node import LeafNode
 from .length_unit import LengthUnit
 from .loft import Loft
