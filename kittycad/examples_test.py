@@ -56,6 +56,7 @@ from kittycad.api.meta import (
 )
 from kittycad.api.ml import (
     create_kcl_code_completions,
+    create_proprietary_to_kcl,
     create_text_to_cad,
     create_text_to_cad_iteration,
     create_text_to_cad_model_feedback,
@@ -188,6 +189,7 @@ from kittycad.models import (
     Invoice,
     IpAddrInfo,
     KclCodeCompletionResponse,
+    KclModel,
     Metadata,
     MlPrompt,
     MlPromptResultsPage,
@@ -1896,6 +1898,49 @@ async def test_get_ml_prompt_async():
     ] = await get_ml_prompt.asyncio_detailed(
         client=client,
         id="<string>",
+    )
+
+
+@pytest.mark.skip
+def test_create_proprietary_to_kcl():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[KclModel, Error]] = create_proprietary_to_kcl.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: KclModel = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[KclModel, Error]]] = (
+        create_proprietary_to_kcl.sync_detailed(
+            client=client,
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_proprietary_to_kcl_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[KclModel, Error]] = await create_proprietary_to_kcl.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[KclModel, Error]]
+    ] = await create_proprietary_to_kcl.asyncio_detailed(
+        client=client,
     )
 
 
@@ -7493,6 +7538,7 @@ def test_modeling_commands_ws():
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
+        api_call_id=None,  # Optional[str]
         pool=None,  # Optional[str]
         replay=None,  # Optional[str]
     ) as websocket:
@@ -7530,6 +7576,7 @@ async def test_modeling_commands_ws_async():
         video_res_height=10,
         video_res_width=10,
         webrtc=False,
+        api_call_id=None,  # Optional[str]
         pool=None,  # Optional[str]
         replay=None,  # Optional[str]
     )

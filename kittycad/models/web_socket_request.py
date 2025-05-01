@@ -75,6 +75,14 @@ class OptionMetricsResponse(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionDebug(BaseModel):
+    """Return information about the connected instance"""
+
+    type: Literal["debug"] = "debug"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionHeaders(BaseModel):
     """Authentication header request."""
 
@@ -94,6 +102,7 @@ WebSocketRequest = RootModel[
             OptionModelingCmdBatchReq,
             OptionPing,
             OptionMetricsResponse,
+            OptionDebug,
             OptionHeaders,
         ],
         Field(discriminator="type"),

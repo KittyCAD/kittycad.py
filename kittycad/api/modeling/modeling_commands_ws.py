@@ -27,10 +27,17 @@ def _get_kwargs(
     webrtc: bool,
     *,
     client: Client,
+    api_call_id: Optional[str] = None,
     pool: Optional[str] = None,
     replay: Optional[str] = None,
 ) -> Dict[str, Any]:
     url = "{}/ws/modeling/commands".format(client.base_url)  # noqa: E501
+
+    if api_call_id is not None:
+        if "?" in url:
+            url = url + "&api_call_id=" + str(api_call_id)
+        else:
+            url = url + "?api_call_id=" + str(api_call_id)
 
     if fps is not None:
         if "?" in url:
@@ -107,12 +114,14 @@ def sync(
     webrtc: bool,
     *,
     client: Client,
+    api_call_id: Optional[str] = None,
     pool: Optional[str] = None,
     replay: Optional[str] = None,
 ) -> ClientConnectionSync:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
+        api_call_id=api_call_id,
         fps=fps,
         pool=pool,
         post_effect=post_effect,
@@ -143,12 +152,14 @@ async def asyncio(
     webrtc: bool,
     *,
     client: Client,
+    api_call_id: Optional[str] = None,
     pool: Optional[str] = None,
     replay: Optional[str] = None,
 ) -> ClientConnectionAsync:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
 
     kwargs = _get_kwargs(
+        api_call_id=api_call_id,
         fps=fps,
         pool=pool,
         post_effect=post_effect,
@@ -184,6 +195,7 @@ class WebSocket:
         video_res_width: int,
         webrtc: bool,
         client: Client,
+        api_call_id: Optional[str] = None,
         pool: Optional[str] = None,
         replay: Optional[str] = None,
     ):
@@ -196,6 +208,7 @@ class WebSocket:
             video_res_width,
             webrtc,
             client=client,
+            api_call_id=api_call_id,
             pool=pool,
             replay=replay,
         )
