@@ -21,11 +21,13 @@ class CustomerBalance(BaseModel):
 
     modeling_app_enterprise_price: Optional[SubscriptionTierPrice] = None
 
-    monthly_credits_remaining: float
+    monthly_api_credits_remaining: int
 
-    pre_pay_cash_remaining: float
+    monthly_api_credits_remaining_monetary_value: float
 
-    pre_pay_credits_remaining: float
+    stable_api_credits_remaining: int
+
+    stable_api_credits_remaining_monetary_value: float
 
     subscription_details: Optional[ZooProductSubscriptions] = None
 
