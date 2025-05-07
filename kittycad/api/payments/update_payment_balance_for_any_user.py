@@ -12,6 +12,7 @@ from ...types import Response
 
 def _get_kwargs(
     id: UserIdentifier,
+    include_total_due: bool,
     body: UpdatePaymentBalance,
     *,
     client: Client,
@@ -20,6 +21,12 @@ def _get_kwargs(
         client.base_url,
         id=id,
     )  # noqa: E501
+
+    if include_total_due is not None:
+        if "?" in url:
+            url = url + "&include_total_due=" + str(include_total_due).lower()
+        else:
+            url = url + "?include_total_due=" + str(include_total_due).lower()
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -61,12 +68,14 @@ def _build_response(
 
 def sync_detailed(
     id: UserIdentifier,
+    include_total_due: bool,
     body: UpdatePaymentBalance,
     *,
     client: Client,
 ) -> Response[Optional[Union[CustomerBalance, Error]]]:
     kwargs = _get_kwargs(
         id=id,
+        include_total_due=include_total_due,
         body=body,
         client=client,
     )
@@ -81,6 +90,7 @@ def sync_detailed(
 
 def sync(
     id: UserIdentifier,
+    include_total_due: bool,
     body: UpdatePaymentBalance,
     *,
     client: Client,
@@ -89,6 +99,7 @@ def sync(
 
     return sync_detailed(
         id=id,
+        include_total_due=include_total_due,
         body=body,
         client=client,
     ).parsed
@@ -96,12 +107,14 @@ def sync(
 
 async def asyncio_detailed(
     id: UserIdentifier,
+    include_total_due: bool,
     body: UpdatePaymentBalance,
     *,
     client: Client,
 ) -> Response[Optional[Union[CustomerBalance, Error]]]:
     kwargs = _get_kwargs(
         id=id,
+        include_total_due=include_total_due,
         body=body,
         client=client,
     )
@@ -114,6 +127,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     id: UserIdentifier,
+    include_total_due: bool,
     body: UpdatePaymentBalance,
     *,
     client: Client,
@@ -123,6 +137,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             id=id,
+            include_total_due=include_total_due,
             body=body,
             client=client,
         )

@@ -3055,6 +3055,7 @@ def test_get_payment_balance_for_org():
 
     result: Optional[Union[CustomerBalance, Error]] = get_payment_balance_for_org.sync(
         client=client,
+        include_total_due=False,
     )
 
     if isinstance(result, Error) or result is None:
@@ -3068,6 +3069,7 @@ def test_get_payment_balance_for_org():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         get_payment_balance_for_org.sync_detailed(
             client=client,
+            include_total_due=False,
         )
     )
 
@@ -3083,6 +3085,7 @@ async def test_get_payment_balance_for_org_async():
         Union[CustomerBalance, Error]
     ] = await get_payment_balance_for_org.asyncio(
         client=client,
+        include_total_due=False,
     )
 
     # OR run async with more info
@@ -3090,6 +3093,7 @@ async def test_get_payment_balance_for_org_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await get_payment_balance_for_org.asyncio_detailed(
         client=client,
+        include_total_due=False,
     )
 
 
@@ -4271,6 +4275,7 @@ def test_get_payment_balance_for_any_org():
     result: Optional[Union[CustomerBalance, Error]] = (
         get_payment_balance_for_any_org.sync(
             client=client,
+            include_total_due=False,
             id=Uuid("<string>"),
         )
     )
@@ -4286,6 +4291,7 @@ def test_get_payment_balance_for_any_org():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         get_payment_balance_for_any_org.sync_detailed(
             client=client,
+            include_total_due=False,
             id=Uuid("<string>"),
         )
     )
@@ -4302,6 +4308,7 @@ async def test_get_payment_balance_for_any_org_async():
         Union[CustomerBalance, Error]
     ] = await get_payment_balance_for_any_org.asyncio(
         client=client,
+        include_total_due=False,
         id=Uuid("<string>"),
     )
 
@@ -4310,6 +4317,7 @@ async def test_get_payment_balance_for_any_org_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await get_payment_balance_for_any_org.asyncio_detailed(
         client=client,
+        include_total_due=False,
         id=Uuid("<string>"),
     )
 
@@ -4323,6 +4331,7 @@ def test_update_payment_balance_for_any_org():
         update_payment_balance_for_any_org.sync(
             client=client,
             id=Uuid("<string>"),
+            include_total_due=False,
             body=UpdatePaymentBalance(),
         )
     )
@@ -4339,6 +4348,7 @@ def test_update_payment_balance_for_any_org():
         update_payment_balance_for_any_org.sync_detailed(
             client=client,
             id=Uuid("<string>"),
+            include_total_due=False,
             body=UpdatePaymentBalance(),
         )
     )
@@ -4356,6 +4366,7 @@ async def test_update_payment_balance_for_any_org_async():
     ] = await update_payment_balance_for_any_org.asyncio(
         client=client,
         id=Uuid("<string>"),
+        include_total_due=False,
         body=UpdatePaymentBalance(),
     )
 
@@ -4365,6 +4376,7 @@ async def test_update_payment_balance_for_any_org_async():
     ] = await update_payment_balance_for_any_org.asyncio_detailed(
         client=client,
         id=Uuid("<string>"),
+        include_total_due=False,
         body=UpdatePaymentBalance(),
     )
 
@@ -6112,6 +6124,7 @@ def test_get_payment_balance_for_user():
 
     result: Optional[Union[CustomerBalance, Error]] = get_payment_balance_for_user.sync(
         client=client,
+        include_total_due=False,
     )
 
     if isinstance(result, Error) or result is None:
@@ -6125,6 +6138,7 @@ def test_get_payment_balance_for_user():
     response: Response[Optional[Union[CustomerBalance, Error]]] = (
         get_payment_balance_for_user.sync_detailed(
             client=client,
+            include_total_due=False,
         )
     )
 
@@ -6140,6 +6154,7 @@ async def test_get_payment_balance_for_user_async():
         Union[CustomerBalance, Error]
     ] = await get_payment_balance_for_user.asyncio(
         client=client,
+        include_total_due=False,
     )
 
     # OR run async with more info
@@ -6147,6 +6162,7 @@ async def test_get_payment_balance_for_user_async():
         Optional[Union[CustomerBalance, Error]]
     ] = await get_payment_balance_for_user.asyncio_detailed(
         client=client,
+        include_total_due=False,
     )
 
 
@@ -7389,6 +7405,7 @@ def test_get_payment_balance_for_any_user():
         get_payment_balance_for_any_user.sync(
             client=client,
             id=UserIdentifier("<string>"),
+            include_total_due=False,
         )
     )
 
@@ -7404,6 +7421,7 @@ def test_get_payment_balance_for_any_user():
         get_payment_balance_for_any_user.sync_detailed(
             client=client,
             id=UserIdentifier("<string>"),
+            include_total_due=False,
         )
     )
 
@@ -7420,6 +7438,7 @@ async def test_get_payment_balance_for_any_user_async():
     ] = await get_payment_balance_for_any_user.asyncio(
         client=client,
         id=UserIdentifier("<string>"),
+        include_total_due=False,
     )
 
     # OR run async with more info
@@ -7428,6 +7447,7 @@ async def test_get_payment_balance_for_any_user_async():
     ] = await get_payment_balance_for_any_user.asyncio_detailed(
         client=client,
         id=UserIdentifier("<string>"),
+        include_total_due=False,
     )
 
 
@@ -7440,6 +7460,7 @@ def test_update_payment_balance_for_any_user():
         update_payment_balance_for_any_user.sync(
             client=client,
             id=UserIdentifier("<string>"),
+            include_total_due=False,
             body=UpdatePaymentBalance(),
         )
     )
@@ -7456,6 +7477,7 @@ def test_update_payment_balance_for_any_user():
         update_payment_balance_for_any_user.sync_detailed(
             client=client,
             id=UserIdentifier("<string>"),
+            include_total_due=False,
             body=UpdatePaymentBalance(),
         )
     )
@@ -7473,6 +7495,7 @@ async def test_update_payment_balance_for_any_user_async():
     ] = await update_payment_balance_for_any_user.asyncio(
         client=client,
         id=UserIdentifier("<string>"),
+        include_total_due=False,
         body=UpdatePaymentBalance(),
     )
 
@@ -7482,6 +7505,7 @@ async def test_update_payment_balance_for_any_user_async():
     ] = await update_payment_balance_for_any_user.asyncio_detailed(
         client=client,
         id=UserIdentifier("<string>"),
+        include_total_due=False,
         body=UpdatePaymentBalance(),
     )
 

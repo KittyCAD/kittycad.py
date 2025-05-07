@@ -11,6 +11,7 @@ from ...types import Response
 
 def _get_kwargs(
     id: UserIdentifier,
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Dict[str, Any]:
@@ -18,6 +19,12 @@ def _get_kwargs(
         client.base_url,
         id=id,
     )  # noqa: E501
+
+    if include_total_due is not None:
+        if "?" in url:
+            url = url + "&include_total_due=" + str(include_total_due).lower()
+        else:
+            url = url + "?include_total_due=" + str(include_total_due).lower()
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -58,11 +65,13 @@ def _build_response(
 
 def sync_detailed(
     id: UserIdentifier,
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Response[Optional[Union[CustomerBalance, Error]]]:
     kwargs = _get_kwargs(
         id=id,
+        include_total_due=include_total_due,
         client=client,
     )
 
@@ -76,6 +85,7 @@ def sync_detailed(
 
 def sync(
     id: UserIdentifier,
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Optional[Union[CustomerBalance, Error]]:
@@ -83,17 +93,20 @@ def sync(
 
     return sync_detailed(
         id=id,
+        include_total_due=include_total_due,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
     id: UserIdentifier,
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Response[Optional[Union[CustomerBalance, Error]]]:
     kwargs = _get_kwargs(
         id=id,
+        include_total_due=include_total_due,
         client=client,
     )
 
@@ -105,6 +118,7 @@ async def asyncio_detailed(
 
 async def asyncio(
     id: UserIdentifier,
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Optional[Union[CustomerBalance, Error]]:
@@ -113,6 +127,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             id=id,
+            include_total_due=include_total_due,
             client=client,
         )
     ).parsed

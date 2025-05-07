@@ -9,12 +9,19 @@ from ...types import Response
 
 
 def _get_kwargs(
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/org/payment/balance".format(
         client.base_url,
     )  # noqa: E501
+
+    if include_total_due is not None:
+        if "?" in url:
+            url = url + "&include_total_due=" + str(include_total_due).lower()
+        else:
+            url = url + "?include_total_due=" + str(include_total_due).lower()
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -54,10 +61,12 @@ def _build_response(
 
 
 def sync_detailed(
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Response[Optional[Union[CustomerBalance, Error]]]:
     kwargs = _get_kwargs(
+        include_total_due=include_total_due,
         client=client,
     )
 
@@ -70,21 +79,25 @@ def sync_detailed(
 
 
 def sync(
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Optional[Union[CustomerBalance, Error]]:
     """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""  # noqa: E501
 
     return sync_detailed(
+        include_total_due=include_total_due,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Response[Optional[Union[CustomerBalance, Error]]]:
     kwargs = _get_kwargs(
+        include_total_due=include_total_due,
         client=client,
     )
 
@@ -95,6 +108,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    include_total_due: bool,
     *,
     client: Client,
 ) -> Optional[Union[CustomerBalance, Error]]:
@@ -102,6 +116,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
+            include_total_due=include_total_due,
             client=client,
         )
     ).parsed
