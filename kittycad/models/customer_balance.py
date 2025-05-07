@@ -33,7 +33,7 @@ class CustomerBalance(BaseModel):
 
     subscription_id: Optional[str] = None
 
-    total_due: float
+    total_due: Optional[float] = None
 
     updated_at: datetime.datetime
 
