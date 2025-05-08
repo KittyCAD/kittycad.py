@@ -11,6 +11,7 @@ from ..models.camera_movement import CameraMovement
 from ..models.camera_view_state import CameraViewState
 from ..models.color import Color
 from ..models.component_transform import ComponentTransform
+from ..models.cut_strategy import CutStrategy
 from ..models.cut_type import CutType
 from ..models.distance_type import DistanceType
 from ..models.entity_type import EntityType
@@ -817,11 +818,17 @@ class OptionSolid3DFilletEdge(BaseModel):
 
     cut_type: CutType = "fillet"  # type: ignore
 
-    edge_id: str
+    edge_id: Optional[str] = None
+
+    edge_ids: List[str] = []
+
+    extra_face_ids: List[str] = []
 
     object_id: str
 
     radius: LengthUnit
+
+    strategy: CutStrategy = "automatic"  # type: ignore
 
     tolerance: LengthUnit
 
@@ -1486,6 +1493,16 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSolid3DGetInfo(BaseModel):
+    """Get a concise description of all of solids edges."""
+
+    object_id: str
+
+    type: Literal["solid3d_get_info"] = "solid3d_get_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSelectClear(BaseModel):
     """Clear the selection"""
 
@@ -1718,6 +1735,7 @@ ModelingCmd = RootModel[
             OptionOrientToFace,
             OptionViewIsometric,
             OptionSolid3DGetExtrusionFaceInfo,
+            OptionSolid3DGetInfo,
             OptionSelectClear,
             OptionSelectGet,
             OptionGetNumObjects,

@@ -12,6 +12,7 @@ from ..models.camera_drag_move import CameraDragMove
 from ..models.camera_drag_start import CameraDragStart
 from ..models.center_of_mass import CenterOfMass
 from ..models.close_path import ClosePath
+from ..models.complementary_edges import ComplementaryEdges
 from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
@@ -58,6 +59,7 @@ from ..models.export3d import Export3d
 from ..models.extend_path import ExtendPath
 from ..models.extrude import Extrude
 from ..models.extrusion_face_info import ExtrusionFaceInfo
+from ..models.face_edge_info import FaceEdgeInfo
 from ..models.face_get_center import FaceGetCenter
 from ..models.face_get_gradient import FaceGetGradient
 from ..models.face_get_position import FaceGetPosition
@@ -123,10 +125,12 @@ from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from ..models.solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
 from ..models.solid3d_get_common_edge import Solid3dGetCommonEdge
 from ..models.solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
+from ..models.solid3d_get_info import Solid3dGetInfo
 from ..models.solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from ..models.solid3d_shell_face import Solid3dShellFace
+from ..models.solid_info import SolidInfo
 from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
 from ..models.sweep import Sweep
@@ -1301,6 +1305,16 @@ class OptionEntityGetDistance(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionFaceEdgeInfo(BaseModel):
+    """"""
+
+    data: FaceEdgeInfo
+
+    type: Literal["face_edge_info"] = "face_edge_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionEntityClone(BaseModel):
     """"""
 
@@ -1407,6 +1421,36 @@ class OptionExtrusionFaceInfo(BaseModel):
     data: ExtrusionFaceInfo
 
     type: Literal["extrusion_face_info"] = "extrusion_face_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionComplementaryEdges(BaseModel):
+    """"""
+
+    data: ComplementaryEdges
+
+    type: Literal["complementary_edges"] = "complementary_edges"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSolid3DGetInfo(BaseModel):
+    """"""
+
+    data: Solid3dGetInfo
+
+    type: Literal["solid3d_get_info"] = "solid3d_get_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSolidInfo(BaseModel):
+    """"""
+
+    data: SolidInfo
+
+    type: Literal["solid_info"] = "solid_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1570,6 +1614,7 @@ OkModelingCmdResponse = RootModel[
             OptionCenterOfMass,
             OptionGetSketchModePlane,
             OptionEntityGetDistance,
+            OptionFaceEdgeInfo,
             OptionEntityClone,
             OptionEntityLinearPatternTransform,
             OptionEntityLinearPattern,
@@ -1581,6 +1626,9 @@ OkModelingCmdResponse = RootModel[
             OptionEntityMakeHelixFromEdge,
             OptionSolid3DGetExtrusionFaceInfo,
             OptionExtrusionFaceInfo,
+            OptionComplementaryEdges,
+            OptionSolid3DGetInfo,
+            OptionSolidInfo,
             OptionSetGridReferencePlane,
             OptionBooleanUnion,
             OptionBooleanIntersection,
