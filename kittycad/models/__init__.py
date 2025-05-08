@@ -52,6 +52,7 @@ from .cluster import Cluster
 from .code_language import CodeLanguage
 from .code_output import CodeOutput
 from .color import Color
+from .complementary_edges import ComplementaryEdges
 from .component_transform import ComponentTransform
 from .connection import Connection
 from .country_code import CountryCode
@@ -67,6 +68,7 @@ from .curve_set_constraint import CurveSetConstraint
 from .curve_type import CurveType
 from .customer import Customer
 from .customer_balance import CustomerBalance
+from .cut_strategy import CutStrategy
 from .cut_type import CutType
 from .default_camera_center_to_scene import DefaultCameraCenterToScene
 from .default_camera_center_to_selection import DefaultCameraCenterToSelection
@@ -131,6 +133,7 @@ from .extrude import Extrude
 from .extruded_face_info import ExtrudedFaceInfo
 from .extrusion_face_cap_type import ExtrusionFaceCapType
 from .extrusion_face_info import ExtrusionFaceInfo
+from .face_edge_info import FaceEdgeInfo
 from .face_get_center import FaceGetCenter
 from .face_get_gradient import FaceGetGradient
 from .face_get_position import FaceGetPosition
@@ -304,10 +307,12 @@ from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from .solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
 from .solid3d_get_common_edge import Solid3dGetCommonEdge
 from .solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
+from .solid3d_get_info import Solid3dGetInfo
 from .solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from .solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from .solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from .solid3d_shell_face import Solid3dShellFace
+from .solid_info import SolidInfo
 from .source_position import SourcePosition
 from .source_range import SourceRange
 from .source_range_prompt import SourceRangePrompt
