@@ -6,12 +6,12 @@ class SupportTier(str, Enum):
 
     """# Community support. """  # noqa: E501
     COMMUNITY = "community"
-    """# Standard support. """  # noqa: E501
-    STANDARD = "standard"
+    """# Standard email support. """  # noqa: E501
+    STANDARD_EMAIL = "standard_email"
+    """# Priority email support. """  # noqa: E501
+    PRIORITY_EMAIL = "priority_email"
     """# Premium support. """  # noqa: E501
     PREMIUM = "premium"
-    """# Priority support. """  # noqa: E501
-    PRIORITY = "priority"
 
     def __str__(self) -> str:
         return str(self.value)
