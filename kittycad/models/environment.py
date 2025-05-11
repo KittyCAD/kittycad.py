@@ -6,7 +6,7 @@ class Environment(str, Enum):
 
     """# The development environment. This is for running locally. """  # noqa: E501
     DEVELOPMENT = "DEVELOPMENT"
-    """# The preview environment. This is when PRs are created and a service is deployed for testing. """  # noqa: E501
+    """# The preview environment. This is deployed to api.dev.zoo.dev. """  # noqa: E501
     PREVIEW = "PREVIEW"
     """# The production environment. """  # noqa: E501
     PRODUCTION = "PRODUCTION"
