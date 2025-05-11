@@ -38,6 +38,8 @@ class ExtendedUser(BaseModel):
 
     image: str
 
+    is_onboarded: bool = False
+
     is_service_account: bool = False
 
     last_name: Optional[str] = None
