@@ -158,6 +158,10 @@ from kittycad.api.users import (
     get_user_shortlinks,
     list_users,
     list_users_extended,
+    patch_user_crm,
+    put_public_form,
+    put_public_subscribe,
+    put_user_form_self,
     update_user_privacy_settings,
     update_user_self,
     update_user_shortlink,
@@ -239,6 +243,7 @@ from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
+from kittycad.models.crm_data import CrmData
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.enterprise_subscription_tier_price import (
     EnterpriseSubscriptionTierPrice,
@@ -251,6 +256,8 @@ from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
 )
+from kittycad.models.inquiry_form import InquiryForm
+from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.ml_feedback import MlFeedback
@@ -274,6 +281,7 @@ from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
+from kittycad.models.subscribe import Subscribe
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
@@ -5732,6 +5740,49 @@ async def test_delete_api_token_for_user_async():
 
 
 @pytest.mark.skip
+def test_patch_user_crm():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = patch_user_crm.sync(
+        client=client,
+        body=CrmData(),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = patch_user_crm.sync_detailed(
+        client=client,
+        body=CrmData(),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_patch_user_crm_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await patch_user_crm.asyncio(
+        client=client,
+        body=CrmData(),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await patch_user_crm.asyncio_detailed(
+        client=client,
+        body=CrmData(),
+    )
+
+
+@pytest.mark.skip
 def test_get_user_self_extended():
     # Create our client.
     client = ClientFromEnv()
@@ -5771,6 +5822,73 @@ async def test_get_user_self_extended_async():
         Optional[Union[ExtendedUser, Error]]
     ] = await get_user_self_extended.asyncio_detailed(
         client=client,
+    )
+
+
+@pytest.mark.skip
+def test_put_user_form_self():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = put_user_form_self.sync(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = put_user_form_self.sync_detailed(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_put_user_form_self_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await put_user_form_self.asyncio(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await put_user_form_self.asyncio_detailed(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
     )
 
 
@@ -7507,6 +7625,124 @@ async def test_update_payment_balance_for_any_user_async():
         id=UserIdentifier("<string>"),
         include_total_due=False,
         body=UpdatePaymentBalance(),
+    )
+
+
+@pytest.mark.skip
+def test_put_public_form():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = put_public_form.sync(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = put_public_form.sync_detailed(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_put_public_form_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await put_public_form.asyncio(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await put_public_form.asyncio_detailed(
+        client=client,
+        body=InquiryForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=InquiryType.GENERAL_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_put_public_subscribe():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = put_public_subscribe.sync(
+        client=client,
+        body=Subscribe(
+            email="<string>",
+        ),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = put_public_subscribe.sync_detailed(
+        client=client,
+        body=Subscribe(
+            email="<string>",
+        ),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_put_public_subscribe_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await put_public_subscribe.asyncio(
+        client=client,
+        body=Subscribe(
+            email="<string>",
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await put_public_subscribe.asyncio_detailed(
+        client=client,
+        body=Subscribe(
+            email="<string>",
+        ),
     )
 
 

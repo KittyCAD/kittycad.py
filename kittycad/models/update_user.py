@@ -16,6 +16,8 @@ class UpdateUser(BaseModel):
 
     image: str
 
+    is_onboarded: Optional[bool] = None
+
     last_name: Optional[str] = None
 
     phone: str = ""
