@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.add_hole_from_offset import AddHoleFromOffset
+from ..models.adjacency_info import AdjacencyInfo
 from ..models.boolean_intersection import BooleanIntersection
 from ..models.boolean_subtract import BooleanSubtract
 from ..models.boolean_union import BooleanUnion
@@ -32,6 +33,7 @@ from ..models.default_camera_set_view import DefaultCameraSetView
 from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
 from ..models.disable_dry_run import DisableDryRun
+from ..models.edge_info import EdgeInfo
 from ..models.edge_lines_visible import EdgeLinesVisible
 from ..models.enable_dry_run import EnableDryRun
 from ..models.enable_sketch_mode import EnableSketchMode
@@ -121,16 +123,15 @@ from ..models.set_tool import SetTool
 from ..models.sketch_mode_disable import SketchModeDisable
 from ..models.solid2d_add_hole import Solid2dAddHole
 from ..models.solid3d_fillet_edge import Solid3dFilletEdge
+from ..models.solid3d_get_adjacency_info import Solid3dGetAdjacencyInfo
 from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from ..models.solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
 from ..models.solid3d_get_common_edge import Solid3dGetCommonEdge
 from ..models.solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
-from ..models.solid3d_get_info import Solid3dGetInfo
 from ..models.solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from ..models.solid3d_shell_face import Solid3dShellFace
-from ..models.solid_info import SolidInfo
 from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
 from ..models.sweep import Sweep
@@ -963,6 +964,16 @@ class OptionSelectGet(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSolid3DGetAdjacencyInfo(BaseModel):
+    """"""
+
+    data: Solid3dGetAdjacencyInfo
+
+    type: Literal["solid3d_get_adjacency_info"] = "solid3d_get_adjacency_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSolid3DGetAllEdgeFaces(BaseModel):
     """"""
 
@@ -1315,6 +1326,16 @@ class OptionFaceEdgeInfo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionEdgeInfo(BaseModel):
+    """"""
+
+    data: EdgeInfo
+
+    type: Literal["edge_info"] = "edge_info"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionEntityClone(BaseModel):
     """"""
 
@@ -1435,22 +1456,12 @@ class OptionComplementaryEdges(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetInfo(BaseModel):
+class OptionAdjacencyInfo(BaseModel):
     """"""
 
-    data: Solid3dGetInfo
+    data: AdjacencyInfo
 
-    type: Literal["solid3d_get_info"] = "solid3d_get_info"
-
-    model_config = ConfigDict(protected_namespaces=())
-
-
-class OptionSolidInfo(BaseModel):
-    """"""
-
-    data: SolidInfo
-
-    type: Literal["solid_info"] = "solid_info"
+    type: Literal["adjacency_info"] = "adjacency_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1580,6 +1591,7 @@ OkModelingCmdResponse = RootModel[
             OptionAddHoleFromOffset,
             OptionDefaultCameraFocusOn,
             OptionSelectGet,
+            OptionSolid3DGetAdjacencyInfo,
             OptionSolid3DGetAllEdgeFaces,
             OptionSolid3DGetAllOppositeEdges,
             OptionSolid3DGetOppositeEdge,
@@ -1615,6 +1627,7 @@ OkModelingCmdResponse = RootModel[
             OptionGetSketchModePlane,
             OptionEntityGetDistance,
             OptionFaceEdgeInfo,
+            OptionEdgeInfo,
             OptionEntityClone,
             OptionEntityLinearPatternTransform,
             OptionEntityLinearPattern,
@@ -1627,8 +1640,7 @@ OkModelingCmdResponse = RootModel[
             OptionSolid3DGetExtrusionFaceInfo,
             OptionExtrusionFaceInfo,
             OptionComplementaryEdges,
-            OptionSolid3DGetInfo,
-            OptionSolidInfo,
+            OptionAdjacencyInfo,
             OptionSetGridReferencePlane,
             OptionBooleanUnion,
             OptionBooleanIntersection,
