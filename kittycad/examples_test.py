@@ -241,6 +241,7 @@ from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
+from kittycad.models.code_option import CodeOption
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.crm_data import CrmData
@@ -1916,6 +1917,7 @@ def test_create_proprietary_to_kcl():
 
     result: Optional[Union[KclModel, Error]] = create_proprietary_to_kcl.sync(
         client=client,
+        code_option=CodeOption.PARSE,
     )
 
     if isinstance(result, Error) or result is None:
@@ -1929,6 +1931,7 @@ def test_create_proprietary_to_kcl():
     response: Response[Optional[Union[KclModel, Error]]] = (
         create_proprietary_to_kcl.sync_detailed(
             client=client,
+            code_option=CodeOption.PARSE,
         )
     )
 
@@ -1942,6 +1945,7 @@ async def test_create_proprietary_to_kcl_async():
 
     result: Optional[Union[KclModel, Error]] = await create_proprietary_to_kcl.asyncio(
         client=client,
+        code_option=CodeOption.PARSE,
     )
 
     # OR run async with more info
@@ -1949,6 +1953,7 @@ async def test_create_proprietary_to_kcl_async():
         Optional[Union[KclModel, Error]]
     ] = await create_proprietary_to_kcl.asyncio_detailed(
         client=client,
+        code_option=CodeOption.PARSE,
     )
 
 

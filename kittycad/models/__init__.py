@@ -4,6 +4,7 @@ from .account_provider import AccountProvider
 from .add_hole_from_offset import AddHoleFromOffset
 from .add_org_member import AddOrgMember
 from .address_details import AddressDetails
+from .adjacency_info import AdjacencyInfo
 from .angle import Angle
 from .annotation_line_end import AnnotationLineEnd
 from .annotation_line_end_options import AnnotationLineEndOptions
@@ -50,6 +51,7 @@ from .client_metrics import ClientMetrics
 from .close_path import ClosePath
 from .cluster import Cluster
 from .code_language import CodeLanguage
+from .code_option import CodeOption
 from .code_output import CodeOutput
 from .color import Color
 from .complementary_edges import ComplementaryEdges
@@ -94,6 +96,7 @@ from .discount import Discount
 from .discount_code import DiscountCode
 from .distance_type import DistanceType
 from .dxf_storage import DxfStorage
+from .edge_info import EdgeInfo
 from .edge_lines_visible import EdgeLinesVisible
 from .email_authentication_form import EmailAuthenticationForm
 from .empty import Empty
@@ -266,6 +269,7 @@ from .project_entity_to_plane import ProjectEntityToPlane
 from .project_points_to_plane import ProjectPointsToPlane
 from .raw_file import RawFile
 from .reconfigure_stream import ReconfigureStream
+from .relative_to import RelativeTo
 from .remove_scene_objects import RemoveSceneObjects
 from .revolve import Revolve
 from .revolve_about_edge import RevolveAboutEdge
@@ -306,16 +310,15 @@ from .side_face import SideFace
 from .sketch_mode_disable import SketchModeDisable
 from .solid2d_add_hole import Solid2dAddHole
 from .solid3d_fillet_edge import Solid3dFilletEdge
+from .solid3d_get_adjacency_info import Solid3dGetAdjacencyInfo
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from .solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
 from .solid3d_get_common_edge import Solid3dGetCommonEdge
 from .solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
-from .solid3d_get_info import Solid3dGetInfo
 from .solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from .solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from .solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from .solid3d_shell_face import Solid3dShellFace
-from .solid_info import SolidInfo
 from .source_position import SourcePosition
 from .source_range import SourceRange
 from .source_range_prompt import SourceRangePrompt

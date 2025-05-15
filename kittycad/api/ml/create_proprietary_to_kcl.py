@@ -3,18 +3,26 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
+from ...models.code_option import CodeOption
 from ...models.error import Error
 from ...models.kcl_model import KclModel
 from ...types import Response
 
 
 def _get_kwargs(
+    code_option: CodeOption,
     *,
     client: Client,
 ) -> Dict[str, Any]:
     url = "{}/ml/convert/proprietary-to-kcl".format(
         client.base_url,
     )  # noqa: E501
+
+    if code_option is not None:
+        if "?" in url:
+            url = url + "&code_option=" + str(code_option)
+        else:
+            url = url + "?code_option=" + str(code_option)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -52,10 +60,12 @@ def _build_response(
 
 
 def sync_detailed(
+    code_option: CodeOption,
     *,
     client: Client,
 ) -> Response[Optional[Union[KclModel, Error]]]:
     kwargs = _get_kwargs(
+        code_option=code_option,
         client=client,
     )
 
@@ -68,6 +78,7 @@ def sync_detailed(
 
 
 def sync(
+    code_option: CodeOption,
     *,
     client: Client,
 ) -> Optional[Union[KclModel, Error]]:
@@ -76,15 +87,18 @@ def sync(
     A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work."""  # noqa: E501
 
     return sync_detailed(
+        code_option=code_option,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    code_option: CodeOption,
     *,
     client: Client,
 ) -> Response[Optional[Union[KclModel, Error]]]:
     kwargs = _get_kwargs(
+        code_option=code_option,
         client=client,
     )
 
@@ -95,6 +109,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    code_option: CodeOption,
     *,
     client: Client,
 ) -> Optional[Union[KclModel, Error]]:
@@ -104,6 +119,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
+            code_option=code_option,
             client=client,
         )
     ).parsed

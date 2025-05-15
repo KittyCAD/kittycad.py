@@ -31,6 +31,7 @@ from ..models.path_segment import PathSegment
 from ..models.perspective_camera_parameters import PerspectiveCameraParameters
 from ..models.point2d import Point2d
 from ..models.point3d import Point3d
+from ..models.relative_to import RelativeTo
 from ..models.scene_selection_type import SceneSelectionType
 from ..models.scene_tool_type import SceneToolType
 from ..models.transform import Transform
@@ -103,6 +104,8 @@ class OptionExtrude(BaseModel):
 
 class OptionSweep(BaseModel):
     """Extrude the object along a path."""
+
+    relative_to: RelativeTo = "sketch_plane"  # type: ignore
 
     sectional: bool
 
@@ -1493,12 +1496,14 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetInfo(BaseModel):
+class OptionSolid3DGetAdjacencyInfo(BaseModel):
     """Get a concise description of all of solids edges."""
+
+    edge_id: str
 
     object_id: str
 
-    type: Literal["solid3d_get_info"] = "solid3d_get_info"
+    type: Literal["solid3d_get_adjacency_info"] = "solid3d_get_adjacency_info"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1735,7 +1740,7 @@ ModelingCmd = RootModel[
             OptionOrientToFace,
             OptionViewIsometric,
             OptionSolid3DGetExtrusionFaceInfo,
-            OptionSolid3DGetInfo,
+            OptionSolid3DGetAdjacencyInfo,
             OptionSelectClear,
             OptionSelectGet,
             OptionGetNumObjects,
