@@ -8,8 +8,8 @@ class CrmData(BaseModel):
 
     cad_industry: Optional[str] = None
 
-    cad_user_count: Optional[str] = None
-
     cad_user_type: Optional[str] = None
+
+    number_of_cad_users: Optional[str] = None
 
     model_config = ConfigDict(protected_namespaces=())
