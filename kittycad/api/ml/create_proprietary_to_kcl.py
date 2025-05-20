@@ -84,7 +84,9 @@ def sync(
 ) -> Optional[Union[KclModel, Error]]:
     """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
 
-    A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work."""  # noqa: E501
+    A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
+
+    Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""  # noqa: E501
 
     return sync_detailed(
         code_option=code_option,
@@ -115,7 +117,9 @@ async def asyncio(
 ) -> Optional[Union[KclModel, Error]]:
     """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
 
-    A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work."""  # noqa: E501
+    A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
+
+    Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""  # noqa: E501
 
     return (
         await asyncio_detailed(
