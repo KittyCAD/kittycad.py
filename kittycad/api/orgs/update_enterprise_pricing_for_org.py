@@ -85,7 +85,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[ZooProductSubscriptions, Error]]:
-    """You must be a Zoo employee to perform this request."""  # noqa: E501
+    """You must be a Zoo admin to perform this request."""  # noqa: E501
 
     return sync_detailed(
         id=id,
@@ -118,7 +118,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[ZooProductSubscriptions, Error]]:
-    """You must be a Zoo employee to perform this request."""  # noqa: E501
+    """You must be a Zoo admin to perform this request."""  # noqa: E501
 
     return (
         await asyncio_detailed(
