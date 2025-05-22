@@ -48,7 +48,6 @@ from kittycad.api.meta import (
     create_debug_uploads,
     create_event,
     get_ipinfo,
-    get_metadata,
     get_pricing_subscriptions,
     get_schema,
     internal_get_api_token_for_discord_user,
@@ -194,7 +193,6 @@ from kittycad.models import (
     IpAddrInfo,
     KclCodeCompletionResponse,
     KclModel,
-    Metadata,
     MlPrompt,
     MlPromptResultsPage,
     Onboarding,
@@ -347,47 +345,6 @@ async def test_get_schema_async():
 
     # OR run async with more info
     await get_schema.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
-def test_get_metadata():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Metadata, Error]] = get_metadata.sync(
-        client=client,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Metadata = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[Metadata, Error]]] = get_metadata.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_metadata_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Metadata, Error]] = await get_metadata.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[Metadata, Error]]
-    ] = await get_metadata.asyncio_detailed(
         client=client,
     )
 
