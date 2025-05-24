@@ -161,6 +161,7 @@ from kittycad.api.users import (
     put_public_form,
     put_public_subscribe,
     put_user_form_self,
+    update_subscription_for_user,
     update_user_privacy_settings,
     update_user_self,
     update_user_shortlink,
@@ -7587,6 +7588,69 @@ async def test_update_payment_balance_for_any_user_async():
         id=UserIdentifier("<string>"),
         include_total_due=False,
         body=UpdatePaymentBalance(),
+    )
+
+
+@pytest.mark.skip
+def test_update_subscription_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ZooProductSubscriptions, Error]] = (
+        update_subscription_for_user.sync(
+            client=client,
+            id=UserIdentifier("<string>"),
+            body=ZooProductSubscriptionsUserRequest(
+                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ZooProductSubscriptions = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
+        update_subscription_for_user.sync_detailed(
+            client=client,
+            id=UserIdentifier("<string>"),
+            body=ZooProductSubscriptionsUserRequest(
+                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_subscription_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await update_subscription_for_user.asyncio(
+        client=client,
+        id=UserIdentifier("<string>"),
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await update_subscription_for_user.asyncio_detailed(
+        client=client,
+        id=UserIdentifier("<string>"),
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
     )
 
 
