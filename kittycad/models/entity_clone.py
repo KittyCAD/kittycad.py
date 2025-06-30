@@ -8,8 +8,6 @@ from ..models.face_edge_info import FaceEdgeInfo
 class EntityClone(BaseModel):
     """The response from the `EntityClone` command."""
 
-    entity_ids: Optional[List[str]] = None
-
     face_edge_ids: Optional[List[FaceEdgeInfo]] = None
 
     model_config = ConfigDict(protected_namespaces=())

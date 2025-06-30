@@ -1,17 +1,20 @@
-from typing import Any
+from typing import Optional
 
-from pydantic import GetCoreSchemaHandler
-from pydantic_core import CoreSchema, core_schema
+from pydantic import BaseModel, ConfigDict
+
+from ..models.origin_type import OriginType
+from ..models.point4d import Point4d
 
 
-class TransformByForPoint4d(str):
-    """"""
+class TransformByForPoint4d(BaseModel):
+    """How a property of an object should be transformed."""
 
-    def __str__(self) -> str:
-        return self
+    is_local: bool
 
-    @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source_type: Any, handler: GetCoreSchemaHandler
-    ) -> CoreSchema:
-        return core_schema.no_info_after_validator_function(cls, handler(str))
+    origin: Optional[OriginType] = None
+
+    property: Point4d
+
+    set: bool
+
+    model_config = ConfigDict(protected_namespaces=())

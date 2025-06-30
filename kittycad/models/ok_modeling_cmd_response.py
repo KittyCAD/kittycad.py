@@ -114,7 +114,9 @@ from ..models.send_object import SendObject
 from ..models.set_background_color import SetBackgroundColor
 from ..models.set_current_tool_properties import SetCurrentToolProperties
 from ..models.set_default_system_properties import SetDefaultSystemProperties
+from ..models.set_grid_auto_scale import SetGridAutoScale
 from ..models.set_grid_reference_plane import SetGridReferencePlane
+from ..models.set_grid_scale import SetGridScale
 from ..models.set_object_transform import SetObjectTransform
 from ..models.set_scene_units import SetSceneUnits
 from ..models.set_selection_filter import SetSelectionFilter
@@ -136,6 +138,7 @@ from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
 from ..models.sweep import Sweep
 from ..models.take_snapshot import TakeSnapshot
+from ..models.twist_extrude import TwistExtrude
 from ..models.update_annotation import UpdateAnnotation
 from ..models.view_isometric import ViewIsometric
 from ..models.volume import Volume
@@ -196,6 +199,16 @@ class OptionExtrude(BaseModel):
     data: Extrude
 
     type: Literal["extrude"] = "extrude"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionTwistExtrude(BaseModel):
+    """"""
+
+    data: TwistExtrude
+
+    type: Literal["twist_extrude"] = "twist_extrude"
 
     model_config = ConfigDict(protected_namespaces=())
 
@@ -1506,6 +1519,26 @@ class OptionBooleanSubtract(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSetGridScale(BaseModel):
+    """"""
+
+    data: SetGridScale
+
+    type: Literal["set_grid_scale"] = "set_grid_scale"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetGridAutoScale(BaseModel):
+    """"""
+
+    data: SetGridAutoScale
+
+    type: Literal["set_grid_auto_scale"] = "set_grid_auto_scale"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1515,6 +1548,7 @@ OkModelingCmdResponse = RootModel[
             OptionMovePathPen,
             OptionExtendPath,
             OptionExtrude,
+            OptionTwistExtrude,
             OptionSweep,
             OptionRevolve,
             OptionSolid3DShellFace,
@@ -1645,6 +1679,8 @@ OkModelingCmdResponse = RootModel[
             OptionBooleanUnion,
             OptionBooleanIntersection,
             OptionBooleanSubtract,
+            OptionSetGridScale,
+            OptionSetGridAutoScale,
         ],
         Field(discriminator="type"),
     ]
