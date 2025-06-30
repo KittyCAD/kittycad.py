@@ -54,6 +54,7 @@ from .code_output import CodeOutput
 from .color import Color
 from .complementary_edges import ComplementaryEdges
 from .component_transform import ComponentTransform
+from .conversion_params import ConversionParams
 from .country_code import CountryCode
 from .coupon import Coupon
 from .create_shortlink_request import CreateShortlinkRequest
@@ -213,7 +214,6 @@ from .object_set_material_params_pbr import ObjectSetMaterialParamsPbr
 from .object_visible import ObjectVisible
 from .ok_modeling_cmd_response import OkModelingCmdResponse
 from .ok_web_socket_response_data import OkWebSocketResponseData
-from .onboarding import Onboarding
 from .opposite_for_angle import OppositeForAngle
 from .opposite_for_length_unit import OppositeForLengthUnit
 from .org import Org
@@ -285,7 +285,9 @@ from .session_uuid import SessionUuid
 from .set_background_color import SetBackgroundColor
 from .set_current_tool_properties import SetCurrentToolProperties
 from .set_default_system_properties import SetDefaultSystemProperties
+from .set_grid_auto_scale import SetGridAutoScale
 from .set_grid_reference_plane import SetGridReferencePlane
+from .set_grid_scale import SetGridScale
 from .set_object_transform import SetObjectTransform
 from .set_scene_units import SetSceneUnits
 from .set_selection_filter import SetSelectionFilter
@@ -335,6 +337,7 @@ from .token_revoke_request_form import TokenRevokeRequestForm
 from .transform import Transform
 from .transform_by_for_point3d import TransformByForPoint3d
 from .transform_by_for_point4d import TransformByForPoint4d
+from .twist_extrude import TwistExtrude
 from .unit_angle import UnitAngle
 from .unit_angle_conversion import UnitAngleConversion
 from .unit_area import UnitArea

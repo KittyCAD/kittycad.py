@@ -389,9 +389,9 @@ def generateTypeAndExamplePython(
             logging.error("schema: %s", json.dumps(schema, indent=4))
             raise Exception("Unknown parameter type")
     elif "oneOf" in schema and len(schema["oneOf"]) > 0:
-        one_of = schema["oneOf"][0]
-        if len(schema["oneOf"]) > 1:
-            one_of = schema["oneOf"][1]
+        # Choose a random one.
+        index = random.randint(0, len(schema["oneOf"]) - 1)
+        one_of = schema["oneOf"][index]
 
         # Check if this is a nested object.
         if isNestedObjectOneOf(schema):
@@ -2377,7 +2377,8 @@ letters: List[str] = []
 def randletter() -> str:
     letter1 = chr(random.randint(ord("A"), ord("Z")))
     letter2 = chr(random.randint(ord("A"), ord("Z")))
-    letter = letter1 + letter2
+    letter3 = chr(random.randint(ord("A"), ord("Z")))
+    letter = letter1 + letter2 + letter3
     while letter in letters:
         return randletter()
     letters.append(letter)
