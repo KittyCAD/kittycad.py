@@ -30,6 +30,7 @@ from kittycad.api.executor import create_executor_term, create_file_execution
 from kittycad.api.file import (
     create_file_center_of_mass,
     create_file_conversion,
+    create_file_conversion_options,
     create_file_density,
     create_file_mass,
     create_file_surface_area,
@@ -150,7 +151,6 @@ from kittycad.api.users import (
     get_session_for_user,
     get_user,
     get_user_extended,
-    get_user_onboarding_self,
     get_user_privacy_settings,
     get_user_self,
     get_user_self_extended,
@@ -196,7 +196,6 @@ from kittycad.models import (
     KclModel,
     MlPrompt,
     MlPromptResultsPage,
-    Onboarding,
     Org,
     OrgMember,
     OrgMemberResultsPage,
@@ -237,13 +236,17 @@ from kittycad.models.add_org_member import AddOrgMember
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
-from kittycad.models.base64data import Base64Data
+from kittycad.models.axis import Axis
+from kittycad.models.axis_direction_pair import AxisDirectionPair
 from kittycad.models.billing_info import BillingInfo
+from kittycad.models.client_metrics import ClientMetrics
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
+from kittycad.models.conversion_params import ConversionParams
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.crm_data import CrmData
+from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.enterprise_subscription_tier_price import (
     EnterpriseSubscriptionTierPrice,
@@ -252,10 +255,10 @@ from kittycad.models.enterprise_subscription_tier_price import (
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import (
-    IdpMetadataSource,
-    OptionBase64EncodedXml,
-)
+from kittycad.models.gltf_presentation import GltfPresentation
+from kittycad.models.gltf_storage import GltfStorage
+from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
+from kittycad.models.input_format3d import InputFormat3d, OptionStl
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
@@ -269,11 +272,10 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
+from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
-from kittycad.models.rtc_sdp_type import RtcSdpType
-from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
@@ -282,6 +284,7 @@ from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
+from kittycad.models.system import System
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
@@ -308,7 +311,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionSdpOffer
+from kittycad.models.web_socket_request import OptionMetricsResponse
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -1325,6 +1328,145 @@ async def test_create_file_center_of_mass_async():
         output_unit=UnitLength.CM,
         src_format=FileImportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
+    )
+
+
+@pytest.mark.skip
+def test_create_file_conversion_options():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[FileConversion, Error]] = (
+        create_file_conversion_options.sync(
+            client=client,
+            body=ConversionParams(
+                output_format=OutputFormat3d(
+                    OptionGltf(
+                        presentation=GltfPresentation.COMPACT,
+                        storage=GltfStorage.BINARY,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionStl(
+                        coords=System(
+                            forward=AxisDirectionPair(
+                                axis=Axis.Y,
+                                direction=Direction.POSITIVE,
+                            ),
+                            up=AxisDirectionPair(
+                                axis=Axis.Y,
+                                direction=Direction.POSITIVE,
+                            ),
+                        ),
+                        units=UnitLength.CM,
+                    )
+                ),
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: FileConversion = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[FileConversion, Error]]] = (
+        create_file_conversion_options.sync_detailed(
+            client=client,
+            body=ConversionParams(
+                output_format=OutputFormat3d(
+                    OptionGltf(
+                        presentation=GltfPresentation.COMPACT,
+                        storage=GltfStorage.BINARY,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionStl(
+                        coords=System(
+                            forward=AxisDirectionPair(
+                                axis=Axis.Y,
+                                direction=Direction.POSITIVE,
+                            ),
+                            up=AxisDirectionPair(
+                                axis=Axis.Y,
+                                direction=Direction.POSITIVE,
+                            ),
+                        ),
+                        units=UnitLength.CM,
+                    )
+                ),
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_file_conversion_options_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[FileConversion, Error]
+    ] = await create_file_conversion_options.asyncio(
+        client=client,
+        body=ConversionParams(
+            output_format=OutputFormat3d(
+                OptionGltf(
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionStl(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.CM,
+                )
+            ),
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[FileConversion, Error]]
+    ] = await create_file_conversion_options.asyncio_detailed(
+        client=client,
+        body=ConversionParams(
+            output_format=OutputFormat3d(
+                OptionGltf(
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionStl(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.CM,
+                )
+            ),
+        ),
     )
 
 
@@ -3611,8 +3753,8 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -3633,8 +3775,8 @@ def test_update_org_saml_idp():
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
-                    OptionBase64EncodedXml(
-                        data=Base64Data(b"<bytes>"),
+                    OptionUrl(
+                        url="<string>",
                     )
                 ),
                 technical_contact_email="<string>",
@@ -3657,8 +3799,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -3673,8 +3815,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -3692,8 +3834,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -3714,8 +3856,8 @@ def test_create_org_saml_idp():
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
-                    OptionBase64EncodedXml(
-                        data=Base64Data(b"<bytes>"),
+                    OptionUrl(
+                        url="<string>",
                     )
                 ),
                 technical_contact_email="<string>",
@@ -3738,8 +3880,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -3754,8 +3896,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -5903,49 +6045,6 @@ async def test_get_oauth2_providers_for_user_async():
 
 
 @pytest.mark.skip
-def test_get_user_onboarding_self():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Onboarding, Error]] = get_user_onboarding_self.sync(
-        client=client,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Onboarding = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[Onboarding, Error]]] = (
-        get_user_onboarding_self.sync_detailed(
-            client=client,
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_user_onboarding_self_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Onboarding, Error]] = await get_user_onboarding_self.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[Onboarding, Error]]
-    ] = await get_user_onboarding_self.asyncio_detailed(
-        client=client,
-    )
-
-
-@pytest.mark.skip
 def test_get_user_org():
     # Create our client.
     client = ClientFromEnv()
@@ -7831,11 +7930,8 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionSdpOffer(
-                    offer=RtcSessionDescription(
-                        sdp="<string>",
-                        type=RtcSdpType.UNSPECIFIED,
-                    ),
+                OptionMetricsResponse(
+                    metrics=ClientMetrics(),
                 )
             )
         )

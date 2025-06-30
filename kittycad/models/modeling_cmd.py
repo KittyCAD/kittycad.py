@@ -102,6 +102,28 @@ class OptionExtrude(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionTwistExtrude(BaseModel):
+    """Command for twist extruding a solid 2d."""
+
+    angle_step_size: Angle = {"unit": "degrees", "value": 15.0}  # type: ignore
+
+    center_2d: Point2d = {"x": 0.0, "y": 0.0}  # type: ignore
+
+    distance: LengthUnit
+
+    faces: Optional[ExtrudedFaceInfo] = None
+
+    target: ModelingCmdId
+
+    tolerance: LengthUnit
+
+    total_rotation_angle: Angle
+
+    type: Literal["twist_extrude"] = "twist_extrude"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 class OptionSweep(BaseModel):
     """Extrude the object along a path."""
 
@@ -1620,6 +1642,26 @@ class OptionSetGridReferencePlane(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionSetGridScale(BaseModel):
+    """Set the scale of the grid lines in the video feed."""
+
+    type: Literal["set_grid_scale"] = "set_grid_scale"
+
+    units: UnitLength
+
+    value: float
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionSetGridAutoScale(BaseModel):
+    """Set the grid lines to auto scale. The grid will get larger the further you zoom out, and smaller the more you zoom in."""
+
+    type: Literal["set_grid_auto_scale"] = "set_grid_auto_scale"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1628,6 +1670,7 @@ ModelingCmd = RootModel[
             OptionMovePathPen,
             OptionExtendPath,
             OptionExtrude,
+            OptionTwistExtrude,
             OptionSweep,
             OptionRevolve,
             OptionSolid3DShellFace,
@@ -1751,6 +1794,8 @@ ModelingCmd = RootModel[
             OptionMakeOffsetPath,
             OptionAddHoleFromOffset,
             OptionSetGridReferencePlane,
+            OptionSetGridScale,
+            OptionSetGridAutoScale,
         ],
         Field(discriminator="type"),
     ]
