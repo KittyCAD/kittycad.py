@@ -37,6 +37,7 @@ from kittycad.api.file import (
     create_file_volume,
 )
 from kittycad.api.hidden import (
+    auth_api_key,
     auth_email,
     auth_email_callback,
     get_auth_saml,
@@ -176,6 +177,7 @@ from kittycad.models import (
     ApiTokenResultsPage,
     AppClientInfo,
     AsyncApiCallResultsPage,
+    AuthApiKeyResponse,
     CodeOutput,
     CreateShortlinkResponse,
     Customer,
@@ -904,6 +906,49 @@ async def test_get_async_operation_async():
     ] = await get_async_operation.asyncio_detailed(
         client=client,
         id="<string>",
+    )
+
+
+@pytest.mark.skip
+def test_auth_api_key():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[AuthApiKeyResponse, Error]] = auth_api_key.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: AuthApiKeyResponse = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[AuthApiKeyResponse, Error]]] = (
+        auth_api_key.sync_detailed(
+            client=client,
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_auth_api_key_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[AuthApiKeyResponse, Error]] = await auth_api_key.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[AuthApiKeyResponse, Error]]
+    ] = await auth_api_key.asyncio_detailed(
+        client=client,
     )
 
 
