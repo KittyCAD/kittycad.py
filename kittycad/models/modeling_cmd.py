@@ -15,6 +15,7 @@ from ..models.cut_strategy import CutStrategy
 from ..models.cut_type import CutType
 from ..models.distance_type import DistanceType
 from ..models.entity_type import EntityType
+from ..models.extrude_method import ExtrudeMethod
 from ..models.extruded_face_info import ExtrudedFaceInfo
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
@@ -90,6 +91,8 @@ class OptionExtrude(BaseModel):
     """Command for extruding a solid 2d."""
 
     distance: LengthUnit
+
+    extrude_method: ExtrudeMethod = "merge"  # type: ignore
 
     faces: Optional[ExtrudedFaceInfo] = None
 
@@ -933,7 +936,7 @@ class OptionEntitySetOpacity(BaseModel):
 class OptionEntityFade(BaseModel):
     """Fade entity in or out."""
 
-    duration_seconds: float = 0.4000000059604645
+    duration_seconds: float = 0.4
 
     entity_id: str
 
