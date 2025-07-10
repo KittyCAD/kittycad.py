@@ -132,6 +132,7 @@ from .extend_path import ExtendPath
 from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
 from .extrude import Extrude
+from .extrude_method import ExtrudeMethod
 from .extruded_face_info import ExtrudedFaceInfo
 from .extrusion_face_cap_type import ExtrusionFaceCapType
 from .extrusion_face_info import ExtrusionFaceInfo

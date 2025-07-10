@@ -240,6 +240,7 @@ from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
+from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.client_metrics import ClientMetrics
 from kittycad.models.code_language import CodeLanguage
@@ -252,15 +253,17 @@ from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.enterprise_subscription_tier_price import (
     EnterpriseSubscriptionTierPrice,
-    OptionPerUser,
+    OptionFlat,
 )
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.gltf_presentation import GltfPresentation
-from kittycad.models.gltf_storage import GltfStorage
-from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
-from kittycad.models.input_format3d import InputFormat3d, OptionStl
+from kittycad.models.idp_metadata_source import (
+    IdpMetadataSource,
+    OptionBase64EncodedXml,
+    OptionUrl,
+)
+from kittycad.models.input_format3d import InputFormat3d, OptionSldprt
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
@@ -274,16 +277,18 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
+from kittycad.models.output_format3d import OptionStl, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionMeshByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
+from kittycad.models.stl_storage import StlStorage
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
 from kittycad.models.system import System
@@ -1386,12 +1391,6 @@ def test_create_file_conversion_options():
             client=client,
             body=ConversionParams(
                 output_format=OutputFormat3d(
-                    OptionGltf(
-                        presentation=GltfPresentation.COMPACT,
-                        storage=GltfStorage.BINARY,
-                    )
-                ),
-                src_format=InputFormat3d(
                     OptionStl(
                         coords=System(
                             forward=AxisDirectionPair(
@@ -1403,7 +1402,18 @@ def test_create_file_conversion_options():
                                 direction=Direction.POSITIVE,
                             ),
                         ),
+                        selection=Selection(
+                            OptionMeshByIndex(
+                                index=10,
+                            )
+                        ),
+                        storage=StlStorage.ASCII,
                         units=UnitLength.CM,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionSldprt(
+                        split_closed_faces=False,
                     )
                 ),
             ),
@@ -1423,12 +1433,6 @@ def test_create_file_conversion_options():
             client=client,
             body=ConversionParams(
                 output_format=OutputFormat3d(
-                    OptionGltf(
-                        presentation=GltfPresentation.COMPACT,
-                        storage=GltfStorage.BINARY,
-                    )
-                ),
-                src_format=InputFormat3d(
                     OptionStl(
                         coords=System(
                             forward=AxisDirectionPair(
@@ -1440,7 +1444,18 @@ def test_create_file_conversion_options():
                                 direction=Direction.POSITIVE,
                             ),
                         ),
+                        selection=Selection(
+                            OptionMeshByIndex(
+                                index=10,
+                            )
+                        ),
+                        storage=StlStorage.ASCII,
                         units=UnitLength.CM,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionSldprt(
+                        split_closed_faces=False,
                     )
                 ),
             ),
@@ -1461,12 +1476,6 @@ async def test_create_file_conversion_options_async():
         client=client,
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                )
-            ),
-            src_format=InputFormat3d(
                 OptionStl(
                     coords=System(
                         forward=AxisDirectionPair(
@@ -1478,7 +1487,18 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionSldprt(
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -1491,12 +1511,6 @@ async def test_create_file_conversion_options_async():
         client=client,
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                )
-            ),
-            src_format=InputFormat3d(
                 OptionStl(
                     coords=System(
                         forward=AxisDirectionPair(
@@ -1508,7 +1522,18 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionSldprt(
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -3798,8 +3823,8 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -3820,8 +3845,8 @@ def test_update_org_saml_idp():
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
-                    OptionUrl(
-                        url="<string>",
+                    OptionBase64EncodedXml(
+                        data=Base64Data(b"<bytes>"),
                     )
                 ),
                 technical_contact_email="<string>",
@@ -3844,8 +3869,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -3860,8 +3885,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -4360,7 +4385,7 @@ def test_update_enterprise_pricing_for_org():
             client=client,
             id=Uuid("<string>"),
             body=EnterpriseSubscriptionTierPrice(
-                OptionPerUser(
+                OptionFlat(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -4381,7 +4406,7 @@ def test_update_enterprise_pricing_for_org():
             client=client,
             id=Uuid("<string>"),
             body=EnterpriseSubscriptionTierPrice(
-                OptionPerUser(
+                OptionFlat(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -4403,7 +4428,7 @@ async def test_update_enterprise_pricing_for_org_async():
         client=client,
         id=Uuid("<string>"),
         body=EnterpriseSubscriptionTierPrice(
-            OptionPerUser(
+            OptionFlat(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )
@@ -4417,7 +4442,7 @@ async def test_update_enterprise_pricing_for_org_async():
         client=client,
         id=Uuid("<string>"),
         body=EnterpriseSubscriptionTierPrice(
-            OptionPerUser(
+            OptionFlat(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )

@@ -109,6 +109,42 @@ class OptionCircularInvolute(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
+class OptionEllipse(BaseModel):
+    """Adds an elliptical arc segment."""
+
+    center: Point2d
+
+    end_angle: Angle
+
+    major_radius: LengthUnit
+
+    minor_radius: LengthUnit
+
+    start_angle: Angle
+
+    type: Literal["ellipse"] = "ellipse"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
+class OptionConicTo(BaseModel):
+    """Adds a generic conic section specified by the end point, interior point and tangents at the start and end of the section."""
+
+    end: Point2d
+
+    end_tangent: Point2d
+
+    interior: Point2d
+
+    relative: bool
+
+    start_tangent: Point2d
+
+    type: Literal["conic_to"] = "conic_to"
+
+    model_config = ConfigDict(protected_namespaces=())
+
+
 PathSegment = RootModel[
     Annotated[
         Union[
@@ -119,6 +155,8 @@ PathSegment = RootModel[
             OptionTangentialArcTo,
             OptionArcTo,
             OptionCircularInvolute,
+            OptionEllipse,
+            OptionConicTo,
         ],
         Field(discriminator="type"),
     ]
