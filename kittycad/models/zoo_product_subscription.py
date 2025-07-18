@@ -18,7 +18,7 @@ from ..models.zoo_tool import ZooTool
 class ZooProductSubscription(BaseModel):
     """A subscription to the modeling app."""
 
-    annual_discount: Optional[int] = None
+    annual_discount: Optional[float] = None
 
     description: str
 
