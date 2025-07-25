@@ -15,6 +15,8 @@ class TextToCadMultiFileIteration(BaseModel):
 
     completed_at: Optional[datetime.datetime] = None
 
+    conversation_id: Uuid
+
     created_at: datetime.datetime
 
     error: Optional[str] = None

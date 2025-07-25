@@ -41,6 +41,7 @@ from kittycad.api.hidden import (
     auth_email,
     auth_email_callback,
     get_auth_saml,
+    get_auth_saml_by_org,
     logout,
     post_auth_saml,
     redirect_user_shortlink,
@@ -1061,6 +1062,53 @@ async def test_auth_email_callback_async():
         client=client,
         email="<string>",
         token="<string>",
+        callback_url=None,  # Optional[str]
+    )
+
+
+@pytest.mark.skip
+def test_get_auth_saml_by_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = get_auth_saml_by_org.sync(
+        client=client,
+        org_id=Uuid("<string>"),
+        callback_url=None,  # Optional[str]
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = get_auth_saml_by_org.sync_detailed(
+        client=client,
+        org_id=Uuid("<string>"),
+        callback_url=None,  # Optional[str]
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_auth_saml_by_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await get_auth_saml_by_org.asyncio(
+        client=client,
+        org_id=Uuid("<string>"),
+        callback_url=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await get_auth_saml_by_org.asyncio_detailed(
+        client=client,
+        org_id=Uuid("<string>"),
         callback_url=None,  # Optional[str]
     )
 
