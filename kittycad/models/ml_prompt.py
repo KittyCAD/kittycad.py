@@ -15,6 +15,8 @@ class MlPrompt(BaseModel):
 
     completed_at: Optional[datetime.datetime] = None
 
+    conversation_id: Optional[Uuid] = None
+
     created_at: datetime.datetime
 
     error: Optional[str] = None
