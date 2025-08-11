@@ -55,6 +55,8 @@ from .code_output import CodeOutput
 from .color import Color
 from .complementary_edges import ComplementaryEdges
 from .component_transform import ComponentTransform
+from .conversation import Conversation
+from .conversation_results_page import ConversationResultsPage
 from .conversion_params import ConversionParams
 from .country_code import CountryCode
 from .coupon import Coupon
@@ -186,11 +188,15 @@ from .make_offset_path import MakeOffsetPath
 from .make_plane import MakePlane
 from .mass import Mass
 from .method import Method
+from .ml_copilot_client_message import MlCopilotClientMessage
+from .ml_copilot_server_message import MlCopilotServerMessage
+from .ml_copilot_system_command import MlCopilotSystemCommand
 from .ml_feedback import MlFeedback
 from .ml_prompt import MlPrompt
 from .ml_prompt_metadata import MlPromptMetadata
 from .ml_prompt_results_page import MlPromptResultsPage
 from .ml_prompt_type import MlPromptType
+from .ml_tool_result import MlToolResult
 from .modeling_app_event_type import ModelingAppEventType
 from .modeling_app_individual_subscription_tier import (
     ModelingAppIndividualSubscriptionTier,
@@ -257,6 +263,7 @@ from .privacy_settings import PrivacySettings
 from .project_entity_to_plane import ProjectEntityToPlane
 from .project_points_to_plane import ProjectPointsToPlane
 from .raw_file import RawFile
+from .reasoning_message import ReasoningMessage
 from .reconfigure_stream import ReconfigureStream
 from .relative_to import RelativeTo
 from .remove_scene_objects import RemoveSceneObjects
@@ -334,7 +341,8 @@ from .text_to_cad_iteration_body import TextToCadIterationBody
 from .text_to_cad_model import TextToCadModel
 from .text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
 from .text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
-from .text_to_cad_results_page import TextToCadResultsPage
+from .text_to_cad_response import TextToCadResponse
+from .text_to_cad_response_results_page import TextToCadResponseResultsPage
 from .token_revoke_request_form import TokenRevokeRequestForm
 from .transform import Transform
 from .transform_by_for_point3d import TransformByForPoint3d

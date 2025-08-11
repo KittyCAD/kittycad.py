@@ -4,7 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.error import Error
-from ...models.text_to_cad import TextToCad
+from ...models.text_to_cad_response import TextToCadResponse
 from ...types import Response
 
 
@@ -29,9 +29,11 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[TextToCad, Error]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[TextToCadResponse, Error]]:
     if response.status_code == 200:
-        response_200 = TextToCad(**response.json())
+        response_200 = TextToCadResponse(**response.json())
         return response_200
     if response.status_code == 400:
         response_4XX = Error(**response.json())
@@ -44,7 +46,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[TextToCad, Er
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[TextToCad, Error]]]:
+) -> Response[Optional[Union[TextToCadResponse, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -57,7 +59,7 @@ def sync_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Optional[Union[TextToCad, Error]]]:
+) -> Response[Optional[Union[TextToCadResponse, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -75,7 +77,7 @@ def sync(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[TextToCad, Error]]:
+) -> Optional[Union[TextToCadResponse, Error]]:
     """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""  # noqa: E501
 
     return sync_detailed(
@@ -88,7 +90,7 @@ async def asyncio_detailed(
     id: str,
     *,
     client: Client,
-) -> Response[Optional[Union[TextToCad, Error]]]:
+) -> Response[Optional[Union[TextToCadResponse, Error]]]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -104,7 +106,7 @@ async def asyncio(
     id: str,
     *,
     client: Client,
-) -> Optional[Union[TextToCad, Error]]:
+) -> Optional[Union[TextToCadResponse, Error]]:
     """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""  # noqa: E501
 
     return (
