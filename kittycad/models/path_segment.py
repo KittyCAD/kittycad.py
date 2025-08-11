@@ -116,7 +116,7 @@ class OptionEllipse(BaseModel):
 
     end_angle: Angle
 
-    major_radius: LengthUnit
+    major_axis: Point2d
 
     minor_radius: LengthUnit
 

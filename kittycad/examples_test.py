@@ -65,8 +65,11 @@ from kittycad.api.ml import (
     create_text_to_cad_multi_file_iteration,
     get_ml_prompt,
     get_text_to_cad_model_for_user,
+    list_conversations_for_user,
     list_ml_prompts,
     list_text_to_cad_models_for_user,
+    ml_copilot_ws,
+    ml_reasoning_ws,
 )
 from kittycad.api.modeling import modeling_commands_ws
 from kittycad.api.orgs import (
@@ -180,6 +183,7 @@ from kittycad.models import (
     AsyncApiCallResultsPage,
     AuthApiKeyResponse,
     CodeOutput,
+    ConversationResultsPage,
     CreateShortlinkResponse,
     Customer,
     CustomerBalance,
@@ -197,6 +201,7 @@ from kittycad.models import (
     IpAddrInfo,
     KclCodeCompletionResponse,
     KclModel,
+    MlCopilotClientMessage,
     MlPrompt,
     MlPromptResultsPage,
     Org,
@@ -214,7 +219,8 @@ from kittycad.models import (
     TextToCad,
     TextToCadIteration,
     TextToCadMultiFileIteration,
-    TextToCadResultsPage,
+    TextToCadResponse,
+    TextToCadResponseResultsPage,
     UnitAngleConversion,
     UnitAreaConversion,
     UnitCurrentConversion,
@@ -243,7 +249,6 @@ from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
 from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
-from kittycad.models.client_metrics import ClientMetrics
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
 from kittycad.models.conversion_params import ConversionParams
@@ -257,6 +262,7 @@ from kittycad.models.enterprise_subscription_tier_price import (
     OptionFlat,
 )
 from kittycad.models.event import Event, OptionModelingAppEvent
+from kittycad.models.fbx_storage import FbxStorage
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.idp_metadata_source import (
@@ -264,11 +270,12 @@ from kittycad.models.idp_metadata_source import (
     OptionBase64EncodedXml,
     OptionUrl,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionSldprt
+from kittycad.models.input_format3d import InputFormat3d, OptionPly
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
+from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionUser
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.modeling_app_individual_subscription_tier import (
@@ -278,18 +285,16 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStl, OutputFormat3d
+from kittycad.models.output_format3d import OptionFbx, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
-from kittycad.models.selection import OptionMeshByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
-from kittycad.models.stl_storage import StlStorage
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
 from kittycad.models.system import System
@@ -319,7 +324,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionMetricsResponse
+from kittycad.models.web_socket_request import OptionDebug
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -1439,7 +1444,12 @@ def test_create_file_conversion_options():
             client=client,
             body=ConversionParams(
                 output_format=OutputFormat3d(
-                    OptionStl(
+                    OptionFbx(
+                        storage=FbxStorage.ASCII,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionPly(
                         coords=System(
                             forward=AxisDirectionPair(
                                 axis=Axis.Y,
@@ -1450,18 +1460,7 @@ def test_create_file_conversion_options():
                                 direction=Direction.POSITIVE,
                             ),
                         ),
-                        selection=Selection(
-                            OptionMeshByIndex(
-                                index=10,
-                            )
-                        ),
-                        storage=StlStorage.ASCII,
                         units=UnitLength.CM,
-                    )
-                ),
-                src_format=InputFormat3d(
-                    OptionSldprt(
-                        split_closed_faces=False,
                     )
                 ),
             ),
@@ -1481,7 +1480,12 @@ def test_create_file_conversion_options():
             client=client,
             body=ConversionParams(
                 output_format=OutputFormat3d(
-                    OptionStl(
+                    OptionFbx(
+                        storage=FbxStorage.ASCII,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionPly(
                         coords=System(
                             forward=AxisDirectionPair(
                                 axis=Axis.Y,
@@ -1492,18 +1496,7 @@ def test_create_file_conversion_options():
                                 direction=Direction.POSITIVE,
                             ),
                         ),
-                        selection=Selection(
-                            OptionMeshByIndex(
-                                index=10,
-                            )
-                        ),
-                        storage=StlStorage.ASCII,
                         units=UnitLength.CM,
-                    )
-                ),
-                src_format=InputFormat3d(
-                    OptionSldprt(
-                        split_closed_faces=False,
                     )
                 ),
             ),
@@ -1524,7 +1517,12 @@ async def test_create_file_conversion_options_async():
         client=client,
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStl(
+                OptionFbx(
+                    storage=FbxStorage.ASCII,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -1535,18 +1533,7 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionMeshByIndex(
-                            index=10,
-                        )
-                    ),
-                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
-                )
-            ),
-            src_format=InputFormat3d(
-                OptionSldprt(
-                    split_closed_faces=False,
                 )
             ),
         ),
@@ -1559,7 +1546,12 @@ async def test_create_file_conversion_options_async():
         client=client,
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStl(
+                OptionFbx(
+                    storage=FbxStorage.ASCII,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -1570,18 +1562,7 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionMeshByIndex(
-                            index=10,
-                        )
-                    ),
-                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
-                )
-            ),
-            src_format=InputFormat3d(
-                OptionSldprt(
-                    split_closed_faces=False,
                 )
             ),
         ),
@@ -2125,6 +2106,65 @@ async def test_get_ml_prompt_async():
     ] = await get_ml_prompt.asyncio_detailed(
         client=client,
         id="<string>",
+    )
+
+
+@pytest.mark.skip
+def test_list_conversations_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ConversationResultsPage, Error]] = (
+        list_conversations_for_user.sync(
+            client=client,
+            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            limit=None,  # Optional[int]
+            page_token=None,  # Optional[str]
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ConversationResultsPage = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[ConversationResultsPage, Error]]] = (
+        list_conversations_for_user.sync_detailed(
+            client=client,
+            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            limit=None,  # Optional[int]
+            page_token=None,  # Optional[str]
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_conversations_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ConversationResultsPage, Error]
+    ] = await list_conversations_for_user.asyncio(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ConversationResultsPage, Error]]
+    ] = await list_conversations_for_user.asyncio_detailed(
+        client=client,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,  # Optional[int]
+        page_token=None,  # Optional[str]
     )
 
 
@@ -7271,10 +7311,11 @@ def test_list_text_to_cad_models_for_user():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[TextToCadResultsPage, Error]] = (
+    result: Optional[Union[TextToCadResponseResultsPage, Error]] = (
         list_text_to_cad_models_for_user.sync(
             client=client,
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            conversation_id=Uuid("<string>"),
             limit=None,  # Optional[int]
             page_token=None,  # Optional[str]
             no_models=None,  # Optional[bool]
@@ -7285,14 +7326,15 @@ def test_list_text_to_cad_models_for_user():
         print(result)
         raise Exception("Error in response")
 
-    body: TextToCadResultsPage = result
+    body: TextToCadResponseResultsPage = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[TextToCadResultsPage, Error]]] = (
+    response: Response[Optional[Union[TextToCadResponseResultsPage, Error]]] = (
         list_text_to_cad_models_for_user.sync_detailed(
             client=client,
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+            conversation_id=Uuid("<string>"),
             limit=None,  # Optional[int]
             page_token=None,  # Optional[str]
             no_models=None,  # Optional[bool]
@@ -7308,10 +7350,11 @@ async def test_list_text_to_cad_models_for_user_async():
     client = ClientFromEnv()
 
     result: Optional[
-        Union[TextToCadResultsPage, Error]
+        Union[TextToCadResponseResultsPage, Error]
     ] = await list_text_to_cad_models_for_user.asyncio(
         client=client,
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        conversation_id=Uuid("<string>"),
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
         no_models=None,  # Optional[bool]
@@ -7319,10 +7362,11 @@ async def test_list_text_to_cad_models_for_user_async():
 
     # OR run async with more info
     response: Response[
-        Optional[Union[TextToCadResultsPage, Error]]
+        Optional[Union[TextToCadResponseResultsPage, Error]]
     ] = await list_text_to_cad_models_for_user.asyncio_detailed(
         client=client,
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        conversation_id=Uuid("<string>"),
         limit=None,  # Optional[int]
         page_token=None,  # Optional[str]
         no_models=None,  # Optional[bool]
@@ -7334,20 +7378,22 @@ def test_get_text_to_cad_model_for_user():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Union[TextToCad, Error]] = get_text_to_cad_model_for_user.sync(
-        client=client,
-        id="<string>",
+    result: Optional[Union[TextToCadResponse, Error]] = (
+        get_text_to_cad_model_for_user.sync(
+            client=client,
+            id="<string>",
+        )
     )
 
     if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
-    body: TextToCad = result
+    body: TextToCadResponse = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[TextToCad, Error]]] = (
+    response: Response[Optional[Union[TextToCadResponse, Error]]] = (
         get_text_to_cad_model_for_user.sync_detailed(
             client=client,
             id="<string>",
@@ -7363,7 +7409,7 @@ async def test_get_text_to_cad_model_for_user_async():
     client = ClientFromEnv()
 
     result: Optional[
-        Union[TextToCad, Error]
+        Union[TextToCadResponse, Error]
     ] = await get_text_to_cad_model_for_user.asyncio(
         client=client,
         id="<string>",
@@ -7371,7 +7417,7 @@ async def test_get_text_to_cad_model_for_user_async():
 
     # OR run async with more info
     response: Response[
-        Optional[Union[TextToCad, Error]]
+        Optional[Union[TextToCadResponse, Error]]
     ] = await get_text_to_cad_model_for_user.asyncio_detailed(
         client=client,
         id="<string>",
@@ -8027,6 +8073,110 @@ async def test_create_executor_term_async():
 
 
 @pytest.mark.skip
+def test_ml_copilot_ws():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    with ml_copilot_ws.WebSocket(
+        client=client,
+    ) as websocket:
+        # Send a message.
+        websocket.send(
+            MlCopilotClientMessage(
+                OptionUser(
+                    content="<string>",
+                    current_files={"<string>": b"<bytes>"},
+                    source_ranges=[
+                        SourceRangePrompt(
+                            prompt="<string>",
+                            range=SourceRange(
+                                end=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                                start=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                            ),
+                        )
+                    ],
+                )
+            )
+        )
+
+        # Get a message.
+        message = websocket.recv()
+        print(message)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_ml_copilot_ws_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    websocket = await ml_copilot_ws.asyncio(
+        client=client,
+    )
+
+    # Send a message.
+    await websocket.send("{}")
+
+    # Get the messages.
+    async for message in websocket:
+        print(message)
+
+
+@pytest.mark.skip
+def test_ml_reasoning_ws():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    with ml_reasoning_ws.WebSocket(
+        client=client,
+        id="<string>",
+    ) as websocket:
+        # Send a message.
+        websocket.send(
+            MlCopilotClientMessage(
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
+                )
+            )
+        )
+
+        # Get a message.
+        message = websocket.recv()
+        print(message)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_ml_reasoning_ws_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    # Connect to the websocket.
+    websocket = await ml_reasoning_ws.asyncio(
+        client=client,
+        id="<string>",
+    )
+
+    # Send a message.
+    await websocket.send("{}")
+
+    # Get the messages.
+    async for message in websocket:
+        print(message)
+
+
+@pytest.mark.skip
 def test_modeling_commands_ws():
     # Create our client.
     client = ClientFromEnv()
@@ -8046,13 +8196,7 @@ def test_modeling_commands_ws():
         replay=None,  # Optional[str]
     ) as websocket:
         # Send a message.
-        websocket.send(
-            WebSocketRequest(
-                OptionMetricsResponse(
-                    metrics=ClientMetrics(),
-                )
-            )
-        )
+        websocket.send(WebSocketRequest(OptionDebug()))
 
         # Get a message.
         message = websocket.recv()
