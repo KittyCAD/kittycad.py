@@ -44,6 +44,9 @@ from .models import (
     System,
     TextToCad,
     TextToCadCreateBody,
+    TextToCadIteration,
+    TextToCadMultiFileIteration,
+    TextToCadResponse,
     UnitDensity,
     UnitLength,
     UnitMass,
@@ -594,7 +597,7 @@ def test_text_to_cad():
         print(result)
         raise Exception("Error in response")
 
-    body: TextToCad = result
+    body: Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration] = result
 
     # Poll the api until the status is completed.
     # Timeout after some seconds.
@@ -602,7 +605,7 @@ def test_text_to_cad():
     while (
         body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
     ) and time.time() - start_time < 120:
-        result_status: Optional[Union[TextToCad, Error]] = (
+        result_status: Optional[Union[TextToCadResponse, Error]] = (
             get_text_to_cad_model_for_user.sync(
                 client=client,
                 id=body.id,
@@ -613,6 +616,6 @@ def test_text_to_cad():
             print(result_status)
             raise Exception("Error in response")
 
-        body = result_status
+        body = result_status.root
 
     assert body.status == ApiCallStatus.COMPLETED

@@ -22,6 +22,7 @@ dmypy.json
 
 # VS code
 .vscode/
+.claude
 
 /coverage.xml
 /.coverage

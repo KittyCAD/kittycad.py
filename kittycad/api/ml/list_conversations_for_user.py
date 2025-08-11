@@ -3,23 +3,20 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
+from ...models.conversation_results_page import ConversationResultsPage
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...models.error import Error
-from ...models.text_to_cad_response_results_page import TextToCadResponseResultsPage
-from ...models.uuid import Uuid
 from ...types import Response
 
 
 def _get_kwargs(
     sort_by: CreatedAtSortMode,
-    conversation_id: Uuid,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-    no_models: Optional[bool] = None,
 ) -> Dict[str, Any]:
-    url = "{}/user/text-to-cad".format(
+    url = "{}/ml/conversations".format(
         client.base_url,
     )  # noqa: E501
 
@@ -41,18 +38,6 @@ def _get_kwargs(
         else:
             url = url + "?sort_by=" + str(sort_by)
 
-    if conversation_id is not None:
-        if "?" in url:
-            url = url + "&conversation_id=" + str(conversation_id)
-        else:
-            url = url + "?conversation_id=" + str(conversation_id)
-
-    if no_models is not None:
-        if "?" in url:
-            url = url + "&no_models=" + str(no_models)
-        else:
-            url = url + "?no_models=" + str(no_models)
-
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
@@ -66,9 +51,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[TextToCadResponseResultsPage, Error]]:
+) -> Optional[Union[ConversationResultsPage, Error]]:
     if response.status_code == 200:
-        response_200 = TextToCadResponseResultsPage(**response.json())
+        response_200 = ConversationResultsPage(**response.json())
         return response_200
     if response.status_code == 400:
         response_4XX = Error(**response.json())
@@ -81,7 +66,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[TextToCadResponseResultsPage, Error]]]:
+) -> Response[Optional[Union[ConversationResultsPage, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -92,19 +77,15 @@ def _build_response(
 
 def sync_detailed(
     sort_by: CreatedAtSortMode,
-    conversation_id: Uuid,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-    no_models: Optional[bool] = None,
-) -> Response[Optional[Union[TextToCadResponseResultsPage, Error]]]:
+) -> Response[Optional[Union[ConversationResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
         sort_by=sort_by,
-        conversation_id=conversation_id,
-        no_models=no_models,
         client=client,
     )
 
@@ -118,44 +99,34 @@ def sync_detailed(
 
 def sync(
     sort_by: CreatedAtSortMode,
-    conversation_id: Uuid,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-    no_models: Optional[bool] = None,
-) -> Optional[Union[TextToCadResponseResultsPage, Error]]:
-    """This will always return the STEP file contents as well as the format the user originally requested.
+) -> Optional[Union[ConversationResultsPage, Error]]:
+    """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
-    This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
-
-    The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""  # noqa: E501
+    The conversations are returned in order of creation, with the most recently created conversations first."""  # noqa: E501
 
     return sync_detailed(
         limit=limit,
         page_token=page_token,
         sort_by=sort_by,
-        conversation_id=conversation_id,
-        no_models=no_models,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
     sort_by: CreatedAtSortMode,
-    conversation_id: Uuid,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-    no_models: Optional[bool] = None,
-) -> Response[Optional[Union[TextToCadResponseResultsPage, Error]]]:
+) -> Response[Optional[Union[ConversationResultsPage, Error]]]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
         sort_by=sort_by,
-        conversation_id=conversation_id,
-        no_models=no_models,
         client=client,
     )
 
@@ -167,26 +138,20 @@ async def asyncio_detailed(
 
 async def asyncio(
     sort_by: CreatedAtSortMode,
-    conversation_id: Uuid,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-    no_models: Optional[bool] = None,
-) -> Optional[Union[TextToCadResponseResultsPage, Error]]:
-    """This will always return the STEP file contents as well as the format the user originally requested.
+) -> Optional[Union[ConversationResultsPage, Error]]:
+    """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
-    This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
-
-    The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""  # noqa: E501
+    The conversations are returned in order of creation, with the most recently created conversations first."""  # noqa: E501
 
     return (
         await asyncio_detailed(
             limit=limit,
             page_token=page_token,
             sort_by=sort_by,
-            conversation_id=conversation_id,
-            no_models=no_models,
             client=client,
         )
     ).parsed

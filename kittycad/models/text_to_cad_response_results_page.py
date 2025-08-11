@@ -2,13 +2,13 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
-from ..models.text_to_cad import TextToCad
+from ..models.text_to_cad_response import TextToCadResponse
 
 
-class TextToCadResultsPage(BaseModel):
+class TextToCadResponseResultsPage(BaseModel):
     """A single page of results"""
 
-    items: List[TextToCad]
+    items: List[TextToCadResponse]
 
     next_page: Optional[str] = None
 
