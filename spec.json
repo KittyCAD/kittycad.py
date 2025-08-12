@@ -37057,6 +37057,176 @@
               "content",
               "type"
             ]
+          },
+          {
+            "description": "Reasoning that contains the KCL docs relevant to the reasoning.",
+            "type": "object",
+            "properties": {
+              "content": {
+                "description": "The content of the reasoning.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "kcl_docs"
+                ]
+              }
+            },
+            "required": [
+              "content",
+              "type"
+            ]
+          },
+          {
+            "description": "Reasoning that contains the KCL code examples relevant to the reasoning.",
+            "type": "object",
+            "properties": {
+              "content": {
+                "description": "The content of the reasoning.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "kcl_code_examples"
+                ]
+              }
+            },
+            "required": [
+              "content",
+              "type"
+            ]
+          },
+          {
+            "description": "Reasoning that contains a feature tree outline.",
+            "type": "object",
+            "properties": {
+              "content": {
+                "description": "The content of the reasoning.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "feature_tree_outline"
+                ]
+              }
+            },
+            "required": [
+              "content",
+              "type"
+            ]
+          },
+          {
+            "description": "Reasoning that contains potential KCL code, this code has not been executed yet. It might not even compile or be valid KCL code.",
+            "type": "object",
+            "properties": {
+              "code": {
+                "description": "The content of the reasoning.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "generated_kcl_code"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "type"
+            ]
+          },
+          {
+            "description": "Reasoning containing an error message from executing the KCL code.",
+            "type": "object",
+            "properties": {
+              "error": {
+                "description": "The error message.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "kcl_code_error"
+                ]
+              }
+            },
+            "required": [
+              "error",
+              "type"
+            ]
+          },
+          {
+            "description": "A KCL file that is being created by the AI. This might contain invalid KCL code.",
+            "type": "object",
+            "properties": {
+              "content": {
+                "description": "The content of the file.",
+                "type": "string"
+              },
+              "file_name": {
+                "description": "The file name.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "created_kcl_file"
+                ]
+              }
+            },
+            "required": [
+              "content",
+              "file_name",
+              "type"
+            ]
+          },
+          {
+            "description": "A KCL file that is being updated by the AI. This might contain invalid KCL code.",
+            "type": "object",
+            "properties": {
+              "content": {
+                "description": "The content of the file.",
+                "type": "string"
+              },
+              "file_name": {
+                "description": "The file name.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "updated_kcl_file"
+                ]
+              }
+            },
+            "required": [
+              "content",
+              "file_name",
+              "type"
+            ]
+          },
+          {
+            "description": "A KCL file that is being deleted by the AI.",
+            "type": "object",
+            "properties": {
+              "file_name": {
+                "description": "The file name.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "deleted_kcl_file"
+                ]
+              }
+            },
+            "required": [
+              "file_name",
+              "type"
+            ]
           }
         ]
       },
