@@ -262,15 +262,13 @@ from kittycad.models.enterprise_subscription_tier_price import (
     OptionFlat,
 )
 from kittycad.models.event import Event, OptionModelingAppEvent
-from kittycad.models.fbx_storage import FbxStorage
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
-    OptionUrl,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionPly
+from kittycad.models.input_format3d import InputFormat3d, OptionStep
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
@@ -285,11 +283,13 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionFbx, OutputFormat3d
+from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionSceneByName, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
@@ -1444,11 +1444,6 @@ def test_create_file_conversion_options():
             client=client,
             body=ConversionParams(
                 output_format=OutputFormat3d(
-                    OptionFbx(
-                        storage=FbxStorage.ASCII,
-                    )
-                ),
-                src_format=InputFormat3d(
                     OptionPly(
                         coords=System(
                             forward=AxisDirectionPair(
@@ -1460,7 +1455,18 @@ def test_create_file_conversion_options():
                                 direction=Direction.POSITIVE,
                             ),
                         ),
+                        selection=Selection(
+                            OptionSceneByName(
+                                name="<string>",
+                            )
+                        ),
+                        storage=PlyStorage.ASCII,
                         units=UnitLength.CM,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionStep(
+                        split_closed_faces=False,
                     )
                 ),
             ),
@@ -1480,11 +1486,6 @@ def test_create_file_conversion_options():
             client=client,
             body=ConversionParams(
                 output_format=OutputFormat3d(
-                    OptionFbx(
-                        storage=FbxStorage.ASCII,
-                    )
-                ),
-                src_format=InputFormat3d(
                     OptionPly(
                         coords=System(
                             forward=AxisDirectionPair(
@@ -1496,7 +1497,18 @@ def test_create_file_conversion_options():
                                 direction=Direction.POSITIVE,
                             ),
                         ),
+                        selection=Selection(
+                            OptionSceneByName(
+                                name="<string>",
+                            )
+                        ),
+                        storage=PlyStorage.ASCII,
                         units=UnitLength.CM,
+                    )
+                ),
+                src_format=InputFormat3d(
+                    OptionStep(
+                        split_closed_faces=False,
                     )
                 ),
             ),
@@ -1517,11 +1529,6 @@ async def test_create_file_conversion_options_async():
         client=client,
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionFbx(
-                    storage=FbxStorage.ASCII,
-                )
-            ),
-            src_format=InputFormat3d(
                 OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
@@ -1533,7 +1540,18 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionSceneByName(
+                            name="<string>",
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionStep(
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -1546,11 +1564,6 @@ async def test_create_file_conversion_options_async():
         client=client,
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionFbx(
-                    storage=FbxStorage.ASCII,
-                )
-            ),
-            src_format=InputFormat3d(
                 OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
@@ -1562,7 +1575,18 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionSceneByName(
+                            name="<string>",
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionStep(
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -3992,8 +4016,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -4014,8 +4038,8 @@ def test_create_org_saml_idp():
             body=SamlIdentityProviderCreate(
                 idp_entity_id="<string>",
                 idp_metadata_source=IdpMetadataSource(
-                    OptionUrl(
-                        url="<string>",
+                    OptionBase64EncodedXml(
+                        data=Base64Data(b"<bytes>"),
                     )
                 ),
                 technical_contact_email="<string>",
@@ -4038,8 +4062,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -4054,8 +4078,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
