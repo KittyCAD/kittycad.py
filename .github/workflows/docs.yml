@@ -64,7 +64,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest-8-cores
     needs: build
     steps:
       - name: Deploy to GitHub Pages
