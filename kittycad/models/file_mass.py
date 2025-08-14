@@ -10,7 +10,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 
 
-class FileMass(BaseModel):
+class Filemass(BaseModel):
     """A file mass result."""
 
     completed_at: Optional[datetime.datetime] = None

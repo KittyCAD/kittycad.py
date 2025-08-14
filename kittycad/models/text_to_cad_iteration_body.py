@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.source_range_prompt import SourceRangePrompt
 
 
-class TextToCadIterationBody(BaseModel):
+class Texttocaditerationbody(BaseModel):
     """Body for generating models from text."""
 
     kcl_version: Optional[str] = None

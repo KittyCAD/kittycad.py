@@ -7,7 +7,7 @@ from ..models.service_account_uuid import ServiceAccountUuid
 from ..models.uuid import Uuid
 
 
-class ServiceAccount(BaseModel):
+class Serviceaccount(BaseModel):
     """A service account.
 
     These are used to authenticate orgs with Bearer authentication.

@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class UpdatePaymentBalance(BaseModel):
+class Updatepaymentbalance(BaseModel):
     """The data for updating a balance."""
 
     monthly_api_credits_remaining_monetary_value: Optional[float] = None

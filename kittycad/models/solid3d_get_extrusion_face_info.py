@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.extrusion_face_info import ExtrusionFaceInfo
 
 
-class Solid3dGetExtrusionFaceInfo(BaseModel):
+class Solid3dgetextrusionfaceinfo(BaseModel):
     """Extrusion face info struct (useful for maintaining mappings between source path segment ids and extrusion faces)"""
 
     faces: List[ExtrusionFaceInfo]

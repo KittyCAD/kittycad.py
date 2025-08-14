@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Solid3dGetOppositeEdge(BaseModel):
+class Solid3dgetoppositeedge(BaseModel):
     """The response from the `Solid3dGetOppositeEdge` command."""
 
     edge: str

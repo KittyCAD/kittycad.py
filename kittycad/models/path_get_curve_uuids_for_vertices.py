@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class PathGetCurveUuidsForVertices(BaseModel):
+class Pathgetcurveuuidsforvertices(BaseModel):
     """The response from the `PathGetCurveUuidsForVertices` command."""
 
     curve_ids: List[str]

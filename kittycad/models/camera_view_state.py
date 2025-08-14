@@ -5,7 +5,7 @@ from ..models.point4d import Point4d
 from ..models.world_coordinate_system import WorldCoordinateSystem
 
 
-class CameraViewState(BaseModel):
+class Cameraviewstate(BaseModel):
     """"""
 
     eye_offset: float

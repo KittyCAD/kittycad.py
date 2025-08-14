@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.country_code import CountryCode
 
 
-class IpAddrInfo(BaseModel):
+class Ipaddrinfo(BaseModel):
     """Information about an ip address. Represents geographical and network-related information."""
 
     asn: Optional[int] = None

@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class UpdateUser(BaseModel):
+class Updateuser(BaseModel):
     """The user-modifiable parts of a User."""
 
     company: Optional[str] = None

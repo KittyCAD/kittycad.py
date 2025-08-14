@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class CrmData(BaseModel):
+class Crmdata(BaseModel):
     """The data for subscribing a user to the newsletter."""
 
     cad_industry: Optional[str] = None

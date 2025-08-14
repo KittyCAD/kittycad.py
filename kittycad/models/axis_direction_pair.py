@@ -4,7 +4,7 @@ from ..models.axis import Axis
 from ..models.direction import Direction
 
 
-class AxisDirectionPair(BaseModel):
+class Axisdirectionpair(BaseModel):
     """An [`Axis`] paired with a [`Direction`]."""
 
     axis: Axis

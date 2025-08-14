@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class PerspectiveCameraParameters(BaseModel):
+class Perspectivecameraparameters(BaseModel):
     """Defines a perspective view."""
 
     fov_y: Optional[float] = None

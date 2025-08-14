@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.user_org_role import UserOrgRole
 
 
-class AddOrgMember(BaseModel):
+class Addorgmember(BaseModel):
     """Data for adding a member to an org."""
 
     email: str

@@ -8,7 +8,7 @@ from ..models.unit_current import UnitCurrent
 from ..models.uuid import Uuid
 
 
-class UnitCurrentConversion(BaseModel):
+class Unitcurrentconversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

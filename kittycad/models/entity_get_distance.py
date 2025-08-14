@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.length_unit import LengthUnit
 
 
-class EntityGetDistance(BaseModel):
+class Entitygetdistance(BaseModel):
     """The response from the `EntitiesGetDistance` command."""
 
     max_distance: LengthUnit

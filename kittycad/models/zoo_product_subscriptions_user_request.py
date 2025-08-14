@@ -7,7 +7,7 @@ from ..models.modeling_app_individual_subscription_tier import (
 )
 
 
-class ZooProductSubscriptionsUserRequest(BaseModel):
+class Zooproductsubscriptionsuserrequest(BaseModel):
     """A struct of Zoo product subscriptions a user can request."""
 
     modeling_app: ModelingAppIndividualSubscriptionTier = "free"  # type: ignore

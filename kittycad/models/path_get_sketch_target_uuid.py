@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class PathGetSketchTargetUuid(BaseModel):
+class Pathgetsketchtargetuuid(BaseModel):
     """The response from the `PathGetSketchTargetUuid` command."""
 
     target_id: Optional[str] = None

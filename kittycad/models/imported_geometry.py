@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class ImportedGeometry(BaseModel):
+class Importedgeometry(BaseModel):
     """Data from importing the files"""
 
     id: str

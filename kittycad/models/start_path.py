@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class StartPath(BaseModel):
+class Startpath(BaseModel):
     """The response from the `StartPath` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

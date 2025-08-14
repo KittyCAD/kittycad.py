@@ -8,7 +8,7 @@ from ..models.unit_pressure import UnitPressure
 from ..models.uuid import Uuid
 
 
-class UnitPressureConversion(BaseModel):
+class Unitpressureconversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

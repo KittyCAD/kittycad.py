@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.ok_web_socket_response_data import OkWebSocketResponseData
 
 
-class SuccessWebSocketResponse(BaseModel):
+class Successwebsocketresponse(BaseModel):
     """Successful Websocket response."""
 
     request_id: Optional[str] = None

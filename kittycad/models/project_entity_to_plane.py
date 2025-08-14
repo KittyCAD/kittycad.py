@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class ProjectEntityToPlane(BaseModel):
+class Projectentitytoplane(BaseModel):
     """The response from the `ProjectEntityToPlane` command."""
 
     projected_points: List[Point3d]

@@ -8,7 +8,7 @@ from ..models.uuid import Uuid
 from ..models.zoo_product_subscriptions import ZooProductSubscriptions
 
 
-class CustomerBalance(BaseModel):
+class Customerbalance(BaseModel):
     """A balance for a customer.
 
     This holds information about the financial balance for the customer."""

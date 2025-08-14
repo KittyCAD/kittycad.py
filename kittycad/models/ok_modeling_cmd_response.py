@@ -233,7 +233,7 @@ class OptionRevolve(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DShellFace(BaseModel):
+class OptionSolid3dShellFace(BaseModel):
     """"""
 
     data: Solid3dShellFace
@@ -395,7 +395,7 @@ class OptionObjectSetMaterialParamsPbr(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid2DAddHole(BaseModel):
+class OptionSolid2dAddHole(BaseModel):
     """"""
 
     data: Solid2dAddHole
@@ -405,7 +405,7 @@ class OptionSolid2DAddHole(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DFilletEdge(BaseModel):
+class OptionSolid3dFilletEdge(BaseModel):
     """"""
 
     data: Solid3dFilletEdge
@@ -707,7 +707,7 @@ class OptionSelectClear(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionExport2D(BaseModel):
+class OptionExport2d(BaseModel):
     """"""
 
     data: Export2d
@@ -717,7 +717,7 @@ class OptionExport2D(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionExport3D(BaseModel):
+class OptionExport3d(BaseModel):
     """"""
 
     data: Export3d
@@ -977,7 +977,7 @@ class OptionSelectGet(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetAdjacencyInfo(BaseModel):
+class OptionSolid3dGetAdjacencyInfo(BaseModel):
     """"""
 
     data: Solid3dGetAdjacencyInfo
@@ -987,7 +987,7 @@ class OptionSolid3DGetAdjacencyInfo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetAllEdgeFaces(BaseModel):
+class OptionSolid3dGetAllEdgeFaces(BaseModel):
     """"""
 
     data: Solid3dGetAllEdgeFaces
@@ -997,7 +997,7 @@ class OptionSolid3DGetAllEdgeFaces(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetAllOppositeEdges(BaseModel):
+class OptionSolid3dGetAllOppositeEdges(BaseModel):
     """"""
 
     data: Solid3dGetAllOppositeEdges
@@ -1007,7 +1007,7 @@ class OptionSolid3DGetAllOppositeEdges(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetOppositeEdge(BaseModel):
+class OptionSolid3dGetOppositeEdge(BaseModel):
     """"""
 
     data: Solid3dGetOppositeEdge
@@ -1017,7 +1017,7 @@ class OptionSolid3DGetOppositeEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetNextAdjacentEdge(BaseModel):
+class OptionSolid3dGetNextAdjacentEdge(BaseModel):
     """"""
 
     data: Solid3dGetNextAdjacentEdge
@@ -1027,7 +1027,7 @@ class OptionSolid3DGetNextAdjacentEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
+class OptionSolid3dGetPrevAdjacentEdge(BaseModel):
     """"""
 
     data: Solid3dGetPrevAdjacentEdge
@@ -1037,7 +1037,7 @@ class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetCommonEdge(BaseModel):
+class OptionSolid3dGetCommonEdge(BaseModel):
     """"""
 
     data: Solid3dGetCommonEdge
@@ -1439,7 +1439,7 @@ class OptionEntityMakeHelixFromEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
+class OptionSolid3dGetExtrusionFaceInfo(BaseModel):
     """"""
 
     data: Solid3dGetExtrusionFaceInfo
@@ -1551,7 +1551,7 @@ OkModelingCmdResponse = RootModel[
             OptionTwistExtrude,
             OptionSweep,
             OptionRevolve,
-            OptionSolid3DShellFace,
+            OptionSolid3dShellFace,
             OptionRevolveAboutEdge,
             OptionCameraDragStart,
             OptionDefaultCameraLookAt,
@@ -1567,8 +1567,8 @@ OkModelingCmdResponse = RootModel[
             OptionObjectVisible,
             OptionObjectBringToFront,
             OptionObjectSetMaterialParamsPbr,
-            OptionSolid2DAddHole,
-            OptionSolid3DFilletEdge,
+            OptionSolid2dAddHole,
+            OptionSolid3dFilletEdge,
             OptionSendObject,
             OptionEntitySetOpacity,
             OptionEntityFade,
@@ -1598,8 +1598,8 @@ OkModelingCmdResponse = RootModel[
             OptionDefaultCameraCenterToSelection,
             OptionDefaultCameraCenterToScene,
             OptionSelectClear,
-            OptionExport2D,
-            OptionExport3D,
+            OptionExport2d,
+            OptionExport3d,
             OptionExport,
             OptionSelectWithPoint,
             OptionHighlightSetEntity,
@@ -1625,13 +1625,13 @@ OkModelingCmdResponse = RootModel[
             OptionAddHoleFromOffset,
             OptionDefaultCameraFocusOn,
             OptionSelectGet,
-            OptionSolid3DGetAdjacencyInfo,
-            OptionSolid3DGetAllEdgeFaces,
-            OptionSolid3DGetAllOppositeEdges,
-            OptionSolid3DGetOppositeEdge,
-            OptionSolid3DGetNextAdjacentEdge,
-            OptionSolid3DGetPrevAdjacentEdge,
-            OptionSolid3DGetCommonEdge,
+            OptionSolid3dGetAdjacencyInfo,
+            OptionSolid3dGetAllEdgeFaces,
+            OptionSolid3dGetAllOppositeEdges,
+            OptionSolid3dGetOppositeEdge,
+            OptionSolid3dGetNextAdjacentEdge,
+            OptionSolid3dGetPrevAdjacentEdge,
+            OptionSolid3dGetCommonEdge,
             OptionGetEntityType,
             OptionCurveGetControlPoints,
             OptionProjectEntityToPlane,
@@ -1671,7 +1671,7 @@ OkModelingCmdResponse = RootModel[
             OptionEntityMakeHelix,
             OptionEntityMakeHelixFromParams,
             OptionEntityMakeHelixFromEdge,
-            OptionSolid3DGetExtrusionFaceInfo,
+            OptionSolid3dGetExtrusionFaceInfo,
             OptionExtrusionFaceInfo,
             OptionComplementaryEdges,
             OptionAdjacencyInfo,

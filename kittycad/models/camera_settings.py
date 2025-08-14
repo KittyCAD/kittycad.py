@@ -6,7 +6,7 @@ from ..models.point3d import Point3d
 from ..models.point4d import Point4d
 
 
-class CameraSettings(BaseModel):
+class Camerasettings(BaseModel):
     """Camera settings including position, center, fov etc"""
 
     center: Point3d

@@ -9,7 +9,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 
 
-class FileVolume(BaseModel):
+class Filevolume(BaseModel):
     """A file volume result."""
 
     completed_at: Optional[datetime.datetime] = None

@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.inquiry_type import InquiryType
 
 
-class InquiryForm(BaseModel):
+class Inquiryform(BaseModel):
     """The form for a public inquiry submission."""
 
     company: Optional[str] = None

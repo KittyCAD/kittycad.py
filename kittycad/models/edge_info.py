@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class EdgeInfo(BaseModel):
+class Edgeinfo(BaseModel):
     """A list of faces for a specific edge."""
 
     edge_id: str

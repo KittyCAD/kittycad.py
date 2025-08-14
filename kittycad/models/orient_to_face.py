@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.camera_settings import CameraSettings
 
 
-class OrientToFace(BaseModel):
+class Orienttoface(BaseModel):
     """The response from the `OrientToFace` command."""
 
     settings: CameraSettings

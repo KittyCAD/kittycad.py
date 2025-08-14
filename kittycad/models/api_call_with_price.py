@@ -7,7 +7,7 @@ from ..models.method import Method
 from ..models.uuid import Uuid
 
 
-class ApiCallWithPrice(BaseModel):
+class Apicallwithprice(BaseModel):
     """An API call with the price.
 
     This is a join of the `ApiCall` and `ApiCallPrice` tables."""

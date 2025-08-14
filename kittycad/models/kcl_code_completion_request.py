@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.kcl_code_completion_params import KclCodeCompletionParams
 
 
-class KclCodeCompletionRequest(BaseModel):
+class Kclcodecompletionrequest(BaseModel):
     """A request to generate KCL code completions."""
 
     extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}  # type: ignore

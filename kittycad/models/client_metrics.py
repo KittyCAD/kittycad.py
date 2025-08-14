@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class ClientMetrics(BaseModel):
+class Clientmetrics(BaseModel):
     """ClientMetrics contains information regarding the state of the peer."""
 
     rtc_frame_height: Optional[int] = None

@@ -4,7 +4,7 @@ from ..models.modeling_cmd import ModelingCmd
 from ..models.modeling_cmd_id import ModelingCmdId
 
 
-class ModelingCmdReq(BaseModel):
+class Modelingcmdreq(BaseModel):
     """A graphics command submitted to the KittyCAD engine via the Modeling API."""
 
     cmd: ModelingCmd

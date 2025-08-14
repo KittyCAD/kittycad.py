@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.ml_prompt import MlPrompt
 
 
-class MlPromptResultsPage(BaseModel):
+class Mlpromptresultspage(BaseModel):
     """A single page of results"""
 
     items: List[MlPrompt]

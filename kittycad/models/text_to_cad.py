@@ -11,7 +11,7 @@ from ..models.uuid import Uuid
 from .base64data import Base64Data
 
 
-class TextToCad(BaseModel):
+class Texttocad(BaseModel):
     """A response from a text to CAD prompt."""
 
     code: Optional[str] = None

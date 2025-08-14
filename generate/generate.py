@@ -4,278 +4,29 @@ import json
 import logging
 import os
 import random
-import re
-import subprocess
-import tempfile
 from typing import Any, Dict, List, Optional, Tuple, TypedDict
 
 import jinja2
 import jsonpatch
 from prance import BaseParser
 
+# Import utilities
+from .utils import (
+    camel_to_screaming_snake,
+    camel_to_snake,
+    clean_parameter_name,
+    consolidate_imports_in_file,
+    deduplicate_imports,
+    extract_imports_from_examples,
+    format_file_with_ruff,
+    snake_to_title,
+)
+
 package_name = "kittycad"
 
 random.seed(10)
 
 examples: List[str] = []
-
-
-def deduplicate_imports(imports_string: str) -> str:
-    """Deduplicate imports, prioritizing bulk imports over specific imports."""
-    if not imports_string.strip():
-        return imports_string
-
-    # Preserve original format characteristics
-    has_trailing_newline = imports_string.endswith("\n")
-    lines = imports_string.strip().split("\n")
-
-    # Track bulk imports from kittycad.models
-    bulk_imports = set()
-
-    # First pass: collect all bulk imports
-    for line in lines:
-        line_stripped = line.strip()
-        if line_stripped.startswith("from kittycad.models import "):
-            # Extract the imported name
-            import_part = line_stripped.replace("from kittycad.models import ", "")
-            bulk_imports.add(import_part)
-
-    # Second pass: identify and remove conflicting imports
-    deduplicated_lines = []
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        line_stripped = line.strip()
-
-        # Skip empty lines
-        if not line_stripped:
-            deduplicated_lines.append(line)
-            i += 1
-            continue
-
-        # Handle multi-line imports from kittycad.models.*
-        if (
-            line_stripped.startswith("from kittycad.models.")
-            and " import (" in line_stripped
-        ):
-            # This is the start of a multi-line import
-            import_block = []
-            import_block.append(lines[i])
-            i += 1
-
-            # Collect the rest of the import block until we find the closing parenthesis
-            while i < len(lines):
-                import_block.append(lines[i])
-                if ")" in lines[i].strip():
-                    i += 1
-                    break
-                i += 1
-
-            # Check if any imported class name from this block conflicts with bulk imports
-            has_conflict = False
-            full_text = " ".join(import_block)
-
-            for bulk_import in bulk_imports:
-                # Look for the bulk import name as a standalone word in the import block
-                if bulk_import in full_text:
-                    has_conflict = True
-                    break
-
-            # If no conflicts, keep the entire import block
-            if not has_conflict:
-                deduplicated_lines.extend(import_block)
-
-        # Handle single-line imports from kittycad.models.*
-        elif (
-            line_stripped.startswith("from kittycad.models.")
-            and " import " in line_stripped
-            and "(" not in line_stripped
-        ):
-            # Extract the imported class name
-            import_name = line_stripped.split(" import ")[-1].strip()
-            # If we have a bulk import for this, skip the specific import
-            if import_name not in bulk_imports:
-                deduplicated_lines.append(line)
-            i += 1
-        else:
-            # Regular line, just add it
-            deduplicated_lines.append(line)
-            i += 1
-
-    result = "\n".join(deduplicated_lines)
-
-    # Preserve trailing newline if original had one
-    if has_trailing_newline:
-        result += "\n"
-
-    return result
-
-
-def format_code_with_ruff(code: str) -> str:
-    """Format Python code using ruff for import sorting and code formatting."""
-    try:
-        # Write to a temporary file for ruff processing
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".py", delete=False
-        ) as temp_file:
-            temp_file.write(code)
-            temp_file_path = temp_file.name
-
-        # Format with ruff
-        subprocess.run(
-            ["python", "-m", "ruff", "check", "--fix", temp_file_path],
-            check=True,
-            capture_output=True,
-        )
-        subprocess.run(
-            ["python", "-m", "ruff", "format", temp_file_path],
-            check=True,
-            capture_output=True,
-        )
-
-        # Read the formatted result
-        with open(temp_file_path, "r") as temp_file:
-            formatted_code = temp_file.read()
-
-        # Clean up temp file
-        os.unlink(temp_file_path)
-
-        return formatted_code
-
-    except Exception as e:
-        logging.error("Failed to format code with ruff: %s", e)
-        logging.error("Content being formatted:\n%s", code)
-        # Fail hard on ruff errors
-        raise
-
-
-def consolidate_imports_in_file(file_path: str) -> None:
-    """Consolidate imports at the top of a Python file."""
-    with open(file_path, "r") as f:
-        content = f.read()
-
-    lines = content.split("\n")
-
-    # Collect all import lines
-    all_imports = set()
-    non_import_lines = []
-
-    for line in lines:
-        stripped = line.strip()
-
-        # Check if this line is an import (but not in a multi-line string or comment)
-        if (
-            stripped.startswith("from ") or stripped.startswith("import ")
-        ) and "(" not in stripped:
-            all_imports.add(stripped)
-        else:
-            non_import_lines.append(line)
-
-    # Sort imports for consistency - standard library first, then third-party, then local
-    standard_imports = []
-    third_party_imports = []
-    local_imports = []
-
-    for imp in sorted(all_imports):
-        if (
-            imp.startswith("import datetime")
-            or imp.startswith("import json")
-            or imp.startswith("from typing")
-        ):
-            standard_imports.append(imp)
-        elif (
-            imp.startswith("from pydantic")
-            or imp.startswith("from uuid")
-            or "pydantic_extra_types" in imp
-            or "typing_extensions" in imp
-        ):
-            third_party_imports.append(imp)
-        elif imp.startswith("from .") or imp.startswith("from .."):
-            local_imports.append(imp)
-        else:
-            # Default to third-party
-            third_party_imports.append(imp)
-
-    # Write the consolidated file
-    with open(file_path, "w") as f:
-        # Write standard library imports
-        if standard_imports:
-            f.write("\n".join(standard_imports))
-            f.write("\n\n")
-
-        # Write third-party imports
-        if third_party_imports:
-            f.write("\n".join(third_party_imports))
-            f.write("\n\n")
-
-        # Write local imports
-        if local_imports:
-            f.write("\n".join(local_imports))
-            f.write("\n\n")
-
-        # Write the rest of the content
-        f.write("\n".join(non_import_lines))
-
-
-def format_file_with_ruff(file_path: str) -> None:
-    """Format a Python file in-place using ruff."""
-    try:
-        # First consolidate imports to fix E402 errors
-        consolidate_imports_in_file(file_path)
-
-        subprocess.run(
-            ["python", "-m", "ruff", "check", "--fix", file_path],
-            check=True,
-            capture_output=True,
-        )
-        subprocess.run(
-            ["python", "-m", "ruff", "format", file_path],
-            check=True,
-            capture_output=True,
-        )
-    except subprocess.CalledProcessError:
-        logging.error("Failed to format file with ruff: %s", file_path)
-        # Fail hard on ruff errors
-        raise
-
-
-def extract_imports_from_examples(examples: List[str]) -> Tuple[List[str], List[str]]:
-    """Extract and consolidate imports from examples, returning (imports, examples_without_imports)."""
-    all_imports = set()
-    examples_without_imports = []
-
-    for example in examples:
-        lines = example.split("\n")
-        import_lines = []
-        code_lines = []
-        in_import_section = True
-
-        for line in lines:
-            stripped = line.strip()
-
-            # Check if this line is an import
-            if (
-                stripped.startswith("from ") or stripped.startswith("import ")
-            ) and "(" not in stripped:
-                if in_import_section:
-                    import_lines.append(line)
-                    all_imports.add(stripped)
-                else:
-                    # Import found after code started - this is the E402 issue
-                    all_imports.add(stripped)
-            else:
-                # Not an import line
-                if stripped and not stripped.startswith("#"):
-                    in_import_section = False
-                code_lines.append(line)
-
-        # Join the code lines back together
-        examples_without_imports.append("\n".join(code_lines))
-
-    # Sort imports for consistency
-    consolidated_imports = sorted(list(all_imports))
-
-    return consolidated_imports, examples_without_imports
 
 
 def main():
@@ -285,10 +36,10 @@ def main():
     parser = BaseParser(spec_path)
 
     # Generate the types.
-    generateTypes(cwd, parser.specification)
+    generate_types(cwd, parser.specification)
 
     # Generate the paths.
-    data = generatePaths(cwd, parser.specification)
+    data = generate_paths(cwd, parser.specification)
 
     # Add the client information to the generation.
     data["info"]["x-python"] = {
@@ -366,7 +117,7 @@ client = ClientFromEnv()
     format_file_with_ruff(examples_test_path)
 
 
-def generatePaths(cwd: str, parser: dict) -> dict:
+def generate_paths(cwd: str, parser: dict) -> dict:
     # Make sure we have the directory.
     path = os.path.join(cwd, "kittycad", "api")
     os.makedirs(path, exist_ok=True)
@@ -414,12 +165,12 @@ def generatePaths(cwd: str, parser: dict) -> dict:
                 # Skip OPTIONS.
                 if method.upper() != "OPTIONS":
                     endpoint = paths[p][method]
-                    data = generatePath(path, p, method, endpoint, data)
+                    data = generate_path(path, p, method, endpoint, data)
 
     return data
 
 
-def generateTypeAndExamplePython(
+def generate_type_and_example_python(
     name: str,
     schema: dict,
     data: dict,
@@ -590,8 +341,10 @@ def generateTypeAndExamplePython(
                 parameter_type = "bytes"
                 parameter_example = 'b"<bytes>"'
             else:
-                items_type, items_example, items_imports = generateTypeAndExamplePython(
-                    "", schema["items"], data, None, None
+                items_type, items_example, items_imports = (
+                    generate_type_and_example_python(
+                        "", schema["items"], data, None, None
+                    )
                 )
                 example_imports = example_imports + items_imports
                 parameter_type = "List[" + items_type + "]"
@@ -637,7 +390,9 @@ def generateTypeAndExamplePython(
                         prop_type,
                         prop_example,
                         prop_imports,
-                    ) = generateTypeAndExamplePython("", prop, data, import_path, tag)
+                    ) = generate_type_and_example_python(
+                        "", prop, data, import_path, tag
+                    )
                     example_imports = example_imports + prop_imports
                     parameter_example = parameter_example + (
                         "\n"
@@ -660,7 +415,7 @@ def generateTypeAndExamplePython(
             and "additionalProperties" in schema
             and schema["additionalProperties"] is not False
         ):
-            items_type, items_example, items_imports = generateTypeAndExamplePython(
+            items_type, items_example, items_imports = generate_type_and_example_python(
                 "", schema["additionalProperties"], data, None, None
             )
             example_imports = example_imports + items_imports
@@ -675,27 +430,27 @@ def generateTypeAndExamplePython(
         one_of = schema["oneOf"][index]
 
         # Check if this is a nested object.
-        if isNestedObjectOneOf(schema):
+        if is_nested_object_one_of(schema):
             if "properties" in one_of:
                 properties = one_of["properties"]
                 for prop in properties:
-                    return generateTypeAndExamplePython(
+                    return generate_type_and_example_python(
                         prop, properties[prop], data, camel_to_snake(name), None
                     )
                     break
             elif "type" in one_of and one_of["type"] == "string":
-                return generateTypeAndExamplePython(
+                return generate_type_and_example_python(
                     name, one_of, data, camel_to_snake(name), None
                 )
 
-        tag = getTagOneOf(schema)
+        tag = get_tag_one_of(schema)
 
         if (
             "properties" in one_of
             and "type" in one_of["properties"]
             and "enum" in one_of["properties"]["type"]
         ):
-            return generateTypeAndExamplePython(
+            return generate_type_and_example_python(
                 snake_to_title("option_" + one_of["properties"]["type"]["enum"][0]),
                 one_of,
                 data,
@@ -704,15 +459,17 @@ def generateTypeAndExamplePython(
                 name,
             )
         else:
-            return generateTypeAndExamplePython(name, one_of, data, None, None)
+            return generate_type_and_example_python(name, one_of, data, None, None)
     elif "allOf" in schema and len(schema["allOf"]) == 1:
-        return generateTypeAndExamplePython(name, schema["allOf"][0], data, None, None)
+        return generate_type_and_example_python(
+            name, schema["allOf"][0], data, None, None
+        )
     elif "$ref" in schema:
         parameter_type = schema["$ref"].replace("#/components/schemas/", "")
         # Get the schema for the reference.
         ref_schema = data["components"]["schemas"][parameter_type]
 
-        return generateTypeAndExamplePython(
+        return generate_type_and_example_python(
             parameter_type, ref_schema, data, None, None
         )
     else:
@@ -722,7 +479,9 @@ def generateTypeAndExamplePython(
     return parameter_type, parameter_example, example_imports
 
 
-def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) -> dict:
+def generate_path(
+    path: str, name: str, method: str, endpoint: dict, data: dict
+) -> dict:
     # Generate the path.
     fn_name = camel_to_snake(endpoint["operationId"])
     file_name = fn_name + ".py"
@@ -734,15 +493,17 @@ def generatePath(path: str, name: str, method: str, endpoint: dict, data: dict) 
     file_path = os.path.join(path, file_name)
     logging.info("generating path functions: %s at: %s", name, file_path)
 
-    endpoint_refs = getEndpointRefs(endpoint, data)
-    parameter_refs = getParameterRefs(endpoint)
-    request_body_refs = getRequestBodyRefs(endpoint)
-    (request_body_type, request_body_schema) = getRequestBodyTypeSchema(endpoint, data)
+    endpoint_refs = get_endpoint_refs(endpoint, data)
+    parameter_refs = get_parameter_refs(endpoint)
+    request_body_refs = get_request_body_refs(endpoint)
+    (request_body_type, request_body_schema) = get_request_body_type_schema(
+        endpoint, data
+    )
 
     success_type = ""
     if len(endpoint_refs) > 0:
         if len(endpoint_refs) > 2:
-            er = getEndpointRefs(endpoint, data)
+            er = get_endpoint_refs(endpoint, data)
             er.remove("Error")
             success_type = "Union[" + ", ".join(er) + "]"
         else:
@@ -771,7 +532,9 @@ from kittycad.types import Response
                 parameter_type,
                 parameter_example,
                 more_example_imports,
-            ) = generateTypeAndExamplePython("", parameter["schema"], data, None, None)
+            ) = generate_type_and_example_python(
+                "", parameter["schema"], data, None, None
+            )
             example_imports = example_imports + more_example_imports
 
             if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
@@ -806,7 +569,9 @@ from kittycad.types import Response
                 body_type,
                 body_ex,
                 more_example_imports,
-            ) = generateTypeAndExamplePython(request_body_type, rbs, data, None, None)
+            ) = generate_type_and_example_python(
+                request_body_type, rbs, data, None, None
+            )
             body_example = body_ex
             if "x-dropshot-websocket" not in endpoint:
                 params_str += "body=" + body_example + ",\n"
@@ -826,8 +591,8 @@ from kittycad.types import Response
     example_variable = ""
     example_variable_response = ""
 
-    response_type = getFunctionResultType(endpoint, endpoint_refs)
-    detailed_response_type = getDetailedFunctionResultType(endpoint, endpoint_refs)
+    response_type = get_function_result_type(endpoint, endpoint_refs)
+    detailed_response_type = get_detailed_function_result_type(endpoint, endpoint_refs)
     if (
         success_type != "str"
         and success_type != "dict"
@@ -1148,7 +913,7 @@ async def test_"""
                                     # We want to parse each of the possible types.
                                     parse_response.write("\t\tdata = response.json()\n")
                                     for index, one_of in enumerate(schema["oneOf"]):
-                                        ref = getOneOfRefType(one_of)
+                                        ref = get_one_of_ref_type(one_of)
                                         parse_response.write("\t\ttry:\n")
                                         parse_response.write(
                                             "\t\t\tif not isinstance(data, dict):\n"
@@ -1350,7 +1115,9 @@ async def test_"""
         template_info["request_body_type"] = request_body_type
 
     # Generate the template for the functions.
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    environment = jinja2.Environment(
+        loader=jinja2.FileSystemLoader("generate/templates/")
+    )
     template_file = "functions.py.jinja2"
     if "x-dropshot-websocket" in endpoint:
         template_file = "functions-ws.py.jinja2"
@@ -1363,7 +1130,7 @@ async def test_"""
     return data
 
 
-def generateTypes(cwd: str, parser: dict):
+def generate_types(cwd: str, parser: dict):
     # Make sure we have the directory.
     path = os.path.join(cwd, "kittycad", "models")
     os.makedirs(path, exist_ok=True)
@@ -1383,7 +1150,7 @@ def generateTypes(cwd: str, parser: dict):
     for key in schemas:
         schema = schemas[key]
         logging.info("generating schema: %s", key)
-        model_file_path = generateType(path, key, schema, data)
+        model_file_path = generate_type(path, key, schema, data)
         if model_file_path:
             generated_files.append(model_file_path)
         f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
@@ -1401,7 +1168,7 @@ def generateTypes(cwd: str, parser: dict):
             consolidate_imports_in_file(file_path)
 
 
-def generateType(path: str, name: str, schema: dict, data: dict):
+def generate_type(path: str, name: str, schema: dict, data: dict):
     file_path = path
     if path.endswith(".py") is False:
         # Generate the type.
@@ -1411,15 +1178,15 @@ def generateType(path: str, name: str, schema: dict, data: dict):
     if "type" in schema:
         type_name = schema["type"]
         if type_name == "object":
-            generateObjectType(file_path, name, schema, type_name, data)
+            generate_object_type(file_path, name, schema, type_name, data)
         elif type_name == "string" and "enum" in schema and schema["enum"] != [None]:
-            generateEnumType(file_path, name, schema, type_name, [])
+            generate_enum_type(file_path, name, schema, type_name, [])
         elif type_name == "integer":
-            generateIntegerType(file_path, name, schema, type_name)
+            generate_integer_type(file_path, name, schema, type_name)
         elif type_name == "number":
-            generateFloatType(file_path, name, schema, type_name)
+            generate_float_type(file_path, name, schema, type_name)
         elif type_name == "string":
-            generateStringType(file_path, name, schema, type_name)
+            generate_string_type(file_path, name, schema, type_name)
         else:
             logging.error("unsupported type: %s", type_name)
             raise Exception("unsupported type: ", type_name)
@@ -1427,9 +1194,9 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         # Skip it since we will already have generated it.
         return None
     elif "oneOf" in schema:
-        generateOneOfType(file_path, name, schema, data)
+        generate_one_of_type(file_path, name, schema, data)
     elif "anyOf" in schema:
-        generateAnyOfType(file_path, name, schema, data)
+        generate_any_of_type(file_path, name, schema, data)
     else:
         logging.error("schema: %s", schema)
         logging.error("unsupported type: %s", name)
@@ -1438,7 +1205,7 @@ def generateType(path: str, name: str, schema: dict, data: dict):
     return file_path
 
 
-def generateStringType(path: str, name: str, schema: dict, type_name: str):
+def generate_string_type(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
@@ -1459,7 +1226,9 @@ def generateStringType(path: str, name: str, schema: dict, type_name: str):
         "name": name,
     }
 
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    environment = jinja2.Environment(
+        loader=jinja2.FileSystemLoader("generate/templates/")
+    )
     template_file = "str.py.jinja2"
     template = environment.get_template(template_file)
     content = template.render(**template_info)
@@ -1470,7 +1239,7 @@ def generateStringType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
-def generateIntegerType(path: str, name: str, schema: dict, type_name: str):
+def generate_integer_type(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
@@ -1491,7 +1260,9 @@ def generateIntegerType(path: str, name: str, schema: dict, type_name: str):
         "name": name,
     }
 
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    environment = jinja2.Environment(
+        loader=jinja2.FileSystemLoader("generate/templates/")
+    )
     template_file = "int.py.jinja2"
     template = environment.get_template(template_file)
     content = template.render(**template_info)
@@ -1502,7 +1273,7 @@ def generateIntegerType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
-def generateFloatType(path: str, name: str, schema: dict, type_name: str):
+def generate_float_type(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
@@ -1523,7 +1294,9 @@ def generateFloatType(path: str, name: str, schema: dict, type_name: str):
         "name": name,
     }
 
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    environment = jinja2.Environment(
+        loader=jinja2.FileSystemLoader("generate/templates/")
+    )
     template_file = "float.py.jinja2"
     template = environment.get_template(template_file)
     content = template.render(**template_info)
@@ -1534,7 +1307,7 @@ def generateFloatType(path: str, name: str, schema: dict, type_name: str):
     f.close()
 
 
-def generateEnumType(
+def generate_enum_type(
     path: str,
     name: str,
     schema: dict,
@@ -1544,14 +1317,14 @@ def generateEnumType(
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
-    code = generateEnumTypeCode(name, schema, type_name, additional_docs)
+    code = generate_enum_type_code(name, schema, type_name, additional_docs)
     f.write(code)
 
     # Close the file.
     f.close()
 
 
-def generateEnumTypeCode(
+def generate_enum_type_code(
     name: str,
     schema: dict,
     type_name: str,
@@ -1594,10 +1367,10 @@ def generateEnumTypeCode(
     return value
 
 
-def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
+def generate_any_of_type(path: str, name: str, schema: dict, data: dict):
     logging.info("generating type: %s at: %s", name, path)
 
-    if isEnumWithDocsOneOf(schema):
+    if is_enum_with_docs_one_of(schema):
         additional_docs = []
         enum = []
         # We want to treat this as an enum with additional docs.
@@ -1610,7 +1383,7 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
         # Write the enum.
         schema["enum"] = enum
         schema["type"] = "string"
-        generateEnumType(path, name, schema, "string", additional_docs)
+        generate_enum_type(path, name, schema, "string", additional_docs)
         # return early.
         return
 
@@ -1640,7 +1413,7 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
             f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
             all_options.append(ref_name)
 
-    if isNestedObjectAnyOf(schema):
+    if is_nested_object_any_of(schema):
         # We want to write each of the nested objects.
         for any_of in schema["anyOf"]:
             # Get the nested object.
@@ -1668,7 +1441,8 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
                             f.write("\n")
                         all_options.append(prop_name)
                     else:
-                        object_code = generateObjectTypeCode(
+                        class_name = snake_to_title(prop_name)
+                        object_code = generate_object_type_code(
                             prop_name,
                             nested_object,
                             "object",
@@ -1680,9 +1454,9 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
                         )
                         f.write(object_code)
                         f.write("\n")
-                        all_options.append(prop_name)
+                        all_options.append(class_name)
             elif "type" in any_of and any_of["type"] == "string":
-                enum_code = generateEnumTypeCode(
+                enum_code = generate_enum_type_code(
                     any_of["enum"][0], any_of, "string", []
                 )
                 f.write(enum_code)
@@ -1690,14 +1464,14 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
                 all_options.append(any_of["enum"][0])
 
     # Check if each any_of has the same enum of one.
-    tag = getTagAnyOf(schema)
+    tag = get_tag_any_of(schema)
 
     if tag is not None:
         # Generate each of the options from the tag.
         for any_of in schema["anyOf"]:
             # Get the value of the tag.
             object_name = any_of["properties"][tag]["enum"][0]
-            object_code = generateObjectTypeCode(
+            object_code = generate_object_type_code(
                 object_name, any_of, "object", data, tag, None
             )
             f.write(object_code)
@@ -1731,7 +1505,8 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
                             f.write("\n")
                         all_options.append(prop_name)
                     else:
-                        object_code = generateObjectTypeCode(
+                        class_name = snake_to_title(prop_name)
+                        object_code = generate_object_type_code(
                             prop_name,
                             nested_object,
                             "object",
@@ -1743,9 +1518,9 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
                         )
                         f.write(object_code)
                         f.write("\n")
-                        all_options.append(prop_name)
+                        all_options.append(class_name)
             elif "type" in any_of and any_of["type"] == "string":
-                enum_code = generateEnumTypeCode(
+                enum_code = generate_enum_type_code(
                     any_of["enum"][0], any_of, "string", []
                 )
                 f.write(enum_code)
@@ -1753,22 +1528,22 @@ def generateAnyOfType(path: str, name: str, schema: dict, data: dict):
                 all_options.append(any_of["enum"][0])
 
     # Write the sum type.
-    description = getAnyOfDescription(schema)
-    content = generateUnionType(all_options, name, description, tag)
+    description = get_any_of_description(schema)
+    content = generate_union_type(all_options, name, description, tag)
     f.write(content)
 
     # Close the file.
     f.close()
 
 
-def getAnyOfDescription(schema: dict) -> str:
+def get_any_of_description(schema: dict) -> str:
     if "description" in schema:
         return schema["description"]
     else:
         return ""
 
 
-def generateUnionType(
+def generate_union_type(
     types: List[str], name: str, description: str, tag: Optional[str]
 ) -> str:
     ArgType = TypedDict(
@@ -1820,7 +1595,7 @@ def generateUnionType(
         else:
             template_info["types"].append(
                 {
-                    "name": snake_to_title(type),
+                    "name": type,
                     "var0": randletter(),
                     "var1": randletter(),
                     "check": "type",
@@ -1828,7 +1603,9 @@ def generateUnionType(
                 }
             )
 
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    environment = jinja2.Environment(
+        loader=jinja2.FileSystemLoader("generate/templates/")
+    )
     template_file = "union-type.py.jinja2"
     template = environment.get_template(template_file)
     content = template.render(**template_info)
@@ -1836,10 +1613,10 @@ def generateUnionType(
     return content
 
 
-def generateOneOfType(path: str, name: str, schema: dict, data: dict):
+def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
     logging.info("generating type: %s at: %s", name, path)
 
-    if isEnumWithDocsOneOf(schema):
+    if is_enum_with_docs_one_of(schema):
         additional_docs = []
         enum = []
         # We want to treat this as an enum with additional docs.
@@ -1852,7 +1629,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         # Write the enum.
         schema["enum"] = enum
         schema["type"] = "string"
-        generateEnumType(path, name, schema, "string", additional_docs)
+        generate_enum_type(path, name, schema, "string", additional_docs)
         # return early.
         return
 
@@ -1875,7 +1652,7 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                 imported_refs.add(class_name)
             all_options.append(class_name)
 
-    if isNestedObjectOneOf(schema):
+    if is_nested_object_one_of(schema):
         # We want to write each of the nested objects.
         for one_of in schema["oneOf"]:
             # Get the nested object.
@@ -1906,7 +1683,8 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                             f.write("\n")
                         all_options.append(ref_name)
                     else:
-                        object_code = generateObjectTypeCode(
+                        class_name = snake_to_title(prop_name)
+                        object_code = generate_object_type_code(
                             prop_name,
                             nested_object,
                             "object",
@@ -1918,9 +1696,9 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                         )
                         f.write(object_code)
                         f.write("\n")
-                        all_options.append(prop_name)
+                        all_options.append(class_name)
             elif "type" in one_of and one_of["type"] == "string":
-                enum_code = generateEnumTypeCode(
+                enum_code = generate_enum_type_code(
                     one_of["enum"][0], one_of, "string", []
                 )
                 f.write(enum_code)
@@ -1928,8 +1706,8 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
                 all_options.append(one_of["enum"][0])
 
     # Check if each one_of has the same enum of one.
-    tag = getTagOneOf(schema)
-    content = getContentOneOf(schema, tag)
+    tag = get_tag_one_of(schema)
+    content = get_content_one_of(schema, tag)
 
     if tag is not None and content is not None:
         # Generate each of the options from the tag.
@@ -1937,8 +1715,8 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             # Get the value of the tag.
             object_name = one_of["properties"][tag]["enum"][0]
             # Generate the type for the object.
-            content_code = generateObjectTypeCode(
-                snake_to_title(object_name) + "Data",
+            content_code = generate_object_type_code(
+                object_name + "_data",
                 one_of["properties"][content],
                 "object",
                 data,
@@ -1949,26 +1727,26 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             )
             f.write(content_code)
             f.write("\n")
-            object_code = generateObjectTypeCode(
+            object_code = generate_object_type_code(
                 object_name, one_of, "object", data, tag, content, True, imported_refs
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append("option_" + object_name)
+            all_options.append(snake_to_title("option_" + object_name))
     elif tag is not None:
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
             object_name = one_of["properties"][tag]["enum"][0]
-            object_code = generateObjectTypeCode(
+            object_code = generate_object_type_code(
                 object_name, one_of, "object", data, tag, None, True, imported_refs
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append("option_" + object_name)
+            all_options.append(snake_to_title("option_" + object_name))
     elif schema["oneOf"].__len__() == 1:
-        description = getOneOfDescription(schema)
-        object_code = generateObjectTypeCode(
+        description = get_one_of_description(schema)
+        object_code = generate_object_type_code(
             name,
             schema["oneOf"][0],
             "object",
@@ -1988,8 +1766,8 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
         i = 0
         for one_of in schema["oneOf"]:
             # Get the value of the tag.
-            object_name = name + str(i)
-            object_code = generateObjectTypeCode(
+            object_name = camel_to_snake(name) + "_" + str(i)
+            object_code = generate_object_type_code(
                 object_name,
                 one_of,
                 "object",
@@ -2001,26 +1779,26 @@ def generateOneOfType(path: str, name: str, schema: dict, data: dict):
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(object_name)
+            all_options.append(snake_to_title(object_name))
             i += 1
 
     # Write the sum type.
-    description = getOneOfDescription(schema)
-    content = generateUnionType(all_options, name, description, tag)
+    description = get_one_of_description(schema)
+    content = generate_union_type(all_options, name, description, tag)
     f.write(content)
 
     # Close the file.
     f.close()
 
 
-def getOneOfDescription(schema: dict) -> str:
+def get_one_of_description(schema: dict) -> str:
     if "description" in schema:
         return schema["description"]
     else:
         return ""
 
 
-def generateObjectTypeCode(
+def generate_object_type_code(
     name: str,
     schema: dict,
     type_name: str,
@@ -2054,7 +1832,7 @@ def generateObjectTypeCode(
         description = schema["description"].replace('"', '\\"')
 
     imports = []
-    refs = getRefs(schema)
+    refs = get_refs(schema)
     if imported_refs is None:
         imported_refs = set()
     for ref in refs:
@@ -2087,7 +1865,7 @@ def generateObjectTypeCode(
                 }
                 fields.append(field1)
             else:
-                field_type = getTypeName(property_schema)
+                field_type = get_type_name(property_schema)
                 if property_name not in required:
                     if "default" in property_schema:
                         if field_type == "str":
@@ -2125,7 +1903,9 @@ def generateObjectTypeCode(
 
     # Iterate over the properties.
 
-    environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
+    environment = jinja2.Environment(
+        loader=jinja2.FileSystemLoader("generate/templates/")
+    )
     if include_imports:
         template_file = "object.py.jinja2"
     else:
@@ -2136,7 +1916,7 @@ def generateObjectTypeCode(
     return content
 
 
-def getObjectTypeImports(
+def get_object_type_imports(
     name: str,
     schema: dict,
     type_name: str,
@@ -2148,7 +1928,7 @@ def getObjectTypeImports(
 ) -> List[str]:
     """Get the imports needed for an object type."""
     imports = []
-    refs = getRefs(schema)
+    refs = get_refs(schema)
     if imported_refs is None:
         imported_refs = set()
     for ref in refs:
@@ -2160,19 +1940,21 @@ def getObjectTypeImports(
     return imports
 
 
-def generateObjectType(path: str, name: str, schema: dict, type_name: str, data: dict):
+def generate_object_type(
+    path: str, name: str, schema: dict, type_name: str, data: dict
+):
     logging.info("generating type: %s at: %s", name, path)
 
     f = open(path, "w")
 
-    code = generateObjectTypeCode(name, schema, type_name, data, None, None)
+    code = generate_object_type_code(name, schema, type_name, data, None, None)
     f.write(code)
 
     # Close the file.
     f.close()
 
 
-def getRefs(schema: dict) -> List[str]:
+def get_refs(schema: dict) -> List[str]:
     refs = []
     if "$ref" in schema:
         refs.append(schema["$ref"].replace("#/components/schemas/", ""))
@@ -2182,7 +1964,7 @@ def getRefs(schema: dict) -> List[str]:
         if "type" not in schema:
             if "allOf" in schema:
                 for sub_schema in schema["allOf"]:
-                    refs.extend(getRefs(sub_schema))
+                    refs.extend(get_refs(sub_schema))
         else:
             type_name = schema["type"]
             if type_name == "object":
@@ -2190,12 +1972,12 @@ def getRefs(schema: dict) -> List[str]:
                     # Iternate over the properties.
                     for property_name in schema["properties"]:
                         property_schema = schema["properties"][property_name]
-                        schema_refs = getRefs(property_schema)
+                        schema_refs = get_refs(property_schema)
                         for ref in schema_refs:
                             if ref not in refs:
                                 refs.append(ref)
                 elif "additionalProperties" in schema:
-                    schema_refs = getRefs(schema["additionalProperties"])
+                    schema_refs = get_refs(schema["additionalProperties"])
                     for ref in schema_refs:
                         if ref not in refs:
                             refs.append(ref)
@@ -2208,7 +1990,7 @@ def getRefs(schema: dict) -> List[str]:
                     pass
             elif type_name == "array":
                 if "items" in schema:
-                    schema_refs = getRefs(schema["items"])
+                    schema_refs = get_refs(schema["items"])
                     for ref in schema_refs:
                         if ref not in refs:
                             refs.append(ref)
@@ -2216,7 +1998,7 @@ def getRefs(schema: dict) -> List[str]:
     return refs
 
 
-def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
+def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
     refs = []
 
     responses = endpoint["responses"]
@@ -2232,12 +2014,14 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
                         # all the possible outcomes.
                         ref = json["$ref"].replace("#/components/schemas/", "")
                         schema = data["components"]["schemas"][ref]
-                        if isNestedObjectOneOf(schema) or isEnumWithDocsOneOf(schema):
+                        if is_nested_object_one_of(schema) or is_enum_with_docs_one_of(
+                            schema
+                        ):
                             if snake_to_title(ref) not in refs:
                                 refs.append(snake_to_title(ref))
-                        elif isTypedObjectOneOf(schema):
+                        elif is_typed_object_one_of(schema):
                             for t in schema["oneOf"]:
-                                ref = getOneOfRefType(t)
+                                ref = get_one_of_ref_type(t)
                                 if snake_to_title(ref) not in refs:
                                     refs.append(snake_to_title(ref))
                         else:
@@ -2296,7 +2080,7 @@ def getEndpointRefs(endpoint: dict, data: dict) -> List[str]:
     return refs
 
 
-def getParameterRefs(endpoint: dict) -> List[str]:
+def get_parameter_refs(endpoint: dict) -> List[str]:
     refs = []
 
     if "parameters" in endpoint:
@@ -2312,7 +2096,7 @@ def getParameterRefs(endpoint: dict) -> List[str]:
     return refs
 
 
-def getRequestBodyRefs(endpoint: dict) -> List[str]:
+def get_request_body_refs(endpoint: dict) -> List[str]:
     refs = []
 
     if "requestBody" in endpoint:
@@ -2346,7 +2130,7 @@ def getRequestBodyRefs(endpoint: dict) -> List[str]:
     return refs
 
 
-def getRequestBodyTypeSchema(
+def get_request_body_type_schema(
     endpoint: dict, data: dict
 ) -> Tuple[Optional[str], Optional[dict]]:
     if "requestBody" in endpoint:
@@ -2392,15 +2176,6 @@ def getRequestBodyTypeSchema(
     return None, None
 
 
-def to_camel_case(s: str):
-    s = re.sub(r"(_|-)+", " ", s).title().replace(" ", "")
-    return "".join([s[0].lower(), s[1:]])
-
-
-def clean_parameter_name(name: str):
-    return camel_to_snake(name).replace("from", "from_")
-
-
 def rename_if_keyword(name: str):
     """Rename a name if it is also a Python keyword."""
     KEYWORDS = ["global"]  # there are more, but this is the only one we overlap now
@@ -2409,27 +2184,7 @@ def rename_if_keyword(name: str):
     return name
 
 
-def camel_to_snake(name: str):
-    name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", name).lower().replace("-", "_")
-
-
-def camel_to_screaming_snake(name: str):
-    name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
-    return (
-        re.sub("([a-z0-9])([A-Z])", r"\1_\2", name)
-        .replace(" ", "")
-        .upper()
-        .replace("-", "_")
-        .replace(":", "_")
-    )
-
-
 # Change `file_conversion` to `FileConversion`
-def snake_to_title(name: str):
-    if "_" in name or name.islower():
-        return "".join([word.title() for word in name.split("_")])
-    return name
 
 
 def get_function_parameters(
@@ -2458,7 +2213,7 @@ def get_function_parameters(
     return params
 
 
-def getOneOfRefType(schema: dict) -> str:
+def get_one_of_ref_type(schema: dict) -> str:
     if (
         "type" in schema["properties"]
         and "enum" in schema["properties"]["type"]
@@ -2470,7 +2225,7 @@ def getOneOfRefType(schema: dict) -> str:
     raise Exception("Cannot get oneOf ref type for schema: ", schema)
 
 
-def isNestedObjectAnyOf(schema: dict) -> bool:
+def is_nested_object_any_of(schema: dict) -> bool:
     if "anyOf" not in schema:
         return False
 
@@ -2504,7 +2259,7 @@ def isNestedObjectAnyOf(schema: dict) -> bool:
     return is_nested_object
 
 
-def isNestedObjectOneOf(schema: dict) -> bool:
+def is_nested_object_one_of(schema: dict) -> bool:
     if "oneOf" not in schema:
         return False
 
@@ -2538,7 +2293,7 @@ def isNestedObjectOneOf(schema: dict) -> bool:
     return is_nested_object
 
 
-def getTagAnyOf(schema: dict) -> Optional[str]:
+def get_tag_any_of(schema: dict) -> Optional[str]:
     tag = None
     for any_of in schema["anyOf"]:
         has_tag = False
@@ -2566,7 +2321,7 @@ def getTagAnyOf(schema: dict) -> Optional[str]:
     return tag
 
 
-def getTagOneOf(schema: dict) -> Optional[str]:
+def get_tag_one_of(schema: dict) -> Optional[str]:
     tag = None
     for one_of in schema["oneOf"]:
         has_tag = False
@@ -2594,7 +2349,7 @@ def getTagOneOf(schema: dict) -> Optional[str]:
     return tag
 
 
-def getContentOneOf(schema: dict, tag: Optional[str]) -> Optional[str]:
+def get_content_one_of(schema: dict, tag: Optional[str]) -> Optional[str]:
     if tag is None:
         return None
     content = None
@@ -2622,7 +2377,7 @@ def getContentOneOf(schema: dict, tag: Optional[str]) -> Optional[str]:
     return content
 
 
-def isEnumWithDocsOneOf(schema: dict) -> bool:
+def is_enum_with_docs_one_of(schema: dict) -> bool:
     if "oneOf" not in schema:
         return False
 
@@ -2637,7 +2392,7 @@ def isEnumWithDocsOneOf(schema: dict) -> bool:
     return is_enum_with_docs
 
 
-def isTypedObjectOneOf(schema: dict) -> bool:
+def is_typed_object_one_of(schema: dict) -> bool:
     if "oneOf" not in schema:
         return False
 
@@ -2656,7 +2411,7 @@ def isTypedObjectOneOf(schema: dict) -> bool:
     return is_typed_object
 
 
-def hasNoContentResponse(endpoint: dict) -> bool:
+def has_no_content_response(endpoint: dict) -> bool:
     responses = endpoint["responses"]
     for response_code in responses:
         if (
@@ -2669,22 +2424,22 @@ def hasNoContentResponse(endpoint: dict) -> bool:
     return False
 
 
-def getFunctionResultType(endpoint: dict, endpoint_refs: List[str]) -> str:
+def get_function_result_type(endpoint: dict, endpoint_refs: List[str]) -> str:
     result = ", ".join(endpoint_refs)
     if len(endpoint_refs) > 1:
         result = "Optional[Union[" + result + "]]"
 
-    if hasNoContentResponse(endpoint):
+    if has_no_content_response(endpoint):
         result = "Optional[" + result + "]"
 
     return result
 
 
-def getDetailedFunctionResultType(endpoint: dict, endpoint_refs: List[str]) -> str:
-    return "Response[" + getFunctionResultType(endpoint, endpoint_refs) + "]"
+def get_detailed_function_result_type(endpoint: dict, endpoint_refs: List[str]) -> str:
+    return "Response[" + get_function_result_type(endpoint, endpoint_refs) + "]"
 
 
-def getTypeName(schema: dict) -> str:
+def get_type_name(schema: dict) -> str:
     if "type" in schema:
         if schema["type"] == "string":
             if "format" in schema:
@@ -2710,14 +2465,14 @@ def getTypeName(schema: dict) -> str:
             return "int"
         elif schema["type"] == "array":
             if "items" in schema:
-                item_type = getTypeName(schema["items"])
+                item_type = get_type_name(schema["items"])
                 if "format" in schema["items"] and schema["items"]["format"] == "uint8":
                     return "bytes"
                 else:
                     return "List[" + item_type + "]"
         elif schema["type"] == "object":
             if "additionalProperties" in schema:
-                item_type = getTypeName(schema["additionalProperties"])
+                item_type = get_type_name(schema["additionalProperties"])
                 return "Dict[str, " + item_type + "]"
             elif "properties" in schema:
                 return "Dict[str, Any]"
@@ -2726,7 +2481,7 @@ def getTypeName(schema: dict) -> str:
     elif "$ref" in schema:
         return schema["$ref"].replace("#/components/schemas/", "")
     elif "allOf" in schema and len(schema["allOf"]) == 1:
-        return getTypeName(schema["allOf"][0])
+        return get_type_name(schema["allOf"][0])
     elif "description" in schema:
         return "Any"
 

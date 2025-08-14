@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class SetGridScale(BaseModel):
+class Setgridscale(BaseModel):
     """The response from the 'SetGridScale'."""
 
     model_config = ConfigDict(protected_namespaces=())

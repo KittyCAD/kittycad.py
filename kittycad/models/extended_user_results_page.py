@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.extended_user import ExtendedUser
 
 
-class ExtendedUserResultsPage(BaseModel):
+class Extendeduserresultspage(BaseModel):
     """A single page of results"""
 
     items: List[ExtendedUser]

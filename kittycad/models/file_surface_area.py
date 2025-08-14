@@ -9,7 +9,7 @@ from ..models.unit_area import UnitArea
 from ..models.uuid import Uuid
 
 
-class FileSurfaceArea(BaseModel):
+class Filesurfacearea(BaseModel):
     """A file surface area result."""
 
     completed_at: Optional[datetime.datetime] = None

@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class FaceEdgeInfo(BaseModel):
+class Faceedgeinfo(BaseModel):
     """Faces and edges id info (most used in identifying geometry in patterned and mirrored objects)."""
 
     edges: List[str]

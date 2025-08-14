@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.country_code import CountryCode
 
 
-class AddressDetails(BaseModel):
+class Addressdetails(BaseModel):
     """Address details."""
 
     city: Optional[str] = None

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class CreateShortlinkResponse(BaseModel):
+class Createshortlinkresponse(BaseModel):
     """Response from creating a shortlink."""
 
     key: str

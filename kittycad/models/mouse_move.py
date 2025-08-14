@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class MouseMove(BaseModel):
+class Mousemove(BaseModel):
     """The response from the `MouseMove` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

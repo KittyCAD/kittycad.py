@@ -12,7 +12,7 @@ from ..models.uuid import Uuid
 from .base64data import Base64Data
 
 
-class FileConversion(BaseModel):
+class Fileconversion(BaseModel):
     """A file conversion."""
 
     completed_at: Optional[datetime.datetime] = None

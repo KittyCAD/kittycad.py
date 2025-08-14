@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class PaymentMethodCardChecks(BaseModel):
+class Paymentmethodcardchecks(BaseModel):
     """Card checks."""
 
     address_line1_check: Optional[str] = None

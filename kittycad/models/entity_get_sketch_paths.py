@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class EntityGetSketchPaths(BaseModel):
+class Entitygetsketchpaths(BaseModel):
     """The response from the `EntityGetSketchPaths` command."""
 
     entity_ids: List[str]

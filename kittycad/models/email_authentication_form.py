@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class EmailAuthenticationForm(BaseModel):
+class Emailauthenticationform(BaseModel):
     """The body of the form for email authentication."""
 
     callback_url: Optional[str] = None

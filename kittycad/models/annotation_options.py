@@ -8,7 +8,7 @@ from ..models.color import Color
 from ..models.point3d import Point3d
 
 
-class AnnotationOptions(BaseModel):
+class Annotationoptions(BaseModel):
     """Options for annotations"""
 
     color: Optional[Color] = None

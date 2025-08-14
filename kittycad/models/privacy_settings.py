@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class PrivacySettings(BaseModel):
+class Privacysettings(BaseModel):
     """Privacy settings for an org or user."""
 
     can_train_on_data: bool

@@ -6,7 +6,7 @@ from ..models.der_encoded_key_pair import DerEncodedKeyPair
 from ..models.idp_metadata_source import IdpMetadataSource
 
 
-class SamlIdentityProviderCreate(BaseModel):
+class Samlidentityprovidercreate(BaseModel):
     """Parameters for creating a SAML identity provider."""
 
     idp_entity_id: Optional[str] = None

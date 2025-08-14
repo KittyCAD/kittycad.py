@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.source_position import SourcePosition
 
 
-class SourceRange(BaseModel):
+class Sourcerange(BaseModel):
     """A source range of code."""
 
     end: SourcePosition

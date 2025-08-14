@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.uuid import Uuid
 
 
-class VerificationTokenResponse(BaseModel):
+class Verificationtokenresponse(BaseModel):
     """A verification token response."""
 
     created_at: datetime.datetime

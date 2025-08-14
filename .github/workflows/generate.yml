@@ -16,6 +16,13 @@ jobs:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          # required
+          app-id: ${{ secrets.GH_ORG_APP_ID }}
+          private-key: ${{ secrets.GH_ORG_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -38,18 +45,18 @@ jobs:
           ./generate/run.sh
         env:
           KITTYCAD_API_TOKEN: ${{secrets.KITTYCAD_API_TOKEN}}
-
       - name: Check for modified files
         id: git-check
         run: echo "modified=$(if [[ -z $(git status --porcelain --untracked-files=no --ignore-submodules) ]]; then echo "false"; else echo "true"; fi)" >> "$GITHUB_OUTPUT"
-
       - name: Commit changes, if any
         if: steps.git-check.outputs.modified == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://${{ github.actor }}:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git fetch origin
           git add .
           git commit -am "I have generated the latest API!" || true
           git push origin ${{github.event.pull_request.head.ref }} || true
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}

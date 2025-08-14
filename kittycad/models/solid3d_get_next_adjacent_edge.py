@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Solid3dGetNextAdjacentEdge(BaseModel):
+class Solid3dgetnextadjacentedge(BaseModel):
     """The response from the `Solid3dGetNextAdjacentEdge` command."""
 
     edge: Optional[str] = None

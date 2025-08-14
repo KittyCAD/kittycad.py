@@ -10,7 +10,7 @@ from ..models.unit_length import UnitLength
 from ..models.uuid import Uuid
 
 
-class FileCenterOfMass(BaseModel):
+class Filecenterofmass(BaseModel):
     """A file center of mass result."""
 
     center_of_mass: Optional[Point3d] = None

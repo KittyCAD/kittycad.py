@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.output_file import OutputFile
 
 
-class CodeOutput(BaseModel):
+class Codeoutput(BaseModel):
     """Output of the code being executed.
 
     <details><summary>JSON schema</summary>

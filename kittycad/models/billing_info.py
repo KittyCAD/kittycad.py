@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.address_details import AddressDetails
 
 
-class BillingInfo(BaseModel):
+class Billinginfo(BaseModel):
     """The billing information for payments."""
 
     address: Optional[AddressDetails] = None

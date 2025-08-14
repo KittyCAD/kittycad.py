@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class CameraDragStart(BaseModel):
+class Cameradragstart(BaseModel):
     """The response from the `CameraDragStart` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

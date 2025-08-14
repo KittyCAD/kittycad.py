@@ -6,7 +6,7 @@ from ..models.origin_type import OriginType
 from ..models.point4d import Point4d
 
 
-class TransformByForPoint4d(BaseModel):
+class Transformbyforpoint4d(BaseModel):
     """How a property of an object should be transformed."""
 
     is_local: bool

@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from .base64data import Base64Data
 
 
-class TakeSnapshot(BaseModel):
+class Takesnapshot(BaseModel):
     """The response from the `TakeSnapshot` command."""
 
     contents: Base64Data

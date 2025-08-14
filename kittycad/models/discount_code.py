@@ -4,7 +4,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class DiscountCode(BaseModel):
+class Discountcode(BaseModel):
     """A discount code for a store."""
 
     code: str

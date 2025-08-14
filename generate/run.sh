@@ -13,7 +13,7 @@ git checkout kittycad/models/base64data.py || true
 git checkout kittycad/models/empty.py || true
 
 # Generate new.
-uv run python generate/generate.py
+uv run python -m generate.generate
 
 # Format and lint.
 uv run ruff check --fix .

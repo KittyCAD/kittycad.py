@@ -6,7 +6,7 @@ from ..models.origin_type import OriginType
 from ..models.point3d import Point3d
 
 
-class TransformByForPoint3d(BaseModel):
+class Transformbyforpoint3d(BaseModel):
     """How a property of an object should be transformed."""
 
     is_local: bool

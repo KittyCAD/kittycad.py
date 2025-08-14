@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.user_org_role import UserOrgRole
 
 
-class UpdateMemberToOrgBody(BaseModel):
+class Updatemembertoorgbody(BaseModel):
     """Data for updating a member of an org."""
 
     role: UserOrgRole

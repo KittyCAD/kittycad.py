@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.annotation_line_end import AnnotationLineEnd
 
 
-class AnnotationLineEndOptions(BaseModel):
+class Annotationlineendoptions(BaseModel):
     """Options for annotation text"""
 
     end: AnnotationLineEnd

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class DefaultCameraCenterToScene(BaseModel):
+class Defaultcameracentertoscene(BaseModel):
     """The response from the `DefaultCameraCenterToScene` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class GetNumObjects(BaseModel):
+class Getnumobjects(BaseModel):
     """The response from the `GetNumObjects` command."""
 
     num_objects: int

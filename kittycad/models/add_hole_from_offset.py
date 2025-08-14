@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class AddHoleFromOffset(BaseModel):
+class Addholefromoffset(BaseModel):
     """The response from the `AddHoleFromOffset` command."""
 
     entity_ids: List[str]

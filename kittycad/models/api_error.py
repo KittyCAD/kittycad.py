@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.error_code import ErrorCode
 
 
-class ApiError(BaseModel):
+class Apierror(BaseModel):
     """An error."""
 
     error_code: ErrorCode

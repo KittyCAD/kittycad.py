@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class RawFile(BaseModel):
+class Rawfile(BaseModel):
     """A raw file with unencoded contents to be passed over binary websockets. When raw files come back for exports it is sent as binary/bson, not text/json."""
 
     contents: bytes

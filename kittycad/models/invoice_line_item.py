@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.currency import Currency
 
 
-class InvoiceLineItem(BaseModel):
+class Invoicelineitem(BaseModel):
     """An invoice line item."""
 
     amount: float = 0.0

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class StoreCouponParams(BaseModel):
+class Storecouponparams(BaseModel):
     """The parameters for a new store coupon."""
 
     percent_off: int

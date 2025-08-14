@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class PaymentIntent(BaseModel):
+class Paymentintent(BaseModel):
     """A payment intent response."""
 
     client_secret: str

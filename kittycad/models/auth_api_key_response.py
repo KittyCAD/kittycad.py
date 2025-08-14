@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class AuthApiKeyResponse(BaseModel):
+class Authapikeyresponse(BaseModel):
     """The response from the `/auth/api-key` endpoint."""
 
     session_token: str

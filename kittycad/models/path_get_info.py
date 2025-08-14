@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.path_segment_info import PathSegmentInfo
 
 
-class PathGetInfo(BaseModel):
+class Pathgetinfo(BaseModel):
     """The response from the `PathGetInfo` command."""
 
     segments: List[PathSegmentInfo]

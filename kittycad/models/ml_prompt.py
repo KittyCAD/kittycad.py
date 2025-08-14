@@ -10,7 +10,7 @@ from ..models.ml_prompt_type import MlPromptType
 from ..models.uuid import Uuid
 
 
-class MlPrompt(BaseModel):
+class Mlprompt(BaseModel):
     """A ML prompt."""
 
     completed_at: Optional[datetime.datetime] = None

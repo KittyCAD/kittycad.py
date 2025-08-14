@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.text_to_cad_response import TextToCadResponse
 
 
-class TextToCadResponseResultsPage(BaseModel):
+class Texttocadresponseresultspage(BaseModel):
     """A single page of results"""
 
     items: List[TextToCadResponse]

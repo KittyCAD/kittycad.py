@@ -7,7 +7,7 @@ from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
 
 
-class ExtendedUser(BaseModel):
+class Extendeduser(BaseModel):
     """Extended user information.
 
     This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: Stripe"""

@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.conversation import Conversation
 
 
-class ConversationResultsPage(BaseModel):
+class Conversationresultspage(BaseModel):
     """A single page of results"""
 
     items: List[Conversation]

@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.side_face import SideFace
 
 
-class ExtrudedFaceInfo(BaseModel):
+class Extrudedfaceinfo(BaseModel):
     """IDs for the extruded faces."""
 
     bottom: Optional[str] = None
