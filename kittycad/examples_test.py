@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional, Union
+from typing import Dict, List, Optional, Union
 
 import pytest
 
@@ -339,12 +339,19 @@ def test_get_schema():
     # Create our client.
     client = ClientFromEnv()
 
-    get_schema.sync(
+    result: Optional[Union[Dict, Error]] = get_schema.sync(
         client=client,
     )
 
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Dict = result
+    print(body)
+
     # OR if you need more info (e.g. status_code)
-    get_schema.sync_detailed(
+    response: Response[Optional[Union[Dict, Error]]] = get_schema.sync_detailed(
         client=client,
     )
 
@@ -356,12 +363,14 @@ async def test_get_schema_async():
     # Create our client.
     client = ClientFromEnv()
 
-    await get_schema.asyncio(
+    result: Optional[Union[Dict, Error]] = await get_schema.asyncio(
         client=client,
     )
 
     # OR run async with more info
-    await get_schema.asyncio_detailed(
+    response: Response[
+        Optional[Union[Dict, Error]]
+    ] = await get_schema.asyncio_detailed(
         client=client,
     )
 
@@ -2561,6 +2570,45 @@ async def test_create_text_to_cad_multi_file_iteration_async():
 
 
 @pytest.mark.skip
+def test_delete_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_org.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_org.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_org.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_org.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
 def test_get_org():
     # Create our client.
     client = ClientFromEnv()
@@ -2596,65 +2644,6 @@ async def test_get_org_async():
     # OR run async with more info
     response: Response[Optional[Union[Org, Error]]] = await get_org.asyncio_detailed(
         client=client,
-    )
-
-
-@pytest.mark.skip
-def test_update_org():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Org, Error]] = update_org.sync(
-        client=client,
-        body=OrgDetails(
-            billing_email="<string>",
-            name="<string>",
-            phone="<string>",
-        ),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Org = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[Org, Error]]] = update_org.sync_detailed(
-        client=client,
-        body=OrgDetails(
-            billing_email="<string>",
-            name="<string>",
-            phone="<string>",
-        ),
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_org_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Org, Error]] = await update_org.asyncio(
-        client=client,
-        body=OrgDetails(
-            billing_email="<string>",
-            name="<string>",
-            phone="<string>",
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[Optional[Union[Org, Error]]] = await update_org.asyncio_detailed(
-        client=client,
-        body=OrgDetails(
-            billing_email="<string>",
-            name="<string>",
-            phone="<string>",
-        ),
     )
 
 
@@ -2718,41 +2707,61 @@ async def test_create_org_async():
 
 
 @pytest.mark.skip
-def test_delete_org():
+def test_update_org():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = delete_org.sync(
+    result: Optional[Union[Org, Error]] = update_org.sync(
         client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
-    body: Error = result
+    body: Org = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_org.sync_detailed(
+    response: Response[Optional[Union[Org, Error]]] = update_org.sync_detailed(
         client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_delete_org_async():
+async def test_update_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = await delete_org.asyncio(
+    result: Optional[Union[Org, Error]] = await update_org.asyncio(
         client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = await delete_org.asyncio_detailed(
+    response: Response[Optional[Union[Org, Error]]] = await update_org.asyncio_detailed(
         client=client,
+        body=OrgDetails(
+            billing_email="<string>",
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -2985,6 +2994,49 @@ async def test_create_org_member_async():
 
 
 @pytest.mark.skip
+def test_delete_org_member():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_org_member.sync(
+        client=client,
+        user_id=Uuid("<string>"),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_org_member.sync_detailed(
+        client=client,
+        user_id=Uuid("<string>"),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_org_member_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_org_member.asyncio(
+        client=client,
+        user_id=Uuid("<string>"),
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_org_member.asyncio_detailed(
+        client=client,
+        user_id=Uuid("<string>"),
+    )
+
+
+@pytest.mark.skip
 def test_get_org_member():
     # Create our client.
     client = ClientFromEnv()
@@ -3091,13 +3143,12 @@ async def test_update_org_member_async():
 
 
 @pytest.mark.skip
-def test_delete_org_member():
+def test_delete_payment_information_for_org():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = delete_org_member.sync(
+    result: Optional[Error] = delete_payment_information_for_org.sync(
         client=client,
-        user_id=Uuid("<string>"),
     )
 
     if isinstance(result, Error) or result is None:
@@ -3108,28 +3159,29 @@ def test_delete_org_member():
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_org_member.sync_detailed(
-        client=client,
-        user_id=Uuid("<string>"),
+    response: Response[Optional[Error]] = (
+        delete_payment_information_for_org.sync_detailed(
+            client=client,
+        )
     )
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_delete_org_member_async():
+async def test_delete_payment_information_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = await delete_org_member.asyncio(
+    result: Optional[Error] = await delete_payment_information_for_org.asyncio(
         client=client,
-        user_id=Uuid("<string>"),
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = await delete_org_member.asyncio_detailed(
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_information_for_org.asyncio_detailed(
         client=client,
-        user_id=Uuid("<string>"),
     )
 
 
@@ -3175,67 +3227,6 @@ async def test_get_payment_information_for_org_async():
         Optional[Union[Customer, Error]]
     ] = await get_payment_information_for_org.asyncio_detailed(
         client=client,
-    )
-
-
-@pytest.mark.skip
-def test_update_payment_information_for_org():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Customer, Error]] = update_payment_information_for_org.sync(
-        client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Customer = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[Customer, Error]]] = (
-        update_payment_information_for_org.sync_detailed(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_payment_information_for_org_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[Customer, Error]
-    ] = await update_payment_information_for_org.asyncio(
-        client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[Customer, Error]]
-    ] = await update_payment_information_for_org.asyncio_detailed(
-        client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
     )
 
 
@@ -3301,25 +3292,33 @@ async def test_create_payment_information_for_org_async():
 
 
 @pytest.mark.skip
-def test_delete_payment_information_for_org():
+def test_update_payment_information_for_org():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = delete_payment_information_for_org.sync(
+    result: Optional[Union[Customer, Error]] = update_payment_information_for_org.sync(
         client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
-    body: Error = result
+    body: Customer = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = (
-        delete_payment_information_for_org.sync_detailed(
+    response: Response[Optional[Union[Customer, Error]]] = (
+        update_payment_information_for_org.sync_detailed(
             client=client,
+            body=BillingInfo(
+                name="<string>",
+                phone="<string>",
+            ),
         )
     )
 
@@ -3327,19 +3326,29 @@ def test_delete_payment_information_for_org():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_delete_payment_information_for_org_async():
+async def test_update_payment_information_for_org_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = await delete_payment_information_for_org.asyncio(
+    result: Optional[
+        Union[Customer, Error]
+    ] = await update_payment_information_for_org.asyncio(
         client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
     response: Response[
-        Optional[Error]
-    ] = await delete_payment_information_for_org.asyncio_detailed(
+        Optional[Union[Customer, Error]]
+    ] = await update_payment_information_for_org.asyncio_detailed(
         client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -3618,65 +3627,6 @@ async def test_get_org_subscription_async():
 
 
 @pytest.mark.skip
-def test_update_org_subscription():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        update_org_subscription.sync(
-            client=client,
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            ),
-        )
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: ZooProductSubscriptions = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        update_org_subscription.sync_detailed(
-            client=client,
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            ),
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_org_subscription_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[ZooProductSubscriptions, Error]
-    ] = await update_org_subscription.asyncio(
-        client=client,
-        body=ZooProductSubscriptionsOrgRequest(
-            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[ZooProductSubscriptions, Error]]
-    ] = await update_org_subscription.asyncio_detailed(
-        client=client,
-        body=ZooProductSubscriptionsOrgRequest(
-            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-        ),
-    )
-
-
-@pytest.mark.skip
 def test_create_org_subscription():
     # Create our client.
     client = ClientFromEnv()
@@ -3728,6 +3678,65 @@ async def test_create_org_subscription_async():
     response: Response[
         Optional[Union[ZooProductSubscriptions, Error]]
     ] = await create_org_subscription.asyncio_detailed(
+        client=client,
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_update_org_subscription():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ZooProductSubscriptions, Error]] = (
+        update_org_subscription.sync(
+            client=client,
+            body=ZooProductSubscriptionsOrgRequest(
+                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ZooProductSubscriptions = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
+        update_org_subscription.sync_detailed(
+            client=client,
+            body=ZooProductSubscriptionsOrgRequest(
+                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_org_subscription_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await update_org_subscription.asyncio(
+        client=client,
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await update_org_subscription.asyncio_detailed(
         client=client,
         body=ZooProductSubscriptionsOrgRequest(
             modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
@@ -3881,6 +3890,45 @@ async def test_update_org_privacy_settings_async():
 
 
 @pytest.mark.skip
+def test_delete_org_saml_idp():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_org_saml_idp.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_org_saml_idp.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_org_saml_idp_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_org_saml_idp.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_org_saml_idp.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
 def test_get_org_saml_idp():
     # Create our client.
     client = ClientFromEnv()
@@ -3922,87 +3970,6 @@ async def test_get_org_saml_idp_async():
         Optional[Union[SamlIdentityProvider, Error]]
     ] = await get_org_saml_idp.asyncio_detailed(
         client=client,
-    )
-
-
-@pytest.mark.skip
-def test_update_org_saml_idp():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[SamlIdentityProvider, Error]] = update_org_saml_idp.sync(
-        client=client,
-        body=SamlIdentityProviderCreate(
-            idp_entity_id="<string>",
-            idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
-                )
-            ),
-            technical_contact_email="<string>",
-        ),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: SamlIdentityProvider = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[SamlIdentityProvider, Error]]] = (
-        update_org_saml_idp.sync_detailed(
-            client=client,
-            body=SamlIdentityProviderCreate(
-                idp_entity_id="<string>",
-                idp_metadata_source=IdpMetadataSource(
-                    OptionBase64EncodedXml(
-                        data=Base64Data(b"<bytes>"),
-                    )
-                ),
-                technical_contact_email="<string>",
-            ),
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_org_saml_idp_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[SamlIdentityProvider, Error]
-    ] = await update_org_saml_idp.asyncio(
-        client=client,
-        body=SamlIdentityProviderCreate(
-            idp_entity_id="<string>",
-            idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
-                )
-            ),
-            technical_contact_email="<string>",
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[SamlIdentityProvider, Error]]
-    ] = await update_org_saml_idp.asyncio_detailed(
-        client=client,
-        body=SamlIdentityProviderCreate(
-            idp_entity_id="<string>",
-            idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
-                )
-            ),
-            technical_contact_email="<string>",
-        ),
     )
 
 
@@ -4088,41 +4055,83 @@ async def test_create_org_saml_idp_async():
 
 
 @pytest.mark.skip
-def test_delete_org_saml_idp():
+def test_update_org_saml_idp():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = delete_org_saml_idp.sync(
+    result: Optional[Union[SamlIdentityProvider, Error]] = update_org_saml_idp.sync(
         client=client,
+        body=SamlIdentityProviderCreate(
+            idp_entity_id="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
+                )
+            ),
+            technical_contact_email="<string>",
+        ),
     )
 
     if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
-    body: Error = result
+    body: SamlIdentityProvider = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_org_saml_idp.sync_detailed(
-        client=client,
+    response: Response[Optional[Union[SamlIdentityProvider, Error]]] = (
+        update_org_saml_idp.sync_detailed(
+            client=client,
+            body=SamlIdentityProviderCreate(
+                idp_entity_id="<string>",
+                idp_metadata_source=IdpMetadataSource(
+                    OptionBase64EncodedXml(
+                        data=Base64Data(b"<bytes>"),
+                    )
+                ),
+                technical_contact_email="<string>",
+            ),
+        )
     )
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_delete_org_saml_idp_async():
+async def test_update_org_saml_idp_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = await delete_org_saml_idp.asyncio(
+    result: Optional[
+        Union[SamlIdentityProvider, Error]
+    ] = await update_org_saml_idp.asyncio(
         client=client,
+        body=SamlIdentityProviderCreate(
+            idp_entity_id="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
+                )
+            ),
+            technical_contact_email="<string>",
+        ),
     )
 
     # OR run async with more info
-    response: Response[Optional[Error]] = await delete_org_saml_idp.asyncio_detailed(
+    response: Response[
+        Optional[Union[SamlIdentityProvider, Error]]
+    ] = await update_org_saml_idp.asyncio_detailed(
         client=client,
+        body=SamlIdentityProviderCreate(
+            idp_entity_id="<string>",
+            idp_metadata_source=IdpMetadataSource(
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
+                )
+            ),
+            technical_contact_email="<string>",
+        ),
     )
 
 
@@ -4237,6 +4246,51 @@ async def test_create_service_account_for_org_async():
 
 
 @pytest.mark.skip
+def test_delete_service_account_for_org():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_service_account_for_org.sync(
+        client=client,
+        token=ServiceAccountUuid("<string>"),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_service_account_for_org.sync_detailed(
+        client=client,
+        token=ServiceAccountUuid("<string>"),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_service_account_for_org_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_service_account_for_org.asyncio(
+        client=client,
+        token=ServiceAccountUuid("<string>"),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await delete_service_account_for_org.asyncio_detailed(
+        client=client,
+        token=ServiceAccountUuid("<string>"),
+    )
+
+
+@pytest.mark.skip
 def test_get_service_account_for_org():
     # Create our client.
     client = ClientFromEnv()
@@ -4280,51 +4334,6 @@ async def test_get_service_account_for_org_async():
     response: Response[
         Optional[Union[ServiceAccount, Error]]
     ] = await get_service_account_for_org.asyncio_detailed(
-        client=client,
-        token=ServiceAccountUuid("<string>"),
-    )
-
-
-@pytest.mark.skip
-def test_delete_service_account_for_org():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = delete_service_account_for_org.sync(
-        client=client,
-        token=ServiceAccountUuid("<string>"),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Error = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_service_account_for_org.sync_detailed(
-        client=client,
-        token=ServiceAccountUuid("<string>"),
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_delete_service_account_for_org_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = await delete_service_account_for_org.asyncio(
-        client=client,
-        token=ServiceAccountUuid("<string>"),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Error]
-    ] = await delete_service_account_for_org.asyncio_detailed(
         client=client,
         token=ServiceAccountUuid("<string>"),
     )
@@ -4720,13 +4729,22 @@ def test_get_pricing_subscriptions():
     # Create our client.
     client = ClientFromEnv()
 
-    get_pricing_subscriptions.sync(
+    result: Optional[Union[Dict, Error]] = get_pricing_subscriptions.sync(
         client=client,
     )
 
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Dict = result
+    print(body)
+
     # OR if you need more info (e.g. status_code)
-    get_pricing_subscriptions.sync_detailed(
-        client=client,
+    response: Response[Optional[Union[Dict, Error]]] = (
+        get_pricing_subscriptions.sync_detailed(
+            client=client,
+        )
     )
 
 
@@ -4737,12 +4755,14 @@ async def test_get_pricing_subscriptions_async():
     # Create our client.
     client = ClientFromEnv()
 
-    await get_pricing_subscriptions.asyncio(
+    result: Optional[Union[Dict, Error]] = await get_pricing_subscriptions.asyncio(
         client=client,
     )
 
     # OR run async with more info
-    await get_pricing_subscriptions.asyncio_detailed(
+    response: Response[
+        Optional[Union[Dict, Error]]
+    ] = await get_pricing_subscriptions.asyncio_detailed(
         client=client,
     )
 
@@ -5566,6 +5586,45 @@ async def test_get_volume_unit_conversion_async():
 
 
 @pytest.mark.skip
+def test_delete_user_self():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_user_self.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_user_self.sync_detailed(
+        client=client,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_user_self_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_user_self.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_user_self.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
 def test_get_user_self():
     # Create our client.
     client = ClientFromEnv()
@@ -5680,45 +5739,6 @@ async def test_update_user_self_async():
             last_name="<string>",
             phone="<string>",
         ),
-    )
-
-
-@pytest.mark.skip
-def test_delete_user_self():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = delete_user_self.sync(
-        client=client,
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Error = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_user_self.sync_detailed(
-        client=client,
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_delete_user_self_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = await delete_user_self.asyncio(
-        client=client,
-    )
-
-    # OR run async with more info
-    response: Response[Optional[Error]] = await delete_user_self.asyncio_detailed(
-        client=client,
     )
 
 
@@ -5935,6 +5955,51 @@ async def test_create_api_token_for_user_async():
 
 
 @pytest.mark.skip
+def test_delete_api_token_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_api_token_for_user.sync(
+        client=client,
+        token=ApiTokenUuid("<string>"),
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_api_token_for_user.sync_detailed(
+        client=client,
+        token=ApiTokenUuid("<string>"),
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_api_token_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_api_token_for_user.asyncio(
+        client=client,
+        token=ApiTokenUuid("<string>"),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await delete_api_token_for_user.asyncio_detailed(
+        client=client,
+        token=ApiTokenUuid("<string>"),
+    )
+
+
+@pytest.mark.skip
 def test_get_api_token_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -5976,51 +6041,6 @@ async def test_get_api_token_for_user_async():
     response: Response[
         Optional[Union[ApiToken, Error]]
     ] = await get_api_token_for_user.asyncio_detailed(
-        client=client,
-        token=ApiTokenUuid("<string>"),
-    )
-
-
-@pytest.mark.skip
-def test_delete_api_token_for_user():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = delete_api_token_for_user.sync(
-        client=client,
-        token=ApiTokenUuid("<string>"),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Error = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_api_token_for_user.sync_detailed(
-        client=client,
-        token=ApiTokenUuid("<string>"),
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_delete_api_token_for_user_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = await delete_api_token_for_user.asyncio(
-        client=client,
-        token=ApiTokenUuid("<string>"),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Error]
-    ] = await delete_api_token_for_user.asyncio_detailed(
         client=client,
         token=ApiTokenUuid("<string>"),
     )
@@ -6270,6 +6290,49 @@ async def test_get_user_org_async():
 
 
 @pytest.mark.skip
+def test_delete_payment_information_for_user():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_payment_information_for_user.sync(
+        client=client,
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = (
+        delete_payment_information_for_user.sync_detailed(
+            client=client,
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_payment_information_for_user_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_payment_information_for_user.asyncio(
+        client=client,
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Error]
+    ] = await delete_payment_information_for_user.asyncio_detailed(
+        client=client,
+    )
+
+
+@pytest.mark.skip
 def test_get_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
@@ -6311,67 +6374,6 @@ async def test_get_payment_information_for_user_async():
         Optional[Union[Customer, Error]]
     ] = await get_payment_information_for_user.asyncio_detailed(
         client=client,
-    )
-
-
-@pytest.mark.skip
-def test_update_payment_information_for_user():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[Customer, Error]] = update_payment_information_for_user.sync(
-        client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Customer = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[Customer, Error]]] = (
-        update_payment_information_for_user.sync_detailed(
-            client=client,
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            ),
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_payment_information_for_user_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[Customer, Error]
-    ] = await update_payment_information_for_user.asyncio(
-        client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[Customer, Error]]
-    ] = await update_payment_information_for_user.asyncio_detailed(
-        client=client,
-        body=BillingInfo(
-            name="<string>",
-            phone="<string>",
-        ),
     )
 
 
@@ -6437,25 +6439,33 @@ async def test_create_payment_information_for_user_async():
 
 
 @pytest.mark.skip
-def test_delete_payment_information_for_user():
+def test_update_payment_information_for_user():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = delete_payment_information_for_user.sync(
+    result: Optional[Union[Customer, Error]] = update_payment_information_for_user.sync(
         client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     if isinstance(result, Error) or result is None:
         print(result)
         raise Exception("Error in response")
 
-    body: Error = result
+    body: Customer = result
     print(body)
 
     # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = (
-        delete_payment_information_for_user.sync_detailed(
+    response: Response[Optional[Union[Customer, Error]]] = (
+        update_payment_information_for_user.sync_detailed(
             client=client,
+            body=BillingInfo(
+                name="<string>",
+                phone="<string>",
+            ),
         )
     )
 
@@ -6463,19 +6473,29 @@ def test_delete_payment_information_for_user():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_delete_payment_information_for_user_async():
+async def test_update_payment_information_for_user_async():
     # Create our client.
     client = ClientFromEnv()
 
-    result: Optional[Error] = await delete_payment_information_for_user.asyncio(
+    result: Optional[
+        Union[Customer, Error]
+    ] = await update_payment_information_for_user.asyncio(
         client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
     # OR run async with more info
     response: Response[
-        Optional[Error]
-    ] = await delete_payment_information_for_user.asyncio_detailed(
+        Optional[Union[Customer, Error]]
+    ] = await update_payment_information_for_user.asyncio_detailed(
         client=client,
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
+        ),
     )
 
 
@@ -6758,65 +6778,6 @@ async def test_get_user_subscription_async():
 
 
 @pytest.mark.skip
-def test_update_user_subscription():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Union[ZooProductSubscriptions, Error]] = (
-        update_user_subscription.sync(
-            client=client,
-            body=ZooProductSubscriptionsUserRequest(
-                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-            ),
-        )
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: ZooProductSubscriptions = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
-        update_user_subscription.sync_detailed(
-            client=client,
-            body=ZooProductSubscriptionsUserRequest(
-                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-            ),
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_user_subscription_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[
-        Union[ZooProductSubscriptions, Error]
-    ] = await update_user_subscription.asyncio(
-        client=client,
-        body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-        ),
-    )
-
-    # OR run async with more info
-    response: Response[
-        Optional[Union[ZooProductSubscriptions, Error]]
-    ] = await update_user_subscription.asyncio_detailed(
-        client=client,
-        body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
-        ),
-    )
-
-
-@pytest.mark.skip
 def test_create_user_subscription():
     # Create our client.
     client = ClientFromEnv()
@@ -6868,6 +6829,65 @@ async def test_create_user_subscription_async():
     response: Response[
         Optional[Union[ZooProductSubscriptions, Error]]
     ] = await create_user_subscription.asyncio_detailed(
+        client=client,
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_update_user_subscription():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Union[ZooProductSubscriptions, Error]] = (
+        update_user_subscription.sync(
+            client=client,
+            body=ZooProductSubscriptionsUserRequest(
+                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            ),
+        )
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: ZooProductSubscriptions = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Union[ZooProductSubscriptions, Error]]] = (
+        update_user_subscription.sync_detailed(
+            client=client,
+            body=ZooProductSubscriptionsUserRequest(
+                modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            ),
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_user_subscription_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[
+        Union[ZooProductSubscriptions, Error]
+    ] = await update_user_subscription.asyncio(
+        client=client,
+        body=ZooProductSubscriptionsUserRequest(
+            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+        ),
+    )
+
+    # OR run async with more info
+    response: Response[
+        Optional[Union[ZooProductSubscriptions, Error]]
+    ] = await update_user_subscription.asyncio_detailed(
         client=client,
         body=ZooProductSubscriptionsUserRequest(
             modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
@@ -7188,6 +7208,49 @@ async def test_create_user_shortlink_async():
 
 
 @pytest.mark.skip
+def test_delete_user_shortlink():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = delete_user_shortlink.sync(
+        client=client,
+        key="<string>",
+    )
+
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Error = result
+    print(body)
+
+    # OR if you need more info (e.g. status_code)
+    response: Response[Optional[Error]] = delete_user_shortlink.sync_detailed(
+        client=client,
+        key="<string>",
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_user_shortlink_async():
+    # Create our client.
+    client = ClientFromEnv()
+
+    result: Optional[Error] = await delete_user_shortlink.asyncio(
+        client=client,
+        key="<string>",
+    )
+
+    # OR run async with more info
+    response: Response[Optional[Error]] = await delete_user_shortlink.asyncio_detailed(
+        client=client,
+        key="<string>",
+    )
+
+
+@pytest.mark.skip
 def test_redirect_user_shortlink():
     # Create our client.
     client = ClientFromEnv()
@@ -7284,49 +7347,6 @@ async def test_update_user_shortlink_async():
         body=UpdateShortlinkRequest(
             restrict_to_org=False,
         ),
-    )
-
-
-@pytest.mark.skip
-def test_delete_user_shortlink():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = delete_user_shortlink.sync(
-        client=client,
-        key="<string>",
-    )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Error = result
-    print(body)
-
-    # OR if you need more info (e.g. status_code)
-    response: Response[Optional[Error]] = delete_user_shortlink.sync_detailed(
-        client=client,
-        key="<string>",
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_delete_user_shortlink_async():
-    # Create our client.
-    client = ClientFromEnv()
-
-    result: Optional[Error] = await delete_user_shortlink.asyncio(
-        client=client,
-        key="<string>",
-    )
-
-    # OR run async with more info
-    response: Response[Optional[Error]] = await delete_user_shortlink.asyncio_detailed(
-        client=client,
-        key="<string>",
     )
 
 

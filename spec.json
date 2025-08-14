@@ -22579,6 +22579,14 @@
                 "type": "string",
                 "format": "date-time"
               },
+              "conversation_id": {
+                "description": "The conversation ID Conversations group different prompts together.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
+              },
               "created_at": {
                 "title": "DateTime",
                 "description": "The time and date the API call was created.",
@@ -22682,6 +22690,7 @@
               }
             },
             "required": [
+              "conversation_id",
               "created_at",
               "id",
               "model",
@@ -22708,6 +22717,14 @@
                 "description": "The time and date the API call was completed.",
                 "type": "string",
                 "format": "date-time"
+              },
+              "conversation_id": {
+                "description": "The conversation ID Conversations group different prompts together.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
               },
               "created_at": {
                 "title": "DateTime",
@@ -22803,6 +22820,7 @@
             },
             "required": [
               "code",
+              "conversation_id",
               "created_at",
               "id",
               "model",
@@ -38571,6 +38589,14 @@
             "type": "string",
             "format": "date-time"
           },
+          "conversation_id": {
+            "description": "The conversation ID Conversations group different prompts together.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
+          },
           "created_at": {
             "title": "DateTime",
             "description": "The time and date the API call was created.",
@@ -38668,6 +38694,7 @@
           }
         },
         "required": [
+          "conversation_id",
           "created_at",
           "id",
           "model",
@@ -38716,6 +38743,14 @@
             "description": "The time and date the API call was completed.",
             "type": "string",
             "format": "date-time"
+          },
+          "conversation_id": {
+            "description": "The conversation ID Conversations group different prompts together.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
           },
           "created_at": {
             "title": "DateTime",
@@ -38805,6 +38840,7 @@
         },
         "required": [
           "code",
+          "conversation_id",
           "created_at",
           "id",
           "model",

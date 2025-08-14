@@ -167,7 +167,7 @@ class OptionRevolve(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DShellFace(BaseModel):
+class OptionSolid3dShellFace(BaseModel):
     """Command for shelling a solid3d face"""
 
     face_ids: List[str]
@@ -343,7 +343,7 @@ class OptionDefaultCameraZoom(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionExport2D(BaseModel):
+class OptionExport2d(BaseModel):
     """Export a sketch to a file."""
 
     entity_ids: List[str]
@@ -355,7 +355,7 @@ class OptionExport2D(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionExport3D(BaseModel):
+class OptionExport3d(BaseModel):
     """Export the scene to a file."""
 
     entity_ids: List[str]
@@ -749,7 +749,7 @@ class OptionGetEntityType(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetAllEdgeFaces(BaseModel):
+class OptionSolid3dGetAllEdgeFaces(BaseModel):
     """Gets all faces which use the given edge."""
 
     edge_id: str
@@ -761,7 +761,7 @@ class OptionSolid3DGetAllEdgeFaces(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid2DAddHole(BaseModel):
+class OptionSolid2dAddHole(BaseModel):
     """Add a hole to a Solid2d object before extruding it."""
 
     hole_id: str
@@ -773,7 +773,7 @@ class OptionSolid2DAddHole(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetAllOppositeEdges(BaseModel):
+class OptionSolid3dGetAllOppositeEdges(BaseModel):
     """Gets all edges which are opposite the given edge, across all possible faces."""
 
     along_vector: Optional[Point3d] = None
@@ -787,7 +787,7 @@ class OptionSolid3DGetAllOppositeEdges(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetOppositeEdge(BaseModel):
+class OptionSolid3dGetOppositeEdge(BaseModel):
     """Gets the edge opposite the given edge, along the given face."""
 
     edge_id: str
@@ -801,7 +801,7 @@ class OptionSolid3DGetOppositeEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetNextAdjacentEdge(BaseModel):
+class OptionSolid3dGetNextAdjacentEdge(BaseModel):
     """Gets the next adjacent edge for the given edge, along the given face."""
 
     edge_id: str
@@ -815,7 +815,7 @@ class OptionSolid3DGetNextAdjacentEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
+class OptionSolid3dGetPrevAdjacentEdge(BaseModel):
     """Gets the previous adjacent edge for the given edge, along the given face."""
 
     edge_id: str
@@ -829,7 +829,7 @@ class OptionSolid3DGetPrevAdjacentEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetCommonEdge(BaseModel):
+class OptionSolid3dGetCommonEdge(BaseModel):
     """Gets the shared edge between these two faces if it exists"""
 
     face_ids: List[str]
@@ -841,7 +841,7 @@ class OptionSolid3DGetCommonEdge(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DFilletEdge(BaseModel):
+class OptionSolid3dFilletEdge(BaseModel):
     """Fillets the given edge with the specified radius."""
 
     cut_type: CutType = "fillet"  # type: ignore
@@ -1509,7 +1509,7 @@ class OptionViewIsometric(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
+class OptionSolid3dGetExtrusionFaceInfo(BaseModel):
     """Get a concise description of all of an extrusion's faces."""
 
     edge_id: str
@@ -1521,7 +1521,7 @@ class OptionSolid3DGetExtrusionFaceInfo(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
 
 
-class OptionSolid3DGetAdjacencyInfo(BaseModel):
+class OptionSolid3dGetAdjacencyInfo(BaseModel):
     """Get a concise description of all of solids edges."""
 
     edge_id: str
@@ -1676,7 +1676,7 @@ ModelingCmd = RootModel[
             OptionTwistExtrude,
             OptionSweep,
             OptionRevolve,
-            OptionSolid3DShellFace,
+            OptionSolid3dShellFace,
             OptionRevolveAboutEdge,
             OptionLoft,
             OptionClosePath,
@@ -1689,8 +1689,8 @@ ModelingCmd = RootModel[
             OptionDefaultCameraLookAt,
             OptionDefaultCameraPerspectiveSettings,
             OptionDefaultCameraZoom,
-            OptionExport2D,
-            OptionExport3D,
+            OptionExport2d,
+            OptionExport3d,
             OptionExport,
             OptionEntityGetParentId,
             OptionEntityGetNumChildren,
@@ -1721,14 +1721,14 @@ ModelingCmd = RootModel[
             OptionObjectBringToFront,
             OptionObjectSetMaterialParamsPbr,
             OptionGetEntityType,
-            OptionSolid3DGetAllEdgeFaces,
-            OptionSolid2DAddHole,
-            OptionSolid3DGetAllOppositeEdges,
-            OptionSolid3DGetOppositeEdge,
-            OptionSolid3DGetNextAdjacentEdge,
-            OptionSolid3DGetPrevAdjacentEdge,
-            OptionSolid3DGetCommonEdge,
-            OptionSolid3DFilletEdge,
+            OptionSolid3dGetAllEdgeFaces,
+            OptionSolid2dAddHole,
+            OptionSolid3dGetAllOppositeEdges,
+            OptionSolid3dGetOppositeEdge,
+            OptionSolid3dGetNextAdjacentEdge,
+            OptionSolid3dGetPrevAdjacentEdge,
+            OptionSolid3dGetCommonEdge,
+            OptionSolid3dFilletEdge,
             OptionFaceIsPlanar,
             OptionFaceGetPosition,
             OptionFaceGetCenter,
@@ -1785,8 +1785,8 @@ ModelingCmd = RootModel[
             OptionZoomToFit,
             OptionOrientToFace,
             OptionViewIsometric,
-            OptionSolid3DGetExtrusionFaceInfo,
-            OptionSolid3DGetAdjacencyInfo,
+            OptionSolid3dGetExtrusionFaceInfo,
+            OptionSolid3dGetAdjacencyInfo,
             OptionSelectClear,
             OptionSelectGet,
             OptionGetNumObjects,

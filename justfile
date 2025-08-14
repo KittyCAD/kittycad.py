@@ -1,7 +1,5 @@
 install-deps:
-    uv pip install poetry
-    poetry update
-    poetry install
+    uv sync --extra dev
 
 generate:
     ./generate/run.sh

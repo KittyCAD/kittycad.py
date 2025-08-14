@@ -1,130 +1,72 @@
-[tool.poetry]
+[project]
 name = "kittycad"
 version = "0.7.9"
 description = "A client library for accessing KittyCAD"
-
 authors = []
-
 readme = "README.md"
-packages = [{ include = "kittycad" }]
-include = ["CHANGELOG.md", "kittycad/py.typed"]
+requires-python = ">=3.9"
+dependencies = [
+  "attrs>=20.1.0,<26.0.0",
+  "httpx>=0.27.2,<0.29.0",
+  "python-dateutil>=2.8.0,<3.0.0",
+  "websockets>=14.1.0,<16.0.0",
+  "pymongo>=4.6.0,<5.0.0",
+  "pydantic>=2.9.1,<3.0.0",
+  "pydantic-extra-types>=2.1.0,<3.0.0",
+]
 
-[[tool.poetry.source]]
+[project.optional-dependencies]
+dev = [
+  "jinja2>=3.1.6,<4.0.0",
+  "jsonpatch>=1.33,<2.0.0",
+  "mypy>=1.17.1,<2.0.0",
+  "openapi-spec-validator>=0.7.2,<1.0.0",
+  "prance>=23.6.21,<24.0.0",
+  "pytest>=8.4.1,<9.0.0",
+  "pytest-asyncio>=1.1.0,<2.0.0",
+  "pytest-cov>=6.2.1,<7.0.0",
+  "ruff>=0.12.7,<1.0.0",
+  "types-python-dateutil>=2.9.0,<3.0.0",
+]
+docs = [
+  "autoclasstoc>=1.7.0,<2.0.0",
+  "pyenchant>=3.2.2,<4.0.0",
+  "Sphinx>=7.1.2,<8.0.0",
+  "sphinx-autoapi>=3.6.0,<4.0.0",
+  "sphinx-autodoc-typehints>=2.3.0,<3.0.0",
+  "sphinxcontrib-spelling>=8.0.0,<9.0.0",
+  "sphinx-copybutton>=0.5.2,<1.0.0",
+  "sphinxext-opengraph>=0.10.0,<1.0.0",
+  "sphinx-rtd-theme>=3.0.2,<4.0.0",
+  "toml>=0.10.2,<1.0.0",
+  "types-toml>=0.10.8,<1.0.0",
+]
+
+[[tool.uv.index]]
 name = "pypi-public"
 url = "https://pypi.org/simple/"
-
-[tool.poetry.dependencies]
-attrs = ">=20.1.0,<26.0.0"
-httpx = ">=0.27.2,<0.29.0"
-python = ">=3.9,<4.0"
-python-dateutil = "^2.8.0"
-websockets = ">=14.1.0,<16.0.0"
-pymongo = "^4.6.0"
-pydantic = "^2.9.1"
-pydantic-extra-types = "^2.1.0"
-
-[tool.poetry.dev-dependencies]
-autoclasstoc = "^1.7.0"
-black = "^25.1.0"
-isort = "^6.0.1"
-jinja2 = "^3.1.6"
-jsonpatch = "^1.33"
-mypy = "^1.17.1"
-openapi-parser = "^0.2.6"
-openapi-spec-validator = "^0.7.2"
-prance = "^23.6.21"
-pyenchant = "^3.2.2"
-pytest = "^8.4.1"
-pytest-asyncio = "^1.1.0"
-pytest-cov = "^6.2.1"
-ruff = "^0.12.7"
-Sphinx = "^7.1.2"
-sphinx-autoapi = "^3.6.0"
-sphinx-autodoc-typehints = "^2.3.0"
-sphinxcontrib-spelling = "^8.0.0"
-sphinx-copybutton = "^0.5.2"
-sphinxext-opengraph = "^0.10.0"
-sphinx-rtd-theme = "^3.0.2"
-toml = "^0.10.2"
-types-python-dateutil = "^2.9.0"
-types-toml = "^0.10.8"
-
-[build-system]
-requires = ["poetry>=1.0"]
-build-backend = "poetry.masonry.api"
-
-[tool.isort]
-line_length = 88
-profile = "black"
-src_paths = ["generate", "kittycad", "docs"]
-float_to_top = true
-combine_as_imports = true
 
 [tool.ruff]
 line-length = 88
 
 [tool.ruff.lint]
+select = ["E", "F", "I"]
 # Since we auto fix these, we don't want to warn about them. Since some doc strings are too long.
 ignore = ["E501"]
-# Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "I",
-  "N",
-  "Q",
-  "S",
-  "T",
-  "W",
-  "ANN",
-  "ARG",
-  "BLE",
-  "COM",
-  "DJ",
-  "DTZ",
-  "EM",
-  "ERA",
-  "EXE",
-  "FBT",
-  "ICN",
-  "INP",
-  "ISC",
-  "NPY",
-  "PD",
-  "PGH",
-  "PIE",
-  "PL",
-  "PT",
-  "PTH",
-  "PYI",
-  "RET",
-  "RSE",
-  "RUF",
-  "SIM",
-  "SLF",
-  "TCH",
-  "TID",
-  "TRY",
-  "UP",
-  "YTT",
-]
-unfixable = []
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
+[tool.ruff.lint.isort]
+combine-as-imports = true
+split-on-trailing-comma = false
+
 [tool.ruff.lint.per-file-ignores]
 # We exclude init files since otherwise ruff will delete all the unused imports.
-# This code comes from here: https://beta.ruff.rs/docs/rules/#pyflakes-f
 "__init__.py" = ["F401"]
 "examples_test.py" = ["F841"]
 
 [tool.mypy]
-exclude = ["venv"]
+exclude = ["venv", "docs"]
 show_error_codes = true
 ignore_missing_imports = true
 check_untyped_defs = true

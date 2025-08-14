@@ -22,18 +22,20 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
   
-      - name: Build
+      - name: Install dependencies
         shell: bash
         run: |
-          poetry install
-          poetry build
+          uv sync --extra dev
 
       - name: Run ruff
         shell: bash
         run: |
-          poetry run ruff check --output-format=github .
-          poetry run ruff format --check
+          uv run ruff check --output-format=github .
+          uv run ruff format --check

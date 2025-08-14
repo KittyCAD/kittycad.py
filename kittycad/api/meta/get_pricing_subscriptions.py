@@ -26,7 +26,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[dict, Error]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Dict, Error]]:
     if response.status_code == 200:
         response_200 = response.json()
         return response_200
@@ -41,7 +41,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[dict, Error]]
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Optional[Union[dict, Error]]]:
+) -> Response[Optional[Union[Dict, Error]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -53,7 +53,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Optional[Union[dict, Error]]]:
+) -> Response[Optional[Union[Dict, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -69,7 +69,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[dict, Error]]:
+) -> Optional[Union[Dict, Error]]:
     """This is the ultimate source of truth for the pricing of our subscriptions."""  # noqa: E501
 
     return sync_detailed(
@@ -80,7 +80,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Optional[Union[dict, Error]]]:
+) -> Response[Optional[Union[Dict, Error]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -94,7 +94,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[dict, Error]]:
+) -> Optional[Union[Dict, Error]]:
     """This is the ultimate source of truth for the pricing of our subscriptions."""  # noqa: E501
 
     return (

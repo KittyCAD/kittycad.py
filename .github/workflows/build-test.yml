@@ -6,51 +6,44 @@ on:
       - '**.py'
       - .github/workflows/build-test.yml
       - 'pyproject.toml'
-      - 'poetry.lock'
+      - 'uv.lock'
       - 'spec.json'
   pull_request:
     paths:
       - '**.py'
       - .github/workflows/build-test.yml
       - 'pyproject.toml'
-      - 'poetry.lock'
+      - 'uv.lock'
       - 'spec.json'
   workflow_dispatch:
     inputs:
 jobs:
   build-test:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.9
         uses: actions/setup-python@v5
         with:
           python-version: 3.9
-
-      # Installation instructions are from: https://python-poetry.org/docs/
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
       - name: Install dependencies
         shell: bash
         run: |
-          pip install \
-          poetry
-
-      - name: Build
-        shell: bash
-        run: |
-          poetry install
-          poetry build
-
+          uv sync --extra dev
       - name: Run pytest
         shell: bash
         run: |
-          poetry run pytest --cov=./ --cov-report=xml kittycad
+          uv run pytest --cov=./ --cov-report=xml kittycad
         env:
           KITTYCAD_API_TOKEN: ${{secrets.KITTYCAD_API_TOKEN}}
-
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
@@ -59,4 +52,3 @@ jobs:
           flags: unittests
           files: ${{ github.workspace }}/coverage.xml
           verbose: true
-
