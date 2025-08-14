@@ -50,6 +50,8 @@ jobs:
           rm -rf docs/html docs/_build docs/_autosummary
           # Build the documentation
           uv run sphinx-build -b html docs/ docs/html/
+          # Add CNAME for custom domain
+          echo "python.api.docs.zoo.dev" > docs/html/CNAME
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
