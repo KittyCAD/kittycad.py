@@ -1,38 +1,37 @@
-DOCKER_IMAGE_NAME := kittycad/python-generator
+VERSION := $(shell uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
 
-INTERACTIVE := $(shell [ -t 0 ] && echo 1 || echo 0)
-ifeq ($(INTERACTIVE), 1)
-	DOCKER_FLAGS += -t
-endif
-
-# For this to work, you need to install toml-cli: https://github.com/gnprice/toml-cli
-# `cargo install toml-cli`
-VERSION := $(shell toml get $(CURDIR)/pyproject.toml project.version | jq -r .)
+.PHONY: install
+install: ## Install dependencies using uv.
+	uv sync --extra dev
 
 .PHONY: generate
-generate: docker-image ## Generate the api client.
-	docker run --rm -i $(DOCKER_FLAGS) \
-		--name python-generator \
-		-e KITTYCAD_API_TOKEN \
-		--disable-content-trust \
-		-v $(CURDIR):/home/user/src \
-		--workdir /home/user/src \
-		$(DOCKER_IMAGE_NAME) ./generate/run.sh
+generate: install ## Generate the api client.
+	./generate/run.sh
 
-.PHONY: shell
-shell: docker-image ## Pop into a shell in the docker image.
-	docker run --rm -i $(DOCKER_FLAGS) \
-		--name python-generator-shell \
-		-e KITTYCAD_API_TOKEN \
-		--disable-content-trust \
-		-v $(CURDIR):/home/user/src \
-		--workdir /home/user/src \
-		$(DOCKER_IMAGE_NAME) /bin/bash
+.PHONY: test
+test: install ## Run tests.
+	uv run pytest kittycad
 
+.PHONY: lint
+lint: install ## Run linting and formatting.
+	uv run ruff check --fix .
+	uv run ruff format
+	uv run isort .
 
-.PHONY: docker-image
-docker-image:
-	docker build -t $(DOCKER_IMAGE_NAME) .
+.PHONY: typecheck
+typecheck: install ## Run type checking.
+	uv run mypy .
+
+.PHONY: docs
+docs: install ## Generate documentation.
+	rm -rf docs/html docs/_autosummary
+	uv run sphinx-build -b html docs/ docs/html/
+
+.PHONY: clean
+clean: ## Clean generated files.
+	rm -rf build/ dist/ *.egg-info/ .coverage htmlcov/
+	find . -type d -name __pycache__ -exec rm -rf {} +
+	find . -type f -name "*.pyc" -delete
 
 .PHONY: tag
 tag: ## Create a new git tag to prepare to build a release.
