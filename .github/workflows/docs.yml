@@ -23,7 +23,7 @@ on:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-latest-4-cores
+    runs-on: ubuntu-latest-8-cores
     steps:
       - name: Checkout
         uses: actions/checkout@v4
