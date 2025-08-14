@@ -26,9 +26,7 @@ dev = [
   "pytest-asyncio>=1.1.0,<2.0.0",
   "pytest-cov>=6.2.1,<7.0.0",
   "ruff>=0.12.7,<1.0.0",
-  "toml>=0.10.2,<1.0.0",
   "types-python-dateutil>=2.9.0,<3.0.0",
-  "types-toml>=0.10.8,<1.0.0",
 ]
 docs = [
   "autoclasstoc>=1.7.0,<2.0.0",
