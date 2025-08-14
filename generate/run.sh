@@ -16,14 +16,14 @@ git checkout kittycad/models/base64data.py || true
 git checkout kittycad/models/empty.py || true
 
 # Generate new.
-poetry run python generate/generate.py
+uv run python generate/generate.py
 
 # Format and lint.
-poetry run isort .
-poetry run ruff check --fix .
-poetry run ruff format
-poetry run mypy .
+uv run isort .
+uv run ruff check --fix .
+uv run ruff format
+uv run mypy .
 
 
 # Run the tests.
-poetry run pytest kittycad
+uv run pytest kittycad

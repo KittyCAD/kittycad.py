@@ -7,7 +7,7 @@ endif
 
 # For this to work, you need to install toml-cli: https://github.com/gnprice/toml-cli
 # `cargo install toml-cli`
-VERSION := $(shell toml get $(CURDIR)/pyproject.toml tool.poetry.version | jq -r .)
+VERSION := $(shell toml get $(CURDIR)/pyproject.toml project.version | jq -r .)
 
 .PHONY: generate
 generate: docker-image ## Generate the api client.
