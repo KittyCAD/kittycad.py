@@ -39,6 +39,7 @@ docs = [
   "sphinxext-opengraph>=0.10.0,<1.0.0",
   "sphinx-rtd-theme>=3.0.2,<4.0.0",
   "toml>=0.10.2,<1.0.0",
+  "types-toml>=0.10.8,<1.0.0",
 ]
 
 [[tool.uv.index]]
@@ -65,7 +66,7 @@ split-on-trailing-comma = false
 "examples_test.py" = ["F841"]
 
 [tool.mypy]
-exclude = ["venv"]
+exclude = ["venv", "docs"]
 show_error_codes = true
 ignore_missing_imports = true
 check_untyped_defs = true

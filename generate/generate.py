@@ -82,11 +82,24 @@ client = ClientFromEnv()
         if not p["path"].startswith("/components"):
             new_patch.append(p)
 
+    # Sort patch operations by path and operation to ensure consistent output
+    new_patch.sort(
+        key=lambda x: (x.get("path", ""), x.get("op", ""), str(x.get("value", "")))
+    )
+
     # Rewrite the spec back out.
     patch_file = os.path.join(cwd, "kittycad.py.patch.json")
-    f = open(patch_file, "w")
-    f.write(json.dumps(new_patch, indent=2))
-    f.close()
+
+    # Check if the content is actually different before writing
+    new_content = json.dumps(new_patch, indent=2)
+    current_content = ""
+    if os.path.exists(patch_file):
+        with open(patch_file, "r") as f:
+            current_content = f.read()
+
+    if new_content != current_content:
+        with open(patch_file, "w") as f:
+            f.write(new_content)
 
     # Write all the examples to a file.
     examples_test_path = os.path.join(cwd, "kittycad", "examples_test.py")
@@ -156,13 +169,15 @@ def generate_paths(cwd: str, parser: dict) -> dict:
     # Generate the paths.
     data = parser
     paths = data["paths"]
-    for p in paths:
+    # Sort paths to ensure consistent processing order
+    for p in sorted(paths.keys()):
         # If p starts with /oauth2 we can skip it.
         # We don't care about generating methods for those.
         if p.startswith("/oauth2"):
             continue
         else:
-            for method in paths[p]:
+            # Sort methods for consistent order
+            for method in sorted(paths[p].keys()):
                 # Skip OPTIONS.
                 if method.upper() != "OPTIONS":
                     endpoint = paths[p][method]
