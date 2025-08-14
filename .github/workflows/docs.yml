@@ -49,7 +49,8 @@ jobs:
           sudo apt update && sudo apt install -y \
             enchant-2 \
             --no-install-recommends
-          uv sync --extra dev
+          # Install dependencies and the package itself for autodoc
+          uv sync --extra dev --all-extras
 
       - name: Build documentation
         run: |

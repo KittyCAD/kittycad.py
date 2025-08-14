@@ -18,8 +18,8 @@ import toml
 ROOT = pathlib.Path(__file__).parent.parent
 PACKAGE_SRC = ROOT / "kittycad"
 
+sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(1, os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.abspath("../kittycad"))
 
 # -- Project information -----------------------------------------------------
 
