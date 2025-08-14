@@ -29,9 +29,9 @@ dmypy.json
 
 testing
 
-# Sphinx documentation
+# Sphinx documentation (generated files)
 docs/_build/
 docs/_autosummary/
-docs/html/_sources/
+docs/html/
 
 snapshot.png
