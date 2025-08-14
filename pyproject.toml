@@ -20,7 +20,6 @@ dev = [
   "jinja2>=3.1.6,<4.0.0",
   "jsonpatch>=1.33,<2.0.0",
   "mypy>=1.17.1,<2.0.0",
-  "openapi-parser>=0.2.6,<1.0.0",
   "openapi-spec-validator>=0.7.2,<1.0.0",
   "prance>=23.6.21,<24.0.0",
   "pytest>=8.4.1,<9.0.0",
@@ -41,6 +40,7 @@ docs = [
   "sphinx-copybutton>=0.5.2,<1.0.0",
   "sphinxext-opengraph>=0.10.0,<1.0.0",
   "sphinx-rtd-theme>=3.0.2,<4.0.0",
+  "toml>=0.10.2,<1.0.0",
 ]
 
 [[tool.uv.index]]
