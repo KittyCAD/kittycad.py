@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Selectreplace(BaseModel):
+class SelectReplace(BaseModel):
     """The response from the `SelectReplace` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

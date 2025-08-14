@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class Makeoffsetpath(BaseModel):
+class MakeOffsetPath(BaseModel):
     """The response from the `MakeOffsetPath` command."""
 
     entity_ids: List[str]

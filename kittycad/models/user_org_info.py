@@ -8,7 +8,7 @@ from ..models.org_role import OrgRole
 from ..models.uuid import Uuid
 
 
-class Userorginfo(BaseModel):
+class UserOrgInfo(BaseModel):
     """A user's information about an org, including their role."""
 
     allow_users_in_domain_to_auto_join: Optional[bool] = None

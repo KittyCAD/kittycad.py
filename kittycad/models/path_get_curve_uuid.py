@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Pathgetcurveuuid(BaseModel):
+class PathGetCurveUuid(BaseModel):
     """The response from the `PathGetCurveUuid` command."""
 
     curve_id: str

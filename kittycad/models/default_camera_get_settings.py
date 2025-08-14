@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.camera_settings import CameraSettings
 
 
-class Defaultcameragetsettings(BaseModel):
+class DefaultCameraGetSettings(BaseModel):
     """The response from the `DefaultCameraGetSettings` command."""
 
     settings: CameraSettings

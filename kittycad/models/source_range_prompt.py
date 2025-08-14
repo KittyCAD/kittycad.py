@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.source_range import SourceRange
 
 
-class Sourcerangeprompt(BaseModel):
+class SourceRangePrompt(BaseModel):
     """A source range and prompt for a text to CAD iteration."""
 
     file: Optional[str] = None

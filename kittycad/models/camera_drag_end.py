@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.camera_settings import CameraSettings
 
 
-class Cameradragend(BaseModel):
+class CameraDragEnd(BaseModel):
     """The response from the `CameraDragEnd` command."""
 
     settings: CameraSettings

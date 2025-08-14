@@ -8,7 +8,7 @@ from ..models.unit_force import UnitForce
 from ..models.uuid import Uuid
 
 
-class Unitforceconversion(BaseModel):
+class UnitForceConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

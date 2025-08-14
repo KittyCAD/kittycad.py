@@ -8,7 +8,7 @@ from ..models.unit_angle import UnitAngle
 from ..models.uuid import Uuid
 
 
-class Unitangleconversion(BaseModel):
+class UnitAngleConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

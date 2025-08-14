@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Apicallquerygroup(BaseModel):
+class ApiCallQueryGroup(BaseModel):
     """A response for a query on the API call table that is grouped by something."""
 
     count: int

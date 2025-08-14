@@ -6,7 +6,7 @@ from ..models.transform_by_for_point3d import TransformByForPoint3d
 from ..models.transform_by_for_point4d import TransformByForPoint4d
 
 
-class Componenttransform(BaseModel):
+class ComponentTransform(BaseModel):
     """Container that holds a translate, rotate and scale. Defaults to no change, everything stays the same (i.e. the identity function)."""
 
     rotate_angle_axis: Optional[TransformByForPoint4d] = None

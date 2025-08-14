@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.extrusion_face_cap_type import ExtrusionFaceCapType
 
 
-class Extrusionfaceinfo(BaseModel):
+class ExtrusionFaceInfo(BaseModel):
     """Extrusion face info struct (useful for maintaining mappings between source path segment ids and extrusion faces)"""
 
     cap: ExtrusionFaceCapType

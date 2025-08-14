@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Oauth2clientinfo(BaseModel):
+class OAuth2ClientInfo(BaseModel):
     """Information about an OAuth 2.0 client."""
 
     csrf_token: Optional[str] = None

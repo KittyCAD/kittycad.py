@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.payment_method_card_checks import PaymentMethodCardChecks
 
 
-class Carddetails(BaseModel):
+class CardDetails(BaseModel):
     """The card details of a payment method."""
 
     brand: Optional[str] = None

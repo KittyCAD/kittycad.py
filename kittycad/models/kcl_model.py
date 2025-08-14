@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Kclmodel(BaseModel):
+class KclModel(BaseModel):
     """The response containing the KCL code."""
 
     code: str

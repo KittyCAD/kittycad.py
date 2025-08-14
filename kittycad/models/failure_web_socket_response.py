@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.api_error import ApiError
 
 
-class Failurewebsocketresponse(BaseModel):
+class FailureWebSocketResponse(BaseModel):
     """Unsuccessful Websocket response."""
 
     errors: List[ApiError]

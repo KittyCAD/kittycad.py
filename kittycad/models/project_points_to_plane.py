@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class Projectpointstoplane(BaseModel):
+class ProjectPointsToPlane(BaseModel):
     """The response from the `ProjectPointsToPlane` command."""
 
     projected_points: List[Point3d]

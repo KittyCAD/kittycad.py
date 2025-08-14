@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Booleanintersection(BaseModel):
+class BooleanIntersection(BaseModel):
     """The response from the 'BooleanIntersection'."""
 
     extra_solid_ids: Optional[List[str]] = None

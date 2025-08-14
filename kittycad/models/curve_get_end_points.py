@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class Curvegetendpoints(BaseModel):
+class CurveGetEndPoints(BaseModel):
     """Endpoints of a curve"""
 
     end: Point3d

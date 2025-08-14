@@ -12,15 +12,71 @@ import tempfile
 from typing import List, Tuple
 
 
+def is_snake_case(name: str) -> bool:
+    """Check if string is in snake_case format."""
+    return (
+        "_" in name
+        and name.islower()
+        and not name.startswith("_")
+        and not name.endswith("_")
+    )
+
+
+def is_camel_case(name: str) -> bool:
+    """Check if string is in camelCase format (starts lowercase)."""
+    return name[0].islower() and any(c.isupper() for c in name[1:]) and "_" not in name
+
+
+def is_pascal_case(name: str) -> bool:
+    """Check if string is in PascalCase format (starts uppercase)."""
+    return name[0].isupper() and any(c.isupper() for c in name[1:]) and "_" not in name
+
+
 def camel_to_snake(name: str) -> str:
-    """Convert CamelCase to snake_case."""
+    """Convert CamelCase/PascalCase to snake_case, but only if not already in snake_case."""
+    if is_snake_case(name):
+        return name
     s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
 
 
-def snake_to_title(name: str) -> str:
-    """Convert snake_case to TitleCase."""
+def snake_to_pascal(name: str) -> str:
+    """Convert snake_case to PascalCase, but only if currently in snake_case."""
+    if is_pascal_case(name):
+        return name
+    if not is_snake_case(name):
+        # If it's all lowercase without underscores, treat it as a single word
+        if name.islower() and "_" not in name:
+            return name.capitalize()
+        # If it's already mixed case without underscores, leave it alone
+        return name
     return "".join(word.capitalize() for word in name.split("_"))
+
+
+def to_pascal_case(name: str) -> str:
+    """Convert any naming convention to PascalCase intelligently."""
+    # Already PascalCase? Return as-is
+    if is_pascal_case(name):
+        return name
+
+    # snake_case? Convert it
+    if is_snake_case(name):
+        return "".join(word.capitalize() for word in name.split("_"))
+
+    # camelCase? Just capitalize first letter
+    if is_camel_case(name):
+        return name[0].upper() + name[1:]
+
+    # All lowercase single word? Capitalize it
+    if name.islower() and "_" not in name:
+        return name.capitalize()
+
+    # Has underscores but not clean snake_case? Split and capitalize
+    if "_" in name:
+        return "".join(word.capitalize() for word in name.split("_"))
+
+    # Default: return as-is
+    return name
 
 
 def camel_to_screaming_snake(name: str) -> str:

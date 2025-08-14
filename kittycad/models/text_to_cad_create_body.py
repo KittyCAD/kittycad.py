@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Texttocadcreatebody(BaseModel):
+class TextToCadCreateBody(BaseModel):
     """Body for generating models from text."""
 
     kcl_version: Optional[str] = None

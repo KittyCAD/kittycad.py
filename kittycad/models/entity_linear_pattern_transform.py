@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.face_edge_info import FaceEdgeInfo
 
 
-class Entitylinearpatterntransform(BaseModel):
+class EntityLinearPatternTransform(BaseModel):
     """The response from the `EntityLinearPatternTransform` command."""
 
     entity_face_edge_ids: Optional[List[FaceEdgeInfo]] = None

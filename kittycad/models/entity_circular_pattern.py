@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.face_edge_info import FaceEdgeInfo
 
 
-class Entitycircularpattern(BaseModel):
+class EntityCircularPattern(BaseModel):
     """The response from the `EntityCircularPattern` command."""
 
     entity_face_edge_ids: Optional[List[FaceEdgeInfo]] = None

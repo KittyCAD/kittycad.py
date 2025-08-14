@@ -8,7 +8,7 @@ from ..models.card_details import CardDetails
 from ..models.payment_method_type import PaymentMethodType
 
 
-class Paymentmethod(BaseModel):
+class PaymentMethod(BaseModel):
     """A payment method."""
 
     billing_info: BillingInfo

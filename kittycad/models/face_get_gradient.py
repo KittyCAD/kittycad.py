@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class Facegetgradient(BaseModel):
+class FaceGetGradient(BaseModel):
     """The gradient (dFdu, dFdv) + normal vector on a brep face"""
 
     df_du: Point3d

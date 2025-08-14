@@ -15,7 +15,7 @@ from ..models.support_tier import SupportTier
 from ..models.zoo_tool import ZooTool
 
 
-class Zooproductsubscription(BaseModel):
+class ZooProductSubscription(BaseModel):
     """A subscription to the modeling app."""
 
     annual_discount: Optional[float] = None

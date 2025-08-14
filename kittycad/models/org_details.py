@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Orgdetails(BaseModel):
+class OrgDetails(BaseModel):
     """The user-modifiable parts of an organization."""
 
     allow_users_in_domain_to_auto_join: Optional[bool] = None

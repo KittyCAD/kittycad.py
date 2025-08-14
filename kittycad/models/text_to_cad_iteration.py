@@ -10,7 +10,7 @@ from ..models.text_to_cad_model import TextToCadModel
 from ..models.uuid import Uuid
 
 
-class Texttocaditeration(BaseModel):
+class TextToCadIteration(BaseModel):
     """A response from a text to CAD iteration."""
 
     code: str

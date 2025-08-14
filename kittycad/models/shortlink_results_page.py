@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.shortlink import Shortlink
 
 
-class Shortlinkresultspage(BaseModel):
+class ShortlinkResultsPage(BaseModel):
     """A single page of results"""
 
     items: List[Shortlink]

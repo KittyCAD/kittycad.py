@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Appclientinfo(BaseModel):
+class AppClientInfo(BaseModel):
     """Information about a third party app client."""
 
     url: Optional[str] = None

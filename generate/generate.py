@@ -19,7 +19,7 @@ from .utils import (
     deduplicate_imports,
     extract_imports_from_examples,
     format_file_with_ruff,
-    snake_to_title,
+    to_pascal_case,
 )
 
 package_name = "kittycad"
@@ -102,7 +102,8 @@ client = ClientFromEnv()
 
     # Write base imports first
     f.write("import pytest\n")
-    f.write("import datetime\n\n")
+    f.write("import datetime\n")
+    f.write("from typing import Dict, Optional, Union\n\n")
 
     # Write consolidated imports from examples
     if consolidated_imports:
@@ -451,7 +452,7 @@ def generate_type_and_example_python(
             and "enum" in one_of["properties"]["type"]
         ):
             return generate_type_and_example_python(
-                snake_to_title("option_" + one_of["properties"]["type"]["enum"][0]),
+                to_pascal_case("option_" + one_of["properties"]["type"]["enum"][0]),
                 one_of,
                 data,
                 camel_to_snake(name),
@@ -505,9 +506,12 @@ def generate_path(
         if len(endpoint_refs) > 2:
             er = get_endpoint_refs(endpoint, data)
             er.remove("Error")
-            success_type = "Union[" + ", ".join(er) + "]"
+            # Ensure all refs are PascalCase for the example type
+            pascal_er = [to_pascal_case(ref) for ref in er]
+            success_type = "Union[" + ", ".join(pascal_er) + "]"
         else:
-            success_type = endpoint_refs[0]
+            # Ensure single ref is PascalCase for the example type
+            success_type = to_pascal_case(endpoint_refs[0])
 
     example_imports = (
         """
@@ -868,16 +872,22 @@ async def test_"""
         if ref.startswith("List[") and ref.endswith("]"):
             ref = ref.replace("List[", "").replace("]", "")
         if ref != "str" and ref != "dict":
+            # Ensure ref is in PascalCase for the class name
+            pascal_ref = to_pascal_case(ref)
             template_info["imports"].append(
-                "from ...models." + camel_to_snake(ref) + " import " + ref
+                "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
             )
     for ref in parameter_refs:
+        # Ensure ref is in PascalCase for the class name
+        pascal_ref = to_pascal_case(ref)
         template_info["imports"].append(
-            "from ...models." + camel_to_snake(ref) + " import " + ref
+            "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
         )
     for ref in request_body_refs:
+        # Ensure ref is in PascalCase for the class name
+        pascal_ref = to_pascal_case(ref)
         template_info["imports"].append(
-            "from ...models." + camel_to_snake(ref) + " import " + ref
+            "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
         )
 
     # Iterate over the responses.
@@ -926,7 +936,7 @@ async def test_"""
                                             "\t\t\t"
                                             + option_name
                                             + " = "
-                                            + snake_to_title(ref)
+                                            + to_pascal_case(ref)
                                             + "(**data)\n"
                                         )
                                         parse_response.write(
@@ -1441,7 +1451,7 @@ def generate_any_of_type(path: str, name: str, schema: dict, data: dict):
                             f.write("\n")
                         all_options.append(prop_name)
                     else:
-                        class_name = snake_to_title(prop_name)
+                        class_name = to_pascal_case(prop_name)
                         object_code = generate_object_type_code(
                             prop_name,
                             nested_object,
@@ -1505,7 +1515,7 @@ def generate_any_of_type(path: str, name: str, schema: dict, data: dict):
                             f.write("\n")
                         all_options.append(prop_name)
                     else:
-                        class_name = snake_to_title(prop_name)
+                        class_name = to_pascal_case(prop_name)
                         object_code = generate_object_type_code(
                             prop_name,
                             nested_object,
@@ -1643,7 +1653,7 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
         if "$ref" in one_of:
             ref = one_of["$ref"]
             ref_name = ref[ref.rfind("/") + 1 :]
-            class_name = snake_to_title(ref_name)
+            class_name = to_pascal_case(ref_name)
             # Use class name as the key to avoid importing same class multiple times regardless of path
             if class_name not in imported_refs:
                 f.write(
@@ -1683,7 +1693,7 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
                             f.write("\n")
                         all_options.append(ref_name)
                     else:
-                        class_name = snake_to_title(prop_name)
+                        class_name = to_pascal_case(prop_name)
                         object_code = generate_object_type_code(
                             prop_name,
                             nested_object,
@@ -1732,7 +1742,7 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(snake_to_title("option_" + object_name))
+            all_options.append(to_pascal_case("option_" + object_name))
     elif tag is not None:
         # Generate each of the options from the tag.
         for one_of in schema["oneOf"]:
@@ -1743,7 +1753,7 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(snake_to_title("option_" + object_name))
+            all_options.append(to_pascal_case("option_" + object_name))
     elif schema["oneOf"].__len__() == 1:
         description = get_one_of_description(schema)
         object_code = generate_object_type_code(
@@ -1779,7 +1789,7 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(snake_to_title(object_name))
+            all_options.append(to_pascal_case(object_name))
             i += 1
 
     # Write the sum type.
@@ -1860,7 +1870,7 @@ def generate_object_type_code(
             elif property_name == content:
                 field1: FieldType = {
                     "name": property_name,
-                    "type": snake_to_title(name) + "Data",
+                    "type": to_pascal_case(name) + "Data",
                     "value": "",
                 }
                 fields.append(field1)
@@ -1891,7 +1901,8 @@ def generate_object_type_code(
                 }
                 fields.append(field2)
 
-    name = snake_to_title(name)
+    # Use surgical conversion to handle all naming conventions properly
+    name = to_pascal_case(name)
     if is_option:
         name = "Option" + name
     template_info: TemplateType = {
@@ -2017,13 +2028,13 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                         if is_nested_object_one_of(schema) or is_enum_with_docs_one_of(
                             schema
                         ):
-                            if snake_to_title(ref) not in refs:
-                                refs.append(snake_to_title(ref))
+                            if ref not in refs:
+                                refs.append(ref)
                         elif is_typed_object_one_of(schema):
                             for t in schema["oneOf"]:
                                 ref = get_one_of_ref_type(t)
-                                if snake_to_title(ref) not in refs:
-                                    refs.append(snake_to_title(ref))
+                                if ref not in refs:
+                                    refs.append(ref)
                         else:
                             if ref not in refs:
                                 refs.append(ref)
@@ -2074,8 +2085,8 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                         json = content[content_type]["schema"]
                         if "$ref" in json:
                             ref = json["$ref"].replace("#/components/schemas/", "")
-                            if snake_to_title(ref) not in refs:
-                                refs.append(snake_to_title(ref))
+                            if ref not in refs:
+                                refs.append(ref)
 
     return refs
 
@@ -2425,7 +2436,9 @@ def has_no_content_response(endpoint: dict) -> bool:
 
 
 def get_function_result_type(endpoint: dict, endpoint_refs: List[str]) -> str:
-    result = ", ".join(endpoint_refs)
+    # Ensure all refs are in PascalCase for return types
+    pascal_refs = [to_pascal_case(ref) for ref in endpoint_refs]
+    result = ", ".join(pascal_refs)
     if len(endpoint_refs) > 1:
         result = "Optional[Union[" + result + "]]"
 

@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.camera_view_state import CameraViewState
 
 
-class Defaultcameragetview(BaseModel):
+class DefaultCameraGetView(BaseModel):
     """The response from the `DefaultCameraGetView` command."""
 
     view: CameraViewState

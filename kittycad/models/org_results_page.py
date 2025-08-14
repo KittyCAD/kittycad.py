@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.org import Org
 
 
-class Orgresultspage(BaseModel):
+class OrgResultsPage(BaseModel):
     """A single page of results"""
 
     items: List[Org]

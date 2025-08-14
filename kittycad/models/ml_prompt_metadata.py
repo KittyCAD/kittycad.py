@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.source_range_prompt import SourceRangePrompt
 
 
-class Mlpromptmetadata(BaseModel):
+class MlPromptMetadata(BaseModel):
     """Metadata for a ML prompt."""
 
     code: Optional[str] = None

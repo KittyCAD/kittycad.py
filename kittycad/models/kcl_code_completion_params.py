@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Kclcodecompletionparams(BaseModel):
+class KclCodeCompletionParams(BaseModel):
     """Extra params for the completions."""
 
     language: str = ""

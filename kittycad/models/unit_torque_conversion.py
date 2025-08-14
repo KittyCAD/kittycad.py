@@ -8,7 +8,7 @@ from ..models.unit_torque import UnitTorque
 from ..models.uuid import Uuid
 
 
-class Unittorqueconversion(BaseModel):
+class UnitTorqueConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

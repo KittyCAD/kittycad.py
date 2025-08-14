@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.camera_settings import CameraSettings
 
 
-class Defaultcamerazoom(BaseModel):
+class DefaultCameraZoom(BaseModel):
     """The response from the `DefaultCameraZoom` command."""
 
     settings: CameraSettings

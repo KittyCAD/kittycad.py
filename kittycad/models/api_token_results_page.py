@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.api_token import ApiToken
 
 
-class Apitokenresultspage(BaseModel):
+class ApiTokenResultsPage(BaseModel):
     """A single page of results"""
 
     items: List[ApiToken]

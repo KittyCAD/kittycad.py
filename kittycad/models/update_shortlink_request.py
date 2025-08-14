@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Updateshortlinkrequest(BaseModel):
+class UpdateShortlinkRequest(BaseModel):
     """Request to update a shortlink."""
 
     password: Optional[str] = None

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Extendpath(BaseModel):
+class ExtendPath(BaseModel):
     """The response from the `ExtendPath` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

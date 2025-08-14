@@ -7,7 +7,7 @@ from ..models.org_role import OrgRole
 from ..models.uuid import Uuid
 
 
-class Orgmember(BaseModel):
+class OrgMember(BaseModel):
     """A member of an organization."""
 
     company: Optional[str] = None

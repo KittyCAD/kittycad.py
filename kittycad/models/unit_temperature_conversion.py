@@ -8,7 +8,7 @@ from ..models.unit_temperature import UnitTemperature
 from ..models.uuid import Uuid
 
 
-class Unittemperatureconversion(BaseModel):
+class UnitTemperatureConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

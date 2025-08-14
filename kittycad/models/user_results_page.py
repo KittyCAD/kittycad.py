@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.user import User
 
 
-class Userresultspage(BaseModel):
+class UserResultsPage(BaseModel):
     """A single page of results"""
 
     items: List[User]

@@ -8,7 +8,7 @@ from ..models.async_api_call_type import AsyncApiCallType
 from ..models.uuid import Uuid
 
 
-class Asyncapicall(BaseModel):
+class AsyncApiCall(BaseModel):
     """An async API call."""
 
     attempts: int = 0

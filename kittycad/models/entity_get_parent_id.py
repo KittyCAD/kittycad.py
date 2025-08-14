@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Entitygetparentid(BaseModel):
+class EntityGetParentId(BaseModel):
     """The response from the `EntityGetParentId` command."""
 
     entity_id: str

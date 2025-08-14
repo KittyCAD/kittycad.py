@@ -10,7 +10,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 
 
-class Filedensity(BaseModel):
+class FileDensity(BaseModel):
     """A file density result."""
 
     completed_at: Optional[datetime.datetime] = None

@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.api_call_with_price import ApiCallWithPrice
 
 
-class Apicallwithpriceresultspage(BaseModel):
+class ApiCallWithPriceResultsPage(BaseModel):
     """A single page of results"""
 
     items: List[ApiCallWithPrice]

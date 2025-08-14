@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class Pathgetvertexuuids(BaseModel):
+class PathGetVertexUuids(BaseModel):
     """The response from the `PathGetVertexUuids` command."""
 
     vertex_ids: List[str]

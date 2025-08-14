@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Entitygetnumchildren(BaseModel):
+class EntityGetNumChildren(BaseModel):
     """The response from the `EntityGetNumChildren` command."""
 
     num: int

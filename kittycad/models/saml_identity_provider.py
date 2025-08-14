@@ -7,7 +7,7 @@ from ..models.uuid import Uuid
 from .base64data import Base64Data
 
 
-class Samlidentityprovider(BaseModel):
+class SamlIdentityProvider(BaseModel):
     """A SAML identity provider."""
 
     acs_url: str

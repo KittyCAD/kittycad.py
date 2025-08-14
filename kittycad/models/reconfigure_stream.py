@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Reconfigurestream(BaseModel):
+class ReconfigureStream(BaseModel):
     """The response from the `ReconfigureStream` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

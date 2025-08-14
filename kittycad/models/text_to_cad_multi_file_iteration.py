@@ -10,7 +10,7 @@ from ..models.text_to_cad_model import TextToCadModel
 from ..models.uuid import Uuid
 
 
-class Texttocadmultifileiteration(BaseModel):
+class TextToCadMultiFileIteration(BaseModel):
     """A response from a text to CAD multi-file iteration."""
 
     completed_at: Optional[datetime.datetime] = None

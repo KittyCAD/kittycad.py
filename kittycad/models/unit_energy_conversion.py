@@ -8,7 +8,7 @@ from ..models.unit_energy import UnitEnergy
 from ..models.uuid import Uuid
 
 
-class Unitenergyconversion(BaseModel):
+class UnitEnergyConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

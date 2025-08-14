@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 
-class Outputfile(BaseModel):
+class OutputFile(BaseModel):
     """Output file contents.
 
     <details><summary>JSON schema</summary>

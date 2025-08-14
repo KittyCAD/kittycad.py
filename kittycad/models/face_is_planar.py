@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class Faceisplanar(BaseModel):
+class FaceIsPlanar(BaseModel):
     """Surface-local planar axes (if available)"""
 
     origin: Optional[Point3d] = None

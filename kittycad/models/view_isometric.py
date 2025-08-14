@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.camera_settings import CameraSettings
 
 
-class Viewisometric(BaseModel):
+class ViewIsometric(BaseModel):
     """The response from the `ViewIsometric` command."""
 
     settings: CameraSettings

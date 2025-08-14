@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class Getsketchmodeplane(BaseModel):
+class GetSketchModePlane(BaseModel):
     """The plane for sketch mode."""
 
     origin: Point3d

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Modelingsessiondata(BaseModel):
+class ModelingSessionData(BaseModel):
     """Successful Websocket response."""
 
     api_call_id: str

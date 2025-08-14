@@ -7,7 +7,7 @@ from ..models.api_token_uuid import ApiTokenUuid
 from ..models.uuid import Uuid
 
 
-class Apitoken(BaseModel):
+class ApiToken(BaseModel):
     """An API token.
 
     These are used to authenticate users with Bearer authentication."""

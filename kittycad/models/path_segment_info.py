@@ -6,7 +6,7 @@ from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.path_command import PathCommand
 
 
-class Pathsegmentinfo(BaseModel):
+class PathSegmentInfo(BaseModel):
     """Info about a path segment"""
 
     command: PathCommand

@@ -8,7 +8,7 @@ from ..models.unit_frequency import UnitFrequency
 from ..models.uuid import Uuid
 
 
-class Unitfrequencyconversion(BaseModel):
+class UnitFrequencyConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

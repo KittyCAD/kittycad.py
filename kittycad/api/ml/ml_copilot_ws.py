@@ -13,7 +13,7 @@ from websockets.sync.client import (
 
 from ...client import Client
 from ...models.ml_copilot_client_message import MlCopilotClientMessage
-from ...models.mlcopilotservermessage import Mlcopilotservermessage
+from ...models.ml_copilot_server_message import MlCopilotServerMessage
 
 
 def _get_kwargs(
@@ -86,7 +86,7 @@ class WebSocket:
     def __exit__(self, exc_type, exc_value, traceback):
         self.close()
 
-    def __iter__(self) -> Iterator[Mlcopilotservermessage]:
+    def __iter__(self) -> Iterator[MlCopilotServerMessage]:
         """
         Iterate on incoming messages.
 
@@ -98,7 +98,7 @@ class WebSocket:
 
         """
         for message in self.ws:
-            yield Mlcopilotservermessage(**json.loads(message))
+            yield MlCopilotServerMessage(**json.loads(message))
 
     def send(self, data: MlCopilotClientMessage):
         """Send data to the websocket."""
@@ -108,10 +108,10 @@ class WebSocket:
         """Send data as bson to the websocket."""
         self.ws.send(bson.encode(data.model_dump()))  # type: ignore
 
-    def recv(self) -> Mlcopilotservermessage:
+    def recv(self) -> MlCopilotServerMessage:
         """Receive data from the websocket."""
         message = self.ws.recv(timeout=60)
-        return Mlcopilotservermessage(**json.loads(message))
+        return MlCopilotServerMessage(**json.loads(message))
 
     def close(self):
         """Close the websocket."""

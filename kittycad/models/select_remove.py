@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Selectremove(BaseModel):
+class SelectRemove(BaseModel):
     """The response from the `SelectRemove` endpoint."""
 
     model_config = ConfigDict(protected_namespaces=())

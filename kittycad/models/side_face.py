@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Sideface(BaseModel):
+class SideFace(BaseModel):
     """IDs for a side face, extruded from the path of some sketch/2D shape."""
 
     face_id: str

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Subscriptiontierfeature(BaseModel):
+class SubscriptionTierFeature(BaseModel):
     """A subscription tier feature."""
 
     info: str

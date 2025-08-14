@@ -8,7 +8,7 @@ from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
 
 
-class Unitvolumeconversion(BaseModel):
+class UnitVolumeConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

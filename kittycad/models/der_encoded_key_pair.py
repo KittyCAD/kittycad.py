@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from .base64data import Base64Data
 
 
-class Derencodedkeypair(BaseModel):
+class DerEncodedKeyPair(BaseModel):
     """The DER encoded key pair."""
 
     private_key: Base64Data

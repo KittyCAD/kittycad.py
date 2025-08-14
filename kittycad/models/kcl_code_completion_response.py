@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class Kclcodecompletionresponse(BaseModel):
+class KclCodeCompletionResponse(BaseModel):
     """A response with KCL code completions."""
 
     completions: List[str]

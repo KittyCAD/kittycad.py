@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.face_edge_info import FaceEdgeInfo
 
 
-class Entitymirror(BaseModel):
+class EntityMirror(BaseModel):
     """The response from the `EntityMirror` endpoint."""
 
     entity_face_edge_ids: Optional[List[FaceEdgeInfo]] = None

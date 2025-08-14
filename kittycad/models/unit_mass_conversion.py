@@ -8,7 +8,7 @@ from ..models.unit_mass import UnitMass
 from ..models.uuid import Uuid
 
 
-class Unitmassconversion(BaseModel):
+class UnitMassConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

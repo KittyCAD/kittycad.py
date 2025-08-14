@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Sourceposition(BaseModel):
+class SourcePosition(BaseModel):
     """A position in the source code."""
 
     column: int

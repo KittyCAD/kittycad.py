@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class Facegetposition(BaseModel):
+class FaceGetPosition(BaseModel):
     """The 3D position on the surface that was evaluated"""
 
     pos: Point3d

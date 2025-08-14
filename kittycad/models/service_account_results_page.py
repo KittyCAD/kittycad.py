@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.service_account import ServiceAccount
 
 
-class Serviceaccountresultspage(BaseModel):
+class ServiceAccountResultsPage(BaseModel):
     """A single page of results"""
 
     items: List[ServiceAccount]

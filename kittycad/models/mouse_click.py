@@ -3,7 +3,7 @@ from typing import List
 from pydantic import BaseModel, ConfigDict
 
 
-class Mouseclick(BaseModel):
+class MouseClick(BaseModel):
     """The response from the `MouseClick` command."""
 
     entities_modified: List[str]

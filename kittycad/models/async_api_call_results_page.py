@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.async_api_call import AsyncApiCall
 
 
-class Asyncapicallresultspage(BaseModel):
+class AsyncApiCallResultsPage(BaseModel):
     """A single page of results"""
 
     items: List[AsyncApiCall]

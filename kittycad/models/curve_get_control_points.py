@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.point3d import Point3d
 
 
-class Curvegetcontrolpoints(BaseModel):
+class CurveGetControlPoints(BaseModel):
     """The response from the `CurveGetControlPoints` command."""
 
     control_points: List[Point3d]

@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Closepath(BaseModel):
+class ClosePath(BaseModel):
     """The response from the `ClosePath` command."""
 
     face_id: str

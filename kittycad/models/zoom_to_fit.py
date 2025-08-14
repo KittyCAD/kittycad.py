@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from ..models.camera_settings import CameraSettings
 
 
-class Zoomtofit(BaseModel):
+class ZoomToFit(BaseModel):
     """The response from the `ZoomToFit` command."""
 
     settings: CameraSettings

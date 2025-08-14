@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional, Union
+from typing import Dict, List, Optional, Union
 
 import pytest
 
@@ -339,12 +339,19 @@ def test_get_schema():
     # Create our client.
     client = ClientFromEnv()
 
-    get_schema.sync(
+    result: Optional[Union[Dict, Error]] = get_schema.sync(
         client=client,
     )
 
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Dict = result
+    print(body)
+
     # OR if you need more info (e.g. status_code)
-    get_schema.sync_detailed(
+    response: Response[Optional[Union[Dict, Error]]] = get_schema.sync_detailed(
         client=client,
     )
 
@@ -356,12 +363,14 @@ async def test_get_schema_async():
     # Create our client.
     client = ClientFromEnv()
 
-    await get_schema.asyncio(
+    result: Optional[Union[Dict, Error]] = await get_schema.asyncio(
         client=client,
     )
 
     # OR run async with more info
-    await get_schema.asyncio_detailed(
+    response: Response[
+        Optional[Union[Dict, Error]]
+    ] = await get_schema.asyncio_detailed(
         client=client,
     )
 
@@ -4720,13 +4729,22 @@ def test_get_pricing_subscriptions():
     # Create our client.
     client = ClientFromEnv()
 
-    get_pricing_subscriptions.sync(
+    result: Optional[Union[Dict, Error]] = get_pricing_subscriptions.sync(
         client=client,
     )
 
+    if isinstance(result, Error) or result is None:
+        print(result)
+        raise Exception("Error in response")
+
+    body: Dict = result
+    print(body)
+
     # OR if you need more info (e.g. status_code)
-    get_pricing_subscriptions.sync_detailed(
-        client=client,
+    response: Response[Optional[Union[Dict, Error]]] = (
+        get_pricing_subscriptions.sync_detailed(
+            client=client,
+        )
     )
 
 
@@ -4737,12 +4755,14 @@ async def test_get_pricing_subscriptions_async():
     # Create our client.
     client = ClientFromEnv()
 
-    await get_pricing_subscriptions.asyncio(
+    result: Optional[Union[Dict, Error]] = await get_pricing_subscriptions.asyncio(
         client=client,
     )
 
     # OR run async with more info
-    await get_pricing_subscriptions.asyncio_detailed(
+    response: Response[
+        Optional[Union[Dict, Error]]
+    ] = await get_pricing_subscriptions.asyncio_detailed(
         client=client,
     )
 

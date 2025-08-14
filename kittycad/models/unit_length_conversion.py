@@ -8,7 +8,7 @@ from ..models.unit_length import UnitLength
 from ..models.uuid import Uuid
 
 
-class Unitlengthconversion(BaseModel):
+class UnitLengthConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None

@@ -6,7 +6,7 @@ from ..models.source_range_prompt import SourceRangePrompt
 from ..models.uuid import Uuid
 
 
-class Texttocadmultifileiterationbody(BaseModel):
+class TextToCadMultiFileIterationBody(BaseModel):
     """Body for iterating on models from text prompts."""
 
     conversation_id: Optional[Uuid] = None

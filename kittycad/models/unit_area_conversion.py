@@ -8,7 +8,7 @@ from ..models.unit_area import UnitArea
 from ..models.uuid import Uuid
 
 
-class Unitareaconversion(BaseModel):
+class UnitAreaConversion(BaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None
