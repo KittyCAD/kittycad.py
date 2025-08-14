@@ -50,7 +50,7 @@ jobs:
             enchant-2 \
             --no-install-recommends
           # Install dependencies and the package itself for autodoc
-          uv sync --extra dev --all-extras
+          uv sync --extra docs
 
       - name: Build documentation
         run: |
