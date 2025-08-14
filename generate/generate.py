@@ -111,6 +111,59 @@ def deduplicate_imports(imports_string: str) -> str:
     return result
 
 
+def format_code_with_ruff(code: str) -> str:
+    """Format Python code using ruff for import sorting and code formatting."""
+    try:
+        # Write to a temporary file for ruff processing
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as temp_file:
+            temp_file.write(code)
+            temp_file_path = temp_file.name
+        
+        # Format with ruff
+        subprocess.run(
+            ["python", "-m", "ruff", "check", "--fix", temp_file_path],
+            check=True,
+            capture_output=True,
+        )
+        subprocess.run(
+            ["python", "-m", "ruff", "format", temp_file_path],
+            check=True,
+            capture_output=True,
+        )
+        
+        # Read the formatted result
+        with open(temp_file_path, 'r') as temp_file:
+            formatted_code = temp_file.read()
+        
+        # Clean up temp file
+        os.unlink(temp_file_path)
+        
+        return formatted_code
+        
+    except Exception as e:
+        logging.error("Failed to format code with ruff: %s", e)
+        logging.error("Content being formatted:\n%s", code)
+        # Fallback to unformatted version
+        return code
+
+
+def format_file_with_ruff(file_path: str) -> None:
+    """Format a Python file in-place using ruff."""
+    try:
+        subprocess.run(
+            ["python", "-m", "ruff", "check", "--fix", file_path],
+            check=True,
+            capture_output=True,
+        )
+        subprocess.run(
+            ["python", "-m", "ruff", "format", file_path],
+            check=True,
+            capture_output=True,
+        )
+    except subprocess.CalledProcessError:
+        pass  # If ruff fails, continue anyway
+
+
 def main():
     cwd = os.getcwd()
     spec_path = os.path.join(cwd, "spec.json")
@@ -182,19 +235,7 @@ client = ClientFromEnv()
     f.close()
 
     # Post-process with ruff to clean up imports and formatting
-    try:
-        subprocess.run(
-            ["python", "-m", "ruff", "check", "--fix", examples_test_path],
-            check=True,
-            capture_output=True,
-        )
-        subprocess.run(
-            ["python", "-m", "ruff", "format", examples_test_path],
-            check=True,
-            capture_output=True,
-        )
-    except subprocess.CalledProcessError:
-        pass  # If ruff fails, continue anyway
+    format_file_with_ruff(examples_test_path)
 
 
 def generatePaths(cwd: str, parser: dict) -> dict:
@@ -867,36 +908,7 @@ async def test_"""
     line_length = 82
     short_sync_example = example_imports + short_sync_example
 
-    try:
-        # Write to a temporary file for ruff processing
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as temp_file:
-            temp_file.write(short_sync_example)
-            temp_file_path = temp_file.name
-        
-        # Format with ruff
-        subprocess.run(
-            ["python", "-m", "ruff", "check", "--fix", temp_file_path],
-            check=True,
-            capture_output=True,
-        )
-        subprocess.run(
-            ["python", "-m", "ruff", "format", temp_file_path],
-            check=True,
-            capture_output=True,
-        )
-        
-        # Read the formatted result
-        with open(temp_file_path, 'r') as temp_file:
-            cleaned_example = temp_file.read()
-        
-        # Clean up temp file
-        os.unlink(temp_file_path)
-        
-    except Exception as e:
-        logging.error("Failed to format example for %s: %s", fn_name, e)
-        logging.error("Content being formatted:\n%s", short_sync_example)
-        # Fallback to unformatted version
-        cleaned_example = short_sync_example
+    cleaned_example = format_code_with_ruff(short_sync_example)
 
     examples.append(example)
 
