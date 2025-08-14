@@ -30,7 +30,7 @@ copyright = str(year) + ", " + author
 
 with open(os.path.abspath("../pyproject.toml"), "r") as f:
     parsed_toml = toml.load(f)
-    version = parsed_toml["tool"]["poetry"]["version"]
+    version = parsed_toml["project"]["version"]
     version = "v" + version
 
 
