@@ -1,0 +1,13 @@
+class {{ name }}(BaseModel):
+    """{{ description }}"""
+    {% for field in fields %}
+    {% if field.value %}
+    {{ field.name }}: Literal[{{ field.value }}] = {{ field.value }}
+    {% else %}
+    {{ field.name }}: {{ field.type }}
+    {% endif %}
+    {% endfor %}
+
+    model_config = ConfigDict(
+        protected_namespaces=()
+    )

@@ -115,10 +115,12 @@ def format_code_with_ruff(code: str) -> str:
     """Format Python code using ruff for import sorting and code formatting."""
     try:
         # Write to a temporary file for ruff processing
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as temp_file:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False
+        ) as temp_file:
             temp_file.write(code)
             temp_file_path = temp_file.name
-        
+
         # Format with ruff
         subprocess.run(
             ["python", "-m", "ruff", "check", "--fix", temp_file_path],
@@ -130,26 +132,97 @@ def format_code_with_ruff(code: str) -> str:
             check=True,
             capture_output=True,
         )
-        
+
         # Read the formatted result
-        with open(temp_file_path, 'r') as temp_file:
+        with open(temp_file_path, "r") as temp_file:
             formatted_code = temp_file.read()
-        
+
         # Clean up temp file
         os.unlink(temp_file_path)
-        
+
         return formatted_code
-        
+
     except Exception as e:
         logging.error("Failed to format code with ruff: %s", e)
         logging.error("Content being formatted:\n%s", code)
-        # Fallback to unformatted version
-        return code
+        # Fail hard on ruff errors
+        raise
+
+
+def consolidate_imports_in_file(file_path: str) -> None:
+    """Consolidate imports at the top of a Python file."""
+    with open(file_path, "r") as f:
+        content = f.read()
+
+    lines = content.split("\n")
+
+    # Collect all import lines
+    all_imports = set()
+    non_import_lines = []
+
+    for line in lines:
+        stripped = line.strip()
+
+        # Check if this line is an import (but not in a multi-line string or comment)
+        if (
+            stripped.startswith("from ") or stripped.startswith("import ")
+        ) and "(" not in stripped:
+            all_imports.add(stripped)
+        else:
+            non_import_lines.append(line)
+
+    # Sort imports for consistency - standard library first, then third-party, then local
+    standard_imports = []
+    third_party_imports = []
+    local_imports = []
+
+    for imp in sorted(all_imports):
+        if (
+            imp.startswith("import datetime")
+            or imp.startswith("import json")
+            or imp.startswith("from typing")
+        ):
+            standard_imports.append(imp)
+        elif (
+            imp.startswith("from pydantic")
+            or imp.startswith("from uuid")
+            or "pydantic_extra_types" in imp
+            or "typing_extensions" in imp
+        ):
+            third_party_imports.append(imp)
+        elif imp.startswith("from .") or imp.startswith("from .."):
+            local_imports.append(imp)
+        else:
+            # Default to third-party
+            third_party_imports.append(imp)
+
+    # Write the consolidated file
+    with open(file_path, "w") as f:
+        # Write standard library imports
+        if standard_imports:
+            f.write("\n".join(standard_imports))
+            f.write("\n\n")
+
+        # Write third-party imports
+        if third_party_imports:
+            f.write("\n".join(third_party_imports))
+            f.write("\n\n")
+
+        # Write local imports
+        if local_imports:
+            f.write("\n".join(local_imports))
+            f.write("\n\n")
+
+        # Write the rest of the content
+        f.write("\n".join(non_import_lines))
 
 
 def format_file_with_ruff(file_path: str) -> None:
     """Format a Python file in-place using ruff."""
     try:
+        # First consolidate imports to fix E402 errors
+        consolidate_imports_in_file(file_path)
+
         subprocess.run(
             ["python", "-m", "ruff", "check", "--fix", file_path],
             check=True,
@@ -161,7 +234,48 @@ def format_file_with_ruff(file_path: str) -> None:
             capture_output=True,
         )
     except subprocess.CalledProcessError:
-        pass  # If ruff fails, continue anyway
+        logging.error("Failed to format file with ruff: %s", file_path)
+        # Fail hard on ruff errors
+        raise
+
+
+def extract_imports_from_examples(examples: List[str]) -> Tuple[List[str], List[str]]:
+    """Extract and consolidate imports from examples, returning (imports, examples_without_imports)."""
+    all_imports = set()
+    examples_without_imports = []
+
+    for example in examples:
+        lines = example.split("\n")
+        import_lines = []
+        code_lines = []
+        in_import_section = True
+
+        for line in lines:
+            stripped = line.strip()
+
+            # Check if this line is an import
+            if (
+                stripped.startswith("from ") or stripped.startswith("import ")
+            ) and "(" not in stripped:
+                if in_import_section:
+                    import_lines.append(line)
+                    all_imports.add(stripped)
+                else:
+                    # Import found after code started - this is the E402 issue
+                    all_imports.add(stripped)
+            else:
+                # Not an import line
+                if stripped and not stripped.startswith("#"):
+                    in_import_section = False
+                code_lines.append(line)
+
+        # Join the code lines back together
+        examples_without_imports.append("\n".join(code_lines))
+
+    # Sort imports for consistency
+    consolidated_imports = sorted(list(all_imports))
+
+    return consolidated_imports, examples_without_imports
 
 
 def main():
@@ -227,11 +341,25 @@ client = ClientFromEnv()
     examples_test_path = os.path.join(cwd, "kittycad", "examples_test.py")
     logging.info("opening examples test file: %s", examples_test_path)
 
+    # Extract and consolidate imports from all examples
+    consolidated_imports, examples_without_imports = extract_imports_from_examples(
+        examples
+    )
+
     # Write all the examples to a file.
     f = open(examples_test_path, "w")
-    f.write("import pytest\n\n")
+
+    # Write base imports first
+    f.write("import pytest\n")
     f.write("import datetime\n\n")
-    f.write("\n\n".join(examples))
+
+    # Write consolidated imports from examples
+    if consolidated_imports:
+        f.write("\n".join(consolidated_imports))
+        f.write("\n\n")
+
+    # Write examples without their individual imports
+    f.write("\n\n".join(examples_without_imports))
     f.close()
 
     # Post-process with ruff to clean up imports and formatting
@@ -907,7 +1035,8 @@ async def test_"""
     # Make pretty.
     short_sync_example = example_imports + short_sync_example
 
-    cleaned_example = format_code_with_ruff(short_sync_example)
+    # Don't format individual examples - we'll format the consolidated file later
+    cleaned_example = short_sync_example
 
     examples.append(example)
 
@@ -1249,10 +1378,14 @@ def generateTypes(cwd: str, parser: dict):
     # Generate the types.
     data = parser
     schemas = data["components"]["schemas"]
+    generated_files = []
+
     for key in schemas:
         schema = schemas[key]
         logging.info("generating schema: %s", key)
-        generateType(path, key, schema, data)
+        model_file_path = generateType(path, key, schema, data)
+        if model_file_path:
+            generated_files.append(model_file_path)
         f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
 
     # This is a hot fix for the empty type.
@@ -1261,6 +1394,11 @@ def generateTypes(cwd: str, parser: dict):
 
     # Close the file.
     f.close()
+
+    # Consolidate imports in all generated model files
+    for file_path in generated_files:
+        if os.path.exists(file_path):
+            consolidate_imports_in_file(file_path)
 
 
 def generateType(path: str, name: str, schema: dict, data: dict):
@@ -1287,7 +1425,7 @@ def generateType(path: str, name: str, schema: dict, data: dict):
             raise Exception("unsupported type: ", type_name)
     elif "$ref" in schema:
         # Skip it since we will already have generated it.
-        return
+        return None
     elif "oneOf" in schema:
         generateOneOfType(file_path, name, schema, data)
     elif "anyOf" in schema:
@@ -1296,6 +1434,8 @@ def generateType(path: str, name: str, schema: dict, data: dict):
         logging.error("schema: %s", schema)
         logging.error("unsupported type: %s", name)
         raise Exception("unsupported type: ", name)
+
+    return file_path
 
 
 def generateStringType(path: str, name: str, schema: dict, type_name: str):
@@ -1889,6 +2029,7 @@ def generateObjectTypeCode(
     content: Optional[str],
     is_option: bool = False,
     imported_refs: Optional[set] = None,
+    include_imports: bool = True,
 ) -> str:
     FieldType = TypedDict(
         "FieldType",
@@ -1985,11 +2126,38 @@ def generateObjectTypeCode(
     # Iterate over the properties.
 
     environment = jinja2.Environment(loader=jinja2.FileSystemLoader("generate/"))
-    template_file = "object.py.jinja2"
+    if include_imports:
+        template_file = "object.py.jinja2"
+    else:
+        template_file = "object-class-only.py.jinja2"
     template = environment.get_template(template_file)
     content = template.render(**template_info)
 
     return content
+
+
+def getObjectTypeImports(
+    name: str,
+    schema: dict,
+    type_name: str,
+    data: dict,
+    tag: Optional[str],
+    content: Optional[str],
+    is_option: bool = False,
+    imported_refs: Optional[set] = None,
+) -> List[str]:
+    """Get the imports needed for an object type."""
+    imports = []
+    refs = getRefs(schema)
+    if imported_refs is None:
+        imported_refs = set()
+    for ref in refs:
+        if ref not in imported_refs:
+            imports.append(
+                "from ..models." + camel_to_snake(ref) + " import " + ref + "\n"
+            )
+            imported_refs.add(ref)
+    return imports
 
 
 def generateObjectType(path: str, name: str, schema: dict, type_name: str, data: dict):
