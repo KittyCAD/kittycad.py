@@ -5,10 +5,10 @@ import logging
 import os
 import random
 import re
-from typing import Any, Dict, List, Optional, Tuple, TypedDict
-
 import subprocess
 import tempfile
+from typing import Any, Dict, List, Optional, Tuple, TypedDict
+
 import jinja2
 import jsonpatch
 from prance import BaseParser
@@ -905,7 +905,6 @@ async def test_"""
     )
 
     # Make pretty.
-    line_length = 82
     short_sync_example = example_imports + short_sync_example
 
     cleaned_example = format_code_with_ruff(short_sync_example)
