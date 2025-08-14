@@ -5,10 +5,8 @@ Contains helper functions for string manipulation, import handling, etc.
 """
 
 import logging
-import os
 import re
 import subprocess
-import tempfile
 from typing import List, Tuple
 
 
@@ -38,19 +36,6 @@ def camel_to_snake(name: str) -> str:
         return name
     s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
-
-
-def snake_to_pascal(name: str) -> str:
-    """Convert snake_case to PascalCase, but only if currently in snake_case."""
-    if is_pascal_case(name):
-        return name
-    if not is_snake_case(name):
-        # If it's all lowercase without underscores, treat it as a single word
-        if name.islower() and "_" not in name:
-            return name.capitalize()
-        # If it's already mixed case without underscores, leave it alone
-        return name
-    return "".join(word.capitalize() for word in name.split("_"))
 
 
 def to_pascal_case(name: str) -> str:
@@ -109,12 +94,6 @@ def clean_parameter_name(name: str) -> str:
         name = name + "_"
 
     return name
-
-
-def to_camel_case(s: str) -> str:
-    """Convert string to camelCase."""
-    components = s.split("_")
-    return components[0] + "".join(x.title() for x in components[1:])
 
 
 def deduplicate_imports(imports_string: str) -> str:
@@ -207,44 +186,6 @@ def deduplicate_imports(imports_string: str) -> str:
         result += "\n"
 
     return result
-
-
-def format_code_with_ruff(code: str) -> str:
-    """Format Python code using ruff for import sorting and code formatting."""
-    try:
-        # Write to a temporary file for ruff processing
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".py", delete=False
-        ) as temp_file:
-            temp_file.write(code)
-            temp_file_path = temp_file.name
-
-        # Format with ruff
-        subprocess.run(
-            ["python", "-m", "ruff", "check", "--fix", temp_file_path],
-            check=True,
-            capture_output=True,
-        )
-        subprocess.run(
-            ["python", "-m", "ruff", "format", temp_file_path],
-            check=True,
-            capture_output=True,
-        )
-
-        # Read the formatted result
-        with open(temp_file_path, "r") as temp_file:
-            formatted_code = temp_file.read()
-
-        # Clean up temp file
-        os.unlink(temp_file_path)
-
-        return formatted_code
-
-    except Exception as e:
-        logging.error("Failed to format code with ruff: %s", e)
-        logging.error("Content being formatted:\n%s", code)
-        # Fail hard on ruff errors
-        raise
 
 
 def consolidate_imports_in_file(file_path: str) -> None:
