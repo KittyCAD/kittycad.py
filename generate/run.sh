@@ -19,7 +19,6 @@ git checkout kittycad/models/empty.py || true
 uv run python generate/generate.py
 
 # Format and lint.
-uv run isort .
 uv run ruff check --fix .
 uv run ruff format
 uv run mypy .

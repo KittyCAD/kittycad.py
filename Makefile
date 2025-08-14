@@ -16,7 +16,6 @@ test: install ## Run tests.
 lint: install ## Run linting and formatting.
 	uv run ruff check --fix .
 	uv run ruff format
-	uv run isort .
 
 .PHONY: typecheck
 typecheck: install ## Run type checking.

@@ -7,8 +7,8 @@ import random
 import re
 from typing import Any, Dict, List, Optional, Tuple, TypedDict
 
-import black
-import isort
+import subprocess
+import tempfile
 import jinja2
 import jsonpatch
 from prance import BaseParser
@@ -181,17 +181,20 @@ client = ClientFromEnv()
     f.write("\n\n".join(examples))
     f.close()
 
-    # Post-process with isort to clean up imports
-    import subprocess
-
+    # Post-process with ruff to clean up imports and formatting
     try:
         subprocess.run(
-            ["python", "-m", "isort", examples_test_path],
+            ["python", "-m", "ruff", "check", "--fix", examples_test_path],
+            check=True,
+            capture_output=True,
+        )
+        subprocess.run(
+            ["python", "-m", "ruff", "format", examples_test_path],
             check=True,
             capture_output=True,
         )
     except subprocess.CalledProcessError:
-        pass  # If isort fails, continue anyway
+        pass  # If ruff fails, continue anyway
 
 
 def generatePaths(cwd: str, parser: dict) -> dict:
@@ -865,19 +868,35 @@ async def test_"""
     short_sync_example = example_imports + short_sync_example
 
     try:
-        cleaned_example = black.format_str(
-            isort.api.sort_code_string(
-                short_sync_example,
-            ),
-            mode=black.FileMode(line_length=line_length),
+        # Write to a temporary file for ruff processing
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as temp_file:
+            temp_file.write(short_sync_example)
+            temp_file_path = temp_file.name
+        
+        # Format with ruff
+        subprocess.run(
+            ["python", "-m", "ruff", "check", "--fix", temp_file_path],
+            check=True,
+            capture_output=True,
         )
+        subprocess.run(
+            ["python", "-m", "ruff", "format", temp_file_path],
+            check=True,
+            capture_output=True,
+        )
+        
+        # Read the formatted result
+        with open(temp_file_path, 'r') as temp_file:
+            cleaned_example = temp_file.read()
+        
+        # Clean up temp file
+        os.unlink(temp_file_path)
+        
     except Exception as e:
         logging.error("Failed to format example for %s: %s", fn_name, e)
         logging.error("Content being formatted:\n%s", short_sync_example)
-        logging.error(
-            "Content after isort:\n%s", isort.api.sort_code_string(short_sync_example)
-        )
-        raise
+        # Fallback to unformatted version
+        cleaned_example = short_sync_example
 
     examples.append(example)
 

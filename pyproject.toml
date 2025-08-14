@@ -18,8 +18,6 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "autoclasstoc>=1.7.0,<2.0.0",
-    "black>=25.1.0,<26.0.0",
-    "isort>=6.0.1,<7.0.0",
     "jinja2>=3.1.6,<4.0.0",
     "jsonpatch>=1.33,<2.0.0",
     "mypy>=1.17.1,<2.0.0",
@@ -47,73 +45,22 @@ dev = [
 name = "pypi-public" 
 url = "https://pypi.org/simple/"
 
-[tool.isort]
-line_length = 88
-profile = "black"
-src_paths = ["generate", "kittycad", "docs"]
-float_to_top = true
-combine_as_imports = true
-
 [tool.ruff]
 line-length = 88
 
 [tool.ruff.lint]
+select = ["E", "F", "I"]
 # Since we auto fix these, we don't want to warn about them. Since some doc strings are too long.
 ignore = ["E501"]
-# Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "I",
-  "N",
-  "Q",
-  "S",
-  "T",
-  "W",
-  "ANN",
-  "ARG",
-  "BLE",
-  "COM",
-  "DJ",
-  "DTZ",
-  "EM",
-  "ERA",
-  "EXE",
-  "FBT",
-  "ICN",
-  "INP",
-  "ISC",
-  "NPY",
-  "PD",
-  "PGH",
-  "PIE",
-  "PL",
-  "PT",
-  "PTH",
-  "PYI",
-  "RET",
-  "RSE",
-  "RUF",
-  "SIM",
-  "SLF",
-  "TCH",
-  "TID",
-  "TRY",
-  "UP",
-  "YTT",
-]
-unfixable = []
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
+[tool.ruff.lint.isort]
+combine-as-imports = true
+split-on-trailing-comma = false
+
 [tool.ruff.lint.per-file-ignores]
 # We exclude init files since otherwise ruff will delete all the unused imports.
-# This code comes from here: https://beta.ruff.rs/docs/rules/#pyflakes-f
 "__init__.py" = ["F401"]
 "examples_test.py" = ["F841"]
 
