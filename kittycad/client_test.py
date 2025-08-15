@@ -55,7 +55,7 @@ def test_get_session():
     client = KittyCAD()
 
     # Get the session using modern pattern
-    session = client.api.users.get_user_self()
+    session = client.users.get_user_self()
 
     assert isinstance(session, User)
 
@@ -68,7 +68,7 @@ async def test_get_api_tokens_async():
     client = KittyCAD()
 
     # List API tokens using modern pattern
-    fc = client.api.api_tokens.list_api_tokens_for_user(
+    fc = client.api_tokens.list_api_tokens_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
     )
 
@@ -85,7 +85,7 @@ async def test_get_session_async():
     client = AsyncKittyCAD()
 
     # Get the session using new async pattern
-    session = await client.api.users.get_user_self()
+    session = await client.users.get_user_self()
 
     assert isinstance(session, User)
 
@@ -129,7 +129,7 @@ def test_file_convert_stl():
     file.close()
 
     # Get the file conversion using modern pattern
-    fc = client.api.file.create_file_conversion(
+    fc = client.file.create_file_conversion(
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
@@ -165,7 +165,7 @@ async def test_file_convert_stl_async():
     file.close()
 
     # Get the file conversion using new async pattern
-    result = await client.api.file.create_file_conversion(
+    result = await client.file.create_file_conversion(
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
@@ -203,7 +203,7 @@ async def test_file_convert_obj_async():
     file.close()
 
     # Get the file conversion using new async pattern
-    result = await client.api.file.create_file_conversion(
+    result = await client.file.create_file_conversion(
         body=content,
         src_format=FileImportFormat.OBJ,
         output_format=FileExportFormat.STL,
@@ -238,7 +238,7 @@ def test_file_mass():
     file.close()
 
     # Get the file mass using modern pattern
-    fm = client.api.file.create_file_mass(
+    fm = client.file.create_file_mass(
         body=content,
         src_format=FileImportFormat.OBJ,
         material_density=1.0,
@@ -268,7 +268,7 @@ def test_file_volume():
     file.close()
 
     # Get the file volume using modern pattern
-    fv = client.api.file.create_file_volume(
+    fv = client.file.create_file_volume(
         body=content,
         src_format=FileImportFormat.OBJ,
         output_unit=UnitVolume.CM3,
@@ -296,7 +296,7 @@ def test_file_center_of_mass():
     file.close()
 
     # Get the file center of mass using modern pattern
-    fv = client.api.file.create_file_center_of_mass(
+    fv = client.file.create_file_center_of_mass(
         body=content,
         src_format=FileImportFormat.OBJ,
         output_unit=UnitLength.CM,
@@ -319,7 +319,7 @@ def test_list_users():
     client = KittyCAD()
 
     # List users using modern pattern
-    response = client.api.users.list_users_extended(
+    response = client.users.list_users_extended(
         sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, limit=10
     )
 
@@ -332,8 +332,8 @@ def test_ws_simple():
     # Create our client
     client = KittyCAD()
 
-    # WebSocket uses client.api pattern
-    with client.api.modeling.modeling_commands_ws.WebSocket(
+    # WebSocket uses direct pattern - call the WebSocket function directly
+    websocket = client.modeling.modeling_commands_ws(
         fps=30,
         show_grid=False,
         post_effect=PostEffectType.NOEFFECT,
@@ -341,7 +341,8 @@ def test_ws_simple():
         video_res_height=360,
         video_res_width=480,
         webrtc=False,
-    ) as websocket:
+    )
+    with websocket:
         # Send a message.
         id = uuid.uuid4()
         req = WebSocketRequest(
@@ -365,8 +366,8 @@ def test_ws_import():
             # Create our client
             client = KittyCAD()
 
-            # WebSocket uses client.api pattern
-            with client.api.modeling.modeling_commands_ws.WebSocket(
+            # WebSocket uses direct pattern - call the WebSocket function directly
+            websocket = client.modeling.modeling_commands_ws(
                 fps=30,
                 post_effect=PostEffectType.NOEFFECT,
                 show_grid=False,
@@ -374,7 +375,8 @@ def test_ws_import():
                 video_res_height=360,
                 video_res_width=480,
                 webrtc=False,
-            ) as websocket:
+            )
+            with websocket:
                 # read the content of the file
                 dir_path = os.path.dirname(os.path.realpath(__file__))
                 file_name = "ORIGINALVOXEL-3.obj"
@@ -557,8 +559,8 @@ def test_text_to_cad():
     # Test the modern client.api pattern
     client = KittyCAD()
 
-    # Modern way: client.api.ml.create_text_to_cad()
-    result = client.api.ml.create_text_to_cad(
+    # Modern way: client.ml.create_text_to_cad()
+    result = client.ml.create_text_to_cad(
         output_format=FileExportFormat.STEP,
         body=TextToCadCreateBody(
             prompt="a 2x4 lego",
@@ -573,7 +575,7 @@ def test_text_to_cad():
     while (
         body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
     ) and time.time() - start_time < 120:
-        result_status = client.api.ml.get_text_to_cad_model_for_user(
+        result_status = client.ml.get_text_to_cad_model_for_user(
             id=body.id,
         )
 

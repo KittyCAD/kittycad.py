@@ -31,7 +31,7 @@ class TestGlobalClientConfiguration:
         """Test configuring with all parameters."""
         configure(
             api_token="test-token-456",
-            base_url="https://custom.api.url",
+            base_url="https://custom.url",
             timeout=60.0,
             headers={"X-Custom": "header"},
             cookies={"session": "abc123"},
@@ -40,7 +40,7 @@ class TestGlobalClientConfiguration:
         client = get_default_client()
 
         assert client.token == "test-token-456"
-        assert client.base_url == "https://custom.api.url"
+        assert client.base_url == "https://custom.url"
         assert client.timeout == 60.0
         assert client.headers == {"X-Custom": "header"}
         assert client.cookies == {"session": "abc123"}

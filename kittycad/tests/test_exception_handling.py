@@ -4,8 +4,7 @@
 import sys
 import traceback
 
-from ..api.meta import ping
-from ..client import Client
+from .. import KittyCAD
 from ..exceptions import KittyCADAPIError, KittyCADClientError, KittyCADServerError
 
 
@@ -14,11 +13,11 @@ def test_successful_request():
     print("Testing successful request...")
 
     # Use a basic client that should work (assuming API is available)
-    client = Client(token="dummy_token", base_url="https://httpbin.org")
+    client = KittyCAD(token="dummy_token", base_url="https://httpbin.org")
 
     try:
         # This would fail with real API but let's test the exception structure
-        result = ping.sync(client=client)
+        result = client.meta.ping()
         print(f"✓ Request succeeded: {type(result)}")
         return True
     except Exception as e:

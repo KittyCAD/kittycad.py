@@ -18,7 +18,7 @@ def example_successful_call():
     try:
         # Clean, simple interface using environment variable
         client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-        result = client.api.meta.ping()
+        result = client.meta.ping()
         print(f"✓ Ping successful: {result}")
 
     except KittyCADAPIError as e:
@@ -36,7 +36,7 @@ def example_error_handling():
     try:
         # This will likely fail with authentication error
         client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-        user = client.api.users.get_user_self()
+        user = client.users.get_user_self()
         print(f"✓ User info: {user}")
 
     except KittyCADClientError as e:
@@ -81,7 +81,7 @@ def example_old_vs_new():
     print("""
     try:
         client = KittyCAD()  # Uses environment variable
-        user = client.api.users.get_user_self()  # Clean API access
+        user = client.users.get_user_self()  # Clean API access
         # user is guaranteed to be the expected type or an exception was raised
         
     except KittyCADAPIError as e:

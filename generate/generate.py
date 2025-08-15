@@ -193,39 +193,17 @@ client = KittyCAD()
 
 
 def generate_paths(cwd: str, parser: dict) -> dict:
-    # Make sure we have the directory.
+    # Make sure we have the directory structure for individual API files.
     path = os.path.join(cwd, "kittycad", "api")
     os.makedirs(path, exist_ok=True)
 
-    # Open the __init__.py file.
-    file_name = "__init__.py"
-    file_path = os.path.join(path, file_name)
-    f = open(file_path, "w")
-    f.write('""" Contains methods for accessing the API """\n')
-    # Close the file.
-    f.close()
-
-    # Generate the directory/__init__.py for each of the tags.
+    # Generate directories for each of the tags (for individual endpoint files).
     tags = parser["tags"]
     for tag in tags:
         tag_name = tag["name"].replace("-", "_")
-        tag_description = tag["description"]
         tag_path = os.path.join(path, tag_name)
-        # Esnure the directory exists.
+        # Ensure the directory exists for individual endpoint files.
         os.makedirs(tag_path, exist_ok=True)
-        # Open the __init__.py file.
-        file_name = "__init__.py"
-        file_path = os.path.join(tag_path, file_name)
-        f = open(file_path, "w")
-        f.write(
-            '""" Contains methods for accessing the '
-            + tag_name
-            + " API paths: "
-            + tag_description
-            + ' """ # noqa: E501\n'
-        )
-        # Close the file.
-        f.close()
 
     # Generate the paths.
     data = parser
