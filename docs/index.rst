@@ -11,7 +11,8 @@ Welcome to kittycad's documentation!
    :template: custom-module-template.rst
    :recursive:
 
-   kittycad.api
+   kittycad.KittyCAD
+   kittycad.AsyncKittyCAD
    kittycad.client
    kittycad.models
    kittycad.types
