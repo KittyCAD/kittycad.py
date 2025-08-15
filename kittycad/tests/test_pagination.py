@@ -766,6 +766,7 @@ def test_sync_pagination_integration_text_to_cad():
     )
 
     # Verify we got a SyncPageIterator
+    from kittycad.models.text_to_cad_response import TextToCadResponse
     from kittycad.pagination import SyncPageIterator
 
     assert isinstance(iterator, SyncPageIterator), (
@@ -776,7 +777,7 @@ def test_sync_pagination_integration_text_to_cad():
     # This validates the API contract that our pagination system depends on
     item_count = 0
     collected_ids: set[str] = set()  # Track unique IDs
-    item: object  # Type annotation for mypy
+    item: TextToCadResponse
     for item in iterator:
         item_count += 1
         # TextToCadResponse is a RootModel Union, so should have .root or .model_dump
@@ -834,6 +835,7 @@ async def test_async_pagination_integration_text_to_cad():
     )
 
     # Verify we got an AsyncPageIterator
+    from kittycad.models.text_to_cad_response import TextToCadResponse
     from kittycad.pagination import AsyncPageIterator
 
     assert isinstance(iterator, AsyncPageIterator), (
@@ -844,7 +846,7 @@ async def test_async_pagination_integration_text_to_cad():
     # This validates the API contract that our pagination system depends on
     item_count = 0
     collected_ids: set[str] = set()  # Track unique IDs
-    item: object  # Type annotation for mypy
+    item: TextToCadResponse
     async for item in iterator:
         item_count += 1
         # TextToCadResponse is a RootModel Union, so should have .root or .model_dump
