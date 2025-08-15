@@ -1,3 +1,8 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
 from typing import Any, Dict, Optional, Union, List
 
 import httpx
@@ -8,6 +13,9 @@ from ...response_helpers import raise_for_status
 {% for import in imports %}
 {{import}}
 {% endfor %}
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -75,35 +83,6 @@ def _build_response(
     )
 
 
-def sync_detailed(
-    {% for arg in args %}
-    {% if arg.is_optional == False %}
-    {{arg.name}}: {{arg.type}},
-    {% endif %}
-    {% endfor %}
-    *,
-    client: Client,
-    {% for arg in args %}
-    {% if arg.is_optional %}
-    {{arg.name}}: {{arg.type}},
-    {% endif %}
-    {% endfor %}
-)  -> Response[{% if response_type != "" %}{{response_type}}{% else %}Any{% endif %}]:
-    kwargs = _get_kwargs(
-        {% for arg in args %}
-        {{arg.name}}={{arg.name}},
-        {% endfor %}
-        client=client,
-    )
-
-    response = httpx.{{method}}(
-        verify=client.verify_ssl,
-        **kwargs,
-    )
-
-    return _build_response(response=response)
-
-
 def sync(
     {% for arg in args %}
     {% if arg.is_optional == False %}
@@ -119,29 +98,7 @@ def sync(
     {% endfor %}
 ) {% if response_type != "" %} -> {{response_type}} {% endif %}:
     {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
-
-    return sync_detailed(
-        {% for arg in args %}
-        {{arg.name}}={{arg.name}},
-        {% endfor %}
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    {% for arg in args %}
-    {% if arg.is_optional == False %}
-    {{arg.name}}: {{arg.type}},
-    {% endif %}
-    {% endfor %}
-    *,
-    client: Client,
-    {% for arg in args %}
-    {% if arg.is_optional %}
-    {{arg.name}}: {{arg.type}},
-    {% endif %}
-    {% endfor %}
-)  -> Response[{% if response_type != "" %}{{response_type}}{% else %}Any{% endif %}]:
+        
     kwargs = _get_kwargs(
         {% for arg in args %}
         {{arg.name}}={{arg.name}},
@@ -149,10 +106,12 @@ async def asyncio_detailed(
         client=client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.{{method}}(**kwargs)
+    response = httpx.{{method}}(
+        verify=client.verify_ssl,
+        **kwargs,
+    )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -170,12 +129,15 @@ async def asyncio(
     {% endfor %}
 ) {% if response_type != "" %} -> {{response_type}} {% endif %}:
     {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
+        
+    kwargs = _get_kwargs(
+        {% for arg in args %}
+        {{arg.name}}={{arg.name}},
+        {% endfor %}
+        client=client,
+    )
 
-    return (
-        await asyncio_detailed(
-            {% for arg in args %}
-            {{arg.name}}={{arg.name}},
-            {% endfor %}
-            client=client,
-        )
-    ).parsed
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.{{method}}(**kwargs)
+
+    return _build_response(response=response).parsed

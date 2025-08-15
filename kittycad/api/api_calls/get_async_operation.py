@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional, Union
 
 import httpx
@@ -14,6 +20,9 @@ from ...models.text_to_cad_iteration import TextToCadIteration
 from ...models.text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -172,38 +181,6 @@ def _build_response(
     )
 
 
-def sync_detailed(
-    id: str,
-    *,
-    client: Client,
-) -> Response[
-    Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ]
-]:
-    kwargs = _get_kwargs(
-        id=id,
-        client=client,
-    )
-
-    response = httpx.get(
-        verify=client.verify_ssl,
-        **kwargs,
-    )
-
-    return _build_response(response=response)
-
-
 def sync(
     id: str,
     *,
@@ -229,40 +206,17 @@ def sync(
 
     Only Zoo employees with the proper access can view async operations for other users."""  # noqa: E501
 
-    return sync_detailed(
-        id=id,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    id: str,
-    *,
-    client: Client,
-) -> Response[
-    Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ]
-]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+    response = httpx.get(
+        verify=client.verify_ssl,
+        **kwargs,
+    )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -290,9 +244,12 @@ async def asyncio(
 
     Only Zoo employees with the proper access can view async operations for other users."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            id=id,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        id=id,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -7,6 +13,9 @@ from ...models.code_language import CodeLanguage
 from ...models.code_output import CodeOutput
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -62,13 +71,13 @@ def _build_response(*, response: httpx.Response) -> Response[CodeOutput]:
     )
 
 
-def sync_detailed(
+def sync(
     lang: CodeLanguage,
     body: bytes,
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Response[CodeOutput]:
+) -> CodeOutput:
     kwargs = _get_kwargs(
         lang=lang,
         output=output,
@@ -81,31 +90,16 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
-def sync(
+async def asyncio(
     lang: CodeLanguage,
     body: bytes,
     *,
     client: Client,
     output: Optional[str] = None,
 ) -> CodeOutput:
-    return sync_detailed(
-        lang=lang,
-        output=output,
-        body=body,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    lang: CodeLanguage,
-    body: bytes,
-    *,
-    client: Client,
-    output: Optional[str] = None,
-) -> Response[CodeOutput]:
     kwargs = _get_kwargs(
         lang=lang,
         output=output,
@@ -116,21 +110,4 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
         response = await _client.post(**kwargs)
 
-    return _build_response(response=response)
-
-
-async def asyncio(
-    lang: CodeLanguage,
-    body: bytes,
-    *,
-    client: Client,
-    output: Optional[str] = None,
-) -> CodeOutput:
-    return (
-        await asyncio_detailed(
-            lang=lang,
-            output=output,
-            body=body,
-            client=client,
-        )
-    ).parsed
+    return _build_response(response=response).parsed

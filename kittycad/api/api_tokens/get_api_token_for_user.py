@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -7,6 +13,9 @@ from ...models.api_token import ApiToken
 from ...models.api_token_uuid import ApiTokenUuid
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -53,11 +62,13 @@ def _build_response(*, response: httpx.Response) -> Response[ApiToken]:
     )
 
 
-def sync_detailed(
+def sync(
     token: ApiTokenUuid,
     *,
     client: Client,
-) -> Response[ApiToken]:
+) -> ApiToken:
+    """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""  # noqa: E501
+
     kwargs = _get_kwargs(
         token=token,
         client=client,
@@ -68,36 +79,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    token: ApiTokenUuid,
-    *,
-    client: Client,
-) -> ApiToken:
-    """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""  # noqa: E501
-
-    return sync_detailed(
-        token=token,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    token: ApiTokenUuid,
-    *,
-    client: Client,
-) -> Response[ApiToken]:
-    kwargs = _get_kwargs(
-        token=token,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -107,9 +89,12 @@ async def asyncio(
 ) -> ApiToken:
     """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            token=token,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        token=token,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

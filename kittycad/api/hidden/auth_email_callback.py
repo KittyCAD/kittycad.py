@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -5,6 +11,9 @@ import httpx
 from ...client import Client
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -69,13 +78,13 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
     )
 
 
-def sync_detailed(
+def sync(
     email: str,
     token: str,
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Response[Any]:
+):
     kwargs = _get_kwargs(
         callback_url=callback_url,
         email=email,
@@ -88,31 +97,16 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
-def sync(
+async def asyncio(
     email: str,
     token: str,
     *,
     client: Client,
     callback_url: Optional[str] = None,
 ):
-    return sync_detailed(
-        callback_url=callback_url,
-        email=email,
-        token=token,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    email: str,
-    token: str,
-    *,
-    client: Client,
-    callback_url: Optional[str] = None,
-) -> Response[Any]:
     kwargs = _get_kwargs(
         callback_url=callback_url,
         email=email,
@@ -123,21 +117,4 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
         response = await _client.get(**kwargs)
 
-    return _build_response(response=response)
-
-
-async def asyncio(
-    email: str,
-    token: str,
-    *,
-    client: Client,
-    callback_url: Optional[str] = None,
-):
-    return (
-        await asyncio_detailed(
-            callback_url=callback_url,
-            email=email,
-            token=token,
-            client=client,
-        )
-    ).parsed
+    return _build_response(response=response).parsed

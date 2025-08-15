@@ -43,21 +43,20 @@ def main():
 
     # Add the client information to the generation.
     data["info"]["x-python"] = {
-        "client": """# Create a client with your token.
-from kittycad.client import Client
+        "client": """# Setup your client with your token
+from kittycad import KittyCAD
 
-client = Client(token="$TOKEN")
+client = KittyCAD(token="$TOKEN")
 
 # - OR -
 
 # Create a new client with your token parsed from the environment variable:
-#   `KITTYCAD_API_TOKEN` or `ZOO_API_TOKEN`.
+# `KITTYCAD_API_TOKEN` or `ZOO_API_TOKEN`.
 # Optionally, you can pass in `ZOO_HOST` to specify the host. But this only
-# needs to be done if you are using a different host than the default,
-# which implies you are running your own instance of the API.
-from kittycad.client import ClientFromEnv
+# works if you are using the `ZOO_API_TOKEN` environment variable.
+from kittycad import KittyCAD
 
-client = ClientFromEnv()
+client = KittyCAD()
 
 # NOTE: The python library additionally implements asyncio, however all the code samples we
 # show below use the sync functions for ease of use and understanding.
@@ -116,7 +115,8 @@ client = ClientFromEnv()
     # Write base imports first
     f.write("import pytest\n")
     f.write("import datetime\n")
-    f.write("from typing import Dict, Optional, Union\n\n")
+    f.write("from typing import Dict, Optional, Union\n")
+    f.write("from kittycad import KittyCAD\n\n")
 
     # Write consolidated imports from examples
     if consolidated_imports:
@@ -531,7 +531,6 @@ def generate_path(
 
     example_imports = (
         """
-from kittycad.client import ClientFromEnv
 from kittycad.api."""
         + tag_name
         + """ import """
@@ -559,12 +558,7 @@ from kittycad.types import Response
 
             if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
                 parameter_type = "Optional[" + parameter_type + "]"
-                optional_args.append(
-                    clean_parameter_name(parameter_name)
-                    + "= None, # "
-                    + parameter_type
-                    + "\n"
-                )
+                optional_args.append(clean_parameter_name(parameter_name) + "=None,\n")
             else:
                 params_str += (
                     clean_parameter_name(parameter_name)
@@ -609,12 +603,8 @@ from kittycad.types import Response
             example_imports = example_imports + more_example_imports
 
     example_variable = ""
-    example_variable_response = ""
 
     response_type = get_function_result_type(endpoint, endpoint_refs, data)
-    detailed_response_type = get_detailed_function_result_type(
-        endpoint, endpoint_refs, data
-    )
     if (
         success_type != "str"
         and success_type != "dict"
@@ -644,27 +634,49 @@ from kittycad.types import Response
             example_variable = "result = "
 
         example_imports = example_imports + "from kittycad.types import Response\n"
-        if detailed_response_type and detailed_response_type != "Response[None]":
-            example_variable_response = "response: " + detailed_response_type + " = "
-        else:
-            example_variable_response = "response = "
 
     # Add some new lines.
     example_imports = example_imports + "\n\n"
+
+    # Clean up params_str for use in examples (no client parameter needed)
+    # For WebSocket examples, we need to properly format parameters
+    no_client_params = params_str.strip()
+    if no_client_params.endswith(",\n"):
+        no_client_params = no_client_params[:-2]
+    elif no_client_params.endswith(","):
+        no_client_params = no_client_params[:-1]
+
+    # If we have parameters, format them properly with proper indentation for multiline calls
+    if no_client_params:
+        # Split into lines and properly indent each parameter line
+        param_lines = no_client_params.split("\n")
+        formatted_lines = []
+        for i, line in enumerate(param_lines):
+            if line.strip():  # Skip empty lines
+                if i == 0:
+                    # First parameter line goes on same line as function call
+                    formatted_lines.append(line.strip())
+                else:
+                    # Subsequent lines need proper indentation
+                    formatted_lines.append("        " + line.strip())
+        no_client_params = "\n".join(formatted_lines)
 
     short_sync_example = (
         """def test_"""
         + fn_name
         + """():
-    # Create our client.
-    client = ClientFromEnv()
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     """
         + example_variable
+        + "client.api."
+        + tag_name
+        + "."
         + fn_name
-        + """.sync(client=client,\n"""
-        + params_str
+        + """("""
+        + no_client_params
         + """)
+
 """
     )
 
@@ -702,39 +714,24 @@ from kittycad.types import Response
     long_example = (
         """
 
-    # OR if you need more info (e.g. status_code)
-    """
-        + example_variable_response
-        + fn_name
-        + """.sync_detailed(client=client,\n"""
-        + params_str
-        + """)
-
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_"""
         + fn_name
         + """_async():
-    # Create our client.
-    client = ClientFromEnv()
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     """
         + example_variable
-        + "await "
+        + "await client.api."
+        + tag_name
+        + "."
         + fn_name
-        + """.asyncio(client=client,\n"""
-        + params_str
+        + """.asyncio("""
+        + no_client_params
         + """)
-
-    # OR run async with more info
-    """
-        + example_variable_response
-        + "await "
-        + fn_name
-        + """.asyncio_detailed(client=client,\n"""
-        + params_str
-        + """)"""
+"""
     )
 
     # Generate the websocket examples.
@@ -744,14 +741,15 @@ async def test_"""
                 """def test_"""
                 + fn_name
                 + """():
-            # Create our client.
-            client = ClientFromEnv()
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
             # Connect to the websocket.
-            with """
+            with client.api."""
+                + tag_name
+                + """."""
                 + fn_name
-                + """.sync(client=client,"""
-                + params_str
+                + """.WebSocket("""
+                + no_client_params
                 + """) as websocket:
 
                 # Send a message.
@@ -768,14 +766,15 @@ async def test_"""
                 """def test_"""
                 + fn_name
                 + """():
-            # Create our client.
-            client = ClientFromEnv()
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
             # Connect to the websocket.
-            with """
+            with client.api."""
+                + tag_name
+                + """."""
                 + fn_name
-                + """.WebSocket(client=client,"""
-                + params_str
+                + """.WebSocket("""
+                + no_client_params
                 + """) as websocket:
 
                 # Send a message.
@@ -799,14 +798,15 @@ async def test_"""
 async def test_"""
             + fn_name
             + """_async():
-    # Create our client.
-    client = ClientFromEnv()
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await """
+    websocket = await client.api."""
+            + tag_name
+            + """."""
             + fn_name
-            + """.asyncio(client=client,"""
-            + params_str
+            + """.asyncio("""
+            + no_client_params
             + """)
 
     # Send a message.
@@ -2608,16 +2608,6 @@ def get_function_result_type(
         result = "Optional[" + result + "]" if result else ""
 
     return result
-
-
-def get_detailed_function_result_type(
-    endpoint: dict, endpoint_refs: List[str], data: Optional[dict] = None
-) -> str:
-    result_type = get_function_result_type(endpoint, endpoint_refs, data)
-    if result_type and result_type != "None":
-        return "Response[" + result_type + "]"
-    else:
-        return "Response[None]"
 
 
 def get_type_name(schema: dict) -> str:

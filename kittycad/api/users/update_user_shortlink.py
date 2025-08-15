@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -6,6 +12,9 @@ from ...client import Client
 from ...models.update_shortlink_request import UpdateShortlinkRequest
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -53,12 +62,16 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
     )
 
 
-def sync_detailed(
+def sync(
     key: str,
     body: UpdateShortlinkRequest,
     *,
     client: Client,
-) -> Response[Any]:
+):
+    """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
+
+    This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""  # noqa: E501
+
     kwargs = _get_kwargs(
         key=key,
         body=body,
@@ -70,42 +83,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    key: str,
-    body: UpdateShortlinkRequest,
-    *,
-    client: Client,
-):
-    """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
-
-    This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""  # noqa: E501
-
-    return sync_detailed(
-        key=key,
-        body=body,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    key: str,
-    body: UpdateShortlinkRequest,
-    *,
-    client: Client,
-) -> Response[Any]:
-    kwargs = _get_kwargs(
-        key=key,
-        body=body,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.put(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -118,10 +96,13 @@ async def asyncio(
 
     This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            key=key,
-            body=body,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        key=key,
+        body=body,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.put(**kwargs)
+
+    return _build_response(response=response).parsed

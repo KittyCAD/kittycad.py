@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -6,6 +12,9 @@ from ...client import Client
 from ...models.uuid import Uuid
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -58,12 +67,14 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
     )
 
 
-def sync_detailed(
+def sync(
     org_id: Uuid,
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Response[Any]:
+):
+    """Redirects the browser straight to the org’s SAML IdP."""  # noqa: E501
+
     kwargs = _get_kwargs(
         org_id=org_id,
         callback_url=callback_url,
@@ -75,40 +86,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    org_id: Uuid,
-    *,
-    client: Client,
-    callback_url: Optional[str] = None,
-):
-    """Redirects the browser straight to the org’s SAML IdP."""  # noqa: E501
-
-    return sync_detailed(
-        org_id=org_id,
-        callback_url=callback_url,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    org_id: Uuid,
-    *,
-    client: Client,
-    callback_url: Optional[str] = None,
-) -> Response[Any]:
-    kwargs = _get_kwargs(
-        org_id=org_id,
-        callback_url=callback_url,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -119,10 +97,13 @@ async def asyncio(
 ):
     """Redirects the browser straight to the org’s SAML IdP."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            org_id=org_id,
-            callback_url=callback_url,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        org_id=org_id,
+        callback_url=callback_url,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -8,6 +14,9 @@ from ...models.file_import_format import FileImportFormat
 from ...models.unit_length import UnitLength
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -68,28 +77,6 @@ def _build_response(*, response: httpx.Response) -> Response[FileCenterOfMass]:
     )
 
 
-def sync_detailed(
-    output_unit: UnitLength,
-    src_format: FileImportFormat,
-    body: bytes,
-    *,
-    client: Client,
-) -> Response[FileCenterOfMass]:
-    kwargs = _get_kwargs(
-        output_unit=output_unit,
-        src_format=src_format,
-        body=body,
-        client=client,
-    )
-
-    response = httpx.post(
-        verify=client.verify_ssl,
-        **kwargs,
-    )
-
-    return _build_response(response=response)
-
-
 def sync(
     output_unit: UnitLength,
     src_format: FileImportFormat,
@@ -107,21 +94,6 @@ def sync(
 
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
-    return sync_detailed(
-        output_unit=output_unit,
-        src_format=src_format,
-        body=body,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    output_unit: UnitLength,
-    src_format: FileImportFormat,
-    body: bytes,
-    *,
-    client: Client,
-) -> Response[FileCenterOfMass]:
     kwargs = _get_kwargs(
         output_unit=output_unit,
         src_format=src_format,
@@ -129,10 +101,12 @@ async def asyncio_detailed(
         client=client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.post(**kwargs)
+    response = httpx.post(
+        verify=client.verify_ssl,
+        **kwargs,
+    )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -152,11 +126,14 @@ async def asyncio(
 
     If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            output_unit=output_unit,
-            src_format=src_format,
-            body=body,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        output_unit=output_unit,
+        src_format=src_format,
+        body=body,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.post(**kwargs)
+
+    return _build_response(response=response).parsed

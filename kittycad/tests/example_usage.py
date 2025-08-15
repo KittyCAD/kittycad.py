@@ -8,10 +8,7 @@ via exceptions rather than return values.
 
 import os
 
-from .. import KittyCADAPIError, KittyCADClientError, KittyCADServerError
-from ..api.meta import ping
-from ..api.users import get_user_self
-from ..client import ClientFromEnv
+from .. import KittyCAD, KittyCADAPIError, KittyCADClientError, KittyCADServerError
 
 
 def example_successful_call():
@@ -19,10 +16,9 @@ def example_successful_call():
     print("=== Example: Successful API Call ===")
 
     try:
-        client = ClientFromEnv()
-
-        # Clean, simple interface - no need to check for error types
-        result = ping.sync(client=client)
+        # Clean, simple interface using environment variable
+        client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+        result = client.api.meta.ping()
         print(f"✓ Ping successful: {result}")
 
     except KittyCADAPIError as e:
@@ -39,8 +35,8 @@ def example_error_handling():
 
     try:
         # This will likely fail with authentication error
-        client = ClientFromEnv()
-        user = get_user_self.sync(client=client)
+        client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+        user = client.api.users.get_user_self()
         print(f"✓ User info: {user}")
 
     except KittyCADClientError as e:
@@ -69,7 +65,10 @@ def example_old_vs_new():
 
     print("OLD (error-prone):")
     print("""
-    result = kittycad.api.users.get_user_self(client=client)
+    from kittycad import Client
+    client = Client(token="your-token")  # Manual client setup required
+    
+    result = kittycad.api.users.get_user_self(client=client)  # Must pass client
     if isinstance(result, Error):
         print(f"Error: {result.message}")
         return
@@ -81,7 +80,8 @@ def example_old_vs_new():
     print("NEW (clean & idiomatic):")
     print("""
     try:
-        user = kittycad.api.users.get_user_self(client=client)
+        client = KittyCAD()  # Uses environment variable
+        user = client.api.users.get_user_self()  # Clean API access
         # user is guaranteed to be the expected type or an exception was raised
         
     except KittyCADAPIError as e:

@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -7,6 +13,9 @@ from ...models.unit_torque import UnitTorque
 from ...models.unit_torque_conversion import UnitTorqueConversion
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -62,13 +71,15 @@ def _build_response(*, response: httpx.Response) -> Response[UnitTorqueConversio
     )
 
 
-def sync_detailed(
+def sync(
     input_unit: UnitTorque,
     output_unit: UnitTorque,
     value: float,
     *,
     client: Client,
-) -> Response[UnitTorqueConversion]:
+) -> UnitTorqueConversion:
+    """Convert a torque unit value to another torque unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
+
     kwargs = _get_kwargs(
         input_unit=input_unit,
         output_unit=output_unit,
@@ -81,44 +92,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    input_unit: UnitTorque,
-    output_unit: UnitTorque,
-    value: float,
-    *,
-    client: Client,
-) -> UnitTorqueConversion:
-    """Convert a torque unit value to another torque unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
-
-    return sync_detailed(
-        input_unit=input_unit,
-        output_unit=output_unit,
-        value=value,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    input_unit: UnitTorque,
-    output_unit: UnitTorque,
-    value: float,
-    *,
-    client: Client,
-) -> Response[UnitTorqueConversion]:
-    kwargs = _get_kwargs(
-        input_unit=input_unit,
-        output_unit=output_unit,
-        value=value,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -130,11 +104,14 @@ async def asyncio(
 ) -> UnitTorqueConversion:
     """Convert a torque unit value to another torque unit value. This is a nice endpoint to use for helper functions."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            input_unit=input_unit,
-            output_unit=output_unit,
-            value=value,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        input_unit=input_unit,
+        output_unit=output_unit,
+        value=value,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

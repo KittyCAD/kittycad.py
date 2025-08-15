@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Iterator
+from typing import Any, Dict, Iterator, Optional
 
 import bson
 from websockets.asyncio.client import (
@@ -11,6 +11,7 @@ from websockets.sync.client import (
     connect as ws_connect,
 )
 
+from ... import get_default_client
 from ...client import Client
 from ...models.ml_copilot_client_message import MlCopilotClientMessage
 from ...models.ml_copilot_server_message import MlCopilotServerMessage
@@ -35,8 +36,11 @@ def _get_kwargs(
 
 def sync(
     *,
-    client: Client,
+    client: Optional[Client] = None,
 ) -> ClientConnectionSync:
+    if client is None:
+        client = get_default_client()
+
     kwargs = _get_kwargs(
         client=client,
     )
@@ -51,8 +55,11 @@ def sync(
 
 async def asyncio(
     *,
-    client: Client,
+    client: Optional[Client] = None,
 ) -> ClientConnectionAsync:
+    if client is None:
+        client = get_default_client()
+
     kwargs = _get_kwargs(
         client=client,
     )
@@ -72,8 +79,9 @@ class WebSocket:
 
     def __init__(
         self,
-        client: Client,
     ):
+        client = get_default_client()
+
         self.ws = sync(
             client=client,
         )

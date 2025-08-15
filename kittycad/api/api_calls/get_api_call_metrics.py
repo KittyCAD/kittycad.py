@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, List
 
 import httpx
@@ -7,6 +13,9 @@ from ...models.api_call_query_group import ApiCallQueryGroup
 from ...models.api_call_query_group_by import ApiCallQueryGroupBy
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -58,11 +67,13 @@ def _build_response(*, response: httpx.Response) -> Response[List[ApiCallQueryGr
     )
 
 
-def sync_detailed(
+def sync(
     group_by: ApiCallQueryGroupBy,
     *,
     client: Client,
-) -> Response[List[ApiCallQueryGroup]]:
+) -> List[ApiCallQueryGroup]:
+    """This endpoint requires authentication by a Zoo employee. The API calls are grouped by the parameter passed."""  # noqa: E501
+
     kwargs = _get_kwargs(
         group_by=group_by,
         client=client,
@@ -73,36 +84,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    group_by: ApiCallQueryGroupBy,
-    *,
-    client: Client,
-) -> List[ApiCallQueryGroup]:
-    """This endpoint requires authentication by a Zoo employee. The API calls are grouped by the parameter passed."""  # noqa: E501
-
-    return sync_detailed(
-        group_by=group_by,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    group_by: ApiCallQueryGroupBy,
-    *,
-    client: Client,
-) -> Response[List[ApiCallQueryGroup]]:
-    kwargs = _get_kwargs(
-        group_by=group_by,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -112,9 +94,12 @@ async def asyncio(
 ) -> List[ApiCallQueryGroup]:
     """This endpoint requires authentication by a Zoo employee. The API calls are grouped by the parameter passed."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            group_by=group_by,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        group_by=group_by,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

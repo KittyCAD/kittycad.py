@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -7,6 +13,9 @@ from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...models.shortlink_results_page import ShortlinkResultsPage
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -72,13 +81,15 @@ def _build_response(*, response: httpx.Response) -> Response[ShortlinkResultsPag
     )
 
 
-def sync_detailed(
+def sync(
     sort_by: CreatedAtSortMode,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[ShortlinkResultsPage]:
+) -> ShortlinkResultsPage:
+    """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""  # noqa: E501
+
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -91,44 +102,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    sort_by: CreatedAtSortMode,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> ShortlinkResultsPage:
-    """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""  # noqa: E501
-
-    return sync_detailed(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    sort_by: CreatedAtSortMode,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> Response[ShortlinkResultsPage]:
-    kwargs = _get_kwargs(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -140,11 +114,14 @@ async def asyncio(
 ) -> ShortlinkResultsPage:
     """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            limit=limit,
-            page_token=page_token,
-            sort_by=sort_by,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        limit=limit,
+        page_token=page_token,
+        sort_by=sort_by,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

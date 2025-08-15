@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -9,6 +15,9 @@ from ...models.text_to_cad_multi_file_iteration_body import (
 )
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -57,24 +66,6 @@ def _build_response(
     )
 
 
-def sync_detailed(
-    body: TextToCadMultiFileIterationBody,
-    *,
-    client: Client,
-) -> Response[TextToCadMultiFileIteration]:
-    kwargs = _get_kwargs(
-        body=body,
-        client=client,
-    )
-
-    response = httpx.post(
-        verify=client.verify_ssl,
-        **kwargs,
-    )
-
-    return _build_response(response=response)
-
-
 def sync(
     body: TextToCadMultiFileIterationBody,
     *,
@@ -90,26 +81,17 @@ def sync(
 
     Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""  # noqa: E501
 
-    return sync_detailed(
-        body=body,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    body: TextToCadMultiFileIterationBody,
-    *,
-    client: Client,
-) -> Response[TextToCadMultiFileIteration]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.post(**kwargs)
+    response = httpx.post(
+        verify=client.verify_ssl,
+        **kwargs,
+    )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -127,9 +109,12 @@ async def asyncio(
 
     Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            body=body,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        body=body,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.post(**kwargs)
+
+    return _build_response(response=response).parsed

@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -5,6 +11,9 @@ import httpx
 from ...client import Client
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -50,11 +59,13 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
     )
 
 
-def sync_detailed(
+def sync(
     key: str,
     *,
     client: Client,
-) -> Response[Any]:
+):
+    """This endpoint might require authentication by a Zoo user. It gets the shortlink for the user and redirects them to the URL. If the shortlink is owned by an org, the user must be a member of the org."""  # noqa: E501
+
     kwargs = _get_kwargs(
         key=key,
         client=client,
@@ -65,36 +76,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    key: str,
-    *,
-    client: Client,
-):
-    """This endpoint might require authentication by a Zoo user. It gets the shortlink for the user and redirects them to the URL. If the shortlink is owned by an org, the user must be a member of the org."""  # noqa: E501
-
-    return sync_detailed(
-        key=key,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    key: str,
-    *,
-    client: Client,
-) -> Response[Any]:
-    kwargs = _get_kwargs(
-        key=key,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -104,9 +86,12 @@ async def asyncio(
 ):
     """This endpoint might require authentication by a Zoo user. It gets the shortlink for the user and redirects them to the URL. If the shortlink is owned by an org, the user must be a member of the org."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            key=key,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        key=key,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

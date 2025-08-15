@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -8,6 +14,9 @@ from ...models.org_member_results_page import OrgMemberResultsPage
 from ...models.user_org_role import UserOrgRole
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -80,14 +89,16 @@ def _build_response(*, response: httpx.Response) -> Response[OrgMemberResultsPag
     )
 
 
-def sync_detailed(
+def sync(
     sort_by: CreatedAtSortMode,
     role: UserOrgRole,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[OrgMemberResultsPage]:
+) -> OrgMemberResultsPage:
+    """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""  # noqa: E501
+
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -101,48 +112,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    sort_by: CreatedAtSortMode,
-    role: UserOrgRole,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> OrgMemberResultsPage:
-    """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""  # noqa: E501
-
-    return sync_detailed(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        role=role,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    sort_by: CreatedAtSortMode,
-    role: UserOrgRole,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> Response[OrgMemberResultsPage]:
-    kwargs = _get_kwargs(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        role=role,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -155,12 +125,15 @@ async def asyncio(
 ) -> OrgMemberResultsPage:
     """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            limit=limit,
-            page_token=page_token,
-            sort_by=sort_by,
-            role=role,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        limit=limit,
+        page_token=page_token,
+        sort_by=sort_by,
+        role=role,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

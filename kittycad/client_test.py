@@ -7,18 +7,8 @@ from typing import Optional, Union
 import pytest
 from websockets.exceptions import ConnectionClosedError
 
-from .api.api_tokens import list_api_tokens_for_user
-from .api.file import (
-    create_file_center_of_mass,
-    create_file_conversion,
-    create_file_mass,
-    create_file_volume,
-)
-from .api.meta import ping
-from .api.ml import create_text_to_cad, get_text_to_cad_model_for_user
-from .api.modeling import modeling_commands_ws
-from .api.users import get_user_self, list_users_extended
-from .client import ClientFromEnv
+from kittycad import KittyCAD
+
 from .models import (
     ApiCallStatus,
     ApiTokenResultsPage,
@@ -42,11 +32,7 @@ from .models import (
     Pong,
     PostEffectType,
     System,
-    TextToCad,
     TextToCadCreateBody,
-    TextToCadIteration,
-    TextToCadMultiFileIteration,
-    TextToCadResponse,
     UnitDensity,
     UnitLength,
     UnitMass,
@@ -67,11 +53,11 @@ from .types import Unset
 
 
 def test_get_session():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
-    # Get the session.
-    session: Union[User, Error, None] = get_user_self.sync(client=client)
+    # Get the session using modern pattern
+    session = client.api.users.get_user_self()
 
     assert isinstance(session, User)
 
@@ -80,12 +66,12 @@ def test_get_session():
 
 @pytest.mark.asyncio
 async def test_get_api_tokens_async():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
-    # List API tokens.
-    fc: Union[ApiTokenResultsPage, Error, None] = list_api_tokens_for_user.sync(
-        client=client, sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
+    # List API tokens using modern pattern
+    fc = client.api.api_tokens.list_api_tokens_for_user(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
     )
 
     assert isinstance(fc, ApiTokenResultsPage)
@@ -95,11 +81,11 @@ async def test_get_api_tokens_async():
 
 @pytest.mark.asyncio
 async def test_get_session_async():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
-    # Get the session.
-    session: Union[User, Error, None] = await get_user_self.asyncio(client=client)
+    # Get the session using modern async pattern
+    session: Union[User, Error, None] = await client.api.users.get_user_self.asyncio()
 
     assert isinstance(session, User)
 
@@ -107,11 +93,11 @@ async def test_get_session_async():
 
 
 def test_ping():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
-    # Get the message.
-    message: Union[Pong, Error, None] = ping.sync(client=client)
+    # Get the message using modern pattern
+    message = client.api.meta.ping()
 
     assert isinstance(message, Pong)
 
@@ -120,11 +106,11 @@ def test_ping():
 
 @pytest.mark.asyncio
 async def test_ping_async():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
-    # Get the message.
-    message: Union[Pong, Error, None] = await ping.asyncio(client=client)
+    # Get the message using modern async pattern
+    message: Union[Pong, Error, None] = await client.api.meta.ping.asyncio()
 
     assert isinstance(message, Pong)
 
@@ -132,25 +118,22 @@ async def test_ping_async():
 
 
 def test_file_convert_stl():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
     content = file.read()
     file.close()
 
-    # Get the fc.
-    result: Optional[Union[FileConversion, Error]] = create_file_conversion.sync(
-        client=client,
+    # Get the file conversion using modern pattern
+    fc = client.api.file.create_file_conversion(
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
     )
 
-    assert isinstance(result, FileConversion)
-
-    fc: FileConversion = result
+    assert isinstance(fc, FileConversion)
 
     print(f"FileConversion: {fc}")
 
@@ -169,19 +152,18 @@ def test_file_convert_stl():
 
 @pytest.mark.asyncio
 async def test_file_convert_stl_async():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
     content = file.read()
     file.close()
 
-    # Get the fc.
+    # Get the file conversion using modern async pattern
     result: Optional[
         Union[FileConversion, Error]
-    ] = await create_file_conversion.asyncio(
-        client=client,
+    ] = await client.api.file.create_file_conversion.asyncio(
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
@@ -208,19 +190,18 @@ async def test_file_convert_stl_async():
 
 @pytest.mark.asyncio
 async def test_file_convert_obj_async():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/ORIGINALVOXEL-3.obj"), "rb")
     content = file.read()
     file.close()
 
-    # Get the fc.
+    # Get the file conversion using modern async pattern
     result: Optional[
         Union[FileConversion, Error]
-    ] = await create_file_conversion.asyncio(
-        client=client,
+    ] = await client.api.file.create_file_conversion.asyncio(
         body=content,
         src_format=FileImportFormat.OBJ,
         output_format=FileExportFormat.STL,
@@ -246,17 +227,16 @@ async def test_file_convert_obj_async():
 
 
 def test_file_mass():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
-    # Get the fc.
-    result: Union[FileMass, Error, None] = create_file_mass.sync(
-        client=client,
+    # Get the file mass using modern pattern
+    fm = client.api.file.create_file_mass(
         body=content,
         src_format=FileImportFormat.OBJ,
         material_density=1.0,
@@ -264,9 +244,7 @@ def test_file_mass():
         output_unit=UnitMass.G,
     )
 
-    assert isinstance(result, FileMass)
-
-    fm: FileMass = result
+    assert isinstance(fm, FileMass)
 
     print(f"FileMass: {fm}")
 
@@ -279,25 +257,22 @@ def test_file_mass():
 
 
 def test_file_volume():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
-    # Get the fc.
-    result: Union[FileVolume, Error, None] = create_file_volume.sync(
-        client=client,
+    # Get the file volume using modern pattern
+    fv = client.api.file.create_file_volume(
         body=content,
         src_format=FileImportFormat.OBJ,
         output_unit=UnitVolume.CM3,
     )
 
-    assert isinstance(result, FileVolume)
-
-    fv: FileVolume = result
+    assert isinstance(fv, FileVolume)
 
     print(f"FileVolume: {fv}")
 
@@ -310,25 +285,22 @@ def test_file_volume():
 
 
 def test_file_center_of_mass():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
-    # Get the fc.
-    result: Union[FileCenterOfMass, Error, None] = create_file_center_of_mass.sync(
-        client=client,
+    # Get the file center of mass using modern pattern
+    fv = client.api.file.create_file_center_of_mass(
         body=content,
         src_format=FileImportFormat.OBJ,
         output_unit=UnitLength.CM,
     )
 
-    assert isinstance(result, FileCenterOfMass)
-
-    fv: FileCenterOfMass = result
+    assert isinstance(fv, FileCenterOfMass)
 
     print(f"FileCenterOfMass: {fv}")
 
@@ -341,11 +313,12 @@ def test_file_center_of_mass():
 
 
 def test_list_users():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
-    response: Union[ExtendedUserResultsPage, Error, None] = list_users_extended.sync(
-        sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, client=client, limit=10
+    # List users using modern pattern
+    response = client.api.users.list_users_extended(
+        sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, limit=10
     )
 
     assert isinstance(response, ExtendedUserResultsPage)
@@ -354,12 +327,11 @@ def test_list_users():
 
 
 def test_ws_simple():
-    # Create our client.
-    client = ClientFromEnv()
+    # Create our client
+    client = KittyCAD()
 
-    # Connect to the websocket.
-    with modeling_commands_ws.WebSocket(
-        client=client,
+    # WebSocket uses client.api pattern
+    with client.api.modeling.modeling_commands_ws.WebSocket(
         fps=30,
         show_grid=False,
         post_effect=PostEffectType.NOEFFECT,
@@ -388,12 +360,11 @@ def test_ws_import():
     max_retries = 3
     for attempt in range(1, max_retries + 1):
         try:
-            # Create our client.
-            client = ClientFromEnv()
+            # Create our client
+            client = KittyCAD()
 
-            # Connect to the websocket.
-            with modeling_commands_ws.WebSocket(
-                client=client,
+            # WebSocket uses client.api pattern
+            with client.api.modeling.modeling_commands_ws.WebSocket(
                 fps=30,
                 post_effect=PostEffectType.NOEFFECT,
                 show_grid=False,
@@ -581,40 +552,28 @@ def test_deserialize_null_request_id():
 
 
 def test_text_to_cad():
-    # Create our client.
-    client = ClientFromEnv()
+    # Test the modern client.api pattern
+    client = KittyCAD()
 
-    result: Optional[Union[TextToCad, Error]] = create_text_to_cad.sync(
-        client=client,
+    # Modern way: client.api.ml.create_text_to_cad()
+    result = client.api.ml.create_text_to_cad(
         output_format=FileExportFormat.STEP,
         body=TextToCadCreateBody(
             prompt="a 2x4 lego",
         ),
-        kcl=None,
     )
-
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
-    body: Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration] = result
+    print(f"Modern result: {result}")
 
     # Poll the api until the status is completed.
     # Timeout after some seconds.
     start_time = time.time()
+    body = result
     while (
         body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
     ) and time.time() - start_time < 120:
-        result_status: Optional[Union[TextToCadResponse, Error]] = (
-            get_text_to_cad_model_for_user.sync(
-                client=client,
-                id=body.id,
-            )
+        result_status = client.api.ml.get_text_to_cad_model_for_user(
+            id=body.id,
         )
-
-        if isinstance(result_status, Error) or result_status is None:
-            print(result_status)
-            raise Exception("Error in response")
 
         body = result_status.root
 

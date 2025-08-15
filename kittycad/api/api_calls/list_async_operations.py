@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -8,6 +14,9 @@ from ...models.async_api_call_results_page import AsyncApiCallResultsPage
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -80,14 +89,18 @@ def _build_response(*, response: httpx.Response) -> Response[AsyncApiCallResults
     )
 
 
-def sync_detailed(
+def sync(
     sort_by: CreatedAtSortMode,
     status: ApiCallStatus,
     *,
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[AsyncApiCallResultsPage]:
+) -> AsyncApiCallResultsPage:
+    """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
+
+    This endpoint requires authentication by a Zoo employee."""  # noqa: E501
+
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -101,50 +114,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    sort_by: CreatedAtSortMode,
-    status: ApiCallStatus,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> AsyncApiCallResultsPage:
-    """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
-
-    This endpoint requires authentication by a Zoo employee."""  # noqa: E501
-
-    return sync_detailed(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        status=status,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    sort_by: CreatedAtSortMode,
-    status: ApiCallStatus,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> Response[AsyncApiCallResultsPage]:
-    kwargs = _get_kwargs(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        status=status,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -159,12 +129,15 @@ async def asyncio(
 
     This endpoint requires authentication by a Zoo employee."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            limit=limit,
-            page_token=page_token,
-            sort_by=sort_by,
-            status=status,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        limit=limit,
+        page_token=page_token,
+        sort_by=sort_by,
+        status=status,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

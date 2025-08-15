@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -7,6 +13,9 @@ from ...models.api_call_with_price_results_page import ApiCallWithPriceResultsPa
 from ...models.created_at_sort_mode import CreatedAtSortMode
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -74,28 +83,6 @@ def _build_response(
     )
 
 
-def sync_detailed(
-    sort_by: CreatedAtSortMode,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> Response[ApiCallWithPriceResultsPage]:
-    kwargs = _get_kwargs(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        client=client,
-    )
-
-    response = httpx.get(
-        verify=client.verify_ssl,
-        **kwargs,
-    )
-
-    return _build_response(response=response)
-
-
 def sync(
     sort_by: CreatedAtSortMode,
     *,
@@ -109,21 +96,6 @@ def sync(
 
     The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
-    return sync_detailed(
-        limit=limit,
-        page_token=page_token,
-        sort_by=sort_by,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    sort_by: CreatedAtSortMode,
-    *,
-    client: Client,
-    limit: Optional[int] = None,
-    page_token: Optional[str] = None,
-) -> Response[ApiCallWithPriceResultsPage]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -131,10 +103,12 @@ async def asyncio_detailed(
         client=client,
     )
 
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
+    response = httpx.get(
+        verify=client.verify_ssl,
+        **kwargs,
+    )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -150,11 +124,14 @@ async def asyncio(
 
     The API calls are returned in order of creation, with the most recently created API calls first."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            limit=limit,
-            page_token=page_token,
-            sort_by=sort_by,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        limit=limit,
+        page_token=page_token,
+        sort_by=sort_by,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

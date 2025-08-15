@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -7,6 +13,9 @@ from ...models.email_authentication_form import EmailAuthenticationForm
 from ...models.verification_token_response import VerificationTokenResponse
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -53,11 +62,11 @@ def _build_response(*, response: httpx.Response) -> Response[VerificationTokenRe
     )
 
 
-def sync_detailed(
+def sync(
     body: EmailAuthenticationForm,
     *,
     client: Client,
-) -> Response[VerificationTokenResponse]:
+) -> VerificationTokenResponse:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -68,25 +77,14 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
-def sync(
+async def asyncio(
     body: EmailAuthenticationForm,
     *,
     client: Client,
 ) -> VerificationTokenResponse:
-    return sync_detailed(
-        body=body,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    body: EmailAuthenticationForm,
-    *,
-    client: Client,
-) -> Response[VerificationTokenResponse]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -95,17 +93,4 @@ async def asyncio_detailed(
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
         response = await _client.post(**kwargs)
 
-    return _build_response(response=response)
-
-
-async def asyncio(
-    body: EmailAuthenticationForm,
-    *,
-    client: Client,
-) -> VerificationTokenResponse:
-    return (
-        await asyncio_detailed(
-            body=body,
-            client=client,
-        )
-    ).parsed
+    return _build_response(response=response).parsed

@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict, Optional
 
 import httpx
@@ -6,6 +12,9 @@ from ...client import Client
 from ...models.api_token import ApiToken
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -57,11 +66,13 @@ def _build_response(*, response: httpx.Response) -> Response[ApiToken]:
     )
 
 
-def sync_detailed(
+def sync(
     *,
     client: Client,
     label: Optional[str] = None,
-) -> Response[ApiToken]:
+) -> ApiToken:
+    """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""  # noqa: E501
+
     kwargs = _get_kwargs(
         label=label,
         client=client,
@@ -72,36 +83,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    *,
-    client: Client,
-    label: Optional[str] = None,
-) -> ApiToken:
-    """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""  # noqa: E501
-
-    return sync_detailed(
-        label=label,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: Client,
-    label: Optional[str] = None,
-) -> Response[ApiToken]:
-    kwargs = _get_kwargs(
-        label=label,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.post(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -111,9 +93,12 @@ async def asyncio(
 ) -> ApiToken:
     """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            label=label,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        label=label,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.post(**kwargs)
+
+    return _build_response(response=response).parsed

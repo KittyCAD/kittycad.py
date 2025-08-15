@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -6,6 +12,9 @@ from ...client import Client
 from ...models.customer_balance import CustomerBalance
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -57,11 +66,13 @@ def _build_response(*, response: httpx.Response) -> Response[CustomerBalance]:
     )
 
 
-def sync_detailed(
+def sync(
     include_total_due: bool,
     *,
     client: Client,
-) -> Response[CustomerBalance]:
+) -> CustomerBalance:
+    """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""  # noqa: E501
+
     kwargs = _get_kwargs(
         include_total_due=include_total_due,
         client=client,
@@ -72,36 +83,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    include_total_due: bool,
-    *,
-    client: Client,
-) -> CustomerBalance:
-    """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""  # noqa: E501
-
-    return sync_detailed(
-        include_total_due=include_total_due,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    include_total_due: bool,
-    *,
-    client: Client,
-) -> Response[CustomerBalance]:
-    kwargs = _get_kwargs(
-        include_total_due=include_total_due,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -111,9 +93,12 @@ async def asyncio(
 ) -> CustomerBalance:
     """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            include_total_due=include_total_due,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        include_total_due=include_total_due,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.get(**kwargs)
+
+    return _build_response(response=response).parsed

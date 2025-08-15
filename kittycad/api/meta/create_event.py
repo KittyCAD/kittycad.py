@@ -1,3 +1,9 @@
+"""
+This module should only be accessed through client.api.
+Direct imports like 'from kittycad.api.module import function' are not supported.
+Use: client = KittyCAD(); client.api.module.function() instead.
+"""
+
 from typing import Any, Dict
 
 import httpx
@@ -6,6 +12,9 @@ from ...client import Client
 from ...models.event import Event
 from ...response_helpers import raise_for_status
 from ...types import Response
+
+# Prevent direct imports - hide all public functions
+__all__: list[str] = []
 
 
 def _get_kwargs(
@@ -51,11 +60,13 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
     )
 
 
-def sync_detailed(
+def sync(
     body: Event,
     *,
     client: Client,
-) -> Response[Any]:
+):
+    """We collect anonymous telemetry data for improving our product."""  # noqa: E501
+
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -66,36 +77,7 @@ def sync_detailed(
         **kwargs,
     )
 
-    return _build_response(response=response)
-
-
-def sync(
-    body: Event,
-    *,
-    client: Client,
-):
-    """We collect anonymous telemetry data for improving our product."""  # noqa: E501
-
-    return sync_detailed(
-        body=body,
-        client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    body: Event,
-    *,
-    client: Client,
-) -> Response[Any]:
-    kwargs = _get_kwargs(
-        body=body,
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.post(**kwargs)
-
-    return _build_response(response=response)
+    return _build_response(response=response).parsed
 
 
 async def asyncio(
@@ -105,9 +87,12 @@ async def asyncio(
 ):
     """We collect anonymous telemetry data for improving our product."""  # noqa: E501
 
-    return (
-        await asyncio_detailed(
-            body=body,
-            client=client,
-        )
-    ).parsed
+    kwargs = _get_kwargs(
+        body=body,
+        client=client,
+    )
+
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.post(**kwargs)
+
+    return _build_response(response=response).parsed
