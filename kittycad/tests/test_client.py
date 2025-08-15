@@ -1,0 +1,581 @@
+import json
+import os
+import time
+import uuid
+
+import pytest
+from websockets.exceptions import ConnectionClosedError
+
+from kittycad import KittyCAD
+from kittycad.models import (
+    ApiCallStatus,
+    ApiTokenResultsPage,
+    Axis,
+    AxisDirectionPair,
+    CreatedAtSortMode,
+    Direction,
+    ExtendedUserResultsPage,
+    FileCenterOfMass,
+    FileConversion,
+    FileExportFormat,
+    FileImportFormat,
+    FileMass,
+    FileVolume,
+    ImageFormat,
+    ImportFile,
+    InputFormat3d,
+    ModelingCmd,
+    ModelingCmdId,
+    Pong,
+    PostEffectType,
+    System,
+    TextToCadCreateBody,
+    UnitDensity,
+    UnitLength,
+    UnitMass,
+    UnitVolume,
+    User,
+    WebSocketRequest,
+    WebSocketResponse,
+)
+from kittycad.models.input_format3d import OptionObj
+from kittycad.models.modeling_cmd import (
+    OptionDefaultCameraFocusOn,
+    OptionImportFiles,
+    OptionStartPath,
+    OptionTakeSnapshot,
+)
+from kittycad.models.web_socket_request import OptionModelingCmdReq
+from kittycad.types import Unset
+
+
+def test_get_session():
+    # Create our client
+    client = KittyCAD()
+
+    # Get the session using modern pattern
+    session = client.users.get_user_self()
+
+    assert isinstance(session, User)
+
+    print(f"Session: {session}")
+
+
+@pytest.mark.asyncio
+async def test_get_api_tokens_async():
+    # Create our client
+    client = KittyCAD()
+
+    # List API tokens using modern pattern
+    fc = client.api_tokens.list_api_tokens_for_user(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
+    )
+
+    assert isinstance(fc, ApiTokenResultsPage)
+
+    print(f"fc: {fc}")
+
+
+@pytest.mark.asyncio
+async def test_get_session_async():
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    # Get the session using new async pattern
+    session = await client.users.get_user_self()
+
+    assert isinstance(session, User)
+
+    print(f"Session: {session}")
+
+
+def test_ping():
+    # Create our client
+    client = KittyCAD()
+
+    # Get the message using modern pattern (no .api layer)
+    message = client.meta.ping()
+
+    assert isinstance(message, Pong)
+
+    print(f"Message: {message}")
+
+
+@pytest.mark.asyncio
+async def test_ping_async():
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    # Get the message using new async pattern (no .api layer)
+    message = await client.meta.ping()
+
+    assert isinstance(message, Pong)
+
+    print(f"Message: {message}")
+
+
+def test_file_convert_stl():
+    # Create our client
+    client = KittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../../assets/testing.stl"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the file conversion using modern pattern
+    fc = client.file.create_file_conversion(
+        body=content,
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ,
+    )
+
+    assert isinstance(fc, FileConversion)
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
+    assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
+
+    # Make sure the bytes are not empty.
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
+
+
+@pytest.mark.asyncio
+async def test_file_convert_stl_async():
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../../assets/testing.stl"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the file conversion using new async pattern
+    result = await client.file.create_file_conversion(
+        body=content,
+        src_format=FileImportFormat.STL,
+        output_format=FileExportFormat.OBJ,
+    )
+
+    assert isinstance(result, FileConversion)
+
+    fc: FileConversion = result
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
+    assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
+
+    # Make sure the bytes are not empty.
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
+
+
+@pytest.mark.asyncio
+async def test_file_convert_obj_async():
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../../assets/ORIGINALVOXEL-3.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the file conversion using new async pattern
+    result = await client.file.create_file_conversion(
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_format=FileExportFormat.STL,
+    )
+
+    assert isinstance(result, FileConversion)
+
+    fc: FileConversion = result
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
+    assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
+
+    # Make sure the bytes are not empty.
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
+
+
+def test_file_mass():
+    # Create our client
+    client = KittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../../assets/testing.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the file mass using modern pattern
+    fm = client.file.create_file_mass(
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        material_density=1.0,
+        material_density_unit=UnitDensity.KG_M3,
+        output_unit=UnitMass.G,
+    )
+
+    assert isinstance(fm, FileMass)
+
+    print(f"FileMass: {fm}")
+
+    assert fm.id is not None
+    assert fm.mass is not None
+
+    assert fm.model_dump_json() is not None
+
+    assert fm.status == ApiCallStatus.COMPLETED
+
+
+def test_file_volume():
+    # Create our client
+    client = KittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../../assets/testing.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the file volume using modern pattern
+    fv = client.file.create_file_volume(
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_unit=UnitVolume.CM3,
+    )
+
+    assert isinstance(fv, FileVolume)
+
+    print(f"FileVolume: {fv}")
+
+    assert fv.id is not None
+    assert fv.volume is not None
+
+    assert fv.model_dump_json() is not None
+
+    assert fv.status == ApiCallStatus.COMPLETED
+
+
+def test_file_center_of_mass():
+    # Create our client
+    client = KittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file = open(os.path.join(dir_path, "../../assets/testing.obj"), "rb")
+    content = file.read()
+    file.close()
+
+    # Get the file center of mass using modern pattern
+    fv = client.file.create_file_center_of_mass(
+        body=content,
+        src_format=FileImportFormat.OBJ,
+        output_unit=UnitLength.CM,
+    )
+
+    assert isinstance(fv, FileCenterOfMass)
+
+    print(f"FileCenterOfMass: {fv}")
+
+    assert fv.id is not None
+    assert fv.center_of_mass is not None
+
+    assert fv.model_dump_json() is not None
+
+    assert fv.status == ApiCallStatus.COMPLETED
+
+
+def test_list_users():
+    # Create our client
+    client = KittyCAD()
+
+    # List users using modern pattern
+    response = client.users.list_users_extended(
+        sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, limit=10
+    )
+
+    assert isinstance(response, ExtendedUserResultsPage)
+
+    print(f"ExtendedUserResultsPage: {response}")
+
+
+def test_ws_simple():
+    # Create our client
+    client = KittyCAD()
+
+    # WebSocket uses direct pattern
+    with client.modeling.modeling_commands_ws(
+        fps=30,
+        show_grid=False,
+        post_effect=PostEffectType.NOEFFECT,
+        unlocked_framerate=False,
+        video_res_height=360,
+        video_res_width=480,
+        webrtc=False,
+    ) as websocket:
+        # Send a message.
+        id = uuid.uuid4()
+        req = WebSocketRequest(
+            OptionModelingCmdReq(
+                cmd=ModelingCmd(OptionStartPath()), cmd_id=ModelingCmdId(id)
+            )
+        )
+        websocket.send(req)
+
+        # Get the messages.
+        while True:
+            message = websocket.recv()
+            print(json.dumps(message.model_dump_json()))
+            break
+
+
+def test_ws_import():
+    max_retries = 3
+    for attempt in range(1, max_retries + 1):
+        try:
+            # Create our client
+            client = KittyCAD()
+
+            # WebSocket uses direct pattern
+            with client.modeling.modeling_commands_ws(
+                fps=30,
+                post_effect=PostEffectType.NOEFFECT,
+                show_grid=False,
+                unlocked_framerate=False,
+                video_res_height=360,
+                video_res_width=480,
+                webrtc=False,
+            ) as websocket:
+                # read the content of the file
+                dir_path = os.path.dirname(os.path.realpath(__file__))
+                file_name = "ORIGINALVOXEL-3.obj"
+                file_path = os.path.join(dir_path, "../..", "assets", file_name)
+                with open(file_path, "rb") as file:
+                    content = file.read()
+                cmd_id = uuid.uuid4()
+                ImportFile(data=content, path=file_name)
+                # form the request
+                req = WebSocketRequest(
+                    OptionModelingCmdReq(
+                        cmd=ModelingCmd(
+                            OptionImportFiles(
+                                files=[ImportFile(data=content, path=file_name)],
+                                format=InputFormat3d(
+                                    OptionObj(
+                                        units=UnitLength.M,
+                                        coords=System(
+                                            forward=AxisDirectionPair(
+                                                axis=Axis.Y,
+                                                direction=Direction.NEGATIVE,
+                                            ),
+                                            up=AxisDirectionPair(
+                                                axis=Axis.Z,
+                                                direction=Direction.POSITIVE,
+                                            ),
+                                        ),
+                                    )
+                                ),
+                            )
+                        ),
+                        cmd_id=ModelingCmdId(cmd_id),
+                    )
+                )
+                # Import files request must be sent as binary, because the file contents might be binary.
+                websocket.send_binary(req)
+
+                # Get the success message.
+                for message in websocket:
+                    message_dict = message.model_dump()
+                    if message_dict["success"] is not True:
+                        raise Exception(message_dict)
+                    elif message_dict["resp"]["type"] != "modeling":
+                        continue
+                    elif (
+                        message_dict["resp"]["data"]["modeling_response"]["type"]
+                        != "import_files"
+                    ):
+                        # We have a modeling command response.
+                        # Make sure its the import files response.
+                        raise Exception(message_dict)
+                    else:
+                        # Okay we have the import files response.
+                        # Break since now we know it was a success.
+                        object_id = str(
+                            message_dict["resp"]["data"]["modeling_response"]["data"][
+                                "object_id"
+                            ]
+                        )
+                        break
+
+                # Now we want to focus on the object.
+                cmd_id = uuid.uuid4()
+                # form the request
+                req = WebSocketRequest(
+                    OptionModelingCmdReq(
+                        cmd=ModelingCmd(OptionDefaultCameraFocusOn(uuid=object_id)),
+                        cmd_id=ModelingCmdId(cmd_id),
+                    )
+                )
+                websocket.send(req)
+
+                # Get the success message.
+                for message in websocket:
+                    message_dict = message.model_dump()
+                    if message_dict["success"] is not True:
+                        raise Exception(message_dict)
+                    elif message_dict["resp"]["type"] != "modeling":
+                        continue
+                    elif message_dict["request_id"] == str(cmd_id):
+                        # We got a success response for our cmd.
+                        break
+                    else:
+                        raise Exception(message_dict)
+
+                # Now we want to snapshot as a png.
+                cmd_id = uuid.uuid4()
+                # form the request
+                req = WebSocketRequest(
+                    OptionModelingCmdReq(
+                        cmd=ModelingCmd(OptionTakeSnapshot(format=ImageFormat.PNG)),
+                        cmd_id=ModelingCmdId(cmd_id),
+                    )
+                )
+                websocket.send(req)
+
+                # Get the success message.
+                for message in websocket:
+                    message_dict = message.model_dump()
+                    if message_dict["success"] is not True:
+                        raise Exception(message_dict)
+                    elif message_dict["resp"]["type"] != "modeling":
+                        continue
+                    elif (
+                        message_dict["resp"]["data"]["modeling_response"]["type"]
+                        != "take_snapshot"
+                    ):
+                        # Make sure its the correct response.
+                        raise Exception(message_dict)
+                    else:
+                        # Okay we have the snapshot response.
+                        # Break since now we know it was a success.
+                        png_contents = message_dict["resp"]["data"][
+                            "modeling_response"
+                        ]["data"]["contents"]
+                        break
+
+                # Save the contents to a file.
+                png_path = os.path.join(dir_path, "../..", "assets", "snapshot.png")
+                with open(png_path, "wb") as f:
+                    f.write(png_contents)
+
+                # Ensure the file is not empty.
+                assert len(png_contents) > 0
+
+                # Ensure the file exists.
+                assert os.path.exists(png_path)
+
+            # Exit the retry loop on success
+            break
+
+        except ConnectionClosedError:
+            if attempt < max_retries:
+                print(
+                    f"ConnectionClosedError encountered on attempt {attempt}/{max_retries}. Retrying..."
+                )
+            else:
+                # After max retries, re-raise the exception to fail the test
+                print(
+                    f"ConnectionClosedError encountered on attempt {attempt}/{max_retries}. No more retries left."
+                )
+                raise
+
+
+def test_serialize_deserialize():
+    json_str = """{"success":true,"request_id":"16a06065-6ca3-4a96-a042-d0bec6b161a6","resp":{"type":"modeling","data":{"modeling_response":{"type":"import_files","data":{"object_id":"f61ac02e-77bd-468f-858f-fd4141a26acd"}}}}}"""
+    d = json.loads(json_str)
+    print(d)
+    message = WebSocketResponse(**d)
+    model_dump = message.model_dump()
+    print(model_dump)
+    assert model_dump["success"] is True  # type: ignore
+    assert model_dump["request_id"] == "16a06065-6ca3-4a96-a042-d0bec6b161a6"  # type: ignore
+    assert model_dump["resp"]["type"] == "modeling"  # type: ignore
+    assert model_dump["resp"]["data"]["modeling_response"]["type"] == "import_files"  # type: ignore
+    assert (
+        model_dump["resp"]["data"]["modeling_response"]["data"]["object_id"]
+        == "f61ac02e-77bd-468f-858f-fd4141a26acd"
+    )  # type: ignore
+
+
+def test_deserialize_null_request_id():
+    json_str = """{"success":true,"request_id":null,"resp":{"type":"modeling_session_data","data":{"session":{"api_call_id":"91f7fd17-8846-4593-97ff-6400a81b8cdd"}}}}"""
+    d = json.loads(json_str)
+    print(d)
+    message = WebSocketResponse(**d)
+    model_dump = message.model_dump()
+    print(model_dump)
+    assert model_dump["success"] is True  # type: ignore
+    assert model_dump["success"] is True  # type: ignore
+    assert model_dump["request_id"] is None  # type: ignore
+    assert model_dump["resp"]["type"] == "modeling_session_data"  # type: ignore
+    assert (
+        model_dump["resp"]["data"]["session"]["api_call_id"]
+        == "91f7fd17-8846-4593-97ff-6400a81b8cdd"
+    )  # type: ignore
+
+
+def test_text_to_cad():
+    # Test the modern client.api pattern
+    client = KittyCAD()
+
+    # Modern way: client.ml.create_text_to_cad()
+    result = client.ml.create_text_to_cad(
+        output_format=FileExportFormat.STEP,
+        body=TextToCadCreateBody(
+            prompt="a 2x4 lego",
+        ),
+    )
+    print(f"Modern result: {result}")
+
+    # Poll the api until the status is completed.
+    # Timeout after some seconds.
+    start_time = time.time()
+    body = result
+    while (
+        body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
+    ) and time.time() - start_time < 120:
+        result_status = client.ml.get_text_to_cad_model_for_user(
+            id=body.id,
+        )
+
+        body = result_status.root  # type: ignore
+
+    assert body.status == ApiCallStatus.COMPLETED

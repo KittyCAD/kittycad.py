@@ -7,8 +7,9 @@ import random
 from typing import Any, Dict, List, Optional, Tuple, TypedDict
 
 import jinja2
-import jsonpatch
 from prance import BaseParser
+
+from .post_processing import generate_examples_tests, generate_patch_json
 
 # Import utilities
 from .utils import (
@@ -17,8 +18,6 @@ from .utils import (
     clean_parameter_name,
     consolidate_imports_in_file,
     deduplicate_imports,
-    extract_imports_from_examples,
-    format_file_with_ruff,
     to_pascal_case,
 )
 
@@ -27,6 +26,457 @@ package_name = "kittycad"
 random.seed(10)
 
 examples: List[str] = []
+
+
+def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -> str:
+    """Generate a sync function implementation using the sync_function template"""
+
+    import os
+
+    from jinja2 import Environment, FileSystemLoader
+
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Add custom filters using existing utility functions
+    env.filters["to_pascal_case"] = to_pascal_case
+    env.filters["pascal_to_snake"] = camel_to_snake
+
+    template = env.get_template("sync_function.py.jinja2")
+
+    # Build context exactly like the working functions.py template
+    fn_name = camel_to_snake(endpoint["operationId"])
+    endpoint_refs = get_endpoint_refs(endpoint, data)
+    (request_body_type, request_body_schema) = get_request_body_type_schema(
+        endpoint, data
+    )
+
+    # Get response type
+    response_type = ""
+    if len(endpoint_refs) > 0:
+        er = [ref for ref in endpoint_refs if ref != "Error"]
+        if len(er) > 1:
+            pascal_er = [to_pascal_case(ref) for ref in er]
+            response_type = "Union[" + ", ".join(pascal_er) + "]"
+        elif len(er) == 1:
+            response_type = to_pascal_case(er[0])
+
+    # Process parameters exactly like the working template
+    args = []
+    if "parameters" in endpoint:
+        for param in endpoint["parameters"]:
+            param_schema = param.get("schema", {})
+            arg_type, _, _ = generate_type_and_example_python(
+                "", param_schema, data, None, None
+            )
+
+            # Mark optional parameters
+            is_optional = not param.get("required", True) or param_schema.get(
+                "nullable", False
+            )
+            if is_optional and not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+
+            args.append(
+                {
+                    "name": clean_parameter_name(param["name"]),
+                    "type": arg_type,
+                    "is_optional": is_optional,
+                    "in_url": param.get("in") == "path",
+                    "in_query": param.get("in") == "query",
+                }
+            )
+
+    # Add request body parameter if it exists
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "is_optional": False,
+                "in_url": False,
+                "in_query": False,
+            }
+        )
+
+    # Check if there's actually a body parameter in the args
+    has_body_param = any(arg.get("name") == "body" for arg in args)
+
+    # Create context for template with all required variables
+    context = {
+        "func_name": fn_name,
+        "method": method.lower(),
+        "response_type": response_type,
+        "url_template": "{}" + path,
+        "has_request_body": has_body_param,
+        "request_body_type": request_body_type,
+        "args": args,
+        "docs": endpoint.get("description", endpoint.get("summary", "")),
+    }
+
+    return template.render(context)
+
+
+def generate_async_function(path: str, method: str, endpoint: dict, data: dict) -> str:
+    """Generate an async function implementation using the async_function template"""
+
+    import os
+
+    from jinja2 import Environment, FileSystemLoader
+
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Add custom filters using existing utility functions
+    env.filters["to_pascal_case"] = to_pascal_case
+    env.filters["pascal_to_snake"] = camel_to_snake
+
+    template = env.get_template("async_function.py.jinja2")
+
+    # Build context exactly like the sync function
+    fn_name = camel_to_snake(endpoint["operationId"])
+    endpoint_refs = get_endpoint_refs(endpoint, data)
+    (request_body_type, request_body_schema) = get_request_body_type_schema(
+        endpoint, data
+    )
+
+    # Get response type
+    response_type = ""
+    if len(endpoint_refs) > 0:
+        er = [ref for ref in endpoint_refs if ref != "Error"]
+        if len(er) > 1:
+            pascal_er = [to_pascal_case(ref) for ref in er]
+            response_type = "Union[" + ", ".join(pascal_er) + "]"
+        elif len(er) == 1:
+            response_type = to_pascal_case(er[0])
+
+    # Process parameters exactly like the working template
+    args = []
+    if "parameters" in endpoint:
+        for param in endpoint["parameters"]:
+            param_schema = param.get("schema", {})
+            arg_type, _, _ = generate_type_and_example_python(
+                "", param_schema, data, None, None
+            )
+
+            # Mark optional parameters
+            is_optional = not param.get("required", True) or param_schema.get(
+                "nullable", False
+            )
+            if is_optional and not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+
+            args.append(
+                {
+                    "name": clean_parameter_name(param["name"]),
+                    "type": arg_type,
+                    "is_optional": is_optional,
+                    "in_url": param.get("in") == "path",
+                    "in_query": param.get("in") == "query",
+                }
+            )
+
+    # Add request body parameter if it exists
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "is_optional": False,
+                "in_url": False,
+                "in_query": False,
+            }
+        )
+
+    # Check if there's actually a body parameter in the args
+    has_body_param = any(arg.get("name") == "body" for arg in args)
+
+    # Create context for template with all required variables
+    context = {
+        "func_name": fn_name,
+        "method": method.lower(),
+        "response_type": response_type,
+        "url_template": "{}" + path,
+        "has_request_body": has_body_param,
+        "request_body_type": request_body_type,
+        "args": args,
+        "docs": endpoint.get("description", endpoint.get("summary", "")),
+    }
+
+    return template.render(context)
+
+
+def generate_client_classes(cwd: str, data: dict):
+    """Generate the KittyCAD and AsyncKittyCAD client classes with embedded endpoint logic"""
+
+    # Collect all endpoints by tag with full implementation details
+    endpoints_by_tag: Dict[str, Dict[str, Any]] = {}
+    all_imports = set()
+    has_websockets = False
+
+    # Process each path and method to collect endpoint info
+    for path, path_data in data.get("paths", {}).items():
+        for method, endpoint_data in path_data.items():
+            if method not in ["get", "post", "put", "delete", "patch"]:
+                continue
+
+            if "tags" not in endpoint_data:
+                continue
+
+            tag = endpoint_data["tags"][0].replace("-", "_")
+            operation_id = endpoint_data.get("operationId", "")
+
+            if tag not in endpoints_by_tag:
+                endpoints_by_tag[tag] = {}
+
+            # Check if this is a WebSocket endpoint
+            is_websocket = "x-dropshot-websocket" in endpoint_data
+            if is_websocket:
+                has_websockets = True
+
+            # Generate everything directly from the OpenAPI spec
+            implementation_code = ""
+            parameters = ""
+            call_args = ""
+            return_type = "Any"
+            parse_response = "response.json()" if method.lower() == "get" else "None"
+            has_websocket_class = False
+
+            # Enable WebSocket wrapper classes for endpoints with request bodies
+            # These need wrapper classes for methods like send_binary(), __enter__, __exit__
+            has_websocket_class = is_websocket
+
+            # Generate sync and async implementations for all endpoints
+            sync_implementation = ""
+            async_implementation = ""
+            try:
+                if is_websocket:
+                    # Generate WebSocket-specific implementations
+                    sync_implementation = generate_websocket_sync_function(
+                        operation_id, path, method, endpoint_data, data
+                    )
+                    async_implementation = generate_websocket_async_function(
+                        operation_id, path, method, endpoint_data, data
+                    )
+                else:
+                    sync_implementation = generate_sync_function(
+                        path, method, endpoint_data, data
+                    )
+                    async_implementation = generate_async_function(
+                        path, method, endpoint_data, data
+                    )
+
+                # Collect imports from response types for all endpoints
+                endpoint_refs = get_endpoint_refs(endpoint_data, data)
+                for ref in endpoint_refs:
+                    # Extract inner types from List, Union, Dict, Optional wrappers
+                    inner_types = []
+                    if ref.startswith("List[") and ref.endswith("]"):
+                        inner_type = ref[5:-1]  # Extract "Type" from "List[Type]"
+                        inner_types.append(inner_type)
+                    elif ref.startswith("Union[") and ref.endswith("]"):
+                        # Extract types from "Union[Type1, Type2]" - for now just skip complex unions
+                        pass
+                    elif ref.startswith("Dict[") and ref.endswith("]"):
+                        # Extract types from "Dict[Key, Value]" - for now just skip
+                        pass
+                    elif ref.startswith("Optional[") and ref.endswith("]"):
+                        inner_type = ref[9:-1]  # Extract "Type" from "Optional[Type]"
+                        inner_types.append(inner_type)
+                    else:
+                        inner_types.append(ref)
+
+                    for inner_type in inner_types:
+                        if (
+                            inner_type != "Error"
+                            and inner_type != "str"
+                            and inner_type != "int"
+                            and inner_type != "float"
+                            and inner_type != "bool"
+                            and inner_type != "dict"
+                            and inner_type
+                            and inner_type[0].isupper()  # Only PascalCase class names
+                        ):
+                            module_name = camel_to_snake(inner_type)
+                            all_imports.add(
+                                f"from .models.{module_name} import {inner_type}"
+                            )
+
+                # Also collect imports from request body types for all endpoints
+                (request_body_type, _) = get_request_body_type_schema(
+                    endpoint_data, data
+                )
+                if (
+                    request_body_type
+                    and request_body_type != "str"
+                    and request_body_type != "bytes"
+                ):
+                    module_name = camel_to_snake(request_body_type)
+                    all_imports.add(
+                        f"from .models.{module_name} import {request_body_type}"
+                    )
+
+                # Also collect imports from parameter types
+                if "parameters" in endpoint_data:
+                    parameters = endpoint_data["parameters"]
+                    for parameter in parameters:
+                        param_schema = parameter.get("schema", {})
+                        if "$ref" in param_schema:
+                            param_type = param_schema["$ref"].replace(
+                                "#/components/schemas/", ""
+                            )
+                            if param_type and param_type[0].isupper():
+                                module_name = camel_to_snake(param_type)
+                                all_imports.add(
+                                    f"from .models.{module_name} import {param_type}"
+                                )
+                        elif (
+                            param_schema.get("type") == "array"
+                            and "items" in param_schema
+                        ):
+                            items = param_schema["items"]
+                            if "$ref" in items:
+                                param_type = items["$ref"].replace(
+                                    "#/components/schemas/", ""
+                                )
+                                if param_type and param_type[0].isupper():
+                                    module_name = camel_to_snake(param_type)
+                                    all_imports.add(
+                                        f"from .models.{module_name} import {param_type}"
+                                    )
+
+            except Exception as e:
+                # Fallback to empty implementations if generation fails
+                sync_implementation = (
+                    f"    # Error generating implementation: {e}\n    pass"
+                )
+                async_implementation = (
+                    f"    # Error generating implementation: {e}\n    pass"
+                )
+
+            # Generate formatted parameter strings for WebSocket wrapper classes
+            websocket_params = ""
+            websocket_call_args = ""
+
+            if is_websocket and has_websocket_class and "parameters" in endpoint_data:
+                required_params = []
+                optional_params = []
+                call_arg_parts = []
+
+                for param in endpoint_data["parameters"]:
+                    param_name = camel_to_snake(param["name"])
+                    param_schema = param.get("schema", {})
+
+                    # Generate type
+                    if "type" in param_schema:
+                        param_type = (
+                            param_schema["type"]
+                            .replace("string", "str")
+                            .replace("integer", "int")
+                            .replace("number", "float")
+                            .replace("boolean", "bool")
+                        )
+                    elif "$ref" in param_schema:
+                        param_type = param_schema["$ref"].replace(
+                            "#/components/schemas/", ""
+                        )
+                    else:
+                        param_type = "Any"
+
+                    # Handle optional parameters
+                    is_required = param.get("required", True)
+                    if not is_required or param_schema.get("nullable", False):
+                        if not param_type.startswith("Optional["):
+                            param_type = f"Optional[{param_type}]"
+                        optional_params.append(f"{param_name}: {param_type} = None")
+                    else:
+                        required_params.append(f"{param_name}: {param_type}")
+
+                    call_arg_parts.append(f"{param_name}={param_name}")
+
+                # WebSocket endpoints don't need body parameters for connection
+                # The body is for messages sent through the WebSocket after connection
+                # So we skip adding the body parameter for WebSocket wrapper classes
+
+                # Combine parameters: required first, then optional
+                all_params = required_params + optional_params
+                if all_params:
+                    websocket_params = ", " + ", ".join(all_params)
+                    websocket_call_args = ", ".join(call_arg_parts)
+
+            endpoints_by_tag[tag][operation_id] = {
+                "name": operation_id,
+                "is_websocket": is_websocket,
+                "has_websocket_class": has_websocket_class,
+                "description": endpoint_data.get("summary", "").replace('"', '\\"'),
+                "return_type": return_type,
+                "path": path,
+                "method": method.lower(),
+                "parameters": parameters,
+                "websocket_params": websocket_params,
+                "websocket_call_args": websocket_call_args,
+                "call_args": call_args,
+                "implementation": implementation_code,
+                "parse_response": parse_response,
+                "sync_implementation": sync_implementation,
+                "async_implementation": async_implementation,
+            }
+
+    # Load and render the template
+    from jinja2 import Environment, FileSystemLoader
+
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Add custom filters using existing utility functions
+    env.filters["to_pascal_case"] = to_pascal_case
+    env.filters["pascal_to_snake"] = camel_to_snake
+
+    template = env.get_template("__init__.py.jinja2")
+
+    # Render the template
+    rendered_content = template.render(
+        endpoints_by_tag=endpoints_by_tag,
+        all_imports=sorted(all_imports),
+        has_websockets=has_websockets,
+    )
+
+    # Write to the __init__.py file
+    init_path = os.path.join(cwd, "kittycad", "__init__.py")
+
+    with open(init_path, "w") as f:
+        f.write(rendered_content)
+
+    # Generate examples tests and patch json files
+    generate_examples_tests(cwd, examples)
+
+    # Add the client information to the generation.
+    data["info"]["x-python"] = {
+        "client": """# Setup your client with your token
+from kittycad import KittyCAD
+
+client = KittyCAD(token="$TOKEN")
+
+# - OR -
+
+# Create a new client with your token parsed from the environment variable:
+# `KITTYCAD_API_TOKEN` or `ZOO_API_TOKEN`.
+# Optionally, you can pass in `ZOO_HOST` to specify the host. But this only
+# works if you are using the `ZOO_API_TOKEN` environment variable.
+from kittycad import KittyCAD
+
+client = KittyCAD()
+
+# NOTE: The python library additionally implements asyncio, however all the code samples we
+# show below use the sync functions for ease of use and understanding.
+# Check out the library docs at:
+# https://python.api.docs.zoo.dev
+# for more details.""",
+        "install": "pip install kittycad",
+    }
+
+    spec_path = os.path.join(cwd, "spec.json")
+    generate_patch_json(cwd, spec_path, data)
 
 
 def main():
@@ -41,132 +491,12 @@ def main():
     # Generate the paths.
     data = generate_paths(cwd, parser.specification)
 
-    # Add the client information to the generation.
-    data["info"]["x-python"] = {
-        "client": """# Create a client with your token.
-from kittycad.client import Client
-
-client = Client(token="$TOKEN")
-
-# - OR -
-
-# Create a new client with your token parsed from the environment variable:
-#   `KITTYCAD_API_TOKEN` or `ZOO_API_TOKEN`.
-# Optionally, you can pass in `ZOO_HOST` to specify the host. But this only
-# needs to be done if you are using a different host than the default,
-# which implies you are running your own instance of the API.
-from kittycad.client import ClientFromEnv
-
-client = ClientFromEnv()
-
-# NOTE: The python library additionally implements asyncio, however all the code samples we
-# show below use the sync functions for ease of use and understanding.
-# Check out the library docs at:
-# https://python.api.docs.zoo.dev/_autosummary/kittycad.api.html#module-kittycad.api
-# for more details.""",
-        "install": "pip install kittycad",
-    }
-
-    # Read the original spec file as a dict.
-    spec = open(spec_path, "r")
-    original = json.load(spec)
-    # Create the json patch document.
-    patch = jsonpatch.make_patch(original, data)
-
-    # Convert this to a dict.
-    patch = json.loads(patch.to_string())
-
-    new_patch = []
-    # Make sure we aren't changing any components/schemas.
-    for index, p in enumerate(patch):
-        if not p["path"].startswith("/components"):
-            new_patch.append(p)
-
-    # Sort patch operations by path and operation to ensure consistent output
-    new_patch.sort(
-        key=lambda x: (x.get("path", ""), x.get("op", ""), str(x.get("value", "")))
-    )
-
-    # Rewrite the spec back out.
-    patch_file = os.path.join(cwd, "kittycad.py.patch.json")
-
-    # Check if the content is actually different before writing
-    new_content = json.dumps(new_patch, indent=2)
-    current_content = ""
-    if os.path.exists(patch_file):
-        with open(patch_file, "r") as f:
-            current_content = f.read()
-
-    if new_content != current_content:
-        with open(patch_file, "w") as f:
-            f.write(new_content)
-
-    # Write all the examples to a file.
-    examples_test_path = os.path.join(cwd, "kittycad", "examples_test.py")
-    logging.info("opening examples test file: %s", examples_test_path)
-
-    # Extract and consolidate imports from all examples
-    consolidated_imports, examples_without_imports = extract_imports_from_examples(
-        examples
-    )
-
-    # Write all the examples to a file.
-    f = open(examples_test_path, "w")
-
-    # Write base imports first
-    f.write("import pytest\n")
-    f.write("import datetime\n")
-    f.write("from typing import Dict, Optional, Union\n\n")
-
-    # Write consolidated imports from examples
-    if consolidated_imports:
-        f.write("\n".join(consolidated_imports))
-        f.write("\n\n")
-
-    # Write examples without their individual imports
-    f.write("\n\n".join(examples_without_imports))
-    f.close()
-
-    # Post-process with ruff to clean up imports and formatting
-    format_file_with_ruff(examples_test_path)
+    # Generate the client classes
+    generate_client_classes(cwd, data)
 
 
 def generate_paths(cwd: str, parser: dict) -> dict:
-    # Make sure we have the directory.
-    path = os.path.join(cwd, "kittycad", "api")
-    os.makedirs(path, exist_ok=True)
-
-    # Open the __init__.py file.
-    file_name = "__init__.py"
-    file_path = os.path.join(path, file_name)
-    f = open(file_path, "w")
-    f.write('""" Contains methods for accessing the API """\n')
-    # Close the file.
-    f.close()
-
-    # Generate the directory/__init__.py for each of the tags.
-    tags = parser["tags"]
-    for tag in tags:
-        tag_name = tag["name"].replace("-", "_")
-        tag_description = tag["description"]
-        tag_path = os.path.join(path, tag_name)
-        # Esnure the directory exists.
-        os.makedirs(tag_path, exist_ok=True)
-        # Open the __init__.py file.
-        file_name = "__init__.py"
-        file_path = os.path.join(tag_path, file_name)
-        f = open(file_path, "w")
-        f.write(
-            '""" Contains methods for accessing the '
-            + tag_name
-            + " API paths: "
-            + tag_description
-            + ' """ # noqa: E501\n'
-        )
-        # Close the file.
-        f.close()
-
-    # Generate the paths.
+    # Generate the paths without creating individual API files.
     data = parser
     paths = data["paths"]
     # Sort paths to ensure consistent processing order
@@ -181,7 +511,7 @@ def generate_paths(cwd: str, parser: dict) -> dict:
                 # Skip OPTIONS.
                 if method.upper() != "OPTIONS":
                     endpoint = paths[p][method]
-                    data = generate_path(path, p, method, endpoint, data)
+                    data = generate_path_data(p, method, endpoint, data)
 
     return data
 
@@ -495,50 +825,35 @@ def generate_type_and_example_python(
     return parameter_type, parameter_example, example_imports
 
 
-def generate_path(
-    path: str, name: str, method: str, endpoint: dict, data: dict
-) -> dict:
-    # Generate the path.
+def generate_path_data(name: str, method: str, endpoint: dict, data: dict) -> dict:
+    # Generate the path data (without creating individual files).
     fn_name = camel_to_snake(endpoint["operationId"])
-    file_name = fn_name + ".py"
     tag_name = ""
-    # Add the tag to the path if it exists.
+    # Get the tag name if it exists.
     if "tags" in endpoint:
         tag_name = endpoint["tags"][0].replace("-", "_")
-        path = os.path.join(path, tag_name)
-    file_path = os.path.join(path, file_name)
-    logging.info("generating path functions: %s at: %s", name, file_path)
+    logging.info("processing path: %s", name)
 
+    # Get endpoint refs for the example generation
     endpoint_refs = get_endpoint_refs(endpoint, data)
-    parameter_refs = get_parameter_refs(endpoint)
-    request_body_refs = get_request_body_refs(endpoint)
     (request_body_type, request_body_schema) = get_request_body_type_schema(
         endpoint, data
     )
 
     success_type = ""
     if len(endpoint_refs) > 0:
-        if len(endpoint_refs) > 2:
-            er = get_endpoint_refs(endpoint, data)
-            er.remove("Error")
+        # Always filter out Error from endpoint_refs for examples
+        er = [ref for ref in endpoint_refs if ref != "Error"]
+        if len(er) > 1:
             # Ensure all refs are PascalCase for the example type
             pascal_er = [to_pascal_case(ref) for ref in er]
             success_type = "Union[" + ", ".join(pascal_er) + "]"
-        else:
+        elif len(er) == 1:
             # Ensure single ref is PascalCase for the example type
-            success_type = to_pascal_case(endpoint_refs[0])
+            success_type = to_pascal_case(er[0])
+        # If no non-Error refs, success_type stays empty
 
-    example_imports = (
-        """
-from kittycad.client import ClientFromEnv
-from kittycad.api."""
-        + tag_name
-        + """ import """
-        + fn_name
-        + """
-from kittycad.types import Response
-"""
-    )
+    example_imports = ""
 
     # Iterate over the parameters.
     params_str = ""
@@ -558,12 +873,7 @@ from kittycad.types import Response
 
             if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
                 parameter_type = "Optional[" + parameter_type + "]"
-                optional_args.append(
-                    clean_parameter_name(parameter_name)
-                    + "= None, # "
-                    + parameter_type
-                    + "\n"
-                )
+                optional_args.append(clean_parameter_name(parameter_name) + "=None,\n")
             else:
                 params_str += (
                     clean_parameter_name(parameter_name)
@@ -608,10 +918,8 @@ from kittycad.types import Response
             example_imports = example_imports + more_example_imports
 
     example_variable = ""
-    example_variable_response = ""
 
-    response_type = get_function_result_type(endpoint, endpoint_refs)
-    detailed_response_type = get_detailed_function_result_type(endpoint, endpoint_refs)
+    response_type = get_function_result_type(endpoint, endpoint_refs, data)
     if (
         success_type != "str"
         and success_type != "dict"
@@ -635,28 +943,55 @@ from kittycad.types import Response
             example_imports + "from typing import Union, Any, Optional, List, Tuple\n"
         )
 
-        example_variable = "result: " + response_type + " = "
+        if response_type and response_type != "None":
+            example_variable = "result: " + response_type + " = "
+        else:
+            example_variable = "result = "
 
         example_imports = example_imports + "from kittycad.types import Response\n"
-        example_imports = example_imports + "from kittycad.models import Error\n"
-        example_variable_response = "response: " + detailed_response_type + " = "
 
     # Add some new lines.
     example_imports = example_imports + "\n\n"
+
+    # Clean up params_str for use in examples (no client parameter needed)
+    # For WebSocket examples, we need to properly format parameters
+    no_client_params = params_str.strip()
+    if no_client_params.endswith(",\n"):
+        no_client_params = no_client_params[:-2]
+    elif no_client_params.endswith(","):
+        no_client_params = no_client_params[:-1]
+
+    # If we have parameters, format them properly with proper indentation for multiline calls
+    if no_client_params:
+        # Split into lines and properly indent each parameter line
+        param_lines = no_client_params.split("\n")
+        formatted_lines = []
+        for i, line in enumerate(param_lines):
+            if line.strip():  # Skip empty lines
+                if i == 0:
+                    # First parameter line goes on same line as function call
+                    formatted_lines.append(line.strip())
+                else:
+                    # Subsequent lines need proper indentation
+                    formatted_lines.append("        " + line.strip())
+        no_client_params = "\n".join(formatted_lines)
 
     short_sync_example = (
         """def test_"""
         + fn_name
         + """():
-    # Create our client.
-    client = ClientFromEnv()
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     """
         + example_variable
+        + "client."
+        + tag_name
+        + "."
         + fn_name
-        + """.sync(client=client,\n"""
-        + params_str
+        + """("""
+        + no_client_params
         + """)
+
 """
     )
 
@@ -666,32 +1001,33 @@ from kittycad.types import Response
         and success_type != "None"
         and success_type != ""
     ):
-        example_success_type = success_type
+        example_success_type = response_type
 
-        short_sync_example = short_sync_example + (
-            """
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
+        if (
+            example_success_type != "str"
+            and example_success_type != "dict"
+            and example_success_type != "None"
+            and example_success_type != ""
+        ):
+            short_sync_example = short_sync_example + (
+                """
     body: """
-            + example_success_type
-            + """ = result
+                + example_success_type
+                + """ = result
     print(body)
 
 """
-        )
+            )
+        else:
+            short_sync_example = short_sync_example + (
+                """
+    print(result)
+
+"""
+            )
 
     long_example = (
         """
-
-    # OR if you need more info (e.g. status_code)
-    """
-        + example_variable_response
-        + fn_name
-        + """.sync_detailed(client=client,\n"""
-        + params_str
-        + """)
 
 # OR run async
 @pytest.mark.asyncio
@@ -699,25 +1035,21 @@ from kittycad.types import Response
 async def test_"""
         + fn_name
         + """_async():
-    # Create our client.
-    client = ClientFromEnv()
+    from kittycad import AsyncKittyCAD
+    
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     """
         + example_variable
-        + "await "
+        + "await client."
+        + tag_name
+        + "."
         + fn_name
-        + """.asyncio(client=client,\n"""
-        + params_str
+        + """("""
+        + no_client_params
         + """)
 
-    # OR run async with more info
-    """
-        + example_variable_response
-        + "await "
-        + fn_name
-        + """.asyncio_detailed(client=client,\n"""
-        + params_str
-        + """)"""
+"""
     )
 
     # Generate the websocket examples.
@@ -727,14 +1059,15 @@ async def test_"""
                 """def test_"""
                 + fn_name
                 + """():
-            # Create our client.
-            client = ClientFromEnv()
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
             # Connect to the websocket.
-            with """
+            with client."""
+                + tag_name
+                + """."""
                 + fn_name
-                + """.sync(client=client,"""
-                + params_str
+                + """("""
+                + no_client_params
                 + """) as websocket:
 
                 # Send a message.
@@ -751,14 +1084,15 @@ async def test_"""
                 """def test_"""
                 + fn_name
                 + """():
-            # Create our client.
-            client = ClientFromEnv()
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
             # Connect to the websocket.
-            with """
+            with client."""
+                + tag_name
+                + """."""
                 + fn_name
-                + """.WebSocket(client=client,"""
-                + params_str
+                + """("""
+                + no_client_params
                 + """) as websocket:
 
                 # Send a message.
@@ -782,14 +1116,17 @@ async def test_"""
 async def test_"""
             + fn_name
             + """_async():
-    # Create our client.
-    client = ClientFromEnv()
+    from kittycad import AsyncKittyCAD
+    
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await """
+    websocket = await client."""
+            + tag_name
+            + """."""
             + fn_name
-            + """.asyncio(client=client,"""
-            + params_str
+            + """("""
+            + no_client_params
             + """)
 
     # Send a message.
@@ -827,330 +1164,12 @@ async def test_"""
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
         "example": cleaned_example.replace("def test_", "def example_"),
-        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.api."
-        + tag_name
+        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad."
+        + to_pascal_case(tag_name)
         + "."
         + fn_name
         + ".html",
     }
-
-    # Start defining the template info.
-    ArgType = TypedDict(
-        "ArgType",
-        {
-            "name": str,
-            "type": str,
-            "in_url": bool,
-            "in_query": bool,
-            "is_optional": bool,
-        },
-    )
-    TemplateType = TypedDict(
-        "TemplateType",
-        {
-            "imports": List[str],
-            "response_type": str,
-            "args": List[ArgType],
-            "url_template": str,
-            "method": str,
-            "docs": str,
-            "parse_response": str,
-            "has_request_body": bool,
-            "request_body_type": str,
-        },
-    )
-    template_info: TemplateType = {
-        "imports": [],
-        "response_type": response_type,
-        "args": [],
-        "url_template": "{}" + name,
-        "method": method,
-        "docs": "",
-        "parse_response": "",
-        "has_request_body": False,
-        "request_body_type": "",
-    }
-
-    if len(endpoint_refs) == 0:
-        template_info["response_type"] = ""
-
-    if "x-dropshot-websocket" in endpoint:
-        template_info["response_type"] = (
-            template_info["response_type"].replace("Optional[", "").replace("]", "")
-        )
-
-    if "description" in endpoint:
-        template_info["docs"] = endpoint["description"]
-
-    # Import our references for responses.
-    for ref in endpoint_refs:
-        if ref.startswith("List[") and ref.endswith("]"):
-            ref = ref.replace("List[", "").replace("]", "")
-        if ref != "str" and ref != "dict":
-            # Ensure ref is in PascalCase for the class name
-            pascal_ref = to_pascal_case(ref)
-            template_info["imports"].append(
-                "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
-            )
-    for ref in parameter_refs:
-        # Ensure ref is in PascalCase for the class name
-        pascal_ref = to_pascal_case(ref)
-        template_info["imports"].append(
-            "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
-        )
-    for ref in request_body_refs:
-        # Ensure ref is in PascalCase for the class name
-        pascal_ref = to_pascal_case(ref)
-        template_info["imports"].append(
-            "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
-        )
-
-    # Iterate over the responses.
-    parse_response = io.StringIO()
-    if len(endpoint_refs) > 0:
-        responses = endpoint["responses"]
-        for response_code in responses:
-            response = responses[response_code]
-            if response_code == "default":
-                # This is no content.
-                parse_response.write("\treturn None\n")
-            elif response_code == "204" or response_code == "302":
-                # This is no content.
-                parse_response.write("\treturn None\n")
-            else:
-                parse_response.write(
-                    "\tif response.status_code == "
-                    + response_code.replace("XX", "00")
-                    + ":\n"
-                )
-                is_one_of = False
-                if "content" in response:
-                    content = response["content"]
-                    for content_type in content:
-                        if content_type == "application/json":
-                            json = content[content_type]["schema"]
-                            if "$ref" in json:
-                                ref = json["$ref"].replace("#/components/schemas/", "")
-                                schema = data["components"]["schemas"][ref]
-                                # Let's check if it is a oneOparse_response.
-                                if "oneOf" in schema:
-                                    is_one_of = True
-                                    # We want to parse each of the possible types.
-                                    parse_response.write("\t\tdata = response.json()\n")
-                                    for index, one_of in enumerate(schema["oneOf"]):
-                                        ref = get_one_of_ref_type(one_of)
-                                        parse_response.write("\t\ttry:\n")
-                                        parse_response.write(
-                                            "\t\t\tif not isinstance(data, dict):\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\t\traise TypeError()\n"
-                                        )
-                                        option_name = "option_" + camel_to_snake(ref)
-                                        parse_response.write(
-                                            "\t\t\t"
-                                            + option_name
-                                            + " = "
-                                            + to_pascal_case(ref)
-                                            + "(**data)\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\treturn " + option_name + "\n"
-                                        )
-                                        parse_response.write("\t\texcept ValueError:\n")
-                                        if index == len(schema["oneOf"]) - 1:
-                                            # On the last one raise the error.
-                                            parse_response.write("\t\t\traise\n")
-                                        else:
-                                            parse_response.write("\t\t\tpass\n")
-                                        parse_response.write("\t\texcept TypeError:\n")
-                                        if index == len(schema["oneOf"]) - 1:
-                                            # On the last one raise the error.
-                                            parse_response.write("\t\t\traise\n")
-                                        else:
-                                            parse_response.write("\t\t\tpass\n")
-                                else:
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = "
-                                        + ref
-                                        + "(**response.json())\n"
-                                    )
-                            elif "type" in json:
-                                if json["type"] == "array":
-                                    items = json["items"]
-                                    if "$ref" in items:
-                                        ref = items["$ref"].replace(
-                                            "#/components/schemas/", ""
-                                        )
-                                        parse_response.write(
-                                            "\t\tresponse_" + response_code + " = [\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\t" + ref + "(**item)\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\tfor item in response.json()\n"
-                                        )
-                                        parse_response.write("\t\t]\n")
-                                    elif "type" in items:
-                                        if items["type"] == "string":
-                                            parse_response.write(
-                                                "\t\tresponse_"
-                                                + response_code
-                                                + " = [\n"
-                                            )
-                                            parse_response.write("\t\t\tstr(**item)\n")
-                                            parse_response.write(
-                                                "\t\t\tfor item in response.json()\n"
-                                            )
-                                            parse_response.write("\t\t]\n")
-                                        else:
-                                            raise Exception("Unknown array type", items)
-                                    else:
-                                        raise Exception("Unknown array type")
-                                elif json["type"] == "string":
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = response.text\n"
-                                    )
-                                elif (
-                                    json["type"] == "object"
-                                    and "additionalProperties" in json
-                                ):
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = response.json()\n"
-                                    )
-                                else:
-                                    print(json)
-                                    raise Exception("Unknown type", json["type"])
-                            else:
-                                parse_response.write(
-                                    "\t\tresponse_"
-                                    + response_code
-                                    + " = response.json()\n"
-                                )
-
-                elif "$ref" in response:
-                    schema_name = response["$ref"].replace(
-                        "#/components/responses/", ""
-                    )
-                    schema = data["components"]["responses"][schema_name]
-                    if "content" in schema:
-                        content = schema["content"]
-                        for content_type in content:
-                            if content_type == "application/json":
-                                json = content[content_type]["schema"]
-                                if "$ref" in json:
-                                    ref = json["$ref"].replace(
-                                        "#/components/schemas/", ""
-                                    )
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = "
-                                        + ref
-                                        + "(**response.json())\n"
-                                    )
-                else:
-                    print(endpoint)
-                    raise Exception("response not supported")
-
-                if not is_one_of:
-                    parse_response.write("\t\treturn response_" + response_code + "\n")
-
-        # End the method.
-        parse_response.write("\treturn Error(**response.json())\n")
-    else:
-        parse_response.write("\treturn\n")
-
-    template_info["parse_response"] = parse_response.getvalue()
-
-    # Iterate over the parameters.
-    optional_args = []
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                    .replace("boolean", "bool")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: %s", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "] = None"
-                    template_info["args"].append(
-                        {
-                            "name": camel_to_snake(parameter_name),
-                            "type": parameter_type,
-                            "in_url": "in" in parameter and (parameter["in"] == "path"),
-                            "in_query": "in" in parameter
-                            and (parameter["in"] == "query"),
-                            "is_optional": True,
-                        }
-                    )
-                else:
-                    template_info["args"].append(
-                        {
-                            "name": camel_to_snake(parameter_name),
-                            "type": parameter_type,
-                            "in_url": "in" in parameter and (parameter["in"] == "path"),
-                            "in_query": "in" in parameter
-                            and (parameter["in"] == "query"),
-                            "is_optional": False,
-                        }
-                    )
-            else:
-                template_info["args"].append(
-                    {
-                        "name": camel_to_snake(parameter_name),
-                        "type": parameter_type,
-                        "in_url": "in" in parameter and (parameter["in"] == "path"),
-                        "in_query": "in" in parameter and (parameter["in"] == "query"),
-                        "is_optional": False,
-                    }
-                )
-
-    if request_body_type:
-        template_info["args"].append(
-            {
-                "name": "body",
-                "type": request_body_type,
-                "in_url": False,
-                "in_query": False,
-                "is_optional": False,
-            }
-        )
-        template_info["has_request_body"] = True
-        template_info["request_body_type"] = request_body_type
-
-    # Generate the template for the functions.
-    environment = jinja2.Environment(
-        loader=jinja2.FileSystemLoader("generate/templates/")
-    )
-    template_file = "functions.py.jinja2"
-    if "x-dropshot-websocket" in endpoint:
-        template_file = "functions-ws.py.jinja2"
-    template = environment.get_template(template_file)
-    content = template.render(**template_info)
-    with open(file_path, mode="w", encoding="utf-8") as message:
-        message.write(content)
-        logging.info(f"... wrote {file_path}")
 
     return data
 
@@ -2450,21 +2469,95 @@ def has_no_content_response(endpoint: dict) -> bool:
     return False
 
 
-def get_function_result_type(endpoint: dict, endpoint_refs: List[str]) -> str:
+def get_success_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
+    """Get references from successful response codes only (2xx), excluding errors."""
+    refs = []
+
+    responses = endpoint["responses"]
+    for response_code in responses:
+        # For WebSocket endpoints, "default" is the success response
+        is_websocket = "x-dropshot-websocket" in endpoint
+
+        # Only include successful response codes (2xx) or default for WebSockets
+        if not (
+            response_code.startswith("2")
+            or response_code == "200"
+            or response_code == "201"
+            or response_code == "204"
+            or (is_websocket and response_code == "default")
+        ):
+            continue
+
+        response = responses[response_code]
+        if "content" in response:
+            content = response["content"]
+            for content_type in content:
+                if content_type == "application/json":
+                    json = content[content_type]["schema"]
+                    if "$ref" in json:
+                        ref = json["$ref"].replace("#/components/schemas/", "")
+                        # Skip Error types explicitly
+                        if ref == "Error":
+                            continue
+                        schema = data["components"]["schemas"][ref]
+                        if is_nested_object_one_of(schema) or is_enum_with_docs_one_of(
+                            schema
+                        ):
+                            if ref not in refs:
+                                refs.append(ref)
+                        elif is_typed_object_one_of(schema):
+                            for t in schema["oneOf"]:
+                                ref = get_one_of_ref_type(t)
+                                if ref != "Error" and ref not in refs:
+                                    refs.append(ref)
+                        else:
+                            if ref not in refs:
+                                refs.append(ref)
+                    elif "type" in json:
+                        if json["type"] == "array":
+                            items = json["items"]
+                            if "$ref" in items:
+                                ref = items["$ref"].replace("#/components/schemas/", "")
+                                if ref != "Error":
+                                    refs.append("List[" + ref + "]")
+                            elif "type" in items:
+                                if items["type"] == "string":
+                                    refs.append("List[str]")
+                                else:
+                                    raise Exception("Unknown array type", items)
+                        elif json["type"] == "string":
+                            refs.append("str")
+                        elif (
+                            json["type"] == "object" and "additionalProperties" in json
+                        ):
+                            refs.append("dict")
+
+    return refs
+
+
+def get_function_result_type(
+    endpoint: dict, endpoint_refs: List[str], data: Optional[dict] = None
+) -> str:
+    # Use success-only refs to avoid including Error types in return signatures
+    if data:
+        success_refs = get_success_endpoint_refs(endpoint, data)
+    else:
+        # Fallback to filtering existing endpoint_refs to remove Error types
+        success_refs = [ref for ref in endpoint_refs if ref != "Error"]
+
     # Ensure all refs are in PascalCase for return types
-    pascal_refs = [to_pascal_case(ref) for ref in endpoint_refs]
-    result = ", ".join(pascal_refs)
-    if len(endpoint_refs) > 1:
+    pascal_refs = [to_pascal_case(ref) for ref in success_refs]
+    result = ", ".join(pascal_refs) if pascal_refs else ""
+
+    if len(success_refs) > 1:
         result = "Optional[Union[" + result + "]]"
+    elif len(success_refs) == 1:
+        result = pascal_refs[0]
 
     if has_no_content_response(endpoint):
-        result = "Optional[" + result + "]"
+        result = "Optional[" + result + "]" if result else ""
 
     return result
-
-
-def get_detailed_function_result_type(endpoint: dict, endpoint_refs: List[str]) -> str:
-    return "Response[" + get_function_result_type(endpoint, endpoint_refs) + "]"
 
 
 def get_type_name(schema: dict) -> str:
@@ -2515,6 +2608,144 @@ def get_type_name(schema: dict) -> str:
 
     logging.error("schema: %s", schema)
     raise Exception("Unknown schema type")
+
+
+def generate_websocket_sync_function(
+    operation_id: str, path: str, method: str, endpoint: dict, data: dict
+) -> str:
+    """Generate a sync WebSocket function implementation."""
+    from jinja2 import Environment, FileSystemLoader
+
+    # Build template context
+    args = []
+
+    # Handle parameters
+    if "parameters" in endpoint:
+        parameters = endpoint["parameters"]
+        for parameter in parameters:
+            parameter_name = parameter["name"]
+            if "type" in parameter["schema"]:
+                parameter_type = (
+                    parameter["schema"]["type"]
+                    .replace("string", "str")
+                    .replace("integer", "int")
+                    .replace("number", "float")
+                    .replace("boolean", "bool")
+                )
+            elif "$ref" in parameter["schema"]:
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+            else:
+                parameter_type = "Any"
+
+            if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
+                parameter_type = f"Optional[{parameter_type}]"
+                is_optional = True
+            else:
+                is_optional = False
+
+            args.append(
+                {
+                    "name": camel_to_snake(parameter_name),
+                    "type": parameter_type,
+                    "in_url": "in" in parameter and parameter["in"] == "path",
+                    "in_query": "in" in parameter and parameter["in"] == "query",
+                    "is_optional": is_optional,
+                }
+            )
+
+    # Handle request body for WebSocket endpoints
+    (request_body_type, _) = get_request_body_type_schema(endpoint, data)
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "in_url": False,
+                "in_query": False,
+                "is_optional": False,
+            }
+        )
+
+    # Use WebSocket template
+    environment = Environment(loader=FileSystemLoader("generate/templates/"))
+    template = environment.get_template("websocket_sync_function.py.jinja2")
+    return template.render(
+        function_name=operation_id,
+        args=args,
+        url_template=path,
+        docs=endpoint.get("summary", "").replace('"', '\\"'),
+    )
+
+
+def generate_websocket_async_function(
+    operation_id: str, path: str, method: str, endpoint: dict, data: dict
+) -> str:
+    """Generate an async WebSocket function implementation."""
+    from jinja2 import Environment, FileSystemLoader
+
+    # Build template context (same as sync)
+    args = []
+
+    # Handle parameters
+    if "parameters" in endpoint:
+        parameters = endpoint["parameters"]
+        for parameter in parameters:
+            parameter_name = parameter["name"]
+            if "type" in parameter["schema"]:
+                parameter_type = (
+                    parameter["schema"]["type"]
+                    .replace("string", "str")
+                    .replace("integer", "int")
+                    .replace("number", "float")
+                    .replace("boolean", "bool")
+                )
+            elif "$ref" in parameter["schema"]:
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+            else:
+                parameter_type = "Any"
+
+            if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
+                parameter_type = f"Optional[{parameter_type}]"
+                is_optional = True
+            else:
+                is_optional = False
+
+            args.append(
+                {
+                    "name": camel_to_snake(parameter_name),
+                    "type": parameter_type,
+                    "in_url": "in" in parameter and parameter["in"] == "path",
+                    "in_query": "in" in parameter and parameter["in"] == "query",
+                    "is_optional": is_optional,
+                }
+            )
+
+    # Handle request body
+    (request_body_type, _) = get_request_body_type_schema(endpoint, data)
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "in_url": False,
+                "in_query": False,
+                "is_optional": False,
+            }
+        )
+
+    # Use WebSocket async template
+    environment = Environment(loader=FileSystemLoader("generate/templates/"))
+    template = environment.get_template("websocket_async_function.py.jinja2")
+    return template.render(
+        function_name=operation_id,
+        args=args,
+        url_template=path,
+        docs=endpoint.get("summary", "").replace('"', '\\"'),
+    )
 
 
 letters: List[str] = []

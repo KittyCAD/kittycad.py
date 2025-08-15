@@ -17,6 +17,7 @@ dependencies = [
   "pymongo>=4.6.0,<5.0.0",
   "pydantic>=2.9.1,<3.0.0",
   "pydantic-extra-types>=2.1.0,<3.0.0",
+  "phonenumbers>=9.0.11",
 ]
 
 [project.optional-dependencies]
@@ -70,7 +71,7 @@ split-on-trailing-comma = false
 [tool.ruff.lint.per-file-ignores]
 # We exclude init files since otherwise ruff will delete all the unused imports.
 "__init__.py" = ["F401"]
-"examples_test.py" = ["F841"]
+"kittycad/tests/test_examples.py" = ["F841"]
 
 [tool.mypy]
 exclude = ["venv", "docs"]
@@ -79,4 +80,4 @@ ignore_missing_imports = true
 check_untyped_defs = true
 
 [tool.pytest.ini_options]
-addopts = "--doctest-modules"
+addopts = "--doctest-modules --ignore=kittycad/api"

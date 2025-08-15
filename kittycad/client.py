@@ -1,6 +1,5 @@
-import os
 import ssl
-from typing import Dict, Optional, Union
+from typing import Dict, Union
 
 import attr
 
@@ -43,33 +42,3 @@ class Client:
     def with_base_url(self, url: str) -> "Client":
         """Get a new client matching this one with a new base url"""
         return attr.evolve(self, base_url=url)
-
-
-@attr.s(auto_attribs=True)
-class ClientFromEnv(Client):
-    """A Client which has been authenticated for use on secured endpoints that uses the KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable for the authentication token.
-
-    Optionally, you can use `ZOO_HOST` to set the base url.
-    This implies you are hosting your own instance of the KittyCAD API.
-    """  # noqa: E501
-
-    token: str = attr.field()
-    base_url: str = attr.ib(default=os.getenv("ZOO_HOST", DEFAULT_BASE_URL))
-
-    @token.default
-    def set_token(self):
-        maybe_token: Optional[str] = os.getenv("KITTYCAD_API_TOKEN")
-        if maybe_token is None:
-            # Try the ZOO_API_TOKEN environment variable
-            maybe_token = os.getenv("ZOO_API_TOKEN")
-            if maybe_token is None:
-                raise ValueError(
-                    "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable must be set to use ClientFromEnv"
-                )
-        token: str = maybe_token
-
-        return token
-
-    def get_headers(self) -> Dict[str, str]:
-        """Get headers to be used in authenticated endpoints"""
-        return {"Authorization": f"Bearer {self.token}", **self.headers}

@@ -1,0 +1,225 @@
+"""The KittyCAD Python SDK"""
+
+import os
+from typing import Any, Dict, List, Optional, Union
+import httpx
+
+{% if has_websockets %}
+import json
+import bson
+from websockets.asyncio.client import (
+    ClientConnection as ClientConnectionAsync,
+    connect as ws_connect_async,
+)
+from websockets.sync.client import (
+    ClientConnection as ClientConnectionSync,
+    connect as ws_connect,
+)
+{% endif %}
+
+from .client import Client
+from .response_helpers import raise_for_status
+from .exceptions import (
+    KittyCADError,
+    KittyCADAPIError,
+    KittyCADClientError,
+    KittyCADServerError,
+    KittyCADConnectionError,
+    KittyCADTimeoutError,
+)
+
+{% if has_websockets %}
+# Import WebSocket request/response models
+from .models.web_socket_request import WebSocketRequest
+from .models.web_socket_response import WebSocketResponse
+from .models.post_effect_type import PostEffectType
+{% endif %}
+
+{% for import in all_imports %}
+{{ import }}
+{% endfor %}
+
+{% for tag, functions in endpoints_by_tag.items() %}
+{% set tag_pascal = tag|to_pascal_case %}
+
+class {{ tag_pascal }}API:
+    """API for {{ tag }} endpoints"""
+    
+    def __init__(self, client: Client) -> None:
+        self.client = client
+    
+    {% for func_name, func_info in functions.items() %}
+    {% if func_info.is_websocket and func_info.has_websocket_class %}
+    def {{ func_name }}(self{{ func_info.websocket_params if func_info.websocket_params else '' }}) -> "WebSocket{{ func_name|to_pascal_case }}":
+        """{{ func_info.description }}
+        
+        Returns a WebSocket wrapper with methods for sending/receiving data.
+        """
+        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.websocket_call_args if func_info.websocket_call_args else '' }}{{ ', ' if func_info.websocket_call_args else '' }}client=self.client)
+    {% else %}
+{{ func_info.sync_implementation }}
+    {% endif %}
+    {% endfor %}
+
+class Async{{ tag_pascal }}API:
+    """Async API for {{ tag }} endpoints"""
+    
+    def __init__(self, client: Client) -> None:
+        self.client = client
+    
+    {% for func_name, func_info in functions.items() %}
+    {% if func_info.is_websocket and func_info.has_websocket_class %}
+    async def {{ func_name }}(self{{ func_info.websocket_params if func_info.websocket_params else '' }}):
+        """{{ func_info.description }}
+        
+        Returns an async WebSocket connection for sending/receiving data.
+        """
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        {{ func_info.async_implementation | replace("    ", "        ") | replace("\n", "\n        ") | trim }}
+    {% else %}
+{{ func_info.async_implementation }}
+    {% endif %}
+    {% endfor %}
+
+{% endfor %}
+
+{% for tag, functions in endpoints_by_tag.items() %}
+{% for func_name, func_info in functions.items() %}
+{% if func_info.is_websocket and func_info.has_websocket_class %}
+class WebSocket{{ func_name|to_pascal_case }}:
+    """A websocket connection for {{ func_name }}."""
+
+    ws: ClientConnectionSync
+
+    def __init__(self, *args, client: Client, **kwargs):
+        # Inline WebSocket connection logic
+        url = (client.base_url + "{{ func_info.path }}").replace("http://", "ws://").replace("https://", "wss://")
+        headers = client.get_headers()
+        self.ws = ws_connect(url, additional_headers=headers, close_timeout=120, max_size=None)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield WebSocketResponse(**json.loads(message))
+
+    def send(self, data: WebSocketRequest):
+        """Send data to the websocket."""
+        self.ws.send(json.dumps(data.model_dump()))
+
+    def send_binary(self, data: WebSocketRequest):
+        """Send data as bson to the websocket."""
+        self.ws.send(bson.encode(data.model_dump()))
+
+    def recv(self) -> WebSocketResponse:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=60)
+        return WebSocketResponse(**json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
+
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+class KittyCAD(Client):
+    """Main KittyCAD client class with sync API interface.
+
+    Usage:
+        client = KittyCAD(token="your-api-token")
+        user = client.users.get_user_self()
+
+    Or with environment variable:
+        client = KittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+    """
+
+    def __init__(self, token: Optional[str] = None, **kwargs) -> None:
+        if token is None:
+            token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
+            if token is None:
+                raise ValueError(
+                    "No API token provided. Either pass token parameter or set "
+                    "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
+                )
+        
+        # Also check for ZOO_HOST environment variable if no base_url provided
+        if "base_url" not in kwargs:
+            zoo_host = os.getenv("ZOO_HOST")
+            if zoo_host:
+                kwargs["base_url"] = zoo_host
+        
+        super().__init__(token=token, **kwargs)
+        
+        # Import and initialize API classes
+        {% for tag in endpoints_by_tag.keys() %}
+        {% set tag_pascal = tag|to_pascal_case %}
+        self.{{ tag }}: {{ tag_pascal }}API = {{ tag_pascal }}API(self)
+        {% endfor %}
+
+
+class AsyncKittyCAD(Client):
+    """Async KittyCAD client class with async API interface.
+
+    Usage:
+        import asyncio
+        from kittycad import AsyncKittyCAD
+
+        async def main():
+            client = AsyncKittyCAD(token="your-api-token")
+            user = await client.users.get_user_self()
+            
+        asyncio.run(main())
+
+    Or with environment variable:
+        client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+    """
+
+    def __init__(self, token: Optional[str] = None, **kwargs) -> None:
+        if token is None:
+            token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
+            if token is None:
+                raise ValueError(
+                    "No API token provided. Either pass token parameter or set "
+                    "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
+                )
+        
+        # Also check for ZOO_HOST environment variable if no base_url provided
+        if "base_url" not in kwargs:
+            zoo_host = os.getenv("ZOO_HOST")
+            if zoo_host:
+                kwargs["base_url"] = zoo_host
+        
+        super().__init__(token=token, **kwargs)
+        
+        # Import and initialize async API classes
+        {% for tag in endpoints_by_tag.keys() %}
+        {% set tag_pascal = tag|to_pascal_case %}
+        self.{{ tag }}: Async{{ tag_pascal }}API = Async{{ tag_pascal }}API(self)
+        {% endfor %}
+
+
+__all__ = [
+    "KittyCAD",
+    "AsyncKittyCAD",
+    "KittyCADError",
+    "KittyCADAPIError", 
+    "KittyCADClientError",
+    "KittyCADServerError",
+    "KittyCADConnectionError",
+    "KittyCADTimeoutError",
+]
