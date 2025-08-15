@@ -26,14 +26,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> None:
-    return None
+def _parse_response(*, response: httpx.Response):
+    if response.status_code == 204:
+        return None
     # This should not be reached since we handle all known success responses above
     # and errors are handled by raise_for_status
     raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(*, response: httpx.Response) -> Response[None]:
+def _build_response(*, response: httpx.Response) -> Response[Any]:
     # Check for errors first - this will raise exceptions for non-success status codes
     # before we try to parse the response
     if not response.is_success:
@@ -50,7 +51,7 @@ def _build_response(*, response: httpx.Response) -> Response[None]:
 def sync_detailed(
     *,
     client: Client,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -66,7 +67,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> None:
+):
     """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
 
     This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""  # noqa: E501
@@ -79,7 +80,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -93,7 +94,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> None:
+):
     """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
 
     This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""  # noqa: E501

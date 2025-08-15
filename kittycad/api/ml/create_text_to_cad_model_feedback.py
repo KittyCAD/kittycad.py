@@ -36,14 +36,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> None:
-    return None
+def _parse_response(*, response: httpx.Response):
+    if response.status_code == 204:
+        return None
     # This should not be reached since we handle all known success responses above
     # and errors are handled by raise_for_status
     raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(*, response: httpx.Response) -> Response[None]:
+def _build_response(*, response: httpx.Response) -> Response[Any]:
     # Check for errors first - this will raise exceptions for non-success status codes
     # before we try to parse the response
     if not response.is_success:
@@ -62,7 +63,7 @@ def sync_detailed(
     feedback: MlFeedback,
     *,
     client: Client,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         id=id,
         feedback=feedback,
@@ -82,7 +83,7 @@ def sync(
     feedback: MlFeedback,
     *,
     client: Client,
-) -> None:
+):
     """This can be a text-to-CAD creation or iteration.
 
     This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""  # noqa: E501
@@ -99,7 +100,7 @@ async def asyncio_detailed(
     feedback: MlFeedback,
     *,
     client: Client,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         id=id,
         feedback=feedback,
@@ -117,7 +118,7 @@ async def asyncio(
     feedback: MlFeedback,
     *,
     client: Client,
-) -> None:
+):
     """This can be a text-to-CAD creation or iteration.
 
     This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""  # noqa: E501

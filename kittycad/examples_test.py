@@ -342,8 +342,7 @@ def test_get_schema():
         client=client,
     )
 
-    body: Dict = result
-    print(body)
+    print(result)
 
     # OR if you need more info (e.g. status_code)
     response = get_schema.sync_detailed(
@@ -765,16 +764,18 @@ def test_get_async_operation():
         id="<string>",
     )
 
-    body: Union[
-        FileConversion,
-        FileCenterOfMass,
-        FileMass,
-        FileVolume,
-        FileDensity,
-        FileSurfaceArea,
-        TextToCad,
-        TextToCadIteration,
-        TextToCadMultiFileIteration,
+    body: Optional[
+        Union[
+            FileConversion,
+            FileCenterOfMass,
+            FileMass,
+            FileVolume,
+            FileDensity,
+            FileSurfaceArea,
+            TextToCad,
+            TextToCadIteration,
+            TextToCadMultiFileIteration,
+        ]
     ] = result
     print(body)
 

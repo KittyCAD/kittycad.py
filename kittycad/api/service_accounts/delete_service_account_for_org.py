@@ -29,14 +29,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> None:
-    return None
+def _parse_response(*, response: httpx.Response):
+    if response.status_code == 204:
+        return None
     # This should not be reached since we handle all known success responses above
     # and errors are handled by raise_for_status
     raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(*, response: httpx.Response) -> Response[None]:
+def _build_response(*, response: httpx.Response) -> Response[Any]:
     # Check for errors first - this will raise exceptions for non-success status codes
     # before we try to parse the response
     if not response.is_success:
@@ -54,7 +55,7 @@ def sync_detailed(
     token: ServiceAccountUuid,
     *,
     client: Client,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         token=token,
         client=client,
@@ -72,7 +73,7 @@ def sync(
     token: ServiceAccountUuid,
     *,
     client: Client,
-) -> None:
+):
     """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
 
     This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""  # noqa: E501
@@ -87,7 +88,7 @@ async def asyncio_detailed(
     token: ServiceAccountUuid,
     *,
     client: Client,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         token=token,
         client=client,
@@ -103,7 +104,7 @@ async def asyncio(
     token: ServiceAccountUuid,
     *,
     client: Client,
-) -> None:
+):
     """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
 
     This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""  # noqa: E501

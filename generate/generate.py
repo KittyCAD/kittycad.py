@@ -674,13 +674,13 @@ from kittycad.types import Response
         and success_type != "None"
         and success_type != ""
     ):
-        example_success_type = success_type
+        example_success_type = response_type
 
         if (
-            success_type != "str"
-            and success_type != "dict"
-            and success_type != "None"
-            and success_type != ""
+            example_success_type != "str"
+            and example_success_type != "dict"
+            and example_success_type != "None"
+            and example_success_type != ""
         ):
             short_sync_example = short_sync_example + (
                 """
@@ -933,10 +933,14 @@ async def test_"""
                 is_websocket = "x-dropshot-websocket" in endpoint
                 if not is_websocket:
                     # Regular endpoints with default response have no content.
-                    parse_response.write("\treturn None\n")
+                    # We'll handle this with the status code check
+                    continue
             elif response_code == "204" or response_code == "302":
-                # This is no content.
-                parse_response.write("\treturn None\n")
+                # No content responses - handle with status code check
+                parse_response.write(
+                    "\tif response.status_code == " + response_code + ":\n"
+                )
+                parse_response.write("\t\treturn None\n")
             else:
                 # Only generate parsing code for success status codes
                 try:
@@ -1105,7 +1109,33 @@ async def test_"""
             "\traise ValueError(f'Unexpected response status: {response.status_code}')\n"
         )
     else:
-        parse_response.write("\treturn\n")
+        # No refs means no content to parse, but we still need to handle status codes
+        # Check if this endpoint has any successful responses
+        has_success_responses = False
+        responses = endpoint["responses"]
+        for response_code in responses:
+            try:
+                if response_code.startswith("2") or response_code in ["204", "302"]:
+                    has_success_responses = True
+                    parse_response.write(
+                        "\tif response.status_code == " + response_code + ":\n"
+                    )
+                    parse_response.write("\t\treturn None\n")
+            except (AttributeError, ValueError):
+                continue
+
+        if has_success_responses:
+            # Add fallback exception
+            parse_response.write(
+                "\t# This should not be reached since we handle all known success responses above\n"
+            )
+            parse_response.write("\t# and errors are handled by raise_for_status\n")
+            parse_response.write(
+                "\traise ValueError(f'Unexpected response status: {response.status_code}')\n"
+            )
+        else:
+            # No success responses found, just return None
+            parse_response.write("\treturn None\n")
 
     template_info["parse_response"] = parse_response.getvalue()
 
@@ -2575,7 +2605,7 @@ def get_function_result_type(
         result = pascal_refs[0]
 
     if has_no_content_response(endpoint):
-        result = "Optional[" + result + "]" if result else "None"
+        result = "Optional[" + result + "]" if result else ""
 
     return result
 

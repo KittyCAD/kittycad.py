@@ -36,14 +36,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> None:
-    return None
+def _parse_response(*, response: httpx.Response):
+    if response.status_code == 302:
+        return None
     # This should not be reached since we handle all known success responses above
     # and errors are handled by raise_for_status
     raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(*, response: httpx.Response) -> Response[None]:
+def _build_response(*, response: httpx.Response) -> Response[Any]:
     # Check for errors first - this will raise exceptions for non-success status codes
     # before we try to parse the response
     if not response.is_success:
@@ -62,7 +63,7 @@ def sync_detailed(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         provider_id=provider_id,
         callback_url=callback_url,
@@ -82,7 +83,7 @@ def sync(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> None:
+):
     """The UI uses this to avoid having to ask the API anything about the IdP. It already knows the SAML IdP ID from the path, so it can just link to this path and rely on the API to redirect to the actual IdP."""  # noqa: E501
 
     return sync_detailed(
@@ -97,7 +98,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> Response[None]:
+) -> Response[Any]:
     kwargs = _get_kwargs(
         provider_id=provider_id,
         callback_url=callback_url,
@@ -115,7 +116,7 @@ async def asyncio(
     *,
     client: Client,
     callback_url: Optional[str] = None,
-) -> None:
+):
     """The UI uses this to avoid having to ask the API anything about the IdP. It already knows the SAML IdP ID from the path, so it can just link to this path and rely on the API to redirect to the actual IdP."""  # noqa: E501
 
     return (
