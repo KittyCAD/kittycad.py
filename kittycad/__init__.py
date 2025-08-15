@@ -11388,7 +11388,8 @@ class WebSocketMlCopilotWs:
             .replace("http://", "ws://")
             .replace("https://", "wss://")
         )
-        headers = client.get_headers()
+        # Create clean headers without any session state
+        headers = {"Authorization": f"Bearer {client.token}"}
         self.ws = ws_connect(
             url, additional_headers=headers, close_timeout=120, max_size=None
         )
@@ -11441,7 +11442,8 @@ class WebSocketMlReasoningWs:
             .replace("http://", "ws://")
             .replace("https://", "wss://")
         )
-        headers = client.get_headers()
+        # Create clean headers without any session state
+        headers = {"Authorization": f"Bearer {client.token}"}
         self.ws = ws_connect(
             url, additional_headers=headers, close_timeout=120, max_size=None
         )
@@ -11494,7 +11496,8 @@ class WebSocketCreateExecutorTerm:
             .replace("http://", "ws://")
             .replace("https://", "wss://")
         )
-        headers = client.get_headers()
+        # Create clean headers without any session state
+        headers = {"Authorization": f"Bearer {client.token}"}
         self.ws = ws_connect(
             url, additional_headers=headers, close_timeout=120, max_size=None
         )
@@ -11547,7 +11550,8 @@ class WebSocketModelingCommandsWs:
             .replace("http://", "ws://")
             .replace("https://", "wss://")
         )
-        headers = client.get_headers()
+        # Create clean headers without any session state
+        headers = {"Authorization": f"Bearer {client.token}"}
         self.ws = ws_connect(
             url, additional_headers=headers, close_timeout=120, max_size=None
         )
