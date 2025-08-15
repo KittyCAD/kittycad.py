@@ -6,8 +6,6 @@ This demonstrates the clean, idiomatic interface where errors are handled
 via exceptions rather than return values.
 """
 
-import os
-
 from .. import KittyCAD, KittyCADAPIError, KittyCADClientError, KittyCADServerError
 
 

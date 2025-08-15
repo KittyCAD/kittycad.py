@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """Test script to verify exception handling works correctly."""
 
-import sys
-import traceback
-
 from .. import KittyCAD
 from ..exceptions import KittyCADAPIError, KittyCADClientError, KittyCADServerError
 
