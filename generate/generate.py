@@ -930,16 +930,7 @@ def generate_path(
             success_type = to_pascal_case(er[0])
         # If no non-Error refs, success_type stays empty
 
-    example_imports = (
-        """
-from kittycad.api."""
-        + tag_name
-        + """ import """
-        + fn_name
-        + """
-from kittycad.types import Response
-"""
-    )
+    example_imports = ""
 
     # Iterate over the parameters.
     params_str = ""
