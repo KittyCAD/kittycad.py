@@ -16,3 +16,10 @@ Welcome to kittycad's documentation!
    kittycad.client
    kittycad.models
    kittycad.types
+   kittycad.pagination
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   pagination

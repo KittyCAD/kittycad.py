@@ -15,6 +15,10 @@ git checkout kittycad/models/empty.py || true
 # Generate new.
 uv run python -m generate.generate
 
+# Auto-generate pagination documentation
+echo "🔄 Generating pagination documentation..."
+uv run python generate/generate_pagination_docs.py
+
 # Format and lint.
 uv run ruff check --fix .
 uv run ruff format
