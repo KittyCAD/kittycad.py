@@ -23,7 +23,3 @@ uv run python generate/generate_pagination_docs.py
 uv run ruff check --fix .
 uv run ruff format
 uv run mypy .
-
-
-# Run the tests.
-uv run pytest kittycad
