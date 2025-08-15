@@ -649,10 +649,10 @@ class MlAPI:
 
     def list_ml_prompts(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> MlPromptResultsPage:
         """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
 
@@ -726,10 +726,10 @@ class MlAPI:
 
     def list_conversations_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ConversationResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
@@ -775,7 +775,8 @@ class MlAPI:
 
     def create_proprietary_to_kcl(
         self,
-        code_option: CodeOption,
+        *,
+        code_option: Optional[CodeOption] = None,
     ) -> KclModel:
         """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
 
@@ -906,11 +907,11 @@ class MlAPI:
 
     def list_text_to_cad_models_for_user(
         self,
-        sort_by: CreatedAtSortMode,
-        conversation_id: Uuid,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
     ) -> TextToCadResponseResultsPage:
         """This will always return the STEP file contents as well as the format the user originally requested.
@@ -1090,10 +1091,10 @@ class AsyncMlAPI:
 
     async def list_ml_prompts(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> MlPromptResultsPage:
         """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
 
@@ -1167,10 +1168,10 @@ class AsyncMlAPI:
 
     async def list_conversations_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ConversationResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
@@ -1216,7 +1217,8 @@ class AsyncMlAPI:
 
     async def create_proprietary_to_kcl(
         self,
-        code_option: CodeOption,
+        *,
+        code_option: Optional[CodeOption] = None,
     ) -> KclModel:
         """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
 
@@ -1347,11 +1349,11 @@ class AsyncMlAPI:
 
     async def list_text_to_cad_models_for_user(
         self,
-        sort_by: CreatedAtSortMode,
-        conversation_id: Uuid,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
     ) -> TextToCadResponseResultsPage:
         """This will always return the STEP file contents as well as the format the user originally requested.
@@ -1554,10 +1556,10 @@ class ApiCallsAPI:
 
     def list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
 
@@ -1631,11 +1633,11 @@ class ApiCallsAPI:
 
     def list_async_operations(
         self,
-        sort_by: CreatedAtSortMode,
-        status: ApiCallStatus,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        status: Optional[ApiCallStatus] = None,
     ) -> AsyncApiCallResultsPage:
         """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 
@@ -1729,10 +1731,10 @@ class ApiCallsAPI:
 
     def org_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This includes all API calls that were made by users in the org.
 
@@ -1806,10 +1808,10 @@ class ApiCallsAPI:
 
     def user_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
 
@@ -1882,10 +1884,10 @@ class ApiCallsAPI:
     def list_api_calls_for_user(
         self,
         id: UserIdentifier,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
 
@@ -1974,10 +1976,10 @@ class AsyncApiCallsAPI:
 
     async def list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
 
@@ -2051,11 +2053,11 @@ class AsyncApiCallsAPI:
 
     async def list_async_operations(
         self,
-        sort_by: CreatedAtSortMode,
-        status: ApiCallStatus,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        status: Optional[ApiCallStatus] = None,
     ) -> AsyncApiCallResultsPage:
         """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 
@@ -2149,10 +2151,10 @@ class AsyncApiCallsAPI:
 
     async def org_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This includes all API calls that were made by users in the org.
 
@@ -2226,10 +2228,10 @@ class AsyncApiCallsAPI:
 
     async def user_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
 
@@ -2302,10 +2304,10 @@ class AsyncApiCallsAPI:
     async def list_api_calls_for_user(
         self,
         id: UserIdentifier,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiCallWithPriceResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
 
@@ -2976,9 +2978,10 @@ class FileAPI:
 
     def create_file_center_of_mass(
         self,
-        output_unit: UnitLength,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitLength] = None,
     ) -> FileCenterOfMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3094,10 +3097,11 @@ class FileAPI:
     def create_file_density(
         self,
         material_mass: float,
-        material_mass_unit: UnitMass,
-        output_unit: UnitDensity,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_mass_unit: Optional[UnitMass] = None,
+        output_unit: Optional[UnitDensity] = None,
     ) -> FileDensity:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3157,10 +3161,11 @@ class FileAPI:
     def create_file_mass(
         self,
         material_density: float,
-        material_density_unit: UnitDensity,
-        output_unit: UnitMass,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_density_unit: Optional[UnitDensity] = None,
+        output_unit: Optional[UnitMass] = None,
     ) -> FileMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3219,9 +3224,10 @@ class FileAPI:
 
     def create_file_surface_area(
         self,
-        output_unit: UnitArea,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitArea] = None,
     ) -> FileSurfaceArea:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3268,9 +3274,10 @@ class FileAPI:
 
     def create_file_volume(
         self,
-        output_unit: UnitVolume,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitVolume] = None,
     ) -> FileVolume:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3324,9 +3331,10 @@ class AsyncFileAPI:
 
     async def create_file_center_of_mass(
         self,
-        output_unit: UnitLength,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitLength] = None,
     ) -> FileCenterOfMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3442,10 +3450,11 @@ class AsyncFileAPI:
     async def create_file_density(
         self,
         material_mass: float,
-        material_mass_unit: UnitMass,
-        output_unit: UnitDensity,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_mass_unit: Optional[UnitMass] = None,
+        output_unit: Optional[UnitDensity] = None,
     ) -> FileDensity:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3505,10 +3514,11 @@ class AsyncFileAPI:
     async def create_file_mass(
         self,
         material_density: float,
-        material_density_unit: UnitDensity,
-        output_unit: UnitMass,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_density_unit: Optional[UnitDensity] = None,
+        output_unit: Optional[UnitMass] = None,
     ) -> FileMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3567,9 +3577,10 @@ class AsyncFileAPI:
 
     async def create_file_surface_area(
         self,
-        output_unit: UnitArea,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitArea] = None,
     ) -> FileSurfaceArea:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3616,9 +3627,10 @@ class AsyncFileAPI:
 
     async def create_file_volume(
         self,
-        output_unit: UnitVolume,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitVolume] = None,
     ) -> FileVolume:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3889,10 +3901,10 @@ class Oauth2API:
     def oauth2_provider_callback(
         self,
         provider: AccountProvider,
-        code: str,
-        state: str,
         *,
+        code: Optional[str] = None,
         id_token: Optional[str] = None,
+        state: Optional[str] = None,
         user: Optional[str] = None,
     ):
         """Listen for callbacks for the OAuth 2.0 provider."""
@@ -4132,10 +4144,10 @@ class AsyncOauth2API:
     async def oauth2_provider_callback(
         self,
         provider: AccountProvider,
-        code: str,
-        state: str,
         *,
+        code: Optional[str] = None,
         id_token: Optional[str] = None,
+        state: Optional[str] = None,
         user: Optional[str] = None,
     ):
         """Listen for callbacks for the OAuth 2.0 provider."""
@@ -4376,11 +4388,11 @@ class OrgsAPI:
 
     def list_org_members(
         self,
-        sort_by: CreatedAtSortMode,
-        role: UserOrgRole,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        role: Optional[UserOrgRole] = None,
     ) -> OrgMemberResultsPage:
         """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
 
@@ -4691,10 +4703,10 @@ class OrgsAPI:
 
     def get_org_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ShortlinkResultsPage:
         """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
 
@@ -4738,10 +4750,10 @@ class OrgsAPI:
 
     def list_orgs(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> OrgResultsPage:
         """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
 
@@ -4976,11 +4988,11 @@ class AsyncOrgsAPI:
 
     async def list_org_members(
         self,
-        sort_by: CreatedAtSortMode,
-        role: UserOrgRole,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        role: Optional[UserOrgRole] = None,
     ) -> OrgMemberResultsPage:
         """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
 
@@ -5291,10 +5303,10 @@ class AsyncOrgsAPI:
 
     async def get_org_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ShortlinkResultsPage:
         """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
 
@@ -5338,10 +5350,10 @@ class AsyncOrgsAPI:
 
     async def list_orgs(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> OrgResultsPage:
         """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
 
@@ -5580,7 +5592,8 @@ class PaymentsAPI:
 
     def get_payment_balance_for_org(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
 
@@ -5807,8 +5820,9 @@ class PaymentsAPI:
 
     def get_payment_balance_for_any_org(
         self,
-        include_total_due: bool,
         id: Uuid,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified org."""
 
@@ -5841,8 +5855,9 @@ class PaymentsAPI:
     def update_payment_balance_for_any_org(
         self,
         id: Uuid,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified org."""
 
@@ -5982,7 +5997,8 @@ class PaymentsAPI:
 
     def get_payment_balance_for_user(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by any Zoo user. It gets the balance information for the authenticated user."""
 
@@ -6210,7 +6226,8 @@ class PaymentsAPI:
     def get_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified user."""
 
@@ -6243,8 +6260,9 @@ class PaymentsAPI:
     def update_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified user."""
 
@@ -6391,7 +6409,8 @@ class AsyncPaymentsAPI:
 
     async def get_payment_balance_for_org(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
 
@@ -6618,8 +6637,9 @@ class AsyncPaymentsAPI:
 
     async def get_payment_balance_for_any_org(
         self,
-        include_total_due: bool,
         id: Uuid,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified org."""
 
@@ -6652,8 +6672,9 @@ class AsyncPaymentsAPI:
     async def update_payment_balance_for_any_org(
         self,
         id: Uuid,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified org."""
 
@@ -6793,7 +6814,8 @@ class AsyncPaymentsAPI:
 
     async def get_payment_balance_for_user(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by any Zoo user. It gets the balance information for the authenticated user."""
 
@@ -7021,7 +7043,8 @@ class AsyncPaymentsAPI:
     async def get_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified user."""
 
@@ -7054,8 +7077,9 @@ class AsyncPaymentsAPI:
     async def update_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified user."""
 
@@ -7095,10 +7119,10 @@ class ServiceAccountsAPI:
 
     def list_service_accounts_for_org(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ServiceAccountResultsPage:
         """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
@@ -7237,10 +7261,10 @@ class AsyncServiceAccountsAPI:
 
     async def list_service_accounts_for_org(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ServiceAccountResultsPage:
         """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
@@ -8649,10 +8673,10 @@ class UsersAPI:
 
     def get_user_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ShortlinkResultsPage:
         """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
 
@@ -8769,10 +8793,10 @@ class UsersAPI:
 
     def list_users(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> UserResultsPage:
         """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
 
@@ -8816,10 +8840,10 @@ class UsersAPI:
 
     def list_users_extended(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ExtendedUserResultsPage:
         """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
 
@@ -9250,10 +9274,10 @@ class AsyncUsersAPI:
 
     async def get_user_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ShortlinkResultsPage:
         """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
 
@@ -9370,10 +9394,10 @@ class AsyncUsersAPI:
 
     async def list_users(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> UserResultsPage:
         """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
 
@@ -9417,10 +9441,10 @@ class AsyncUsersAPI:
 
     async def list_users_extended(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ExtendedUserResultsPage:
         """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
 
@@ -9599,10 +9623,10 @@ class ApiTokensAPI:
 
     def list_api_tokens_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiTokenResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
@@ -9737,10 +9761,10 @@ class AsyncApiTokensAPI:
 
     async def list_api_tokens_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> ApiTokenResultsPage:
         """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
@@ -9875,16 +9899,16 @@ class ModelingAPI:
 
     def modeling_commands_ws(
         self,
-        fps: int,
-        post_effect: PostEffectType,
-        show_grid: bool,
-        unlocked_framerate: bool,
-        video_res_height: int,
-        video_res_width: int,
-        webrtc: bool,
         api_call_id: Optional[str] = None,
+        fps: Optional[int] = None,
         pool: Optional[str] = None,
+        post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
+        show_grid: Optional[bool] = None,
+        unlocked_framerate: Optional[bool] = None,
+        video_res_height: Optional[int] = None,
+        video_res_width: Optional[int] = None,
+        webrtc: Optional[bool] = None,
     ) -> "WebSocketModelingCommandsWs":
         """Open a websocket which accepts modeling commands.
 
@@ -9913,16 +9937,16 @@ class AsyncModelingAPI:
 
     async def modeling_commands_ws(
         self,
-        fps: int,
-        post_effect: PostEffectType,
-        show_grid: bool,
-        unlocked_framerate: bool,
-        video_res_height: int,
-        video_res_width: int,
-        webrtc: bool,
         api_call_id: Optional[str] = None,
+        fps: Optional[int] = None,
         pool: Optional[str] = None,
+        post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
+        show_grid: Optional[bool] = None,
+        unlocked_framerate: Optional[bool] = None,
+        video_res_height: Optional[int] = None,
+        video_res_width: Optional[int] = None,
+        webrtc: Optional[bool] = None,
     ):
         """Open a websocket which accepts modeling commands.
 

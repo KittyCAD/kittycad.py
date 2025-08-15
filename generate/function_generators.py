@@ -57,9 +57,12 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
             )
 
             # Mark optional parameters
-            is_optional = not param.get("required", True) or param_schema.get(
-                "nullable", False
-            )
+            # For query parameters, default to optional (required=False) if not specified
+            # For path parameters, default to required (required=True) if not specified
+            default_required = param.get("in") == "path"
+            is_optional = not param.get(
+                "required", default_required
+            ) or param_schema.get("nullable", False)
             if is_optional and not arg_type.startswith("Optional["):
                 arg_type = f"Optional[{arg_type}]"
 
@@ -162,9 +165,12 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
             )
 
             # Mark optional parameters
-            is_optional = not param.get("required", True) or param_schema.get(
-                "nullable", False
-            )
+            # For query parameters, default to optional (required=False) if not specified
+            # For path parameters, default to required (required=True) if not specified
+            default_required = param.get("in") == "path"
+            is_optional = not param.get(
+                "required", default_required
+            ) or param_schema.get("nullable", False)
             if is_optional and not arg_type.startswith("Optional["):
                 arg_type = f"Optional[{arg_type}]"
 
