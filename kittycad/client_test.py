@@ -2,7 +2,6 @@ import json
 import os
 import time
 import uuid
-from typing import Optional, Union
 
 import pytest
 from websockets.exceptions import ConnectionClosedError
@@ -16,7 +15,6 @@ from .models import (
     AxisDirectionPair,
     CreatedAtSortMode,
     Direction,
-    Error,
     ExtendedUserResultsPage,
     FileCenterOfMass,
     FileConversion,
@@ -81,11 +79,13 @@ async def test_get_api_tokens_async():
 
 @pytest.mark.asyncio
 async def test_get_session_async():
-    # Create our client
-    client = KittyCAD()
+    from kittycad import AsyncKittyCAD
 
-    # Get the session using modern async pattern
-    session: Union[User, Error, None] = await client.api.users.get_user_self.asyncio()
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    # Get the session using new async pattern
+    session = await client.api.users.get_user_self()
 
     assert isinstance(session, User)
 
@@ -106,11 +106,13 @@ def test_ping():
 
 @pytest.mark.asyncio
 async def test_ping_async():
-    # Create our client
-    client = KittyCAD()
+    from kittycad import AsyncKittyCAD
 
-    # Get the message using modern async pattern
-    message: Union[Pong, Error, None] = await client.api.meta.ping.asyncio()
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    # Get the message using new async pattern
+    message = await client.api.meta.ping()
 
     assert isinstance(message, Pong)
 
@@ -152,18 +154,18 @@ def test_file_convert_stl():
 
 @pytest.mark.asyncio
 async def test_file_convert_stl_async():
-    # Create our client
-    client = KittyCAD()
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
     content = file.read()
     file.close()
 
-    # Get the file conversion using modern async pattern
-    result: Optional[
-        Union[FileConversion, Error]
-    ] = await client.api.file.create_file_conversion.asyncio(
+    # Get the file conversion using new async pattern
+    result = await client.api.file.create_file_conversion(
         body=content,
         src_format=FileImportFormat.STL,
         output_format=FileExportFormat.OBJ,
@@ -190,18 +192,18 @@ async def test_file_convert_stl_async():
 
 @pytest.mark.asyncio
 async def test_file_convert_obj_async():
-    # Create our client
-    client = KittyCAD()
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
     file = open(os.path.join(dir_path, "../assets/ORIGINALVOXEL-3.obj"), "rb")
     content = file.read()
     file.close()
 
-    # Get the file conversion using modern async pattern
-    result: Optional[
-        Union[FileConversion, Error]
-    ] = await client.api.file.create_file_conversion.asyncio(
+    # Get the file conversion using new async pattern
+    result = await client.api.file.create_file_conversion(
         body=content,
         src_format=FileImportFormat.OBJ,
         output_format=FileExportFormat.STL,

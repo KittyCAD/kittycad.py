@@ -3,7 +3,7 @@ from typing import Dict, List, Optional, Union
 
 import pytest
 
-from kittycad import KittyCAD
+from kittycad import AsyncKittyCAD, KittyCAD
 from kittycad.models import (
     AccountProvider,
     ApiCallQueryGroup,
@@ -177,9 +177,9 @@ def test_get_schema():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_schema_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result = await client.api.meta.get_schema.asyncio()
+    result = await client.api.meta.get_schema()
 
 
 @pytest.mark.skip
@@ -196,9 +196,9 @@ def test_get_ipinfo():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_ipinfo_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: IpAddrInfo = await client.api.meta.get_ipinfo.asyncio()
+    result: IpAddrInfo = await client.api.meta.get_ipinfo()
 
 
 @pytest.mark.skip
@@ -221,9 +221,9 @@ def test_create_text_to_cad():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_text_to_cad_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCad = await client.api.ml.create_text_to_cad.asyncio(
+    result: TextToCad = await client.api.ml.create_text_to_cad(
         output_format=FileExportFormat.FBX,
         kcl=None,
         body=TextToCadCreateBody(
@@ -248,11 +248,9 @@ def test_get_api_call_metrics():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_api_call_metrics_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[
-        ApiCallQueryGroup
-    ] = await client.api.api_calls.get_api_call_metrics.asyncio(
+    result: List[ApiCallQueryGroup] = await client.api.api_calls.get_api_call_metrics(
         group_by=ApiCallQueryGroupBy.EMAIL
     )
 
@@ -273,12 +271,10 @@ def test_list_api_calls():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_api_calls_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = (
-        await client.api.api_calls.list_api_calls.asyncio(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-        )
+    result: ApiCallWithPriceResultsPage = await client.api.api_calls.list_api_calls(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
 
@@ -296,11 +292,9 @@ def test_get_api_call():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_api_call_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPrice = await client.api.api_calls.get_api_call.asyncio(
-        id="<string>"
-    )
+    result: ApiCallWithPrice = await client.api.api_calls.get_api_call(id="<string>")
 
 
 @pytest.mark.skip
@@ -314,9 +308,9 @@ def test_apps_github_callback():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_apps_github_callback_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.apps.apps_github_callback.asyncio()
+    await client.api.apps.apps_github_callback()
 
 
 @pytest.mark.skip
@@ -333,9 +327,9 @@ def test_apps_github_consent():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_apps_github_consent_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: AppClientInfo = await client.api.apps.apps_github_consent.asyncio()
+    result: AppClientInfo = await client.api.apps.apps_github_consent()
 
 
 @pytest.mark.skip
@@ -349,9 +343,9 @@ def test_apps_github_webhook():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_apps_github_webhook_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.apps.apps_github_webhook.asyncio(body=bytes("some bytes", "utf-8"))
+    await client.api.apps.apps_github_webhook(body=bytes("some bytes", "utf-8"))
 
 
 @pytest.mark.skip
@@ -373,15 +367,13 @@ def test_list_async_operations():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_async_operations_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: AsyncApiCallResultsPage = (
-        await client.api.api_calls.list_async_operations.asyncio(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            status=ApiCallStatus.QUEUED,
-            limit=None,
-            page_token=None,
-        )
+    result: AsyncApiCallResultsPage = await client.api.api_calls.list_async_operations(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        status=ApiCallStatus.QUEUED,
+        limit=None,
+        page_token=None,
     )
 
 
@@ -423,7 +415,7 @@ def test_get_async_operation():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_async_operation_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: Optional[
         Union[
@@ -437,7 +429,7 @@ async def test_get_async_operation_async():
             TextToCadIteration,
             TextToCadMultiFileIteration,
         ]
-    ] = await client.api.api_calls.get_async_operation.asyncio(id="<string>")
+    ] = await client.api.api_calls.get_async_operation(id="<string>")
 
 
 @pytest.mark.skip
@@ -454,9 +446,9 @@ def test_auth_api_key():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_auth_api_key_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: AuthApiKeyResponse = await client.api.hidden.auth_api_key.asyncio()
+    result: AuthApiKeyResponse = await client.api.hidden.auth_api_key()
 
 
 @pytest.mark.skip
@@ -477,9 +469,9 @@ def test_auth_email():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_auth_email_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: VerificationTokenResponse = await client.api.hidden.auth_email.asyncio(
+    result: VerificationTokenResponse = await client.api.hidden.auth_email(
         body=EmailAuthenticationForm(
             email="<string>",
         )
@@ -499,9 +491,9 @@ def test_auth_email_callback():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_auth_email_callback_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.hidden.auth_email_callback.asyncio(
+    await client.api.hidden.auth_email_callback(
         email="<string>", token="<string>", callback_url=None
     )
 
@@ -517,9 +509,9 @@ def test_get_auth_saml_by_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_auth_saml_by_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.hidden.get_auth_saml_by_org.asyncio(
+    await client.api.hidden.get_auth_saml_by_org(
         org_id=Uuid("<string>"), callback_url=None
     )
 
@@ -535,9 +527,9 @@ def test_get_auth_saml():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_auth_saml_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.hidden.get_auth_saml.asyncio(
+    await client.api.hidden.get_auth_saml(
         provider_id=Uuid("<string>"), callback_url=None
     )
 
@@ -555,9 +547,9 @@ def test_post_auth_saml():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_post_auth_saml_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.hidden.post_auth_saml.asyncio(
+    await client.api.hidden.post_auth_saml(
         provider_id=Uuid("<string>"), body=bytes("some bytes", "utf-8")
     )
 
@@ -573,9 +565,9 @@ def test_community_sso():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_community_sso_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.meta.community_sso.asyncio(sig="<string>", sso="<string>")
+    await client.api.meta.community_sso(sig="<string>", sso="<string>")
 
 
 @pytest.mark.skip
@@ -592,9 +584,9 @@ def test_create_debug_uploads():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_debug_uploads_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[str] = await client.api.meta.create_debug_uploads.asyncio()
+    result: List[str] = await client.api.meta.create_debug_uploads()
 
 
 @pytest.mark.skip
@@ -618,9 +610,9 @@ def test_create_event():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_event_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.meta.create_event.asyncio(
+    await client.api.meta.create_event(
         body=Event(
             OptionModelingAppEvent(
                 created_at=datetime.datetime.now(),
@@ -651,9 +643,9 @@ def test_create_file_center_of_mass():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_center_of_mass_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FileCenterOfMass = await client.api.file.create_file_center_of_mass.asyncio(
+    result: FileCenterOfMass = await client.api.file.create_file_center_of_mass(
         output_unit=UnitLength.CM,
         src_format=FileImportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
@@ -703,38 +695,36 @@ def test_create_file_conversion_options():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_conversion_options_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FileConversion = (
-        await client.api.file.create_file_conversion_options.asyncio(
-            body=ConversionParams(
-                output_format=OutputFormat3d(
-                    OptionPly(
-                        coords=System(
-                            forward=AxisDirectionPair(
-                                axis=Axis.Y,
-                                direction=Direction.POSITIVE,
-                            ),
-                            up=AxisDirectionPair(
-                                axis=Axis.Y,
-                                direction=Direction.POSITIVE,
-                            ),
+    result: FileConversion = await client.api.file.create_file_conversion_options(
+        body=ConversionParams(
+            output_format=OutputFormat3d(
+                OptionPly(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
                         ),
-                        selection=Selection(
-                            OptionSceneByName(
-                                name="<string>",
-                            )
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
                         ),
-                        storage=PlyStorage.ASCII,
-                        units=UnitLength.CM,
-                    )
-                ),
-                src_format=InputFormat3d(
-                    OptionStep(
-                        split_closed_faces=False,
-                    )
-                ),
-            )
+                    ),
+                    selection=Selection(
+                        OptionSceneByName(
+                            name="<string>",
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
+                    units=UnitLength.CM,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionStep(
+                    split_closed_faces=False,
+                )
+            ),
         )
     )
 
@@ -757,9 +747,9 @@ def test_create_file_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FileConversion = await client.api.file.create_file_conversion.asyncio(
+    result: FileConversion = await client.api.file.create_file_conversion(
         output_format=FileExportFormat.FBX,
         src_format=FileImportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
@@ -786,9 +776,9 @@ def test_create_file_density():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_density_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FileDensity = await client.api.file.create_file_density.asyncio(
+    result: FileDensity = await client.api.file.create_file_density(
         material_mass=3.14,
         material_mass_unit=UnitMass.G,
         output_unit=UnitDensity.LB_FT3,
@@ -813,9 +803,9 @@ def test_create_file_execution():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_execution_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: CodeOutput = await client.api.executor.create_file_execution.asyncio(
+    result: CodeOutput = await client.api.executor.create_file_execution(
         lang=CodeLanguage.GO, output=None, body=bytes("some bytes", "utf-8")
     )
 
@@ -840,9 +830,9 @@ def test_create_file_mass():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_mass_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FileMass = await client.api.file.create_file_mass.asyncio(
+    result: FileMass = await client.api.file.create_file_mass(
         material_density=3.14,
         material_density_unit=UnitDensity.LB_FT3,
         output_unit=UnitMass.G,
@@ -869,9 +859,9 @@ def test_create_file_surface_area():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_surface_area_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FileSurfaceArea = await client.api.file.create_file_surface_area.asyncio(
+    result: FileSurfaceArea = await client.api.file.create_file_surface_area(
         output_unit=UnitArea.CM2,
         src_format=FileImportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
@@ -896,9 +886,9 @@ def test_create_file_volume():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_file_volume_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FileVolume = await client.api.file.create_file_volume.asyncio(
+    result: FileVolume = await client.api.file.create_file_volume(
         output_unit=UnitVolume.CM3,
         src_format=FileImportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
@@ -921,12 +911,10 @@ def test_internal_get_api_token_for_discord_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_internal_get_api_token_for_discord_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiToken = (
-        await client.api.meta.internal_get_api_token_for_discord_user.asyncio(
-            discord_id="<string>"
-        )
+    result: ApiToken = await client.api.meta.internal_get_api_token_for_discord_user(
+        discord_id="<string>"
     )
 
 
@@ -941,9 +929,9 @@ def test_logout():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_logout_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.hidden.logout.asyncio()
+    await client.api.hidden.logout()
 
 
 @pytest.mark.skip
@@ -962,9 +950,9 @@ def test_list_ml_prompts():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_ml_prompts_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: MlPromptResultsPage = await client.api.ml.list_ml_prompts.asyncio(
+    result: MlPromptResultsPage = await client.api.ml.list_ml_prompts(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
@@ -983,9 +971,9 @@ def test_get_ml_prompt():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_ml_prompt_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: MlPrompt = await client.api.ml.get_ml_prompt.asyncio(id="<string>")
+    result: MlPrompt = await client.api.ml.get_ml_prompt(id="<string>")
 
 
 @pytest.mark.skip
@@ -1004,12 +992,10 @@ def test_list_conversations_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_conversations_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ConversationResultsPage = (
-        await client.api.ml.list_conversations_for_user.asyncio(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-        )
+    result: ConversationResultsPage = await client.api.ml.list_conversations_for_user(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
 
@@ -1029,9 +1015,9 @@ def test_create_proprietary_to_kcl():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_proprietary_to_kcl_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: KclModel = await client.api.ml.create_proprietary_to_kcl.asyncio(
+    result: KclModel = await client.api.ml.create_proprietary_to_kcl(
         code_option=CodeOption.PARSE
     )
 
@@ -1061,20 +1047,18 @@ def test_create_kcl_code_completions():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_kcl_code_completions_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: KclCodeCompletionResponse = (
-        await client.api.ml.create_kcl_code_completions.asyncio(
-            body=KclCodeCompletionRequest(
-                extra=KclCodeCompletionParams(
-                    language="<string>",
-                    trim_by_indentation=False,
-                ),
-                prompt="<string>",
-                stop=["<string>"],
-                stream=False,
-                suffix="<string>",
-            )
+    result: KclCodeCompletionResponse = await client.api.ml.create_kcl_code_completions(
+        body=KclCodeCompletionRequest(
+            extra=KclCodeCompletionParams(
+                language="<string>",
+                trim_by_indentation=False,
+            ),
+            prompt="<string>",
+            stop=["<string>"],
+            stream=False,
+            suffix="<string>",
         )
     )
 
@@ -1112,28 +1096,26 @@ def test_create_text_to_cad_iteration():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_text_to_cad_iteration_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadIteration = (
-        await client.api.ml.create_text_to_cad_iteration.asyncio(
-            body=TextToCadIterationBody(
-                original_source_code="<string>",
-                source_ranges=[
-                    SourceRangePrompt(
-                        prompt="<string>",
-                        range=SourceRange(
-                            end=SourcePosition(
-                                column=10,
-                                line=10,
-                            ),
-                            start=SourcePosition(
-                                column=10,
-                                line=10,
-                            ),
+    result: TextToCadIteration = await client.api.ml.create_text_to_cad_iteration(
+        body=TextToCadIterationBody(
+            original_source_code="<string>",
+            source_ranges=[
+                SourceRangePrompt(
+                    prompt="<string>",
+                    range=SourceRange(
+                        end=SourcePosition(
+                            column=10,
+                            line=10,
                         ),
-                    )
-                ],
-            )
+                        start=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                    ),
+                )
+            ],
         )
     )
 
@@ -1172,10 +1154,10 @@ def test_create_text_to_cad_multi_file_iteration():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_text_to_cad_multi_file_iteration_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: TextToCadMultiFileIteration = (
-        await client.api.ml.create_text_to_cad_multi_file_iteration.asyncio(
+        await client.api.ml.create_text_to_cad_multi_file_iteration(
             body=TextToCadMultiFileIterationBody(
                 source_ranges=[
                     SourceRangePrompt(
@@ -1208,9 +1190,9 @@ def test_delete_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.orgs.delete_org.asyncio()
+    await client.api.orgs.delete_org()
 
 
 @pytest.mark.skip
@@ -1227,9 +1209,9 @@ def test_get_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Org = await client.api.orgs.get_org.asyncio()
+    result: Org = await client.api.orgs.get_org()
 
 
 @pytest.mark.skip
@@ -1252,9 +1234,9 @@ def test_create_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Org = await client.api.orgs.create_org.asyncio(
+    result: Org = await client.api.orgs.create_org(
         body=OrgDetails(
             billing_email="<string>",
             name="<string>",
@@ -1283,9 +1265,9 @@ def test_update_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Org = await client.api.orgs.update_org.asyncio(
+    result: Org = await client.api.orgs.update_org(
         body=OrgDetails(
             billing_email="<string>",
             name="<string>",
@@ -1310,12 +1292,10 @@ def test_org_list_api_calls():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_org_list_api_calls_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = (
-        await client.api.api_calls.org_list_api_calls.asyncio(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-        )
+    result: ApiCallWithPriceResultsPage = await client.api.api_calls.org_list_api_calls(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
 
@@ -1333,9 +1313,9 @@ def test_get_api_call_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_api_call_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPrice = await client.api.api_calls.get_api_call_for_org.asyncio(
+    result: ApiCallWithPrice = await client.api.api_calls.get_api_call_for_org(
         id="<string>"
     )
 
@@ -1359,9 +1339,9 @@ def test_list_org_members():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_org_members_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgMemberResultsPage = await client.api.orgs.list_org_members.asyncio(
+    result: OrgMemberResultsPage = await client.api.orgs.list_org_members(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         role=UserOrgRole.ADMIN,
         limit=None,
@@ -1388,9 +1368,9 @@ def test_create_org_member():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_org_member_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgMember = await client.api.orgs.create_org_member.asyncio(
+    result: OrgMember = await client.api.orgs.create_org_member(
         body=AddOrgMember(
             email="<string>",
             role=UserOrgRole.ADMIN,
@@ -1409,9 +1389,9 @@ def test_delete_org_member():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_org_member_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.orgs.delete_org_member.asyncio(user_id=Uuid("<string>"))
+    await client.api.orgs.delete_org_member(user_id=Uuid("<string>"))
 
 
 @pytest.mark.skip
@@ -1428,11 +1408,9 @@ def test_get_org_member():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_org_member_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgMember = await client.api.orgs.get_org_member.asyncio(
-        user_id=Uuid("<string>")
-    )
+    result: OrgMember = await client.api.orgs.get_org_member(user_id=Uuid("<string>"))
 
 
 @pytest.mark.skip
@@ -1454,9 +1432,9 @@ def test_update_org_member():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_org_member_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgMember = await client.api.orgs.update_org_member.asyncio(
+    result: OrgMember = await client.api.orgs.update_org_member(
         user_id=Uuid("<string>"),
         body=UpdateMemberToOrgBody(
             role=UserOrgRole.ADMIN,
@@ -1475,9 +1453,9 @@ def test_delete_payment_information_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_payment_information_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.payments.delete_payment_information_for_org.asyncio()
+    await client.api.payments.delete_payment_information_for_org()
 
 
 @pytest.mark.skip
@@ -1494,11 +1472,9 @@ def test_get_payment_information_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_payment_information_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Customer = (
-        await client.api.payments.get_payment_information_for_org.asyncio()
-    )
+    result: Customer = await client.api.payments.get_payment_information_for_org()
 
 
 @pytest.mark.skip
@@ -1520,14 +1496,12 @@ def test_create_payment_information_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_payment_information_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Customer = (
-        await client.api.payments.create_payment_information_for_org.asyncio(
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            )
+    result: Customer = await client.api.payments.create_payment_information_for_org(
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
         )
     )
 
@@ -1551,14 +1525,12 @@ def test_update_payment_information_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_payment_information_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Customer = (
-        await client.api.payments.update_payment_information_for_org.asyncio(
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            )
+    result: Customer = await client.api.payments.update_payment_information_for_org(
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
         )
     )
 
@@ -1579,12 +1551,10 @@ def test_get_payment_balance_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_payment_balance_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: CustomerBalance = (
-        await client.api.payments.get_payment_balance_for_org.asyncio(
-            include_total_due=False
-        )
+    result: CustomerBalance = await client.api.payments.get_payment_balance_for_org(
+        include_total_due=False
     )
 
 
@@ -1602,11 +1572,9 @@ def test_create_payment_intent_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_payment_intent_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: PaymentIntent = (
-        await client.api.payments.create_payment_intent_for_org.asyncio()
-    )
+    result: PaymentIntent = await client.api.payments.create_payment_intent_for_org()
 
 
 @pytest.mark.skip
@@ -1623,9 +1591,9 @@ def test_list_invoices_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_invoices_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[Invoice] = await client.api.payments.list_invoices_for_org.asyncio()
+    result: List[Invoice] = await client.api.payments.list_invoices_for_org()
 
 
 @pytest.mark.skip
@@ -1642,11 +1610,11 @@ def test_list_payment_methods_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_payment_methods_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: List[
         PaymentMethod
-    ] = await client.api.payments.list_payment_methods_for_org.asyncio()
+    ] = await client.api.payments.list_payment_methods_for_org()
 
 
 @pytest.mark.skip
@@ -1660,9 +1628,9 @@ def test_delete_payment_method_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_payment_method_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.payments.delete_payment_method_for_org.asyncio(id="<string>")
+    await client.api.payments.delete_payment_method_for_org(id="<string>")
 
 
 @pytest.mark.skip
@@ -1679,11 +1647,9 @@ def test_get_org_subscription():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_org_subscription_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ZooProductSubscriptions = (
-        await client.api.payments.get_org_subscription.asyncio()
-    )
+    result: ZooProductSubscriptions = await client.api.payments.get_org_subscription()
 
 
 @pytest.mark.skip
@@ -1704,13 +1670,11 @@ def test_create_org_subscription():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_org_subscription_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ZooProductSubscriptions = (
-        await client.api.payments.create_org_subscription.asyncio(
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            )
+    result: ZooProductSubscriptions = await client.api.payments.create_org_subscription(
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
         )
     )
 
@@ -1733,13 +1697,11 @@ def test_update_org_subscription():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_org_subscription_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ZooProductSubscriptions = (
-        await client.api.payments.update_org_subscription.asyncio(
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
-            )
+    result: ZooProductSubscriptions = await client.api.payments.update_org_subscription(
+        body=ZooProductSubscriptionsOrgRequest(
+            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
         )
     )
 
@@ -1755,9 +1717,9 @@ def test_validate_customer_tax_information_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_validate_customer_tax_information_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.payments.validate_customer_tax_information_for_org.asyncio()
+    await client.api.payments.validate_customer_tax_information_for_org()
 
 
 @pytest.mark.skip
@@ -1774,9 +1736,9 @@ def test_get_org_privacy_settings():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_org_privacy_settings_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: PrivacySettings = await client.api.orgs.get_org_privacy_settings.asyncio()
+    result: PrivacySettings = await client.api.orgs.get_org_privacy_settings()
 
 
 @pytest.mark.skip
@@ -1797,9 +1759,9 @@ def test_update_org_privacy_settings():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_org_privacy_settings_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: PrivacySettings = await client.api.orgs.update_org_privacy_settings.asyncio(
+    result: PrivacySettings = await client.api.orgs.update_org_privacy_settings(
         body=PrivacySettings(
             can_train_on_data=False,
         )
@@ -1817,9 +1779,9 @@ def test_delete_org_saml_idp():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_org_saml_idp_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.orgs.delete_org_saml_idp.asyncio()
+    await client.api.orgs.delete_org_saml_idp()
 
 
 @pytest.mark.skip
@@ -1836,9 +1798,9 @@ def test_get_org_saml_idp():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_org_saml_idp_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: SamlIdentityProvider = await client.api.orgs.get_org_saml_idp.asyncio()
+    result: SamlIdentityProvider = await client.api.orgs.get_org_saml_idp()
 
 
 @pytest.mark.skip
@@ -1865,9 +1827,9 @@ def test_create_org_saml_idp():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_org_saml_idp_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: SamlIdentityProvider = await client.api.orgs.create_org_saml_idp.asyncio(
+    result: SamlIdentityProvider = await client.api.orgs.create_org_saml_idp(
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
@@ -1904,9 +1866,9 @@ def test_update_org_saml_idp():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_org_saml_idp_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: SamlIdentityProvider = await client.api.orgs.update_org_saml_idp.asyncio(
+    result: SamlIdentityProvider = await client.api.orgs.update_org_saml_idp(
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
@@ -1937,10 +1899,10 @@ def test_list_service_accounts_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_service_accounts_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ServiceAccountResultsPage = (
-        await client.api.service_accounts.list_service_accounts_for_org.asyncio(
+        await client.api.service_accounts.list_service_accounts_for_org(
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
         )
     )
@@ -1962,12 +1924,10 @@ def test_create_service_account_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_service_account_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ServiceAccount = (
-        await client.api.service_accounts.create_service_account_for_org.asyncio(
-            label=None
-        )
+        await client.api.service_accounts.create_service_account_for_org(label=None)
     )
 
 
@@ -1984,9 +1944,9 @@ def test_delete_service_account_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_service_account_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.service_accounts.delete_service_account_for_org.asyncio(
+    await client.api.service_accounts.delete_service_account_for_org(
         token=ServiceAccountUuid("<string>")
     )
 
@@ -2007,10 +1967,10 @@ def test_get_service_account_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_service_account_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ServiceAccount = (
-        await client.api.service_accounts.get_service_account_for_org.asyncio(
+        await client.api.service_accounts.get_service_account_for_org(
             token=ServiceAccountUuid("<string>")
         )
     )
@@ -2032,9 +1992,9 @@ def test_get_org_shortlinks():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_org_shortlinks_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ShortlinkResultsPage = await client.api.orgs.get_org_shortlinks.asyncio(
+    result: ShortlinkResultsPage = await client.api.orgs.get_org_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
@@ -2055,9 +2015,9 @@ def test_list_orgs():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_orgs_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgResultsPage = await client.api.orgs.list_orgs.asyncio(
+    result: OrgResultsPage = await client.api.orgs.list_orgs(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
@@ -2076,9 +2036,9 @@ def test_get_any_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_any_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Org = await client.api.orgs.get_any_org.asyncio(id=Uuid("<string>"))
+    result: Org = await client.api.orgs.get_any_org(id=Uuid("<string>"))
 
 
 @pytest.mark.skip
@@ -2103,10 +2063,10 @@ def test_update_enterprise_pricing_for_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_enterprise_pricing_for_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ZooProductSubscriptions = (
-        await client.api.orgs.update_enterprise_pricing_for_org.asyncio(
+        await client.api.orgs.update_enterprise_pricing_for_org(
             id=Uuid("<string>"),
             body=EnterpriseSubscriptionTierPrice(
                 OptionFlat(
@@ -2134,12 +2094,10 @@ def test_get_payment_balance_for_any_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_payment_balance_for_any_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: CustomerBalance = (
-        await client.api.payments.get_payment_balance_for_any_org.asyncio(
-            include_total_due=False, id=Uuid("<string>")
-        )
+    result: CustomerBalance = await client.api.payments.get_payment_balance_for_any_org(
+        include_total_due=False, id=Uuid("<string>")
     )
 
 
@@ -2159,10 +2117,10 @@ def test_update_payment_balance_for_any_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_payment_balance_for_any_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: CustomerBalance = (
-        await client.api.payments.update_payment_balance_for_any_org.asyncio(
+        await client.api.payments.update_payment_balance_for_any_org(
             id=Uuid("<string>"), include_total_due=False, body=UpdatePaymentBalance()
         )
     )
@@ -2182,9 +2140,9 @@ def test_ping():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_ping_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Pong = await client.api.meta.ping.asyncio()
+    result: Pong = await client.api.meta.ping()
 
 
 @pytest.mark.skip
@@ -2201,9 +2159,9 @@ def test_get_pricing_subscriptions():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_pricing_subscriptions_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Dict = await client.api.meta.get_pricing_subscriptions.asyncio()
+    result: Dict = await client.api.meta.get_pricing_subscriptions()
 
 
 @pytest.mark.skip
@@ -2224,9 +2182,9 @@ def test_create_store_coupon():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_store_coupon_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: DiscountCode = await client.api.store.create_store_coupon.asyncio(
+    result: DiscountCode = await client.api.store.create_store_coupon(
         body=StoreCouponParams(
             percent_off=10,
         )
@@ -2249,12 +2207,10 @@ def test_get_angle_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_angle_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitAngleConversion = (
-        await client.api.unit.get_angle_unit_conversion.asyncio(
-            input_unit=UnitAngle.DEGREES, output_unit=UnitAngle.DEGREES, value=3.14
-        )
+    result: UnitAngleConversion = await client.api.unit.get_angle_unit_conversion(
+        input_unit=UnitAngle.DEGREES, output_unit=UnitAngle.DEGREES, value=3.14
     )
 
 
@@ -2274,9 +2230,9 @@ def test_get_area_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_area_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitAreaConversion = await client.api.unit.get_area_unit_conversion.asyncio(
+    result: UnitAreaConversion = await client.api.unit.get_area_unit_conversion(
         input_unit=UnitArea.CM2, output_unit=UnitArea.CM2, value=3.14
     )
 
@@ -2297,12 +2253,10 @@ def test_get_current_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_current_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitCurrentConversion = (
-        await client.api.unit.get_current_unit_conversion.asyncio(
-            input_unit=UnitCurrent.AMPERES, output_unit=UnitCurrent.AMPERES, value=3.14
-        )
+    result: UnitCurrentConversion = await client.api.unit.get_current_unit_conversion(
+        input_unit=UnitCurrent.AMPERES, output_unit=UnitCurrent.AMPERES, value=3.14
     )
 
 
@@ -2322,12 +2276,10 @@ def test_get_energy_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_energy_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitEnergyConversion = (
-        await client.api.unit.get_energy_unit_conversion.asyncio(
-            input_unit=UnitEnergy.BTU, output_unit=UnitEnergy.BTU, value=3.14
-        )
+    result: UnitEnergyConversion = await client.api.unit.get_energy_unit_conversion(
+        input_unit=UnitEnergy.BTU, output_unit=UnitEnergy.BTU, value=3.14
     )
 
 
@@ -2347,12 +2299,10 @@ def test_get_force_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_force_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitForceConversion = (
-        await client.api.unit.get_force_unit_conversion.asyncio(
-            input_unit=UnitForce.DYNES, output_unit=UnitForce.DYNES, value=3.14
-        )
+    result: UnitForceConversion = await client.api.unit.get_force_unit_conversion(
+        input_unit=UnitForce.DYNES, output_unit=UnitForce.DYNES, value=3.14
     )
 
 
@@ -2374,10 +2324,10 @@ def test_get_frequency_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_frequency_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: UnitFrequencyConversion = (
-        await client.api.unit.get_frequency_unit_conversion.asyncio(
+        await client.api.unit.get_frequency_unit_conversion(
             input_unit=UnitFrequency.GIGAHERTZ,
             output_unit=UnitFrequency.GIGAHERTZ,
             value=3.14,
@@ -2401,12 +2351,10 @@ def test_get_length_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_length_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitLengthConversion = (
-        await client.api.unit.get_length_unit_conversion.asyncio(
-            input_unit=UnitLength.CM, output_unit=UnitLength.CM, value=3.14
-        )
+    result: UnitLengthConversion = await client.api.unit.get_length_unit_conversion(
+        input_unit=UnitLength.CM, output_unit=UnitLength.CM, value=3.14
     )
 
 
@@ -2426,9 +2374,9 @@ def test_get_mass_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_mass_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitMassConversion = await client.api.unit.get_mass_unit_conversion.asyncio(
+    result: UnitMassConversion = await client.api.unit.get_mass_unit_conversion(
         input_unit=UnitMass.G, output_unit=UnitMass.G, value=3.14
     )
 
@@ -2451,14 +2399,12 @@ def test_get_power_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_power_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitPowerConversion = (
-        await client.api.unit.get_power_unit_conversion.asyncio(
-            input_unit=UnitPower.BTU_PER_MINUTE,
-            output_unit=UnitPower.BTU_PER_MINUTE,
-            value=3.14,
-        )
+    result: UnitPowerConversion = await client.api.unit.get_power_unit_conversion(
+        input_unit=UnitPower.BTU_PER_MINUTE,
+        output_unit=UnitPower.BTU_PER_MINUTE,
+        value=3.14,
     )
 
 
@@ -2480,14 +2426,12 @@ def test_get_pressure_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_pressure_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitPressureConversion = (
-        await client.api.unit.get_pressure_unit_conversion.asyncio(
-            input_unit=UnitPressure.ATMOSPHERES,
-            output_unit=UnitPressure.ATMOSPHERES,
-            value=3.14,
-        )
+    result: UnitPressureConversion = await client.api.unit.get_pressure_unit_conversion(
+        input_unit=UnitPressure.ATMOSPHERES,
+        output_unit=UnitPressure.ATMOSPHERES,
+        value=3.14,
     )
 
 
@@ -2509,10 +2453,10 @@ def test_get_temperature_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_temperature_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: UnitTemperatureConversion = (
-        await client.api.unit.get_temperature_unit_conversion.asyncio(
+        await client.api.unit.get_temperature_unit_conversion(
             input_unit=UnitTemperature.CELSIUS,
             output_unit=UnitTemperature.CELSIUS,
             value=3.14,
@@ -2538,14 +2482,12 @@ def test_get_torque_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_torque_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitTorqueConversion = (
-        await client.api.unit.get_torque_unit_conversion.asyncio(
-            input_unit=UnitTorque.NEWTON_METRES,
-            output_unit=UnitTorque.NEWTON_METRES,
-            value=3.14,
-        )
+    result: UnitTorqueConversion = await client.api.unit.get_torque_unit_conversion(
+        input_unit=UnitTorque.NEWTON_METRES,
+        output_unit=UnitTorque.NEWTON_METRES,
+        value=3.14,
     )
 
 
@@ -2565,12 +2507,10 @@ def test_get_volume_unit_conversion():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_volume_unit_conversion_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UnitVolumeConversion = (
-        await client.api.unit.get_volume_unit_conversion.asyncio(
-            input_unit=UnitVolume.CM3, output_unit=UnitVolume.CM3, value=3.14
-        )
+    result: UnitVolumeConversion = await client.api.unit.get_volume_unit_conversion(
+        input_unit=UnitVolume.CM3, output_unit=UnitVolume.CM3, value=3.14
     )
 
 
@@ -2585,9 +2525,9 @@ def test_delete_user_self():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_user_self_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.users.delete_user_self.asyncio()
+    await client.api.users.delete_user_self()
 
 
 @pytest.mark.skip
@@ -2604,9 +2544,9 @@ def test_get_user_self():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_self_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: User = await client.api.users.get_user_self.asyncio()
+    result: User = await client.api.users.get_user_self()
 
 
 @pytest.mark.skip
@@ -2633,9 +2573,9 @@ def test_update_user_self():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_user_self_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: User = await client.api.users.update_user_self.asyncio(
+    result: User = await client.api.users.update_user_self(
         body=UpdateUser(
             company="<string>",
             discord="<string>",
@@ -2664,10 +2604,10 @@ def test_user_list_api_calls():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_user_list_api_calls_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ApiCallWithPriceResultsPage = (
-        await client.api.api_calls.user_list_api_calls.asyncio(
+        await client.api.api_calls.user_list_api_calls(
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
         )
     )
@@ -2687,9 +2627,9 @@ def test_get_api_call_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_api_call_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPrice = await client.api.api_calls.get_api_call_for_user.asyncio(
+    result: ApiCallWithPrice = await client.api.api_calls.get_api_call_for_user(
         id="<string>"
     )
 
@@ -2710,12 +2650,10 @@ def test_list_api_tokens_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_api_tokens_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiTokenResultsPage = (
-        await client.api.api_tokens.list_api_tokens_for_user.asyncio(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-        )
+    result: ApiTokenResultsPage = await client.api.api_tokens.list_api_tokens_for_user(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
 
@@ -2733,11 +2671,9 @@ def test_create_api_token_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_api_token_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiToken = await client.api.api_tokens.create_api_token_for_user.asyncio(
-        label=None
-    )
+    result: ApiToken = await client.api.api_tokens.create_api_token_for_user(label=None)
 
 
 @pytest.mark.skip
@@ -2751,9 +2687,9 @@ def test_delete_api_token_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_api_token_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.api_tokens.delete_api_token_for_user.asyncio(
+    await client.api.api_tokens.delete_api_token_for_user(
         token=ApiTokenUuid("<string>")
     )
 
@@ -2774,9 +2710,9 @@ def test_get_api_token_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_api_token_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiToken = await client.api.api_tokens.get_api_token_for_user.asyncio(
+    result: ApiToken = await client.api.api_tokens.get_api_token_for_user(
         token=ApiTokenUuid("<string>")
     )
 
@@ -2792,9 +2728,9 @@ def test_patch_user_crm():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_patch_user_crm_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.users.patch_user_crm.asyncio(body=CrmData())
+    await client.api.users.patch_user_crm(body=CrmData())
 
 
 @pytest.mark.skip
@@ -2811,9 +2747,9 @@ def test_get_user_self_extended():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_self_extended_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ExtendedUser = await client.api.users.get_user_self_extended.asyncio()
+    result: ExtendedUser = await client.api.users.get_user_self_extended()
 
 
 @pytest.mark.skip
@@ -2835,9 +2771,9 @@ def test_put_user_form_self():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_put_user_form_self_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.users.put_user_form_self.asyncio(
+    await client.api.users.put_user_form_self(
         body=InquiryForm(
             email="<string>",
             first_name="<string>",
@@ -2862,11 +2798,11 @@ def test_get_oauth2_providers_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_oauth2_providers_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: List[
         AccountProvider
-    ] = await client.api.users.get_oauth2_providers_for_user.asyncio()
+    ] = await client.api.users.get_oauth2_providers_for_user()
 
 
 @pytest.mark.skip
@@ -2883,9 +2819,9 @@ def test_get_user_org():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_org_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UserOrgInfo = await client.api.orgs.get_user_org.asyncio()
+    result: UserOrgInfo = await client.api.orgs.get_user_org()
 
 
 @pytest.mark.skip
@@ -2899,9 +2835,9 @@ def test_delete_payment_information_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_payment_information_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.payments.delete_payment_information_for_user.asyncio()
+    await client.api.payments.delete_payment_information_for_user()
 
 
 @pytest.mark.skip
@@ -2918,11 +2854,9 @@ def test_get_payment_information_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_payment_information_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Customer = (
-        await client.api.payments.get_payment_information_for_user.asyncio()
-    )
+    result: Customer = await client.api.payments.get_payment_information_for_user()
 
 
 @pytest.mark.skip
@@ -2944,14 +2878,12 @@ def test_create_payment_information_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_payment_information_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Customer = (
-        await client.api.payments.create_payment_information_for_user.asyncio(
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            )
+    result: Customer = await client.api.payments.create_payment_information_for_user(
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
         )
     )
 
@@ -2975,14 +2907,12 @@ def test_update_payment_information_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_payment_information_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Customer = (
-        await client.api.payments.update_payment_information_for_user.asyncio(
-            body=BillingInfo(
-                name="<string>",
-                phone="<string>",
-            )
+    result: Customer = await client.api.payments.update_payment_information_for_user(
+        body=BillingInfo(
+            name="<string>",
+            phone="<string>",
         )
     )
 
@@ -3003,12 +2933,10 @@ def test_get_payment_balance_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_payment_balance_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: CustomerBalance = (
-        await client.api.payments.get_payment_balance_for_user.asyncio(
-            include_total_due=False
-        )
+    result: CustomerBalance = await client.api.payments.get_payment_balance_for_user(
+        include_total_due=False
     )
 
 
@@ -3026,11 +2954,9 @@ def test_create_payment_intent_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_payment_intent_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: PaymentIntent = (
-        await client.api.payments.create_payment_intent_for_user.asyncio()
-    )
+    result: PaymentIntent = await client.api.payments.create_payment_intent_for_user()
 
 
 @pytest.mark.skip
@@ -3047,9 +2973,9 @@ def test_list_invoices_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_invoices_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[Invoice] = await client.api.payments.list_invoices_for_user.asyncio()
+    result: List[Invoice] = await client.api.payments.list_invoices_for_user()
 
 
 @pytest.mark.skip
@@ -3066,11 +2992,11 @@ def test_list_payment_methods_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_payment_methods_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: List[
         PaymentMethod
-    ] = await client.api.payments.list_payment_methods_for_user.asyncio()
+    ] = await client.api.payments.list_payment_methods_for_user()
 
 
 @pytest.mark.skip
@@ -3084,9 +3010,9 @@ def test_delete_payment_method_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_payment_method_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.payments.delete_payment_method_for_user.asyncio(id="<string>")
+    await client.api.payments.delete_payment_method_for_user(id="<string>")
 
 
 @pytest.mark.skip
@@ -3103,11 +3029,9 @@ def test_get_user_subscription():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_subscription_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ZooProductSubscriptions = (
-        await client.api.payments.get_user_subscription.asyncio()
-    )
+    result: ZooProductSubscriptions = await client.api.payments.get_user_subscription()
 
 
 @pytest.mark.skip
@@ -3128,10 +3052,10 @@ def test_create_user_subscription():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_user_subscription_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ZooProductSubscriptions = (
-        await client.api.payments.create_user_subscription.asyncio(
+        await client.api.payments.create_user_subscription(
             body=ZooProductSubscriptionsUserRequest(
                 modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
             )
@@ -3157,10 +3081,10 @@ def test_update_user_subscription():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_user_subscription_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ZooProductSubscriptions = (
-        await client.api.payments.update_user_subscription.asyncio(
+        await client.api.payments.update_user_subscription(
             body=ZooProductSubscriptionsUserRequest(
                 modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
             )
@@ -3179,9 +3103,9 @@ def test_validate_customer_tax_information_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_validate_customer_tax_information_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.payments.validate_customer_tax_information_for_user.asyncio()
+    await client.api.payments.validate_customer_tax_information_for_user()
 
 
 @pytest.mark.skip
@@ -3198,9 +3122,9 @@ def test_get_user_privacy_settings():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_privacy_settings_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: PrivacySettings = await client.api.users.get_user_privacy_settings.asyncio()
+    result: PrivacySettings = await client.api.users.get_user_privacy_settings()
 
 
 @pytest.mark.skip
@@ -3221,13 +3145,11 @@ def test_update_user_privacy_settings():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_user_privacy_settings_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: PrivacySettings = (
-        await client.api.users.update_user_privacy_settings.asyncio(
-            body=PrivacySettings(
-                can_train_on_data=False,
-            )
+    result: PrivacySettings = await client.api.users.update_user_privacy_settings(
+        body=PrivacySettings(
+            can_train_on_data=False,
         )
     )
 
@@ -3248,9 +3170,9 @@ def test_get_session_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_session_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Session = await client.api.users.get_session_for_user.asyncio(
+    result: Session = await client.api.users.get_session_for_user(
         token=SessionUuid("<string>")
     )
 
@@ -3271,9 +3193,9 @@ def test_get_user_shortlinks():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_shortlinks_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ShortlinkResultsPage = await client.api.users.get_user_shortlinks.asyncio(
+    result: ShortlinkResultsPage = await client.api.users.get_user_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
@@ -3297,14 +3219,12 @@ def test_create_user_shortlink():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_user_shortlink_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: CreateShortlinkResponse = (
-        await client.api.users.create_user_shortlink.asyncio(
-            body=CreateShortlinkRequest(
-                restrict_to_org=False,
-                url="<string>",
-            )
+    result: CreateShortlinkResponse = await client.api.users.create_user_shortlink(
+        body=CreateShortlinkRequest(
+            restrict_to_org=False,
+            url="<string>",
         )
     )
 
@@ -3320,9 +3240,9 @@ def test_delete_user_shortlink():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_delete_user_shortlink_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.users.delete_user_shortlink.asyncio(key="<string>")
+    await client.api.users.delete_user_shortlink(key="<string>")
 
 
 @pytest.mark.skip
@@ -3336,9 +3256,9 @@ def test_redirect_user_shortlink():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_redirect_user_shortlink_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.hidden.redirect_user_shortlink.asyncio(key="<string>")
+    await client.api.hidden.redirect_user_shortlink(key="<string>")
 
 
 @pytest.mark.skip
@@ -3357,9 +3277,9 @@ def test_update_user_shortlink():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_user_shortlink_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.users.update_user_shortlink.asyncio(
+    await client.api.users.update_user_shortlink(
         key="<string>",
         body=UpdateShortlinkRequest(
             restrict_to_org=False,
@@ -3389,10 +3309,10 @@ def test_list_text_to_cad_models_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_text_to_cad_models_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: TextToCadResponseResultsPage = (
-        await client.api.ml.list_text_to_cad_models_for_user.asyncio(
+        await client.api.ml.list_text_to_cad_models_for_user(
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
             conversation_id=Uuid("<string>"),
             limit=None,
@@ -3418,10 +3338,10 @@ def test_get_text_to_cad_model_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_text_to_cad_model_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponse = (
-        await client.api.ml.get_text_to_cad_model_for_user.asyncio(id="<string>")
+    result: TextToCadResponse = await client.api.ml.get_text_to_cad_model_for_user(
+        id="<string>"
     )
 
 
@@ -3438,9 +3358,9 @@ def test_create_text_to_cad_model_feedback():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_text_to_cad_model_feedback_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.ml.create_text_to_cad_model_feedback.asyncio(
+    await client.api.ml.create_text_to_cad_model_feedback(
         id="<string>", feedback=MlFeedback.THUMBS_UP
     )
 
@@ -3461,9 +3381,9 @@ def test_list_users():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_users_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UserResultsPage = await client.api.users.list_users.asyncio(
+    result: UserResultsPage = await client.api.users.list_users(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
@@ -3484,12 +3404,10 @@ def test_list_users_extended():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_users_extended_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ExtendedUserResultsPage = (
-        await client.api.users.list_users_extended.asyncio(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-        )
+    result: ExtendedUserResultsPage = await client.api.users.list_users_extended(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
 
 
@@ -3509,9 +3427,9 @@ def test_get_user_extended():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_extended_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ExtendedUser = await client.api.users.get_user_extended.asyncio(
+    result: ExtendedUser = await client.api.users.get_user_extended(
         id=UserIdentifier("<string>")
     )
 
@@ -3530,11 +3448,9 @@ def test_get_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: User = await client.api.users.get_user.asyncio(
-        id=UserIdentifier("<string>")
-    )
+    result: User = await client.api.users.get_user(id=UserIdentifier("<string>"))
 
 
 @pytest.mark.skip
@@ -3556,10 +3472,10 @@ def test_list_api_calls_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_list_api_calls_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ApiCallWithPriceResultsPage = (
-        await client.api.api_calls.list_api_calls_for_user.asyncio(
+        await client.api.api_calls.list_api_calls_for_user(
             id=UserIdentifier("<string>"),
             sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
             limit=None,
@@ -3584,10 +3500,10 @@ def test_get_payment_balance_for_any_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_get_payment_balance_for_any_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: CustomerBalance = (
-        await client.api.payments.get_payment_balance_for_any_user.asyncio(
+        await client.api.payments.get_payment_balance_for_any_user(
             id=UserIdentifier("<string>"), include_total_due=False
         )
     )
@@ -3611,10 +3527,10 @@ def test_update_payment_balance_for_any_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_payment_balance_for_any_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: CustomerBalance = (
-        await client.api.payments.update_payment_balance_for_any_user.asyncio(
+        await client.api.payments.update_payment_balance_for_any_user(
             id=UserIdentifier("<string>"),
             include_total_due=False,
             body=UpdatePaymentBalance(),
@@ -3641,10 +3557,10 @@ def test_update_subscription_for_user():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_update_subscription_for_user_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ZooProductSubscriptions = (
-        await client.api.users.update_subscription_for_user.asyncio(
+        await client.api.users.update_subscription_for_user(
             id=UserIdentifier("<string>"),
             body=ZooProductSubscriptionsUserRequest(
                 modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
@@ -3672,9 +3588,9 @@ def test_put_public_form():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_put_public_form_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.users.put_public_form.asyncio(
+    await client.api.users.put_public_form(
         body=InquiryForm(
             email="<string>",
             first_name="<string>",
@@ -3700,9 +3616,9 @@ def test_put_public_subscribe():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_put_public_subscribe_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api.users.put_public_subscribe.asyncio(
+    await client.api.users.put_public_subscribe(
         body=Subscribe(
             email="<string>",
         )
@@ -3727,10 +3643,10 @@ def test_create_executor_term():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_create_executor_term_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await client.api.executor.create_executor_term.asyncio()
+    websocket = await client.api.executor.create_executor_term()
 
     # Send a message.
     await websocket.send("{}")
@@ -3780,10 +3696,10 @@ def test_ml_copilot_ws():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_ml_copilot_ws_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await client.api.ml.ml_copilot_ws.asyncio()
+    websocket = await client.api.ml.ml_copilot_ws()
 
     # Send a message.
     await websocket.send("{}")
@@ -3817,10 +3733,10 @@ def test_ml_reasoning_ws():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_ml_reasoning_ws_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await client.api.ml.ml_reasoning_ws.asyncio(id="<string>")
+    websocket = await client.api.ml.ml_reasoning_ws(id="<string>")
 
     # Send a message.
     await websocket.send("{}")
@@ -3859,10 +3775,10 @@ def test_modeling_commands_ws():
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_modeling_commands_ws_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await client.api.modeling.modeling_commands_ws.asyncio(
+    websocket = await client.api.modeling.modeling_commands_ws(
         fps=10,
         post_effect=PostEffectType.PHOSPHOR,
         show_grid=False,

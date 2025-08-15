@@ -84,7 +84,8 @@ class APIModule:
         # Otherwise, treat it as a function module and create a wrapper
         func = item
 
-        # Create a wrapper class that supports both sync calls and .asyncio attribute
+        # Create a wrapper class that supports only sync calls
+        # For async, users must use AsyncKittyCAD instead
         class APIFunction:
             def __init__(self, func, client):
                 self.func = func
@@ -96,13 +97,16 @@ class APIModule:
                     kwargs["client"] = self.client
                 return self.func.sync(*args, **kwargs)
 
-            async def asyncio(self, *args, **kwargs):
-                # Async behavior when called with .asyncio
-                if "client" not in kwargs:
-                    kwargs["client"] = self.client
-                return await self.func.asyncio(*args, **kwargs)
-
             def __getattr__(self, attr_name):
+                # Disallow access to the old asyncio pattern
+                if attr_name == "asyncio":
+                    raise AttributeError(
+                        "The .asyncio() pattern is deprecated. Use AsyncKittyCAD instead:\n"
+                        "from kittycad import AsyncKittyCAD\n"
+                        "client = AsyncKittyCAD()\n"
+                        "result = await client.api.module.function()"
+                    )
+
                 # Support accessing classes like WebSocket from function modules
                 if hasattr(self.func, attr_name):
                     attr = getattr(self.func, attr_name)
@@ -111,6 +115,89 @@ class APIModule:
                 return getattr(self.func, attr_name)
 
         return APIFunction(func, self.client)
+
+
+class AsyncAPIModule:
+    """Dynamic wrapper for async API modules like client.api.users, client.api.ml"""
+
+    def __init__(self, client: "Client", module_name: str):
+        self.client = client
+        self.module_name = module_name
+        self._module: Optional[ModuleType] = None
+
+    def __getattr__(self, name):
+        # Dynamically import the API module
+        if self._module is None:
+            self._module = __import__(
+                f"kittycad.api.{self.module_name}", fromlist=[name]
+            )
+
+        # Get the item from the module
+        item = getattr(self._module, name)
+
+        # Check if it's a class (like WebSocket)
+        if isinstance(item, type):
+            # For WebSocket classes, create a wrapper that injects the client
+            if name == "WebSocket":
+                # Note: WebSocket classes don't have async constructors, so we return the sync version
+                # but the user can await the asyncio() function directly
+                client_to_inject = self.client
+
+                # For WebSocket in async context, we want to call the module's asyncio function
+                # not the WebSocket class constructor
+                async def async_websocket_function(*args, **kwargs):
+                    # Override the default client with our client
+                    from kittycad import set_default_client
+
+                    original_client = None
+                    try:
+                        from kittycad import get_default_client
+
+                        original_client = get_default_client()
+                    except ValueError:
+                        pass  # No default client set
+
+                    set_default_client(client_to_inject)
+                    try:
+                        # Call the module's asyncio function directly (not the WebSocket class)
+                        if self._module is None:
+                            raise RuntimeError("Module not loaded")
+                        return await self._module.asyncio(*args, **kwargs)
+                    finally:
+                        # Restore original client
+                        if original_client:
+                            set_default_client(original_client)
+                        else:
+                            import kittycad
+
+                            kittycad._default_client = None
+
+                return async_websocket_function
+            else:
+                # Return other classes directly
+                return item
+
+        # Otherwise, create an async function wrapper
+        func = item
+
+        # Create a wrapper that directly awaits the async function
+        async def async_function(*args, **kwargs):
+            if "client" not in kwargs:
+                kwargs["client"] = self.client
+            return await func.asyncio(*args, **kwargs)
+
+        return async_function
+
+
+class AsyncAPICollection:
+    """Collection of all async API modules - accessed as client.api.users, client.api.ml, etc."""
+
+    def __init__(self, client: "Client"):
+        self.client = client
+
+    def __getattr__(self, name):
+        # Dynamically create async API module wrappers
+        return AsyncAPIModule(self.client, name)
 
 
 class APICollection:
@@ -146,6 +233,36 @@ class KittyCAD(Client):
         super().__init__(token=token, **kwargs)
         # Add OpenAI-style API namespaces
         self.api = APICollection(self)
+
+
+class AsyncKittyCAD(Client):
+    """Async KittyCAD client class with OpenAI-style async interface.
+
+    Usage:
+        import asyncio
+        from kittycad import AsyncKittyCAD
+
+        async def main():
+            client = AsyncKittyCAD(token="your-api-token")
+            user = await client.api.users.get_user_self()
+
+        asyncio.run(main())
+
+    Or with environment variable:
+        client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+    """
+
+    def __init__(self, token: Optional[str] = None, **kwargs):
+        if token is None:
+            token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
+            if token is None:
+                raise ValueError(
+                    "No API token provided. Either pass token parameter or set "
+                    "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
+                )
+        super().__init__(token=token, **kwargs)
+        # Add async API namespaces
+        self.api = AsyncAPICollection(self)
 
 
 # Global default client instance
@@ -245,6 +362,7 @@ def set_default_client(client: Client) -> None:
 
 __all__ = [
     "KittyCAD",
+    "AsyncKittyCAD",
     "KittyCADError",
     "KittyCADAPIError",
     "KittyCADClientError",

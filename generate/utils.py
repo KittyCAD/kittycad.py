@@ -259,7 +259,6 @@ def consolidate_imports_in_file(file_path: str) -> None:
 def format_file_with_ruff(file_path: str) -> None:
     """Format a Python file in-place using ruff."""
     try:
-
         # First consolidate imports to fix E402 errors
         consolidate_imports_in_file(file_path)
 

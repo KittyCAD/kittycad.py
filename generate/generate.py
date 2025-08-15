@@ -720,7 +720,9 @@ from kittycad.types import Response
 async def test_"""
         + fn_name
         + """_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    from kittycad import AsyncKittyCAD
+    
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     """
         + example_variable
@@ -728,7 +730,7 @@ async def test_"""
         + tag_name
         + "."
         + fn_name
-        + """.asyncio("""
+        + """("""
         + no_client_params
         + """)
 """
@@ -798,14 +800,16 @@ async def test_"""
 async def test_"""
             + fn_name
             + """_async():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+    from kittycad import AsyncKittyCAD
+    
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
     websocket = await client.api."""
             + tag_name
             + """."""
             + fn_name
-            + """.asyncio("""
+            + """("""
             + no_client_params
             + """)
 
