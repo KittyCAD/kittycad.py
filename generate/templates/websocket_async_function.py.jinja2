@@ -1,0 +1,41 @@
+    async def {{ function_name }}(
+        self,
+        {% for arg in args %}
+        {% if not arg.is_optional %}
+        {{ arg.name }}: {{ arg.type }},
+        {% endif %}
+        {% endfor %}
+        {% set optional_args = args|selectattr("is_optional")|list %}
+        {% if optional_args %}*,
+        {% for arg in optional_args %}
+        {{ arg.name }}: {{ arg.type }} = None,
+        {% endfor %}
+        {% endif %}
+    ) -> ClientConnectionAsync:
+        {% if docs %}"""{{ docs }}"""{% endif %}
+        
+        {% set path_args = args|selectattr("in_url")|list %}
+        url = "{{ url_template }}".format(self.client.base_url{% for arg in path_args %}, {{ arg.name }}={{ arg.name }}{% endfor %})
+        {% for arg in args %}
+        {% if arg.in_query %}
+        if {{ arg.name }} is not None:
+            {% if "bool" in arg.type %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }}).lower()
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }}).lower()
+            {% else %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }})
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }})
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        
+        return await ws_connect_async(
+            url.replace("http", "ws"), 
+            extra_headers=self.client.get_headers(), 
+            close_timeout=120, 
+            max_size=None
+        )

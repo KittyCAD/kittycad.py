@@ -1,7 +1,7 @@
-"""The KittyCAD Python SDK - Generated Client Classes"""
+"""The KittyCAD Python SDK"""
 
 import os
-from typing import Any, Dict, Optional, Union, List
+from typing import Any, Dict, List, Optional, Union
 import httpx
 
 {% if has_websockets %}
@@ -18,7 +18,6 @@ from websockets.sync.client import (
 {% endif %}
 
 from .client import Client
-from .types import Response
 from .response_helpers import raise_for_status
 from .exceptions import (
     KittyCADError,
@@ -29,19 +28,20 @@ from .exceptions import (
     KittyCADTimeoutError,
 )
 
-# Import model types
-{% for import_path in all_imports %}
-{{ import_path }}
-{% endfor %}
-
 {% if has_websockets %}
 # Import WebSocket request/response models
 from .models.web_socket_request import WebSocketRequest
 from .models.web_socket_response import WebSocketResponse
+from .models.post_effect_type import PostEffectType
 {% endif %}
+
+{% for import in all_imports %}
+{{ import }}
+{% endfor %}
 
 {% for tag, functions in endpoints_by_tag.items() %}
 {% set tag_pascal = tag|to_pascal_case %}
+
 class {{ tag_pascal }}API:
     """API for {{ tag }} endpoints"""
     
@@ -50,29 +50,16 @@ class {{ tag_pascal }}API:
     
     {% for func_name, func_info in functions.items() %}
     {% if func_info.is_websocket and func_info.has_websocket_class %}
-    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> "WebSocket{{ func_name|to_pascal_case }}":
+    def {{ func_name }}(self{{ func_info.websocket_params if func_info.websocket_params else '' }}) -> "WebSocket{{ func_name|to_pascal_case }}":
         """{{ func_info.description }}
         
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
-    {% elif func_info.is_websocket %}
-    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> ClientConnectionSync:
-        """{{ func_info.description }}
-        
-        Returns a raw WebSocket connection for {{ func_name }}.
-        """
-        from .api.{{ tag }}.{{ func_name }} import sync
-        return sync({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
+        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.websocket_call_args if func_info.websocket_call_args else '' }}{{ ', ' if func_info.websocket_call_args else '' }}client=self.client)
     {% else %}
-    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> {{ func_info.return_type }}:
-        """{{ func_info.description }}"""
-        from .api.{{ tag }}.{{ func_name }} import sync
-        return sync({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
+{{ func_info.sync_implementation }}
     {% endif %}
-    
     {% endfor %}
-
 
 class Async{{ tag_pascal }}API:
     """Async API for {{ tag }} endpoints"""
@@ -82,28 +69,17 @@ class Async{{ tag_pascal }}API:
     
     {% for func_name, func_info in functions.items() %}
     {% if func_info.is_websocket and func_info.has_websocket_class %}
-    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> "WebSocket{{ func_name|to_pascal_case }}":
+    async def {{ func_name }}(self{{ func_info.websocket_params if func_info.websocket_params else '' }}):
         """{{ func_info.description }}
         
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        Note: WebSocket connections are synchronous even in AsyncKittyCAD
+        Returns an async WebSocket connection for sending/receiving data.
         """
-        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
-    {% elif func_info.is_websocket %}
-    async def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> ClientConnectionAsync:
-        """{{ func_info.description }}
-        
-        Returns a raw async WebSocket connection for {{ func_name }}.
-        """
-        from .api.{{ tag }}.{{ func_name }} import asyncio
-        return await asyncio({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        {{ func_info.async_implementation | replace("    ", "        ") | replace("\n", "\n        ") | trim }}
     {% else %}
-    async def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> {{ func_info.return_type }}:
-        """{{ func_info.description }}"""
-        from .api.{{ tag }}.{{ func_name }} import asyncio
-        return await asyncio({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
+{{ func_info.async_implementation }}
     {% endif %}
-    
     {% endfor %}
 
 {% endfor %}
@@ -116,9 +92,11 @@ class WebSocket{{ func_name|to_pascal_case }}:
 
     ws: ClientConnectionSync
 
-    def __init__(self{{ func_info.parameters if func_info.parameters else '' }}, *, client: Client):
-        from .api.{{ tag }}.{{ func_name }} import sync
-        self.ws = sync({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=client)
+    def __init__(self, *args, client: Client, **kwargs):
+        # Inline WebSocket connection logic
+        url = (client.base_url + "{{ func_info.path }}").replace("http://", "ws://").replace("https://", "wss://")
+        headers = client.get_headers()
+        self.ws = ws_connect(url, additional_headers=headers, close_timeout=120, max_size=None)
 
     def __enter__(self):
         return self
@@ -186,7 +164,8 @@ class KittyCAD(Client):
                 kwargs["base_url"] = zoo_host
         
         super().__init__(token=token, **kwargs)
-        # Add API modules directly to client
+        
+        # Import and initialize API classes
         {% for tag in endpoints_by_tag.keys() %}
         {% set tag_pascal = tag|to_pascal_case %}
         self.{{ tag }}: {{ tag_pascal }}API = {{ tag_pascal }}API(self)
@@ -226,7 +205,8 @@ class AsyncKittyCAD(Client):
                 kwargs["base_url"] = zoo_host
         
         super().__init__(token=token, **kwargs)
-        # Add async API modules directly to client
+        
+        # Import and initialize async API classes
         {% for tag in endpoints_by_tag.keys() %}
         {% set tag_pascal = tag|to_pascal_case %}
         self.{{ tag }}: Async{{ tag_pascal }}API = Async{{ tag_pascal }}API(self)

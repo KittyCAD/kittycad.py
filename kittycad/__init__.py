@@ -1,4 +1,4 @@
-"""The KittyCAD Python SDK - Generated Client Classes"""
+"""The KittyCAD Python SDK"""
 
 import json
 import os
@@ -24,8 +24,6 @@ from .exceptions import (
     KittyCADServerError,
     KittyCADTimeoutError,
 )
-
-# Import model types
 from .models.account_provider import AccountProvider
 from .models.add_org_member import AddOrgMember
 from .models.api_call_query_group import ApiCallQueryGroup
@@ -39,6 +37,7 @@ from .models.api_token_uuid import ApiTokenUuid
 from .models.app_client_info import AppClientInfo
 from .models.async_api_call_results_page import AsyncApiCallResultsPage
 from .models.auth_api_key_response import AuthApiKeyResponse
+from .models.auth_callback import AuthCallback
 from .models.billing_info import BillingInfo
 from .models.code_language import CodeLanguage
 from .models.code_option import CodeOption
@@ -51,6 +50,9 @@ from .models.created_at_sort_mode import CreatedAtSortMode
 from .models.crm_data import CrmData
 from .models.customer import Customer
 from .models.customer_balance import CustomerBalance
+from .models.device_access_token_request_form import DeviceAccessTokenRequestForm
+from .models.device_auth_confirm_params import DeviceAuthConfirmParams
+from .models.device_auth_request_form import DeviceAuthRequestForm
 from .models.discount_code import DiscountCode
 from .models.email_authentication_form import EmailAuthenticationForm
 from .models.enterprise_subscription_tier_price import EnterpriseSubscriptionTierPrice
@@ -76,6 +78,7 @@ from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
 from .models.ml_prompt import MlPrompt
 from .models.ml_prompt_results_page import MlPromptResultsPage
+from .models.o_auth2_client_info import OAuth2ClientInfo
 from .models.org import Org
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember
@@ -106,6 +109,7 @@ from .models.text_to_cad_multi_file_iteration_body import (
 )
 from .models.text_to_cad_response import TextToCadResponse
 from .models.text_to_cad_response_results_page import TextToCadResponseResultsPage
+from .models.token_revoke_request_form import TokenRevokeRequestForm
 from .models.unit_angle import UnitAngle
 from .models.unit_angle_conversion import UnitAngleConversion
 from .models.unit_area import UnitArea
@@ -144,6 +148,8 @@ from .models.user_org_role import UserOrgRole
 from .models.user_results_page import UserResultsPage
 from .models.uuid import Uuid
 from .models.verification_token_response import VerificationTokenResponse
+
+# Import WebSocket request/response models
 from .models.web_socket_request import WebSocketRequest
 from .models.web_socket_response import WebSocketResponse
 from .models.zoo_product_subscriptions import ZooProductSubscriptions
@@ -154,9 +160,6 @@ from .models.zoo_product_subscriptions_user_request import (
     ZooProductSubscriptionsUserRequest,
 )
 from .response_helpers import raise_for_status
-from .types import Response
-
-# Import WebSocket request/response models
 
 
 class MetaAPI:
@@ -165,53 +168,232 @@ class MetaAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_schema(self) -> Any:
+    def get_schema(
+        self,
+    ) -> Dict:
         """Get OpenAPI schema."""
-        from .api.meta.get_schema import sync
 
-        return sync(client=self.client)
+        url = "{}/".format(self.client.base_url)
 
-    def get_ipinfo(self) -> Any:
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Dict(**json_data)
+
+    def get_ipinfo(
+        self,
+    ) -> IpAddrInfo:
         """Get ip address information."""
-        from .api.meta.get_ipinfo import sync
 
-        return sync(client=self.client)
+        url = "{}/_meta/ipinfo".format(self.client.base_url)
 
-    def community_sso(self) -> Any:
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return IpAddrInfo(**json_data)
+
+    def community_sso(
+        self,
+        sig: str,
+        sso: str,
+    ):
         """Authorize an inbound auth request from our Community page."""
-        from .api.meta.community_sso import sync
 
-        return sync(client=self.client)
+        url = "{}/community/sso".format(self.client.base_url)
 
-    def create_debug_uploads(self) -> Any:
-        """Uploads files to public blob storage for debugging purposes."""
-        from .api.meta.create_debug_uploads import sync
+        if sig is not None:
+            if "?" in url:
+                url = url + "&sig=" + str(sig)
+            else:
+                url = url + "?sig=" + str(sig)
 
-        return sync(client=self.client)
+        if sso is not None:
+            if "?" in url:
+                url = url + "&sso=" + str(sso)
+            else:
+                url = url + "?sso=" + str(sso)
 
-    def create_event(self) -> Any:
-        """Creates an internal telemetry event."""
-        from .api.meta.create_event import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def internal_get_api_token_for_discord_user(self) -> Any:
-        """Get an API token for a user by their discord id."""
-        from .api.meta.internal_get_api_token_for_discord_user import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        return response.json() if response.content else None
 
-    def ping(self) -> Any:
+    def create_debug_uploads(
+        self,
+    ) -> List[str]:
+        """Do NOT send files here that you don't want to be public."""
+
+        url = "{}/debug/uploads".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[str](**json_data)
+
+    def create_event(
+        self,
+        body: Event,
+    ):
+        """We collect anonymous telemetry data for improving our product."""
+
+        url = "{}/events".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def internal_get_api_token_for_discord_user(
+        self,
+        discord_id: str,
+    ) -> ApiToken:
+        """This endpoint allows us to run API calls from our discord bot on behalf of a user. The user must have a discord account linked to their Zoo Account via oauth2 for this to work.
+
+        You must be a Zoo admin to use this endpoint."""
+
+        url = "{}/internal/discord/api-token/{discord_id}".format(
+            self.client.base_url, discord_id=discord_id
+        )
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiToken(**json_data)
+
+    def ping(
+        self,
+    ) -> Pong:
         """Return pong."""
-        from .api.meta.ping import sync
 
-        return sync(client=self.client)
+        url = "{}/ping".format(self.client.base_url)
 
-    def get_pricing_subscriptions(self) -> Any:
-        """Get the pricing for our subscriptions."""
-        from .api.meta.get_pricing_subscriptions import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Pong(**json_data)
+
+    def get_pricing_subscriptions(
+        self,
+    ) -> Dict:
+        """This is the ultimate source of truth for the pricing of our subscriptions."""
+
+        url = "{}/pricing/subscriptions".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Dict(**json_data)
 
 
 class AsyncMetaAPI:
@@ -220,53 +402,232 @@ class AsyncMetaAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_schema(self) -> Any:
+    async def get_schema(
+        self,
+    ) -> Dict:
         """Get OpenAPI schema."""
-        from .api.meta.get_schema import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/".format(self.client.base_url)
 
-    async def get_ipinfo(self) -> Any:
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Dict(**json_data)
+
+    async def get_ipinfo(
+        self,
+    ) -> IpAddrInfo:
         """Get ip address information."""
-        from .api.meta.get_ipinfo import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/_meta/ipinfo".format(self.client.base_url)
 
-    async def community_sso(self) -> Any:
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return IpAddrInfo(**json_data)
+
+    async def community_sso(
+        self,
+        sig: str,
+        sso: str,
+    ):
         """Authorize an inbound auth request from our Community page."""
-        from .api.meta.community_sso import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/community/sso".format(self.client.base_url)
 
-    async def create_debug_uploads(self) -> Any:
-        """Uploads files to public blob storage for debugging purposes."""
-        from .api.meta.create_debug_uploads import asyncio
+        if sig is not None:
+            if "?" in url:
+                url = url + "&sig=" + str(sig)
+            else:
+                url = url + "?sig=" + str(sig)
 
-        return await asyncio(client=self.client)
+        if sso is not None:
+            if "?" in url:
+                url = url + "&sso=" + str(sso)
+            else:
+                url = url + "?sso=" + str(sso)
 
-    async def create_event(self) -> Any:
-        """Creates an internal telemetry event."""
-        from .api.meta.create_event import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def internal_get_api_token_for_discord_user(self) -> Any:
-        """Get an API token for a user by their discord id."""
-        from .api.meta.internal_get_api_token_for_discord_user import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        return response.json() if response.content else None
 
-    async def ping(self) -> Any:
+    async def create_debug_uploads(
+        self,
+    ) -> List[str]:
+        """Do NOT send files here that you don't want to be public."""
+
+        url = "{}/debug/uploads".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[str](**json_data)
+
+    async def create_event(
+        self,
+        body: Event,
+    ):
+        """We collect anonymous telemetry data for improving our product."""
+
+        url = "{}/events".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def internal_get_api_token_for_discord_user(
+        self,
+        discord_id: str,
+    ) -> ApiToken:
+        """This endpoint allows us to run API calls from our discord bot on behalf of a user. The user must have a discord account linked to their Zoo Account via oauth2 for this to work.
+
+        You must be a Zoo admin to use this endpoint."""
+
+        url = "{}/internal/discord/api-token/{discord_id}".format(
+            self.client.base_url, discord_id=discord_id
+        )
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiToken(**json_data)
+
+    async def ping(
+        self,
+    ) -> Pong:
         """Return pong."""
-        from .api.meta.ping import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/ping".format(self.client.base_url)
 
-    async def get_pricing_subscriptions(self) -> Any:
-        """Get the pricing for our subscriptions."""
-        from .api.meta.get_pricing_subscriptions import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Pong(**json_data)
+
+    async def get_pricing_subscriptions(
+        self,
+    ) -> Dict:
+        """This is the ultimate source of truth for the pricing of our subscriptions."""
+
+        url = "{}/pricing/subscriptions".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Dict(**json_data)
 
 
 class MlAPI:
@@ -275,71 +636,447 @@ class MlAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_text_to_cad(self) -> Any:
-        """Generate a CAD model from text."""
-        from .api.ml.create_text_to_cad import sync
+    def create_text_to_cad(
+        self,
+        output_format: FileExportFormat,
+        body: TextToCadCreateBody,
+        *,
+        kcl: Optional[bool] = None,
+    ) -> TextToCad:
+        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
 
-        return sync(client=self.client)
+        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-    def list_ml_prompts(self) -> Any:
-        """List all ML prompts."""
-        from .api.ml.list_ml_prompts import sync
+        One thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`."""
 
-        return sync(client=self.client)
+        url = "{}/ai/text-to-cad/{output_format}".format(
+            self.client.base_url, output_format=output_format
+        )
 
-    def get_ml_prompt(self) -> Any:
-        """Get a ML prompt."""
-        from .api.ml.get_ml_prompt import sync
+        if kcl is not None:
+            if "?" in url:
+                url = url + "&kcl=" + str(kcl).lower()
+            else:
+                url = url + "?kcl=" + str(kcl).lower()
 
-        return sync(client=self.client)
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-    def list_conversations_for_user(self) -> Any:
-        """List conversations"""
-        from .api.ml.list_conversations_for_user import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def create_proprietary_to_kcl(self) -> Any:
-        """Converts a proprietary CAD format to KCL."""
-        from .api.ml.create_proprietary_to_kcl import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def create_kcl_code_completions(self) -> Any:
+        return TextToCad(**json_data)
+
+    def list_ml_prompts(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> MlPromptResultsPage:
+        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by a Zoo employee.
+
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first."""
+
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return MlPromptResultsPage(**json_data)
+
+    def get_ml_prompt(
+        self,
+        id: str,
+    ) -> MlPrompt:
+        """This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return MlPrompt(**json_data)
+
+    def list_conversations_for_user(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ConversationResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
+
+        The conversations are returned in order of creation, with the most recently created conversations first."""
+
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ConversationResultsPage(**json_data)
+
+    def create_proprietary_to_kcl(
+        self,
+        code_option: CodeOption,
+    ) -> KclModel:
+        """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
+
+        A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
+
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+
+        url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
+
+        if code_option is not None:
+            if "?" in url:
+                url = url + "&code_option=" + str(code_option)
+            else:
+                url = url + "?code_option=" + str(code_option)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return KclModel(**json_data)
+
+    def create_kcl_code_completions(
+        self,
+        body: KclCodeCompletionRequest,
+    ) -> KclCodeCompletionResponse:
         """Generate code completions for KCL."""
-        from .api.ml.create_kcl_code_completions import sync
 
-        return sync(client=self.client)
+        url = "{}/ml/kcl/completions".format(self.client.base_url)
 
-    def create_text_to_cad_iteration(self) -> Any:
-        """Iterate on a CAD model with a prompt."""
-        from .api.ml.create_text_to_cad_iteration import sync
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def create_text_to_cad_multi_file_iteration(self) -> Any:
-        """Iterate on a multi-file CAD model with a prompt."""
-        from .api.ml.create_text_to_cad_multi_file_iteration import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def list_text_to_cad_models_for_user(self) -> Any:
-        """List text-to-CAD models you've generated."""
-        from .api.ml.list_text_to_cad_models_for_user import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return KclCodeCompletionResponse(**json_data)
 
-    def get_text_to_cad_model_for_user(self) -> Any:
-        """Get a text-to-CAD response."""
-        from .api.ml.get_text_to_cad_model_for_user import sync
+    def create_text_to_cad_iteration(
+        self,
+        body: TextToCadIterationBody,
+    ) -> TextToCadIteration:
+        """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
-        return sync(client=self.client)
+        You always get the whole code back, even if you only changed a small part of it.
 
-    def create_text_to_cad_model_feedback(self) -> Any:
-        """Give feedback to a specific ML response."""
-        from .api.ml.create_text_to_cad_model_feedback import sync
+        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        return sync(client=self.client)
+        This endpoint will soon be deprecated in favor of the `/ml/text-to-cad/multi-file/iteration` endpoint. In that the endpoint path will remain but it will have the same behavior as `ml/text-to-cad/multi-file/iteration`."""
+
+        url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadIteration(**json_data)
+
+    def create_text_to_cad_multi_file_iteration(
+        self,
+        body: TextToCadMultiFileIterationBody,
+    ) -> TextToCadMultiFileIteration:
+        """This endpoint can iterate on multi-file models.
+
+        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
+
+        You always get the whole code back, even if you only changed a small part of it. This endpoint will always return all the code back, including files that were not changed. If your original source code imported a stl/gltf/step/etc file, the output will not include that file since the model will never change non-kcl files. The endpoint will only return the kcl files that were changed.
+
+        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+
+        url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadMultiFileIteration(**json_data)
+
+    def list_text_to_cad_models_for_user(
+        self,
+        sort_by: CreatedAtSortMode,
+        conversation_id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        no_models: Optional[bool] = None,
+    ) -> TextToCadResponseResultsPage:
+        """This will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
+
+        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""
+
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        if conversation_id is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(conversation_id)
+            else:
+                url = url + "?conversation_id=" + str(conversation_id)
+
+        if no_models is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(no_models).lower()
+            else:
+                url = url + "?no_models=" + str(no_models).lower()
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadResponseResultsPage(**json_data)
+
+    def get_text_to_cad_model_for_user(
+        self,
+        id: str,
+    ) -> TextToCadResponse:
+        """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadResponse(**json_data)
+
+    def create_text_to_cad_model_feedback(
+        self,
+        id: str,
+        feedback: MlFeedback,
+    ):
+        """This can be a text-to-CAD creation or iteration.
+
+        This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        if feedback is not None:
+            if "?" in url:
+                url = url + "&feedback=" + str(feedback)
+            else:
+                url = url + "?feedback=" + str(feedback)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     def ml_copilot_ws(self) -> "WebSocketMlCopilotWs":
         """Open a websocket to prompt the ML copilot.
@@ -353,7 +1090,7 @@ class MlAPI:
 
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        return WebSocketMlReasoningWs(id, client=self.client)
+        return WebSocketMlReasoningWs(id=id, client=self.client)
 
 
 class AsyncMlAPI:
@@ -362,87 +1099,494 @@ class AsyncMlAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_text_to_cad(self) -> Any:
-        """Generate a CAD model from text."""
-        from .api.ml.create_text_to_cad import asyncio
+    async def create_text_to_cad(
+        self,
+        output_format: FileExportFormat,
+        body: TextToCadCreateBody,
+        *,
+        kcl: Optional[bool] = None,
+    ) -> TextToCad:
+        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
 
-        return await asyncio(client=self.client)
+        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-    async def list_ml_prompts(self) -> Any:
-        """List all ML prompts."""
-        from .api.ml.list_ml_prompts import asyncio
+        One thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`."""
 
-        return await asyncio(client=self.client)
+        url = "{}/ai/text-to-cad/{output_format}".format(
+            self.client.base_url, output_format=output_format
+        )
 
-    async def get_ml_prompt(self) -> Any:
-        """Get a ML prompt."""
-        from .api.ml.get_ml_prompt import asyncio
+        if kcl is not None:
+            if "?" in url:
+                url = url + "&kcl=" + str(kcl).lower()
+            else:
+                url = url + "?kcl=" + str(kcl).lower()
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-    async def list_conversations_for_user(self) -> Any:
-        """List conversations"""
-        from .api.ml.list_conversations_for_user import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def create_proprietary_to_kcl(self) -> Any:
-        """Converts a proprietary CAD format to KCL."""
-        from .api.ml.create_proprietary_to_kcl import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def create_kcl_code_completions(self) -> Any:
+        return TextToCad(**json_data)
+
+    async def list_ml_prompts(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> MlPromptResultsPage:
+        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by a Zoo employee.
+
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first."""
+
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return MlPromptResultsPage(**json_data)
+
+    async def get_ml_prompt(
+        self,
+        id: str,
+    ) -> MlPrompt:
+        """This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return MlPrompt(**json_data)
+
+    async def list_conversations_for_user(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ConversationResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
+
+        The conversations are returned in order of creation, with the most recently created conversations first."""
+
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ConversationResultsPage(**json_data)
+
+    async def create_proprietary_to_kcl(
+        self,
+        code_option: CodeOption,
+    ) -> KclModel:
+        """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
+
+        A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
+
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+
+        url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
+
+        if code_option is not None:
+            if "?" in url:
+                url = url + "&code_option=" + str(code_option)
+            else:
+                url = url + "?code_option=" + str(code_option)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return KclModel(**json_data)
+
+    async def create_kcl_code_completions(
+        self,
+        body: KclCodeCompletionRequest,
+    ) -> KclCodeCompletionResponse:
         """Generate code completions for KCL."""
-        from .api.ml.create_kcl_code_completions import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/ml/kcl/completions".format(self.client.base_url)
 
-    async def create_text_to_cad_iteration(self) -> Any:
-        """Iterate on a CAD model with a prompt."""
-        from .api.ml.create_text_to_cad_iteration import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def create_text_to_cad_multi_file_iteration(self) -> Any:
-        """Iterate on a multi-file CAD model with a prompt."""
-        from .api.ml.create_text_to_cad_multi_file_iteration import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def list_text_to_cad_models_for_user(self) -> Any:
-        """List text-to-CAD models you've generated."""
-        from .api.ml.list_text_to_cad_models_for_user import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return KclCodeCompletionResponse(**json_data)
 
-    async def get_text_to_cad_model_for_user(self) -> Any:
-        """Get a text-to-CAD response."""
-        from .api.ml.get_text_to_cad_model_for_user import asyncio
+    async def create_text_to_cad_iteration(
+        self,
+        body: TextToCadIterationBody,
+    ) -> TextToCadIteration:
+        """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
-        return await asyncio(client=self.client)
+        You always get the whole code back, even if you only changed a small part of it.
 
-    async def create_text_to_cad_model_feedback(self) -> Any:
-        """Give feedback to a specific ML response."""
-        from .api.ml.create_text_to_cad_model_feedback import asyncio
+        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        return await asyncio(client=self.client)
+        This endpoint will soon be deprecated in favor of the `/ml/text-to-cad/multi-file/iteration` endpoint. In that the endpoint path will remain but it will have the same behavior as `ml/text-to-cad/multi-file/iteration`."""
 
-    def ml_copilot_ws(self) -> "WebSocketMlCopilotWs":
+        url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadIteration(**json_data)
+
+    async def create_text_to_cad_multi_file_iteration(
+        self,
+        body: TextToCadMultiFileIterationBody,
+    ) -> TextToCadMultiFileIteration:
+        """This endpoint can iterate on multi-file models.
+
+        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
+
+        You always get the whole code back, even if you only changed a small part of it. This endpoint will always return all the code back, including files that were not changed. If your original source code imported a stl/gltf/step/etc file, the output will not include that file since the model will never change non-kcl files. The endpoint will only return the kcl files that were changed.
+
+        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+
+        url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadMultiFileIteration(**json_data)
+
+    async def list_text_to_cad_models_for_user(
+        self,
+        sort_by: CreatedAtSortMode,
+        conversation_id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        no_models: Optional[bool] = None,
+    ) -> TextToCadResponseResultsPage:
+        """This will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
+
+        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""
+
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        if conversation_id is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(conversation_id)
+            else:
+                url = url + "?conversation_id=" + str(conversation_id)
+
+        if no_models is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(no_models).lower()
+            else:
+                url = url + "?no_models=" + str(no_models).lower()
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadResponseResultsPage(**json_data)
+
+    async def get_text_to_cad_model_for_user(
+        self,
+        id: str,
+    ) -> TextToCadResponse:
+        """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return TextToCadResponse(**json_data)
+
+    async def create_text_to_cad_model_feedback(
+        self,
+        id: str,
+        feedback: MlFeedback,
+    ):
+        """This can be a text-to-CAD creation or iteration.
+
+        This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        if feedback is not None:
+            if "?" in url:
+                url = url + "&feedback=" + str(feedback)
+            else:
+                url = url + "?feedback=" + str(feedback)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def ml_copilot_ws(self):
         """Open a websocket to prompt the ML copilot.
 
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        Note: WebSocket connections are synchronous even in AsyncKittyCAD
+        Returns an async WebSocket connection for sending/receiving data.
         """
-        return WebSocketMlCopilotWs(client=self.client)
 
-    def ml_reasoning_ws(self, id: str) -> "WebSocketMlReasoningWs":
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def ml_copilot_ws(
+            self,
+            body: MlCopilotClientMessage,
+        ) -> ClientConnectionAsync:
+            """Open a websocket to prompt the ML copilot."""
+
+            url = "/ws/ml/copilot"
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                extra_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
+
+    async def ml_reasoning_ws(self, id: str):
         """Open a websocket to prompt the ML copilot.
 
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        Note: WebSocket connections are synchronous even in AsyncKittyCAD
+        Returns an async WebSocket connection for sending/receiving data.
         """
-        return WebSocketMlReasoningWs(id, client=self.client)
+
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def ml_reasoning_ws(
+            self,
+            id: str,
+            body: MlCopilotClientMessage,
+        ) -> ClientConnectionAsync:
+            """Open a websocket to prompt the ML copilot."""
+
+            url = "/ws/ml/reasoning/{id}".format(id=id)
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                extra_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
 
 
 class ApiCallsAPI:
@@ -451,65 +1595,438 @@ class ApiCallsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_api_call_metrics(self) -> Any:
-        """Get API call metrics."""
-        from .api.api_calls.get_api_call_metrics import sync
+    def get_api_call_metrics(
+        self,
+        group_by: ApiCallQueryGroupBy,
+    ) -> List[ApiCallQueryGroup]:
+        """This endpoint requires authentication by a Zoo employee. The API calls are grouped by the parameter passed."""
 
-        return sync(client=self.client)
+        url = "{}/api-call-metrics".format(self.client.base_url)
 
-    def list_api_calls(self) -> Any:
-        """List API calls."""
-        from .api.api_calls.list_api_calls import sync
+        if group_by is not None:
+            if "?" in url:
+                url = url + "&group_by=" + str(group_by)
+            else:
+                url = url + "?group_by=" + str(group_by)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def get_api_call(self) -> Any:
-        """Get details of an API call."""
-        from .api.api_calls.get_api_call import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def list_async_operations(self) -> Any:
-        """List async operations."""
-        from .api.api_calls.list_async_operations import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def get_async_operation(self) -> Any:
-        """Get an async operation."""
-        from .api.api_calls.get_async_operation import sync
+        return List[ApiCallQueryGroup](**json_data)
 
-        return sync(client=self.client)
+    def list_api_calls(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
 
-    def org_list_api_calls(self) -> Any:
-        """List API calls for your org."""
-        from .api.api_calls.org_list_api_calls import sync
+        url = "{}/api-calls".format(self.client.base_url)
 
-        return sync(client=self.client)
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-    def get_api_call_for_org(self) -> Any:
-        """Get an API call for an org."""
-        from .api.api_calls.get_api_call_for_org import sync
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-        return sync(client=self.client)
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-    def user_list_api_calls(self) -> Any:
-        """List API calls for your user."""
-        from .api.api_calls.user_list_api_calls import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def get_api_call_for_user(self) -> Any:
-        """Get an API call for a user."""
-        from .api.api_calls.get_api_call_for_user import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def list_api_calls_for_user(self) -> Any:
-        """List API calls for a user."""
-        from .api.api_calls.list_api_calls_for_user import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return ApiCallWithPriceResultsPage(**json_data)
+
+    def get_api_call(
+        self,
+        id: str,
+    ) -> ApiCallWithPrice:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user.
+
+        If the user is not authenticated to view the specified API call, then it is not returned.
+
+        Only Zoo employees can view API calls for other users."""
+
+        url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPrice(**json_data)
+
+    def list_async_operations(
+        self,
+        sort_by: CreatedAtSortMode,
+        status: ApiCallStatus,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> AsyncApiCallResultsPage:
+        """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
+
+        This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/async/operations".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        if status is not None:
+            if "?" in url:
+                url = url + "&status=" + str(status)
+            else:
+                url = url + "?status=" + str(status)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return AsyncApiCallResultsPage(**json_data)
+
+    def get_async_operation(
+        self,
+        id: str,
+    ) -> Union[
+        FileConversion,
+        FileCenterOfMass,
+        FileMass,
+        FileVolume,
+        FileDensity,
+        FileSurfaceArea,
+        TextToCad,
+        TextToCadIteration,
+        TextToCadMultiFileIteration,
+    ]:
+        """Get the status and output of an async operation.
+
+        This endpoint requires authentication by any Zoo user. It returns details of the requested async operation for the user.
+
+        If the user is not authenticated to view the specified async operation, then it is not returned.
+
+        Only Zoo employees with the proper access can view async operations for other users."""
+
+        url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return json_data
+
+    def org_list_api_calls(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This includes all API calls that were made by users in the org.
+
+        This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
+
+        The API calls are returned in order of creation, with the most recently created API calls first."""
+
+        url = "{}/org/api-calls".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPriceResultsPage(**json_data)
+
+    def get_api_call_for_org(
+        self,
+        id: str,
+    ) -> ApiCallWithPrice:
+        """This endpoint requires authentication by an org admin. It returns details of the requested API call for the user's org."""
+
+        url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPrice(**json_data)
+
+    def user_list_api_calls(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
+
+        The API calls are returned in order of creation, with the most recently created API calls first."""
+
+        url = "{}/user/api-calls".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPriceResultsPage(**json_data)
+
+    def get_api_call_for_user(
+        self,
+        id: str,
+    ) -> ApiCallWithPrice:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user."""
+
+        url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPrice(**json_data)
+
+    def list_api_calls_for_user(
+        self,
+        id: UserIdentifier,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
+
+        Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
+
+        If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
+
+        The API calls are returned in order of creation, with the most recently created API calls first."""
+
+        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPriceResultsPage(**json_data)
 
 
 class AsyncApiCallsAPI:
@@ -518,65 +2035,438 @@ class AsyncApiCallsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_api_call_metrics(self) -> Any:
-        """Get API call metrics."""
-        from .api.api_calls.get_api_call_metrics import asyncio
+    async def get_api_call_metrics(
+        self,
+        group_by: ApiCallQueryGroupBy,
+    ) -> List[ApiCallQueryGroup]:
+        """This endpoint requires authentication by a Zoo employee. The API calls are grouped by the parameter passed."""
 
-        return await asyncio(client=self.client)
+        url = "{}/api-call-metrics".format(self.client.base_url)
 
-    async def list_api_calls(self) -> Any:
-        """List API calls."""
-        from .api.api_calls.list_api_calls import asyncio
+        if group_by is not None:
+            if "?" in url:
+                url = url + "&group_by=" + str(group_by)
+            else:
+                url = url + "?group_by=" + str(group_by)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def get_api_call(self) -> Any:
-        """Get details of an API call."""
-        from .api.api_calls.get_api_call import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def list_async_operations(self) -> Any:
-        """List async operations."""
-        from .api.api_calls.list_async_operations import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def get_async_operation(self) -> Any:
-        """Get an async operation."""
-        from .api.api_calls.get_async_operation import asyncio
+        return List[ApiCallQueryGroup](**json_data)
 
-        return await asyncio(client=self.client)
+    async def list_api_calls(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
 
-    async def org_list_api_calls(self) -> Any:
-        """List API calls for your org."""
-        from .api.api_calls.org_list_api_calls import asyncio
+        url = "{}/api-calls".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-    async def get_api_call_for_org(self) -> Any:
-        """Get an API call for an org."""
-        from .api.api_calls.get_api_call_for_org import asyncio
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-        return await asyncio(client=self.client)
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-    async def user_list_api_calls(self) -> Any:
-        """List API calls for your user."""
-        from .api.api_calls.user_list_api_calls import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def get_api_call_for_user(self) -> Any:
-        """Get an API call for a user."""
-        from .api.api_calls.get_api_call_for_user import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def list_api_calls_for_user(self) -> Any:
-        """List API calls for a user."""
-        from .api.api_calls.list_api_calls_for_user import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return ApiCallWithPriceResultsPage(**json_data)
+
+    async def get_api_call(
+        self,
+        id: str,
+    ) -> ApiCallWithPrice:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user.
+
+        If the user is not authenticated to view the specified API call, then it is not returned.
+
+        Only Zoo employees can view API calls for other users."""
+
+        url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPrice(**json_data)
+
+    async def list_async_operations(
+        self,
+        sort_by: CreatedAtSortMode,
+        status: ApiCallStatus,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> AsyncApiCallResultsPage:
+        """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
+
+        This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/async/operations".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        if status is not None:
+            if "?" in url:
+                url = url + "&status=" + str(status)
+            else:
+                url = url + "?status=" + str(status)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return AsyncApiCallResultsPage(**json_data)
+
+    async def get_async_operation(
+        self,
+        id: str,
+    ) -> Union[
+        FileConversion,
+        FileCenterOfMass,
+        FileMass,
+        FileVolume,
+        FileDensity,
+        FileSurfaceArea,
+        TextToCad,
+        TextToCadIteration,
+        TextToCadMultiFileIteration,
+    ]:
+        """Get the status and output of an async operation.
+
+        This endpoint requires authentication by any Zoo user. It returns details of the requested async operation for the user.
+
+        If the user is not authenticated to view the specified async operation, then it is not returned.
+
+        Only Zoo employees with the proper access can view async operations for other users."""
+
+        url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return json_data
+
+    async def org_list_api_calls(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This includes all API calls that were made by users in the org.
+
+        This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
+
+        The API calls are returned in order of creation, with the most recently created API calls first."""
+
+        url = "{}/org/api-calls".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPriceResultsPage(**json_data)
+
+    async def get_api_call_for_org(
+        self,
+        id: str,
+    ) -> ApiCallWithPrice:
+        """This endpoint requires authentication by an org admin. It returns details of the requested API call for the user's org."""
+
+        url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPrice(**json_data)
+
+    async def user_list_api_calls(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
+
+        The API calls are returned in order of creation, with the most recently created API calls first."""
+
+        url = "{}/user/api-calls".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPriceResultsPage(**json_data)
+
+    async def get_api_call_for_user(
+        self,
+        id: str,
+    ) -> ApiCallWithPrice:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API call for the user."""
+
+        url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPrice(**json_data)
+
+    async def list_api_calls_for_user(
+        self,
+        id: UserIdentifier,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiCallWithPriceResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
+
+        Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
+
+        If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
+
+        The API calls are returned in order of creation, with the most recently created API calls first."""
+
+        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiCallWithPriceResultsPage(**json_data)
 
 
 class AppsAPI:
@@ -585,23 +2475,82 @@ class AppsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def apps_github_callback(self) -> Any:
-        """Listen for callbacks to GitHub app authentication."""
-        from .api.apps.apps_github_callback import sync
+    def apps_github_callback(
+        self,
+    ):
+        """This is different than OAuth 2.0 authentication for users. This endpoint grants access for Zoo to access user's repos.
 
-        return sync(client=self.client)
+        The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""
 
-    def apps_github_consent(self) -> Any:
-        """Get the consent URL for GitHub app authentication."""
-        from .api.apps.apps_github_consent import sync
+        url = "{}/apps/github/callback".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def apps_github_webhook(self) -> Any:
-        """Listen for GitHub webhooks."""
-        from .api.apps.apps_github_webhook import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def apps_github_consent(
+        self,
+    ) -> AppClientInfo:
+        """This is different than OAuth 2.0 authentication for users. This endpoint grants access for Zoo to access user's repos.
+
+        The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""
+
+        url = "{}/apps/github/consent".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return AppClientInfo(**json_data)
+
+    def apps_github_webhook(
+        self,
+        body: bytes,
+    ):
+        """These come from the GitHub app."""
+
+        url = "{}/apps/github/webhook".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class AsyncAppsAPI:
@@ -610,23 +2559,82 @@ class AsyncAppsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def apps_github_callback(self) -> Any:
-        """Listen for callbacks to GitHub app authentication."""
-        from .api.apps.apps_github_callback import asyncio
+    async def apps_github_callback(
+        self,
+    ):
+        """This is different than OAuth 2.0 authentication for users. This endpoint grants access for Zoo to access user's repos.
 
-        return await asyncio(client=self.client)
+        The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""
 
-    async def apps_github_consent(self) -> Any:
-        """Get the consent URL for GitHub app authentication."""
-        from .api.apps.apps_github_consent import asyncio
+        url = "{}/apps/github/callback".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def apps_github_webhook(self) -> Any:
-        """Listen for GitHub webhooks."""
-        from .api.apps.apps_github_webhook import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def apps_github_consent(
+        self,
+    ) -> AppClientInfo:
+        """This is different than OAuth 2.0 authentication for users. This endpoint grants access for Zoo to access user's repos.
+
+        The user doesn't need Zoo OAuth authorization for this endpoint, this is purely for the GitHub permissions to access repos."""
+
+        url = "{}/apps/github/consent".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return AppClientInfo(**json_data)
+
+    async def apps_github_webhook(
+        self,
+        body: bytes,
+    ):
+        """These come from the GitHub app."""
+
+        url = "{}/apps/github/webhook".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class HiddenAPI:
@@ -635,53 +2643,243 @@ class HiddenAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def auth_api_key(self) -> Any:
-        """Authenticate using an api-key. This is disabled on production but can be used in dev to login without email magic."""
-        from .api.hidden.auth_api_key import sync
+    def auth_api_key(
+        self,
+    ) -> AuthApiKeyResponse:
+        """This returns a session token."""
 
-        return sync(client=self.client)
+        url = "{}/auth/api-key".format(self.client.base_url)
 
-    def auth_email(self) -> Any:
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return AuthApiKeyResponse(**json_data)
+
+    def auth_email(
+        self,
+        body: EmailAuthenticationForm,
+    ) -> VerificationTokenResponse:
         """Create an email verification request for a user."""
-        from .api.hidden.auth_email import sync
 
-        return sync(client=self.client)
+        url = "{}/auth/email".format(self.client.base_url)
 
-    def auth_email_callback(self) -> Any:
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return VerificationTokenResponse(**json_data)
+
+    def auth_email_callback(
+        self,
+        email: str,
+        token: str,
+        *,
+        callback_url: Optional[str] = None,
+    ):
         """Listen for callbacks for email authentication for users."""
-        from .api.hidden.auth_email_callback import sync
 
-        return sync(client=self.client)
+        url = "{}/auth/email/callback".format(self.client.base_url)
 
-    def get_auth_saml_by_org(self) -> Any:
-        """GET /auth/saml/{org_id}"""
-        from .api.hidden.get_auth_saml_by_org import sync
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
 
-        return sync(client=self.client)
+        if email is not None:
+            if "?" in url:
+                url = url + "&email=" + str(email)
+            else:
+                url = url + "?email=" + str(email)
 
-    def get_auth_saml(self) -> Any:
-        """Get a redirect straight to the SAML IdP."""
-        from .api.hidden.get_auth_saml import sync
+        if token is not None:
+            if "?" in url:
+                url = url + "&token=" + str(token)
+            else:
+                url = url + "?token=" + str(token)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def post_auth_saml(self) -> Any:
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_auth_saml_by_org(
+        self,
+        org_id: Uuid,
+        *,
+        callback_url: Optional[str] = None,
+    ):
+        """Redirects the browser straight to the org’s SAML IdP."""
+
+        url = "{}/auth/saml/org/{org_id}/login".format(
+            self.client.base_url, org_id=org_id
+        )
+
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_auth_saml(
+        self,
+        provider_id: Uuid,
+        *,
+        callback_url: Optional[str] = None,
+    ):
+        """The UI uses this to avoid having to ask the API anything about the IdP. It already knows the SAML IdP ID from the path, so it can just link to this path and rely on the API to redirect to the actual IdP."""
+
+        url = "{}/auth/saml/provider/{provider_id}/login".format(
+            self.client.base_url, provider_id=provider_id
+        )
+
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def post_auth_saml(
+        self,
+        provider_id: Uuid,
+        body: bytes,
+    ):
         """Authenticate a user via SAML"""
-        from .api.hidden.post_auth_saml import sync
 
-        return sync(client=self.client)
+        url = "{}/auth/saml/provider/{provider_id}/login".format(
+            self.client.base_url, provider_id=provider_id
+        )
 
-    def logout(self) -> Any:
-        """This endpoint removes the session cookie for a user."""
-        from .api.hidden.logout import sync
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def redirect_user_shortlink(self) -> Any:
-        """Redirect the user to the URL for the shortlink."""
-        from .api.hidden.redirect_user_shortlink import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        return response.json() if response.content else None
+
+    def logout(
+        self,
+    ):
+        """This is used in logout scenarios."""
+
+        url = "{}/logout".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def redirect_user_shortlink(
+        self,
+        key: str,
+    ):
+        """This endpoint might require authentication by a Zoo user. It gets the shortlink for the user and redirects them to the URL. If the shortlink is owned by an org, the user must be a member of the org."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class AsyncHiddenAPI:
@@ -690,53 +2888,243 @@ class AsyncHiddenAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def auth_api_key(self) -> Any:
-        """Authenticate using an api-key. This is disabled on production but can be used in dev to login without email magic."""
-        from .api.hidden.auth_api_key import asyncio
+    async def auth_api_key(
+        self,
+    ) -> AuthApiKeyResponse:
+        """This returns a session token."""
 
-        return await asyncio(client=self.client)
+        url = "{}/auth/api-key".format(self.client.base_url)
 
-    async def auth_email(self) -> Any:
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return AuthApiKeyResponse(**json_data)
+
+    async def auth_email(
+        self,
+        body: EmailAuthenticationForm,
+    ) -> VerificationTokenResponse:
         """Create an email verification request for a user."""
-        from .api.hidden.auth_email import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/auth/email".format(self.client.base_url)
 
-    async def auth_email_callback(self) -> Any:
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return VerificationTokenResponse(**json_data)
+
+    async def auth_email_callback(
+        self,
+        email: str,
+        token: str,
+        *,
+        callback_url: Optional[str] = None,
+    ):
         """Listen for callbacks for email authentication for users."""
-        from .api.hidden.auth_email_callback import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/auth/email/callback".format(self.client.base_url)
 
-    async def get_auth_saml_by_org(self) -> Any:
-        """GET /auth/saml/{org_id}"""
-        from .api.hidden.get_auth_saml_by_org import asyncio
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
 
-        return await asyncio(client=self.client)
+        if email is not None:
+            if "?" in url:
+                url = url + "&email=" + str(email)
+            else:
+                url = url + "?email=" + str(email)
 
-    async def get_auth_saml(self) -> Any:
-        """Get a redirect straight to the SAML IdP."""
-        from .api.hidden.get_auth_saml import asyncio
+        if token is not None:
+            if "?" in url:
+                url = url + "&token=" + str(token)
+            else:
+                url = url + "?token=" + str(token)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def post_auth_saml(self) -> Any:
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_auth_saml_by_org(
+        self,
+        org_id: Uuid,
+        *,
+        callback_url: Optional[str] = None,
+    ):
+        """Redirects the browser straight to the org’s SAML IdP."""
+
+        url = "{}/auth/saml/org/{org_id}/login".format(
+            self.client.base_url, org_id=org_id
+        )
+
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_auth_saml(
+        self,
+        provider_id: Uuid,
+        *,
+        callback_url: Optional[str] = None,
+    ):
+        """The UI uses this to avoid having to ask the API anything about the IdP. It already knows the SAML IdP ID from the path, so it can just link to this path and rely on the API to redirect to the actual IdP."""
+
+        url = "{}/auth/saml/provider/{provider_id}/login".format(
+            self.client.base_url, provider_id=provider_id
+        )
+
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def post_auth_saml(
+        self,
+        provider_id: Uuid,
+        body: bytes,
+    ):
         """Authenticate a user via SAML"""
-        from .api.hidden.post_auth_saml import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/auth/saml/provider/{provider_id}/login".format(
+            self.client.base_url, provider_id=provider_id
+        )
 
-    async def logout(self) -> Any:
-        """This endpoint removes the session cookie for a user."""
-        from .api.hidden.logout import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def redirect_user_shortlink(self) -> Any:
-        """Redirect the user to the URL for the shortlink."""
-        from .api.hidden.redirect_user_shortlink import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        return response.json() if response.content else None
+
+    async def logout(
+        self,
+    ):
+        """This is used in logout scenarios."""
+
+        url = "{}/logout".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def redirect_user_shortlink(
+        self,
+        key: str,
+    ):
+        """This endpoint might require authentication by a Zoo user. It gets the shortlink for the user and redirects them to the URL. If the shortlink is owned by an org, the user must be a member of the org."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class FileAPI:
@@ -745,47 +3133,360 @@ class FileAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_file_center_of_mass(self) -> Any:
-        """Get CAD file center of mass."""
-        from .api.file.create_file_center_of_mass import sync
+    def create_file_center_of_mass(
+        self,
+        output_unit: UnitLength,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileCenterOfMass:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
-        return sync(client=self.client)
+        This endpoint returns the cartesian coordinate in world space measure units.
 
-    def create_file_conversion_options(self) -> Any:
-        """Convert CAD file from one format to another."""
-        from .api.file.create_file_conversion_options import sync
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
 
-        return sync(client=self.client)
+        Get the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
 
-    def create_file_conversion(self) -> Any:
-        """Convert CAD file with defaults."""
-        from .api.file.create_file_conversion import sync
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
 
-        return sync(client=self.client)
+        url = "{}/file/center-of-mass".format(self.client.base_url)
 
-    def create_file_density(self) -> Any:
-        """Get CAD file density."""
-        from .api.file.create_file_density import sync
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
 
-        return sync(client=self.client)
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
 
-    def create_file_mass(self) -> Any:
-        """Get CAD file mass."""
-        from .api.file.create_file_mass import sync
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def create_file_surface_area(self) -> Any:
-        """Get CAD file surface area."""
-        from .api.file.create_file_surface_area import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def create_file_volume(self) -> Any:
-        """Get CAD file volume."""
-        from .api.file.create_file_volume import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return FileCenterOfMass(**json_data)
+
+    def create_file_conversion_options(
+        self,
+        body: ConversionParams,
+    ) -> FileConversion:
+        """This takes a HTTP multipart body with these fields in any order:
+
+         - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.
+
+        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/conversion".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileConversion(**json_data)
+
+    def create_file_conversion(
+        self,
+        output_format: FileExportFormat,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileConversion:
+        """If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.
+
+        Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
+
+        If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/conversion/{src_format}/{output_format}".format(
+            self.client.base_url, output_format=output_format, src_format=src_format
+        )
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileConversion(**json_data)
+
+    def create_file_density(
+        self,
+        material_mass: float,
+        material_mass_unit: UnitMass,
+        output_unit: UnitDensity,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileDensity:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint assumes if you are giving a material mass in a specific mass units, we return a density in mass unit per cubic measure unit.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the density of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/density".format(self.client.base_url)
+
+        if material_mass is not None:
+            if "?" in url:
+                url = url + "&material_mass=" + str(material_mass)
+            else:
+                url = url + "?material_mass=" + str(material_mass)
+
+        if material_mass_unit is not None:
+            if "?" in url:
+                url = url + "&material_mass_unit=" + str(material_mass_unit)
+            else:
+                url = url + "?material_mass_unit=" + str(material_mass_unit)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileDensity(**json_data)
+
+    def create_file_mass(
+        self,
+        material_density: float,
+        material_density_unit: UnitDensity,
+        output_unit: UnitMass,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileMass:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint assumes if you are giving a material density in a specific mass unit per cubic measure unit, we return a mass in mass units. The same mass units as passed in the material density.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/mass".format(self.client.base_url)
+
+        if material_density is not None:
+            if "?" in url:
+                url = url + "&material_density=" + str(material_density)
+            else:
+                url = url + "?material_density=" + str(material_density)
+
+        if material_density_unit is not None:
+            if "?" in url:
+                url = url + "&material_density_unit=" + str(material_density_unit)
+            else:
+                url = url + "?material_density_unit=" + str(material_density_unit)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileMass(**json_data)
+
+    def create_file_surface_area(
+        self,
+        output_unit: UnitArea,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileSurfaceArea:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint returns the square measure units.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the surface area of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/surface-area".format(self.client.base_url)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileSurfaceArea(**json_data)
+
+    def create_file_volume(
+        self,
+        output_unit: UnitVolume,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileVolume:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint returns the cubic measure units.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/volume".format(self.client.base_url)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileVolume(**json_data)
 
 
 class AsyncFileAPI:
@@ -794,47 +3495,360 @@ class AsyncFileAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_file_center_of_mass(self) -> Any:
-        """Get CAD file center of mass."""
-        from .api.file.create_file_center_of_mass import asyncio
+    async def create_file_center_of_mass(
+        self,
+        output_unit: UnitLength,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileCenterOfMass:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
-        return await asyncio(client=self.client)
+        This endpoint returns the cartesian coordinate in world space measure units.
 
-    async def create_file_conversion_options(self) -> Any:
-        """Convert CAD file from one format to another."""
-        from .api.file.create_file_conversion_options import asyncio
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
 
-        return await asyncio(client=self.client)
+        Get the center of mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
 
-    async def create_file_conversion(self) -> Any:
-        """Convert CAD file with defaults."""
-        from .api.file.create_file_conversion import asyncio
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
 
-        return await asyncio(client=self.client)
+        url = "{}/file/center-of-mass".format(self.client.base_url)
 
-    async def create_file_density(self) -> Any:
-        """Get CAD file density."""
-        from .api.file.create_file_density import asyncio
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
 
-        return await asyncio(client=self.client)
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
 
-    async def create_file_mass(self) -> Any:
-        """Get CAD file mass."""
-        from .api.file.create_file_mass import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def create_file_surface_area(self) -> Any:
-        """Get CAD file surface area."""
-        from .api.file.create_file_surface_area import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def create_file_volume(self) -> Any:
-        """Get CAD file volume."""
-        from .api.file.create_file_volume import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return FileCenterOfMass(**json_data)
+
+    async def create_file_conversion_options(
+        self,
+        body: ConversionParams,
+    ) -> FileConversion:
+        """This takes a HTTP multipart body with these fields in any order:
+
+         - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.
+
+        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/conversion".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileConversion(**json_data)
+
+    async def create_file_conversion(
+        self,
+        output_format: FileExportFormat,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileConversion:
+        """If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.
+
+        Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
+
+        If the conversion is performed synchronously, the contents of the converted file (`output`) will be returned as a base64 encoded string.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/conversion/{src_format}/{output_format}".format(
+            self.client.base_url, output_format=output_format, src_format=src_format
+        )
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileConversion(**json_data)
+
+    async def create_file_density(
+        self,
+        material_mass: float,
+        material_mass_unit: UnitMass,
+        output_unit: UnitDensity,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileDensity:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint assumes if you are giving a material mass in a specific mass units, we return a density in mass unit per cubic measure unit.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the density of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/density".format(self.client.base_url)
+
+        if material_mass is not None:
+            if "?" in url:
+                url = url + "&material_mass=" + str(material_mass)
+            else:
+                url = url + "?material_mass=" + str(material_mass)
+
+        if material_mass_unit is not None:
+            if "?" in url:
+                url = url + "&material_mass_unit=" + str(material_mass_unit)
+            else:
+                url = url + "?material_mass_unit=" + str(material_mass_unit)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileDensity(**json_data)
+
+    async def create_file_mass(
+        self,
+        material_density: float,
+        material_density_unit: UnitDensity,
+        output_unit: UnitMass,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileMass:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint assumes if you are giving a material density in a specific mass unit per cubic measure unit, we return a mass in mass units. The same mass units as passed in the material density.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the mass of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/mass".format(self.client.base_url)
+
+        if material_density is not None:
+            if "?" in url:
+                url = url + "&material_density=" + str(material_density)
+            else:
+                url = url + "?material_density=" + str(material_density)
+
+        if material_density_unit is not None:
+            if "?" in url:
+                url = url + "&material_density_unit=" + str(material_density_unit)
+            else:
+                url = url + "?material_density_unit=" + str(material_density_unit)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileMass(**json_data)
+
+    async def create_file_surface_area(
+        self,
+        output_unit: UnitArea,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileSurfaceArea:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint returns the square measure units.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the surface area of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/surface-area".format(self.client.base_url)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileSurfaceArea(**json_data)
+
+    async def create_file_volume(
+        self,
+        output_unit: UnitVolume,
+        src_format: FileImportFormat,
+        body: bytes,
+    ) -> FileVolume:
+        """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
+
+        This endpoint returns the cubic measure units.
+
+        In the future, we will use the units inside the file if they are given and do any conversions if necessary for the calculation. But currently, that is not supported.
+
+        Get the volume of an object in a CAD file. If the file is larger than 25MB, it will be performed asynchronously.
+
+        If the operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/volume".format(self.client.base_url)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return FileVolume(**json_data)
 
 
 class ExecutorAPI:
@@ -843,20 +3857,50 @@ class ExecutorAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_file_execution(self) -> Any:
+    def create_file_execution(
+        self,
+        lang: CodeLanguage,
+        body: bytes,
+        *,
+        output: Optional[str] = None,
+    ) -> CodeOutput:
         """Execute a Zoo program in a specific language."""
-        from .api.executor.create_file_execution import sync
 
-        return sync(client=self.client)
+        url = "{}/file/execute/{lang}".format(self.client.base_url, lang=lang)
 
-    def create_executor_term(self) -> ClientConnectionSync:
+        if output is not None:
+            if "?" in url:
+                url = url + "&output=" + str(output)
+            else:
+                url = url + "?output=" + str(output)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CodeOutput(**json_data)
+
+    def create_executor_term(self) -> "WebSocketCreateExecutorTerm":
         """Create a terminal.
 
-        Returns a raw WebSocket connection for create_executor_term.
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        from .api.executor.create_executor_term import sync
-
-        return sync(client=self.client)
+        return WebSocketCreateExecutorTerm(client=self.client)
 
 
 class AsyncExecutorAPI:
@@ -865,20 +3909,65 @@ class AsyncExecutorAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_file_execution(self) -> Any:
+    async def create_file_execution(
+        self,
+        lang: CodeLanguage,
+        body: bytes,
+        *,
+        output: Optional[str] = None,
+    ) -> CodeOutput:
         """Execute a Zoo program in a specific language."""
-        from .api.executor.create_file_execution import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/file/execute/{lang}".format(self.client.base_url, lang=lang)
 
-    async def create_executor_term(self) -> ClientConnectionAsync:
+        if output is not None:
+            if "?" in url:
+                url = url + "&output=" + str(output)
+            else:
+                url = url + "?output=" + str(output)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body,
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CodeOutput(**json_data)
+
+    async def create_executor_term(self):
         """Create a terminal.
 
-        Returns a raw async WebSocket connection for create_executor_term.
+        Returns an async WebSocket connection for sending/receiving data.
         """
-        from .api.executor.create_executor_term import asyncio
 
-        return await asyncio(client=self.client)
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def create_executor_term(
+            self,
+        ) -> ClientConnectionAsync:
+            """Create a terminal."""
+
+            url = "/ws/executor/term"
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                extra_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
 
 
 class Oauth2API:
@@ -887,53 +3976,257 @@ class Oauth2API:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def device_auth_request(self) -> Any:
-        """Start an OAuth 2.0 Device Authorization Grant."""
-        from .api.oauth2.device_auth_request import sync
+    def device_auth_request(
+        self,
+        body: DeviceAuthRequestForm,
+    ):
+        """This endpoint is designed to be accessed from an *unauthenticated* API client. It generates and records a `device_code` and `user_code` which must be verified and confirmed prior to a token being granted."""
 
-        return sync(client=self.client)
+        url = "{}/oauth2/device/auth".format(self.client.base_url)
 
-    def device_auth_confirm(self) -> Any:
-        """Confirm an OAuth 2.0 Device Authorization Grant."""
-        from .api.oauth2.device_auth_confirm import sync
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def device_access_token(self) -> Any:
-        """Request a device access token."""
-        from .api.oauth2.device_access_token import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        return response.json() if response.content else None
 
-    def device_auth_verify(self) -> Any:
-        """Verify an OAuth 2.0 Device Authorization Grant."""
-        from .api.oauth2.device_auth_verify import sync
+    def device_auth_confirm(
+        self,
+        body: DeviceAuthConfirmParams,
+    ):
+        """This endpoint is designed to be accessed by the user agent (browser), not the client requesting the token. So we do not actually return the token here; it will be returned in response to the poll on `/oauth2/device/token`."""
 
-        return sync(client=self.client)
+        url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
-    def oauth2_provider_callback(self) -> Any:
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def device_access_token(
+        self,
+        body: DeviceAccessTokenRequestForm,
+    ):
+        """This endpoint should be polled by the client until the user code is verified and the grant is confirmed."""
+
+        url = "{}/oauth2/device/token".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def device_auth_verify(
+        self,
+        user_code: str,
+        *,
+        app_name: Optional[str] = None,
+    ):
+        """This endpoint should be accessed in a full user agent (e.g., a browser). If the user is not logged in, we redirect them to the login page and use the `callback_url` parameter to get them to the UI verification form upon logging in. If they are logged in, we redirect them to the UI verification form on the website."""
+
+        url = "{}/oauth2/device/verify".format(self.client.base_url)
+
+        if app_name is not None:
+            if "?" in url:
+                url = url + "&app_name=" + str(app_name)
+            else:
+                url = url + "?app_name=" + str(app_name)
+
+        if user_code is not None:
+            if "?" in url:
+                url = url + "&user_code=" + str(user_code)
+            else:
+                url = url + "?user_code=" + str(user_code)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def oauth2_provider_callback(
+        self,
+        provider: AccountProvider,
+        code: str,
+        state: str,
+        *,
+        id_token: Optional[str] = None,
+        user: Optional[str] = None,
+    ):
         """Listen for callbacks for the OAuth 2.0 provider."""
-        from .api.oauth2.oauth2_provider_callback import sync
 
-        return sync(client=self.client)
+        url = "{}/oauth2/provider/{provider}/callback".format(
+            self.client.base_url, provider=provider
+        )
 
-    def oauth2_provider_callback_post(self) -> Any:
-        """Listen for callbacks for the OAuth 2.0 provider."""
-        from .api.oauth2.oauth2_provider_callback_post import sync
+        if code is not None:
+            if "?" in url:
+                url = url + "&code=" + str(code)
+            else:
+                url = url + "?code=" + str(code)
 
-        return sync(client=self.client)
+        if id_token is not None:
+            if "?" in url:
+                url = url + "&id_token=" + str(id_token)
+            else:
+                url = url + "?id_token=" + str(id_token)
 
-    def oauth2_provider_consent(self) -> Any:
+        if state is not None:
+            if "?" in url:
+                url = url + "&state=" + str(state)
+            else:
+                url = url + "?state=" + str(state)
+
+        if user is not None:
+            if "?" in url:
+                url = url + "&user=" + str(user)
+            else:
+                url = url + "?user=" + str(user)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def oauth2_provider_callback_post(
+        self,
+        provider: AccountProvider,
+        body: AuthCallback,
+    ):
+        """This specific endpoint listens for posts of form data."""
+
+        url = "{}/oauth2/provider/{provider}/callback".format(
+            self.client.base_url, provider=provider
+        )
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def oauth2_provider_consent(
+        self,
+        provider: AccountProvider,
+        *,
+        callback_url: Optional[str] = None,
+    ) -> OAuth2ClientInfo:
         """Get the consent URL and other information for the OAuth 2.0 provider."""
-        from .api.oauth2.oauth2_provider_consent import sync
 
-        return sync(client=self.client)
+        url = "{}/oauth2/provider/{provider}/consent".format(
+            self.client.base_url, provider=provider
+        )
 
-    def oauth2_token_revoke(self) -> Any:
-        """Revoke an OAuth2 token."""
-        from .api.oauth2.oauth2_token_revoke import sync
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OAuth2ClientInfo(**json_data)
+
+    def oauth2_token_revoke(
+        self,
+        body: TokenRevokeRequestForm,
+    ):
+        """This endpoint is designed to be accessed from an *unauthenticated* API client."""
+
+        url = "{}/oauth2/token/revoke".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class AsyncOauth2API:
@@ -942,53 +4235,257 @@ class AsyncOauth2API:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def device_auth_request(self) -> Any:
-        """Start an OAuth 2.0 Device Authorization Grant."""
-        from .api.oauth2.device_auth_request import asyncio
+    async def device_auth_request(
+        self,
+        body: DeviceAuthRequestForm,
+    ):
+        """This endpoint is designed to be accessed from an *unauthenticated* API client. It generates and records a `device_code` and `user_code` which must be verified and confirmed prior to a token being granted."""
 
-        return await asyncio(client=self.client)
+        url = "{}/oauth2/device/auth".format(self.client.base_url)
 
-    async def device_auth_confirm(self) -> Any:
-        """Confirm an OAuth 2.0 Device Authorization Grant."""
-        from .api.oauth2.device_auth_confirm import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def device_access_token(self) -> Any:
-        """Request a device access token."""
-        from .api.oauth2.device_access_token import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        return response.json() if response.content else None
 
-    async def device_auth_verify(self) -> Any:
-        """Verify an OAuth 2.0 Device Authorization Grant."""
-        from .api.oauth2.device_auth_verify import asyncio
+    async def device_auth_confirm(
+        self,
+        body: DeviceAuthConfirmParams,
+    ):
+        """This endpoint is designed to be accessed by the user agent (browser), not the client requesting the token. So we do not actually return the token here; it will be returned in response to the poll on `/oauth2/device/token`."""
 
-        return await asyncio(client=self.client)
+        url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
-    async def oauth2_provider_callback(self) -> Any:
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def device_access_token(
+        self,
+        body: DeviceAccessTokenRequestForm,
+    ):
+        """This endpoint should be polled by the client until the user code is verified and the grant is confirmed."""
+
+        url = "{}/oauth2/device/token".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def device_auth_verify(
+        self,
+        user_code: str,
+        *,
+        app_name: Optional[str] = None,
+    ):
+        """This endpoint should be accessed in a full user agent (e.g., a browser). If the user is not logged in, we redirect them to the login page and use the `callback_url` parameter to get them to the UI verification form upon logging in. If they are logged in, we redirect them to the UI verification form on the website."""
+
+        url = "{}/oauth2/device/verify".format(self.client.base_url)
+
+        if app_name is not None:
+            if "?" in url:
+                url = url + "&app_name=" + str(app_name)
+            else:
+                url = url + "?app_name=" + str(app_name)
+
+        if user_code is not None:
+            if "?" in url:
+                url = url + "&user_code=" + str(user_code)
+            else:
+                url = url + "?user_code=" + str(user_code)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def oauth2_provider_callback(
+        self,
+        provider: AccountProvider,
+        code: str,
+        state: str,
+        *,
+        id_token: Optional[str] = None,
+        user: Optional[str] = None,
+    ):
         """Listen for callbacks for the OAuth 2.0 provider."""
-        from .api.oauth2.oauth2_provider_callback import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/oauth2/provider/{provider}/callback".format(
+            self.client.base_url, provider=provider
+        )
 
-    async def oauth2_provider_callback_post(self) -> Any:
-        """Listen for callbacks for the OAuth 2.0 provider."""
-        from .api.oauth2.oauth2_provider_callback_post import asyncio
+        if code is not None:
+            if "?" in url:
+                url = url + "&code=" + str(code)
+            else:
+                url = url + "?code=" + str(code)
 
-        return await asyncio(client=self.client)
+        if id_token is not None:
+            if "?" in url:
+                url = url + "&id_token=" + str(id_token)
+            else:
+                url = url + "?id_token=" + str(id_token)
 
-    async def oauth2_provider_consent(self) -> Any:
+        if state is not None:
+            if "?" in url:
+                url = url + "&state=" + str(state)
+            else:
+                url = url + "?state=" + str(state)
+
+        if user is not None:
+            if "?" in url:
+                url = url + "&user=" + str(user)
+            else:
+                url = url + "?user=" + str(user)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def oauth2_provider_callback_post(
+        self,
+        provider: AccountProvider,
+        body: AuthCallback,
+    ):
+        """This specific endpoint listens for posts of form data."""
+
+        url = "{}/oauth2/provider/{provider}/callback".format(
+            self.client.base_url, provider=provider
+        )
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def oauth2_provider_consent(
+        self,
+        provider: AccountProvider,
+        *,
+        callback_url: Optional[str] = None,
+    ) -> OAuth2ClientInfo:
         """Get the consent URL and other information for the OAuth 2.0 provider."""
-        from .api.oauth2.oauth2_provider_consent import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/oauth2/provider/{provider}/consent".format(
+            self.client.base_url, provider=provider
+        )
 
-    async def oauth2_token_revoke(self) -> Any:
-        """Revoke an OAuth2 token."""
-        from .api.oauth2.oauth2_token_revoke import asyncio
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OAuth2ClientInfo(**json_data)
+
+    async def oauth2_token_revoke(
+        self,
+        body: TokenRevokeRequestForm,
+    ):
+        """This endpoint is designed to be accessed from an *unauthenticated* API client."""
+
+        url = "{}/oauth2/token/revoke".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class OrgsAPI:
@@ -997,125 +4494,638 @@ class OrgsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_org(self) -> Any:
-        """Get an org."""
-        from .api.orgs.get_org import sync
+    def get_org(
+        self,
+    ) -> Org:
+        """This endpoint requires authentication by an org admin. It gets the authenticated user's org."""
 
-        return sync(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    def update_org(self) -> Any:
-        """Update an org."""
-        from .api.orgs.update_org import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def create_org(self) -> Any:
-        """Create an org."""
-        from .api.orgs.create_org import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def delete_org(self) -> Any:
-        """Delete an org."""
-        from .api.orgs.delete_org import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return Org(**json_data)
 
-    def list_org_members(self) -> Any:
-        """List members of your org."""
-        from .api.orgs.list_org_members import sync
+    def update_org(
+        self,
+        body: OrgDetails,
+    ) -> Org:
+        """This endpoint requires authentication by an org admin. It updates the authenticated user's org."""
 
-        return sync(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    def create_org_member(self) -> Any:
-        """Add a member to your org."""
-        from .api.orgs.create_org_member import sync
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def get_org_member(self) -> Any:
-        """Get a member of your org."""
-        from .api.orgs.get_org_member import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def update_org_member(self) -> Any:
-        """Update a member of your org."""
-        from .api.orgs.update_org_member import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return Org(**json_data)
 
-    def delete_org_member(self) -> Any:
-        """Remove a member from your org."""
-        from .api.orgs.delete_org_member import sync
+    def create_org(
+        self,
+        body: OrgDetails,
+    ) -> Org:
+        """This endpoint requires authentication by a Zoo user that is not already in an org. It creates a new org for the authenticated user and makes them an admin."""
 
-        return sync(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    def get_org_privacy_settings(self) -> Any:
-        """Get the privacy settings for an org."""
-        from .api.orgs.get_org_privacy_settings import sync
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def update_org_privacy_settings(self) -> Any:
-        """Update the privacy settings for an org."""
-        from .api.orgs.update_org_privacy_settings import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def get_org_saml_idp(self) -> Any:
-        """Get the SAML identity provider."""
-        from .api.orgs.get_org_saml_idp import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return Org(**json_data)
 
-    def update_org_saml_idp(self) -> Any:
-        """Update the SAML identity provider."""
-        from .api.orgs.update_org_saml_idp import sync
+    def delete_org(
+        self,
+    ):
+        """In order to delete an org, you must first delete all of its members, except yourself.
 
-        return sync(client=self.client)
+        You must also have no outstanding invoices or unpaid balances.
 
-    def create_org_saml_idp(self) -> Any:
-        """Create a SAML identity provider."""
-        from .api.orgs.create_org_saml_idp import sync
+        This endpoint requires authentication by an org admin. It deletes the authenticated user's org."""
 
-        return sync(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    def delete_org_saml_idp(self) -> Any:
-        """Delete an SAML identity provider."""
-        from .api.orgs.delete_org_saml_idp import sync
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def get_org_shortlinks(self) -> Any:
-        """Get the shortlinks for an org."""
-        from .api.orgs.get_org_shortlinks import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        return response.json() if response.content else None
 
-    def list_orgs(self) -> Any:
-        """List orgs."""
-        from .api.orgs.list_orgs import sync
+    def list_org_members(
+        self,
+        sort_by: CreatedAtSortMode,
+        role: UserOrgRole,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> OrgMemberResultsPage:
+        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
 
-        return sync(client=self.client)
+        url = "{}/org/members".format(self.client.base_url)
 
-    def get_any_org(self) -> Any:
-        """Get an org."""
-        from .api.orgs.get_any_org import sync
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-        return sync(client=self.client)
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-    def update_enterprise_pricing_for_org(self) -> Any:
-        """Set the enterprise price for an organization."""
-        from .api.orgs.update_enterprise_pricing_for_org import sync
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-        return sync(client=self.client)
+        if role is not None:
+            if "?" in url:
+                url = url + "&role=" + str(role)
+            else:
+                url = url + "?role=" + str(role)
 
-    def get_user_org(self) -> Any:
-        """Get a user's org."""
-        from .api.orgs.get_user_org import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMemberResultsPage(**json_data)
+
+    def create_org_member(
+        self,
+        body: AddOrgMember,
+    ) -> OrgMember:
+        """If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.
+
+        In both cases the user gets an email that they have been added to the org.
+
+        If the user is already in your org, this will return a 400 and a message.
+
+        If the user is already in a different org, this will return a 400 and a message.
+
+        This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user's org."""
+
+        url = "{}/org/members".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMember(**json_data)
+
+    def get_org_member(
+        self,
+        user_id: Uuid,
+    ) -> OrgMember:
+        """This endpoint requires authentication by an org admin. It gets the specified member of the authenticated user's org."""
+
+        url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMember(**json_data)
+
+    def update_org_member(
+        self,
+        user_id: Uuid,
+        body: UpdateMemberToOrgBody,
+    ) -> OrgMember:
+        """This endpoint requires authentication by an org admin. It updates the specified member of the authenticated user's org."""
+
+        url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMember(**json_data)
+
+    def delete_org_member(
+        self,
+        user_id: Uuid,
+    ):
+        """This endpoint requires authentication by an org admin. It removes the specified member from the authenticated user's org."""
+
+        url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_org_privacy_settings(
+        self,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by an org admin. It gets the privacy settings for the authenticated user's org."""
+
+        url = "{}/org/privacy".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    def update_org_privacy_settings(
+        self,
+        body: PrivacySettings,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by an org admin. It updates the privacy settings for the authenticated user's org."""
+
+        url = "{}/org/privacy".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    def get_org_saml_idp(
+        self,
+    ) -> SamlIdentityProvider:
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return SamlIdentityProvider(**json_data)
+
+    def update_org_saml_idp(
+        self,
+        body: SamlIdentityProviderCreate,
+    ) -> SamlIdentityProvider:
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return SamlIdentityProvider(**json_data)
+
+    def create_org_saml_idp(
+        self,
+        body: SamlIdentityProviderCreate,
+    ) -> SamlIdentityProvider:
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return SamlIdentityProvider(**json_data)
+
+    def delete_org_saml_idp(
+        self,
+    ):
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_org_shortlinks(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ShortlinkResultsPage:
+        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
+
+        url = "{}/org/shortlinks".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ShortlinkResultsPage(**json_data)
+
+    def list_orgs(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> OrgResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
+
+        url = "{}/orgs".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgResultsPage(**json_data)
+
+    def get_any_org(
+        self,
+        id: Uuid,
+    ) -> Org:
+        """This endpoint requires authentication by a Zoo employee. It gets the information for the specified org."""
+
+        url = "{}/orgs/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Org(**json_data)
+
+    def update_enterprise_pricing_for_org(
+        self,
+        id: Uuid,
+        body: EnterpriseSubscriptionTierPrice,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def get_user_org(
+        self,
+    ) -> UserOrgInfo:
+        """This endpoint requires authentication by any Zoo user. It gets the authenticated user's org.
+
+        If the user is not a member of an org, this endpoint will return a 404."""
+
+        url = "{}/user/org".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UserOrgInfo(**json_data)
 
 
 class AsyncOrgsAPI:
@@ -1124,125 +5134,638 @@ class AsyncOrgsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_org(self) -> Any:
-        """Get an org."""
-        from .api.orgs.get_org import asyncio
+    async def get_org(
+        self,
+    ) -> Org:
+        """This endpoint requires authentication by an org admin. It gets the authenticated user's org."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    async def update_org(self) -> Any:
-        """Update an org."""
-        from .api.orgs.update_org import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def create_org(self) -> Any:
-        """Create an org."""
-        from .api.orgs.create_org import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def delete_org(self) -> Any:
-        """Delete an org."""
-        from .api.orgs.delete_org import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return Org(**json_data)
 
-    async def list_org_members(self) -> Any:
-        """List members of your org."""
-        from .api.orgs.list_org_members import asyncio
+    async def update_org(
+        self,
+        body: OrgDetails,
+    ) -> Org:
+        """This endpoint requires authentication by an org admin. It updates the authenticated user's org."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    async def create_org_member(self) -> Any:
-        """Add a member to your org."""
-        from .api.orgs.create_org_member import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def get_org_member(self) -> Any:
-        """Get a member of your org."""
-        from .api.orgs.get_org_member import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def update_org_member(self) -> Any:
-        """Update a member of your org."""
-        from .api.orgs.update_org_member import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return Org(**json_data)
 
-    async def delete_org_member(self) -> Any:
-        """Remove a member from your org."""
-        from .api.orgs.delete_org_member import asyncio
+    async def create_org(
+        self,
+        body: OrgDetails,
+    ) -> Org:
+        """This endpoint requires authentication by a Zoo user that is not already in an org. It creates a new org for the authenticated user and makes them an admin."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    async def get_org_privacy_settings(self) -> Any:
-        """Get the privacy settings for an org."""
-        from .api.orgs.get_org_privacy_settings import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def update_org_privacy_settings(self) -> Any:
-        """Update the privacy settings for an org."""
-        from .api.orgs.update_org_privacy_settings import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def get_org_saml_idp(self) -> Any:
-        """Get the SAML identity provider."""
-        from .api.orgs.get_org_saml_idp import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return Org(**json_data)
 
-    async def update_org_saml_idp(self) -> Any:
-        """Update the SAML identity provider."""
-        from .api.orgs.update_org_saml_idp import asyncio
+    async def delete_org(
+        self,
+    ):
+        """In order to delete an org, you must first delete all of its members, except yourself.
 
-        return await asyncio(client=self.client)
+        You must also have no outstanding invoices or unpaid balances.
 
-    async def create_org_saml_idp(self) -> Any:
-        """Create a SAML identity provider."""
-        from .api.orgs.create_org_saml_idp import asyncio
+        This endpoint requires authentication by an org admin. It deletes the authenticated user's org."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org".format(self.client.base_url)
 
-    async def delete_org_saml_idp(self) -> Any:
-        """Delete an SAML identity provider."""
-        from .api.orgs.delete_org_saml_idp import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def get_org_shortlinks(self) -> Any:
-        """Get the shortlinks for an org."""
-        from .api.orgs.get_org_shortlinks import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        return response.json() if response.content else None
 
-    async def list_orgs(self) -> Any:
-        """List orgs."""
-        from .api.orgs.list_orgs import asyncio
+    async def list_org_members(
+        self,
+        sort_by: CreatedAtSortMode,
+        role: UserOrgRole,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> OrgMemberResultsPage:
+        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org/members".format(self.client.base_url)
 
-    async def get_any_org(self) -> Any:
-        """Get an org."""
-        from .api.orgs.get_any_org import asyncio
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-        return await asyncio(client=self.client)
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-    async def update_enterprise_pricing_for_org(self) -> Any:
-        """Set the enterprise price for an organization."""
-        from .api.orgs.update_enterprise_pricing_for_org import asyncio
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-        return await asyncio(client=self.client)
+        if role is not None:
+            if "?" in url:
+                url = url + "&role=" + str(role)
+            else:
+                url = url + "?role=" + str(role)
 
-    async def get_user_org(self) -> Any:
-        """Get a user's org."""
-        from .api.orgs.get_user_org import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMemberResultsPage(**json_data)
+
+    async def create_org_member(
+        self,
+        body: AddOrgMember,
+    ) -> OrgMember:
+        """If the user exists, this will add them to your org. If they do not exist, this will create a new user and add them to your org.
+
+        In both cases the user gets an email that they have been added to the org.
+
+        If the user is already in your org, this will return a 400 and a message.
+
+        If the user is already in a different org, this will return a 400 and a message.
+
+        This endpoint requires authentication by an org admin. It adds the specified member to the authenticated user's org."""
+
+        url = "{}/org/members".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMember(**json_data)
+
+    async def get_org_member(
+        self,
+        user_id: Uuid,
+    ) -> OrgMember:
+        """This endpoint requires authentication by an org admin. It gets the specified member of the authenticated user's org."""
+
+        url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMember(**json_data)
+
+    async def update_org_member(
+        self,
+        user_id: Uuid,
+        body: UpdateMemberToOrgBody,
+    ) -> OrgMember:
+        """This endpoint requires authentication by an org admin. It updates the specified member of the authenticated user's org."""
+
+        url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgMember(**json_data)
+
+    async def delete_org_member(
+        self,
+        user_id: Uuid,
+    ):
+        """This endpoint requires authentication by an org admin. It removes the specified member from the authenticated user's org."""
+
+        url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_org_privacy_settings(
+        self,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by an org admin. It gets the privacy settings for the authenticated user's org."""
+
+        url = "{}/org/privacy".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    async def update_org_privacy_settings(
+        self,
+        body: PrivacySettings,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by an org admin. It updates the privacy settings for the authenticated user's org."""
+
+        url = "{}/org/privacy".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    async def get_org_saml_idp(
+        self,
+    ) -> SamlIdentityProvider:
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return SamlIdentityProvider(**json_data)
+
+    async def update_org_saml_idp(
+        self,
+        body: SamlIdentityProviderCreate,
+    ) -> SamlIdentityProvider:
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return SamlIdentityProvider(**json_data)
+
+    async def create_org_saml_idp(
+        self,
+        body: SamlIdentityProviderCreate,
+    ) -> SamlIdentityProvider:
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return SamlIdentityProvider(**json_data)
+
+    async def delete_org_saml_idp(
+        self,
+    ):
+        """This endpoint requires authentication by an org admin."""
+
+        url = "{}/org/saml/idp".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_org_shortlinks(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ShortlinkResultsPage:
+        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
+
+        url = "{}/org/shortlinks".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ShortlinkResultsPage(**json_data)
+
+    async def list_orgs(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> OrgResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
+
+        url = "{}/orgs".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return OrgResultsPage(**json_data)
+
+    async def get_any_org(
+        self,
+        id: Uuid,
+    ) -> Org:
+        """This endpoint requires authentication by a Zoo employee. It gets the information for the specified org."""
+
+        url = "{}/orgs/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Org(**json_data)
+
+    async def update_enterprise_pricing_for_org(
+        self,
+        id: Uuid,
+        body: EnterpriseSubscriptionTierPrice,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def get_user_org(
+        self,
+    ) -> UserOrgInfo:
+        """This endpoint requires authentication by any Zoo user. It gets the authenticated user's org.
+
+        If the user is not a member of an org, this endpoint will return a 404."""
+
+        url = "{}/user/org".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UserOrgInfo(**json_data)
 
 
 class PaymentsAPI:
@@ -1251,185 +5774,869 @@ class PaymentsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_payment_information_for_org(self) -> Any:
-        """Get payment info about your org."""
-        from .api.payments.get_payment_information_for_org import sync
+    def get_payment_information_for_org(
+        self,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
 
-        return sync(client=self.client)
+        This endpoint requires authentication by an org admin. It gets the payment information for the authenticated user's org."""
 
-    def update_payment_information_for_org(self) -> Any:
-        """Update payment info for your org."""
-        from .api.payments.update_payment_information_for_org import sync
+        url = "{}/org/payment".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def create_payment_information_for_org(self) -> Any:
-        """Create payment info for your org."""
-        from .api.payments.create_payment_information_for_org import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def delete_payment_information_for_org(self) -> Any:
-        """Delete payment info for your org."""
-        from .api.payments.delete_payment_information_for_org import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def get_payment_balance_for_org(self) -> Any:
-        """Get balance for your org."""
-        from .api.payments.get_payment_balance_for_org import sync
+        return Customer(**json_data)
 
-        return sync(client=self.client)
+    def update_payment_information_for_org(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
 
-    def create_payment_intent_for_org(self) -> Any:
-        """Create a payment intent for your org."""
-        from .api.payments.create_payment_intent_for_org import sync
+        This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org."""
 
-        return sync(client=self.client)
+        url = "{}/org/payment".format(self.client.base_url)
 
-    def list_invoices_for_org(self) -> Any:
-        """List invoices for your org."""
-        from .api.payments.list_invoices_for_org import sync
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def list_payment_methods_for_org(self) -> Any:
-        """List payment methods for your org."""
-        from .api.payments.list_payment_methods_for_org import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def delete_payment_method_for_org(self) -> Any:
-        """Delete a payment method for your org."""
-        from .api.payments.delete_payment_method_for_org import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return Customer(**json_data)
 
-    def get_org_subscription(self) -> Any:
-        """Get the subscription for an org."""
-        from .api.payments.get_org_subscription import sync
+    def create_payment_information_for_org(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
 
-        return sync(client=self.client)
+        This endpoint requires authentication by the org admin. It creates the payment information for the authenticated user's org."""
 
-    def update_org_subscription(self) -> Any:
-        """Update the subscription for an org."""
-        from .api.payments.update_org_subscription import sync
+        url = "{}/org/payment".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-    def create_org_subscription(self) -> Any:
-        """Create the subscription for an org."""
-        from .api.payments.create_org_subscription import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def validate_customer_tax_information_for_org(self) -> Any:
-        """Validate an orgs's information is correct and valid for automatic tax."""
-        from .api.payments.validate_customer_tax_information_for_org import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def get_payment_balance_for_any_org(self) -> Any:
-        """Get balance for an org."""
-        from .api.payments.get_payment_balance_for_any_org import sync
+        return Customer(**json_data)
 
-        return sync(client=self.client)
+    def delete_payment_information_for_org(
+        self,
+    ):
+        """This includes billing address, phone, and name.
 
-    def update_payment_balance_for_any_org(self) -> Any:
-        """Update balance for an org."""
-        from .api.payments.update_payment_balance_for_any_org import sync
+        This endpoint requires authentication by an org admin. It deletes the payment information for the authenticated user's org."""
 
-        return sync(client=self.client)
+        url = "{}/org/payment".format(self.client.base_url)
 
-    def get_payment_information_for_user(self) -> Any:
-        """Get payment info about your user."""
-        from .api.payments.get_payment_information_for_user import sync
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def update_payment_information_for_user(self) -> Any:
-        """Update payment info for your user."""
-        from .api.payments.update_payment_information_for_user import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        return response.json() if response.content else None
 
-    def create_payment_information_for_user(self) -> Any:
-        """Create payment info for your user."""
-        from .api.payments.create_payment_information_for_user import sync
+    def get_payment_balance_for_org(
+        self,
+        include_total_due: bool,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
 
-        return sync(client=self.client)
+        url = "{}/org/payment/balance".format(self.client.base_url)
 
-    def delete_payment_information_for_user(self) -> Any:
-        """Delete payment info for your user."""
-        from .api.payments.delete_payment_information_for_user import sync
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def get_payment_balance_for_user(self) -> Any:
-        """Get balance for your user."""
-        from .api.payments.get_payment_balance_for_user import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def create_payment_intent_for_user(self) -> Any:
-        """Create a payment intent for your user."""
-        from .api.payments.create_payment_intent_for_user import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def list_invoices_for_user(self) -> Any:
-        """List invoices for your user."""
-        from .api.payments.list_invoices_for_user import sync
+        return CustomerBalance(**json_data)
 
-        return sync(client=self.client)
+    def create_payment_intent_for_org(
+        self,
+    ) -> PaymentIntent:
+        """This endpoint requires authentication by the org admin. It creates a new payment intent for the authenticated user's org's org."""
 
-    def list_payment_methods_for_user(self) -> Any:
-        """List payment methods for your user."""
-        from .api.payments.list_payment_methods_for_user import sync
+        url = "{}/org/payment/intent".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def delete_payment_method_for_user(self) -> Any:
-        """Delete a payment method for your user."""
-        from .api.payments.delete_payment_method_for_user import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def get_user_subscription(self) -> Any:
-        """Get the subscription for a user."""
-        from .api.payments.get_user_subscription import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def update_user_subscription(self) -> Any:
-        """Update the user's subscription."""
-        from .api.payments.update_user_subscription import sync
+        return PaymentIntent(**json_data)
 
-        return sync(client=self.client)
+    def list_invoices_for_org(
+        self,
+    ) -> List[Invoice]:
+        """This endpoint requires authentication by an org admin. It lists invoices for the authenticated user's org."""
 
-    def create_user_subscription(self) -> Any:
-        """Create the subscription for a user."""
-        from .api.payments.create_user_subscription import sync
+        url = "{}/org/payment/invoices".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def validate_customer_tax_information_for_user(self) -> Any:
-        """Validate a user's information is correct and valid for automatic tax."""
-        from .api.payments.validate_customer_tax_information_for_user import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def get_payment_balance_for_any_user(self) -> Any:
-        """Get balance for an user."""
-        from .api.payments.get_payment_balance_for_any_user import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def update_payment_balance_for_any_user(self) -> Any:
-        """Update balance for an user."""
-        from .api.payments.update_payment_balance_for_any_user import sync
+        return List[Invoice](**json_data)
 
-        return sync(client=self.client)
+    def list_payment_methods_for_org(
+        self,
+    ) -> List[PaymentMethod]:
+        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org."""
+
+        url = "{}/org/payment/methods".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[PaymentMethod](**json_data)
+
+    def delete_payment_method_for_org(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by an org admin. It deletes the specified payment method for the authenticated user's org."""
+
+        url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_org_subscription(
+        self,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by an org admin. It gets the subscription for the authenticated user's org."""
+
+        url = "{}/org/payment/subscriptions".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def update_org_subscription(
+        self,
+        body: ZooProductSubscriptionsOrgRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by an org admin. It updates the subscription for the authenticated user's org."""
+
+        url = "{}/org/payment/subscriptions".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def create_org_subscription(
+        self,
+        body: ZooProductSubscriptionsOrgRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by an org admin. It creates the subscription for the authenticated user's org."""
+
+        url = "{}/org/payment/subscriptions".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def validate_customer_tax_information_for_org(
+        self,
+    ):
+        """This endpoint requires authentication by an org admin. It will return an error if the org's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""
+
+        url = "{}/org/payment/tax".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_payment_balance_for_any_org(
+        self,
+        include_total_due: bool,
+        id: Uuid,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified org."""
+
+        url = "{}/orgs/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    def update_payment_balance_for_any_org(
+        self,
+        id: Uuid,
+        include_total_due: bool,
+        body: UpdatePaymentBalance,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified org."""
+
+        url = "{}/orgs/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    def get_payment_information_for_user(
+        self,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It gets the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Customer(**json_data)
+
+    def update_payment_information_for_user(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It updates the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Customer(**json_data)
+
+    def create_payment_information_for_user(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It creates the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Customer(**json_data)
+
+    def delete_payment_information_for_user(
+        self,
+    ):
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It deletes the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_payment_balance_for_user(
+        self,
+        include_total_due: bool,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by any Zoo user. It gets the balance information for the authenticated user."""
+
+        url = "{}/user/payment/balance".format(self.client.base_url)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    def create_payment_intent_for_user(
+        self,
+    ) -> PaymentIntent:
+        """This endpoint requires authentication by any Zoo user. It creates a new payment intent for the authenticated user."""
+
+        url = "{}/user/payment/intent".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PaymentIntent(**json_data)
+
+    def list_invoices_for_user(
+        self,
+    ) -> List[Invoice]:
+        """This endpoint requires authentication by any Zoo user. It lists invoices for the authenticated user."""
+
+        url = "{}/user/payment/invoices".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[Invoice](**json_data)
+
+    def list_payment_methods_for_user(
+        self,
+    ) -> List[PaymentMethod]:
+        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user."""
+
+        url = "{}/user/payment/methods".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[PaymentMethod](**json_data)
+
+    def delete_payment_method_for_user(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
+
+        url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_user_subscription(
+        self,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by any Zoo user. It gets the subscription for the user."""
+
+        url = "{}/user/payment/subscriptions".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def update_user_subscription(
+        self,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by any Zoo user. It updates the subscription for the user."""
+
+        url = "{}/user/payment/subscriptions".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def create_user_subscription(
+        self,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by any Zoo user. It creates the subscription for the user."""
+
+        url = "{}/user/payment/subscriptions".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def validate_customer_tax_information_for_user(
+        self,
+    ):
+        """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""
+
+        url = "{}/user/payment/tax".format(self.client.base_url)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_payment_balance_for_any_user(
+        self,
+        id: UserIdentifier,
+        include_total_due: bool,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified user."""
+
+        url = "{}/users/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    def update_payment_balance_for_any_user(
+        self,
+        id: UserIdentifier,
+        include_total_due: bool,
+        body: UpdatePaymentBalance,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified user."""
+
+        url = "{}/users/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
 
 
 class AsyncPaymentsAPI:
@@ -1438,185 +6645,869 @@ class AsyncPaymentsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_payment_information_for_org(self) -> Any:
-        """Get payment info about your org."""
-        from .api.payments.get_payment_information_for_org import asyncio
+    async def get_payment_information_for_org(
+        self,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
 
-        return await asyncio(client=self.client)
+        This endpoint requires authentication by an org admin. It gets the payment information for the authenticated user's org."""
 
-    async def update_payment_information_for_org(self) -> Any:
-        """Update payment info for your org."""
-        from .api.payments.update_payment_information_for_org import asyncio
+        url = "{}/org/payment".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def create_payment_information_for_org(self) -> Any:
-        """Create payment info for your org."""
-        from .api.payments.create_payment_information_for_org import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def delete_payment_information_for_org(self) -> Any:
-        """Delete payment info for your org."""
-        from .api.payments.delete_payment_information_for_org import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def get_payment_balance_for_org(self) -> Any:
-        """Get balance for your org."""
-        from .api.payments.get_payment_balance_for_org import asyncio
+        return Customer(**json_data)
 
-        return await asyncio(client=self.client)
+    async def update_payment_information_for_org(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
 
-    async def create_payment_intent_for_org(self) -> Any:
-        """Create a payment intent for your org."""
-        from .api.payments.create_payment_intent_for_org import asyncio
+        This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org/payment".format(self.client.base_url)
 
-    async def list_invoices_for_org(self) -> Any:
-        """List invoices for your org."""
-        from .api.payments.list_invoices_for_org import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def list_payment_methods_for_org(self) -> Any:
-        """List payment methods for your org."""
-        from .api.payments.list_payment_methods_for_org import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def delete_payment_method_for_org(self) -> Any:
-        """Delete a payment method for your org."""
-        from .api.payments.delete_payment_method_for_org import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return Customer(**json_data)
 
-    async def get_org_subscription(self) -> Any:
-        """Get the subscription for an org."""
-        from .api.payments.get_org_subscription import asyncio
+    async def create_payment_information_for_org(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
 
-        return await asyncio(client=self.client)
+        This endpoint requires authentication by the org admin. It creates the payment information for the authenticated user's org."""
 
-    async def update_org_subscription(self) -> Any:
-        """Update the subscription for an org."""
-        from .api.payments.update_org_subscription import asyncio
+        url = "{}/org/payment".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-    async def create_org_subscription(self) -> Any:
-        """Create the subscription for an org."""
-        from .api.payments.create_org_subscription import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def validate_customer_tax_information_for_org(self) -> Any:
-        """Validate an orgs's information is correct and valid for automatic tax."""
-        from .api.payments.validate_customer_tax_information_for_org import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def get_payment_balance_for_any_org(self) -> Any:
-        """Get balance for an org."""
-        from .api.payments.get_payment_balance_for_any_org import asyncio
+        return Customer(**json_data)
 
-        return await asyncio(client=self.client)
+    async def delete_payment_information_for_org(
+        self,
+    ):
+        """This includes billing address, phone, and name.
 
-    async def update_payment_balance_for_any_org(self) -> Any:
-        """Update balance for an org."""
-        from .api.payments.update_payment_balance_for_any_org import asyncio
+        This endpoint requires authentication by an org admin. It deletes the payment information for the authenticated user's org."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org/payment".format(self.client.base_url)
 
-    async def get_payment_information_for_user(self) -> Any:
-        """Get payment info about your user."""
-        from .api.payments.get_payment_information_for_user import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def update_payment_information_for_user(self) -> Any:
-        """Update payment info for your user."""
-        from .api.payments.update_payment_information_for_user import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        return response.json() if response.content else None
 
-    async def create_payment_information_for_user(self) -> Any:
-        """Create payment info for your user."""
-        from .api.payments.create_payment_information_for_user import asyncio
+    async def get_payment_balance_for_org(
+        self,
+        include_total_due: bool,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
 
-        return await asyncio(client=self.client)
+        url = "{}/org/payment/balance".format(self.client.base_url)
 
-    async def delete_payment_information_for_user(self) -> Any:
-        """Delete payment info for your user."""
-        from .api.payments.delete_payment_information_for_user import asyncio
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def get_payment_balance_for_user(self) -> Any:
-        """Get balance for your user."""
-        from .api.payments.get_payment_balance_for_user import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def create_payment_intent_for_user(self) -> Any:
-        """Create a payment intent for your user."""
-        from .api.payments.create_payment_intent_for_user import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def list_invoices_for_user(self) -> Any:
-        """List invoices for your user."""
-        from .api.payments.list_invoices_for_user import asyncio
+        return CustomerBalance(**json_data)
 
-        return await asyncio(client=self.client)
+    async def create_payment_intent_for_org(
+        self,
+    ) -> PaymentIntent:
+        """This endpoint requires authentication by the org admin. It creates a new payment intent for the authenticated user's org's org."""
 
-    async def list_payment_methods_for_user(self) -> Any:
-        """List payment methods for your user."""
-        from .api.payments.list_payment_methods_for_user import asyncio
+        url = "{}/org/payment/intent".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def delete_payment_method_for_user(self) -> Any:
-        """Delete a payment method for your user."""
-        from .api.payments.delete_payment_method_for_user import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def get_user_subscription(self) -> Any:
-        """Get the subscription for a user."""
-        from .api.payments.get_user_subscription import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def update_user_subscription(self) -> Any:
-        """Update the user's subscription."""
-        from .api.payments.update_user_subscription import asyncio
+        return PaymentIntent(**json_data)
 
-        return await asyncio(client=self.client)
+    async def list_invoices_for_org(
+        self,
+    ) -> List[Invoice]:
+        """This endpoint requires authentication by an org admin. It lists invoices for the authenticated user's org."""
 
-    async def create_user_subscription(self) -> Any:
-        """Create the subscription for a user."""
-        from .api.payments.create_user_subscription import asyncio
+        url = "{}/org/payment/invoices".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def validate_customer_tax_information_for_user(self) -> Any:
-        """Validate a user's information is correct and valid for automatic tax."""
-        from .api.payments.validate_customer_tax_information_for_user import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def get_payment_balance_for_any_user(self) -> Any:
-        """Get balance for an user."""
-        from .api.payments.get_payment_balance_for_any_user import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def update_payment_balance_for_any_user(self) -> Any:
-        """Update balance for an user."""
-        from .api.payments.update_payment_balance_for_any_user import asyncio
+        return List[Invoice](**json_data)
 
-        return await asyncio(client=self.client)
+    async def list_payment_methods_for_org(
+        self,
+    ) -> List[PaymentMethod]:
+        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org."""
+
+        url = "{}/org/payment/methods".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[PaymentMethod](**json_data)
+
+    async def delete_payment_method_for_org(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by an org admin. It deletes the specified payment method for the authenticated user's org."""
+
+        url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_org_subscription(
+        self,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by an org admin. It gets the subscription for the authenticated user's org."""
+
+        url = "{}/org/payment/subscriptions".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def update_org_subscription(
+        self,
+        body: ZooProductSubscriptionsOrgRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by an org admin. It updates the subscription for the authenticated user's org."""
+
+        url = "{}/org/payment/subscriptions".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def create_org_subscription(
+        self,
+        body: ZooProductSubscriptionsOrgRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by an org admin. It creates the subscription for the authenticated user's org."""
+
+        url = "{}/org/payment/subscriptions".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def validate_customer_tax_information_for_org(
+        self,
+    ):
+        """This endpoint requires authentication by an org admin. It will return an error if the org's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""
+
+        url = "{}/org/payment/tax".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_payment_balance_for_any_org(
+        self,
+        include_total_due: bool,
+        id: Uuid,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified org."""
+
+        url = "{}/orgs/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    async def update_payment_balance_for_any_org(
+        self,
+        id: Uuid,
+        include_total_due: bool,
+        body: UpdatePaymentBalance,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified org."""
+
+        url = "{}/orgs/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    async def get_payment_information_for_user(
+        self,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It gets the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Customer(**json_data)
+
+    async def update_payment_information_for_user(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It updates the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Customer(**json_data)
+
+    async def create_payment_information_for_user(
+        self,
+        body: BillingInfo,
+    ) -> Customer:
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It creates the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Customer(**json_data)
+
+    async def delete_payment_information_for_user(
+        self,
+    ):
+        """This includes billing address, phone, and name.
+
+        This endpoint requires authentication by any Zoo user. It deletes the payment information for the authenticated user."""
+
+        url = "{}/user/payment".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_payment_balance_for_user(
+        self,
+        include_total_due: bool,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by any Zoo user. It gets the balance information for the authenticated user."""
+
+        url = "{}/user/payment/balance".format(self.client.base_url)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    async def create_payment_intent_for_user(
+        self,
+    ) -> PaymentIntent:
+        """This endpoint requires authentication by any Zoo user. It creates a new payment intent for the authenticated user."""
+
+        url = "{}/user/payment/intent".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PaymentIntent(**json_data)
+
+    async def list_invoices_for_user(
+        self,
+    ) -> List[Invoice]:
+        """This endpoint requires authentication by any Zoo user. It lists invoices for the authenticated user."""
+
+        url = "{}/user/payment/invoices".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[Invoice](**json_data)
+
+    async def list_payment_methods_for_user(
+        self,
+    ) -> List[PaymentMethod]:
+        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user."""
+
+        url = "{}/user/payment/methods".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return List[PaymentMethod](**json_data)
+
+    async def delete_payment_method_for_user(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
+
+        url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_user_subscription(
+        self,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by any Zoo user. It gets the subscription for the user."""
+
+        url = "{}/user/payment/subscriptions".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def update_user_subscription(
+        self,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by any Zoo user. It updates the subscription for the user."""
+
+        url = "{}/user/payment/subscriptions".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def create_user_subscription(
+        self,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by any Zoo user. It creates the subscription for the user."""
+
+        url = "{}/user/payment/subscriptions".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def validate_customer_tax_information_for_user(
+        self,
+    ):
+        """This endpoint requires authentication by any Zoo user. It will return an error if the user's information is not valid for automatic tax. Otherwise, it will return an empty successful response."""
+
+        url = "{}/user/payment/tax".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_payment_balance_for_any_user(
+        self,
+        id: UserIdentifier,
+        include_total_due: bool,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified user."""
+
+        url = "{}/users/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
+
+    async def update_payment_balance_for_any_user(
+        self,
+        id: UserIdentifier,
+        include_total_due: bool,
+        body: UpdatePaymentBalance,
+    ) -> CustomerBalance:
+        """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified user."""
+
+        url = "{}/users/{id}/payment/balance".format(self.client.base_url, id=id)
+
+        if include_total_due is not None:
+            if "?" in url:
+                url = url + "&include_total_due=" + str(include_total_due).lower()
+            else:
+                url = url + "?include_total_due=" + str(include_total_due).lower()
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CustomerBalance(**json_data)
 
 
 class ServiceAccountsAPI:
@@ -1625,29 +7516,148 @@ class ServiceAccountsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def list_service_accounts_for_org(self) -> Any:
-        """List service accounts for your org."""
-        from .api.service_accounts.list_service_accounts_for_org import sync
+    def list_service_accounts_for_org(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ServiceAccountResultsPage:
+        """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
-        return sync(client=self.client)
+        The service accounts are returned in order of creation, with the most recently created service accounts first."""
 
-    def create_service_account_for_org(self) -> Any:
-        """Create a new service account for your org."""
-        from .api.service_accounts.create_service_account_for_org import sync
+        url = "{}/org/service-accounts".format(self.client.base_url)
 
-        return sync(client=self.client)
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-    def get_service_account_for_org(self) -> Any:
-        """Get an service account for your org."""
-        from .api.service_accounts.get_service_account_for_org import sync
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-        return sync(client=self.client)
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-    def delete_service_account_for_org(self) -> Any:
-        """Delete an service account for your org."""
-        from .api.service_accounts.delete_service_account_for_org import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ServiceAccountResultsPage(**json_data)
+
+    def create_service_account_for_org(
+        self,
+        *,
+        label: Optional[str] = None,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org admin. It creates a new service account for the organization."""
+
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        if label is not None:
+            if "?" in url:
+                url = url + "&label=" + str(label)
+            else:
+                url = url + "?label=" + str(label)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ServiceAccount(**json_data)
+
+    def get_service_account_for_org(
+        self,
+        token: ServiceAccountUuid,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org admin. It returns details of the requested service account for the organization."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ServiceAccount(**json_data)
+
+    def delete_service_account_for_org(
+        self,
+        token: ServiceAccountUuid,
+    ):
+        """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
+
+        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class AsyncServiceAccountsAPI:
@@ -1656,29 +7666,148 @@ class AsyncServiceAccountsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def list_service_accounts_for_org(self) -> Any:
-        """List service accounts for your org."""
-        from .api.service_accounts.list_service_accounts_for_org import asyncio
+    async def list_service_accounts_for_org(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ServiceAccountResultsPage:
+        """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
-        return await asyncio(client=self.client)
+        The service accounts are returned in order of creation, with the most recently created service accounts first."""
 
-    async def create_service_account_for_org(self) -> Any:
-        """Create a new service account for your org."""
-        from .api.service_accounts.create_service_account_for_org import asyncio
+        url = "{}/org/service-accounts".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-    async def get_service_account_for_org(self) -> Any:
-        """Get an service account for your org."""
-        from .api.service_accounts.get_service_account_for_org import asyncio
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-        return await asyncio(client=self.client)
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-    async def delete_service_account_for_org(self) -> Any:
-        """Delete an service account for your org."""
-        from .api.service_accounts.delete_service_account_for_org import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ServiceAccountResultsPage(**json_data)
+
+    async def create_service_account_for_org(
+        self,
+        *,
+        label: Optional[str] = None,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org admin. It creates a new service account for the organization."""
+
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        if label is not None:
+            if "?" in url:
+                url = url + "&label=" + str(label)
+            else:
+                url = url + "?label=" + str(label)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ServiceAccount(**json_data)
+
+    async def get_service_account_for_org(
+        self,
+        token: ServiceAccountUuid,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org admin. It returns details of the requested service account for the organization."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ServiceAccount(**json_data)
+
+    async def delete_service_account_for_org(
+        self,
+        token: ServiceAccountUuid,
+    ):
+        """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
+
+        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class StoreAPI:
@@ -1687,11 +7816,34 @@ class StoreAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_store_coupon(self) -> Any:
-        """Create a new store coupon."""
-        from .api.store.create_store_coupon import sync
+    def create_store_coupon(
+        self,
+        body: StoreCouponParams,
+    ) -> DiscountCode:
+        """This endpoint requires authentication by a Zoo employee. It creates a new store coupon."""
 
-        return sync(client=self.client)
+        url = "{}/store/coupon".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return DiscountCode(**json_data)
 
 
 class AsyncStoreAPI:
@@ -1700,11 +7852,34 @@ class AsyncStoreAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_store_coupon(self) -> Any:
-        """Create a new store coupon."""
-        from .api.store.create_store_coupon import asyncio
+    async def create_store_coupon(
+        self,
+        body: StoreCouponParams,
+    ) -> DiscountCode:
+        """This endpoint requires authentication by a Zoo employee. It creates a new store coupon."""
 
-        return await asyncio(client=self.client)
+        url = "{}/store/coupon".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return DiscountCode(**json_data)
 
 
 class UnitAPI:
@@ -1713,83 +7888,499 @@ class UnitAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_angle_unit_conversion(self) -> Any:
-        """Convert angle units."""
-        from .api.unit.get_angle_unit_conversion import sync
+    def get_angle_unit_conversion(
+        self,
+        input_unit: UnitAngle,
+        output_unit: UnitAngle,
+        value: float,
+    ) -> UnitAngleConversion:
+        """Convert an angle unit value to another angle unit value. This is a nice endpoint to use for helper functions."""
 
-        return sync(client=self.client)
+        url = "{}/unit/conversion/angle/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
 
-    def get_area_unit_conversion(self) -> Any:
-        """Convert area units."""
-        from .api.unit.get_area_unit_conversion import sync
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def get_current_unit_conversion(self) -> Any:
-        """Convert current units."""
-        from .api.unit.get_current_unit_conversion import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def get_energy_unit_conversion(self) -> Any:
-        """Convert energy units."""
-        from .api.unit.get_energy_unit_conversion import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def get_force_unit_conversion(self) -> Any:
-        """Convert force units."""
-        from .api.unit.get_force_unit_conversion import sync
+        return UnitAngleConversion(**json_data)
 
-        return sync(client=self.client)
+    def get_area_unit_conversion(
+        self,
+        input_unit: UnitArea,
+        output_unit: UnitArea,
+        value: float,
+    ) -> UnitAreaConversion:
+        """Convert an area unit value to another area unit value. This is a nice endpoint to use for helper functions."""
 
-    def get_frequency_unit_conversion(self) -> Any:
-        """Convert frequency units."""
-        from .api.unit.get_frequency_unit_conversion import sync
+        url = "{}/unit/conversion/area/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
 
-        return sync(client=self.client)
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
 
-    def get_length_unit_conversion(self) -> Any:
-        """Convert length units."""
-        from .api.unit.get_length_unit_conversion import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def get_mass_unit_conversion(self) -> Any:
-        """Convert mass units."""
-        from .api.unit.get_mass_unit_conversion import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def get_power_unit_conversion(self) -> Any:
-        """Convert power units."""
-        from .api.unit.get_power_unit_conversion import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return UnitAreaConversion(**json_data)
 
-    def get_pressure_unit_conversion(self) -> Any:
-        """Convert pressure units."""
-        from .api.unit.get_pressure_unit_conversion import sync
+    def get_current_unit_conversion(
+        self,
+        input_unit: UnitCurrent,
+        output_unit: UnitCurrent,
+        value: float,
+    ) -> UnitCurrentConversion:
+        """Convert a current unit value to another current unit value. This is a nice endpoint to use for helper functions."""
 
-        return sync(client=self.client)
+        url = "{}/unit/conversion/current/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
 
-    def get_temperature_unit_conversion(self) -> Any:
-        """Convert temperature units."""
-        from .api.unit.get_temperature_unit_conversion import sync
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def get_torque_unit_conversion(self) -> Any:
-        """Convert torque units."""
-        from .api.unit.get_torque_unit_conversion import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def get_volume_unit_conversion(self) -> Any:
-        """Convert volume units."""
-        from .api.unit.get_volume_unit_conversion import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
+
+        return UnitCurrentConversion(**json_data)
+
+    def get_energy_unit_conversion(
+        self,
+        input_unit: UnitEnergy,
+        output_unit: UnitEnergy,
+        value: float,
+    ) -> UnitEnergyConversion:
+        """Convert a energy unit value to another energy unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/energy/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitEnergyConversion(**json_data)
+
+    def get_force_unit_conversion(
+        self,
+        input_unit: UnitForce,
+        output_unit: UnitForce,
+        value: float,
+    ) -> UnitForceConversion:
+        """Convert a force unit value to another force unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/force/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitForceConversion(**json_data)
+
+    def get_frequency_unit_conversion(
+        self,
+        input_unit: UnitFrequency,
+        output_unit: UnitFrequency,
+        value: float,
+    ) -> UnitFrequencyConversion:
+        """Convert a frequency unit value to another frequency unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/frequency/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitFrequencyConversion(**json_data)
+
+    def get_length_unit_conversion(
+        self,
+        input_unit: UnitLength,
+        output_unit: UnitLength,
+        value: float,
+    ) -> UnitLengthConversion:
+        """Convert a length unit value to another length unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/length/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitLengthConversion(**json_data)
+
+    def get_mass_unit_conversion(
+        self,
+        input_unit: UnitMass,
+        output_unit: UnitMass,
+        value: float,
+    ) -> UnitMassConversion:
+        """Convert a mass unit value to another mass unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/mass/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitMassConversion(**json_data)
+
+    def get_power_unit_conversion(
+        self,
+        input_unit: UnitPower,
+        output_unit: UnitPower,
+        value: float,
+    ) -> UnitPowerConversion:
+        """Convert a power unit value to another power unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/power/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitPowerConversion(**json_data)
+
+    def get_pressure_unit_conversion(
+        self,
+        input_unit: UnitPressure,
+        output_unit: UnitPressure,
+        value: float,
+    ) -> UnitPressureConversion:
+        """Convert a pressure unit value to another pressure unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/pressure/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitPressureConversion(**json_data)
+
+    def get_temperature_unit_conversion(
+        self,
+        input_unit: UnitTemperature,
+        output_unit: UnitTemperature,
+        value: float,
+    ) -> UnitTemperatureConversion:
+        """Convert a temperature unit value to another temperature unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/temperature/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitTemperatureConversion(**json_data)
+
+    def get_torque_unit_conversion(
+        self,
+        input_unit: UnitTorque,
+        output_unit: UnitTorque,
+        value: float,
+    ) -> UnitTorqueConversion:
+        """Convert a torque unit value to another torque unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/torque/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitTorqueConversion(**json_data)
+
+    def get_volume_unit_conversion(
+        self,
+        input_unit: UnitVolume,
+        output_unit: UnitVolume,
+        value: float,
+    ) -> UnitVolumeConversion:
+        """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/volume/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitVolumeConversion(**json_data)
 
 
 class AsyncUnitAPI:
@@ -1798,83 +8389,499 @@ class AsyncUnitAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_angle_unit_conversion(self) -> Any:
-        """Convert angle units."""
-        from .api.unit.get_angle_unit_conversion import asyncio
+    async def get_angle_unit_conversion(
+        self,
+        input_unit: UnitAngle,
+        output_unit: UnitAngle,
+        value: float,
+    ) -> UnitAngleConversion:
+        """Convert an angle unit value to another angle unit value. This is a nice endpoint to use for helper functions."""
 
-        return await asyncio(client=self.client)
+        url = "{}/unit/conversion/angle/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
 
-    async def get_area_unit_conversion(self) -> Any:
-        """Convert area units."""
-        from .api.unit.get_area_unit_conversion import asyncio
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def get_current_unit_conversion(self) -> Any:
-        """Convert current units."""
-        from .api.unit.get_current_unit_conversion import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def get_energy_unit_conversion(self) -> Any:
-        """Convert energy units."""
-        from .api.unit.get_energy_unit_conversion import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def get_force_unit_conversion(self) -> Any:
-        """Convert force units."""
-        from .api.unit.get_force_unit_conversion import asyncio
+        return UnitAngleConversion(**json_data)
 
-        return await asyncio(client=self.client)
+    async def get_area_unit_conversion(
+        self,
+        input_unit: UnitArea,
+        output_unit: UnitArea,
+        value: float,
+    ) -> UnitAreaConversion:
+        """Convert an area unit value to another area unit value. This is a nice endpoint to use for helper functions."""
 
-    async def get_frequency_unit_conversion(self) -> Any:
-        """Convert frequency units."""
-        from .api.unit.get_frequency_unit_conversion import asyncio
+        url = "{}/unit/conversion/area/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
 
-        return await asyncio(client=self.client)
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
 
-    async def get_length_unit_conversion(self) -> Any:
-        """Convert length units."""
-        from .api.unit.get_length_unit_conversion import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def get_mass_unit_conversion(self) -> Any:
-        """Convert mass units."""
-        from .api.unit.get_mass_unit_conversion import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def get_power_unit_conversion(self) -> Any:
-        """Convert power units."""
-        from .api.unit.get_power_unit_conversion import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return UnitAreaConversion(**json_data)
 
-    async def get_pressure_unit_conversion(self) -> Any:
-        """Convert pressure units."""
-        from .api.unit.get_pressure_unit_conversion import asyncio
+    async def get_current_unit_conversion(
+        self,
+        input_unit: UnitCurrent,
+        output_unit: UnitCurrent,
+        value: float,
+    ) -> UnitCurrentConversion:
+        """Convert a current unit value to another current unit value. This is a nice endpoint to use for helper functions."""
 
-        return await asyncio(client=self.client)
+        url = "{}/unit/conversion/current/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
 
-    async def get_temperature_unit_conversion(self) -> Any:
-        """Convert temperature units."""
-        from .api.unit.get_temperature_unit_conversion import asyncio
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def get_torque_unit_conversion(self) -> Any:
-        """Convert torque units."""
-        from .api.unit.get_torque_unit_conversion import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def get_volume_unit_conversion(self) -> Any:
-        """Convert volume units."""
-        from .api.unit.get_volume_unit_conversion import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
+
+        return UnitCurrentConversion(**json_data)
+
+    async def get_energy_unit_conversion(
+        self,
+        input_unit: UnitEnergy,
+        output_unit: UnitEnergy,
+        value: float,
+    ) -> UnitEnergyConversion:
+        """Convert a energy unit value to another energy unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/energy/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitEnergyConversion(**json_data)
+
+    async def get_force_unit_conversion(
+        self,
+        input_unit: UnitForce,
+        output_unit: UnitForce,
+        value: float,
+    ) -> UnitForceConversion:
+        """Convert a force unit value to another force unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/force/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitForceConversion(**json_data)
+
+    async def get_frequency_unit_conversion(
+        self,
+        input_unit: UnitFrequency,
+        output_unit: UnitFrequency,
+        value: float,
+    ) -> UnitFrequencyConversion:
+        """Convert a frequency unit value to another frequency unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/frequency/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitFrequencyConversion(**json_data)
+
+    async def get_length_unit_conversion(
+        self,
+        input_unit: UnitLength,
+        output_unit: UnitLength,
+        value: float,
+    ) -> UnitLengthConversion:
+        """Convert a length unit value to another length unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/length/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitLengthConversion(**json_data)
+
+    async def get_mass_unit_conversion(
+        self,
+        input_unit: UnitMass,
+        output_unit: UnitMass,
+        value: float,
+    ) -> UnitMassConversion:
+        """Convert a mass unit value to another mass unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/mass/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitMassConversion(**json_data)
+
+    async def get_power_unit_conversion(
+        self,
+        input_unit: UnitPower,
+        output_unit: UnitPower,
+        value: float,
+    ) -> UnitPowerConversion:
+        """Convert a power unit value to another power unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/power/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitPowerConversion(**json_data)
+
+    async def get_pressure_unit_conversion(
+        self,
+        input_unit: UnitPressure,
+        output_unit: UnitPressure,
+        value: float,
+    ) -> UnitPressureConversion:
+        """Convert a pressure unit value to another pressure unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/pressure/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitPressureConversion(**json_data)
+
+    async def get_temperature_unit_conversion(
+        self,
+        input_unit: UnitTemperature,
+        output_unit: UnitTemperature,
+        value: float,
+    ) -> UnitTemperatureConversion:
+        """Convert a temperature unit value to another temperature unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/temperature/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitTemperatureConversion(**json_data)
+
+    async def get_torque_unit_conversion(
+        self,
+        input_unit: UnitTorque,
+        output_unit: UnitTorque,
+        value: float,
+    ) -> UnitTorqueConversion:
+        """Convert a torque unit value to another torque unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/torque/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitTorqueConversion(**json_data)
+
+    async def get_volume_unit_conversion(
+        self,
+        input_unit: UnitVolume,
+        output_unit: UnitVolume,
+        value: float,
+    ) -> UnitVolumeConversion:
+        """Convert a volume unit value to another volume unit value. This is a nice endpoint to use for helper functions."""
+
+        url = "{}/unit/conversion/volume/{input_unit}/{output_unit}".format(
+            self.client.base_url, input_unit=input_unit, output_unit=output_unit
+        )
+
+        if value is not None:
+            if "?" in url:
+                url = url + "&value=" + str(value)
+            else:
+                url = url + "?value=" + str(value)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UnitVolumeConversion(**json_data)
 
 
 class UsersAPI:
@@ -1883,131 +8890,641 @@ class UsersAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_user_self(self) -> Any:
-        """Get your user."""
-        from .api.users.get_user_self import sync
+    def get_user_self(
+        self,
+    ) -> User:
+        """Get the user information for the authenticated user.
 
-        return sync(client=self.client)
+        Alternatively, you can also use the `/users/me` endpoint."""
 
-    def update_user_self(self) -> Any:
-        """Update your user."""
-        from .api.users.update_user_self import sync
+        url = "{}/user".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def delete_user_self(self) -> Any:
-        """Delete your user."""
-        from .api.users.delete_user_self import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def patch_user_crm(self) -> Any:
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return User(**json_data)
+
+    def update_user_self(
+        self,
+        body: UpdateUser,
+    ) -> User:
+        """This endpoint requires authentication by any Zoo user. It updates information about the authenticated user."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return User(**json_data)
+
+    def delete_user_self(
+        self,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
+
+        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def patch_user_crm(
+        self,
+        body: CrmData,
+    ):
         """Update properties in the CRM"""
-        from .api.users.patch_user_crm import sync
 
-        return sync(client=self.client)
+        url = "{}/user/crm".format(self.client.base_url)
 
-    def get_user_self_extended(self) -> Any:
-        """Get extended information about your user."""
-        from .api.users.get_user_self_extended import sync
+        response = httpx.patch(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def put_user_form_self(self) -> Any:
-        """Create a new support/sales ticket from the website contact form. This endpoint is authenticated."""
-        from .api.users.put_user_form_self import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        return response.json() if response.content else None
 
-    def get_oauth2_providers_for_user(self) -> Any:
-        """Get the OAuth2 providers for your user."""
-        from .api.users.get_oauth2_providers_for_user import sync
+    def get_user_self_extended(
+        self,
+    ) -> ExtendedUser:
+        """Get the user information for the authenticated user.
 
-        return sync(client=self.client)
+        Alternatively, you can also use the `/users-extended/me` endpoint."""
 
-    def get_user_privacy_settings(self) -> Any:
-        """Get the privacy settings for a user."""
-        from .api.users.get_user_privacy_settings import sync
+        url = "{}/user/extended".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-    def update_user_privacy_settings(self) -> Any:
-        """Update the user's privacy settings."""
-        from .api.users.update_user_privacy_settings import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def get_session_for_user(self) -> Any:
-        """Get a session for your user."""
-        from .api.users.get_session_for_user import sync
+        if not response.content:
+            return None  # type: ignore
 
-        return sync(client=self.client)
+        json_data = response.json()
 
-    def get_user_shortlinks(self) -> Any:
-        """Get the shortlinks for a user."""
-        from .api.users.get_user_shortlinks import sync
+        return ExtendedUser(**json_data)
 
-        return sync(client=self.client)
+    def put_user_form_self(
+        self,
+        body: InquiryForm,
+    ):
+        """It gets attached to the user's account."""
 
-    def create_user_shortlink(self) -> Any:
-        """Create a shortlink for a user."""
-        from .api.users.create_user_shortlink import sync
+        url = "{}/user/form".format(self.client.base_url)
 
-        return sync(client=self.client)
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
 
-    def update_user_shortlink(self) -> Any:
-        """Update a shortlink for a user."""
-        from .api.users.update_user_shortlink import sync
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return sync(client=self.client)
+            raise_for_status(response)
 
-    def delete_user_shortlink(self) -> Any:
-        """Delete a shortlink for a user."""
-        from .api.users.delete_user_shortlink import sync
+        return response.json() if response.content else None
 
-        return sync(client=self.client)
+    def get_oauth2_providers_for_user(
+        self,
+    ) -> List[AccountProvider]:
+        """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
 
-    def list_users(self) -> Any:
-        """List users."""
-        from .api.users.list_users import sync
+        This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""
 
-        return sync(client=self.client)
+        url = "{}/user/oauth2/providers".format(self.client.base_url)
 
-    def list_users_extended(self) -> Any:
-        """List users with extended information."""
-        from .api.users.list_users_extended import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def get_user_extended(self) -> Any:
-        """Get extended information about a user."""
-        from .api.users.get_user_extended import sync
+            raise_for_status(response)
 
-        return sync(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    def get_user(self) -> Any:
-        """Get a user."""
-        from .api.users.get_user import sync
+        json_data = response.json()
 
-        return sync(client=self.client)
+        return List[AccountProvider](**json_data)
 
-    def update_subscription_for_user(self) -> Any:
-        """Update a subscription for a user."""
-        from .api.users.update_subscription_for_user import sync
+    def get_user_privacy_settings(
+        self,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It gets the privacy settings for the user."""
 
-        return sync(client=self.client)
+        url = "{}/user/privacy".format(self.client.base_url)
 
-    def put_public_form(self) -> Any:
-        """Creates a new support/sales ticket from the website contact form. This endpoint is for untrusted"""
-        from .api.users.put_public_form import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    def put_public_subscribe(self) -> Any:
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    def update_user_privacy_settings(
+        self,
+        body: PrivacySettings,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It updates the privacy settings for the user."""
+
+        url = "{}/user/privacy".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    def get_session_for_user(
+        self,
+        token: SessionUuid,
+    ) -> Session:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
+
+        url = "{}/user/session/{token}".format(self.client.base_url, token=token)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Session(**json_data)
+
+    def get_user_shortlinks(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ShortlinkResultsPage:
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
+
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ShortlinkResultsPage(**json_data)
+
+    def create_user_shortlink(
+        self,
+        body: CreateShortlinkRequest,
+    ) -> CreateShortlinkResponse:
+        """This endpoint requires authentication by any Zoo user. It creates a shortlink for the user."""
+
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CreateShortlinkResponse(**json_data)
+
+    def update_user_shortlink(
+        self,
+        key: str,
+        body: UpdateShortlinkRequest,
+    ):
+        """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
+
+        This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def delete_user_shortlink(
+        self,
+        key: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes a shortlink for the user."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_users(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> UserResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+
+        url = "{}/users".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UserResultsPage(**json_data)
+
+    def list_users_extended(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ExtendedUserResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+
+        url = "{}/users-extended".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ExtendedUserResultsPage(**json_data)
+
+    def get_user_extended(
+        self,
+        id: UserIdentifier,
+    ) -> ExtendedUser:
+        """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user/extended` endpoint."""
+
+        url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ExtendedUser(**json_data)
+
+    def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> User:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return User(**json_data)
+
+    def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    def put_public_form(
+        self,
+        body: InquiryForm,
+    ):
+        """users and is not authenticated."""
+
+        url = "{}/website/form".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def put_public_subscribe(
+        self,
+        body: Subscribe,
+    ):
         """Subscribes a user to the newsletter."""
-        from .api.users.put_public_subscribe import sync
 
-        return sync(client=self.client)
+        url = "{}/website/subscribe".format(self.client.base_url)
+
+        response = httpx.put(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class AsyncUsersAPI:
@@ -2016,131 +9533,641 @@ class AsyncUsersAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_user_self(self) -> Any:
-        """Get your user."""
-        from .api.users.get_user_self import asyncio
+    async def get_user_self(
+        self,
+    ) -> User:
+        """Get the user information for the authenticated user.
 
-        return await asyncio(client=self.client)
+        Alternatively, you can also use the `/users/me` endpoint."""
 
-    async def update_user_self(self) -> Any:
-        """Update your user."""
-        from .api.users.update_user_self import asyncio
+        url = "{}/user".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def delete_user_self(self) -> Any:
-        """Delete your user."""
-        from .api.users.delete_user_self import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def patch_user_crm(self) -> Any:
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return User(**json_data)
+
+    async def update_user_self(
+        self,
+        body: UpdateUser,
+    ) -> User:
+        """This endpoint requires authentication by any Zoo user. It updates information about the authenticated user."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return User(**json_data)
+
+    async def delete_user_self(
+        self,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
+
+        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def patch_user_crm(
+        self,
+        body: CrmData,
+    ):
         """Update properties in the CRM"""
-        from .api.users.patch_user_crm import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/user/crm".format(self.client.base_url)
 
-    async def get_user_self_extended(self) -> Any:
-        """Get extended information about your user."""
-        from .api.users.get_user_self_extended import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.patch(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def put_user_form_self(self) -> Any:
-        """Create a new support/sales ticket from the website contact form. This endpoint is authenticated."""
-        from .api.users.put_user_form_self import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        return response.json() if response.content else None
 
-    async def get_oauth2_providers_for_user(self) -> Any:
-        """Get the OAuth2 providers for your user."""
-        from .api.users.get_oauth2_providers_for_user import asyncio
+    async def get_user_self_extended(
+        self,
+    ) -> ExtendedUser:
+        """Get the user information for the authenticated user.
 
-        return await asyncio(client=self.client)
+        Alternatively, you can also use the `/users-extended/me` endpoint."""
 
-    async def get_user_privacy_settings(self) -> Any:
-        """Get the privacy settings for a user."""
-        from .api.users.get_user_privacy_settings import asyncio
+        url = "{}/user/extended".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-    async def update_user_privacy_settings(self) -> Any:
-        """Update the user's privacy settings."""
-        from .api.users.update_user_privacy_settings import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def get_session_for_user(self) -> Any:
-        """Get a session for your user."""
-        from .api.users.get_session_for_user import asyncio
+        if not response.content:
+            return None  # type: ignore
 
-        return await asyncio(client=self.client)
+        json_data = response.json()
 
-    async def get_user_shortlinks(self) -> Any:
-        """Get the shortlinks for a user."""
-        from .api.users.get_user_shortlinks import asyncio
+        return ExtendedUser(**json_data)
 
-        return await asyncio(client=self.client)
+    async def put_user_form_self(
+        self,
+        body: InquiryForm,
+    ):
+        """It gets attached to the user's account."""
 
-    async def create_user_shortlink(self) -> Any:
-        """Create a shortlink for a user."""
-        from .api.users.create_user_shortlink import asyncio
+        url = "{}/user/form".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
 
-    async def update_user_shortlink(self) -> Any:
-        """Update a shortlink for a user."""
-        from .api.users.update_user_shortlink import asyncio
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-        return await asyncio(client=self.client)
+            raise_for_status(response)
 
-    async def delete_user_shortlink(self) -> Any:
-        """Delete a shortlink for a user."""
-        from .api.users.delete_user_shortlink import asyncio
+        return response.json() if response.content else None
 
-        return await asyncio(client=self.client)
+    async def get_oauth2_providers_for_user(
+        self,
+    ) -> List[AccountProvider]:
+        """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
 
-    async def list_users(self) -> Any:
-        """List users."""
-        from .api.users.list_users import asyncio
+        This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""
 
-        return await asyncio(client=self.client)
+        url = "{}/user/oauth2/providers".format(self.client.base_url)
 
-    async def list_users_extended(self) -> Any:
-        """List users with extended information."""
-        from .api.users.list_users_extended import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def get_user_extended(self) -> Any:
-        """Get extended information about a user."""
-        from .api.users.get_user_extended import asyncio
+            raise_for_status(response)
 
-        return await asyncio(client=self.client)
+        if not response.content:
+            return None  # type: ignore
 
-    async def get_user(self) -> Any:
-        """Get a user."""
-        from .api.users.get_user import asyncio
+        json_data = response.json()
 
-        return await asyncio(client=self.client)
+        return List[AccountProvider](**json_data)
 
-    async def update_subscription_for_user(self) -> Any:
-        """Update a subscription for a user."""
-        from .api.users.update_subscription_for_user import asyncio
+    async def get_user_privacy_settings(
+        self,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It gets the privacy settings for the user."""
 
-        return await asyncio(client=self.client)
+        url = "{}/user/privacy".format(self.client.base_url)
 
-    async def put_public_form(self) -> Any:
-        """Creates a new support/sales ticket from the website contact form. This endpoint is for untrusted"""
-        from .api.users.put_public_form import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
 
-    async def put_public_subscribe(self) -> Any:
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    async def update_user_privacy_settings(
+        self,
+        body: PrivacySettings,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It updates the privacy settings for the user."""
+
+        url = "{}/user/privacy".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return PrivacySettings(**json_data)
+
+    async def get_session_for_user(
+        self,
+        token: SessionUuid,
+    ) -> Session:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
+
+        url = "{}/user/session/{token}".format(self.client.base_url, token=token)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return Session(**json_data)
+
+    async def get_user_shortlinks(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ShortlinkResultsPage:
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
+
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ShortlinkResultsPage(**json_data)
+
+    async def create_user_shortlink(
+        self,
+        body: CreateShortlinkRequest,
+    ) -> CreateShortlinkResponse:
+        """This endpoint requires authentication by any Zoo user. It creates a shortlink for the user."""
+
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return CreateShortlinkResponse(**json_data)
+
+    async def update_user_shortlink(
+        self,
+        key: str,
+        body: UpdateShortlinkRequest,
+    ):
+        """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
+
+        This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def delete_user_shortlink(
+        self,
+        key: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes a shortlink for the user."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def list_users(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> UserResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+
+        url = "{}/users".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return UserResultsPage(**json_data)
+
+    async def list_users_extended(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ExtendedUserResultsPage:
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+
+        url = "{}/users-extended".format(self.client.base_url)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
+
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ExtendedUserResultsPage(**json_data)
+
+    async def get_user_extended(
+        self,
+        id: UserIdentifier,
+    ) -> ExtendedUser:
+        """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user/extended` endpoint."""
+
+        url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ExtendedUser(**json_data)
+
+    async def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> User:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return User(**json_data)
+
+    async def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ZooProductSubscriptions(**json_data)
+
+    async def put_public_form(
+        self,
+        body: InquiryForm,
+    ):
+        """users and is not authenticated."""
+
+        url = "{}/website/form".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def put_public_subscribe(
+        self,
+        body: Subscribe,
+    ):
         """Subscribes a user to the newsletter."""
-        from .api.users.put_public_subscribe import asyncio
 
-        return await asyncio(client=self.client)
+        url = "{}/website/subscribe".format(self.client.base_url)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.put(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+                content=body.model_dump_json(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class ApiTokensAPI:
@@ -2149,29 +10176,144 @@ class ApiTokensAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def list_api_tokens_for_user(self) -> Any:
-        """List API tokens for your user."""
-        from .api.api_tokens.list_api_tokens_for_user import sync
+    def list_api_tokens_for_user(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiTokenResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
-        return sync(client=self.client)
+        The API tokens are returned in order of creation, with the most recently created API tokens first."""
 
-    def create_api_token_for_user(self) -> Any:
-        """Create a new API token for your user."""
-        from .api.api_tokens.create_api_token_for_user import sync
+        url = "{}/user/api-tokens".format(self.client.base_url)
 
-        return sync(client=self.client)
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-    def get_api_token_for_user(self) -> Any:
-        """Get an API token for your user."""
-        from .api.api_tokens.get_api_token_for_user import sync
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-        return sync(client=self.client)
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-    def delete_api_token_for_user(self) -> Any:
-        """Delete an API token for your user."""
-        from .api.api_tokens.delete_api_token_for_user import sync
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
 
-        return sync(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiTokenResultsPage(**json_data)
+
+    def create_api_token_for_user(
+        self,
+        *,
+        label: Optional[str] = None,
+    ) -> ApiToken:
+        """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""
+
+        url = "{}/user/api-tokens".format(self.client.base_url)
+
+        if label is not None:
+            if "?" in url:
+                url = url + "&label=" + str(label)
+            else:
+                url = url + "?label=" + str(label)
+
+        response = httpx.post(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiToken(**json_data)
+
+    def get_api_token_for_user(
+        self,
+        token: ApiTokenUuid,
+    ) -> ApiToken:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
+
+        url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
+
+        response = httpx.get(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiToken(**json_data)
+
+    def delete_api_token_for_user(
+        self,
+        token: ApiTokenUuid,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the requested API token for the user.
+
+        This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""
+
+        url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
+
+        response = httpx.delete(
+            url=url,
+            headers=self.client.get_headers(),
+            cookies=self.client.get_cookies(),
+            timeout=self.client.get_timeout(),
+            verify=self.client.verify_ssl,
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class AsyncApiTokensAPI:
@@ -2180,29 +10322,144 @@ class AsyncApiTokensAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def list_api_tokens_for_user(self) -> Any:
-        """List API tokens for your user."""
-        from .api.api_tokens.list_api_tokens_for_user import asyncio
+    async def list_api_tokens_for_user(
+        self,
+        sort_by: CreatedAtSortMode,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> ApiTokenResultsPage:
+        """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
-        return await asyncio(client=self.client)
+        The API tokens are returned in order of creation, with the most recently created API tokens first."""
 
-    async def create_api_token_for_user(self) -> Any:
-        """Create a new API token for your user."""
-        from .api.api_tokens.create_api_token_for_user import asyncio
+        url = "{}/user/api-tokens".format(self.client.base_url)
 
-        return await asyncio(client=self.client)
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
 
-    async def get_api_token_for_user(self) -> Any:
-        """Get an API token for your user."""
-        from .api.api_tokens.get_api_token_for_user import asyncio
+        if page_token is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(page_token)
+            else:
+                url = url + "?page_token=" + str(page_token)
 
-        return await asyncio(client=self.client)
+        if sort_by is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(sort_by)
+            else:
+                url = url + "?sort_by=" + str(sort_by)
 
-    async def delete_api_token_for_user(self) -> Any:
-        """Delete an API token for your user."""
-        from .api.api_tokens.delete_api_token_for_user import asyncio
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
 
-        return await asyncio(client=self.client)
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiTokenResultsPage(**json_data)
+
+    async def create_api_token_for_user(
+        self,
+        *,
+        label: Optional[str] = None,
+    ) -> ApiToken:
+        """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""
+
+        url = "{}/user/api-tokens".format(self.client.base_url)
+
+        if label is not None:
+            if "?" in url:
+                url = url + "&label=" + str(label)
+            else:
+                url = url + "?label=" + str(label)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.post(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiToken(**json_data)
+
+    async def get_api_token_for_user(
+        self,
+        token: ApiTokenUuid,
+    ) -> ApiToken:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
+
+        url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.get(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        return ApiToken(**json_data)
+
+    async def delete_api_token_for_user(
+        self,
+        token: ApiTokenUuid,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the requested API token for the user.
+
+        This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""
+
+        url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
+
+        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
+            response = await _client.delete(
+                url=url,
+                headers=self.client.get_headers(),
+                cookies=self.client.get_cookies(),
+                timeout=self.client.get_timeout(),
+            )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
 
 class ModelingAPI:
@@ -2229,16 +10486,16 @@ class ModelingAPI:
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
         return WebSocketModelingCommandsWs(
-            fps,
-            post_effect,
-            show_grid,
-            unlocked_framerate,
-            video_res_height,
-            video_res_width,
-            webrtc,
-            api_call_id,
-            pool,
-            replay,
+            api_call_id=api_call_id,
+            fps=fps,
+            pool=pool,
+            post_effect=post_effect,
+            replay=replay,
+            show_grid=show_grid,
+            unlocked_framerate=unlocked_framerate,
+            video_res_height=video_res_height,
+            video_res_width=video_res_width,
+            webrtc=webrtc,
             client=self.client,
         )
 
@@ -2249,7 +10506,7 @@ class AsyncModelingAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def modeling_commands_ws(
+    async def modeling_commands_ws(
         self,
         fps: int,
         post_effect: PostEffectType,
@@ -2261,25 +10518,99 @@ class AsyncModelingAPI:
         api_call_id: Optional[str] = None,
         pool: Optional[str] = None,
         replay: Optional[str] = None,
-    ) -> "WebSocketModelingCommandsWs":
+    ):
         """Open a websocket which accepts modeling commands.
 
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        Note: WebSocket connections are synchronous even in AsyncKittyCAD
+        Returns an async WebSocket connection for sending/receiving data.
         """
-        return WebSocketModelingCommandsWs(
-            fps,
-            post_effect,
-            show_grid,
-            unlocked_framerate,
-            video_res_height,
-            video_res_width,
-            webrtc,
-            api_call_id,
-            pool,
-            replay,
-            client=self.client,
-        )
+
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def modeling_commands_ws(
+            self,
+            fps: int,
+            post_effect: PostEffectType,
+            show_grid: bool,
+            unlocked_framerate: bool,
+            video_res_height: int,
+            video_res_width: int,
+            webrtc: bool,
+            body: WebSocketRequest,
+            *,
+            api_call_id: Optional[str] = None,
+            pool: Optional[str] = None,
+            replay: Optional[str] = None,
+        ) -> ClientConnectionAsync:
+            """Open a websocket which accepts modeling commands."""
+
+            url = "/ws/modeling/commands"
+
+            if api_call_id is not None:
+                if "?" in url:
+                    url = url + "&api_call_id=" + str(api_call_id)
+                else:
+                    url = url + "?api_call_id=" + str(api_call_id)
+
+            if fps is not None:
+                if "?" in url:
+                    url = url + "&fps=" + str(fps)
+                else:
+                    url = url + "?fps=" + str(fps)
+
+            if pool is not None:
+                if "?" in url:
+                    url = url + "&pool=" + str(pool)
+                else:
+                    url = url + "?pool=" + str(pool)
+
+            if post_effect is not None:
+                if "?" in url:
+                    url = url + "&post_effect=" + str(post_effect)
+                else:
+                    url = url + "?post_effect=" + str(post_effect)
+
+            if replay is not None:
+                if "?" in url:
+                    url = url + "&replay=" + str(replay)
+                else:
+                    url = url + "?replay=" + str(replay)
+
+            if show_grid is not None:
+                if "?" in url:
+                    url = url + "&show_grid=" + str(show_grid).lower()
+                else:
+                    url = url + "?show_grid=" + str(show_grid).lower()
+
+            if unlocked_framerate is not None:
+                if "?" in url:
+                    url = url + "&unlocked_framerate=" + str(unlocked_framerate).lower()
+                else:
+                    url = url + "?unlocked_framerate=" + str(unlocked_framerate).lower()
+
+            if video_res_height is not None:
+                if "?" in url:
+                    url = url + "&video_res_height=" + str(video_res_height)
+                else:
+                    url = url + "?video_res_height=" + str(video_res_height)
+
+            if video_res_width is not None:
+                if "?" in url:
+                    url = url + "&video_res_width=" + str(video_res_width)
+                else:
+                    url = url + "?video_res_width=" + str(video_res_width)
+
+            if webrtc is not None:
+                if "?" in url:
+                    url = url + "&webrtc=" + str(webrtc).lower()
+                else:
+                    url = url + "?webrtc=" + str(webrtc).lower()
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                extra_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
 
 
 class WebSocketMlCopilotWs:
@@ -2287,10 +10618,17 @@ class WebSocketMlCopilotWs:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *, client: Client):
-        from .api.ml.ml_copilot_ws import sync
-
-        self.ws = sync(client=client)
+    def __init__(self, *args, client: Client, **kwargs):
+        # Inline WebSocket connection logic
+        url = (
+            (client.base_url + "/ws/ml/copilot")
+            .replace("http://", "ws://")
+            .replace("https://", "wss://")
+        )
+        headers = client.get_headers()
+        self.ws = ws_connect(
+            url, additional_headers=headers, close_timeout=120, max_size=None
+        )
 
     def __enter__(self):
         return self
@@ -2333,10 +10671,70 @@ class WebSocketMlReasoningWs:
 
     ws: ClientConnectionSync
 
-    def __init__(self, id: str, *, client: Client):
-        from .api.ml.ml_reasoning_ws import sync
+    def __init__(self, *args, client: Client, **kwargs):
+        # Inline WebSocket connection logic
+        url = (
+            (client.base_url + "/ws/ml/reasoning/{id}")
+            .replace("http://", "ws://")
+            .replace("https://", "wss://")
+        )
+        headers = client.get_headers()
+        self.ws = ws_connect(
+            url, additional_headers=headers, close_timeout=120, max_size=None
+        )
 
-        self.ws = sync(id, client=client)
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield WebSocketResponse(**json.loads(message))
+
+    def send(self, data: WebSocketRequest):
+        """Send data to the websocket."""
+        self.ws.send(json.dumps(data.model_dump()))
+
+    def send_binary(self, data: WebSocketRequest):
+        """Send data as bson to the websocket."""
+        self.ws.send(bson.encode(data.model_dump()))
+
+    def recv(self) -> WebSocketResponse:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=60)
+        return WebSocketResponse(**json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
+
+
+class WebSocketCreateExecutorTerm:
+    """A websocket connection for create_executor_term."""
+
+    ws: ClientConnectionSync
+
+    def __init__(self, *args, client: Client, **kwargs):
+        # Inline WebSocket connection logic
+        url = (
+            (client.base_url + "/ws/executor/term")
+            .replace("http://", "ws://")
+            .replace("https://", "wss://")
+        )
+        headers = client.get_headers()
+        self.ws = ws_connect(
+            url, additional_headers=headers, close_timeout=120, max_size=None
+        )
 
     def __enter__(self):
         return self
@@ -2379,35 +10777,16 @@ class WebSocketModelingCommandsWs:
 
     ws: ClientConnectionSync
 
-    def __init__(
-        self,
-        fps: int,
-        post_effect: PostEffectType,
-        show_grid: bool,
-        unlocked_framerate: bool,
-        video_res_height: int,
-        video_res_width: int,
-        webrtc: bool,
-        api_call_id: Optional[str] = None,
-        pool: Optional[str] = None,
-        replay: Optional[str] = None,
-        *,
-        client: Client,
-    ):
-        from .api.modeling.modeling_commands_ws import sync
-
-        self.ws = sync(
-            fps,
-            post_effect,
-            show_grid,
-            unlocked_framerate,
-            video_res_height,
-            video_res_width,
-            webrtc,
-            api_call_id,
-            pool,
-            replay,
-            client=client,
+    def __init__(self, *args, client: Client, **kwargs):
+        # Inline WebSocket connection logic
+        url = (
+            (client.base_url + "/ws/modeling/commands")
+            .replace("http://", "ws://")
+            .replace("https://", "wss://")
+        )
+        headers = client.get_headers()
+        self.ws = ws_connect(
+            url, additional_headers=headers, close_timeout=120, max_size=None
         )
 
     def __enter__(self):
@@ -2473,7 +10852,8 @@ class KittyCAD(Client):
                 kwargs["base_url"] = zoo_host
 
         super().__init__(token=token, **kwargs)
-        # Add API modules directly to client
+
+        # Import and initialize API classes
 
         self.meta: MetaAPI = MetaAPI(self)
 
@@ -2541,7 +10921,8 @@ class AsyncKittyCAD(Client):
                 kwargs["base_url"] = zoo_host
 
         super().__init__(token=token, **kwargs)
-        # Add async API modules directly to client
+
+        # Import and initialize async API classes
 
         self.meta: AsyncMetaAPI = AsyncMetaAPI(self)
 

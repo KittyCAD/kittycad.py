@@ -576,6 +576,6 @@ def test_text_to_cad():
             id=body.id,
         )
 
-        body = result_status.root
+        body = result_status.root  # type: ignore
 
     assert body.status == ApiCallStatus.COMPLETED

@@ -29,6 +29,184 @@ random.seed(10)
 examples: List[str] = []
 
 
+def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -> str:
+    """Generate a sync function implementation using the sync_function template"""
+
+    import os
+
+    from jinja2 import Environment, FileSystemLoader
+
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Add custom filters using existing utility functions
+    env.filters["to_pascal_case"] = to_pascal_case
+    env.filters["pascal_to_snake"] = camel_to_snake
+
+    template = env.get_template("sync_function.py.jinja2")
+
+    # Build context exactly like the working functions.py template
+    fn_name = camel_to_snake(endpoint["operationId"])
+    endpoint_refs = get_endpoint_refs(endpoint, data)
+    (request_body_type, request_body_schema) = get_request_body_type_schema(
+        endpoint, data
+    )
+
+    # Get response type
+    response_type = ""
+    if len(endpoint_refs) > 0:
+        er = [ref for ref in endpoint_refs if ref != "Error"]
+        if len(er) > 1:
+            pascal_er = [to_pascal_case(ref) for ref in er]
+            response_type = "Union[" + ", ".join(pascal_er) + "]"
+        elif len(er) == 1:
+            response_type = to_pascal_case(er[0])
+
+    # Process parameters exactly like the working template
+    args = []
+    if "parameters" in endpoint:
+        for param in endpoint["parameters"]:
+            param_schema = param.get("schema", {})
+            arg_type, _, _ = generate_type_and_example_python(
+                "", param_schema, data, None, None
+            )
+
+            # Mark optional parameters
+            is_optional = not param.get("required", True) or param_schema.get(
+                "nullable", False
+            )
+            if is_optional and not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+
+            args.append(
+                {
+                    "name": clean_parameter_name(param["name"]),
+                    "type": arg_type,
+                    "is_optional": is_optional,
+                    "in_url": param.get("in") == "path",
+                    "in_query": param.get("in") == "query",
+                }
+            )
+
+    # Add request body parameter if it exists
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "is_optional": False,
+                "in_url": False,
+                "in_query": False,
+            }
+        )
+
+    # Check if there's actually a body parameter in the args
+    has_body_param = any(arg.get("name") == "body" for arg in args)
+
+    # Create context for template with all required variables
+    context = {
+        "func_name": fn_name,
+        "method": method.lower(),
+        "response_type": response_type,
+        "url_template": "{}" + path,
+        "has_request_body": has_body_param,
+        "request_body_type": request_body_type,
+        "args": args,
+        "docs": endpoint.get("description", endpoint.get("summary", "")),
+    }
+
+    return template.render(context)
+
+
+def generate_async_function(path: str, method: str, endpoint: dict, data: dict) -> str:
+    """Generate an async function implementation using the async_function template"""
+
+    import os
+
+    from jinja2 import Environment, FileSystemLoader
+
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Add custom filters using existing utility functions
+    env.filters["to_pascal_case"] = to_pascal_case
+    env.filters["pascal_to_snake"] = camel_to_snake
+
+    template = env.get_template("async_function.py.jinja2")
+
+    # Build context exactly like the sync function
+    fn_name = camel_to_snake(endpoint["operationId"])
+    endpoint_refs = get_endpoint_refs(endpoint, data)
+    (request_body_type, request_body_schema) = get_request_body_type_schema(
+        endpoint, data
+    )
+
+    # Get response type
+    response_type = ""
+    if len(endpoint_refs) > 0:
+        er = [ref for ref in endpoint_refs if ref != "Error"]
+        if len(er) > 1:
+            pascal_er = [to_pascal_case(ref) for ref in er]
+            response_type = "Union[" + ", ".join(pascal_er) + "]"
+        elif len(er) == 1:
+            response_type = to_pascal_case(er[0])
+
+    # Process parameters exactly like the working template
+    args = []
+    if "parameters" in endpoint:
+        for param in endpoint["parameters"]:
+            param_schema = param.get("schema", {})
+            arg_type, _, _ = generate_type_and_example_python(
+                "", param_schema, data, None, None
+            )
+
+            # Mark optional parameters
+            is_optional = not param.get("required", True) or param_schema.get(
+                "nullable", False
+            )
+            if is_optional and not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+
+            args.append(
+                {
+                    "name": clean_parameter_name(param["name"]),
+                    "type": arg_type,
+                    "is_optional": is_optional,
+                    "in_url": param.get("in") == "path",
+                    "in_query": param.get("in") == "query",
+                }
+            )
+
+    # Add request body parameter if it exists
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "is_optional": False,
+                "in_url": False,
+                "in_query": False,
+            }
+        )
+
+    # Check if there's actually a body parameter in the args
+    has_body_param = any(arg.get("name") == "body" for arg in args)
+
+    # Create context for template with all required variables
+    context = {
+        "func_name": fn_name,
+        "method": method.lower(),
+        "response_type": response_type,
+        "url_template": "{}" + path,
+        "has_request_body": has_body_param,
+        "request_body_type": request_body_type,
+        "args": args,
+        "docs": endpoint.get("description", endpoint.get("summary", "")),
+    }
+
+    return template.render(context)
+
+
 def generate_client_classes(cwd: str, data: dict):
     """Generate the KittyCAD and AsyncKittyCAD client classes with embedded endpoint logic"""
 
@@ -57,127 +235,175 @@ def generate_client_classes(cwd: str, data: dict):
             if is_websocket:
                 has_websockets = True
 
-            # Get detailed implementation by reading the generated API file
-            api_file_path = os.path.join(
-                cwd, "kittycad", "api", tag, f"{operation_id}.py"
-            )
-
+            # Generate everything directly from the OpenAPI spec
             implementation_code = ""
             parameters = ""
             call_args = ""
             return_type = "Any"
             parse_response = "response.json()" if method.lower() == "get" else "None"
+            has_websocket_class = False
 
-            if os.path.exists(api_file_path):
-                try:
-                    with open(api_file_path, "r") as f:
-                        content = f.read()
+            # Enable WebSocket wrapper classes for endpoints with request bodies
+            # These need wrapper classes for methods like send_binary(), __enter__, __exit__
+            has_websocket_class = is_websocket
 
-                        # Extract return type from sync function
-                        import re
+            # Generate sync and async implementations for all endpoints
+            sync_implementation = ""
+            async_implementation = ""
+            try:
+                if is_websocket:
+                    # Generate WebSocket-specific implementations
+                    sync_implementation = generate_websocket_sync_function(
+                        operation_id, path, method, endpoint_data, data
+                    )
+                    async_implementation = generate_websocket_async_function(
+                        operation_id, path, method, endpoint_data, data
+                    )
+                else:
+                    sync_implementation = generate_sync_function(
+                        path, method, endpoint_data, data
+                    )
+                    async_implementation = generate_async_function(
+                        path, method, endpoint_data, data
+                    )
 
-                        sync_func_match = re.search(
-                            r"def sync\((.*?)\) -> (.*?):", content, re.DOTALL
-                        )
-                        if sync_func_match:
-                            params = sync_func_match.group(1)
-                            return_type = sync_func_match.group(2).strip()
+                # Collect imports from response types for all endpoints
+                endpoint_refs = get_endpoint_refs(endpoint_data, data)
+                for ref in endpoint_refs:
+                    # Extract inner types from List, Union, Dict, Optional wrappers
+                    inner_types = []
+                    if ref.startswith("List[") and ref.endswith("]"):
+                        inner_type = ref[5:-1]  # Extract "Type" from "List[Type]"
+                        inner_types.append(inner_type)
+                    elif ref.startswith("Union[") and ref.endswith("]"):
+                        # Extract types from "Union[Type1, Type2]" - for now just skip complex unions
+                        pass
+                    elif ref.startswith("Dict[") and ref.endswith("]"):
+                        # Extract types from "Dict[Key, Value]" - for now just skip
+                        pass
+                    elif ref.startswith("Optional[") and ref.endswith("]"):
+                        inner_type = ref[9:-1]  # Extract "Type" from "Optional[Type]"
+                        inner_types.append(inner_type)
+                    else:
+                        inner_types.append(ref)
 
-                            # Build parameter list (excluding client parameter)
-                            param_lines = [
-                                p.strip() for p in params.split(",") if p.strip()
-                            ]
-                            client_filtered_params = []
-                            call_args_list = []
-
-                            for param in param_lines:
-                                if "client:" not in param and param != "*":
-                                    if param.startswith("*"):
-                                        client_filtered_params.append(param)
-                                    else:
-                                        client_filtered_params.append(param)
-                                        # Extract parameter name for call args
-                                        param_name = param.split(":")[0].strip()
-                                        if (
-                                            "=" not in param_name
-                                        ):  # Skip default values in call
-                                            call_args_list.append(param_name)
-
-                            if client_filtered_params:
-                                parameters = ", " + ", ".join(client_filtered_params)
-                            call_args = ", ".join(call_args_list)
-
-                        # Generate simple implementation code based on the endpoint
-                        url_template = path
-                        if "{" in url_template:
-                            # Handle URL parameters
-                            implementation_code = f'''url = "{url_template}".format(self.client.base_url)
-        headers = self.client.get_headers()
-        cookies = self.client.get_cookies()
-        kwargs = {{
-            "url": url,
-            "headers": headers, 
-            "cookies": cookies,
-            "timeout": self.client.get_timeout(),
-        }}'''
-                        else:
-                            # Simple URL without parameters
-                            implementation_code = f'''kwargs = {{
-            "url": "{url_template}".format(self.client.base_url),
-            "headers": self.client.get_headers(),
-            "cookies": self.client.get_cookies(), 
-            "timeout": self.client.get_timeout(),
-        }}'''
-
-                        # Extract parse response logic
-                        parse_match = re.search(
-                            r"def _parse_response\(.*?\) -> (.*?):(.*?)(?=\n\ndef|\n\nclass|\Z)",
-                            content,
-                            re.DOTALL,
-                        )
-                        if parse_match:
-                            parse_body = parse_match.group(2).strip()
-                            # Extract just the successful response parsing
-                            if "response_200 =" in parse_body:
-                                response_match = re.search(
-                                    r"response_200 = (.*)", parse_body
-                                )
-                                if response_match:
-                                    parse_response = response_match.group(1)
-
-                        # Extract model imports
-                        import_matches = re.findall(
-                            r"from \.\.\.models\.(.*?) import (.*)", content
-                        )
-                        for match in import_matches:
-                            module_name, class_name = match
+                    for inner_type in inner_types:
+                        if (
+                            inner_type != "Error"
+                            and inner_type != "str"
+                            and inner_type != "int"
+                            and inner_type != "float"
+                            and inner_type != "bool"
+                            and inner_type != "dict"
+                            and inner_type
+                            and inner_type[0].isupper()  # Only PascalCase class names
+                        ):
+                            module_name = camel_to_snake(inner_type)
                             all_imports.add(
-                                f"from .models.{module_name} import {class_name}"
+                                f"from .models.{module_name} import {inner_type}"
                             )
 
-                except (IOError, OSError):
-                    pass
+                # Also collect imports from request body types for all endpoints
+                (request_body_type, _) = get_request_body_type_schema(
+                    endpoint_data, data
+                )
+                if (
+                    request_body_type
+                    and request_body_type != "str"
+                    and request_body_type != "bytes"
+                ):
+                    module_name = camel_to_snake(request_body_type)
+                    all_imports.add(
+                        f"from .models.{module_name} import {request_body_type}"
+                    )
 
-            # Check if WebSocket endpoint has a wrapper class
-            has_websocket_class = False
-            if is_websocket and os.path.exists(api_file_path):
-                try:
-                    with open(api_file_path, "r") as f:
-                        content = f.read()
-                        has_websocket_class = "class WebSocket" in content
+                # Also collect imports from parameter types
+                if "parameters" in endpoint_data:
+                    parameters = endpoint_data["parameters"]
+                    for parameter in parameters:
+                        param_schema = parameter.get("schema", {})
+                        if "$ref" in param_schema:
+                            param_type = param_schema["$ref"].replace(
+                                "#/components/schemas/", ""
+                            )
+                            if param_type and param_type[0].isupper():
+                                module_name = camel_to_snake(param_type)
+                                all_imports.add(
+                                    f"from .models.{module_name} import {param_type}"
+                                )
+                        elif (
+                            param_schema.get("type") == "array"
+                            and "items" in param_schema
+                        ):
+                            items = param_schema["items"]
+                            if "$ref" in items:
+                                param_type = items["$ref"].replace(
+                                    "#/components/schemas/", ""
+                                )
+                                if param_type and param_type[0].isupper():
+                                    module_name = camel_to_snake(param_type)
+                                    all_imports.add(
+                                        f"from .models.{module_name} import {param_type}"
+                                    )
 
-                        if has_websocket_class:
-                            # Generate WebSocket implementation
-                            if "{" in path:
-                                implementation_code = f'''url = "{path}".format(self.client.base_url)
-        headers = self.client.get_headers()
-        cookies = self.client.get_cookies()'''
-                            else:
-                                implementation_code = f'''url = "{path}".format(self.client.base_url)
-        headers = self.client.get_headers()
-        cookies = self.client.get_cookies()'''
-                except (IOError, OSError):
-                    pass
+            except Exception as e:
+                # Fallback to empty implementations if generation fails
+                sync_implementation = (
+                    f"    # Error generating implementation: {e}\n    pass"
+                )
+                async_implementation = (
+                    f"    # Error generating implementation: {e}\n    pass"
+                )
+
+            # Generate formatted parameter strings for WebSocket wrapper classes
+            websocket_params = ""
+            websocket_call_args = ""
+
+            if is_websocket and has_websocket_class and "parameters" in endpoint_data:
+                required_params = []
+                optional_params = []
+                call_arg_parts = []
+
+                for param in endpoint_data["parameters"]:
+                    param_name = camel_to_snake(param["name"])
+                    param_schema = param.get("schema", {})
+
+                    # Generate type
+                    if "type" in param_schema:
+                        param_type = (
+                            param_schema["type"]
+                            .replace("string", "str")
+                            .replace("integer", "int")
+                            .replace("number", "float")
+                            .replace("boolean", "bool")
+                        )
+                    elif "$ref" in param_schema:
+                        param_type = param_schema["$ref"].replace(
+                            "#/components/schemas/", ""
+                        )
+                    else:
+                        param_type = "Any"
+
+                    # Handle optional parameters
+                    is_required = param.get("required", True)
+                    if not is_required or param_schema.get("nullable", False):
+                        if not param_type.startswith("Optional["):
+                            param_type = f"Optional[{param_type}]"
+                        optional_params.append(f"{param_name}: {param_type} = None")
+                    else:
+                        required_params.append(f"{param_name}: {param_type}")
+
+                    call_arg_parts.append(f"{param_name}={param_name}")
+
+                # WebSocket endpoints don't need body parameters for connection
+                # The body is for messages sent through the WebSocket after connection
+                # So we skip adding the body parameter for WebSocket wrapper classes
+
+                # Combine parameters: required first, then optional
+                all_params = required_params + optional_params
+                if all_params:
+                    websocket_params = ", " + ", ".join(all_params)
+                    websocket_call_args = ", ".join(call_arg_parts)
 
             endpoints_by_tag[tag][operation_id] = {
                 "name": operation_id,
@@ -188,9 +414,13 @@ def generate_client_classes(cwd: str, data: dict):
                 "path": path,
                 "method": method.lower(),
                 "parameters": parameters,
+                "websocket_params": websocket_params,
+                "websocket_call_args": websocket_call_args,
                 "call_args": call_args,
                 "implementation": implementation_code,
                 "parse_response": parse_response,
+                "sync_implementation": sync_implementation,
+                "async_implementation": async_implementation,
             }
 
     # Load and render the template
@@ -2834,6 +3064,144 @@ def get_type_name(schema: dict) -> str:
 
     logging.error("schema: %s", schema)
     raise Exception("Unknown schema type")
+
+
+def generate_websocket_sync_function(
+    operation_id: str, path: str, method: str, endpoint: dict, data: dict
+) -> str:
+    """Generate a sync WebSocket function implementation."""
+    from jinja2 import Environment, FileSystemLoader
+
+    # Build template context
+    args = []
+
+    # Handle parameters
+    if "parameters" in endpoint:
+        parameters = endpoint["parameters"]
+        for parameter in parameters:
+            parameter_name = parameter["name"]
+            if "type" in parameter["schema"]:
+                parameter_type = (
+                    parameter["schema"]["type"]
+                    .replace("string", "str")
+                    .replace("integer", "int")
+                    .replace("number", "float")
+                    .replace("boolean", "bool")
+                )
+            elif "$ref" in parameter["schema"]:
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+            else:
+                parameter_type = "Any"
+
+            if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
+                parameter_type = f"Optional[{parameter_type}]"
+                is_optional = True
+            else:
+                is_optional = False
+
+            args.append(
+                {
+                    "name": camel_to_snake(parameter_name),
+                    "type": parameter_type,
+                    "in_url": "in" in parameter and parameter["in"] == "path",
+                    "in_query": "in" in parameter and parameter["in"] == "query",
+                    "is_optional": is_optional,
+                }
+            )
+
+    # Handle request body for WebSocket endpoints
+    (request_body_type, _) = get_request_body_type_schema(endpoint, data)
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "in_url": False,
+                "in_query": False,
+                "is_optional": False,
+            }
+        )
+
+    # Use WebSocket template
+    environment = Environment(loader=FileSystemLoader("generate/templates/"))
+    template = environment.get_template("websocket_sync_function.py.jinja2")
+    return template.render(
+        function_name=operation_id,
+        args=args,
+        url_template=path,
+        docs=endpoint.get("summary", "").replace('"', '\\"'),
+    )
+
+
+def generate_websocket_async_function(
+    operation_id: str, path: str, method: str, endpoint: dict, data: dict
+) -> str:
+    """Generate an async WebSocket function implementation."""
+    from jinja2 import Environment, FileSystemLoader
+
+    # Build template context (same as sync)
+    args = []
+
+    # Handle parameters
+    if "parameters" in endpoint:
+        parameters = endpoint["parameters"]
+        for parameter in parameters:
+            parameter_name = parameter["name"]
+            if "type" in parameter["schema"]:
+                parameter_type = (
+                    parameter["schema"]["type"]
+                    .replace("string", "str")
+                    .replace("integer", "int")
+                    .replace("number", "float")
+                    .replace("boolean", "bool")
+                )
+            elif "$ref" in parameter["schema"]:
+                parameter_type = parameter["schema"]["$ref"].replace(
+                    "#/components/schemas/", ""
+                )
+            else:
+                parameter_type = "Any"
+
+            if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
+                parameter_type = f"Optional[{parameter_type}]"
+                is_optional = True
+            else:
+                is_optional = False
+
+            args.append(
+                {
+                    "name": camel_to_snake(parameter_name),
+                    "type": parameter_type,
+                    "in_url": "in" in parameter and parameter["in"] == "path",
+                    "in_query": "in" in parameter and parameter["in"] == "query",
+                    "is_optional": is_optional,
+                }
+            )
+
+    # Handle request body
+    (request_body_type, _) = get_request_body_type_schema(endpoint, data)
+    if request_body_type:
+        args.append(
+            {
+                "name": "body",
+                "type": request_body_type,
+                "in_url": False,
+                "in_query": False,
+                "is_optional": False,
+            }
+        )
+
+    # Use WebSocket async template
+    environment = Environment(loader=FileSystemLoader("generate/templates/"))
+    template = environment.get_template("websocket_async_function.py.jinja2")
+    return template.render(
+        function_name=operation_id,
+        args=args,
+        url_template=path,
+        docs=endpoint.get("summary", "").replace('"', '\\"'),
+    )
 
 
 letters: List[str] = []
