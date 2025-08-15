@@ -2455,6 +2455,13 @@ class KittyCAD(Client):
                     "No API token provided. Either pass token parameter or set "
                     "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
                 )
+
+        # Also check for ZOO_HOST environment variable if no base_url provided
+        if "base_url" not in kwargs:
+            zoo_host = os.getenv("ZOO_HOST")
+            if zoo_host:
+                kwargs["base_url"] = zoo_host
+
         super().__init__(token=token, **kwargs)
         # Add API modules directly to client
 
@@ -2516,6 +2523,13 @@ class AsyncKittyCAD(Client):
                     "No API token provided. Either pass token parameter or set "
                     "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
                 )
+
+        # Also check for ZOO_HOST environment variable if no base_url provided
+        if "base_url" not in kwargs:
+            zoo_host = os.getenv("ZOO_HOST")
+            if zoo_host:
+                kwargs["base_url"] = zoo_host
+
         super().__init__(token=token, **kwargs)
         # Add async API modules directly to client
 

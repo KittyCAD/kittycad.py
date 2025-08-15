@@ -14,7 +14,7 @@ The KittyCAD Python SDK now features a streamlined, class-based API that's much 
 ```python
 from kittycad import KittyCAD
 
-# Create client (uses KITTYCAD_API_TOKEN, ZOO_API_TOKEN, ZOO_HOST environment variable)
+# Create client (uses KITTYCAD_API_TOKEN/ZOO_API_TOKEN and ZOO_HOST environment variables)
 client = KittyCAD()
 
 # Make API calls directly
@@ -70,7 +70,7 @@ from kittycad import KittyCAD
 # With explicit token
 client = KittyCAD(token="your-token-here")
 
-# Or using environment variables (KITTYCAD_API_TOKEN or ZOO_API_TOKEN)
+# Or using environment variables (KITTYCAD_API_TOKEN/ZOO_API_TOKEN + ZOO_HOST)
 client = KittyCAD()  # Automatically reads from environment
 
 # REST endpoints
@@ -91,7 +91,7 @@ from kittycad import AsyncKittyCAD
 # With explicit token
 client = AsyncKittyCAD(token="your-token-here")
 
-# Or using environment variables (KITTYCAD_API_TOKEN or ZOO_API_TOKEN)
+# Or using environment variables (KITTYCAD_API_TOKEN/ZOO_API_TOKEN + ZOO_HOST)
 client = AsyncKittyCAD()  # Automatically reads from environment
 
 # REST endpoints  
