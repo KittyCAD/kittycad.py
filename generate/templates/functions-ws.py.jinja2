@@ -9,8 +9,8 @@ from websockets.asyncio.client import ClientConnection as ClientConnectionAsync
 
 
 from ...client import Client
-from ...models.error import Error
 from ...types import Response
+from ...response_helpers import raise_for_status
 {% for import in imports %}
 {{import}}
 {% endfor %}

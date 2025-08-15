@@ -1,10 +1,10 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
-from ...models.error import Error
 from ...models.update_shortlink_request import UpdateShortlinkRequest
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -31,18 +31,19 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Error]:
+def _parse_response(*, response: httpx.Response) -> None:
     return None
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(*, response: httpx.Response) -> Response[Optional[Error]]:
+def _build_response(*, response: httpx.Response) -> Response[None]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -56,7 +57,7 @@ def sync_detailed(
     body: UpdateShortlinkRequest,
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+) -> Response[None]:
     kwargs = _get_kwargs(
         key=key,
         body=body,
@@ -76,7 +77,7 @@ def sync(
     body: UpdateShortlinkRequest,
     *,
     client: Client,
-) -> Optional[Error]:
+) -> None:
     """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
 
     This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""  # noqa: E501
@@ -93,7 +94,7 @@ async def asyncio_detailed(
     body: UpdateShortlinkRequest,
     *,
     client: Client,
-) -> Response[Optional[Error]]:
+) -> Response[None]:
     kwargs = _get_kwargs(
         key=key,
         body=body,
@@ -111,7 +112,7 @@ async def asyncio(
     body: UpdateShortlinkRequest,
     *,
     client: Client,
-) -> Optional[Error]:
+) -> None:
     """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
 
     This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""  # noqa: E501

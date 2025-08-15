@@ -1,11 +1,11 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
 from ...models.billing_info import BillingInfo
 from ...models.customer import Customer
-from ...models.error import Error
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -30,22 +30,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Customer, Error]]:
+def _parse_response(*, response: httpx.Response) -> Customer:
     if response.status_code == 200:
         response_200 = Customer(**response.json())
         return response_200
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[Customer, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[Customer]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -58,7 +57,7 @@ def sync_detailed(
     body: BillingInfo,
     *,
     client: Client,
-) -> Response[Optional[Union[Customer, Error]]]:
+) -> Response[Customer]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -76,7 +75,7 @@ def sync(
     body: BillingInfo,
     *,
     client: Client,
-) -> Optional[Union[Customer, Error]]:
+) -> Customer:
     """This includes billing address, phone, and name.
 
     This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org."""  # noqa: E501
@@ -91,7 +90,7 @@ async def asyncio_detailed(
     body: BillingInfo,
     *,
     client: Client,
-) -> Response[Optional[Union[Customer, Error]]]:
+) -> Response[Customer]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -107,7 +106,7 @@ async def asyncio(
     body: BillingInfo,
     *,
     client: Client,
-) -> Optional[Union[Customer, Error]]:
+) -> Customer:
     """This includes billing address, phone, and name.
 
     This endpoint requires authentication by an org admin. It updates the payment information for the authenticated user's org."""  # noqa: E501

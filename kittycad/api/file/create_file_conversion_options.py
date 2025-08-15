@@ -1,11 +1,11 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
 from ...models.conversion_params import ConversionParams
-from ...models.error import Error
 from ...models.file_conversion import FileConversion
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -30,24 +30,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[FileConversion, Error]]:
+def _parse_response(*, response: httpx.Response) -> FileConversion:
     if response.status_code == 201:
         response_201 = FileConversion(**response.json())
         return response_201
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[FileConversion, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[FileConversion]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -60,7 +57,7 @@ def sync_detailed(
     body: ConversionParams,
     *,
     client: Client,
-) -> Response[Optional[Union[FileConversion, Error]]]:
+) -> Response[FileConversion]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -78,7 +75,7 @@ def sync(
     body: ConversionParams,
     *,
     client: Client,
-) -> Optional[Union[FileConversion, Error]]:
+) -> FileConversion:
     """This takes a HTTP multipart body with these fields in any order:
 
      - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.
@@ -95,7 +92,7 @@ async def asyncio_detailed(
     body: ConversionParams,
     *,
     client: Client,
-) -> Response[Optional[Union[FileConversion, Error]]]:
+) -> Response[FileConversion]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -111,7 +108,7 @@ async def asyncio(
     body: ConversionParams,
     *,
     client: Client,
-) -> Optional[Union[FileConversion, Error]]:
+) -> FileConversion:
     """This takes a HTTP multipart body with these fields in any order:
 
      - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.

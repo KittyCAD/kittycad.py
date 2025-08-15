@@ -1,11 +1,11 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
 from ...models.conversation_results_page import ConversationResultsPage
 from ...models.created_at_sort_mode import CreatedAtSortMode
-from ...models.error import Error
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -49,24 +49,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[ConversationResultsPage, Error]]:
+def _parse_response(*, response: httpx.Response) -> ConversationResultsPage:
     if response.status_code == 200:
         response_200 = ConversationResultsPage(**response.json())
         return response_200
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[ConversationResultsPage, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[ConversationResultsPage]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -81,7 +78,7 @@ def sync_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Optional[Union[ConversationResultsPage, Error]]]:
+) -> Response[ConversationResultsPage]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -103,7 +100,7 @@ def sync(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[ConversationResultsPage, Error]]:
+) -> ConversationResultsPage:
     """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
     The conversations are returned in order of creation, with the most recently created conversations first."""  # noqa: E501
@@ -122,7 +119,7 @@ async def asyncio_detailed(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Response[Optional[Union[ConversationResultsPage, Error]]]:
+) -> Response[ConversationResultsPage]:
     kwargs = _get_kwargs(
         limit=limit,
         page_token=page_token,
@@ -142,7 +139,7 @@ async def asyncio(
     client: Client,
     limit: Optional[int] = None,
     page_token: Optional[str] = None,
-) -> Optional[Union[ConversationResultsPage, Error]]:
+) -> ConversationResultsPage:
     """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
     The conversations are returned in order of creation, with the most recently created conversations first."""  # noqa: E501

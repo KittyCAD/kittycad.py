@@ -20,3 +20,7 @@ We aim to make this SDK as idiomatic to python developers as possible using the 
 SDK as inspiration.
 
 We also try to write simple and idiomatic python in the `generate/` logic.
+
+As you make changes run `make generate` to generate a new sdk and make sure you didn't break anything.
+
+If you make a breaking change add it to the CHANGELOG.md with a guide for users as to how to migrate.

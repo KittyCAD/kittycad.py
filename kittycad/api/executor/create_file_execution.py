@@ -1,11 +1,11 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
 from ...models.code_language import CodeLanguage
 from ...models.code_output import CodeOutput
-from ...models.error import Error
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -39,22 +39,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[CodeOutput, Error]]:
+def _parse_response(*, response: httpx.Response) -> CodeOutput:
     if response.status_code == 201:
         response_201 = CodeOutput(**response.json())
         return response_201
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[CodeOutput]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -69,7 +68,7 @@ def sync_detailed(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+) -> Response[CodeOutput]:
     kwargs = _get_kwargs(
         lang=lang,
         output=output,
@@ -91,7 +90,7 @@ def sync(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Optional[Union[CodeOutput, Error]]:
+) -> CodeOutput:
     return sync_detailed(
         lang=lang,
         output=output,
@@ -106,7 +105,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Response[Optional[Union[CodeOutput, Error]]]:
+) -> Response[CodeOutput]:
     kwargs = _get_kwargs(
         lang=lang,
         output=output,
@@ -126,7 +125,7 @@ async def asyncio(
     *,
     client: Client,
     output: Optional[str] = None,
-) -> Optional[Union[CodeOutput, Error]]:
+) -> CodeOutput:
     return (
         await asyncio_detailed(
             lang=lang,

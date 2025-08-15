@@ -518,15 +518,16 @@ def generate_path(
 
     success_type = ""
     if len(endpoint_refs) > 0:
-        if len(endpoint_refs) > 2:
-            er = get_endpoint_refs(endpoint, data)
-            er.remove("Error")
+        # Always filter out Error from endpoint_refs for examples
+        er = [ref for ref in endpoint_refs if ref != "Error"]
+        if len(er) > 1:
             # Ensure all refs are PascalCase for the example type
             pascal_er = [to_pascal_case(ref) for ref in er]
             success_type = "Union[" + ", ".join(pascal_er) + "]"
-        else:
+        elif len(er) == 1:
             # Ensure single ref is PascalCase for the example type
-            success_type = to_pascal_case(endpoint_refs[0])
+            success_type = to_pascal_case(er[0])
+        # If no non-Error refs, success_type stays empty
 
     example_imports = (
         """
@@ -610,8 +611,10 @@ from kittycad.types import Response
     example_variable = ""
     example_variable_response = ""
 
-    response_type = get_function_result_type(endpoint, endpoint_refs)
-    detailed_response_type = get_detailed_function_result_type(endpoint, endpoint_refs)
+    response_type = get_function_result_type(endpoint, endpoint_refs, data)
+    detailed_response_type = get_detailed_function_result_type(
+        endpoint, endpoint_refs, data
+    )
     if (
         success_type != "str"
         and success_type != "dict"
@@ -635,11 +638,16 @@ from kittycad.types import Response
             example_imports + "from typing import Union, Any, Optional, List, Tuple\n"
         )
 
-        example_variable = "result: " + response_type + " = "
+        if response_type and response_type != "None":
+            example_variable = "result: " + response_type + " = "
+        else:
+            example_variable = "result = "
 
         example_imports = example_imports + "from kittycad.types import Response\n"
-        example_imports = example_imports + "from kittycad.models import Error\n"
-        example_variable_response = "response: " + detailed_response_type + " = "
+        if detailed_response_type and detailed_response_type != "Response[None]":
+            example_variable_response = "response: " + detailed_response_type + " = "
+        else:
+            example_variable_response = "response = "
 
     # Add some new lines.
     example_imports = example_imports + "\n\n"
@@ -668,19 +676,28 @@ from kittycad.types import Response
     ):
         example_success_type = success_type
 
-        short_sync_example = short_sync_example + (
-            """
-    if isinstance(result, Error) or result is None:
-        print(result)
-        raise Exception("Error in response")
-
+        if (
+            success_type != "str"
+            and success_type != "dict"
+            and success_type != "None"
+            and success_type != ""
+        ):
+            short_sync_example = short_sync_example + (
+                """
     body: """
-            + example_success_type
-            + """ = result
+                + example_success_type
+                + """ = result
     print(body)
 
 """
-        )
+            )
+        else:
+            short_sync_example = short_sync_example + (
+                """
+    print(result)
+
+"""
+            )
 
     long_example = (
         """
@@ -882,11 +899,11 @@ async def test_"""
     if "description" in endpoint:
         template_info["docs"] = endpoint["description"]
 
-    # Import our references for responses.
+    # Import our references for responses (exclude Error since we use exceptions now)
     for ref in endpoint_refs:
         if ref.startswith("List[") and ref.endswith("]"):
             ref = ref.replace("List[", "").replace("]", "")
-        if ref != "str" and ref != "dict":
+        if ref != "str" and ref != "dict" and ref != "Error":
             # Ensure ref is in PascalCase for the class name
             pascal_ref = to_pascal_case(ref)
             template_info["imports"].append(
@@ -912,17 +929,32 @@ async def test_"""
         for response_code in responses:
             response = responses[response_code]
             if response_code == "default":
-                # This is no content.
-                parse_response.write("\treturn None\n")
+                # For WebSocket endpoints, "default" contains the response schema
+                is_websocket = "x-dropshot-websocket" in endpoint
+                if not is_websocket:
+                    # Regular endpoints with default response have no content.
+                    parse_response.write("\treturn None\n")
             elif response_code == "204" or response_code == "302":
                 # This is no content.
                 parse_response.write("\treturn None\n")
             else:
-                parse_response.write(
-                    "\tif response.status_code == "
-                    + response_code.replace("XX", "00")
-                    + ":\n"
-                )
+                # Only generate parsing code for success status codes
+                try:
+                    status_code_int = int(response_code.replace("XX", "00"))
+                    if 200 <= status_code_int < 300:
+                        parse_response.write(
+                            "\tif response.status_code == "
+                            + response_code.replace("XX", "00")
+                            + ":\n"
+                        )
+                    else:
+                        # Skip error status codes - they'll be handled by raise_for_status
+                        continue
+                except ValueError:
+                    # Handle non-numeric response codes like "default"
+                    # Skip them since they were handled above
+                    continue
+
                 is_one_of = False
                 if "content" in response:
                     content = response["content"]
@@ -1063,8 +1095,15 @@ async def test_"""
                 if not is_one_of:
                     parse_response.write("\t\treturn response_" + response_code + "\n")
 
-        # End the method.
-        parse_response.write("\treturn Error(**response.json())\n")
+        # End the method - successful responses should be handled above
+        # Error responses are handled by raise_for_status in _build_response
+        parse_response.write(
+            "\t# This should not be reached since we handle all known success responses above\n"
+        )
+        parse_response.write("\t# and errors are handled by raise_for_status\n")
+        parse_response.write(
+            "\traise ValueError(f'Unexpected response status: {response.status_code}')\n"
+        )
     else:
         parse_response.write("\treturn\n")
 
@@ -2450,21 +2489,105 @@ def has_no_content_response(endpoint: dict) -> bool:
     return False
 
 
-def get_function_result_type(endpoint: dict, endpoint_refs: List[str]) -> str:
+def get_success_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
+    """Get references from successful response codes only (2xx), excluding errors."""
+    refs = []
+
+    responses = endpoint["responses"]
+    for response_code in responses:
+        # For WebSocket endpoints, "default" is the success response
+        is_websocket = "x-dropshot-websocket" in endpoint
+
+        # Only include successful response codes (2xx) or default for WebSockets
+        if not (
+            response_code.startswith("2")
+            or response_code == "200"
+            or response_code == "201"
+            or response_code == "204"
+            or (is_websocket and response_code == "default")
+        ):
+            continue
+
+        response = responses[response_code]
+        if "content" in response:
+            content = response["content"]
+            for content_type in content:
+                if content_type == "application/json":
+                    json = content[content_type]["schema"]
+                    if "$ref" in json:
+                        ref = json["$ref"].replace("#/components/schemas/", "")
+                        # Skip Error types explicitly
+                        if ref == "Error":
+                            continue
+                        schema = data["components"]["schemas"][ref]
+                        if is_nested_object_one_of(schema) or is_enum_with_docs_one_of(
+                            schema
+                        ):
+                            if ref not in refs:
+                                refs.append(ref)
+                        elif is_typed_object_one_of(schema):
+                            for t in schema["oneOf"]:
+                                ref = get_one_of_ref_type(t)
+                                if ref != "Error" and ref not in refs:
+                                    refs.append(ref)
+                        else:
+                            if ref not in refs:
+                                refs.append(ref)
+                    elif "type" in json:
+                        if json["type"] == "array":
+                            items = json["items"]
+                            if "$ref" in items:
+                                ref = items["$ref"].replace("#/components/schemas/", "")
+                                if ref != "Error":
+                                    refs.append("List[" + ref + "]")
+                            elif "type" in items:
+                                if items["type"] == "string":
+                                    refs.append("List[str]")
+                                else:
+                                    raise Exception("Unknown array type", items)
+                        elif json["type"] == "string":
+                            refs.append("str")
+                        elif (
+                            json["type"] == "object" and "additionalProperties" in json
+                        ):
+                            refs.append("dict")
+
+    return refs
+
+
+def get_function_result_type(
+    endpoint: dict, endpoint_refs: List[str], data: Optional[dict] = None
+) -> str:
+    # Use success-only refs to avoid including Error types in return signatures
+    if data:
+        success_refs = get_success_endpoint_refs(endpoint, data)
+    else:
+        # Fallback to filtering existing endpoint_refs to remove Error types
+        success_refs = [ref for ref in endpoint_refs if ref != "Error"]
+
     # Ensure all refs are in PascalCase for return types
-    pascal_refs = [to_pascal_case(ref) for ref in endpoint_refs]
-    result = ", ".join(pascal_refs)
-    if len(endpoint_refs) > 1:
+    pascal_refs = [to_pascal_case(ref) for ref in success_refs]
+    result = ", ".join(pascal_refs) if pascal_refs else ""
+
+    if len(success_refs) > 1:
         result = "Optional[Union[" + result + "]]"
+    elif len(success_refs) == 1:
+        result = pascal_refs[0]
 
     if has_no_content_response(endpoint):
-        result = "Optional[" + result + "]"
+        result = "Optional[" + result + "]" if result else "None"
 
     return result
 
 
-def get_detailed_function_result_type(endpoint: dict, endpoint_refs: List[str]) -> str:
-    return "Response[" + get_function_result_type(endpoint, endpoint_refs) + "]"
+def get_detailed_function_result_type(
+    endpoint: dict, endpoint_refs: List[str], data: Optional[dict] = None
+) -> str:
+    result_type = get_function_result_type(endpoint, endpoint_refs, data)
+    if result_type and result_type != "None":
+        return "Response[" + result_type + "]"
+    else:
+        return "Response[None]"
 
 
 def get_type_name(schema: dict) -> str:

@@ -1,10 +1,10 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
 from ...models.api_token import ApiToken
-from ...models.error import Error
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -29,22 +29,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[ApiToken, Error]]:
+def _parse_response(*, response: httpx.Response) -> ApiToken:
     if response.status_code == 200:
         response_200 = ApiToken(**response.json())
         return response_200
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[ApiToken, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[ApiToken]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -57,7 +56,7 @@ def sync_detailed(
     discord_id: str,
     *,
     client: Client,
-) -> Response[Optional[Union[ApiToken, Error]]]:
+) -> Response[ApiToken]:
     kwargs = _get_kwargs(
         discord_id=discord_id,
         client=client,
@@ -75,7 +74,7 @@ def sync(
     discord_id: str,
     *,
     client: Client,
-) -> Optional[Union[ApiToken, Error]]:
+) -> ApiToken:
     """This endpoint allows us to run API calls from our discord bot on behalf of a user. The user must have a discord account linked to their Zoo Account via oauth2 for this to work.
 
     You must be a Zoo admin to use this endpoint."""  # noqa: E501
@@ -90,7 +89,7 @@ async def asyncio_detailed(
     discord_id: str,
     *,
     client: Client,
-) -> Response[Optional[Union[ApiToken, Error]]]:
+) -> Response[ApiToken]:
     kwargs = _get_kwargs(
         discord_id=discord_id,
         client=client,
@@ -106,7 +105,7 @@ async def asyncio(
     discord_id: str,
     *,
     client: Client,
-) -> Optional[Union[ApiToken, Error]]:
+) -> ApiToken:
     """This endpoint allows us to run API calls from our discord bot on behalf of a user. The user must have a discord account linked to their Zoo Account via oauth2 for this to work.
 
     You must be a Zoo admin to use this endpoint."""  # noqa: E501

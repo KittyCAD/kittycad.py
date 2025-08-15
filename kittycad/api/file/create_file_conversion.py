@@ -1,12 +1,12 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
-from ...models.error import Error
 from ...models.file_conversion import FileConversion
 from ...models.file_export_format import FileExportFormat
 from ...models.file_import_format import FileImportFormat
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -35,24 +35,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[FileConversion, Error]]:
+def _parse_response(*, response: httpx.Response) -> FileConversion:
     if response.status_code == 201:
         response_201 = FileConversion(**response.json())
         return response_201
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[FileConversion, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[FileConversion]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -67,7 +64,7 @@ def sync_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Optional[Union[FileConversion, Error]]]:
+) -> Response[FileConversion]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -89,7 +86,7 @@ def sync(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[FileConversion, Error]]:
+) -> FileConversion:
     """If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.
 
     Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.
@@ -112,7 +109,7 @@ async def asyncio_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Optional[Union[FileConversion, Error]]]:
+) -> Response[FileConversion]:
     kwargs = _get_kwargs(
         output_format=output_format,
         src_format=src_format,
@@ -132,7 +129,7 @@ async def asyncio(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[FileConversion, Error]]:
+) -> FileConversion:
     """If you wish to specify the conversion options, use the `/file/conversion` endpoint instead.
 
     Convert a CAD file from one format to another. If the file being converted is larger than 25MB, it will be performed asynchronously.

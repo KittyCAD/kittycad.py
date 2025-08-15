@@ -1,12 +1,12 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
-from ...models.error import Error
 from ...models.file_center_of_mass import FileCenterOfMass
 from ...models.file_import_format import FileImportFormat
 from ...models.unit_length import UnitLength
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -45,24 +45,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[FileCenterOfMass, Error]]:
+def _parse_response(*, response: httpx.Response) -> FileCenterOfMass:
     if response.status_code == 201:
         response_201 = FileCenterOfMass(**response.json())
         return response_201
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[FileCenterOfMass, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[FileCenterOfMass]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -77,7 +74,7 @@ def sync_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Optional[Union[FileCenterOfMass, Error]]]:
+) -> Response[FileCenterOfMass]:
     kwargs = _get_kwargs(
         output_unit=output_unit,
         src_format=src_format,
@@ -99,7 +96,7 @@ def sync(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[FileCenterOfMass, Error]]:
+) -> FileCenterOfMass:
     """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
     This endpoint returns the cartesian coordinate in world space measure units.
@@ -124,7 +121,7 @@ async def asyncio_detailed(
     body: bytes,
     *,
     client: Client,
-) -> Response[Optional[Union[FileCenterOfMass, Error]]]:
+) -> Response[FileCenterOfMass]:
     kwargs = _get_kwargs(
         output_unit=output_unit,
         src_format=src_format,
@@ -144,7 +141,7 @@ async def asyncio(
     body: bytes,
     *,
     client: Client,
-) -> Optional[Union[FileCenterOfMass, Error]]:
+) -> FileCenterOfMass:
     """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
     This endpoint returns the cartesian coordinate in world space measure units.

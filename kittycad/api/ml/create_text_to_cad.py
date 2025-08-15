@@ -1,12 +1,12 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
-from ...models.error import Error
 from ...models.file_export_format import FileExportFormat
 from ...models.text_to_cad import TextToCad
 from ...models.text_to_cad_create_body import TextToCadCreateBody
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -40,22 +40,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[TextToCad, Error]]:
+def _parse_response(*, response: httpx.Response) -> TextToCad:
     if response.status_code == 201:
         response_201 = TextToCad(**response.json())
         return response_201
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[TextToCad, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[TextToCad]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -70,7 +69,7 @@ def sync_detailed(
     *,
     client: Client,
     kcl: Optional[bool] = None,
-) -> Response[Optional[Union[TextToCad, Error]]]:
+) -> Response[TextToCad]:
     kwargs = _get_kwargs(
         output_format=output_format,
         kcl=kcl,
@@ -92,7 +91,7 @@ def sync(
     *,
     client: Client,
     kcl: Optional[bool] = None,
-) -> Optional[Union[TextToCad, Error]]:
+) -> TextToCad:
     """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
 
     This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
@@ -113,7 +112,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     kcl: Optional[bool] = None,
-) -> Response[Optional[Union[TextToCad, Error]]]:
+) -> Response[TextToCad]:
     kwargs = _get_kwargs(
         output_format=output_format,
         kcl=kcl,
@@ -133,7 +132,7 @@ async def asyncio(
     *,
     client: Client,
     kcl: Optional[bool] = None,
-) -> Optional[Union[TextToCad, Error]]:
+) -> TextToCad:
     """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
 
     This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.

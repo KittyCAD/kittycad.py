@@ -3,7 +3,6 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.error import Error
 from ...models.file_center_of_mass import FileCenterOfMass
 from ...models.file_conversion import FileConversion
 from ...models.file_density import FileDensity
@@ -13,6 +12,7 @@ from ...models.file_volume import FileVolume
 from ...models.text_to_cad import TextToCad
 from ...models.text_to_cad_iteration import TextToCadIteration
 from ...models.text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -50,7 +50,6 @@ def _parse_response(
         TextToCad,
         TextToCadIteration,
         TextToCadMultiFileIteration,
-        Error,
     ]
 ]:
     if response.status_code == 200:
@@ -138,13 +137,9 @@ def _parse_response(
             raise
         except TypeError:
             raise
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
 def _build_response(
@@ -161,10 +156,14 @@ def _build_response(
             TextToCad,
             TextToCadIteration,
             TextToCadMultiFileIteration,
-            Error,
         ]
     ]
 ]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -189,7 +188,6 @@ def sync_detailed(
             TextToCad,
             TextToCadIteration,
             TextToCadMultiFileIteration,
-            Error,
         ]
     ]
 ]:
@@ -221,7 +219,6 @@ def sync(
         TextToCad,
         TextToCadIteration,
         TextToCadMultiFileIteration,
-        Error,
     ]
 ]:
     """Get the status and output of an async operation.
@@ -254,7 +251,6 @@ async def asyncio_detailed(
             TextToCad,
             TextToCadIteration,
             TextToCadMultiFileIteration,
-            Error,
         ]
     ]
 ]:
@@ -284,7 +280,6 @@ async def asyncio(
         TextToCad,
         TextToCadIteration,
         TextToCadMultiFileIteration,
-        Error,
     ]
 ]:
     """Get the status and output of an async operation.

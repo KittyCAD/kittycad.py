@@ -1,11 +1,11 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import Client
-from ...models.error import Error
 from ...models.text_to_cad_iteration import TextToCadIteration
 from ...models.text_to_cad_iteration_body import TextToCadIterationBody
+from ...response_helpers import raise_for_status
 from ...types import Response
 
 
@@ -30,24 +30,21 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[TextToCadIteration, Error]]:
+def _parse_response(*, response: httpx.Response) -> TextToCadIteration:
     if response.status_code == 201:
         response_201 = TextToCadIteration(**response.json())
         return response_201
-    if response.status_code == 400:
-        response_4XX = Error(**response.json())
-        return response_4XX
-    if response.status_code == 500:
-        response_5XX = Error(**response.json())
-        return response_5XX
-    return Error(**response.json())
+    # This should not be reached since we handle all known success responses above
+    # and errors are handled by raise_for_status
+    raise ValueError(f"Unexpected response status: {response.status_code}")
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Optional[Union[TextToCadIteration, Error]]]:
+def _build_response(*, response: httpx.Response) -> Response[TextToCadIteration]:
+    # Check for errors first - this will raise exceptions for non-success status codes
+    # before we try to parse the response
+    if not response.is_success:
+        raise_for_status(response)
+
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -60,7 +57,7 @@ def sync_detailed(
     body: TextToCadIterationBody,
     *,
     client: Client,
-) -> Response[Optional[Union[TextToCadIteration, Error]]]:
+) -> Response[TextToCadIteration]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -78,7 +75,7 @@ def sync(
     body: TextToCadIterationBody,
     *,
     client: Client,
-) -> Optional[Union[TextToCadIteration, Error]]:
+) -> TextToCadIteration:
     """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
     You always get the whole code back, even if you only changed a small part of it.
@@ -97,7 +94,7 @@ async def asyncio_detailed(
     body: TextToCadIterationBody,
     *,
     client: Client,
-) -> Response[Optional[Union[TextToCadIteration, Error]]]:
+) -> Response[TextToCadIteration]:
     kwargs = _get_kwargs(
         body=body,
         client=client,
@@ -113,7 +110,7 @@ async def asyncio(
     body: TextToCadIterationBody,
     *,
     client: Client,
-) -> Optional[Union[TextToCadIteration, Error]]:
+) -> TextToCadIteration:
     """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
     You always get the whole code back, even if you only changed a small part of it.
