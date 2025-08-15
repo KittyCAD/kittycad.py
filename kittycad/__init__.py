@@ -15,7 +15,7 @@ from websockets.sync.client import (
     connect as ws_connect,
 )
 
-from .client import Client
+from .client import AsyncClient, Client
 from .exceptions import (
     KittyCADAPIError,
     KittyCADClientError,
@@ -175,12 +175,10 @@ class MetaAPI:
 
         url = "{}/".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -202,12 +200,10 @@ class MetaAPI:
 
         url = "{}/_meta/ipinfo".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -243,12 +239,10 @@ class MetaAPI:
             else:
                 url = url + "?sso=" + str(sso)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -265,12 +259,10 @@ class MetaAPI:
 
         url = "{}/debug/uploads".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -293,12 +285,10 @@ class MetaAPI:
 
         url = "{}/events".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -321,12 +311,10 @@ class MetaAPI:
             self.client.base_url, discord_id=discord_id
         )
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -348,12 +336,10 @@ class MetaAPI:
 
         url = "{}/ping".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -375,12 +361,10 @@ class MetaAPI:
 
         url = "{}/pricing/subscriptions".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -399,7 +383,7 @@ class MetaAPI:
 class AsyncMetaAPI:
     """Async API for meta endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_schema(
@@ -409,13 +393,11 @@ class AsyncMetaAPI:
 
         url = "{}/".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -436,13 +418,11 @@ class AsyncMetaAPI:
 
         url = "{}/_meta/ipinfo".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -477,13 +457,11 @@ class AsyncMetaAPI:
             else:
                 url = url + "?sso=" + str(sso)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -499,13 +477,11 @@ class AsyncMetaAPI:
 
         url = "{}/debug/uploads".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -527,14 +503,12 @@ class AsyncMetaAPI:
 
         url = "{}/events".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -555,13 +529,11 @@ class AsyncMetaAPI:
             self.client.base_url, discord_id=discord_id
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -582,13 +554,11 @@ class AsyncMetaAPI:
 
         url = "{}/ping".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -609,13 +579,11 @@ class AsyncMetaAPI:
 
         url = "{}/pricing/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -659,12 +627,10 @@ class MlAPI:
             else:
                 url = url + "?kcl=" + str(kcl).lower()
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -713,12 +679,10 @@ class MlAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -741,12 +705,10 @@ class MlAPI:
 
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -792,12 +754,10 @@ class MlAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -830,12 +790,10 @@ class MlAPI:
             else:
                 url = url + "?code_option=" + str(code_option)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -858,12 +816,10 @@ class MlAPI:
 
         url = "{}/ml/kcl/completions".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -893,12 +849,10 @@ class MlAPI:
 
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -930,12 +884,10 @@ class MlAPI:
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -998,12 +950,10 @@ class MlAPI:
             else:
                 url = url + "?no_models=" + str(no_models).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1026,12 +976,10 @@ class MlAPI:
 
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1063,12 +1011,10 @@ class MlAPI:
             else:
                 url = url + "?feedback=" + str(feedback)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1096,7 +1042,7 @@ class MlAPI:
 class AsyncMlAPI:
     """Async API for ml endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_text_to_cad(
@@ -1122,14 +1068,12 @@ class AsyncMlAPI:
             else:
                 url = url + "?kcl=" + str(kcl).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1176,13 +1120,11 @@ class AsyncMlAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1204,13 +1146,11 @@ class AsyncMlAPI:
 
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1255,13 +1195,11 @@ class AsyncMlAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1293,13 +1231,11 @@ class AsyncMlAPI:
             else:
                 url = url + "?code_option=" + str(code_option)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1321,14 +1257,12 @@ class AsyncMlAPI:
 
         url = "{}/ml/kcl/completions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1356,14 +1290,12 @@ class AsyncMlAPI:
 
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1393,14 +1325,12 @@ class AsyncMlAPI:
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1461,13 +1391,11 @@ class AsyncMlAPI:
             else:
                 url = url + "?no_models=" + str(no_models).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1489,13 +1417,11 @@ class AsyncMlAPI:
 
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1526,13 +1452,11 @@ class AsyncMlAPI:
             else:
                 url = url + "?feedback=" + str(feedback)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1609,12 +1533,10 @@ class ApiCallsAPI:
             else:
                 url = url + "?group_by=" + str(group_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1658,12 +1580,10 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1690,12 +1610,10 @@ class ApiCallsAPI:
 
         url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1748,12 +1666,10 @@ class ApiCallsAPI:
             else:
                 url = url + "?status=" + str(status)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1792,12 +1708,10 @@ class ApiCallsAPI:
 
         url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1845,12 +1759,10 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1873,12 +1785,10 @@ class ApiCallsAPI:
 
         url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1924,12 +1834,10 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1952,12 +1860,10 @@ class ApiCallsAPI:
 
         url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2008,12 +1914,10 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2032,7 +1936,7 @@ class ApiCallsAPI:
 class AsyncApiCallsAPI:
     """Async API for api_calls endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_api_call_metrics(
@@ -2049,13 +1953,11 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?group_by=" + str(group_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2098,13 +2000,11 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2130,13 +2030,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2188,13 +2086,11 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?status=" + str(status)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2232,13 +2128,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2285,13 +2179,11 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2313,13 +2205,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2364,13 +2254,11 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2392,13 +2280,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2448,13 +2334,11 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2484,12 +2368,10 @@ class AppsAPI:
 
         url = "{}/apps/github/callback".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2508,12 +2390,10 @@ class AppsAPI:
 
         url = "{}/apps/github/consent".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2536,12 +2416,10 @@ class AppsAPI:
 
         url = "{}/apps/github/webhook".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -2556,7 +2434,7 @@ class AppsAPI:
 class AsyncAppsAPI:
     """Async API for apps endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def apps_github_callback(
@@ -2568,13 +2446,11 @@ class AsyncAppsAPI:
 
         url = "{}/apps/github/callback".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2592,13 +2468,11 @@ class AsyncAppsAPI:
 
         url = "{}/apps/github/consent".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2620,14 +2494,12 @@ class AsyncAppsAPI:
 
         url = "{}/apps/github/webhook".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2650,12 +2522,10 @@ class HiddenAPI:
 
         url = "{}/auth/api-key".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2678,12 +2548,10 @@ class HiddenAPI:
 
         url = "{}/auth/email".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -2728,12 +2596,10 @@ class HiddenAPI:
             else:
                 url = url + "?token=" + str(token)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2761,12 +2627,10 @@ class HiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2794,12 +2658,10 @@ class HiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2820,12 +2682,10 @@ class HiddenAPI:
             self.client.base_url, provider_id=provider_id
         )
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -2843,12 +2703,10 @@ class HiddenAPI:
 
         url = "{}/logout".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2866,12 +2724,10 @@ class HiddenAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2885,7 +2741,7 @@ class HiddenAPI:
 class AsyncHiddenAPI:
     """Async API for hidden endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def auth_api_key(
@@ -2895,13 +2751,11 @@ class AsyncHiddenAPI:
 
         url = "{}/auth/api-key".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2923,14 +2777,12 @@ class AsyncHiddenAPI:
 
         url = "{}/auth/email".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2973,13 +2825,11 @@ class AsyncHiddenAPI:
             else:
                 url = url + "?token=" + str(token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3006,13 +2856,11 @@ class AsyncHiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3039,13 +2887,11 @@ class AsyncHiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3065,14 +2911,12 @@ class AsyncHiddenAPI:
             self.client.base_url, provider_id=provider_id
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3088,13 +2932,11 @@ class AsyncHiddenAPI:
 
         url = "{}/logout".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3111,13 +2953,11 @@ class AsyncHiddenAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3163,12 +3003,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3196,12 +3034,10 @@ class FileAPI:
 
         url = "{}/file/conversion".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -3235,12 +3071,10 @@ class FileAPI:
             self.client.base_url, output_format=output_format, src_format=src_format
         )
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3300,12 +3134,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3365,12 +3197,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3416,12 +3246,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3467,12 +3295,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3492,7 +3318,7 @@ class FileAPI:
 class AsyncFileAPI:
     """Async API for file endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_file_center_of_mass(
@@ -3525,14 +3351,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3558,14 +3382,12 @@ class AsyncFileAPI:
 
         url = "{}/file/conversion".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3597,14 +3419,12 @@ class AsyncFileAPI:
             self.client.base_url, output_format=output_format, src_format=src_format
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3662,14 +3482,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3727,14 +3545,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3778,14 +3594,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3829,14 +3643,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3874,12 +3686,10 @@ class ExecutorAPI:
             else:
                 url = url + "?output=" + str(output)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3906,7 +3716,7 @@ class ExecutorAPI:
 class AsyncExecutorAPI:
     """Async API for executor endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_file_execution(
@@ -3926,14 +3736,12 @@ class AsyncExecutorAPI:
             else:
                 url = url + "?output=" + str(output)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3984,12 +3792,10 @@ class Oauth2API:
 
         url = "{}/oauth2/device/auth".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4008,12 +3814,10 @@ class Oauth2API:
 
         url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4032,12 +3836,10 @@ class Oauth2API:
 
         url = "{}/oauth2/device/token".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4070,12 +3872,10 @@ class Oauth2API:
             else:
                 url = url + "?user_code=" + str(user_code)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4124,12 +3924,10 @@ class Oauth2API:
             else:
                 url = url + "?user=" + str(user)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4150,12 +3948,10 @@ class Oauth2API:
             self.client.base_url, provider=provider
         )
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4184,12 +3980,10 @@ class Oauth2API:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4212,12 +4006,10 @@ class Oauth2API:
 
         url = "{}/oauth2/token/revoke".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4232,7 +4024,7 @@ class Oauth2API:
 class AsyncOauth2API:
     """Async API for oauth2 endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def device_auth_request(
@@ -4243,14 +4035,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/device/auth".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4267,14 +4057,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4291,14 +4079,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/device/token".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4329,13 +4115,11 @@ class AsyncOauth2API:
             else:
                 url = url + "?user_code=" + str(user_code)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4383,13 +4167,11 @@ class AsyncOauth2API:
             else:
                 url = url + "?user=" + str(user)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4409,14 +4191,12 @@ class AsyncOauth2API:
             self.client.base_url, provider=provider
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4443,13 +4223,11 @@ class AsyncOauth2API:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4471,14 +4249,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/token/revoke".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4501,12 +4277,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4529,12 +4303,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4558,12 +4330,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4590,12 +4360,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4641,12 +4409,10 @@ class OrgsAPI:
             else:
                 url = url + "?role=" + str(role)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4677,12 +4443,10 @@ class OrgsAPI:
 
         url = "{}/org/members".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4706,12 +4470,10 @@ class OrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4735,12 +4497,10 @@ class OrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4764,12 +4524,10 @@ class OrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4786,12 +4544,10 @@ class OrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4814,12 +4570,10 @@ class OrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4842,12 +4596,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4870,12 +4622,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4899,12 +4649,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4927,12 +4675,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4971,12 +4717,10 @@ class OrgsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5020,12 +4764,10 @@ class OrgsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5048,12 +4790,10 @@ class OrgsAPI:
 
         url = "{}/orgs/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5077,12 +4817,10 @@ class OrgsAPI:
 
         url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -5107,12 +4845,10 @@ class OrgsAPI:
 
         url = "{}/user/org".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5131,7 +4867,7 @@ class OrgsAPI:
 class AsyncOrgsAPI:
     """Async API for orgs endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_org(
@@ -5141,13 +4877,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5169,14 +4903,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5198,14 +4930,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5230,13 +4960,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5281,13 +5009,11 @@ class AsyncOrgsAPI:
             else:
                 url = url + "?role=" + str(role)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5317,14 +5043,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5346,13 +5070,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5375,14 +5097,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5404,13 +5124,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5426,13 +5144,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5454,14 +5170,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5482,13 +5196,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5510,14 +5222,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5539,14 +5249,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5567,13 +5275,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5611,13 +5317,11 @@ class AsyncOrgsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5660,13 +5364,11 @@ class AsyncOrgsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5688,13 +5390,11 @@ class AsyncOrgsAPI:
 
         url = "{}/orgs/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5717,14 +5417,12 @@ class AsyncOrgsAPI:
 
         url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5747,13 +5445,11 @@ class AsyncOrgsAPI:
 
         url = "{}/user/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5783,12 +5479,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5813,12 +5507,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -5844,12 +5536,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -5874,12 +5564,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5903,12 +5591,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5930,12 +5616,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/intent".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5957,12 +5641,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5984,12 +5666,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/methods".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6012,12 +5692,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6034,12 +5712,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6062,12 +5738,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6091,12 +5765,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6119,12 +5791,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/tax".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6149,12 +5819,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6185,12 +5853,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6215,12 +5881,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6245,12 +5909,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6276,12 +5938,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6306,12 +5966,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6335,12 +5993,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6362,12 +6018,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/intent".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6389,12 +6043,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6416,12 +6068,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/methods".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6444,12 +6094,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6466,12 +6114,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6494,12 +6140,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6523,12 +6167,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6551,12 +6193,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/tax".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6581,12 +6221,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6617,12 +6255,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6642,7 +6278,7 @@ class PaymentsAPI:
 class AsyncPaymentsAPI:
     """Async API for payments endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_payment_information_for_org(
@@ -6654,13 +6290,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6684,14 +6318,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6715,14 +6347,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6745,13 +6375,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6774,13 +6402,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6801,13 +6427,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/intent".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6828,13 +6452,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6855,13 +6477,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/methods".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6883,13 +6503,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6905,13 +6523,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6933,14 +6549,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6962,14 +6576,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6990,13 +6602,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/tax".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7020,13 +6630,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7056,14 +6664,12 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7086,13 +6692,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7116,14 +6720,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7147,14 +6749,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7177,13 +6777,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7206,13 +6804,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7233,13 +6829,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/intent".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7260,13 +6854,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7287,13 +6879,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/methods".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7315,13 +6905,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7337,13 +6925,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7365,14 +6951,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7394,14 +6978,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7422,13 +7004,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/tax".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7452,13 +7032,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7488,14 +7066,12 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7547,12 +7123,10 @@ class ServiceAccountsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7582,12 +7156,10 @@ class ServiceAccountsAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7612,12 +7184,10 @@ class ServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7644,12 +7214,10 @@ class ServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7663,7 +7231,7 @@ class ServiceAccountsAPI:
 class AsyncServiceAccountsAPI:
     """Async API for service_accounts endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def list_service_accounts_for_org(
@@ -7697,13 +7265,11 @@ class AsyncServiceAccountsAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7732,13 +7298,11 @@ class AsyncServiceAccountsAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7762,13 +7326,11 @@ class AsyncServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7794,13 +7356,11 @@ class AsyncServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7824,12 +7384,10 @@ class StoreAPI:
 
         url = "{}/store/coupon".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -7849,7 +7407,7 @@ class StoreAPI:
 class AsyncStoreAPI:
     """Async API for store endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_store_coupon(
@@ -7860,14 +7418,12 @@ class AsyncStoreAPI:
 
         url = "{}/store/coupon".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7906,12 +7462,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7944,12 +7498,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7982,12 +7534,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8020,12 +7570,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8058,12 +7606,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8096,12 +7642,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8134,12 +7678,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8172,12 +7714,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8210,12 +7750,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8248,12 +7786,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8286,12 +7822,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8324,12 +7858,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8362,12 +7894,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8386,7 +7916,7 @@ class UnitAPI:
 class AsyncUnitAPI:
     """Async API for unit endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_angle_unit_conversion(
@@ -8407,13 +7937,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8445,13 +7973,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8483,13 +8009,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8521,13 +8045,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8559,13 +8081,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8597,13 +8117,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8635,13 +8153,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8673,13 +8189,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8711,13 +8225,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8749,13 +8261,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8787,13 +8297,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8825,13 +8333,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8863,13 +8369,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8899,12 +8403,10 @@ class UsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8927,12 +8429,10 @@ class UsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -8957,12 +8457,10 @@ class UsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8980,12 +8478,10 @@ class UsersAPI:
 
         url = "{}/user/crm".format(self.client.base_url)
 
-        response = httpx.patch(
+        _client = self.client.get_http_client()
+        response = _client.patch(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9005,12 +8501,10 @@ class UsersAPI:
 
         url = "{}/user/extended".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9033,12 +8527,10 @@ class UsersAPI:
 
         url = "{}/user/form".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9058,12 +8550,10 @@ class UsersAPI:
 
         url = "{}/user/oauth2/providers".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9085,12 +8575,10 @@ class UsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9113,12 +8601,10 @@ class UsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9142,12 +8628,10 @@ class UsersAPI:
 
         url = "{}/user/session/{token}".format(self.client.base_url, token=token)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9191,12 +8675,10 @@ class UsersAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9219,12 +8701,10 @@ class UsersAPI:
 
         url = "{}/user/shortlinks".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9251,12 +8731,10 @@ class UsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9275,12 +8753,10 @@ class UsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9319,12 +8795,10 @@ class UsersAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9368,12 +8842,10 @@ class UsersAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9398,12 +8870,10 @@ class UsersAPI:
 
         url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9428,12 +8898,10 @@ class UsersAPI:
 
         url = "{}/users/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9457,12 +8925,10 @@ class UsersAPI:
 
         url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9486,12 +8952,10 @@ class UsersAPI:
 
         url = "{}/website/form".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9510,12 +8974,10 @@ class UsersAPI:
 
         url = "{}/website/subscribe".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9530,7 +8992,7 @@ class UsersAPI:
 class AsyncUsersAPI:
     """Async API for users endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_user_self(
@@ -9542,13 +9004,11 @@ class AsyncUsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9570,14 +9030,12 @@ class AsyncUsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9600,13 +9058,11 @@ class AsyncUsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9623,14 +9079,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/crm".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.patch(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.patch(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9648,13 +9102,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/extended".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9676,14 +9128,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/form".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9701,13 +9151,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/oauth2/providers".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9728,13 +9176,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9756,14 +9202,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9785,13 +9229,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/session/{token}".format(self.client.base_url, token=token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9834,13 +9276,11 @@ class AsyncUsersAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9862,14 +9302,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/shortlinks".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9894,14 +9332,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9918,13 +9354,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9962,13 +9396,11 @@ class AsyncUsersAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10011,13 +9443,11 @@ class AsyncUsersAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10041,13 +9471,11 @@ class AsyncUsersAPI:
 
         url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10071,13 +9499,11 @@ class AsyncUsersAPI:
 
         url = "{}/users/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10100,14 +9526,12 @@ class AsyncUsersAPI:
 
         url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10129,14 +9553,12 @@ class AsyncUsersAPI:
 
         url = "{}/website/form".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10153,14 +9575,12 @@ class AsyncUsersAPI:
 
         url = "{}/website/subscribe".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10207,12 +9627,10 @@ class ApiTokensAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -10242,12 +9660,10 @@ class ApiTokensAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -10270,12 +9686,10 @@ class ApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -10300,12 +9714,10 @@ class ApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -10319,7 +9731,7 @@ class ApiTokensAPI:
 class AsyncApiTokensAPI:
     """Async API for api_tokens endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def list_api_tokens_for_user(
@@ -10353,13 +9765,11 @@ class AsyncApiTokensAPI:
             else:
                 url = url + "?sort_by=" + str(sort_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10388,13 +9798,11 @@ class AsyncApiTokensAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10416,13 +9824,11 @@ class AsyncApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10446,13 +9852,11 @@ class AsyncApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10503,7 +9907,7 @@ class ModelingAPI:
 class AsyncModelingAPI:
     """Async API for modeling endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def modeling_commands_ws(
@@ -10888,7 +10292,7 @@ class KittyCAD(Client):
         self.modeling: ModelingAPI = ModelingAPI(self)
 
 
-class AsyncKittyCAD(Client):
+class AsyncKittyCAD(AsyncClient):
     """Async KittyCAD client class with async API interface.
 
     Usage:

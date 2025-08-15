@@ -33,12 +33,10 @@
         {% endif %}
         {% endfor %}
 
-        response = httpx.{{ method }}(
+        _client = self.client.get_http_client()
+        response = _client.{{ method }}(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(),{% else %}content=body,{% endif %}{% endif %}
         )
 
