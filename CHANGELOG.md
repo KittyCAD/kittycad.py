@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Quick Start - New Simple API 🎉
+
+The KittyCAD Python SDK now features a streamlined, class-based API that's much easier to use:
+
+```python
+from kittycad import KittyCAD
+
+# Create client (uses KITTYCAD_API_TOKEN, ZOO_API_TOKEN, ZOO_HOST environment variable)
+client = KittyCAD()
+
+# Make API calls directly
+user = client.get_user_self()
+print(f"Hello {user.name}!")
+
+# WebSocket connections are seamless
+with client.modeling_commands_ws(fps=30, webrtc=False, ...) as ws:
+    # Send modeling commands
+    ws.send(command)
+    response = ws.recv()
+```
+
+**Async support:**
+
+```python
+from kittycad import AsyncKittyCAD
+
+client = AsyncKittyCAD()
+user = await client.get_user_self()
+```
+
 ### Added - New Client Classes 🚨 BREAKING CHANGE
 
 The SDK now provides unified client classes that eliminate the need for direct API imports and global configuration.
