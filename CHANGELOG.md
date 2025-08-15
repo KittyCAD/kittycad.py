@@ -37,6 +37,77 @@ client = AsyncKittyCAD()
 user = await client.get_user_self()
 ```
 
+### Added - HTTP Client Pooling & Improved Performance ⚡
+
+**Connection Pooling**: The client now uses persistent HTTP connections, significantly improving performance for multiple API calls by reusing TCP connections instead of establishing new ones for each request.
+
+**Improved Error Handling**: Enhanced exception handling with better context and debugging information.
+
+**Memory Efficiency**: Optimized memory usage through better connection management and resource cleanup.
+
+### Added - OpenAI-Style Automatic Pagination 🎯
+
+**Smart Pagination**: List endpoints now return iterators that automatically handle pagination, eliminating the need for manual page token management.
+
+**Memory Efficient**: Uses generators for O(1) memory usage regardless of result count - items are fetched and yielded as needed.
+
+**Type Safe**: Full type annotations and IDE support for all paginated endpoints.
+
+#### Usage Examples
+
+**Sync Pagination:**
+
+```python
+from kittycad import KittyCAD
+
+client = KittyCAD()
+
+# Automatically iterate through ALL results across pages
+for api_call in client.api_calls.list_api_calls():
+    print(f"API Call: {api_call.id}")
+    # No manual pagination needed!
+
+# Control page size
+for item in client.api_calls.list_api_calls(limit=50):
+    print(item)
+```
+
+**Async Pagination:**
+
+```python
+import asyncio
+from kittycad import AsyncKittyCAD
+
+async def main():
+    client = AsyncKittyCAD()
+    
+    # Async iteration over all results
+    async for api_call in client.api_calls.list_api_calls():
+        print(f"API Call: {api_call.id}")
+        
+    await client.aclose()
+
+asyncio.run(main())
+```
+
+#### Paginated Endpoints
+
+The following endpoints now support automatic pagination:
+- **API Calls**: `list_api_calls()`, `org_list_api_calls()`, `user_list_api_calls()`
+- **ML**: `list_ml_prompts()`, `list_conversations_for_user()`, `list_text_to_cad_models_for_user()`
+- **Organizations**: `list_org_members()`, `get_org_shortlinks()`, `list_orgs()`
+- **Users**: `get_user_shortlinks()`, `list_users()`, `list_users_extended()`
+- **Service Accounts**: `list_service_accounts_for_org()`
+- **API Tokens**: `list_api_tokens_for_user()`
+
+### Added - Enhanced Documentation 📚
+
+**Comprehensive Pagination Guide**: New detailed documentation for the automatic pagination system with examples and advanced usage patterns.
+
+**Updated API Reference**: Documentation now reflects the new client classes and pagination capabilities.
+
+**Better Organization**: Restructured docs to highlight the new client approach and pagination features.
+
 ### Added - New Client Classes 🚨 BREAKING CHANGE
 
 The SDK now provides unified client classes that eliminate the need for direct API imports and global configuration.
@@ -44,7 +115,7 @@ The SDK now provides unified client classes that eliminate the need for direct A
 #### New Client Classes
 
 - **`KittyCAD`**: Main synchronous client with all API endpoints as methods
-- **`AsyncKittyCAD`**: Asynchronous client with async/await support
+- **`AsyncKittyCAD`**: Asynchronous client with async/await support and dedicated `AsyncClient` class
 - Direct method access: `client.ping()`, `client.get_user()`, `client.modeling_commands_ws()`, etc.
 - WebSocket support with convenient wrapper classes
 - All API endpoints organized as client methods (no more direct API imports needed)
