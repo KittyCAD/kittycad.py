@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 from websockets.asyncio.client import (
     ClientConnection as ClientConnectionAsync,
@@ -9,7 +9,6 @@ from websockets.sync.client import (
     connect as ws_connect,
 )
 
-from ... import get_default_client
 from ...client import Client
 
 
@@ -32,12 +31,9 @@ def _get_kwargs(
 
 def sync(
     *,
-    client: Optional[Client] = None,
+    client: Client,
 ) -> ClientConnectionSync:
     """Attach to a docker container to create an interactive terminal."""  # noqa: E501
-
-    if client is None:
-        client = get_default_client()
 
     kwargs = _get_kwargs(
         client=client,
@@ -53,12 +49,9 @@ def sync(
 
 async def asyncio(
     *,
-    client: Optional[Client] = None,
+    client: Client,
 ) -> ClientConnectionAsync:
     """Attach to a docker container to create an interactive terminal."""  # noqa: E501
-
-    if client is None:
-        client = get_default_client()
 
     kwargs = _get_kwargs(
         client=client,

@@ -1,8 +1,7 @@
 """The KittyCAD Python SDK - Generated Client Classes"""
 
 import os
-from typing import Optional, Dict, Union, Any
-import ssl
+from typing import Any, Optional
 
 from .client import Client
 from .exceptions import (
@@ -28,99 +27,8 @@ from .exceptions import (
 from .models.{{ return_type|pascal_to_snake }} import {{ return_type }}
 {% endfor %}
 
-# Global default client instance
-_default_client: Optional[Client] = None
 
 
-def configure(
-    api_token: Optional[str] = None,
-    base_url: Optional[str] = None,
-    timeout: Optional[float] = None,
-    cookies: Optional[Dict[str, str]] = None,
-    headers: Optional[Dict[str, str]] = None,
-    verify_ssl: Optional[Union[str, bool, ssl.SSLContext]] = None,
-) -> None:
-    """Configure the global default client for KittyCAD.
-
-    Args:
-        api_token: Your API token. If None, will attempt to use environment variable.
-        base_url: Base URL for the API. Defaults to https://api.zoo.dev
-        timeout: Request timeout in seconds. Defaults to 120.0
-        cookies: Additional cookies to send with requests
-        headers: Additional headers to send with requests
-        verify_ssl: SSL verification setting (bool, path to CA cert, or SSLContext)
-
-    Examples:
-        Configure with explicit token:
-        >>> import kittycad
-        >>> kittycad.configure(api_token="your-token-here")
-
-        Configure using environment variables:
-        >>> kittycad.configure()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
-
-        Configure with custom base URL:
-        >>> kittycad.configure(api_token="token", base_url="https://custom.api.url")
-    """
-    global _default_client
-
-    if api_token is None:
-        # Try to get from environment
-        api_token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
-        if api_token is None:
-            raise ValueError(
-                "No API token provided. Either pass api_token parameter or set "
-                "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
-            )
-
-    kwargs: Dict[str, Any] = {}
-    if base_url is not None:
-        kwargs["base_url"] = base_url
-    if timeout is not None:
-        kwargs["timeout"] = timeout
-    if cookies is not None:
-        kwargs["cookies"] = cookies
-    if headers is not None:
-        kwargs["headers"] = headers
-    if verify_ssl is not None:
-        kwargs["verify_ssl"] = verify_ssl
-
-    _default_client = Client(token=api_token, **kwargs)
-
-
-def get_default_client() -> Client:
-    """Get the global default client.
-    
-    Returns:
-        The default client instance
-        
-    Raises:
-        ValueError: If no default client is configured
-    """
-    global _default_client
-    
-    if _default_client is None:
-        # Try to create from environment as fallback
-        token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
-        if token:
-            from .client import ClientFromEnv
-            _default_client = ClientFromEnv()
-        else:
-            raise ValueError(
-                "No default client configured. Call configure() first or set "
-                "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
-            )
-    
-    return _default_client
-
-
-def set_default_client(client: Client) -> None:
-    """Set the global default client directly.
-    
-    Args:
-        client: Client instance to use as default
-    """
-    global _default_client
-    _default_client = client
 
 
 {% for tag, functions in endpoints_by_tag.items() %}
@@ -142,22 +50,9 @@ class {{ tag_pascal }}API:
         # Import WebSocket wrapper class
         from .api.{{ tag }}.{{ func_name }} import WebSocket
         
-        # Temporarily set default client for WebSocket initialization
-        original_client = None
-        try:
-            original_client = get_default_client()
-        except ValueError:
-            pass
-        
-        set_default_client(self.client)
-        try:
-            return WebSocket(*args, **kwargs)
-        finally:
-            if original_client:
-                set_default_client(original_client)
-            else:
-                global _default_client
-                _default_client = None
+        # Pass client directly to WebSocket constructor
+        kwargs["client"] = self.client
+        return WebSocket(*args, **kwargs)
         {% else %}
         # Use sync function for WebSocket endpoints without wrapper class
         from .api.{{ tag }}.{{ func_name }} import sync
@@ -194,22 +89,9 @@ class Async{{ tag_pascal }}API:
         # Import WebSocket wrapper class
         from .api.{{ tag }}.{{ func_name }} import WebSocket
         
-        # Temporarily set default client for WebSocket initialization
-        original_client = None
-        try:
-            original_client = get_default_client()
-        except ValueError:
-            pass
-        
-        set_default_client(self.client)
-        try:
-            return WebSocket(*args, **kwargs)
-        finally:
-            if original_client:
-                set_default_client(original_client)
-            else:
-                global _default_client
-                _default_client = None
+        # Pass client directly to WebSocket constructor
+        kwargs["client"] = self.client
+        return WebSocket(*args, **kwargs)
         {% else %}
         # Use sync function for WebSocket endpoints without wrapper class
         from .api.{{ tag }}.{{ func_name }} import sync
@@ -297,7 +179,4 @@ __all__ = [
     "KittyCADServerError",
     "KittyCADConnectionError",
     "KittyCADTimeoutError",
-    "configure",
-    "get_default_client",
-    "set_default_client",
 ]

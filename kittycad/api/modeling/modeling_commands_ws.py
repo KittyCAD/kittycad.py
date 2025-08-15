@@ -11,7 +11,6 @@ from websockets.sync.client import (
     connect as ws_connect,
 )
 
-from ... import get_default_client
 from ...client import Client
 from ...models.post_effect_type import PostEffectType
 from ...models.web_socket_request import WebSocketRequest
@@ -114,15 +113,12 @@ def sync(
     video_res_width: int,
     webrtc: bool,
     *,
-    client: Optional[Client] = None,
+    client: Client,
     api_call_id: Optional[str] = None,
     pool: Optional[str] = None,
     replay: Optional[str] = None,
 ) -> ClientConnectionSync:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
-
-    if client is None:
-        client = get_default_client()
 
     kwargs = _get_kwargs(
         api_call_id=api_call_id,
@@ -155,15 +151,12 @@ async def asyncio(
     video_res_width: int,
     webrtc: bool,
     *,
-    client: Optional[Client] = None,
+    client: Client,
     api_call_id: Optional[str] = None,
     pool: Optional[str] = None,
     replay: Optional[str] = None,
 ) -> ClientConnectionAsync:
     """Pass those commands to the engine via websocket, and pass responses back to the client. Basically, this is a websocket proxy between the frontend/client and the engine."""  # noqa: E501
-
-    if client is None:
-        client = get_default_client()
 
     kwargs = _get_kwargs(
         api_call_id=api_call_id,
@@ -201,12 +194,12 @@ class WebSocket:
         video_res_height: int,
         video_res_width: int,
         webrtc: bool,
+        *,
+        client: Client,
         api_call_id: Optional[str] = None,
         pool: Optional[str] = None,
         replay: Optional[str] = None,
     ):
-        client = get_default_client()
-
         self.ws = sync(
             fps,
             post_effect,

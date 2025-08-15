@@ -7,7 +7,6 @@ from websockets.asyncio.client import connect as ws_connect_async
 from websockets.sync.client import ClientConnection as ClientConnectionSync
 from websockets.asyncio.client import ClientConnection as ClientConnectionAsync
 
-from ... import get_default_client
 from ...client import Client
 from ...types import Response
 from ...response_helpers import raise_for_status
@@ -94,7 +93,7 @@ def sync(
     {% endif %}
     {% endfor %}
     *,
-    client: Optional[Client] = None,
+    client: Client,
     {% for arg in args %}
     {% if arg.in_url %}
     {% if arg.is_optional %}
@@ -112,8 +111,6 @@ def sync(
 ) -> ClientConnectionSync:
     {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
 
-    if client is None:
-        client = get_default_client()
 
     kwargs = _get_kwargs(
         {% for arg in args %}
@@ -149,7 +146,7 @@ async def asyncio(
     {% endif %}
     {% endfor %}
     *,
-    client: Optional[Client] = None,
+    client: Client,
     {% for arg in args %}
     {% if arg.in_url %}
     {% if arg.is_optional %}
@@ -167,8 +164,6 @@ async def asyncio(
 ) -> ClientConnectionAsync:
     {%if docs%}"""{{docs}}"""  # noqa: E501{% endif %}
 
-    if client is None:
-        client = get_default_client()
 
     kwargs = _get_kwargs(
         {% for arg in args %}
@@ -207,6 +202,8 @@ class WebSocket:
         {% endif %}
         {% endif %}
         {% endfor %}
+        *,
+        client: Client,
         {% for arg in args %}
         {% if arg.in_url %}
         {% if arg.is_optional %}
@@ -222,7 +219,6 @@ class WebSocket:
         {% endif %}
         {% endfor %}
     ):
-        client = get_default_client()
         
         self.ws = sync(
         {% for arg in args %}
