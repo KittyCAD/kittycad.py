@@ -71,7 +71,7 @@ split-on-trailing-comma = false
 [tool.ruff.lint.per-file-ignores]
 # We exclude init files since otherwise ruff will delete all the unused imports.
 "__init__.py" = ["F401"]
-"examples_test.py" = ["F841"]
+"kittycad/tests/test_examples.py" = ["F841"]
 
 [tool.mypy]
 exclude = ["venv", "docs"]

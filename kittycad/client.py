@@ -1,6 +1,5 @@
-import os
 import ssl
-from typing import Dict, Optional, Union
+from typing import Dict, Union
 
 import attr
 
@@ -43,5 +42,3 @@ class Client:
     def with_base_url(self, url: str) -> "Client":
         """Get a new client matching this one with a new base url"""
         return attr.evolve(self, base_url=url)
-
-

@@ -7,8 +7,7 @@ import pytest
 from websockets.exceptions import ConnectionClosedError
 
 from kittycad import KittyCAD
-
-from .models import (
+from kittycad.models import (
     ApiCallStatus,
     ApiTokenResultsPage,
     Axis,
@@ -39,15 +38,15 @@ from .models import (
     WebSocketRequest,
     WebSocketResponse,
 )
-from .models.input_format3d import OptionObj
-from .models.modeling_cmd import (
+from kittycad.models.input_format3d import OptionObj
+from kittycad.models.modeling_cmd import (
     OptionDefaultCameraFocusOn,
     OptionImportFiles,
     OptionStartPath,
     OptionTakeSnapshot,
 )
-from .models.web_socket_request import OptionModelingCmdReq
-from .types import Unset
+from kittycad.models.web_socket_request import OptionModelingCmdReq
+from kittycad.types import Unset
 
 
 def test_get_session():
@@ -124,7 +123,7 @@ def test_file_convert_stl():
     client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
+    file = open(os.path.join(dir_path, "../../assets/testing.stl"), "rb")
     content = file.read()
     file.close()
 
@@ -160,7 +159,7 @@ async def test_file_convert_stl_async():
     client = AsyncKittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/testing.stl"), "rb")
+    file = open(os.path.join(dir_path, "../../assets/testing.stl"), "rb")
     content = file.read()
     file.close()
 
@@ -198,7 +197,7 @@ async def test_file_convert_obj_async():
     client = AsyncKittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/ORIGINALVOXEL-3.obj"), "rb")
+    file = open(os.path.join(dir_path, "../../assets/ORIGINALVOXEL-3.obj"), "rb")
     content = file.read()
     file.close()
 
@@ -233,7 +232,7 @@ def test_file_mass():
     client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
+    file = open(os.path.join(dir_path, "../../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
@@ -263,7 +262,7 @@ def test_file_volume():
     client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
+    file = open(os.path.join(dir_path, "../../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
@@ -291,7 +290,7 @@ def test_file_center_of_mass():
     client = KittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file = open(os.path.join(dir_path, "../assets/testing.obj"), "rb")
+    file = open(os.path.join(dir_path, "../../assets/testing.obj"), "rb")
     content = file.read()
     file.close()
 
@@ -378,7 +377,7 @@ def test_ws_import():
                 # read the content of the file
                 dir_path = os.path.dirname(os.path.realpath(__file__))
                 file_name = "ORIGINALVOXEL-3.obj"
-                file_path = os.path.join(dir_path, "..", "assets", file_name)
+                file_path = os.path.join(dir_path, "../..", "assets", file_name)
                 with open(file_path, "rb") as file:
                     content = file.read()
                 cmd_id = uuid.uuid4()
@@ -493,7 +492,7 @@ def test_ws_import():
                         break
 
                 # Save the contents to a file.
-                png_path = os.path.join(dir_path, "..", "assets", "snapshot.png")
+                png_path = os.path.join(dir_path, "../..", "assets", "snapshot.png")
                 with open(png_path, "wb") as f:
                     f.write(png_contents)
 

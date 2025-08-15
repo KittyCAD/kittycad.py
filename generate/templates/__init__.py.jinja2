@@ -1,9 +1,25 @@
 """The KittyCAD Python SDK - Generated Client Classes"""
 
 import os
-from typing import Any, Optional
+from typing import Any, Dict, Optional, Union, List
+import httpx
+
+{% if has_websockets %}
+import json
+import bson
+from websockets.asyncio.client import (
+    ClientConnection as ClientConnectionAsync,
+    connect as ws_connect_async,
+)
+from websockets.sync.client import (
+    ClientConnection as ClientConnectionSync,
+    connect as ws_connect,
+)
+{% endif %}
 
 from .client import Client
+from .types import Response
+from .response_helpers import raise_for_status
 from .exceptions import (
     KittyCADError,
     KittyCADAPIError,
@@ -13,23 +29,16 @@ from .exceptions import (
     KittyCADTimeoutError,
 )
 
-# Import all model types used in return type annotations
-{% set all_return_types = [] %}
-{% for tag, functions in endpoints_by_tag.items() %}
-    {% for func_name, func_info in functions.items() %}
-        {% if func_info.return_type != "Any" and func_info.return_type not in all_return_types %}
-            {% set _ = all_return_types.append(func_info.return_type) %}
-        {% endif %}
-    {% endfor %}
+# Import model types
+{% for import_path in all_imports %}
+{{ import_path }}
 {% endfor %}
 
-{% for return_type in all_return_types %}
-from .models.{{ return_type|pascal_to_snake }} import {{ return_type }}
-{% endfor %}
-
-
-
-
+{% if has_websockets %}
+# Import WebSocket request/response models
+from .models.web_socket_request import WebSocketRequest
+from .models.web_socket_response import WebSocketResponse
+{% endif %}
 
 {% for tag, functions in endpoints_by_tag.items() %}
 {% set tag_pascal = tag|to_pascal_case %}
@@ -40,31 +49,26 @@ class {{ tag_pascal }}API:
         self.client = client
     
     {% for func_name, func_info in functions.items() %}
-    {% if func_info.is_websocket %}
-    def {{ func_name }}(self, *args, **kwargs):
-        """WebSocket connection for {{ func_name }}
+    {% if func_info.is_websocket and func_info.has_websocket_class %}
+    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> "WebSocket{{ func_name|to_pascal_case }}":
+        """{{ func_info.description }}
         
-        {{ func_info.description }}
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        {% if func_info.has_websocket_class %}
-        # Import WebSocket wrapper class
-        from .api.{{ tag }}.{{ func_name }} import WebSocket
+        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
+    {% elif func_info.is_websocket %}
+    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> ClientConnectionSync:
+        """{{ func_info.description }}
         
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
-        {% else %}
-        # Use sync function for WebSocket endpoints without wrapper class
+        Returns a raw WebSocket connection for {{ func_name }}.
+        """
         from .api.{{ tag }}.{{ func_name }} import sync
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
-        {% endif %}
+        return sync({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
     {% else %}
-    def {{ func_name }}(self, *args, **kwargs) -> {{ func_info.return_type }}:
+    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> {{ func_info.return_type }}:
         """{{ func_info.description }}"""
         from .api.{{ tag }}.{{ func_name }} import sync
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
     {% endif %}
     
     {% endfor %}
@@ -77,37 +81,82 @@ class Async{{ tag_pascal }}API:
         self.client = client
     
     {% for func_name, func_info in functions.items() %}
-    {% if func_info.is_websocket %}
-    def {{ func_name }}(self, *args, **kwargs):
-        """WebSocket connection for {{ func_name }} (sync wrapper for async client)
+    {% if func_info.is_websocket and func_info.has_websocket_class %}
+    def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> "WebSocket{{ func_name|to_pascal_case }}":
+        """{{ func_info.description }}
         
-        {{ func_info.description }}
-        
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         Note: WebSocket connections are synchronous even in AsyncKittyCAD
         """
-        {% if func_info.has_websocket_class %}
-        # Import WebSocket wrapper class
-        from .api.{{ tag }}.{{ func_name }} import WebSocket
+        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
+    {% elif func_info.is_websocket %}
+    async def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> ClientConnectionAsync:
+        """{{ func_info.description }}
         
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
-        {% else %}
-        # Use sync function for WebSocket endpoints without wrapper class
-        from .api.{{ tag }}.{{ func_name }} import sync
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
-        {% endif %}
+        Returns a raw async WebSocket connection for {{ func_name }}.
+        """
+        from .api.{{ tag }}.{{ func_name }} import asyncio
+        return await asyncio({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
     {% else %}
-    async def {{ func_name }}(self, *args, **kwargs) -> {{ func_info.return_type }}:
+    async def {{ func_name }}(self{{ func_info.parameters if func_info.parameters else '' }}) -> {{ func_info.return_type }}:
         """{{ func_info.description }}"""
         from .api.{{ tag }}.{{ func_name }} import asyncio
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=self.client)
     {% endif %}
     
     {% endfor %}
 
+{% endfor %}
+
+{% for tag, functions in endpoints_by_tag.items() %}
+{% for func_name, func_info in functions.items() %}
+{% if func_info.is_websocket and func_info.has_websocket_class %}
+class WebSocket{{ func_name|to_pascal_case }}:
+    """A websocket connection for {{ func_name }}."""
+
+    ws: ClientConnectionSync
+
+    def __init__(self{{ func_info.parameters if func_info.parameters else '' }}, *, client: Client):
+        from .api.{{ tag }}.{{ func_name }} import sync
+        self.ws = sync({{ func_info.call_args if func_info.call_args else '' }}{{ ', ' if func_info.call_args else '' }}client=client)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield WebSocketResponse(**json.loads(message))
+
+    def send(self, data: WebSocketRequest):
+        """Send data to the websocket."""
+        self.ws.send(json.dumps(data.model_dump()))
+
+    def send_binary(self, data: WebSocketRequest):
+        """Send data as bson to the websocket."""
+        self.ws.send(bson.encode(data.model_dump()))
+
+    def recv(self) -> WebSocketResponse:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=60)
+        return WebSocketResponse(**json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
+
+{% endif %}
+{% endfor %}
 {% endfor %}
 
 class KittyCAD(Client):

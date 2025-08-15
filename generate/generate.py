@@ -30,10 +30,12 @@ examples: List[str] = []
 
 
 def generate_client_classes(cwd: str, data: dict):
-    """Generate the KittyCAD and AsyncKittyCAD client classes using templates"""
+    """Generate the KittyCAD and AsyncKittyCAD client classes with embedded endpoint logic"""
 
-    # Collect all endpoints by tag with full info
+    # Collect all endpoints by tag with full implementation details
     endpoints_by_tag: Dict[str, Dict[str, Any]] = {}
+    all_imports = set()
+    has_websockets = False
 
     # Process each path and method to collect endpoint info
     for path, path_data in data.get("paths", {}).items():
@@ -52,24 +54,130 @@ def generate_client_classes(cwd: str, data: dict):
 
             # Check if this is a WebSocket endpoint
             is_websocket = "x-dropshot-websocket" in endpoint_data
+            if is_websocket:
+                has_websockets = True
 
-            # Use Any return type for now to avoid complex union type issues
+            # Get detailed implementation by reading the generated API file
+            api_file_path = os.path.join(
+                cwd, "kittycad", "api", tag, f"{operation_id}.py"
+            )
+
+            implementation_code = ""
+            parameters = ""
+            call_args = ""
             return_type = "Any"
+            parse_response = "response.json()" if method.lower() == "get" else "None"
+
+            if os.path.exists(api_file_path):
+                try:
+                    with open(api_file_path, "r") as f:
+                        content = f.read()
+
+                        # Extract return type from sync function
+                        import re
+
+                        sync_func_match = re.search(
+                            r"def sync\((.*?)\) -> (.*?):", content, re.DOTALL
+                        )
+                        if sync_func_match:
+                            params = sync_func_match.group(1)
+                            return_type = sync_func_match.group(2).strip()
+
+                            # Build parameter list (excluding client parameter)
+                            param_lines = [
+                                p.strip() for p in params.split(",") if p.strip()
+                            ]
+                            client_filtered_params = []
+                            call_args_list = []
+
+                            for param in param_lines:
+                                if "client:" not in param and param != "*":
+                                    if param.startswith("*"):
+                                        client_filtered_params.append(param)
+                                    else:
+                                        client_filtered_params.append(param)
+                                        # Extract parameter name for call args
+                                        param_name = param.split(":")[0].strip()
+                                        if (
+                                            "=" not in param_name
+                                        ):  # Skip default values in call
+                                            call_args_list.append(param_name)
+
+                            if client_filtered_params:
+                                parameters = ", " + ", ".join(client_filtered_params)
+                            call_args = ", ".join(call_args_list)
+
+                        # Generate simple implementation code based on the endpoint
+                        url_template = path
+                        if "{" in url_template:
+                            # Handle URL parameters
+                            implementation_code = f'''url = "{url_template}".format(self.client.base_url)
+        headers = self.client.get_headers()
+        cookies = self.client.get_cookies()
+        kwargs = {{
+            "url": url,
+            "headers": headers, 
+            "cookies": cookies,
+            "timeout": self.client.get_timeout(),
+        }}'''
+                        else:
+                            # Simple URL without parameters
+                            implementation_code = f'''kwargs = {{
+            "url": "{url_template}".format(self.client.base_url),
+            "headers": self.client.get_headers(),
+            "cookies": self.client.get_cookies(), 
+            "timeout": self.client.get_timeout(),
+        }}'''
+
+                        # Extract parse response logic
+                        parse_match = re.search(
+                            r"def _parse_response\(.*?\) -> (.*?):(.*?)(?=\n\ndef|\n\nclass|\Z)",
+                            content,
+                            re.DOTALL,
+                        )
+                        if parse_match:
+                            parse_body = parse_match.group(2).strip()
+                            # Extract just the successful response parsing
+                            if "response_200 =" in parse_body:
+                                response_match = re.search(
+                                    r"response_200 = (.*)", parse_body
+                                )
+                                if response_match:
+                                    parse_response = response_match.group(1)
+
+                        # Extract model imports
+                        import_matches = re.findall(
+                            r"from \.\.\.models\.(.*?) import (.*)", content
+                        )
+                        for match in import_matches:
+                            module_name, class_name = match
+                            all_imports.add(
+                                f"from .models.{module_name} import {class_name}"
+                            )
+
+                except (IOError, OSError):
+                    pass
 
             # Check if WebSocket endpoint has a wrapper class
             has_websocket_class = False
-            if is_websocket:
-                # Check if the corresponding API file has a WebSocket class
-                api_file_path = os.path.join(
-                    cwd, "kittycad", "api", tag, f"{operation_id}.py"
-                )
-                if os.path.exists(api_file_path):
-                    try:
-                        with open(api_file_path, "r") as f:
-                            content = f.read()
-                            has_websocket_class = "class WebSocket" in content
-                    except (IOError, OSError):
-                        pass
+            if is_websocket and os.path.exists(api_file_path):
+                try:
+                    with open(api_file_path, "r") as f:
+                        content = f.read()
+                        has_websocket_class = "class WebSocket" in content
+
+                        if has_websocket_class:
+                            # Generate WebSocket implementation
+                            if "{" in path:
+                                implementation_code = f'''url = "{path}".format(self.client.base_url)
+        headers = self.client.get_headers()
+        cookies = self.client.get_cookies()'''
+                            else:
+                                implementation_code = f'''url = "{path}".format(self.client.base_url)
+        headers = self.client.get_headers()
+        cookies = self.client.get_cookies()'''
+                except (IOError, OSError):
+                    pass
 
             endpoints_by_tag[tag][operation_id] = {
                 "name": operation_id,
@@ -78,7 +186,11 @@ def generate_client_classes(cwd: str, data: dict):
                 "description": endpoint_data.get("summary", "").replace('"', '\\"'),
                 "return_type": return_type,
                 "path": path,
-                "method": method,
+                "method": method.lower(),
+                "parameters": parameters,
+                "call_args": call_args,
+                "implementation": implementation_code,
+                "parse_response": parse_response,
             }
 
     # Load and render the template
@@ -94,7 +206,11 @@ def generate_client_classes(cwd: str, data: dict):
     template = env.get_template("__init__.py.jinja2")
 
     # Render the template
-    rendered_content = template.render(endpoints_by_tag=endpoints_by_tag)
+    rendered_content = template.render(
+        endpoints_by_tag=endpoints_by_tag,
+        all_imports=sorted(all_imports),
+        has_websockets=has_websockets,
+    )
 
     # Write to the __init__.py file
     init_path = os.path.join(cwd, "kittycad", "__init__.py")
@@ -178,7 +294,7 @@ client = KittyCAD()
             f.write(new_content)
 
     # Write all the examples to a file.
-    examples_test_path = os.path.join(cwd, "kittycad", "examples_test.py")
+    examples_test_path = os.path.join(cwd, "kittycad", "tests", "test_examples.py")
     logging.info("opening examples test file: %s", examples_test_path)
 
     # Extract and consolidate imports from all examples
@@ -788,6 +904,7 @@ async def test_"""
         + """("""
         + no_client_params
         + """)
+
 """
     )
 

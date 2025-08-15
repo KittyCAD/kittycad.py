@@ -9,7 +9,7 @@ YOU CANNOT MANUALLY EDIT ANY FILES IN THE `kittycad/` folder EXCEPT:
 
 - client.py
 - types.py
-- client_test.py
+- kittycad/test/\* except text_examples.py
 - kittycad/models/base64data.py
 - kittycad/models/empty.py
 

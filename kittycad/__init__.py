@@ -1,7 +1,19 @@
 """The KittyCAD Python SDK - Generated Client Classes"""
 
+import json
 import os
-from typing import Any, Optional
+from typing import Any, Dict, List, Optional, Union
+
+import bson
+import httpx
+from websockets.asyncio.client import (
+    ClientConnection as ClientConnectionAsync,
+    connect as ws_connect_async,
+)
+from websockets.sync.client import (
+    ClientConnection as ClientConnectionSync,
+    connect as ws_connect,
+)
 
 from .client import Client
 from .exceptions import (
@@ -13,7 +25,138 @@ from .exceptions import (
     KittyCADTimeoutError,
 )
 
-# Import all model types used in return type annotations
+# Import model types
+from .models.account_provider import AccountProvider
+from .models.add_org_member import AddOrgMember
+from .models.api_call_query_group import ApiCallQueryGroup
+from .models.api_call_query_group_by import ApiCallQueryGroupBy
+from .models.api_call_status import ApiCallStatus
+from .models.api_call_with_price import ApiCallWithPrice
+from .models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
+from .models.api_token import ApiToken
+from .models.api_token_results_page import ApiTokenResultsPage
+from .models.api_token_uuid import ApiTokenUuid
+from .models.app_client_info import AppClientInfo
+from .models.async_api_call_results_page import AsyncApiCallResultsPage
+from .models.auth_api_key_response import AuthApiKeyResponse
+from .models.billing_info import BillingInfo
+from .models.code_language import CodeLanguage
+from .models.code_option import CodeOption
+from .models.code_output import CodeOutput
+from .models.conversation_results_page import ConversationResultsPage
+from .models.conversion_params import ConversionParams
+from .models.create_shortlink_request import CreateShortlinkRequest
+from .models.create_shortlink_response import CreateShortlinkResponse
+from .models.created_at_sort_mode import CreatedAtSortMode
+from .models.crm_data import CrmData
+from .models.customer import Customer
+from .models.customer_balance import CustomerBalance
+from .models.discount_code import DiscountCode
+from .models.email_authentication_form import EmailAuthenticationForm
+from .models.enterprise_subscription_tier_price import EnterpriseSubscriptionTierPrice
+from .models.event import Event
+from .models.extended_user import ExtendedUser
+from .models.extended_user_results_page import ExtendedUserResultsPage
+from .models.file_center_of_mass import FileCenterOfMass
+from .models.file_conversion import FileConversion
+from .models.file_density import FileDensity
+from .models.file_export_format import FileExportFormat
+from .models.file_import_format import FileImportFormat
+from .models.file_mass import FileMass
+from .models.file_surface_area import FileSurfaceArea
+from .models.file_volume import FileVolume
+from .models.inquiry_form import InquiryForm
+from .models.invoice import Invoice
+from .models.ip_addr_info import IpAddrInfo
+from .models.kcl_code_completion_request import KclCodeCompletionRequest
+from .models.kcl_code_completion_response import KclCodeCompletionResponse
+from .models.kcl_model import KclModel
+from .models.ml_copilot_client_message import MlCopilotClientMessage
+from .models.ml_copilot_server_message import MlCopilotServerMessage
+from .models.ml_feedback import MlFeedback
+from .models.ml_prompt import MlPrompt
+from .models.ml_prompt_results_page import MlPromptResultsPage
+from .models.org import Org
+from .models.org_details import OrgDetails
+from .models.org_member import OrgMember
+from .models.org_member_results_page import OrgMemberResultsPage
+from .models.org_results_page import OrgResultsPage
+from .models.payment_intent import PaymentIntent
+from .models.payment_method import PaymentMethod
+from .models.pong import Pong
+from .models.post_effect_type import PostEffectType
+from .models.privacy_settings import PrivacySettings
+from .models.saml_identity_provider import SamlIdentityProvider
+from .models.saml_identity_provider_create import SamlIdentityProviderCreate
+from .models.service_account import ServiceAccount
+from .models.service_account_results_page import ServiceAccountResultsPage
+from .models.service_account_uuid import ServiceAccountUuid
+from .models.session import Session
+from .models.session_uuid import SessionUuid
+from .models.shortlink_results_page import ShortlinkResultsPage
+from .models.store_coupon_params import StoreCouponParams
+from .models.subscribe import Subscribe
+from .models.text_to_cad import TextToCad
+from .models.text_to_cad_create_body import TextToCadCreateBody
+from .models.text_to_cad_iteration import TextToCadIteration
+from .models.text_to_cad_iteration_body import TextToCadIterationBody
+from .models.text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
+from .models.text_to_cad_multi_file_iteration_body import (
+    TextToCadMultiFileIterationBody,
+)
+from .models.text_to_cad_response import TextToCadResponse
+from .models.text_to_cad_response_results_page import TextToCadResponseResultsPage
+from .models.unit_angle import UnitAngle
+from .models.unit_angle_conversion import UnitAngleConversion
+from .models.unit_area import UnitArea
+from .models.unit_area_conversion import UnitAreaConversion
+from .models.unit_current import UnitCurrent
+from .models.unit_current_conversion import UnitCurrentConversion
+from .models.unit_density import UnitDensity
+from .models.unit_energy import UnitEnergy
+from .models.unit_energy_conversion import UnitEnergyConversion
+from .models.unit_force import UnitForce
+from .models.unit_force_conversion import UnitForceConversion
+from .models.unit_frequency import UnitFrequency
+from .models.unit_frequency_conversion import UnitFrequencyConversion
+from .models.unit_length import UnitLength
+from .models.unit_length_conversion import UnitLengthConversion
+from .models.unit_mass import UnitMass
+from .models.unit_mass_conversion import UnitMassConversion
+from .models.unit_power import UnitPower
+from .models.unit_power_conversion import UnitPowerConversion
+from .models.unit_pressure import UnitPressure
+from .models.unit_pressure_conversion import UnitPressureConversion
+from .models.unit_temperature import UnitTemperature
+from .models.unit_temperature_conversion import UnitTemperatureConversion
+from .models.unit_torque import UnitTorque
+from .models.unit_torque_conversion import UnitTorqueConversion
+from .models.unit_volume import UnitVolume
+from .models.unit_volume_conversion import UnitVolumeConversion
+from .models.update_member_to_org_body import UpdateMemberToOrgBody
+from .models.update_payment_balance import UpdatePaymentBalance
+from .models.update_shortlink_request import UpdateShortlinkRequest
+from .models.update_user import UpdateUser
+from .models.user import User
+from .models.user_identifier import UserIdentifier
+from .models.user_org_info import UserOrgInfo
+from .models.user_org_role import UserOrgRole
+from .models.user_results_page import UserResultsPage
+from .models.uuid import Uuid
+from .models.verification_token_response import VerificationTokenResponse
+from .models.web_socket_request import WebSocketRequest
+from .models.web_socket_response import WebSocketResponse
+from .models.zoo_product_subscriptions import ZooProductSubscriptions
+from .models.zoo_product_subscriptions_org_request import (
+    ZooProductSubscriptionsOrgRequest,
+)
+from .models.zoo_product_subscriptions_user_request import (
+    ZooProductSubscriptionsUserRequest,
+)
+from .response_helpers import raise_for_status
+from .types import Response
+
+# Import WebSocket request/response models
 
 
 class MetaAPI:
@@ -22,61 +165,53 @@ class MetaAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_schema(self, *args, **kwargs) -> Any:
+    def get_schema(self) -> Any:
         """Get OpenAPI schema."""
         from .api.meta.get_schema import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_ipinfo(self, *args, **kwargs) -> Any:
+    def get_ipinfo(self) -> Any:
         """Get ip address information."""
         from .api.meta.get_ipinfo import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def community_sso(self, *args, **kwargs) -> Any:
+    def community_sso(self) -> Any:
         """Authorize an inbound auth request from our Community page."""
         from .api.meta.community_sso import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_debug_uploads(self, *args, **kwargs) -> Any:
+    def create_debug_uploads(self) -> Any:
         """Uploads files to public blob storage for debugging purposes."""
         from .api.meta.create_debug_uploads import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_event(self, *args, **kwargs) -> Any:
+    def create_event(self) -> Any:
         """Creates an internal telemetry event."""
         from .api.meta.create_event import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def internal_get_api_token_for_discord_user(self, *args, **kwargs) -> Any:
+    def internal_get_api_token_for_discord_user(self) -> Any:
         """Get an API token for a user by their discord id."""
         from .api.meta.internal_get_api_token_for_discord_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def ping(self, *args, **kwargs) -> Any:
+    def ping(self) -> Any:
         """Return pong."""
         from .api.meta.ping import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_pricing_subscriptions(self, *args, **kwargs) -> Any:
+    def get_pricing_subscriptions(self) -> Any:
         """Get the pricing for our subscriptions."""
         from .api.meta.get_pricing_subscriptions import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncMetaAPI:
@@ -85,61 +220,53 @@ class AsyncMetaAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_schema(self, *args, **kwargs) -> Any:
+    async def get_schema(self) -> Any:
         """Get OpenAPI schema."""
         from .api.meta.get_schema import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_ipinfo(self, *args, **kwargs) -> Any:
+    async def get_ipinfo(self) -> Any:
         """Get ip address information."""
         from .api.meta.get_ipinfo import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def community_sso(self, *args, **kwargs) -> Any:
+    async def community_sso(self) -> Any:
         """Authorize an inbound auth request from our Community page."""
         from .api.meta.community_sso import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_debug_uploads(self, *args, **kwargs) -> Any:
+    async def create_debug_uploads(self) -> Any:
         """Uploads files to public blob storage for debugging purposes."""
         from .api.meta.create_debug_uploads import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_event(self, *args, **kwargs) -> Any:
+    async def create_event(self) -> Any:
         """Creates an internal telemetry event."""
         from .api.meta.create_event import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def internal_get_api_token_for_discord_user(self, *args, **kwargs) -> Any:
+    async def internal_get_api_token_for_discord_user(self) -> Any:
         """Get an API token for a user by their discord id."""
         from .api.meta.internal_get_api_token_for_discord_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def ping(self, *args, **kwargs) -> Any:
+    async def ping(self) -> Any:
         """Return pong."""
         from .api.meta.ping import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_pricing_subscriptions(self, *args, **kwargs) -> Any:
+    async def get_pricing_subscriptions(self) -> Any:
         """Get the pricing for our subscriptions."""
         from .api.meta.get_pricing_subscriptions import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class MlAPI:
@@ -148,108 +275,85 @@ class MlAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_text_to_cad(self, *args, **kwargs) -> Any:
+    def create_text_to_cad(self) -> Any:
         """Generate a CAD model from text."""
         from .api.ml.create_text_to_cad import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_ml_prompts(self, *args, **kwargs) -> Any:
+    def list_ml_prompts(self) -> Any:
         """List all ML prompts."""
         from .api.ml.list_ml_prompts import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_ml_prompt(self, *args, **kwargs) -> Any:
+    def get_ml_prompt(self) -> Any:
         """Get a ML prompt."""
         from .api.ml.get_ml_prompt import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_conversations_for_user(self, *args, **kwargs) -> Any:
+    def list_conversations_for_user(self) -> Any:
         """List conversations"""
         from .api.ml.list_conversations_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_proprietary_to_kcl(self, *args, **kwargs) -> Any:
+    def create_proprietary_to_kcl(self) -> Any:
         """Converts a proprietary CAD format to KCL."""
         from .api.ml.create_proprietary_to_kcl import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_kcl_code_completions(self, *args, **kwargs) -> Any:
+    def create_kcl_code_completions(self) -> Any:
         """Generate code completions for KCL."""
         from .api.ml.create_kcl_code_completions import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_text_to_cad_iteration(self, *args, **kwargs) -> Any:
+    def create_text_to_cad_iteration(self) -> Any:
         """Iterate on a CAD model with a prompt."""
         from .api.ml.create_text_to_cad_iteration import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_text_to_cad_multi_file_iteration(self, *args, **kwargs) -> Any:
+    def create_text_to_cad_multi_file_iteration(self) -> Any:
         """Iterate on a multi-file CAD model with a prompt."""
         from .api.ml.create_text_to_cad_multi_file_iteration import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_text_to_cad_models_for_user(self, *args, **kwargs) -> Any:
+    def list_text_to_cad_models_for_user(self) -> Any:
         """List text-to-CAD models you've generated."""
         from .api.ml.list_text_to_cad_models_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_text_to_cad_model_for_user(self, *args, **kwargs) -> Any:
+    def get_text_to_cad_model_for_user(self) -> Any:
         """Get a text-to-CAD response."""
         from .api.ml.get_text_to_cad_model_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_text_to_cad_model_feedback(self, *args, **kwargs) -> Any:
+    def create_text_to_cad_model_feedback(self) -> Any:
         """Give feedback to a specific ML response."""
         from .api.ml.create_text_to_cad_model_feedback import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def ml_copilot_ws(self, *args, **kwargs):
-        """WebSocket connection for ml_copilot_ws
+    def ml_copilot_ws(self) -> "WebSocketMlCopilotWs":
+        """Open a websocket to prompt the ML copilot.
 
-        Open a websocket to prompt the ML copilot.
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         """
+        return WebSocketMlCopilotWs(client=self.client)
 
-        # Import WebSocket wrapper class
-        from .api.ml.ml_copilot_ws import WebSocket
+    def ml_reasoning_ws(self, id: str) -> "WebSocketMlReasoningWs":
+        """Open a websocket to prompt the ML copilot.
 
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
-
-    def ml_reasoning_ws(self, *args, **kwargs):
-        """WebSocket connection for ml_reasoning_ws
-
-        Open a websocket to prompt the ML copilot.
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-
-        # Import WebSocket wrapper class
-        from .api.ml.ml_reasoning_ws import WebSocket
-
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
+        return WebSocketMlReasoningWs(id, client=self.client)
 
 
 class AsyncMlAPI:
@@ -258,112 +362,87 @@ class AsyncMlAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_text_to_cad(self, *args, **kwargs) -> Any:
+    async def create_text_to_cad(self) -> Any:
         """Generate a CAD model from text."""
         from .api.ml.create_text_to_cad import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_ml_prompts(self, *args, **kwargs) -> Any:
+    async def list_ml_prompts(self) -> Any:
         """List all ML prompts."""
         from .api.ml.list_ml_prompts import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_ml_prompt(self, *args, **kwargs) -> Any:
+    async def get_ml_prompt(self) -> Any:
         """Get a ML prompt."""
         from .api.ml.get_ml_prompt import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_conversations_for_user(self, *args, **kwargs) -> Any:
+    async def list_conversations_for_user(self) -> Any:
         """List conversations"""
         from .api.ml.list_conversations_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_proprietary_to_kcl(self, *args, **kwargs) -> Any:
+    async def create_proprietary_to_kcl(self) -> Any:
         """Converts a proprietary CAD format to KCL."""
         from .api.ml.create_proprietary_to_kcl import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_kcl_code_completions(self, *args, **kwargs) -> Any:
+    async def create_kcl_code_completions(self) -> Any:
         """Generate code completions for KCL."""
         from .api.ml.create_kcl_code_completions import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_text_to_cad_iteration(self, *args, **kwargs) -> Any:
+    async def create_text_to_cad_iteration(self) -> Any:
         """Iterate on a CAD model with a prompt."""
         from .api.ml.create_text_to_cad_iteration import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_text_to_cad_multi_file_iteration(self, *args, **kwargs) -> Any:
+    async def create_text_to_cad_multi_file_iteration(self) -> Any:
         """Iterate on a multi-file CAD model with a prompt."""
         from .api.ml.create_text_to_cad_multi_file_iteration import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_text_to_cad_models_for_user(self, *args, **kwargs) -> Any:
+    async def list_text_to_cad_models_for_user(self) -> Any:
         """List text-to-CAD models you've generated."""
         from .api.ml.list_text_to_cad_models_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_text_to_cad_model_for_user(self, *args, **kwargs) -> Any:
+    async def get_text_to_cad_model_for_user(self) -> Any:
         """Get a text-to-CAD response."""
         from .api.ml.get_text_to_cad_model_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_text_to_cad_model_feedback(self, *args, **kwargs) -> Any:
+    async def create_text_to_cad_model_feedback(self) -> Any:
         """Give feedback to a specific ML response."""
         from .api.ml.create_text_to_cad_model_feedback import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    def ml_copilot_ws(self, *args, **kwargs):
-        """WebSocket connection for ml_copilot_ws (sync wrapper for async client)
+    def ml_copilot_ws(self) -> "WebSocketMlCopilotWs":
+        """Open a websocket to prompt the ML copilot.
 
-        Open a websocket to prompt the ML copilot.
-
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         Note: WebSocket connections are synchronous even in AsyncKittyCAD
         """
+        return WebSocketMlCopilotWs(client=self.client)
 
-        # Import WebSocket wrapper class
-        from .api.ml.ml_copilot_ws import WebSocket
+    def ml_reasoning_ws(self, id: str) -> "WebSocketMlReasoningWs":
+        """Open a websocket to prompt the ML copilot.
 
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
-
-    def ml_reasoning_ws(self, *args, **kwargs):
-        """WebSocket connection for ml_reasoning_ws (sync wrapper for async client)
-
-        Open a websocket to prompt the ML copilot.
-
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         Note: WebSocket connections are synchronous even in AsyncKittyCAD
         """
-
-        # Import WebSocket wrapper class
-        from .api.ml.ml_reasoning_ws import WebSocket
-
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
+        return WebSocketMlReasoningWs(id, client=self.client)
 
 
 class ApiCallsAPI:
@@ -372,75 +451,65 @@ class ApiCallsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_api_call_metrics(self, *args, **kwargs) -> Any:
+    def get_api_call_metrics(self) -> Any:
         """Get API call metrics."""
         from .api.api_calls.get_api_call_metrics import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_api_calls(self, *args, **kwargs) -> Any:
+    def list_api_calls(self) -> Any:
         """List API calls."""
         from .api.api_calls.list_api_calls import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_api_call(self, *args, **kwargs) -> Any:
+    def get_api_call(self) -> Any:
         """Get details of an API call."""
         from .api.api_calls.get_api_call import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_async_operations(self, *args, **kwargs) -> Any:
+    def list_async_operations(self) -> Any:
         """List async operations."""
         from .api.api_calls.list_async_operations import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_async_operation(self, *args, **kwargs) -> Any:
+    def get_async_operation(self) -> Any:
         """Get an async operation."""
         from .api.api_calls.get_async_operation import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def org_list_api_calls(self, *args, **kwargs) -> Any:
+    def org_list_api_calls(self) -> Any:
         """List API calls for your org."""
         from .api.api_calls.org_list_api_calls import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_api_call_for_org(self, *args, **kwargs) -> Any:
+    def get_api_call_for_org(self) -> Any:
         """Get an API call for an org."""
         from .api.api_calls.get_api_call_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def user_list_api_calls(self, *args, **kwargs) -> Any:
+    def user_list_api_calls(self) -> Any:
         """List API calls for your user."""
         from .api.api_calls.user_list_api_calls import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_api_call_for_user(self, *args, **kwargs) -> Any:
+    def get_api_call_for_user(self) -> Any:
         """Get an API call for a user."""
         from .api.api_calls.get_api_call_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_api_calls_for_user(self, *args, **kwargs) -> Any:
+    def list_api_calls_for_user(self) -> Any:
         """List API calls for a user."""
         from .api.api_calls.list_api_calls_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncApiCallsAPI:
@@ -449,75 +518,65 @@ class AsyncApiCallsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_api_call_metrics(self, *args, **kwargs) -> Any:
+    async def get_api_call_metrics(self) -> Any:
         """Get API call metrics."""
         from .api.api_calls.get_api_call_metrics import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_api_calls(self, *args, **kwargs) -> Any:
+    async def list_api_calls(self) -> Any:
         """List API calls."""
         from .api.api_calls.list_api_calls import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_api_call(self, *args, **kwargs) -> Any:
+    async def get_api_call(self) -> Any:
         """Get details of an API call."""
         from .api.api_calls.get_api_call import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_async_operations(self, *args, **kwargs) -> Any:
+    async def list_async_operations(self) -> Any:
         """List async operations."""
         from .api.api_calls.list_async_operations import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_async_operation(self, *args, **kwargs) -> Any:
+    async def get_async_operation(self) -> Any:
         """Get an async operation."""
         from .api.api_calls.get_async_operation import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def org_list_api_calls(self, *args, **kwargs) -> Any:
+    async def org_list_api_calls(self) -> Any:
         """List API calls for your org."""
         from .api.api_calls.org_list_api_calls import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_api_call_for_org(self, *args, **kwargs) -> Any:
+    async def get_api_call_for_org(self) -> Any:
         """Get an API call for an org."""
         from .api.api_calls.get_api_call_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def user_list_api_calls(self, *args, **kwargs) -> Any:
+    async def user_list_api_calls(self) -> Any:
         """List API calls for your user."""
         from .api.api_calls.user_list_api_calls import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_api_call_for_user(self, *args, **kwargs) -> Any:
+    async def get_api_call_for_user(self) -> Any:
         """Get an API call for a user."""
         from .api.api_calls.get_api_call_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_api_calls_for_user(self, *args, **kwargs) -> Any:
+    async def list_api_calls_for_user(self) -> Any:
         """List API calls for a user."""
         from .api.api_calls.list_api_calls_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class AppsAPI:
@@ -526,26 +585,23 @@ class AppsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def apps_github_callback(self, *args, **kwargs) -> Any:
+    def apps_github_callback(self) -> Any:
         """Listen for callbacks to GitHub app authentication."""
         from .api.apps.apps_github_callback import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def apps_github_consent(self, *args, **kwargs) -> Any:
+    def apps_github_consent(self) -> Any:
         """Get the consent URL for GitHub app authentication."""
         from .api.apps.apps_github_consent import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def apps_github_webhook(self, *args, **kwargs) -> Any:
+    def apps_github_webhook(self) -> Any:
         """Listen for GitHub webhooks."""
         from .api.apps.apps_github_webhook import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncAppsAPI:
@@ -554,26 +610,23 @@ class AsyncAppsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def apps_github_callback(self, *args, **kwargs) -> Any:
+    async def apps_github_callback(self) -> Any:
         """Listen for callbacks to GitHub app authentication."""
         from .api.apps.apps_github_callback import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def apps_github_consent(self, *args, **kwargs) -> Any:
+    async def apps_github_consent(self) -> Any:
         """Get the consent URL for GitHub app authentication."""
         from .api.apps.apps_github_consent import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def apps_github_webhook(self, *args, **kwargs) -> Any:
+    async def apps_github_webhook(self) -> Any:
         """Listen for GitHub webhooks."""
         from .api.apps.apps_github_webhook import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class HiddenAPI:
@@ -582,61 +635,53 @@ class HiddenAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def auth_api_key(self, *args, **kwargs) -> Any:
+    def auth_api_key(self) -> Any:
         """Authenticate using an api-key. This is disabled on production but can be used in dev to login without email magic."""
         from .api.hidden.auth_api_key import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def auth_email(self, *args, **kwargs) -> Any:
+    def auth_email(self) -> Any:
         """Create an email verification request for a user."""
         from .api.hidden.auth_email import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def auth_email_callback(self, *args, **kwargs) -> Any:
+    def auth_email_callback(self) -> Any:
         """Listen for callbacks for email authentication for users."""
         from .api.hidden.auth_email_callback import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_auth_saml_by_org(self, *args, **kwargs) -> Any:
+    def get_auth_saml_by_org(self) -> Any:
         """GET /auth/saml/{org_id}"""
         from .api.hidden.get_auth_saml_by_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_auth_saml(self, *args, **kwargs) -> Any:
+    def get_auth_saml(self) -> Any:
         """Get a redirect straight to the SAML IdP."""
         from .api.hidden.get_auth_saml import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def post_auth_saml(self, *args, **kwargs) -> Any:
+    def post_auth_saml(self) -> Any:
         """Authenticate a user via SAML"""
         from .api.hidden.post_auth_saml import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def logout(self, *args, **kwargs) -> Any:
+    def logout(self) -> Any:
         """This endpoint removes the session cookie for a user."""
         from .api.hidden.logout import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def redirect_user_shortlink(self, *args, **kwargs) -> Any:
+    def redirect_user_shortlink(self) -> Any:
         """Redirect the user to the URL for the shortlink."""
         from .api.hidden.redirect_user_shortlink import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncHiddenAPI:
@@ -645,61 +690,53 @@ class AsyncHiddenAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def auth_api_key(self, *args, **kwargs) -> Any:
+    async def auth_api_key(self) -> Any:
         """Authenticate using an api-key. This is disabled on production but can be used in dev to login without email magic."""
         from .api.hidden.auth_api_key import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def auth_email(self, *args, **kwargs) -> Any:
+    async def auth_email(self) -> Any:
         """Create an email verification request for a user."""
         from .api.hidden.auth_email import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def auth_email_callback(self, *args, **kwargs) -> Any:
+    async def auth_email_callback(self) -> Any:
         """Listen for callbacks for email authentication for users."""
         from .api.hidden.auth_email_callback import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_auth_saml_by_org(self, *args, **kwargs) -> Any:
+    async def get_auth_saml_by_org(self) -> Any:
         """GET /auth/saml/{org_id}"""
         from .api.hidden.get_auth_saml_by_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_auth_saml(self, *args, **kwargs) -> Any:
+    async def get_auth_saml(self) -> Any:
         """Get a redirect straight to the SAML IdP."""
         from .api.hidden.get_auth_saml import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def post_auth_saml(self, *args, **kwargs) -> Any:
+    async def post_auth_saml(self) -> Any:
         """Authenticate a user via SAML"""
         from .api.hidden.post_auth_saml import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def logout(self, *args, **kwargs) -> Any:
+    async def logout(self) -> Any:
         """This endpoint removes the session cookie for a user."""
         from .api.hidden.logout import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def redirect_user_shortlink(self, *args, **kwargs) -> Any:
+    async def redirect_user_shortlink(self) -> Any:
         """Redirect the user to the URL for the shortlink."""
         from .api.hidden.redirect_user_shortlink import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class FileAPI:
@@ -708,54 +745,47 @@ class FileAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_file_center_of_mass(self, *args, **kwargs) -> Any:
+    def create_file_center_of_mass(self) -> Any:
         """Get CAD file center of mass."""
         from .api.file.create_file_center_of_mass import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_file_conversion_options(self, *args, **kwargs) -> Any:
+    def create_file_conversion_options(self) -> Any:
         """Convert CAD file from one format to another."""
         from .api.file.create_file_conversion_options import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_file_conversion(self, *args, **kwargs) -> Any:
+    def create_file_conversion(self) -> Any:
         """Convert CAD file with defaults."""
         from .api.file.create_file_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_file_density(self, *args, **kwargs) -> Any:
+    def create_file_density(self) -> Any:
         """Get CAD file density."""
         from .api.file.create_file_density import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_file_mass(self, *args, **kwargs) -> Any:
+    def create_file_mass(self) -> Any:
         """Get CAD file mass."""
         from .api.file.create_file_mass import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_file_surface_area(self, *args, **kwargs) -> Any:
+    def create_file_surface_area(self) -> Any:
         """Get CAD file surface area."""
         from .api.file.create_file_surface_area import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_file_volume(self, *args, **kwargs) -> Any:
+    def create_file_volume(self) -> Any:
         """Get CAD file volume."""
         from .api.file.create_file_volume import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncFileAPI:
@@ -764,54 +794,47 @@ class AsyncFileAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_file_center_of_mass(self, *args, **kwargs) -> Any:
+    async def create_file_center_of_mass(self) -> Any:
         """Get CAD file center of mass."""
         from .api.file.create_file_center_of_mass import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_file_conversion_options(self, *args, **kwargs) -> Any:
+    async def create_file_conversion_options(self) -> Any:
         """Convert CAD file from one format to another."""
         from .api.file.create_file_conversion_options import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_file_conversion(self, *args, **kwargs) -> Any:
+    async def create_file_conversion(self) -> Any:
         """Convert CAD file with defaults."""
         from .api.file.create_file_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_file_density(self, *args, **kwargs) -> Any:
+    async def create_file_density(self) -> Any:
         """Get CAD file density."""
         from .api.file.create_file_density import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_file_mass(self, *args, **kwargs) -> Any:
+    async def create_file_mass(self) -> Any:
         """Get CAD file mass."""
         from .api.file.create_file_mass import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_file_surface_area(self, *args, **kwargs) -> Any:
+    async def create_file_surface_area(self) -> Any:
         """Get CAD file surface area."""
         from .api.file.create_file_surface_area import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_file_volume(self, *args, **kwargs) -> Any:
+    async def create_file_volume(self) -> Any:
         """Get CAD file volume."""
         from .api.file.create_file_volume import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class ExecutorAPI:
@@ -820,24 +843,20 @@ class ExecutorAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_file_execution(self, *args, **kwargs) -> Any:
+    def create_file_execution(self) -> Any:
         """Execute a Zoo program in a specific language."""
         from .api.executor.create_file_execution import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_executor_term(self, *args, **kwargs):
-        """WebSocket connection for create_executor_term
+    def create_executor_term(self) -> ClientConnectionSync:
+        """Create a terminal.
 
-        Create a terminal.
+        Returns a raw WebSocket connection for create_executor_term.
         """
-
-        # Use sync function for WebSocket endpoints without wrapper class
         from .api.executor.create_executor_term import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncExecutorAPI:
@@ -846,26 +865,20 @@ class AsyncExecutorAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_file_execution(self, *args, **kwargs) -> Any:
+    async def create_file_execution(self) -> Any:
         """Execute a Zoo program in a specific language."""
         from .api.executor.create_file_execution import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    def create_executor_term(self, *args, **kwargs):
-        """WebSocket connection for create_executor_term (sync wrapper for async client)
+    async def create_executor_term(self) -> ClientConnectionAsync:
+        """Create a terminal.
 
-        Create a terminal.
-
-        Note: WebSocket connections are synchronous even in AsyncKittyCAD
+        Returns a raw async WebSocket connection for create_executor_term.
         """
+        from .api.executor.create_executor_term import asyncio
 
-        # Use sync function for WebSocket endpoints without wrapper class
-        from .api.executor.create_executor_term import sync
-
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class Oauth2API:
@@ -874,61 +887,53 @@ class Oauth2API:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def device_auth_request(self, *args, **kwargs) -> Any:
+    def device_auth_request(self) -> Any:
         """Start an OAuth 2.0 Device Authorization Grant."""
         from .api.oauth2.device_auth_request import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def device_auth_confirm(self, *args, **kwargs) -> Any:
+    def device_auth_confirm(self) -> Any:
         """Confirm an OAuth 2.0 Device Authorization Grant."""
         from .api.oauth2.device_auth_confirm import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def device_access_token(self, *args, **kwargs) -> Any:
+    def device_access_token(self) -> Any:
         """Request a device access token."""
         from .api.oauth2.device_access_token import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def device_auth_verify(self, *args, **kwargs) -> Any:
+    def device_auth_verify(self) -> Any:
         """Verify an OAuth 2.0 Device Authorization Grant."""
         from .api.oauth2.device_auth_verify import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def oauth2_provider_callback(self, *args, **kwargs) -> Any:
+    def oauth2_provider_callback(self) -> Any:
         """Listen for callbacks for the OAuth 2.0 provider."""
         from .api.oauth2.oauth2_provider_callback import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def oauth2_provider_callback_post(self, *args, **kwargs) -> Any:
+    def oauth2_provider_callback_post(self) -> Any:
         """Listen for callbacks for the OAuth 2.0 provider."""
         from .api.oauth2.oauth2_provider_callback_post import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def oauth2_provider_consent(self, *args, **kwargs) -> Any:
+    def oauth2_provider_consent(self) -> Any:
         """Get the consent URL and other information for the OAuth 2.0 provider."""
         from .api.oauth2.oauth2_provider_consent import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def oauth2_token_revoke(self, *args, **kwargs) -> Any:
+    def oauth2_token_revoke(self) -> Any:
         """Revoke an OAuth2 token."""
         from .api.oauth2.oauth2_token_revoke import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncOauth2API:
@@ -937,61 +942,53 @@ class AsyncOauth2API:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def device_auth_request(self, *args, **kwargs) -> Any:
+    async def device_auth_request(self) -> Any:
         """Start an OAuth 2.0 Device Authorization Grant."""
         from .api.oauth2.device_auth_request import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def device_auth_confirm(self, *args, **kwargs) -> Any:
+    async def device_auth_confirm(self) -> Any:
         """Confirm an OAuth 2.0 Device Authorization Grant."""
         from .api.oauth2.device_auth_confirm import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def device_access_token(self, *args, **kwargs) -> Any:
+    async def device_access_token(self) -> Any:
         """Request a device access token."""
         from .api.oauth2.device_access_token import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def device_auth_verify(self, *args, **kwargs) -> Any:
+    async def device_auth_verify(self) -> Any:
         """Verify an OAuth 2.0 Device Authorization Grant."""
         from .api.oauth2.device_auth_verify import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def oauth2_provider_callback(self, *args, **kwargs) -> Any:
+    async def oauth2_provider_callback(self) -> Any:
         """Listen for callbacks for the OAuth 2.0 provider."""
         from .api.oauth2.oauth2_provider_callback import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def oauth2_provider_callback_post(self, *args, **kwargs) -> Any:
+    async def oauth2_provider_callback_post(self) -> Any:
         """Listen for callbacks for the OAuth 2.0 provider."""
         from .api.oauth2.oauth2_provider_callback_post import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def oauth2_provider_consent(self, *args, **kwargs) -> Any:
+    async def oauth2_provider_consent(self) -> Any:
         """Get the consent URL and other information for the OAuth 2.0 provider."""
         from .api.oauth2.oauth2_provider_consent import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def oauth2_token_revoke(self, *args, **kwargs) -> Any:
+    async def oauth2_token_revoke(self) -> Any:
         """Revoke an OAuth2 token."""
         from .api.oauth2.oauth2_token_revoke import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class OrgsAPI:
@@ -1000,145 +997,125 @@ class OrgsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_org(self, *args, **kwargs) -> Any:
+    def get_org(self) -> Any:
         """Get an org."""
         from .api.orgs.get_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_org(self, *args, **kwargs) -> Any:
+    def update_org(self) -> Any:
         """Update an org."""
         from .api.orgs.update_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_org(self, *args, **kwargs) -> Any:
+    def create_org(self) -> Any:
         """Create an org."""
         from .api.orgs.create_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_org(self, *args, **kwargs) -> Any:
+    def delete_org(self) -> Any:
         """Delete an org."""
         from .api.orgs.delete_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_org_members(self, *args, **kwargs) -> Any:
+    def list_org_members(self) -> Any:
         """List members of your org."""
         from .api.orgs.list_org_members import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_org_member(self, *args, **kwargs) -> Any:
+    def create_org_member(self) -> Any:
         """Add a member to your org."""
         from .api.orgs.create_org_member import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_org_member(self, *args, **kwargs) -> Any:
+    def get_org_member(self) -> Any:
         """Get a member of your org."""
         from .api.orgs.get_org_member import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_org_member(self, *args, **kwargs) -> Any:
+    def update_org_member(self) -> Any:
         """Update a member of your org."""
         from .api.orgs.update_org_member import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_org_member(self, *args, **kwargs) -> Any:
+    def delete_org_member(self) -> Any:
         """Remove a member from your org."""
         from .api.orgs.delete_org_member import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_org_privacy_settings(self, *args, **kwargs) -> Any:
+    def get_org_privacy_settings(self) -> Any:
         """Get the privacy settings for an org."""
         from .api.orgs.get_org_privacy_settings import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_org_privacy_settings(self, *args, **kwargs) -> Any:
+    def update_org_privacy_settings(self) -> Any:
         """Update the privacy settings for an org."""
         from .api.orgs.update_org_privacy_settings import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_org_saml_idp(self, *args, **kwargs) -> Any:
+    def get_org_saml_idp(self) -> Any:
         """Get the SAML identity provider."""
         from .api.orgs.get_org_saml_idp import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_org_saml_idp(self, *args, **kwargs) -> Any:
+    def update_org_saml_idp(self) -> Any:
         """Update the SAML identity provider."""
         from .api.orgs.update_org_saml_idp import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_org_saml_idp(self, *args, **kwargs) -> Any:
+    def create_org_saml_idp(self) -> Any:
         """Create a SAML identity provider."""
         from .api.orgs.create_org_saml_idp import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_org_saml_idp(self, *args, **kwargs) -> Any:
+    def delete_org_saml_idp(self) -> Any:
         """Delete an SAML identity provider."""
         from .api.orgs.delete_org_saml_idp import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_org_shortlinks(self, *args, **kwargs) -> Any:
+    def get_org_shortlinks(self) -> Any:
         """Get the shortlinks for an org."""
         from .api.orgs.get_org_shortlinks import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_orgs(self, *args, **kwargs) -> Any:
+    def list_orgs(self) -> Any:
         """List orgs."""
         from .api.orgs.list_orgs import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_any_org(self, *args, **kwargs) -> Any:
+    def get_any_org(self) -> Any:
         """Get an org."""
         from .api.orgs.get_any_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_enterprise_pricing_for_org(self, *args, **kwargs) -> Any:
+    def update_enterprise_pricing_for_org(self) -> Any:
         """Set the enterprise price for an organization."""
         from .api.orgs.update_enterprise_pricing_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_user_org(self, *args, **kwargs) -> Any:
+    def get_user_org(self) -> Any:
         """Get a user's org."""
         from .api.orgs.get_user_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncOrgsAPI:
@@ -1147,145 +1124,125 @@ class AsyncOrgsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_org(self, *args, **kwargs) -> Any:
+    async def get_org(self) -> Any:
         """Get an org."""
         from .api.orgs.get_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_org(self, *args, **kwargs) -> Any:
+    async def update_org(self) -> Any:
         """Update an org."""
         from .api.orgs.update_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_org(self, *args, **kwargs) -> Any:
+    async def create_org(self) -> Any:
         """Create an org."""
         from .api.orgs.create_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_org(self, *args, **kwargs) -> Any:
+    async def delete_org(self) -> Any:
         """Delete an org."""
         from .api.orgs.delete_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_org_members(self, *args, **kwargs) -> Any:
+    async def list_org_members(self) -> Any:
         """List members of your org."""
         from .api.orgs.list_org_members import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_org_member(self, *args, **kwargs) -> Any:
+    async def create_org_member(self) -> Any:
         """Add a member to your org."""
         from .api.orgs.create_org_member import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_org_member(self, *args, **kwargs) -> Any:
+    async def get_org_member(self) -> Any:
         """Get a member of your org."""
         from .api.orgs.get_org_member import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_org_member(self, *args, **kwargs) -> Any:
+    async def update_org_member(self) -> Any:
         """Update a member of your org."""
         from .api.orgs.update_org_member import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_org_member(self, *args, **kwargs) -> Any:
+    async def delete_org_member(self) -> Any:
         """Remove a member from your org."""
         from .api.orgs.delete_org_member import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_org_privacy_settings(self, *args, **kwargs) -> Any:
+    async def get_org_privacy_settings(self) -> Any:
         """Get the privacy settings for an org."""
         from .api.orgs.get_org_privacy_settings import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_org_privacy_settings(self, *args, **kwargs) -> Any:
+    async def update_org_privacy_settings(self) -> Any:
         """Update the privacy settings for an org."""
         from .api.orgs.update_org_privacy_settings import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_org_saml_idp(self, *args, **kwargs) -> Any:
+    async def get_org_saml_idp(self) -> Any:
         """Get the SAML identity provider."""
         from .api.orgs.get_org_saml_idp import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_org_saml_idp(self, *args, **kwargs) -> Any:
+    async def update_org_saml_idp(self) -> Any:
         """Update the SAML identity provider."""
         from .api.orgs.update_org_saml_idp import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_org_saml_idp(self, *args, **kwargs) -> Any:
+    async def create_org_saml_idp(self) -> Any:
         """Create a SAML identity provider."""
         from .api.orgs.create_org_saml_idp import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_org_saml_idp(self, *args, **kwargs) -> Any:
+    async def delete_org_saml_idp(self) -> Any:
         """Delete an SAML identity provider."""
         from .api.orgs.delete_org_saml_idp import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_org_shortlinks(self, *args, **kwargs) -> Any:
+    async def get_org_shortlinks(self) -> Any:
         """Get the shortlinks for an org."""
         from .api.orgs.get_org_shortlinks import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_orgs(self, *args, **kwargs) -> Any:
+    async def list_orgs(self) -> Any:
         """List orgs."""
         from .api.orgs.list_orgs import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_any_org(self, *args, **kwargs) -> Any:
+    async def get_any_org(self) -> Any:
         """Get an org."""
         from .api.orgs.get_any_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_enterprise_pricing_for_org(self, *args, **kwargs) -> Any:
+    async def update_enterprise_pricing_for_org(self) -> Any:
         """Set the enterprise price for an organization."""
         from .api.orgs.update_enterprise_pricing_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_user_org(self, *args, **kwargs) -> Any:
+    async def get_user_org(self) -> Any:
         """Get a user's org."""
         from .api.orgs.get_user_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class PaymentsAPI:
@@ -1294,215 +1251,185 @@ class PaymentsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_payment_information_for_org(self, *args, **kwargs) -> Any:
+    def get_payment_information_for_org(self) -> Any:
         """Get payment info about your org."""
         from .api.payments.get_payment_information_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_payment_information_for_org(self, *args, **kwargs) -> Any:
+    def update_payment_information_for_org(self) -> Any:
         """Update payment info for your org."""
         from .api.payments.update_payment_information_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_payment_information_for_org(self, *args, **kwargs) -> Any:
+    def create_payment_information_for_org(self) -> Any:
         """Create payment info for your org."""
         from .api.payments.create_payment_information_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_payment_information_for_org(self, *args, **kwargs) -> Any:
+    def delete_payment_information_for_org(self) -> Any:
         """Delete payment info for your org."""
         from .api.payments.delete_payment_information_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_payment_balance_for_org(self, *args, **kwargs) -> Any:
+    def get_payment_balance_for_org(self) -> Any:
         """Get balance for your org."""
         from .api.payments.get_payment_balance_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_payment_intent_for_org(self, *args, **kwargs) -> Any:
+    def create_payment_intent_for_org(self) -> Any:
         """Create a payment intent for your org."""
         from .api.payments.create_payment_intent_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_invoices_for_org(self, *args, **kwargs) -> Any:
+    def list_invoices_for_org(self) -> Any:
         """List invoices for your org."""
         from .api.payments.list_invoices_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_payment_methods_for_org(self, *args, **kwargs) -> Any:
+    def list_payment_methods_for_org(self) -> Any:
         """List payment methods for your org."""
         from .api.payments.list_payment_methods_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_payment_method_for_org(self, *args, **kwargs) -> Any:
+    def delete_payment_method_for_org(self) -> Any:
         """Delete a payment method for your org."""
         from .api.payments.delete_payment_method_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_org_subscription(self, *args, **kwargs) -> Any:
+    def get_org_subscription(self) -> Any:
         """Get the subscription for an org."""
         from .api.payments.get_org_subscription import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_org_subscription(self, *args, **kwargs) -> Any:
+    def update_org_subscription(self) -> Any:
         """Update the subscription for an org."""
         from .api.payments.update_org_subscription import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_org_subscription(self, *args, **kwargs) -> Any:
+    def create_org_subscription(self) -> Any:
         """Create the subscription for an org."""
         from .api.payments.create_org_subscription import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def validate_customer_tax_information_for_org(self, *args, **kwargs) -> Any:
+    def validate_customer_tax_information_for_org(self) -> Any:
         """Validate an orgs's information is correct and valid for automatic tax."""
         from .api.payments.validate_customer_tax_information_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_payment_balance_for_any_org(self, *args, **kwargs) -> Any:
+    def get_payment_balance_for_any_org(self) -> Any:
         """Get balance for an org."""
         from .api.payments.get_payment_balance_for_any_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_payment_balance_for_any_org(self, *args, **kwargs) -> Any:
+    def update_payment_balance_for_any_org(self) -> Any:
         """Update balance for an org."""
         from .api.payments.update_payment_balance_for_any_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_payment_information_for_user(self, *args, **kwargs) -> Any:
+    def get_payment_information_for_user(self) -> Any:
         """Get payment info about your user."""
         from .api.payments.get_payment_information_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_payment_information_for_user(self, *args, **kwargs) -> Any:
+    def update_payment_information_for_user(self) -> Any:
         """Update payment info for your user."""
         from .api.payments.update_payment_information_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_payment_information_for_user(self, *args, **kwargs) -> Any:
+    def create_payment_information_for_user(self) -> Any:
         """Create payment info for your user."""
         from .api.payments.create_payment_information_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_payment_information_for_user(self, *args, **kwargs) -> Any:
+    def delete_payment_information_for_user(self) -> Any:
         """Delete payment info for your user."""
         from .api.payments.delete_payment_information_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_payment_balance_for_user(self, *args, **kwargs) -> Any:
+    def get_payment_balance_for_user(self) -> Any:
         """Get balance for your user."""
         from .api.payments.get_payment_balance_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_payment_intent_for_user(self, *args, **kwargs) -> Any:
+    def create_payment_intent_for_user(self) -> Any:
         """Create a payment intent for your user."""
         from .api.payments.create_payment_intent_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_invoices_for_user(self, *args, **kwargs) -> Any:
+    def list_invoices_for_user(self) -> Any:
         """List invoices for your user."""
         from .api.payments.list_invoices_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_payment_methods_for_user(self, *args, **kwargs) -> Any:
+    def list_payment_methods_for_user(self) -> Any:
         """List payment methods for your user."""
         from .api.payments.list_payment_methods_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_payment_method_for_user(self, *args, **kwargs) -> Any:
+    def delete_payment_method_for_user(self) -> Any:
         """Delete a payment method for your user."""
         from .api.payments.delete_payment_method_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_user_subscription(self, *args, **kwargs) -> Any:
+    def get_user_subscription(self) -> Any:
         """Get the subscription for a user."""
         from .api.payments.get_user_subscription import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_user_subscription(self, *args, **kwargs) -> Any:
+    def update_user_subscription(self) -> Any:
         """Update the user's subscription."""
         from .api.payments.update_user_subscription import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_user_subscription(self, *args, **kwargs) -> Any:
+    def create_user_subscription(self) -> Any:
         """Create the subscription for a user."""
         from .api.payments.create_user_subscription import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def validate_customer_tax_information_for_user(self, *args, **kwargs) -> Any:
+    def validate_customer_tax_information_for_user(self) -> Any:
         """Validate a user's information is correct and valid for automatic tax."""
         from .api.payments.validate_customer_tax_information_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_payment_balance_for_any_user(self, *args, **kwargs) -> Any:
+    def get_payment_balance_for_any_user(self) -> Any:
         """Get balance for an user."""
         from .api.payments.get_payment_balance_for_any_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_payment_balance_for_any_user(self, *args, **kwargs) -> Any:
+    def update_payment_balance_for_any_user(self) -> Any:
         """Update balance for an user."""
         from .api.payments.update_payment_balance_for_any_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncPaymentsAPI:
@@ -1511,215 +1438,185 @@ class AsyncPaymentsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_payment_information_for_org(self, *args, **kwargs) -> Any:
+    async def get_payment_information_for_org(self) -> Any:
         """Get payment info about your org."""
         from .api.payments.get_payment_information_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_payment_information_for_org(self, *args, **kwargs) -> Any:
+    async def update_payment_information_for_org(self) -> Any:
         """Update payment info for your org."""
         from .api.payments.update_payment_information_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_payment_information_for_org(self, *args, **kwargs) -> Any:
+    async def create_payment_information_for_org(self) -> Any:
         """Create payment info for your org."""
         from .api.payments.create_payment_information_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_payment_information_for_org(self, *args, **kwargs) -> Any:
+    async def delete_payment_information_for_org(self) -> Any:
         """Delete payment info for your org."""
         from .api.payments.delete_payment_information_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_payment_balance_for_org(self, *args, **kwargs) -> Any:
+    async def get_payment_balance_for_org(self) -> Any:
         """Get balance for your org."""
         from .api.payments.get_payment_balance_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_payment_intent_for_org(self, *args, **kwargs) -> Any:
+    async def create_payment_intent_for_org(self) -> Any:
         """Create a payment intent for your org."""
         from .api.payments.create_payment_intent_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_invoices_for_org(self, *args, **kwargs) -> Any:
+    async def list_invoices_for_org(self) -> Any:
         """List invoices for your org."""
         from .api.payments.list_invoices_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_payment_methods_for_org(self, *args, **kwargs) -> Any:
+    async def list_payment_methods_for_org(self) -> Any:
         """List payment methods for your org."""
         from .api.payments.list_payment_methods_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_payment_method_for_org(self, *args, **kwargs) -> Any:
+    async def delete_payment_method_for_org(self) -> Any:
         """Delete a payment method for your org."""
         from .api.payments.delete_payment_method_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_org_subscription(self, *args, **kwargs) -> Any:
+    async def get_org_subscription(self) -> Any:
         """Get the subscription for an org."""
         from .api.payments.get_org_subscription import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_org_subscription(self, *args, **kwargs) -> Any:
+    async def update_org_subscription(self) -> Any:
         """Update the subscription for an org."""
         from .api.payments.update_org_subscription import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_org_subscription(self, *args, **kwargs) -> Any:
+    async def create_org_subscription(self) -> Any:
         """Create the subscription for an org."""
         from .api.payments.create_org_subscription import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def validate_customer_tax_information_for_org(self, *args, **kwargs) -> Any:
+    async def validate_customer_tax_information_for_org(self) -> Any:
         """Validate an orgs's information is correct and valid for automatic tax."""
         from .api.payments.validate_customer_tax_information_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_payment_balance_for_any_org(self, *args, **kwargs) -> Any:
+    async def get_payment_balance_for_any_org(self) -> Any:
         """Get balance for an org."""
         from .api.payments.get_payment_balance_for_any_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_payment_balance_for_any_org(self, *args, **kwargs) -> Any:
+    async def update_payment_balance_for_any_org(self) -> Any:
         """Update balance for an org."""
         from .api.payments.update_payment_balance_for_any_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_payment_information_for_user(self, *args, **kwargs) -> Any:
+    async def get_payment_information_for_user(self) -> Any:
         """Get payment info about your user."""
         from .api.payments.get_payment_information_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_payment_information_for_user(self, *args, **kwargs) -> Any:
+    async def update_payment_information_for_user(self) -> Any:
         """Update payment info for your user."""
         from .api.payments.update_payment_information_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_payment_information_for_user(self, *args, **kwargs) -> Any:
+    async def create_payment_information_for_user(self) -> Any:
         """Create payment info for your user."""
         from .api.payments.create_payment_information_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_payment_information_for_user(self, *args, **kwargs) -> Any:
+    async def delete_payment_information_for_user(self) -> Any:
         """Delete payment info for your user."""
         from .api.payments.delete_payment_information_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_payment_balance_for_user(self, *args, **kwargs) -> Any:
+    async def get_payment_balance_for_user(self) -> Any:
         """Get balance for your user."""
         from .api.payments.get_payment_balance_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_payment_intent_for_user(self, *args, **kwargs) -> Any:
+    async def create_payment_intent_for_user(self) -> Any:
         """Create a payment intent for your user."""
         from .api.payments.create_payment_intent_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_invoices_for_user(self, *args, **kwargs) -> Any:
+    async def list_invoices_for_user(self) -> Any:
         """List invoices for your user."""
         from .api.payments.list_invoices_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_payment_methods_for_user(self, *args, **kwargs) -> Any:
+    async def list_payment_methods_for_user(self) -> Any:
         """List payment methods for your user."""
         from .api.payments.list_payment_methods_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_payment_method_for_user(self, *args, **kwargs) -> Any:
+    async def delete_payment_method_for_user(self) -> Any:
         """Delete a payment method for your user."""
         from .api.payments.delete_payment_method_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_user_subscription(self, *args, **kwargs) -> Any:
+    async def get_user_subscription(self) -> Any:
         """Get the subscription for a user."""
         from .api.payments.get_user_subscription import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_user_subscription(self, *args, **kwargs) -> Any:
+    async def update_user_subscription(self) -> Any:
         """Update the user's subscription."""
         from .api.payments.update_user_subscription import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_user_subscription(self, *args, **kwargs) -> Any:
+    async def create_user_subscription(self) -> Any:
         """Create the subscription for a user."""
         from .api.payments.create_user_subscription import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def validate_customer_tax_information_for_user(self, *args, **kwargs) -> Any:
+    async def validate_customer_tax_information_for_user(self) -> Any:
         """Validate a user's information is correct and valid for automatic tax."""
         from .api.payments.validate_customer_tax_information_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_payment_balance_for_any_user(self, *args, **kwargs) -> Any:
+    async def get_payment_balance_for_any_user(self) -> Any:
         """Get balance for an user."""
         from .api.payments.get_payment_balance_for_any_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_payment_balance_for_any_user(self, *args, **kwargs) -> Any:
+    async def update_payment_balance_for_any_user(self) -> Any:
         """Update balance for an user."""
         from .api.payments.update_payment_balance_for_any_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class ServiceAccountsAPI:
@@ -1728,33 +1625,29 @@ class ServiceAccountsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def list_service_accounts_for_org(self, *args, **kwargs) -> Any:
+    def list_service_accounts_for_org(self) -> Any:
         """List service accounts for your org."""
         from .api.service_accounts.list_service_accounts_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_service_account_for_org(self, *args, **kwargs) -> Any:
+    def create_service_account_for_org(self) -> Any:
         """Create a new service account for your org."""
         from .api.service_accounts.create_service_account_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_service_account_for_org(self, *args, **kwargs) -> Any:
+    def get_service_account_for_org(self) -> Any:
         """Get an service account for your org."""
         from .api.service_accounts.get_service_account_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_service_account_for_org(self, *args, **kwargs) -> Any:
+    def delete_service_account_for_org(self) -> Any:
         """Delete an service account for your org."""
         from .api.service_accounts.delete_service_account_for_org import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncServiceAccountsAPI:
@@ -1763,33 +1656,29 @@ class AsyncServiceAccountsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def list_service_accounts_for_org(self, *args, **kwargs) -> Any:
+    async def list_service_accounts_for_org(self) -> Any:
         """List service accounts for your org."""
         from .api.service_accounts.list_service_accounts_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_service_account_for_org(self, *args, **kwargs) -> Any:
+    async def create_service_account_for_org(self) -> Any:
         """Create a new service account for your org."""
         from .api.service_accounts.create_service_account_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_service_account_for_org(self, *args, **kwargs) -> Any:
+    async def get_service_account_for_org(self) -> Any:
         """Get an service account for your org."""
         from .api.service_accounts.get_service_account_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_service_account_for_org(self, *args, **kwargs) -> Any:
+    async def delete_service_account_for_org(self) -> Any:
         """Delete an service account for your org."""
         from .api.service_accounts.delete_service_account_for_org import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class StoreAPI:
@@ -1798,12 +1687,11 @@ class StoreAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def create_store_coupon(self, *args, **kwargs) -> Any:
+    def create_store_coupon(self) -> Any:
         """Create a new store coupon."""
         from .api.store.create_store_coupon import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncStoreAPI:
@@ -1812,12 +1700,11 @@ class AsyncStoreAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def create_store_coupon(self, *args, **kwargs) -> Any:
+    async def create_store_coupon(self) -> Any:
         """Create a new store coupon."""
         from .api.store.create_store_coupon import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class UnitAPI:
@@ -1826,96 +1713,83 @@ class UnitAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_angle_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_angle_unit_conversion(self) -> Any:
         """Convert angle units."""
         from .api.unit.get_angle_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_area_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_area_unit_conversion(self) -> Any:
         """Convert area units."""
         from .api.unit.get_area_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_current_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_current_unit_conversion(self) -> Any:
         """Convert current units."""
         from .api.unit.get_current_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_energy_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_energy_unit_conversion(self) -> Any:
         """Convert energy units."""
         from .api.unit.get_energy_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_force_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_force_unit_conversion(self) -> Any:
         """Convert force units."""
         from .api.unit.get_force_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_frequency_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_frequency_unit_conversion(self) -> Any:
         """Convert frequency units."""
         from .api.unit.get_frequency_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_length_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_length_unit_conversion(self) -> Any:
         """Convert length units."""
         from .api.unit.get_length_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_mass_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_mass_unit_conversion(self) -> Any:
         """Convert mass units."""
         from .api.unit.get_mass_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_power_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_power_unit_conversion(self) -> Any:
         """Convert power units."""
         from .api.unit.get_power_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_pressure_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_pressure_unit_conversion(self) -> Any:
         """Convert pressure units."""
         from .api.unit.get_pressure_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_temperature_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_temperature_unit_conversion(self) -> Any:
         """Convert temperature units."""
         from .api.unit.get_temperature_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_torque_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_torque_unit_conversion(self) -> Any:
         """Convert torque units."""
         from .api.unit.get_torque_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_volume_unit_conversion(self, *args, **kwargs) -> Any:
+    def get_volume_unit_conversion(self) -> Any:
         """Convert volume units."""
         from .api.unit.get_volume_unit_conversion import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncUnitAPI:
@@ -1924,96 +1798,83 @@ class AsyncUnitAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_angle_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_angle_unit_conversion(self) -> Any:
         """Convert angle units."""
         from .api.unit.get_angle_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_area_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_area_unit_conversion(self) -> Any:
         """Convert area units."""
         from .api.unit.get_area_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_current_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_current_unit_conversion(self) -> Any:
         """Convert current units."""
         from .api.unit.get_current_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_energy_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_energy_unit_conversion(self) -> Any:
         """Convert energy units."""
         from .api.unit.get_energy_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_force_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_force_unit_conversion(self) -> Any:
         """Convert force units."""
         from .api.unit.get_force_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_frequency_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_frequency_unit_conversion(self) -> Any:
         """Convert frequency units."""
         from .api.unit.get_frequency_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_length_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_length_unit_conversion(self) -> Any:
         """Convert length units."""
         from .api.unit.get_length_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_mass_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_mass_unit_conversion(self) -> Any:
         """Convert mass units."""
         from .api.unit.get_mass_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_power_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_power_unit_conversion(self) -> Any:
         """Convert power units."""
         from .api.unit.get_power_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_pressure_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_pressure_unit_conversion(self) -> Any:
         """Convert pressure units."""
         from .api.unit.get_pressure_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_temperature_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_temperature_unit_conversion(self) -> Any:
         """Convert temperature units."""
         from .api.unit.get_temperature_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_torque_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_torque_unit_conversion(self) -> Any:
         """Convert torque units."""
         from .api.unit.get_torque_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_volume_unit_conversion(self, *args, **kwargs) -> Any:
+    async def get_volume_unit_conversion(self) -> Any:
         """Convert volume units."""
         from .api.unit.get_volume_unit_conversion import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class UsersAPI:
@@ -2022,152 +1883,131 @@ class UsersAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def get_user_self(self, *args, **kwargs) -> Any:
+    def get_user_self(self) -> Any:
         """Get your user."""
         from .api.users.get_user_self import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_user_self(self, *args, **kwargs) -> Any:
+    def update_user_self(self) -> Any:
         """Update your user."""
         from .api.users.update_user_self import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_user_self(self, *args, **kwargs) -> Any:
+    def delete_user_self(self) -> Any:
         """Delete your user."""
         from .api.users.delete_user_self import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def patch_user_crm(self, *args, **kwargs) -> Any:
+    def patch_user_crm(self) -> Any:
         """Update properties in the CRM"""
         from .api.users.patch_user_crm import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_user_self_extended(self, *args, **kwargs) -> Any:
+    def get_user_self_extended(self) -> Any:
         """Get extended information about your user."""
         from .api.users.get_user_self_extended import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def put_user_form_self(self, *args, **kwargs) -> Any:
+    def put_user_form_self(self) -> Any:
         """Create a new support/sales ticket from the website contact form. This endpoint is authenticated."""
         from .api.users.put_user_form_self import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_oauth2_providers_for_user(self, *args, **kwargs) -> Any:
+    def get_oauth2_providers_for_user(self) -> Any:
         """Get the OAuth2 providers for your user."""
         from .api.users.get_oauth2_providers_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_user_privacy_settings(self, *args, **kwargs) -> Any:
+    def get_user_privacy_settings(self) -> Any:
         """Get the privacy settings for a user."""
         from .api.users.get_user_privacy_settings import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_user_privacy_settings(self, *args, **kwargs) -> Any:
+    def update_user_privacy_settings(self) -> Any:
         """Update the user's privacy settings."""
         from .api.users.update_user_privacy_settings import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_session_for_user(self, *args, **kwargs) -> Any:
+    def get_session_for_user(self) -> Any:
         """Get a session for your user."""
         from .api.users.get_session_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_user_shortlinks(self, *args, **kwargs) -> Any:
+    def get_user_shortlinks(self) -> Any:
         """Get the shortlinks for a user."""
         from .api.users.get_user_shortlinks import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_user_shortlink(self, *args, **kwargs) -> Any:
+    def create_user_shortlink(self) -> Any:
         """Create a shortlink for a user."""
         from .api.users.create_user_shortlink import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_user_shortlink(self, *args, **kwargs) -> Any:
+    def update_user_shortlink(self) -> Any:
         """Update a shortlink for a user."""
         from .api.users.update_user_shortlink import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_user_shortlink(self, *args, **kwargs) -> Any:
+    def delete_user_shortlink(self) -> Any:
         """Delete a shortlink for a user."""
         from .api.users.delete_user_shortlink import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_users(self, *args, **kwargs) -> Any:
+    def list_users(self) -> Any:
         """List users."""
         from .api.users.list_users import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def list_users_extended(self, *args, **kwargs) -> Any:
+    def list_users_extended(self) -> Any:
         """List users with extended information."""
         from .api.users.list_users_extended import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_user_extended(self, *args, **kwargs) -> Any:
+    def get_user_extended(self) -> Any:
         """Get extended information about a user."""
         from .api.users.get_user_extended import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_user(self, *args, **kwargs) -> Any:
+    def get_user(self) -> Any:
         """Get a user."""
         from .api.users.get_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def update_subscription_for_user(self, *args, **kwargs) -> Any:
+    def update_subscription_for_user(self) -> Any:
         """Update a subscription for a user."""
         from .api.users.update_subscription_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def put_public_form(self, *args, **kwargs) -> Any:
+    def put_public_form(self) -> Any:
         """Creates a new support/sales ticket from the website contact form. This endpoint is for untrusted"""
         from .api.users.put_public_form import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def put_public_subscribe(self, *args, **kwargs) -> Any:
+    def put_public_subscribe(self) -> Any:
         """Subscribes a user to the newsletter."""
         from .api.users.put_public_subscribe import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncUsersAPI:
@@ -2176,152 +2016,131 @@ class AsyncUsersAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def get_user_self(self, *args, **kwargs) -> Any:
+    async def get_user_self(self) -> Any:
         """Get your user."""
         from .api.users.get_user_self import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_user_self(self, *args, **kwargs) -> Any:
+    async def update_user_self(self) -> Any:
         """Update your user."""
         from .api.users.update_user_self import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_user_self(self, *args, **kwargs) -> Any:
+    async def delete_user_self(self) -> Any:
         """Delete your user."""
         from .api.users.delete_user_self import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def patch_user_crm(self, *args, **kwargs) -> Any:
+    async def patch_user_crm(self) -> Any:
         """Update properties in the CRM"""
         from .api.users.patch_user_crm import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_user_self_extended(self, *args, **kwargs) -> Any:
+    async def get_user_self_extended(self) -> Any:
         """Get extended information about your user."""
         from .api.users.get_user_self_extended import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def put_user_form_self(self, *args, **kwargs) -> Any:
+    async def put_user_form_self(self) -> Any:
         """Create a new support/sales ticket from the website contact form. This endpoint is authenticated."""
         from .api.users.put_user_form_self import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_oauth2_providers_for_user(self, *args, **kwargs) -> Any:
+    async def get_oauth2_providers_for_user(self) -> Any:
         """Get the OAuth2 providers for your user."""
         from .api.users.get_oauth2_providers_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_user_privacy_settings(self, *args, **kwargs) -> Any:
+    async def get_user_privacy_settings(self) -> Any:
         """Get the privacy settings for a user."""
         from .api.users.get_user_privacy_settings import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_user_privacy_settings(self, *args, **kwargs) -> Any:
+    async def update_user_privacy_settings(self) -> Any:
         """Update the user's privacy settings."""
         from .api.users.update_user_privacy_settings import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_session_for_user(self, *args, **kwargs) -> Any:
+    async def get_session_for_user(self) -> Any:
         """Get a session for your user."""
         from .api.users.get_session_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_user_shortlinks(self, *args, **kwargs) -> Any:
+    async def get_user_shortlinks(self) -> Any:
         """Get the shortlinks for a user."""
         from .api.users.get_user_shortlinks import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_user_shortlink(self, *args, **kwargs) -> Any:
+    async def create_user_shortlink(self) -> Any:
         """Create a shortlink for a user."""
         from .api.users.create_user_shortlink import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_user_shortlink(self, *args, **kwargs) -> Any:
+    async def update_user_shortlink(self) -> Any:
         """Update a shortlink for a user."""
         from .api.users.update_user_shortlink import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_user_shortlink(self, *args, **kwargs) -> Any:
+    async def delete_user_shortlink(self) -> Any:
         """Delete a shortlink for a user."""
         from .api.users.delete_user_shortlink import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_users(self, *args, **kwargs) -> Any:
+    async def list_users(self) -> Any:
         """List users."""
         from .api.users.list_users import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def list_users_extended(self, *args, **kwargs) -> Any:
+    async def list_users_extended(self) -> Any:
         """List users with extended information."""
         from .api.users.list_users_extended import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_user_extended(self, *args, **kwargs) -> Any:
+    async def get_user_extended(self) -> Any:
         """Get extended information about a user."""
         from .api.users.get_user_extended import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_user(self, *args, **kwargs) -> Any:
+    async def get_user(self) -> Any:
         """Get a user."""
         from .api.users.get_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def update_subscription_for_user(self, *args, **kwargs) -> Any:
+    async def update_subscription_for_user(self) -> Any:
         """Update a subscription for a user."""
         from .api.users.update_subscription_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def put_public_form(self, *args, **kwargs) -> Any:
+    async def put_public_form(self) -> Any:
         """Creates a new support/sales ticket from the website contact form. This endpoint is for untrusted"""
         from .api.users.put_public_form import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def put_public_subscribe(self, *args, **kwargs) -> Any:
+    async def put_public_subscribe(self) -> Any:
         """Subscribes a user to the newsletter."""
         from .api.users.put_public_subscribe import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class ApiTokensAPI:
@@ -2330,33 +2149,29 @@ class ApiTokensAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def list_api_tokens_for_user(self, *args, **kwargs) -> Any:
+    def list_api_tokens_for_user(self) -> Any:
         """List API tokens for your user."""
         from .api.api_tokens.list_api_tokens_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def create_api_token_for_user(self, *args, **kwargs) -> Any:
+    def create_api_token_for_user(self) -> Any:
         """Create a new API token for your user."""
         from .api.api_tokens.create_api_token_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def get_api_token_for_user(self, *args, **kwargs) -> Any:
+    def get_api_token_for_user(self) -> Any:
         """Get an API token for your user."""
         from .api.api_tokens.get_api_token_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
-    def delete_api_token_for_user(self, *args, **kwargs) -> Any:
+    def delete_api_token_for_user(self) -> Any:
         """Delete an API token for your user."""
         from .api.api_tokens.delete_api_token_for_user import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        return sync(client=self.client)
 
 
 class AsyncApiTokensAPI:
@@ -2365,33 +2180,29 @@ class AsyncApiTokensAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def list_api_tokens_for_user(self, *args, **kwargs) -> Any:
+    async def list_api_tokens_for_user(self) -> Any:
         """List API tokens for your user."""
         from .api.api_tokens.list_api_tokens_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def create_api_token_for_user(self, *args, **kwargs) -> Any:
+    async def create_api_token_for_user(self) -> Any:
         """Create a new API token for your user."""
         from .api.api_tokens.create_api_token_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def get_api_token_for_user(self, *args, **kwargs) -> Any:
+    async def get_api_token_for_user(self) -> Any:
         """Get an API token for your user."""
         from .api.api_tokens.get_api_token_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
-    async def delete_api_token_for_user(self, *args, **kwargs) -> Any:
+    async def delete_api_token_for_user(self) -> Any:
         """Delete an API token for your user."""
         from .api.api_tokens.delete_api_token_for_user import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return await asyncio(client=self.client)
 
 
 class ModelingAPI:
@@ -2400,18 +2211,36 @@ class ModelingAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def modeling_commands_ws(self, *args, **kwargs):
-        """WebSocket connection for modeling_commands_ws
+    def modeling_commands_ws(
+        self,
+        fps: int,
+        post_effect: PostEffectType,
+        show_grid: bool,
+        unlocked_framerate: bool,
+        video_res_height: int,
+        video_res_width: int,
+        webrtc: bool,
+        api_call_id: Optional[str] = None,
+        pool: Optional[str] = None,
+        replay: Optional[str] = None,
+    ) -> "WebSocketModelingCommandsWs":
+        """Open a websocket which accepts modeling commands.
 
-        Open a websocket which accepts modeling commands.
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-
-        # Import WebSocket wrapper class
-        from .api.modeling.modeling_commands_ws import WebSocket
-
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
+        return WebSocketModelingCommandsWs(
+            fps,
+            post_effect,
+            show_grid,
+            unlocked_framerate,
+            video_res_height,
+            video_res_width,
+            webrtc,
+            api_call_id,
+            pool,
+            replay,
+            client=self.client,
+        )
 
 
 class AsyncModelingAPI:
@@ -2420,20 +2249,201 @@ class AsyncModelingAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def modeling_commands_ws(self, *args, **kwargs):
-        """WebSocket connection for modeling_commands_ws (sync wrapper for async client)
+    def modeling_commands_ws(
+        self,
+        fps: int,
+        post_effect: PostEffectType,
+        show_grid: bool,
+        unlocked_framerate: bool,
+        video_res_height: int,
+        video_res_width: int,
+        webrtc: bool,
+        api_call_id: Optional[str] = None,
+        pool: Optional[str] = None,
+        replay: Optional[str] = None,
+    ) -> "WebSocketModelingCommandsWs":
+        """Open a websocket which accepts modeling commands.
 
-        Open a websocket which accepts modeling commands.
-
+        Returns a WebSocket wrapper with methods for sending/receiving data.
         Note: WebSocket connections are synchronous even in AsyncKittyCAD
         """
+        return WebSocketModelingCommandsWs(
+            fps,
+            post_effect,
+            show_grid,
+            unlocked_framerate,
+            video_res_height,
+            video_res_width,
+            webrtc,
+            api_call_id,
+            pool,
+            replay,
+            client=self.client,
+        )
 
-        # Import WebSocket wrapper class
-        from .api.modeling.modeling_commands_ws import WebSocket
 
-        # Pass client directly to WebSocket constructor
-        kwargs["client"] = self.client
-        return WebSocket(*args, **kwargs)
+class WebSocketMlCopilotWs:
+    """A websocket connection for ml_copilot_ws."""
+
+    ws: ClientConnectionSync
+
+    def __init__(self, *, client: Client):
+        from .api.ml.ml_copilot_ws import sync
+
+        self.ws = sync(client=client)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield WebSocketResponse(**json.loads(message))
+
+    def send(self, data: WebSocketRequest):
+        """Send data to the websocket."""
+        self.ws.send(json.dumps(data.model_dump()))
+
+    def send_binary(self, data: WebSocketRequest):
+        """Send data as bson to the websocket."""
+        self.ws.send(bson.encode(data.model_dump()))
+
+    def recv(self) -> WebSocketResponse:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=60)
+        return WebSocketResponse(**json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
+
+
+class WebSocketMlReasoningWs:
+    """A websocket connection for ml_reasoning_ws."""
+
+    ws: ClientConnectionSync
+
+    def __init__(self, id: str, *, client: Client):
+        from .api.ml.ml_reasoning_ws import sync
+
+        self.ws = sync(id, client=client)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield WebSocketResponse(**json.loads(message))
+
+    def send(self, data: WebSocketRequest):
+        """Send data to the websocket."""
+        self.ws.send(json.dumps(data.model_dump()))
+
+    def send_binary(self, data: WebSocketRequest):
+        """Send data as bson to the websocket."""
+        self.ws.send(bson.encode(data.model_dump()))
+
+    def recv(self) -> WebSocketResponse:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=60)
+        return WebSocketResponse(**json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
+
+
+class WebSocketModelingCommandsWs:
+    """A websocket connection for modeling_commands_ws."""
+
+    ws: ClientConnectionSync
+
+    def __init__(
+        self,
+        fps: int,
+        post_effect: PostEffectType,
+        show_grid: bool,
+        unlocked_framerate: bool,
+        video_res_height: int,
+        video_res_width: int,
+        webrtc: bool,
+        api_call_id: Optional[str] = None,
+        pool: Optional[str] = None,
+        replay: Optional[str] = None,
+        *,
+        client: Client,
+    ):
+        from .api.modeling.modeling_commands_ws import sync
+
+        self.ws = sync(
+            fps,
+            post_effect,
+            show_grid,
+            unlocked_framerate,
+            video_res_height,
+            video_res_width,
+            webrtc,
+            api_call_id,
+            pool,
+            replay,
+            client=client,
+        )
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield WebSocketResponse(**json.loads(message))
+
+    def send(self, data: WebSocketRequest):
+        """Send data to the websocket."""
+        self.ws.send(json.dumps(data.model_dump()))
+
+    def send_binary(self, data: WebSocketRequest):
+        """Send data as bson to the websocket."""
+        self.ws.send(bson.encode(data.model_dump()))
+
+    def recv(self) -> WebSocketResponse:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=60)
+        return WebSocketResponse(**json.loads(message))
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
 
 
 class KittyCAD(Client):
