@@ -1,0 +1,255 @@
+"""The KittyCAD Python SDK - Generated Client Classes"""
+
+import os
+from typing import Optional, Dict, Union, Any
+import ssl
+
+from .client import Client
+from .exceptions import (
+    KittyCADError,
+    KittyCADAPIError,
+    KittyCADClientError,
+    KittyCADServerError,
+    KittyCADConnectionError,
+    KittyCADTimeoutError,
+)
+
+# Import all model types used in return type annotations
+{% set all_return_types = [] %}
+{% for tag, functions in endpoints_by_tag.items() %}
+    {% for func_name, func_info in functions.items() %}
+        {% if func_info.return_type != "Any" and func_info.return_type not in all_return_types %}
+            {% set _ = all_return_types.append(func_info.return_type) %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% for return_type in all_return_types %}
+from .models.{{ return_type|pascal_to_snake }} import {{ return_type }}
+{% endfor %}
+
+# Global default client instance
+_default_client: Optional[Client] = None
+
+
+def configure(
+    api_token: Optional[str] = None,
+    base_url: Optional[str] = None,
+    timeout: Optional[float] = None,
+    cookies: Optional[Dict[str, str]] = None,
+    headers: Optional[Dict[str, str]] = None,
+    verify_ssl: Optional[Union[str, bool, ssl.SSLContext]] = None,
+) -> None:
+    """Configure the global default client for KittyCAD.
+
+    Args:
+        api_token: Your API token. If None, will attempt to use environment variable.
+        base_url: Base URL for the API. Defaults to https://api.zoo.dev
+        timeout: Request timeout in seconds. Defaults to 120.0
+        cookies: Additional cookies to send with requests
+        headers: Additional headers to send with requests
+        verify_ssl: SSL verification setting (bool, path to CA cert, or SSLContext)
+
+    Examples:
+        Configure with explicit token:
+        >>> import kittycad
+        >>> kittycad.configure(api_token="your-token-here")
+
+        Configure using environment variables:
+        >>> kittycad.configure()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+
+        Configure with custom base URL:
+        >>> kittycad.configure(api_token="token", base_url="https://custom.api.url")
+    """
+    global _default_client
+
+    if api_token is None:
+        # Try to get from environment
+        api_token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
+        if api_token is None:
+            raise ValueError(
+                "No API token provided. Either pass api_token parameter or set "
+                "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
+            )
+
+    kwargs: Dict[str, Any] = {}
+    if base_url is not None:
+        kwargs["base_url"] = base_url
+    if timeout is not None:
+        kwargs["timeout"] = timeout
+    if cookies is not None:
+        kwargs["cookies"] = cookies
+    if headers is not None:
+        kwargs["headers"] = headers
+    if verify_ssl is not None:
+        kwargs["verify_ssl"] = verify_ssl
+
+    _default_client = Client(token=api_token, **kwargs)
+
+
+def get_default_client() -> Client:
+    """Get the global default client.
+    
+    Returns:
+        The default client instance
+        
+    Raises:
+        ValueError: If no default client is configured
+    """
+    global _default_client
+    
+    if _default_client is None:
+        # Try to create from environment as fallback
+        token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
+        if token:
+            from .client import ClientFromEnv
+            _default_client = ClientFromEnv()
+        else:
+            raise ValueError(
+                "No default client configured. Call configure() first or set "
+                "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
+            )
+    
+    return _default_client
+
+
+def set_default_client(client: Client) -> None:
+    """Set the global default client directly.
+    
+    Args:
+        client: Client instance to use as default
+    """
+    global _default_client
+    _default_client = client
+
+
+{% for tag, functions in endpoints_by_tag.items() %}
+{% set tag_pascal = tag|to_pascal_case %}
+class {{ tag_pascal }}API:
+    """API for {{ tag }} endpoints"""
+    
+    def __init__(self, client: Client) -> None:
+        self.client = client
+    
+    {% for func_name, func_info in functions.items() %}
+    {% if func_info.is_websocket %}
+    def {{ func_name }}(self, *args, **kwargs):
+        """WebSocket connection for {{ func_name }}
+        
+        {{ func_info.description }}
+        """
+        from .api.{{ tag }}.{{ func_name }} import sync
+        kwargs["client"] = self.client
+        return sync(*args, **kwargs)
+    {% else %}
+    def {{ func_name }}(self, *args, **kwargs) -> {{ func_info.return_type }}:
+        """{{ func_info.description }}"""
+        from .api.{{ tag }}.{{ func_name }} import sync
+        kwargs["client"] = self.client
+        return sync(*args, **kwargs)
+    {% endif %}
+    
+    {% endfor %}
+
+
+class Async{{ tag_pascal }}API:
+    """Async API for {{ tag }} endpoints"""
+    
+    def __init__(self, client: Client) -> None:
+        self.client = client
+    
+    {% for func_name, func_info in functions.items() %}
+    {% if func_info.is_websocket %}
+    async def {{ func_name }}(self, *args, **kwargs):
+        """Async WebSocket connection for {{ func_name }}
+        
+        {{ func_info.description }}
+        """
+        from .api.{{ tag }}.{{ func_name }} import asyncio
+        kwargs["client"] = self.client
+        return await asyncio(*args, **kwargs)
+    {% else %}
+    async def {{ func_name }}(self, *args, **kwargs) -> {{ func_info.return_type }}:
+        """{{ func_info.description }}"""
+        from .api.{{ tag }}.{{ func_name }} import asyncio
+        kwargs["client"] = self.client
+        return await asyncio(*args, **kwargs)
+    {% endif %}
+    
+    {% endfor %}
+
+{% endfor %}
+
+class KittyCAD(Client):
+    """Main KittyCAD client class with sync API interface.
+
+    Usage:
+        client = KittyCAD(token="your-api-token")
+        user = client.users.get_user_self()
+
+    Or with environment variable:
+        client = KittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+    """
+
+    def __init__(self, token: Optional[str] = None, **kwargs) -> None:
+        if token is None:
+            token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
+            if token is None:
+                raise ValueError(
+                    "No API token provided. Either pass token parameter or set "
+                    "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
+                )
+        super().__init__(token=token, **kwargs)
+        # Add API modules directly to client
+        {% for tag in endpoints_by_tag.keys() %}
+        {% set tag_pascal = tag|to_pascal_case %}
+        self.{{ tag }}: {{ tag_pascal }}API = {{ tag_pascal }}API(self)
+        {% endfor %}
+
+
+class AsyncKittyCAD(Client):
+    """Async KittyCAD client class with async API interface.
+
+    Usage:
+        import asyncio
+        from kittycad import AsyncKittyCAD
+
+        async def main():
+            client = AsyncKittyCAD(token="your-api-token")
+            user = await client.users.get_user_self()
+            
+        asyncio.run(main())
+
+    Or with environment variable:
+        client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+    """
+
+    def __init__(self, token: Optional[str] = None, **kwargs) -> None:
+        if token is None:
+            token = os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")
+            if token is None:
+                raise ValueError(
+                    "No API token provided. Either pass token parameter or set "
+                    "KITTYCAD_API_TOKEN or ZOO_API_TOKEN environment variable."
+                )
+        super().__init__(token=token, **kwargs)
+        # Add async API modules directly to client
+        {% for tag in endpoints_by_tag.keys() %}
+        {% set tag_pascal = tag|to_pascal_case %}
+        self.{{ tag }}: Async{{ tag_pascal }}API = Async{{ tag_pascal }}API(self)
+        {% endfor %}
+
+
+__all__ = [
+    "KittyCAD",
+    "AsyncKittyCAD",
+    "KittyCADError",
+    "KittyCADAPIError", 
+    "KittyCADClientError",
+    "KittyCADServerError",
+    "KittyCADConnectionError",
+    "KittyCADTimeoutError",
+    "configure",
+    "get_default_client",
+    "set_default_client",
+]

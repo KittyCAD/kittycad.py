@@ -96,8 +96,8 @@ def test_ping():
     # Create our client
     client = KittyCAD()
 
-    # Get the message using modern pattern
-    message = client.api.meta.ping()
+    # Get the message using modern pattern (no .api layer)
+    message = client.meta.ping()
 
     assert isinstance(message, Pong)
 
@@ -111,8 +111,8 @@ async def test_ping_async():
     # Create our async client
     client = AsyncKittyCAD()
 
-    # Get the message using new async pattern
-    message = await client.api.meta.ping()
+    # Get the message using new async pattern (no .api layer)
+    message = await client.meta.ping()
 
     assert isinstance(message, Pong)
 

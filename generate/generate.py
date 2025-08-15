@@ -29,6 +29,64 @@ random.seed(10)
 examples: List[str] = []
 
 
+def generate_client_classes(cwd: str, data: dict):
+    """Generate the KittyCAD and AsyncKittyCAD client classes using templates"""
+
+    # Collect all endpoints by tag with full info
+    endpoints_by_tag: Dict[str, Dict[str, Any]] = {}
+
+    # Process each path and method to collect endpoint info
+    for path, path_data in data.get("paths", {}).items():
+        for method, endpoint_data in path_data.items():
+            if method not in ["get", "post", "put", "delete", "patch"]:
+                continue
+
+            if "tags" not in endpoint_data:
+                continue
+
+            tag = endpoint_data["tags"][0].replace("-", "_")
+            operation_id = endpoint_data.get("operationId", "")
+
+            if tag not in endpoints_by_tag:
+                endpoints_by_tag[tag] = {}
+
+            # Check if this is a WebSocket endpoint
+            is_websocket = "x-dropshot-websocket" in endpoint_data
+
+            # Use Any return type for now to avoid complex union type issues
+            return_type = "Any"
+
+            endpoints_by_tag[tag][operation_id] = {
+                "name": operation_id,
+                "is_websocket": is_websocket,
+                "description": endpoint_data.get("summary", "").replace('"', '\\"'),
+                "return_type": return_type,
+                "path": path,
+                "method": method,
+            }
+
+    # Load and render the template
+    from jinja2 import Environment, FileSystemLoader
+
+    template_dir = os.path.join(os.path.dirname(__file__), "templates")
+    env = Environment(loader=FileSystemLoader(template_dir))
+
+    # Add custom filters using existing utility functions
+    env.filters["to_pascal_case"] = to_pascal_case
+    env.filters["pascal_to_snake"] = camel_to_snake
+
+    template = env.get_template("__init__.py.jinja2")
+
+    # Render the template
+    rendered_content = template.render(endpoints_by_tag=endpoints_by_tag)
+
+    # Write to the __init__.py file
+    init_path = os.path.join(cwd, "kittycad", "__init__.py")
+
+    with open(init_path, "w") as f:
+        f.write(rendered_content)
+
+
 def main():
     cwd = os.getcwd()
     spec_path = os.path.join(cwd, "spec.json")
@@ -40,6 +98,9 @@ def main():
 
     # Generate the paths.
     data = generate_paths(cwd, parser.specification)
+
+    # Generate the client classes
+    generate_client_classes(cwd, parser.specification)
 
     # Add the client information to the generation.
     data["info"]["x-python"] = {
@@ -669,7 +730,7 @@ from kittycad.types import Response
 
     """
         + example_variable
-        + "client.api."
+        + "client."
         + tag_name
         + "."
         + fn_name
@@ -726,7 +787,7 @@ async def test_"""
 
     """
         + example_variable
-        + "await client.api."
+        + "await client."
         + tag_name
         + "."
         + fn_name
@@ -746,11 +807,11 @@ async def test_"""
             client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
             # Connect to the websocket.
-            with client.api."""
+            with client."""
                 + tag_name
                 + """."""
                 + fn_name
-                + """.WebSocket("""
+                + """("""
                 + no_client_params
                 + """) as websocket:
 
@@ -771,11 +832,11 @@ async def test_"""
             client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
             # Connect to the websocket.
-            with client.api."""
+            with client."""
                 + tag_name
                 + """."""
                 + fn_name
-                + """.WebSocket("""
+                + """("""
                 + no_client_params
                 + """) as websocket:
 
@@ -805,7 +866,7 @@ async def test_"""
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await client.api."""
+    websocket = await client."""
             + tag_name
             + """."""
             + fn_name
