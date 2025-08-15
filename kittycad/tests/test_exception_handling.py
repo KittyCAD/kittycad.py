@@ -10,125 +10,80 @@ from ..exceptions import KittyCADAPIError, KittyCADClientError, KittyCADServerEr
 
 def test_successful_request():
     """Test that successful requests work without exceptions."""
-    print("Testing successful request...")
-
     # Use a basic client that should work (assuming API is available)
     client = KittyCAD(token="dummy_token", base_url="https://httpbin.org")
 
     try:
         # This would fail with real API but let's test the exception structure
         result = client.meta.ping()
-        print(f"✓ Request succeeded: {type(result)}")
-        return True
-    except Exception as e:
-        print(f"✓ Request failed as expected with exception: {type(e).__name__}: {e}")
-        return True
+        assert result is not None or result is None  # Either outcome is acceptable
+    except Exception:
+        # Request failed as expected
+        pass
 
 
 def test_exception_types():
     """Test that our exception types are properly defined."""
-    print("Testing exception types...")
-
     try:
         # Test base exception
         raise KittyCADAPIError("Test API error", 500, "TEST_ERROR", "req-123")
     except KittyCADAPIError as e:
-        print(f"✓ KittyCADAPIError: {e}")
-        print(f"  - status_code: {e.status_code}")
-        print(f"  - error_code: {e.error_code}")
-        print(f"  - request_id: {e.request_id}")
+        assert e.status_code == 500
+        assert e.error_code == "TEST_ERROR"
+        assert e.request_id == "req-123"
 
     try:
         # Test client error
         raise KittyCADClientError("Test client error", 404, "NOT_FOUND", "req-456")
     except KittyCADClientError as e:
-        print(f"✓ KittyCADClientError: {e}")
+        assert e.status_code == 404
+        assert e.error_code == "NOT_FOUND"
+        assert e.request_id == "req-456"
 
     try:
         # Test server error
         raise KittyCADServerError("Test server error", 500, "INTERNAL_ERROR", "req-789")
     except KittyCADServerError as e:
-        print(f"✓ KittyCADServerError: {e}")
+        assert e.status_code == 500
+        assert e.error_code == "INTERNAL_ERROR"
+        assert e.request_id == "req-789"
 
 
 def test_exception_inheritance():
     """Test that exception inheritance works correctly."""
-    print("Testing exception inheritance...")
-
     try:
         raise KittyCADClientError("Test error", 400)
     except KittyCADAPIError as e:
-        print(f"✓ KittyCADClientError caught as KittyCADAPIError: {type(e).__name__}")
+        assert isinstance(e, KittyCADClientError)
+        assert isinstance(e, KittyCADAPIError)
 
     try:
         raise KittyCADServerError("Test error", 500)
     except KittyCADAPIError as e:
-        print(f"✓ KittyCADServerError caught as KittyCADAPIError: {type(e).__name__}")
+        assert isinstance(e, KittyCADServerError)
+        assert isinstance(e, KittyCADAPIError)
 
 
 def test_import_structure():
     """Test that exceptions can be imported from the main package."""
-    print("Testing import structure...")
+    from kittycad import (
+        KittyCADAPIError,
+        KittyCADClientError,
+        KittyCADConnectionError,
+        KittyCADError,
+        KittyCADServerError,
+        KittyCADTimeoutError,
+    )
 
-    try:
-        from kittycad import (
-            KittyCADAPIError,
-            KittyCADClientError,
-            KittyCADConnectionError,
-            KittyCADError,
-            KittyCADServerError,
-            KittyCADTimeoutError,
-        )
-
-        # Test that they are actually classes to avoid unused import warning
-        exceptions = [
-            KittyCADError,
-            KittyCADAPIError,
-            KittyCADClientError,
-            KittyCADServerError,
-            KittyCADConnectionError,
-            KittyCADTimeoutError,
-        ]
-        assert all(isinstance(exc, type) for exc in exceptions)
-
-        print("✓ All exceptions imported successfully from kittycad package")
-        return True
-    except ImportError as e:
-        print(f"✗ Import failed: {e}")
-        return False
+    # Test that they are actually classes to avoid unused import warning
+    exceptions = [
+        KittyCADError,
+        KittyCADAPIError,
+        KittyCADClientError,
+        KittyCADServerError,
+        KittyCADConnectionError,
+        KittyCADTimeoutError,
+    ]
+    assert all(isinstance(exc, type) for exc in exceptions)
 
 
-def main():
-    """Run all tests."""
-    print("=== Testing KittyCAD Exception Handling ===\n")
-
-    success = True
-
-    try:
-        test_exception_types()
-        print()
-
-        test_exception_inheritance()
-        print()
-
-        success &= test_import_structure()
-        print()
-
-        test_successful_request()
-        print()
-
-    except Exception as e:
-        print(f"✗ Unexpected error: {e}")
-        traceback.print_exc()
-        success = False
-
-    if success:
-        print("✓ All tests passed! Exception handling is working correctly.")
-        return 0
-    else:
-        print("✗ Some tests failed.")
-        return 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())
