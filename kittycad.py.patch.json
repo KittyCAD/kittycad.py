@@ -43,7 +43,7 @@
     "op": "add",
     "path": "/paths/~1api-calls/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_api_calls():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.api_calls.list_api_calls(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ApiCallWithPrice\ndef example_list_api_calls():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ApiCallWithPrice\n    for item in client.api_calls.list_api_calls(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.ApiCalls.list_api_calls.html"
     }
   },
@@ -83,7 +83,7 @@
     "op": "add",
     "path": "/paths/~1async~1operations/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.api_call_status import ApiCallStatus\nfrom kittycad.models import AsyncApiCallResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_async_operations():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.api_calls.list_async_operations(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        status=ApiCallStatus.QUEUED,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.api_call_status import ApiCallStatus\nfrom kittycad.models import AsyncApiCallResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import AsyncApiCall\ndef example_list_async_operations():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: AsyncApiCall\n    for item in client.api_calls.list_async_operations(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        status=ApiCallStatus.QUEUED,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.ApiCalls.list_async_operations.html"
     }
   },
@@ -251,7 +251,7 @@
     "op": "add",
     "path": "/paths/~1ml-prompts/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import MlPromptResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_ml_prompts():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.ml.list_ml_prompts(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import MlPromptResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import MlPrompt\ndef example_list_ml_prompts():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: MlPrompt\n    for item in client.ml.list_ml_prompts(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Ml.list_ml_prompts.html"
     }
   },
@@ -267,7 +267,7 @@
     "op": "add",
     "path": "/paths/~1ml~1conversations/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ConversationResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_conversations_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.ml.list_conversations_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ConversationResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import Conversation\ndef example_list_conversations_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: Conversation\n    for item in client.ml.list_conversations_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Ml.list_conversations_for_user.html"
     }
   },
@@ -339,7 +339,7 @@
     "op": "add",
     "path": "/paths/~1orgs/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import OrgResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_orgs():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.orgs.list_orgs(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import OrgResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import Org\ndef example_list_orgs():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: Org\n    for item in client.orgs.list_orgs(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Orgs.list_orgs.html"
     }
   },
@@ -379,7 +379,7 @@
     "op": "add",
     "path": "/paths/~1org~1api-calls/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_org_list_api_calls():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.api_calls.org_list_api_calls(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ApiCallWithPrice\ndef example_org_list_api_calls():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ApiCallWithPrice\n    for item in client.api_calls.org_list_api_calls(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.ApiCalls.org_list_api_calls.html"
     }
   },
@@ -395,7 +395,7 @@
     "op": "add",
     "path": "/paths/~1org~1members/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.user_org_role import UserOrgRole\nfrom kittycad.models import OrgMemberResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_org_members():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.orgs.list_org_members(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        role=UserOrgRole.ADMIN,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.user_org_role import UserOrgRole\nfrom kittycad.models import OrgMemberResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import OrgMember\ndef example_list_org_members():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: OrgMember\n    for item in client.orgs.list_org_members(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        role=UserOrgRole.ADMIN,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Orgs.list_org_members.html"
     }
   },
@@ -587,7 +587,7 @@
     "op": "add",
     "path": "/paths/~1org~1service-accounts/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ServiceAccountResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_service_accounts_for_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.service_accounts.list_service_accounts_for_org(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ServiceAccountResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ServiceAccount\ndef example_list_service_accounts_for_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ServiceAccount\n    for item in client.service_accounts.list_service_accounts_for_org(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.ServiceAccounts.list_service_accounts_for_org.html"
     }
   },
@@ -619,7 +619,7 @@
     "op": "add",
     "path": "/paths/~1org~1shortlinks/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ShortlinkResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_org_shortlinks():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.orgs.get_org_shortlinks(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ShortlinkResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import Shortlink\ndef example_get_org_shortlinks():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: Shortlink\n    for item in client.orgs.get_org_shortlinks(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Orgs.get_org_shortlinks.html"
     }
   },
@@ -779,7 +779,7 @@
     "op": "add",
     "path": "/paths/~1users-extended/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ExtendedUserResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_users_extended():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.users.list_users_extended(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ExtendedUserResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ExtendedUser\ndef example_list_users_extended():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ExtendedUser\n    for item in client.users.list_users_extended(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Users.list_users_extended.html"
     }
   },
@@ -795,7 +795,7 @@
     "op": "add",
     "path": "/paths/~1users/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import UserResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_users():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.users.list_users(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import UserResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import User\ndef example_list_users():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: User\n    for item in client.users.list_users(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Users.list_users.html"
     }
   },
@@ -811,7 +811,7 @@
     "op": "add",
     "path": "/paths/~1users~1{id}~1api-calls/get/x-python",
     "value": {
-      "example": "from kittycad.models.user_identifier import UserIdentifier\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_api_calls_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.api_calls.list_api_calls_for_user(id=UserIdentifier(\"<string>\"),\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.user_identifier import UserIdentifier\nfrom kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ApiCallWithPrice\ndef example_list_api_calls_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ApiCallWithPrice\n    for item in client.api_calls.list_api_calls_for_user(id=UserIdentifier(\"<string>\"),\n        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.ApiCalls.list_api_calls_for_user.html"
     }
   },
@@ -843,7 +843,7 @@
     "op": "add",
     "path": "/paths/~1user~1api-calls/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_user_list_api_calls():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.api_calls.user_list_api_calls(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiCallWithPriceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ApiCallWithPrice\ndef example_user_list_api_calls():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ApiCallWithPrice\n    for item in client.api_calls.user_list_api_calls(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.ApiCalls.user_list_api_calls.html"
     }
   },
@@ -859,7 +859,7 @@
     "op": "add",
     "path": "/paths/~1user~1api-tokens/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiTokenResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_api_tokens_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.api_tokens.list_api_tokens_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ApiTokenResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ApiToken\ndef example_list_api_tokens_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ApiToken\n    for item in client.api_tokens.list_api_tokens_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.ApiTokens.list_api_tokens_for_user.html"
     }
   },
@@ -1059,7 +1059,7 @@
     "op": "add",
     "path": "/paths/~1user~1shortlinks/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ShortlinkResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user_shortlinks():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.users.get_user_shortlinks(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import ShortlinkResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import Shortlink\ndef example_get_user_shortlinks():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: Shortlink\n    for item in client.users.get_user_shortlinks(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Users.get_user_shortlinks.html"
     }
   },
@@ -1099,7 +1099,7 @@
     "op": "add",
     "path": "/paths/~1user~1text-to-cad/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import TextToCadResponseResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_text_to_cad_models_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    from typing import Any\n    item: Any\n    for item in client.ml.list_text_to_cad_models_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        conversation_id=Uuid(\"<string>\"),\n        limit=None,\n        page_token=None,\n        no_models=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import TextToCadResponseResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import TextToCadResponse\ndef example_list_text_to_cad_models_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: TextToCadResponse\n    for item in client.ml.list_text_to_cad_models_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        conversation_id=Uuid(\"<string>\"),\n        limit=None,\n        page_token=None,\n        no_models=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.Ml.list_text_to_cad_models_for_user.html"
     }
   },

@@ -783,7 +783,7 @@ def test_sync_pagination_integration_text_to_cad():
         assert hasattr(item, "root") or hasattr(item, "model_dump"), (
             "Items should be valid TextToCadResponse models"
         )
-        
+
         # Extract ID from the TextToCadResponse (which is a RootModel)
         if hasattr(item, "root"):
             # RootModel - get the underlying object
@@ -792,28 +792,34 @@ def test_sync_pagination_integration_text_to_cad():
         else:
             # Fallback - get id directly if possible
             item_id = str(getattr(item, "id", f"unknown_{item_count}"))
-            
+
         # Verify this ID is unique
         assert item_id not in collected_ids, (
             f"Duplicate ID found: {item_id} (item #{item_count}). "
             f"Previously seen IDs: {sorted(collected_ids)}"
         )
         collected_ids.add(item_id)
-        
-        print(f"Item #{item_count}: ID = {item_id}")
-        
+
+        # Show which "page" this item likely came from (since limit=10)
+        expected_page = ((item_count - 1) // 10) + 1
+        print(f"Item #{item_count} (page ~{expected_page}): ID = {item_id}")
+
         # Don't iterate through all items in integration test, just verify it works
         if item_count >= 12:
             break
 
-    # Verify we got 12 unique items  
+    # Verify we got 12 unique items
     assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
-    assert len(collected_ids) >= 12, f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+    assert len(collected_ids) >= 12, (
+        f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+    )
     assert len(collected_ids) == item_count, (
         f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
     )
-    
-    print(f"✅ Successfully validated {item_count} items with {len(collected_ids)} unique IDs")
+
+    print(
+        f"✅ Successfully validated {item_count} items with {len(collected_ids)} unique IDs"
+    )
 
 
 @pytest.mark.asyncio
@@ -845,7 +851,7 @@ async def test_async_pagination_integration_text_to_cad():
         assert hasattr(item, "root") or hasattr(item, "model_dump"), (
             "Items should be valid TextToCadResponse models"
         )
-        
+
         # Extract ID from the TextToCadResponse (which is a RootModel)
         if hasattr(item, "root"):
             # RootModel - get the underlying object
@@ -854,28 +860,34 @@ async def test_async_pagination_integration_text_to_cad():
         else:
             # Fallback - get id directly if possible
             item_id = str(getattr(item, "id", f"unknown_{item_count}"))
-            
+
         # Verify this ID is unique
         assert item_id not in collected_ids, (
             f"Duplicate ID found: {item_id} (item #{item_count}). "
             f"Previously seen IDs: {sorted(collected_ids)}"
         )
         collected_ids.add(item_id)
-        
-        print(f"Async Item #{item_count}: ID = {item_id}")
-        
+
+        # Show which "page" this item likely came from (since limit=10)
+        expected_page = ((item_count - 1) // 10) + 1
+        print(f"Async Item #{item_count} (page ~{expected_page}): ID = {item_id}")
+
         # Don't iterate through all items in integration test, just verify it works
         if item_count >= 12:
             break
 
-    # Verify we got 12 unique items  
+    # Verify we got 12 unique items
     assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
-    assert len(collected_ids) >= 12, f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+    assert len(collected_ids) >= 12, (
+        f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+    )
     assert len(collected_ids) == item_count, (
         f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
     )
-    
-    print(f"✅ Async: Successfully validated {item_count} items with {len(collected_ids)} unique IDs")
+
+    print(
+        f"✅ Async: Successfully validated {item_count} items with {len(collected_ids)} unique IDs"
+    )
 
     # Clean up the async client
     await client.aclose()

@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union
 
 import pytest
 
@@ -10,8 +10,10 @@ from kittycad.models import (
     ApiCallWithPrice,
     ApiToken,
     AppClientInfo,
+    AsyncApiCall,
     AuthApiKeyResponse,
     CodeOutput,
+    Conversation,
     CreateShortlinkResponse,
     Customer,
     CustomerBalance,
@@ -37,6 +39,7 @@ from kittycad.models import (
     SamlIdentityProvider,
     ServiceAccount,
     Session,
+    Shortlink,
     TextToCad,
     TextToCadIteration,
     TextToCadMultiFileIteration,
@@ -248,7 +251,7 @@ def test_list_api_calls():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: ApiCallWithPrice
     for item in client.api_calls.list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -265,7 +268,7 @@ async def test_list_api_calls_async():
     iterator = client.api_calls.list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: ApiCallWithPrice
     async for item in iterator:
         print(item)
 
@@ -345,7 +348,7 @@ def test_list_async_operations():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: AsyncApiCall
     for item in client.api_calls.list_async_operations(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         status=ApiCallStatus.QUEUED,
@@ -368,7 +371,7 @@ async def test_list_async_operations_async():
         limit=None,
         page_token=None,
     )
-    item: Any
+    item: AsyncApiCall
     async for item in iterator:
         print(item)
 
@@ -931,7 +934,7 @@ def test_list_ml_prompts():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: MlPrompt
     for item in client.ml.list_ml_prompts(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -948,7 +951,7 @@ async def test_list_ml_prompts_async():
     iterator = client.ml.list_ml_prompts(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: MlPrompt
     async for item in iterator:
         print(item)
 
@@ -977,7 +980,7 @@ def test_list_conversations_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: Conversation
     for item in client.ml.list_conversations_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -994,7 +997,7 @@ async def test_list_conversations_for_user_async():
     iterator = client.ml.list_conversations_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: Conversation
     async for item in iterator:
         print(item)
 
@@ -1279,7 +1282,7 @@ def test_org_list_api_calls():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: ApiCallWithPrice
     for item in client.api_calls.org_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -1296,7 +1299,7 @@ async def test_org_list_api_calls_async():
     iterator = client.api_calls.org_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: ApiCallWithPrice
     async for item in iterator:
         print(item)
 
@@ -1327,7 +1330,7 @@ def test_list_org_members():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: OrgMember
     for item in client.orgs.list_org_members(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         role=UserOrgRole.ADMIN,
@@ -1350,7 +1353,7 @@ async def test_list_org_members_async():
         limit=None,
         page_token=None,
     )
-    item: Any
+    item: OrgMember
     async for item in iterator:
         print(item)
 
@@ -1890,7 +1893,7 @@ def test_list_service_accounts_for_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: ServiceAccount
     for item in client.service_accounts.list_service_accounts_for_org(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -1907,7 +1910,7 @@ async def test_list_service_accounts_for_org_async():
     iterator = client.service_accounts.list_service_accounts_for_org(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: ServiceAccount
     async for item in iterator:
         print(item)
 
@@ -1983,7 +1986,7 @@ def test_get_org_shortlinks():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: Shortlink
     for item in client.orgs.get_org_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -2000,7 +2003,7 @@ async def test_get_org_shortlinks_async():
     iterator = client.orgs.get_org_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: Shortlink
     async for item in iterator:
         print(item)
 
@@ -2010,7 +2013,7 @@ def test_list_orgs():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: Org
     for item in client.orgs.list_orgs(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -2027,7 +2030,7 @@ async def test_list_orgs_async():
     iterator = client.orgs.list_orgs(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: Org
     async for item in iterator:
         print(item)
 
@@ -2599,7 +2602,7 @@ def test_user_list_api_calls():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: ApiCallWithPrice
     for item in client.api_calls.user_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -2616,7 +2619,7 @@ async def test_user_list_api_calls_async():
     iterator = client.api_calls.user_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: ApiCallWithPrice
     async for item in iterator:
         print(item)
 
@@ -2647,7 +2650,7 @@ def test_list_api_tokens_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: ApiToken
     for item in client.api_tokens.list_api_tokens_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -2664,7 +2667,7 @@ async def test_list_api_tokens_for_user_async():
     iterator = client.api_tokens.list_api_tokens_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: ApiToken
     async for item in iterator:
         print(item)
 
@@ -3182,7 +3185,7 @@ def test_get_user_shortlinks():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: Shortlink
     for item in client.users.get_user_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -3199,7 +3202,7 @@ async def test_get_user_shortlinks_async():
     iterator = client.users.get_user_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: Shortlink
     async for item in iterator:
         print(item)
 
@@ -3296,7 +3299,7 @@ def test_list_text_to_cad_models_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: TextToCadResponse
     for item in client.ml.list_text_to_cad_models_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         conversation_id=Uuid("<string>"),
@@ -3321,7 +3324,7 @@ async def test_list_text_to_cad_models_for_user_async():
         page_token=None,
         no_models=None,
     )
-    item: Any
+    item: TextToCadResponse
     async for item in iterator:
         print(item)
 
@@ -3372,7 +3375,7 @@ def test_list_users():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: User
     for item in client.users.list_users(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -3389,7 +3392,7 @@ async def test_list_users_async():
     iterator = client.users.list_users(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: User
     async for item in iterator:
         print(item)
 
@@ -3399,7 +3402,7 @@ def test_list_users_extended():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: ExtendedUser
     for item in client.users.list_users_extended(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -3416,7 +3419,7 @@ async def test_list_users_extended_async():
     iterator = client.users.list_users_extended(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: Any
+    item: ExtendedUser
     async for item in iterator:
         print(item)
 
@@ -3466,7 +3469,7 @@ def test_list_api_calls_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: Any
+    item: ApiCallWithPrice
     for item in client.api_calls.list_api_calls_for_user(
         id=UserIdentifier("<string>"),
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
@@ -3489,7 +3492,7 @@ async def test_list_api_calls_for_user_async():
         limit=None,
         page_token=None,
     )
-    item: Any
+    item: ApiCallWithPrice
     async for item in iterator:
         print(item)
 

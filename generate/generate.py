@@ -1181,6 +1181,19 @@ async def test_"""
         )
     # Generate pagination examples for endpoints with x-dropshot-pagination
     elif "x-dropshot-pagination" in endpoint:
+        # Extract item type from ResultsPage response type
+        item_type = "Any"
+        if success_type and success_type.endswith("ResultsPage"):
+            # Extract item type by removing "ResultsPage" suffix
+            # E.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice"
+            item_type = success_type.replace("ResultsPage", "")
+
+        # Add import for the item type if it's not Any
+        if item_type != "Any":
+            example_imports = (
+                example_imports + f"from kittycad.models import {item_type}\n"
+            )
+
         # Create pagination-focused examples
         short_sync_example = (
             """def test_"""
@@ -1189,8 +1202,9 @@ async def test_"""
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    from typing import Any
-    item: Any
+    item: """
+            + item_type
+            + """
     for item in client."""
             + tag_name
             + """."""
@@ -1224,8 +1238,9 @@ async def test_"""
             + """("""
             + no_client_params
             + """)
-    from typing import Any
-    item: Any
+    item: """
+            + item_type
+            + """
     async for item in iterator:
         print(item)
     """
