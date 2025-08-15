@@ -44,9 +44,8 @@ class SyncPageIterator:
             # Add page token if we have one
             if self._current_page_token:
                 kwargs["page_token"] = self._current_page_token
-            elif "page_token" in kwargs:
-                # Remove page_token if it exists but we don't have one to use
-                del kwargs["page_token"]
+            # Note: Don't remove page_token from kwargs if it exists in initial_kwargs
+            # This allows users to explicitly start pagination from a specific token
 
             # Fetch the page
             page = self._page_fetcher(**kwargs)
@@ -107,9 +106,8 @@ class AsyncPageIterator:
             # Add page token if we have one
             if self._current_page_token:
                 kwargs["page_token"] = self._current_page_token
-            elif "page_token" in kwargs:
-                # Remove page_token if it exists but we don't have one to use
-                del kwargs["page_token"]
+            # Note: Don't remove page_token from kwargs if it exists in initial_kwargs
+            # This allows users to explicitly start pagination from a specific token
 
             # Fetch the page
             page = await self._page_fetcher(**kwargs)

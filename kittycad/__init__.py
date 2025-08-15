@@ -719,18 +719,7 @@ class MlAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -847,18 +836,7 @@ class MlAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -1103,18 +1081,7 @@ class MlAPI:
             else:
                 url = url + "?no_models=" + str(kwargs["no_models"]).lower()
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -1324,18 +1291,7 @@ class AsyncMlAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -1452,18 +1408,7 @@ class AsyncMlAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -1708,18 +1653,7 @@ class AsyncMlAPI:
             else:
                 url = url + "?no_models=" + str(kwargs["no_models"]).lower()
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -1948,18 +1882,7 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -2088,18 +2011,7 @@ class ApiCallsAPI:
             else:
                 url = url + "?status=" + str(kwargs["status"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -2232,18 +2144,7 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -2358,18 +2259,7 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -2493,18 +2383,7 @@ class ApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -2630,18 +2509,7 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -2772,18 +2640,7 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?status=" + str(kwargs["status"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -2918,18 +2775,7 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -3046,18 +2892,7 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -3181,18 +3016,7 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -5320,18 +5144,7 @@ class OrgsAPI:
             else:
                 url = url + "?role=" + str(kwargs["role"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -5679,18 +5492,7 @@ class OrgsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -5777,18 +5579,7 @@ class OrgsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -6076,18 +5867,7 @@ class AsyncOrgsAPI:
             else:
                 url = url + "?role=" + str(kwargs["role"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -6435,18 +6215,7 @@ class AsyncOrgsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -6533,18 +6302,7 @@ class AsyncOrgsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -8357,18 +8115,7 @@ class ServiceAccountsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -8552,18 +8299,7 @@ class AsyncServiceAccountsAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -10013,18 +9749,7 @@ class UsersAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -10184,18 +9909,7 @@ class UsersAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -10282,18 +9996,7 @@ class UsersAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -10767,18 +10470,7 @@ class AsyncUsersAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -10938,18 +10630,7 @@ class AsyncUsersAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -11038,18 +10719,7 @@ class AsyncUsersAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -11273,18 +10943,7 @@ class ApiTokensAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -11464,18 +11123,7 @@ class AsyncApiTokensAPI:
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
 
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
         response = await _client.get(

@@ -1,6 +1,5 @@
 """Tests for pagination functionality."""
 
-import os
 from typing import AsyncIterator, Iterator, List, Optional
 from unittest.mock import AsyncMock, Mock
 
@@ -756,64 +755,42 @@ async def test_async_page_iterator_large_dataset():
 
 
 # Integration tests with real API calls
-@pytest.mark.skipif(
-    not os.environ.get("KITTYCAD_API_TOKEN"),
-    reason="API token required for integration tests",
-)
 def test_sync_pagination_integration_text_to_cad():
     """Integration test for sync pagination with real text-to-cad API calls."""
     # Create client with real API token
     client = KittyCAD()
 
-    # Call paginated endpoint - after code regeneration this should return SyncPageIterator
-    # Currently returns TextToCadResponseResultsPage, but tests pagination structure
-    response = client.ml.list_text_to_cad_models_for_user(  # type: ignore[attr-defined]
+    # Call paginated endpoint - now returns SyncPageIterator
+    iterator = client.ml.list_text_to_cad_models_for_user(  # type: ignore[attr-defined]
         limit=10,  # Small page size to test pagination
     )
 
-    # Verify the response has the expected pagination structure
-    assert hasattr(response, "items"), (
-        "Response should have 'items' field for pagination"
-    )
-    assert hasattr(response, "next_page"), (
-        "Response should have 'next_page' field for pagination"
+    # Verify we got a SyncPageIterator
+    from kittycad.pagination import SyncPageIterator
+
+    assert isinstance(iterator, SyncPageIterator), (
+        f"Expected SyncPageIterator, got {type(iterator)}"
     )
 
-    # The items list should contain TextToCadResponse objects (may be empty)
-    assert isinstance(response.items, list)
-
-    # Test that our pagination would work with this endpoint by checking structure
+    # Test that we can iterate over the paginated results
     # This validates the API contract that our pagination system depends on
-    if response.items:
-        # If we have items, verify they have the expected structure
-        for item in response.items[:3]:  # Check first few items only
-            # TextToCadResponse is a RootModel Union, so should have .root
-            assert hasattr(item, "root") or hasattr(item, "model_dump"), (
-                "Items should be valid models"
-            )
-
-    # Check we can iterate over the items and get at least 12 which is more than 10
-    # This is just to ensure the pagination works end-to-end
     item_count = 0
-    for item in response.items:
+    item: object  # Type annotation for mypy
+    for item in iterator:
         item_count += 1
-        # Mypy needs help with early break - cast to avoid Never type
-        # typed_item: MockItem = item
-        # assert typed_item.id is not None
-        # assert typed_item.name is not None
+        # TextToCadResponse is a RootModel Union, so should have .root or .model_dump
+        assert hasattr(item, "root") or hasattr(item, "model_dump"), (
+            "Items should be valid TextToCadResponse models"
+        )
+        # Don't iterate through all items in integration test, just verify it works
         if item_count >= 12:
             break
 
-    assert item_count >= 12, (
-        "Should have at least 12 items to ensure pagination works end-to-end"
-    )
+    # Just verify we got some items
+    assert item_count >= 12, "Should have at least 12 items to verify pagination works"
 
 
 @pytest.mark.asyncio
-@pytest.mark.skipif(
-    not os.environ.get("KITTYCAD_API_TOKEN"),
-    reason="API token required for integration tests",
-)
 async def test_async_pagination_integration_text_to_cad():
     """Integration test for async pagination with real text-to-cad API calls."""
     # Create async client with real API token
@@ -842,11 +819,170 @@ async def test_async_pagination_integration_text_to_cad():
             "Items should be valid TextToCadResponse models"
         )
         # Don't iterate through all items in integration test, just verify it works
-        if item_count >= 3:
+        if item_count >= 12:
             break
 
-    # Just verify we got some items (API may have limited data in test environment)
-    assert item_count >= 1, "Should have at least 1 item to verify pagination works"
+    # Just verify we got some items
+    assert item_count >= 12, "Should have at least 12 items to verify pagination works"
 
     # Clean up the async client
     await client.aclose()
+
+
+def test_pagination_url_parameters_no_duplication():
+    """Test that pagination URL parameters are not duplicated."""
+    from unittest.mock import Mock, patch
+
+    from kittycad import KittyCAD
+    from kittycad.pagination import SyncPageIterator
+
+    # Create a mock client to intercept HTTP requests
+    client = KittyCAD()
+
+    # Mock the HTTP client to capture URLs for each request
+    captured_urls = []
+
+    def mock_http_request(url, **kwargs):
+        nonlocal captured_urls
+        captured_urls.append(url)
+        # Return a mock response that looks like a pagination response
+        mock_response = Mock()
+        mock_response.is_success = True
+        # First request returns a page with next_page token, second returns final page
+        if len(captured_urls) == 1:
+            mock_response.content = b'{"items": [], "next_page": "page2_token"}'
+            mock_response.json.return_value = {"items": [], "next_page": "page2_token"}
+        else:
+            mock_response.content = b'{"items": [], "next_page": null}'
+            mock_response.json.return_value = {"items": [], "next_page": None}
+        return mock_response
+
+    # Get the iterator first with specific parameters
+    from kittycad.models.created_at_sort_mode import CreatedAtSortMode
+
+    iterator = client.ml.list_text_to_cad_models_for_user(
+        limit=5, sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
+    )
+    assert isinstance(iterator, SyncPageIterator)
+
+    # Patch the HTTP client to mock the request
+    with patch.object(client, "get_http_client") as mock_get_client:
+        mock_client = Mock()
+        mock_client.get = mock_http_request
+        mock_get_client.return_value = mock_client
+
+        # Trigger pagination by fully consuming the iterator
+        list(iterator)  # Consume the iterator to trigger HTTP requests
+
+        # Verify we made exactly 2 requests (first page + second page)
+        assert len(captured_urls) == 2, (
+            f"Expected 2 HTTP requests, got {len(captured_urls)}"
+        )
+
+        # Check first URL (initial request)
+        first_url = captured_urls[0]
+        print(f"First request URL: {first_url}")
+
+        # Verify first URL has correct parameters and no duplicates
+        limit_count = first_url.count("limit=5")
+        assert limit_count == 1, (
+            f"Expected 'limit=5' to appear exactly once in first URL, but found {limit_count} occurrences in: {first_url}"
+        )
+
+        sort_by_count = first_url.count("sort_by=created_at_ascending")
+        assert sort_by_count == 1, (
+            f"Expected 'sort_by=created_at_ascending' to appear exactly once in first URL, but found {sort_by_count} occurrences in: {first_url}"
+        )
+
+        # First request should not have page_token
+        page_token_count = first_url.count("page_token=")
+        assert page_token_count == 0, (
+            f"Expected no 'page_token' in first URL, but found {page_token_count} occurrences in: {first_url}"
+        )
+
+        # Check second URL (pagination request)
+        second_url = captured_urls[1]
+        print(f"Second request URL: {second_url}")
+
+        # Verify second URL has page_token from first response
+        page_token_count = second_url.count("page_token=page2_token")
+        assert page_token_count == 1, (
+            f"Expected 'page_token=page2_token' to appear exactly once in second URL, but found {page_token_count} occurrences in: {second_url}"
+        )
+
+        # Verify limit parameter is preserved in second request
+        limit_count = second_url.count("limit=5")
+        assert limit_count == 1, (
+            f"Expected 'limit=5' to appear exactly once in second URL, but found {limit_count} occurrences in: {second_url}"
+        )
+
+        # Verify both URLs are properly formed
+        for url in captured_urls:
+            assert "user/text-to-cad" in url
+            assert "limit=5" in url
+
+        print("All pagination URLs verified - no parameter duplication detected")
+
+
+def test_pagination_explicit_page_token():
+    """Test that explicitly passed page_token is correctly used in initial request."""
+    from unittest.mock import Mock, patch
+
+    from kittycad import KittyCAD
+    from kittycad.pagination import SyncPageIterator
+
+    # Create a mock client to intercept HTTP requests
+    client = KittyCAD()
+
+    # Mock the HTTP client to capture the URL
+    captured_url = None
+
+    def mock_http_request(url, **kwargs):
+        nonlocal captured_url
+        captured_url = url
+        # Return a mock response that looks like a final pagination page
+        mock_response = Mock()
+        mock_response.is_success = True
+        mock_response.content = b'{"items": [], "next_page": null}'
+        mock_response.json.return_value = {"items": [], "next_page": None}
+        return mock_response
+
+    # Get the iterator with an explicit page_token (user wants to start from specific page)
+    iterator = client.ml.list_text_to_cad_models_for_user(
+        limit=5, page_token="explicit_start_token"
+    )
+    assert isinstance(iterator, SyncPageIterator)
+
+    # Patch the HTTP client to mock the request
+    with patch.object(client, "get_http_client") as mock_get_client:
+        mock_client = Mock()
+        mock_client.get = mock_http_request
+        mock_get_client.return_value = mock_client
+
+        # Trigger the first page fetch by starting iteration
+        result_items: list = list(iterator)
+
+        # Verify the URL was captured
+        assert captured_url is not None, "No HTTP request was made"
+        print(f"URL with explicit page_token: {captured_url}")
+
+        # Check that limit parameter appears exactly once
+        limit_count = captured_url.count("limit=5")
+        assert limit_count == 1, (
+            f"Expected 'limit=5' to appear exactly once, but found {limit_count} occurrences in URL: {captured_url}"
+        )
+
+        # Check that the explicit page_token appears exactly once
+        page_token_count = captured_url.count("page_token=explicit_start_token")
+        assert page_token_count == 1, (
+            f"Expected 'page_token=explicit_start_token' to appear exactly once, but found {page_token_count} occurrences in URL: {captured_url}"
+        )
+
+        # Verify the URL structure looks correct
+        assert "user/text-to-cad" in captured_url
+        assert "limit=5" in captured_url
+        assert "page_token=explicit_start_token" in captured_url
+
+        # Ensure we got the expected result (empty pages)
+        assert len(result_items) == 0
+        print(f"Explicit page_token correctly passed to API: {captured_url}")

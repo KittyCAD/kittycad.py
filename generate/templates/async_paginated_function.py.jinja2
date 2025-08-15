@@ -79,19 +79,8 @@
         {% endif %}
         {% endfor %}
         
-        # Add pagination parameters
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
         
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
         _client = self.client.get_http_client()
         response = await _client.{{ method }}(
             url=url,
