@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import pytest
 
@@ -8,20 +8,15 @@ from kittycad.models import (
     AccountProvider,
     ApiCallQueryGroup,
     ApiCallWithPrice,
-    ApiCallWithPriceResultsPage,
     ApiToken,
-    ApiTokenResultsPage,
     AppClientInfo,
-    AsyncApiCallResultsPage,
     AuthApiKeyResponse,
     CodeOutput,
-    ConversationResultsPage,
     CreateShortlinkResponse,
     Customer,
     CustomerBalance,
     DiscountCode,
     ExtendedUser,
-    ExtendedUserResultsPage,
     FileCenterOfMass,
     FileConversion,
     FileDensity,
@@ -34,24 +29,18 @@ from kittycad.models import (
     KclModel,
     MlCopilotClientMessage,
     MlPrompt,
-    MlPromptResultsPage,
     Org,
     OrgMember,
-    OrgMemberResultsPage,
-    OrgResultsPage,
     PaymentIntent,
     PaymentMethod,
     Pong,
     SamlIdentityProvider,
     ServiceAccount,
-    ServiceAccountResultsPage,
     Session,
-    ShortlinkResultsPage,
     TextToCad,
     TextToCadIteration,
     TextToCadMultiFileIteration,
     TextToCadResponse,
-    TextToCadResponseResultsPage,
     UnitAngleConversion,
     UnitAreaConversion,
     UnitCurrentConversion,
@@ -67,7 +56,6 @@ from kittycad.models import (
     UnitVolumeConversion,
     User,
     UserOrgInfo,
-    UserResultsPage,
     VerificationTokenResponse,
     WebSocketRequest,
     ZooProductSubscriptions,
@@ -259,12 +247,12 @@ async def test_get_api_call_metrics_async():
 def test_list_api_calls():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = client.api_calls.list_api_calls(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.api_calls.list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ApiCallWithPriceResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -273,9 +261,13 @@ def test_list_api_calls():
 async def test_list_api_calls_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = await client.api_calls.list_api_calls(
+    # Iterate through all pages automatically
+    iterator = client.api_calls.list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -352,15 +344,15 @@ async def test_apps_github_webhook_async():
 def test_list_async_operations():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: AsyncApiCallResultsPage = client.api_calls.list_async_operations(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.api_calls.list_async_operations(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         status=ApiCallStatus.QUEUED,
         limit=None,
         page_token=None,
-    )
-
-    body: AsyncApiCallResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -369,12 +361,16 @@ def test_list_async_operations():
 async def test_list_async_operations_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: AsyncApiCallResultsPage = await client.api_calls.list_async_operations(
+    # Iterate through all pages automatically
+    iterator = client.api_calls.list_async_operations(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         status=ApiCallStatus.QUEUED,
         limit=None,
         page_token=None,
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -934,12 +930,12 @@ async def test_logout_async():
 def test_list_ml_prompts():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: MlPromptResultsPage = client.ml.list_ml_prompts(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.ml.list_ml_prompts(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: MlPromptResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -948,9 +944,13 @@ def test_list_ml_prompts():
 async def test_list_ml_prompts_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: MlPromptResultsPage = await client.ml.list_ml_prompts(
+    # Iterate through all pages automatically
+    iterator = client.ml.list_ml_prompts(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -976,12 +976,12 @@ async def test_get_ml_prompt_async():
 def test_list_conversations_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ConversationResultsPage = client.ml.list_conversations_for_user(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.ml.list_conversations_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ConversationResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -990,9 +990,13 @@ def test_list_conversations_for_user():
 async def test_list_conversations_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ConversationResultsPage = await client.ml.list_conversations_for_user(
+    # Iterate through all pages automatically
+    iterator = client.ml.list_conversations_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -1274,12 +1278,12 @@ async def test_update_org_async():
 def test_org_list_api_calls():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = client.api_calls.org_list_api_calls(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.api_calls.org_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ApiCallWithPriceResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -1288,9 +1292,13 @@ def test_org_list_api_calls():
 async def test_org_list_api_calls_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = await client.api_calls.org_list_api_calls(
+    # Iterate through all pages automatically
+    iterator = client.api_calls.org_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -1318,15 +1326,15 @@ async def test_get_api_call_for_org_async():
 def test_list_org_members():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgMemberResultsPage = client.orgs.list_org_members(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.orgs.list_org_members(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         role=UserOrgRole.ADMIN,
         limit=None,
         page_token=None,
-    )
-
-    body: OrgMemberResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -1335,12 +1343,16 @@ def test_list_org_members():
 async def test_list_org_members_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgMemberResultsPage = await client.orgs.list_org_members(
+    # Iterate through all pages automatically
+    iterator = client.orgs.list_org_members(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         role=UserOrgRole.ADMIN,
         limit=None,
         page_token=None,
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -1877,14 +1889,12 @@ async def test_update_org_saml_idp_async():
 def test_list_service_accounts_for_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ServiceAccountResultsPage = (
-        client.service_accounts.list_service_accounts_for_org(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-        )
-    )
-
-    body: ServiceAccountResultsPage = result
-    print(body)
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.service_accounts.list_service_accounts_for_org(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+    ):
+        print(item)
 
 
 # OR run async
@@ -1893,11 +1903,13 @@ def test_list_service_accounts_for_org():
 async def test_list_service_accounts_for_org_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ServiceAccountResultsPage = (
-        await client.service_accounts.list_service_accounts_for_org(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-        )
+    # Iterate through all pages automatically
+    iterator = client.service_accounts.list_service_accounts_for_org(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -1970,12 +1982,12 @@ async def test_get_service_account_for_org_async():
 def test_get_org_shortlinks():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ShortlinkResultsPage = client.orgs.get_org_shortlinks(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.orgs.get_org_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ShortlinkResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -1984,21 +1996,25 @@ def test_get_org_shortlinks():
 async def test_get_org_shortlinks_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ShortlinkResultsPage = await client.orgs.get_org_shortlinks(
+    # Iterate through all pages automatically
+    iterator = client.orgs.get_org_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
 def test_list_orgs():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgResultsPage = client.orgs.list_orgs(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.orgs.list_orgs(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: OrgResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -2007,9 +2023,13 @@ def test_list_orgs():
 async def test_list_orgs_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgResultsPage = await client.orgs.list_orgs(
+    # Iterate through all pages automatically
+    iterator = client.orgs.list_orgs(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -2578,12 +2598,12 @@ async def test_update_user_self_async():
 def test_user_list_api_calls():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = client.api_calls.user_list_api_calls(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.api_calls.user_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ApiCallWithPriceResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -2592,9 +2612,13 @@ def test_user_list_api_calls():
 async def test_user_list_api_calls_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = await client.api_calls.user_list_api_calls(
+    # Iterate through all pages automatically
+    iterator = client.api_calls.user_list_api_calls(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -2622,12 +2646,12 @@ async def test_get_api_call_for_user_async():
 def test_list_api_tokens_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiTokenResultsPage = client.api_tokens.list_api_tokens_for_user(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.api_tokens.list_api_tokens_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ApiTokenResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -2636,9 +2660,13 @@ def test_list_api_tokens_for_user():
 async def test_list_api_tokens_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiTokenResultsPage = await client.api_tokens.list_api_tokens_for_user(
+    # Iterate through all pages automatically
+    iterator = client.api_tokens.list_api_tokens_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3153,12 +3181,12 @@ async def test_get_session_for_user_async():
 def test_get_user_shortlinks():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ShortlinkResultsPage = client.users.get_user_shortlinks(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.users.get_user_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ShortlinkResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -3167,9 +3195,13 @@ def test_get_user_shortlinks():
 async def test_get_user_shortlinks_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ShortlinkResultsPage = await client.users.get_user_shortlinks(
+    # Iterate through all pages automatically
+    iterator = client.users.get_user_shortlinks(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3263,16 +3295,16 @@ async def test_update_user_shortlink_async():
 def test_list_text_to_cad_models_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponseResultsPage = client.ml.list_text_to_cad_models_for_user(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.ml.list_text_to_cad_models_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         conversation_id=Uuid("<string>"),
         limit=None,
         page_token=None,
         no_models=None,
-    )
-
-    body: TextToCadResponseResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -3281,15 +3313,17 @@ def test_list_text_to_cad_models_for_user():
 async def test_list_text_to_cad_models_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponseResultsPage = (
-        await client.ml.list_text_to_cad_models_for_user(
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            conversation_id=Uuid("<string>"),
-            limit=None,
-            page_token=None,
-            no_models=None,
-        )
+    # Iterate through all pages automatically
+    iterator = client.ml.list_text_to_cad_models_for_user(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        conversation_id=Uuid("<string>"),
+        limit=None,
+        page_token=None,
+        no_models=None,
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3337,12 +3371,12 @@ async def test_create_text_to_cad_model_feedback_async():
 def test_list_users():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UserResultsPage = client.users.list_users(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.users.list_users(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: UserResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -3351,21 +3385,25 @@ def test_list_users():
 async def test_list_users_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: UserResultsPage = await client.users.list_users(
+    # Iterate through all pages automatically
+    iterator = client.users.list_users(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
 def test_list_users_extended():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ExtendedUserResultsPage = client.users.list_users_extended(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.users.list_users_extended(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
-    )
-
-    body: ExtendedUserResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -3374,9 +3412,13 @@ def test_list_users_extended():
 async def test_list_users_extended_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ExtendedUserResultsPage = await client.users.list_users_extended(
+    # Iterate through all pages automatically
+    iterator = client.users.list_users_extended(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3423,15 +3465,15 @@ async def test_get_user_async():
 def test_list_api_calls_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = client.api_calls.list_api_calls_for_user(
+    # Iterate through all pages automatically
+    item: Any
+    for item in client.api_calls.list_api_calls_for_user(
         id=UserIdentifier("<string>"),
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=None,
         page_token=None,
-    )
-
-    body: ApiCallWithPriceResultsPage = result
-    print(body)
+    ):
+        print(item)
 
 
 # OR run async
@@ -3440,14 +3482,16 @@ def test_list_api_calls_for_user():
 async def test_list_api_calls_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiCallWithPriceResultsPage = (
-        await client.api_calls.list_api_calls_for_user(
-            id=UserIdentifier("<string>"),
-            sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-            limit=None,
-            page_token=None,
-        )
+    # Iterate through all pages automatically
+    iterator = client.api_calls.list_api_calls_for_user(
+        id=UserIdentifier("<string>"),
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
     )
+    item: Any
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip

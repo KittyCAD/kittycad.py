@@ -24,6 +24,7 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
         if is_paginated
         else "sync_function.py.jinja2"
     )
+
     template = env.get_template(template_name)
 
     # Import these here to avoid circular imports
@@ -132,6 +133,7 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
         if is_paginated
         else "async_function.py.jinja2"
     )
+
     template = env.get_template(template_name)
 
     # Import these here to avoid circular imports

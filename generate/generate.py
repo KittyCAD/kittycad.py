@@ -42,7 +42,15 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
     env.filters["to_pascal_case"] = to_pascal_case
     env.filters["pascal_to_snake"] = camel_to_snake
 
-    template = env.get_template("sync_function.py.jinja2")
+    # Check if this endpoint uses pagination
+    is_paginated = "x-dropshot-pagination" in endpoint
+    template_name = (
+        "sync_paginated_function.py.jinja2"
+        if is_paginated
+        else "sync_function.py.jinja2"
+    )
+
+    template = env.get_template(template_name)
 
     # Build context exactly like the working functions.py template
     fn_name = camel_to_snake(endpoint["operationId"])
@@ -117,6 +125,15 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
         "docs": endpoint.get("description", endpoint.get("summary", "")),
     }
 
+    # Add pagination-specific context if needed
+    if is_paginated and response_type:
+        # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
+        item_type = response_type.replace("ResultsPage", "")
+        context["item_type"] = item_type
+        context["api_section"] = (
+            path.split("/")[1] if len(path.split("/")) > 1 else "api"
+        )
+
     return template.render(context)
 
 
@@ -134,7 +151,14 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
     env.filters["to_pascal_case"] = to_pascal_case
     env.filters["pascal_to_snake"] = camel_to_snake
 
-    template = env.get_template("async_function.py.jinja2")
+    # Check if this endpoint uses pagination
+    is_paginated = "x-dropshot-pagination" in endpoint
+    template_name = (
+        "async_paginated_function.py.jinja2"
+        if is_paginated
+        else "async_function.py.jinja2"
+    )
+    template = env.get_template(template_name)
 
     # Build context exactly like the sync function
     fn_name = camel_to_snake(endpoint["operationId"])
@@ -208,6 +232,15 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
         "args": args,
         "docs": endpoint.get("description", endpoint.get("summary", "")),
     }
+
+    # Add pagination-specific context if needed
+    if is_paginated and response_type:
+        # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
+        item_type = response_type.replace("ResultsPage", "")
+        context["item_type"] = item_type
+        context["api_section"] = (
+            path.split("/")[1] if len(path.split("/")) > 1 else "api"
+        )
 
     return template.render(context)
 
@@ -1144,6 +1177,57 @@ async def test_"""
     # Get the messages.
     async for message in websocket:
         print(message)
+    """
+        )
+    # Generate pagination examples for endpoints with x-dropshot-pagination
+    elif "x-dropshot-pagination" in endpoint:
+        # Create pagination-focused examples
+        short_sync_example = (
+            """def test_"""
+            + fn_name
+            + """():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    from typing import Any
+    item: Any
+    for item in client."""
+            + tag_name
+            + """."""
+            + fn_name
+            + """("""
+            + no_client_params
+            + """):
+        print(item)
+
+"""
+        )
+
+        long_example = (
+            """
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_"""
+            + fn_name
+            + """_async():
+    from kittycad import AsyncKittyCAD
+    
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically  
+    iterator = client."""
+            + tag_name
+            + """."""
+            + fn_name
+            + """("""
+            + no_client_params
+            + """)
+    from typing import Any
+    item: Any
+    async for item in iterator:
+        print(item)
     """
         )
 

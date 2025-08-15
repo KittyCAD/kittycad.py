@@ -17,7 +17,7 @@ class SyncPageIterator:
         self,
         page_fetcher: Callable[..., BaseModel],
         initial_kwargs: Dict[str, Any],
-        item_type: Type[T],
+        item_type: Optional[Type[T]] = None,
     ):
         """Initialize the sync page iterator.
 
@@ -77,7 +77,7 @@ class AsyncPageIterator:
         self,
         page_fetcher: Callable[..., Any],  # Returns Awaitable[BaseModel]
         initial_kwargs: Dict[str, Any],
-        item_type: Type[T],
+        item_type: Optional[Type[T]] = None,
     ):
         """Initialize the async page iterator.
 
@@ -133,7 +133,7 @@ class AsyncPageIterator:
 def create_sync_page_iterator(
     page_fetcher: Callable[..., BaseModel],
     kwargs: Dict[str, Any],
-    item_type: Type[T],
+    item_type: Optional[Type[T]] = None,
 ) -> SyncPageIterator:
     """Create a synchronous page iterator.
 
@@ -151,7 +151,7 @@ def create_sync_page_iterator(
 def create_async_page_iterator(
     page_fetcher: Callable[..., Any],  # Returns Awaitable[BaseModel]
     kwargs: Dict[str, Any],
-    item_type: Type[T],
+    item_type: Optional[Type[T]] = None,
 ) -> AsyncPageIterator:
     """Create an asynchronous page iterator.
 

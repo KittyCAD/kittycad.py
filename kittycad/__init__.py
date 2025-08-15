@@ -653,32 +653,84 @@ class MlAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> MlPromptResultsPage:
+    ) -> "SyncPageIterator":
         """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by a Zoo employee.
 
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first."""
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
 
-        url = "{}/ml-prompts".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -687,7 +739,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -695,7 +747,6 @@ class MlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return MlPromptResultsPage(**json_data)
 
     def get_ml_prompt(
@@ -730,30 +781,84 @@ class MlAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ConversationResultsPage:
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
-        The conversations are returned in order of creation, with the most recently created conversations first."""
+        The conversations are returned in order of creation, with the most recently created conversations first.
 
-        url = "{}/ml/conversations".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.ml.list_conversations_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_conversations_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_conversations_for_user(
+        self, **kwargs
+    ) -> ConversationResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -762,7 +867,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -770,7 +875,6 @@ class MlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ConversationResultsPage(**json_data)
 
     def create_proprietary_to_kcl(
@@ -913,44 +1017,104 @@ class MlAPI:
         sort_by: Optional[CreatedAtSortMode] = None,
         conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
-    ) -> TextToCadResponseResultsPage:
+    ) -> "SyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
 
-        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""
+        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
 
-        url = "{}/user/text-to-cad".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_text_to_cad_models_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if conversation_id is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(conversation_id)
-            else:
-                url = url + "?conversation_id=" + str(conversation_id)
+            kwargs["conversation_id"] = conversation_id
 
         if no_models is not None:
+            kwargs["no_models"] = no_models
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_text_to_cad_models_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_text_to_cad_models_for_user(
+        self, **kwargs
+    ) -> TextToCadResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&no_models=" + str(no_models).lower()
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?no_models=" + str(no_models).lower()
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
+            else:
+                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+
+        if "no_models" in kwargs and kwargs["no_models"] is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
+            else:
+                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -959,7 +1123,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -967,7 +1131,6 @@ class MlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return TextToCadResponseResultsPage(**json_data)
 
     def get_text_to_cad_model_for_user(
@@ -1089,38 +1252,90 @@ class AsyncMlAPI:
 
         return TextToCad(**json_data)
 
-    async def list_ml_prompts(
+    def list_ml_prompts(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> MlPromptResultsPage:
+    ) -> "AsyncPageIterator":
         """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by a Zoo employee.
 
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first."""
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
 
-        url = "{}/ml-prompts".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -1129,7 +1344,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1137,7 +1352,6 @@ class AsyncMlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return MlPromptResultsPage(**json_data)
 
     async def get_ml_prompt(
@@ -1166,36 +1380,90 @@ class AsyncMlAPI:
 
         return MlPrompt(**json_data)
 
-    async def list_conversations_for_user(
+    def list_conversations_for_user(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ConversationResultsPage:
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
-        The conversations are returned in order of creation, with the most recently created conversations first."""
+        The conversations are returned in order of creation, with the most recently created conversations first.
 
-        url = "{}/ml/conversations".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.ml.list_conversations_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_conversations_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_conversations_for_user(
+        self, **kwargs
+    ) -> ConversationResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -1204,7 +1472,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1212,7 +1480,6 @@ class AsyncMlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ConversationResultsPage(**json_data)
 
     async def create_proprietary_to_kcl(
@@ -1347,7 +1614,7 @@ class AsyncMlAPI:
 
         return TextToCadMultiFileIteration(**json_data)
 
-    async def list_text_to_cad_models_for_user(
+    def list_text_to_cad_models_for_user(
         self,
         *,
         limit: Optional[int] = None,
@@ -1355,44 +1622,104 @@ class AsyncMlAPI:
         sort_by: Optional[CreatedAtSortMode] = None,
         conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
-    ) -> TextToCadResponseResultsPage:
+    ) -> "AsyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
 
-        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""
+        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
 
-        url = "{}/user/text-to-cad".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_text_to_cad_models_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if conversation_id is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(conversation_id)
-            else:
-                url = url + "?conversation_id=" + str(conversation_id)
+            kwargs["conversation_id"] = conversation_id
 
         if no_models is not None:
+            kwargs["no_models"] = no_models
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_text_to_cad_models_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_text_to_cad_models_for_user(
+        self, **kwargs
+    ) -> TextToCadResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&no_models=" + str(no_models).lower()
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?no_models=" + str(no_models).lower()
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
+            else:
+                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+
+        if "no_models" in kwargs and kwargs["no_models"] is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
+            else:
+                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -1401,7 +1728,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1409,7 +1736,6 @@ class AsyncMlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return TextToCadResponseResultsPage(**json_data)
 
     async def get_text_to_cad_model_for_user(
@@ -1560,28 +1886,80 @@ class ApiCallsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/api-calls".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.api-calls.list_api_calls():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_api_calls(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -1590,7 +1968,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1598,7 +1976,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     def get_api_call(
@@ -1638,36 +2015,91 @@ class ApiCallsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
         status: Optional[ApiCallStatus] = None,
-    ) -> AsyncApiCallResultsPage:
+    ) -> "SyncPageIterator":
         """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 
-        This endpoint requires authentication by a Zoo employee."""
+        This endpoint requires authentication by a Zoo employee.
 
-        url = "{}/async/operations".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.async.list_async_operations():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if status is not None:
+            kwargs["status"] = status
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_async_operations(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_async_operations(self, **kwargs) -> AsyncApiCallResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/async/operations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&status=" + str(status)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?status=" + str(status)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "status" in kwargs and kwargs["status"] is not None:
+            if "?" in url:
+                url = url + "&status=" + str(kwargs["status"])
+            else:
+                url = url + "?status=" + str(kwargs["status"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -1676,7 +2108,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1684,7 +2116,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return AsyncApiCallResultsPage(**json_data)
 
     def get_async_operation(
@@ -1735,32 +2166,84 @@ class ApiCallsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
+    ) -> "SyncPageIterator":
         """This includes all API calls that were made by users in the org.
 
         This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/org/api-calls".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.org.org_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_org_list_api_calls(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_org_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -1769,7 +2252,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1777,7 +2260,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     def get_api_call_for_org(
@@ -1812,30 +2294,82 @@ class ApiCallsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/user/api-calls".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.user_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_user_list_api_calls(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_user_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -1844,7 +2378,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1852,7 +2386,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     def get_api_call_for_user(
@@ -1888,34 +2421,90 @@ class ApiCallsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
 
         Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
 
         If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.users.list_api_calls_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_api_calls_for_user(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_api_calls_for_user(
+        self, id: UserIdentifier, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -1924,7 +2513,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1932,7 +2521,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
 
@@ -1974,34 +2562,86 @@ class AsyncApiCallsAPI:
 
         return List[ApiCallQueryGroup](**json_data)
 
-    async def list_api_calls(
+    def list_api_calls(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/api-calls".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.api-calls.list_api_calls():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_api_calls(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -2010,7 +2650,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2018,7 +2658,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     async def get_api_call(
@@ -2051,43 +2690,100 @@ class AsyncApiCallsAPI:
 
         return ApiCallWithPrice(**json_data)
 
-    async def list_async_operations(
+    def list_async_operations(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
         status: Optional[ApiCallStatus] = None,
-    ) -> AsyncApiCallResultsPage:
+    ) -> "AsyncPageIterator":
         """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 
-        This endpoint requires authentication by a Zoo employee."""
+        This endpoint requires authentication by a Zoo employee.
 
-        url = "{}/async/operations".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.async.list_async_operations():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if status is not None:
+            kwargs["status"] = status
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_async_operations(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_async_operations(
+        self, **kwargs
+    ) -> AsyncApiCallResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/async/operations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&status=" + str(status)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?status=" + str(status)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "status" in kwargs and kwargs["status"] is not None:
+            if "?" in url:
+                url = url + "&status=" + str(kwargs["status"])
+            else:
+                url = url + "?status=" + str(kwargs["status"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -2096,7 +2792,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2104,7 +2800,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return AsyncApiCallResultsPage(**json_data)
 
     async def get_async_operation(
@@ -2149,38 +2844,92 @@ class AsyncApiCallsAPI:
 
         return json_data
 
-    async def org_list_api_calls(
+    def org_list_api_calls(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
+    ) -> "AsyncPageIterator":
         """This includes all API calls that were made by users in the org.
 
         This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/org/api-calls".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.org.org_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_org_list_api_calls(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_org_list_api_calls(
+        self, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -2189,7 +2938,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2197,7 +2946,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     async def get_api_call_for_org(
@@ -2226,36 +2974,90 @@ class AsyncApiCallsAPI:
 
         return ApiCallWithPrice(**json_data)
 
-    async def user_list_api_calls(
+    def user_list_api_calls(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/user/api-calls".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.user_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_user_list_api_calls(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_user_list_api_calls(
+        self, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -2264,7 +3066,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2272,7 +3074,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     async def get_api_call_for_user(
@@ -2301,41 +3102,97 @@ class AsyncApiCallsAPI:
 
         return ApiCallWithPrice(**json_data)
 
-    async def list_api_calls_for_user(
+    def list_api_calls_for_user(
         self,
         id: UserIdentifier,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiCallWithPriceResultsPage:
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
 
         Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
 
         If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.users.list_api_calls_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_api_calls_for_user(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_api_calls_for_user(
+        self, id: UserIdentifier, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -2344,7 +3201,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2352,7 +3209,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
 
@@ -4393,34 +5249,89 @@ class OrgsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
         role: Optional[UserOrgRole] = None,
-    ) -> OrgMemberResultsPage:
-        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org.
 
-        url = "{}/org/members".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_members():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if role is not None:
+            kwargs["role"] = role
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_members(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_members(self, **kwargs) -> OrgMemberResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/members".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&role=" + str(role)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?role=" + str(role)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "role" in kwargs and kwargs["role"] is not None:
+            if "?" in url:
+                url = url + "&role=" + str(kwargs["role"])
+            else:
+                url = url + "?role=" + str(kwargs["role"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -4429,7 +5340,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4437,7 +5348,6 @@ class OrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgMemberResultsPage(**json_data)
 
     def create_org_member(
@@ -4707,28 +5617,80 @@ class OrgsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org.
 
-        url = "{}/org/shortlinks".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.get_org_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_get_org_shortlinks(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_org_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -4737,7 +5699,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4745,7 +5707,6 @@ class OrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
     def list_orgs(
@@ -4754,28 +5715,80 @@ class OrgsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> OrgResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first.
 
-        url = "{}/orgs".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.orgs.list_orgs():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_orgs(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_orgs(self, **kwargs) -> OrgResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/orgs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -4784,7 +5797,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4792,7 +5805,6 @@ class OrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgResultsPage(**json_data)
 
     def get_any_org(
@@ -4986,41 +5998,96 @@ class AsyncOrgsAPI:
 
         return response.json() if response.content else None
 
-    async def list_org_members(
+    def list_org_members(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
         role: Optional[UserOrgRole] = None,
-    ) -> OrgMemberResultsPage:
-        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org.
 
-        url = "{}/org/members".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_members():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if role is not None:
+            kwargs["role"] = role
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_members(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_members(self, **kwargs) -> OrgMemberResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/members".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&role=" + str(role)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?role=" + str(role)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "role" in kwargs and kwargs["role"] is not None:
+            if "?" in url:
+                url = url + "&role=" + str(kwargs["role"])
+            else:
+                url = url + "?role=" + str(kwargs["role"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -5029,7 +6096,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5037,7 +6104,6 @@ class AsyncOrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgMemberResultsPage(**json_data)
 
     async def create_org_member(
@@ -5301,34 +6367,86 @@ class AsyncOrgsAPI:
 
         return response.json() if response.content else None
 
-    async def get_org_shortlinks(
+    def get_org_shortlinks(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.get_org_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_org_shortlinks(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_org_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/org/shortlinks".format(self.client.base_url)
 
-        if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+        # Add query parameters
 
-        if page_token is not None:
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&page_token=" + str(page_token)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?page_token=" + str(page_token)
+                url = url + "?limit=" + str(kwargs["limit"])
 
-        if sort_by is not None:
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&page_token=" + str(kwargs["page_token"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -5337,7 +6455,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5345,37 +6463,88 @@ class AsyncOrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
-    async def list_orgs(
+    def list_orgs(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> OrgResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first.
 
-        url = "{}/orgs".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.orgs.list_orgs():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_orgs(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_orgs(self, **kwargs) -> OrgResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/orgs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -5384,7 +6553,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5392,7 +6561,6 @@ class AsyncOrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgResultsPage(**json_data)
 
     async def get_any_org(
@@ -7123,30 +8291,84 @@ class ServiceAccountsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ServiceAccountResultsPage:
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
-        The service accounts are returned in order of creation, with the most recently created service accounts first."""
+        The service accounts are returned in order of creation, with the most recently created service accounts first.
 
-        url = "{}/org/service-accounts".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.org.list_service_accounts_for_org():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_service_accounts_for_org(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_service_accounts_for_org(
+        self, **kwargs
+    ) -> ServiceAccountResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -7155,7 +8377,7 @@ class ServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7163,7 +8385,6 @@ class ServiceAccountsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ServiceAccountResultsPage(**json_data)
 
     def create_service_account_for_org(
@@ -7259,36 +8480,90 @@ class AsyncServiceAccountsAPI:
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
-    async def list_service_accounts_for_org(
+    def list_service_accounts_for_org(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ServiceAccountResultsPage:
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
-        The service accounts are returned in order of creation, with the most recently created service accounts first."""
+        The service accounts are returned in order of creation, with the most recently created service accounts first.
 
-        url = "{}/org/service-accounts".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.org.list_service_accounts_for_org():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_service_accounts_for_org(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_service_accounts_for_org(
+        self, **kwargs
+    ) -> ServiceAccountResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -7297,7 +8572,7 @@ class AsyncServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7305,7 +8580,6 @@ class AsyncServiceAccountsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ServiceAccountResultsPage(**json_data)
 
     async def create_service_account_for_org(
@@ -8677,28 +9951,80 @@ class UsersAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
 
-        url = "{}/user/shortlinks".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.get_user_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_get_user_shortlinks(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -8707,7 +10033,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8715,7 +10041,6 @@ class UsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
     def create_user_shortlink(
@@ -8797,28 +10122,80 @@ class UsersAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> UserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
-        url = "{}/users".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.users.list_users():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_users(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_users(self, **kwargs) -> UserResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -8827,7 +10204,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8835,7 +10212,6 @@ class UsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return UserResultsPage(**json_data)
 
     def list_users_extended(
@@ -8844,28 +10220,80 @@ class UsersAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ExtendedUserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
-        url = "{}/users-extended".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.users-extended.list_users_extended():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_users_extended(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_users_extended(self, **kwargs) -> ExtendedUserResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users-extended".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -8874,7 +10302,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8882,7 +10310,6 @@ class UsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ExtendedUserResultsPage(**json_data)
 
     def get_user_extended(
@@ -9272,34 +10699,86 @@ class AsyncUsersAPI:
 
         return Session(**json_data)
 
-    async def get_user_shortlinks(
+    def get_user_shortlinks(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
 
-        url = "{}/user/shortlinks".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.get_user_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_user_shortlinks(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -9308,7 +10787,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9316,7 +10795,6 @@ class AsyncUsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
     async def create_user_shortlink(
@@ -9392,34 +10870,86 @@ class AsyncUsersAPI:
 
         return response.json() if response.content else None
 
-    async def list_users(
+    def list_users(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> UserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.users.list_users():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_users(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_users(self, **kwargs) -> UserResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/users".format(self.client.base_url)
 
-        if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+        # Add query parameters
 
-        if page_token is not None:
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&page_token=" + str(page_token)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?page_token=" + str(page_token)
+                url = url + "?limit=" + str(kwargs["limit"])
 
-        if sort_by is not None:
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&page_token=" + str(kwargs["page_token"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -9428,7 +10958,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9436,37 +10966,90 @@ class AsyncUsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return UserResultsPage(**json_data)
 
-    async def list_users_extended(
+    def list_users_extended(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ExtendedUserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
-        url = "{}/users-extended".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.users-extended.list_users_extended():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_users_extended(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_users_extended(
+        self, **kwargs
+    ) -> ExtendedUserResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users-extended".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -9475,7 +11058,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9483,7 +11066,6 @@ class AsyncUsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ExtendedUserResultsPage(**json_data)
 
     async def get_user_extended(
@@ -9627,30 +11209,82 @@ class ApiTokensAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiTokenResultsPage:
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
-        The API tokens are returned in order of creation, with the most recently created API tokens first."""
+        The API tokens are returned in order of creation, with the most recently created API tokens first.
 
-        url = "{}/user/api-tokens".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_api_tokens_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_api_tokens_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_api_tokens_for_user(self, **kwargs) -> ApiTokenResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-tokens".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = _client.get(
@@ -9659,7 +11293,7 @@ class ApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9667,7 +11301,6 @@ class ApiTokensAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiTokenResultsPage(**json_data)
 
     def create_api_token_for_user(
@@ -9759,36 +11392,90 @@ class AsyncApiTokensAPI:
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
-    async def list_api_tokens_for_user(
+    def list_api_tokens_for_user(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> ApiTokenResultsPage:
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
-        The API tokens are returned in order of creation, with the most recently created API tokens first."""
+        The API tokens are returned in order of creation, with the most recently created API tokens first.
 
-        url = "{}/user/api-tokens".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_api_tokens_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_api_tokens_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_api_tokens_for_user(
+        self, **kwargs
+    ) -> ApiTokenResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-tokens".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Add pagination parameters
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
         _client = self.client.get_http_client()
         response = await _client.get(
@@ -9797,7 +11484,7 @@ class AsyncApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9805,7 +11492,6 @@ class AsyncApiTokensAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiTokenResultsPage(**json_data)
 
     async def create_api_token_for_user(

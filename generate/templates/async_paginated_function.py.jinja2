@@ -11,7 +11,7 @@
         {{ arg.name }}: {{ arg.type }} = None,
         {% endfor %}
         {% endif %}
-    ) -> "AsyncPageIterator[{{ item_type }}]":
+    ) -> "AsyncPageIterator":
         {% if docs %}"""{{ docs }}
         
         Returns an async iterator that automatically handles pagination.
@@ -21,7 +21,8 @@
                 print(item)
         """{% endif %}
         
-        from ..pagination import AsyncPageIterator
+        from typing import Dict, Any
+        from kittycad.pagination import AsyncPageIterator
         
         # Store path parameters in closure for later use
         {% for arg in args %}
@@ -31,7 +32,7 @@
         {% endfor %}
         
         # Create arguments dict, filtering out None values
-        kwargs = {}
+        kwargs: Dict[str, Any] = {}
         {% for arg in args %}
         {% if arg.in_query %}
         if {{ arg.name }} is not None:
@@ -53,7 +54,6 @@
         return AsyncPageIterator(
             page_fetcher=fetch_page,
             initial_kwargs=kwargs,
-            item_type={{ item_type }},
         )
     
     async def _fetch_page_{{ func_name }}(self, {% for arg in args %}{% if arg.in_url %}{{ arg.name }}: {{ arg.type }}, {% endif %}{% endfor %}**kwargs) -> {{ response_type }}:
@@ -100,7 +100,7 @@
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
             raise_for_status(response)
         
         if not response.content:

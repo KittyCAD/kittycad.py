@@ -8,7 +8,6 @@ import pytest
 from pydantic import BaseModel
 
 from kittycad import AsyncKittyCAD, KittyCAD
-from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.pagination import AsyncPageIterator, SyncPageIterator
 
 
@@ -769,7 +768,6 @@ def test_sync_pagination_integration_text_to_cad():
     # Call paginated endpoint - after code regeneration this should return SyncPageIterator
     # Currently returns TextToCadResponseResultsPage, but tests pagination structure
     response = client.ml.list_text_to_cad_models_for_user(  # type: ignore[attr-defined]
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         limit=10,  # Small page size to test pagination
     )
 
@@ -793,6 +791,22 @@ def test_sync_pagination_integration_text_to_cad():
             assert hasattr(item, "root") or hasattr(item, "model_dump"), (
                 "Items should be valid models"
             )
+
+    # Check we can iterate over the items and get at least 12 which is more than 10
+    # This is just to ensure the pagination works end-to-end
+    item_count = 0
+    for item in response.items:
+        item_count += 1
+        # Mypy needs help with early break - cast to avoid Never type
+        # typed_item: MockItem = item
+        # assert typed_item.id is not None
+        # assert typed_item.name is not None
+        if item_count >= 12:
+            break
+
+    assert item_count >= 12, (
+        "Should have at least 12 items to ensure pagination works end-to-end"
+    )
 
 
 @pytest.mark.asyncio
@@ -805,33 +819,34 @@ async def test_async_pagination_integration_text_to_cad():
     # Create async client with real API token
     client = AsyncKittyCAD()
 
-    # Call paginated endpoint - after code regeneration this should return AsyncPageIterator
-    # Currently returns TextToCadResponseResultsPage, but tests pagination structure
-    response = await client.ml.list_text_to_cad_models_for_user(  # type: ignore[attr-defined]
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+    # Call paginated endpoint - now returns AsyncPageIterator directly
+    iterator = client.ml.list_text_to_cad_models_for_user(  # type: ignore[attr-defined]
         limit=10,  # Small page size to test pagination
     )
 
-    # Verify the response has the expected pagination structure
-    assert hasattr(response, "items"), (
-        "Response should have 'items' field for pagination"
-    )
-    assert hasattr(response, "next_page"), (
-        "Response should have 'next_page' field for pagination"
+    # Verify we got an AsyncPageIterator
+    from kittycad.pagination import AsyncPageIterator
+
+    assert isinstance(iterator, AsyncPageIterator), (
+        f"Expected AsyncPageIterator, got {type(iterator)}"
     )
 
-    # The items list should contain TextToCadResponse objects (may be empty)
-    assert isinstance(response.items, list)
-
-    # Test that our pagination would work with this endpoint by checking structure
+    # Test that we can iterate over the paginated results
     # This validates the API contract that our pagination system depends on
-    if response.items:
-        # If we have items, verify they have the expected structure
-        for item in response.items[:3]:  # Check first few items only
-            # TextToCadResponse is a RootModel Union, so should have .root
-            assert hasattr(item, "root") or hasattr(item, "model_dump"), (
-                "Items should be valid models"
-            )
+    item_count = 0
+    item: object  # Type annotation for mypy
+    async for item in iterator:
+        item_count += 1
+        # TextToCadResponse is a RootModel Union, so should have .root or .model_dump
+        assert hasattr(item, "root") or hasattr(item, "model_dump"), (
+            "Items should be valid TextToCadResponse models"
+        )
+        # Don't iterate through all items in integration test, just verify it works
+        if item_count >= 3:
+            break
 
-        # Clean up the async client
-        await client.aclose()
+    # Just verify we got some items (API may have limited data in test environment)
+    assert item_count >= 1, "Should have at least 1 item to verify pagination works"
+
+    # Clean up the async client
+    await client.aclose()
