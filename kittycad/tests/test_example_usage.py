@@ -49,12 +49,10 @@ def test_interface_design():
     """Test that the new interface is properly designed."""
     # Test that KittyCAD class can be instantiated
     client = KittyCAD()
-    assert hasattr(client, 'users')
-    assert hasattr(client, 'meta')
-    
+    assert hasattr(client, "users")
+    assert hasattr(client, "meta")
+
     # Test that exception types exist
     assert KittyCADAPIError is not None
     assert KittyCADClientError is not None
     assert KittyCADServerError is not None
-
-

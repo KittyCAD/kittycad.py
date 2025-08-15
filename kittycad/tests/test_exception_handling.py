@@ -82,5 +82,3 @@ def test_import_structure():
         KittyCADTimeoutError,
     ]
     assert all(isinstance(exc, type) for exc in exceptions)
-
-
