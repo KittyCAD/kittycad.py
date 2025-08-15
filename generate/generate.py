@@ -7,8 +7,9 @@ import random
 from typing import Any, Dict, List, Optional, Tuple, TypedDict
 
 import jinja2
-import jsonpatch
 from prance import BaseParser
+
+from .post_processing import generate_examples_tests, generate_patch_json
 
 # Import utilities
 from .utils import (
@@ -17,8 +18,6 @@ from .utils import (
     clean_parameter_name,
     consolidate_imports_in_file,
     deduplicate_imports,
-    extract_imports_from_examples,
-    format_file_with_ruff,
     to_pascal_case,
 )
 
@@ -448,21 +447,8 @@ def generate_client_classes(cwd: str, data: dict):
     with open(init_path, "w") as f:
         f.write(rendered_content)
 
-
-def main():
-    cwd = os.getcwd()
-    spec_path = os.path.join(cwd, "spec.json")
-    logging.info("opening spec file: %s", spec_path)
-    parser = BaseParser(spec_path)
-
-    # Generate the types.
-    generate_types(cwd, parser.specification)
-
-    # Generate the paths.
-    data = generate_paths(cwd, parser.specification)
-
-    # Generate the client classes
-    generate_client_classes(cwd, parser.specification)
+    # Generate examples tests and patch json files
+    generate_examples_tests(cwd, examples)
 
     # Add the client information to the generation.
     data["info"]["x-python"] = {
@@ -489,85 +475,28 @@ client = KittyCAD()
         "install": "pip install kittycad",
     }
 
-    # Read the original spec file as a dict.
-    spec = open(spec_path, "r")
-    original = json.load(spec)
-    # Create the json patch document.
-    patch = jsonpatch.make_patch(original, data)
+    spec_path = os.path.join(cwd, "spec.json")
+    generate_patch_json(cwd, spec_path, data)
 
-    # Convert this to a dict.
-    patch = json.loads(patch.to_string())
 
-    new_patch = []
-    # Make sure we aren't changing any components/schemas.
-    for index, p in enumerate(patch):
-        if not p["path"].startswith("/components"):
-            new_patch.append(p)
+def main():
+    cwd = os.getcwd()
+    spec_path = os.path.join(cwd, "spec.json")
+    logging.info("opening spec file: %s", spec_path)
+    parser = BaseParser(spec_path)
 
-    # Sort patch operations by path and operation to ensure consistent output
-    new_patch.sort(
-        key=lambda x: (x.get("path", ""), x.get("op", ""), str(x.get("value", "")))
-    )
+    # Generate the types.
+    generate_types(cwd, parser.specification)
 
-    # Rewrite the spec back out.
-    patch_file = os.path.join(cwd, "kittycad.py.patch.json")
+    # Generate the paths.
+    data = generate_paths(cwd, parser.specification)
 
-    # Check if the content is actually different before writing
-    new_content = json.dumps(new_patch, indent=2)
-    current_content = ""
-    if os.path.exists(patch_file):
-        with open(patch_file, "r") as f:
-            current_content = f.read()
-
-    if new_content != current_content:
-        with open(patch_file, "w") as f:
-            f.write(new_content)
-
-    # Write all the examples to a file.
-    examples_test_path = os.path.join(cwd, "kittycad", "tests", "test_examples.py")
-    logging.info("opening examples test file: %s", examples_test_path)
-
-    # Extract and consolidate imports from all examples
-    consolidated_imports, examples_without_imports = extract_imports_from_examples(
-        examples
-    )
-
-    # Write all the examples to a file.
-    f = open(examples_test_path, "w")
-
-    # Write base imports first
-    f.write("import pytest\n")
-    f.write("import datetime\n")
-    f.write("from typing import Dict, Optional, Union\n")
-    f.write("from kittycad import KittyCAD\n\n")
-
-    # Write consolidated imports from examples
-    if consolidated_imports:
-        f.write("\n".join(consolidated_imports))
-        f.write("\n\n")
-
-    # Write examples without their individual imports
-    f.write("\n\n".join(examples_without_imports))
-    f.close()
-
-    # Post-process with ruff to clean up imports and formatting
-    format_file_with_ruff(examples_test_path)
+    # Generate the client classes
+    generate_client_classes(cwd, data)
 
 
 def generate_paths(cwd: str, parser: dict) -> dict:
-    # Make sure we have the directory structure for individual API files.
-    path = os.path.join(cwd, "kittycad", "api")
-    os.makedirs(path, exist_ok=True)
-
-    # Generate directories for each of the tags (for individual endpoint files).
-    tags = parser["tags"]
-    for tag in tags:
-        tag_name = tag["name"].replace("-", "_")
-        tag_path = os.path.join(path, tag_name)
-        # Ensure the directory exists for individual endpoint files.
-        os.makedirs(tag_path, exist_ok=True)
-
-    # Generate the paths.
+    # Generate the paths without creating individual API files.
     data = parser
     paths = data["paths"]
     # Sort paths to ensure consistent processing order
@@ -582,7 +511,7 @@ def generate_paths(cwd: str, parser: dict) -> dict:
                 # Skip OPTIONS.
                 if method.upper() != "OPTIONS":
                     endpoint = paths[p][method]
-                    data = generate_path(path, p, method, endpoint, data)
+                    data = generate_path_data(p, method, endpoint, data)
 
     return data
 
@@ -896,23 +825,17 @@ def generate_type_and_example_python(
     return parameter_type, parameter_example, example_imports
 
 
-def generate_path(
-    path: str, name: str, method: str, endpoint: dict, data: dict
-) -> dict:
-    # Generate the path.
+def generate_path_data(name: str, method: str, endpoint: dict, data: dict) -> dict:
+    # Generate the path data (without creating individual files).
     fn_name = camel_to_snake(endpoint["operationId"])
-    file_name = fn_name + ".py"
     tag_name = ""
-    # Add the tag to the path if it exists.
+    # Get the tag name if it exists.
     if "tags" in endpoint:
         tag_name = endpoint["tags"][0].replace("-", "_")
-        path = os.path.join(path, tag_name)
-    file_path = os.path.join(path, file_name)
-    logging.info("generating path functions: %s at: %s", name, file_path)
+    logging.info("processing path: %s", name)
 
+    # Get endpoint refs for the example generation
     endpoint_refs = get_endpoint_refs(endpoint, data)
-    parameter_refs = get_parameter_refs(endpoint)
-    request_body_refs = get_request_body_refs(endpoint)
     (request_body_type, request_body_schema) = get_request_body_type_schema(
         endpoint, data
     )
@@ -1241,382 +1164,12 @@ async def test_"""
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
         "example": cleaned_example.replace("def test_", "def example_"),
-        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.api."
-        + tag_name
+        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad."
+        + to_pascal_case(tag_name)
         + "."
         + fn_name
         + ".html",
     }
-
-    # Start defining the template info.
-    ArgType = TypedDict(
-        "ArgType",
-        {
-            "name": str,
-            "type": str,
-            "in_url": bool,
-            "in_query": bool,
-            "is_optional": bool,
-        },
-    )
-    TemplateType = TypedDict(
-        "TemplateType",
-        {
-            "imports": List[str],
-            "response_type": str,
-            "args": List[ArgType],
-            "url_template": str,
-            "method": str,
-            "docs": str,
-            "parse_response": str,
-            "has_request_body": bool,
-            "request_body_type": str,
-        },
-    )
-    template_info: TemplateType = {
-        "imports": [],
-        "response_type": response_type,
-        "args": [],
-        "url_template": "{}" + name,
-        "method": method,
-        "docs": "",
-        "parse_response": "",
-        "has_request_body": False,
-        "request_body_type": "",
-    }
-
-    if len(endpoint_refs) == 0:
-        template_info["response_type"] = ""
-
-    if "x-dropshot-websocket" in endpoint:
-        template_info["response_type"] = (
-            template_info["response_type"].replace("Optional[", "").replace("]", "")
-        )
-
-    if "description" in endpoint:
-        template_info["docs"] = endpoint["description"]
-
-    # Import our references for responses (exclude Error since we use exceptions now)
-    for ref in endpoint_refs:
-        if ref.startswith("List[") and ref.endswith("]"):
-            ref = ref.replace("List[", "").replace("]", "")
-        if ref != "str" and ref != "dict" and ref != "Error":
-            # Ensure ref is in PascalCase for the class name
-            pascal_ref = to_pascal_case(ref)
-            template_info["imports"].append(
-                "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
-            )
-    for ref in parameter_refs:
-        # Ensure ref is in PascalCase for the class name
-        pascal_ref = to_pascal_case(ref)
-        template_info["imports"].append(
-            "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
-        )
-    for ref in request_body_refs:
-        # Ensure ref is in PascalCase for the class name
-        pascal_ref = to_pascal_case(ref)
-        template_info["imports"].append(
-            "from ...models." + camel_to_snake(pascal_ref) + " import " + pascal_ref
-        )
-
-    # Iterate over the responses.
-    parse_response = io.StringIO()
-    if len(endpoint_refs) > 0:
-        responses = endpoint["responses"]
-        for response_code in responses:
-            response = responses[response_code]
-            if response_code == "default":
-                # For WebSocket endpoints, "default" contains the response schema
-                is_websocket = "x-dropshot-websocket" in endpoint
-                if not is_websocket:
-                    # Regular endpoints with default response have no content.
-                    # We'll handle this with the status code check
-                    continue
-            elif response_code == "204" or response_code == "302":
-                # No content responses - handle with status code check
-                parse_response.write(
-                    "\tif response.status_code == " + response_code + ":\n"
-                )
-                parse_response.write("\t\treturn None\n")
-            else:
-                # Only generate parsing code for success status codes
-                try:
-                    status_code_int = int(response_code.replace("XX", "00"))
-                    if 200 <= status_code_int < 300:
-                        parse_response.write(
-                            "\tif response.status_code == "
-                            + response_code.replace("XX", "00")
-                            + ":\n"
-                        )
-                    else:
-                        # Skip error status codes - they'll be handled by raise_for_status
-                        continue
-                except ValueError:
-                    # Handle non-numeric response codes like "default"
-                    # Skip them since they were handled above
-                    continue
-
-                is_one_of = False
-                if "content" in response:
-                    content = response["content"]
-                    for content_type in content:
-                        if content_type == "application/json":
-                            json = content[content_type]["schema"]
-                            if "$ref" in json:
-                                ref = json["$ref"].replace("#/components/schemas/", "")
-                                schema = data["components"]["schemas"][ref]
-                                # Let's check if it is a oneOparse_response.
-                                if "oneOf" in schema:
-                                    is_one_of = True
-                                    # We want to parse each of the possible types.
-                                    parse_response.write("\t\tdata = response.json()\n")
-                                    for index, one_of in enumerate(schema["oneOf"]):
-                                        ref = get_one_of_ref_type(one_of)
-                                        parse_response.write("\t\ttry:\n")
-                                        parse_response.write(
-                                            "\t\t\tif not isinstance(data, dict):\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\t\traise TypeError()\n"
-                                        )
-                                        option_name = "option_" + camel_to_snake(ref)
-                                        parse_response.write(
-                                            "\t\t\t"
-                                            + option_name
-                                            + " = "
-                                            + to_pascal_case(ref)
-                                            + "(**data)\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\treturn " + option_name + "\n"
-                                        )
-                                        parse_response.write("\t\texcept ValueError:\n")
-                                        if index == len(schema["oneOf"]) - 1:
-                                            # On the last one raise the error.
-                                            parse_response.write("\t\t\traise\n")
-                                        else:
-                                            parse_response.write("\t\t\tpass\n")
-                                        parse_response.write("\t\texcept TypeError:\n")
-                                        if index == len(schema["oneOf"]) - 1:
-                                            # On the last one raise the error.
-                                            parse_response.write("\t\t\traise\n")
-                                        else:
-                                            parse_response.write("\t\t\tpass\n")
-                                else:
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = "
-                                        + ref
-                                        + "(**response.json())\n"
-                                    )
-                            elif "type" in json:
-                                if json["type"] == "array":
-                                    items = json["items"]
-                                    if "$ref" in items:
-                                        ref = items["$ref"].replace(
-                                            "#/components/schemas/", ""
-                                        )
-                                        parse_response.write(
-                                            "\t\tresponse_" + response_code + " = [\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\t" + ref + "(**item)\n"
-                                        )
-                                        parse_response.write(
-                                            "\t\t\tfor item in response.json()\n"
-                                        )
-                                        parse_response.write("\t\t]\n")
-                                    elif "type" in items:
-                                        if items["type"] == "string":
-                                            parse_response.write(
-                                                "\t\tresponse_"
-                                                + response_code
-                                                + " = [\n"
-                                            )
-                                            parse_response.write("\t\t\tstr(**item)\n")
-                                            parse_response.write(
-                                                "\t\t\tfor item in response.json()\n"
-                                            )
-                                            parse_response.write("\t\t]\n")
-                                        else:
-                                            raise Exception("Unknown array type", items)
-                                    else:
-                                        raise Exception("Unknown array type")
-                                elif json["type"] == "string":
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = response.text\n"
-                                    )
-                                elif (
-                                    json["type"] == "object"
-                                    and "additionalProperties" in json
-                                ):
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = response.json()\n"
-                                    )
-                                else:
-                                    print(json)
-                                    raise Exception("Unknown type", json["type"])
-                            else:
-                                parse_response.write(
-                                    "\t\tresponse_"
-                                    + response_code
-                                    + " = response.json()\n"
-                                )
-
-                elif "$ref" in response:
-                    schema_name = response["$ref"].replace(
-                        "#/components/responses/", ""
-                    )
-                    schema = data["components"]["responses"][schema_name]
-                    if "content" in schema:
-                        content = schema["content"]
-                        for content_type in content:
-                            if content_type == "application/json":
-                                json = content[content_type]["schema"]
-                                if "$ref" in json:
-                                    ref = json["$ref"].replace(
-                                        "#/components/schemas/", ""
-                                    )
-                                    parse_response.write(
-                                        "\t\tresponse_"
-                                        + response_code
-                                        + " = "
-                                        + ref
-                                        + "(**response.json())\n"
-                                    )
-                else:
-                    print(endpoint)
-                    raise Exception("response not supported")
-
-                if not is_one_of:
-                    parse_response.write("\t\treturn response_" + response_code + "\n")
-
-        # End the method - successful responses should be handled above
-        # Error responses are handled by raise_for_status in _build_response
-        parse_response.write(
-            "\t# This should not be reached since we handle all known success responses above\n"
-        )
-        parse_response.write("\t# and errors are handled by raise_for_status\n")
-        parse_response.write(
-            "\traise ValueError(f'Unexpected response status: {response.status_code}')\n"
-        )
-    else:
-        # No refs means no content to parse, but we still need to handle status codes
-        # Check if this endpoint has any successful responses
-        has_success_responses = False
-        responses = endpoint["responses"]
-        for response_code in responses:
-            try:
-                if response_code.startswith("2") or response_code in ["204", "302"]:
-                    has_success_responses = True
-                    parse_response.write(
-                        "\tif response.status_code == " + response_code + ":\n"
-                    )
-                    parse_response.write("\t\treturn None\n")
-            except (AttributeError, ValueError):
-                continue
-
-        if has_success_responses:
-            # Add fallback exception
-            parse_response.write(
-                "\t# This should not be reached since we handle all known success responses above\n"
-            )
-            parse_response.write("\t# and errors are handled by raise_for_status\n")
-            parse_response.write(
-                "\traise ValueError(f'Unexpected response status: {response.status_code}')\n"
-            )
-        else:
-            # No success responses found, just return None
-            parse_response.write("\treturn None\n")
-
-    template_info["parse_response"] = parse_response.getvalue()
-
-    # Iterate over the parameters.
-    optional_args = []
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                    .replace("boolean", "bool")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                logging.error("parameter: %s", parameter)
-                raise Exception("Unknown parameter type")
-            if "nullable" in parameter["schema"]:
-                if parameter["schema"]["nullable"]:
-                    parameter_type = "Optional[" + parameter_type + "] = None"
-                    template_info["args"].append(
-                        {
-                            "name": camel_to_snake(parameter_name),
-                            "type": parameter_type,
-                            "in_url": "in" in parameter and (parameter["in"] == "path"),
-                            "in_query": "in" in parameter
-                            and (parameter["in"] == "query"),
-                            "is_optional": True,
-                        }
-                    )
-                else:
-                    template_info["args"].append(
-                        {
-                            "name": camel_to_snake(parameter_name),
-                            "type": parameter_type,
-                            "in_url": "in" in parameter and (parameter["in"] == "path"),
-                            "in_query": "in" in parameter
-                            and (parameter["in"] == "query"),
-                            "is_optional": False,
-                        }
-                    )
-            else:
-                template_info["args"].append(
-                    {
-                        "name": camel_to_snake(parameter_name),
-                        "type": parameter_type,
-                        "in_url": "in" in parameter and (parameter["in"] == "path"),
-                        "in_query": "in" in parameter and (parameter["in"] == "query"),
-                        "is_optional": False,
-                    }
-                )
-
-    if request_body_type:
-        template_info["args"].append(
-            {
-                "name": "body",
-                "type": request_body_type,
-                "in_url": False,
-                "in_query": False,
-                "is_optional": False,
-            }
-        )
-        template_info["has_request_body"] = True
-        template_info["request_body_type"] = request_body_type
-
-    # Generate the template for the functions.
-    environment = jinja2.Environment(
-        loader=jinja2.FileSystemLoader("generate/templates/")
-    )
-    template_file = "functions.py.jinja2"
-    if "x-dropshot-websocket" in endpoint:
-        template_file = "functions-ws.py.jinja2"
-    template = environment.get_template(template_file)
-    content = template.render(**template_info)
-    with open(file_path, mode="w", encoding="utf-8") as message:
-        message.write(content)
-        logging.info(f"... wrote {file_path}")
 
     return data
 
