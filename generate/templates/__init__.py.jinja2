@@ -138,9 +138,32 @@ class {{ tag_pascal }}API:
         
         {{ func_info.description }}
         """
+        {% if func_info.has_websocket_class %}
+        # Import WebSocket wrapper class
+        from .api.{{ tag }}.{{ func_name }} import WebSocket
+        
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+        
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
+        {% else %}
+        # Use sync function for WebSocket endpoints without wrapper class
         from .api.{{ tag }}.{{ func_name }} import sync
         kwargs["client"] = self.client
         return sync(*args, **kwargs)
+        {% endif %}
     {% else %}
     def {{ func_name }}(self, *args, **kwargs) -> {{ func_info.return_type }}:
         """{{ func_info.description }}"""
@@ -160,14 +183,39 @@ class Async{{ tag_pascal }}API:
     
     {% for func_name, func_info in functions.items() %}
     {% if func_info.is_websocket %}
-    async def {{ func_name }}(self, *args, **kwargs):
-        """Async WebSocket connection for {{ func_name }}
+    def {{ func_name }}(self, *args, **kwargs):
+        """WebSocket connection for {{ func_name }} (sync wrapper for async client)
         
         {{ func_info.description }}
+        
+        Note: WebSocket connections are synchronous even in AsyncKittyCAD
         """
-        from .api.{{ tag }}.{{ func_name }} import asyncio
+        {% if func_info.has_websocket_class %}
+        # Import WebSocket wrapper class
+        from .api.{{ tag }}.{{ func_name }} import WebSocket
+        
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+        
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
+        {% else %}
+        # Use sync function for WebSocket endpoints without wrapper class
+        from .api.{{ tag }}.{{ func_name }} import sync
         kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return sync(*args, **kwargs)
+        {% endif %}
     {% else %}
     async def {{ func_name }}(self, *args, **kwargs) -> {{ func_info.return_type }}:
         """{{ func_info.description }}"""

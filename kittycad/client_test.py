@@ -332,8 +332,8 @@ def test_ws_simple():
     # Create our client
     client = KittyCAD()
 
-    # WebSocket uses direct pattern - call the WebSocket function directly
-    websocket = client.modeling.modeling_commands_ws(
+    # WebSocket uses direct pattern
+    with client.modeling.modeling_commands_ws(
         fps=30,
         show_grid=False,
         post_effect=PostEffectType.NOEFFECT,
@@ -341,8 +341,7 @@ def test_ws_simple():
         video_res_height=360,
         video_res_width=480,
         webrtc=False,
-    )
-    with websocket:
+    ) as websocket:
         # Send a message.
         id = uuid.uuid4()
         req = WebSocketRequest(
@@ -366,8 +365,8 @@ def test_ws_import():
             # Create our client
             client = KittyCAD()
 
-            # WebSocket uses direct pattern - call the WebSocket function directly
-            websocket = client.modeling.modeling_commands_ws(
+            # WebSocket uses direct pattern
+            with client.modeling.modeling_commands_ws(
                 fps=30,
                 post_effect=PostEffectType.NOEFFECT,
                 show_grid=False,
@@ -375,8 +374,7 @@ def test_ws_import():
                 video_res_height=360,
                 video_res_width=480,
                 webrtc=False,
-            )
-            with websocket:
+            ) as websocket:
                 # read the content of the file
                 dir_path = os.path.dirname(os.path.realpath(__file__))
                 file_name = "ORIGINALVOXEL-3.obj"

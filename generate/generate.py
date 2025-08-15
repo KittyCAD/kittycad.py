@@ -56,9 +56,25 @@ def generate_client_classes(cwd: str, data: dict):
             # Use Any return type for now to avoid complex union type issues
             return_type = "Any"
 
+            # Check if WebSocket endpoint has a wrapper class
+            has_websocket_class = False
+            if is_websocket:
+                # Check if the corresponding API file has a WebSocket class
+                api_file_path = os.path.join(
+                    cwd, "kittycad", "api", tag, f"{operation_id}.py"
+                )
+                if os.path.exists(api_file_path):
+                    try:
+                        with open(api_file_path, "r") as f:
+                            content = f.read()
+                            has_websocket_class = "class WebSocket" in content
+                    except (IOError, OSError):
+                        pass
+
             endpoints_by_tag[tag][operation_id] = {
                 "name": operation_id,
                 "is_websocket": is_websocket,
+                "has_websocket_class": has_websocket_class,
                 "description": endpoint_data.get("summary", "").replace('"', '\\"'),
                 "return_type": return_type,
                 "path": path,

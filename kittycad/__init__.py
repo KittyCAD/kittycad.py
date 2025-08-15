@@ -327,20 +327,52 @@ class MlAPI:
 
         Open a websocket to prompt the ML copilot.
         """
-        from .api.ml.ml_copilot_ws import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        # Import WebSocket wrapper class
+        from .api.ml.ml_copilot_ws import WebSocket
+
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
 
     def ml_reasoning_ws(self, *args, **kwargs):
         """WebSocket connection for ml_reasoning_ws
 
         Open a websocket to prompt the ML copilot.
         """
-        from .api.ml.ml_reasoning_ws import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        # Import WebSocket wrapper class
+        from .api.ml.ml_reasoning_ws import WebSocket
+
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
 
 
 class AsyncMlAPI:
@@ -426,25 +458,61 @@ class AsyncMlAPI:
         kwargs["client"] = self.client
         return await asyncio(*args, **kwargs)
 
-    async def ml_copilot_ws(self, *args, **kwargs):
-        """Async WebSocket connection for ml_copilot_ws
+    def ml_copilot_ws(self, *args, **kwargs):
+        """WebSocket connection for ml_copilot_ws (sync wrapper for async client)
 
         Open a websocket to prompt the ML copilot.
+
+        Note: WebSocket connections are synchronous even in AsyncKittyCAD
         """
-        from .api.ml.ml_copilot_ws import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        # Import WebSocket wrapper class
+        from .api.ml.ml_copilot_ws import WebSocket
 
-    async def ml_reasoning_ws(self, *args, **kwargs):
-        """Async WebSocket connection for ml_reasoning_ws
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
+
+    def ml_reasoning_ws(self, *args, **kwargs):
+        """WebSocket connection for ml_reasoning_ws (sync wrapper for async client)
 
         Open a websocket to prompt the ML copilot.
-        """
-        from .api.ml.ml_reasoning_ws import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        Note: WebSocket connections are synchronous even in AsyncKittyCAD
+        """
+
+        # Import WebSocket wrapper class
+        from .api.ml.ml_reasoning_ws import WebSocket
+
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
 
 
 class ApiCallsAPI:
@@ -913,6 +981,8 @@ class ExecutorAPI:
 
         Create a terminal.
         """
+
+        # Use sync function for WebSocket endpoints without wrapper class
         from .api.executor.create_executor_term import sync
 
         kwargs["client"] = self.client
@@ -932,15 +1002,19 @@ class AsyncExecutorAPI:
         kwargs["client"] = self.client
         return await asyncio(*args, **kwargs)
 
-    async def create_executor_term(self, *args, **kwargs):
-        """Async WebSocket connection for create_executor_term
+    def create_executor_term(self, *args, **kwargs):
+        """WebSocket connection for create_executor_term (sync wrapper for async client)
 
         Create a terminal.
+
+        Note: WebSocket connections are synchronous even in AsyncKittyCAD
         """
-        from .api.executor.create_executor_term import asyncio
+
+        # Use sync function for WebSocket endpoints without wrapper class
+        from .api.executor.create_executor_term import sync
 
         kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        return sync(*args, **kwargs)
 
 
 class Oauth2API:
@@ -2480,10 +2554,26 @@ class ModelingAPI:
 
         Open a websocket which accepts modeling commands.
         """
-        from .api.modeling.modeling_commands_ws import sync
 
-        kwargs["client"] = self.client
-        return sync(*args, **kwargs)
+        # Import WebSocket wrapper class
+        from .api.modeling.modeling_commands_ws import WebSocket
+
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
 
 
 class AsyncModelingAPI:
@@ -2492,15 +2582,33 @@ class AsyncModelingAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def modeling_commands_ws(self, *args, **kwargs):
-        """Async WebSocket connection for modeling_commands_ws
+    def modeling_commands_ws(self, *args, **kwargs):
+        """WebSocket connection for modeling_commands_ws (sync wrapper for async client)
 
         Open a websocket which accepts modeling commands.
-        """
-        from .api.modeling.modeling_commands_ws import asyncio
 
-        kwargs["client"] = self.client
-        return await asyncio(*args, **kwargs)
+        Note: WebSocket connections are synchronous even in AsyncKittyCAD
+        """
+
+        # Import WebSocket wrapper class
+        from .api.modeling.modeling_commands_ws import WebSocket
+
+        # Temporarily set default client for WebSocket initialization
+        original_client = None
+        try:
+            original_client = get_default_client()
+        except ValueError:
+            pass
+
+        set_default_client(self.client)
+        try:
+            return WebSocket(*args, **kwargs)
+        finally:
+            if original_client:
+                set_default_client(original_client)
+            else:
+                global _default_client
+                _default_client = None
 
 
 class KittyCAD(Client):
