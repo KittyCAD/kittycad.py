@@ -17,7 +17,8 @@ from websockets.sync.client import (
 )
 {% endif %}
 
-from .client import Client
+from .client import AsyncClient, Client
+from .pagination import AsyncPageIterator, SyncPageIterator
 from .response_helpers import raise_for_status
 from .exceptions import (
     KittyCADError,
@@ -64,7 +65,7 @@ class {{ tag_pascal }}API:
 class Async{{ tag_pascal }}API:
     """Async API for {{ tag }} endpoints"""
     
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
     
     {% for func_name, func_info in functions.items() %}
@@ -172,7 +173,7 @@ class KittyCAD(Client):
         {% endfor %}
 
 
-class AsyncKittyCAD(Client):
+class AsyncKittyCAD(AsyncClient):
     """Async KittyCAD client class with async API interface.
 
     Usage:

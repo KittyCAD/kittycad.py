@@ -15,7 +15,7 @@ from websockets.sync.client import (
     connect as ws_connect,
 )
 
-from .client import Client
+from .client import AsyncClient, Client
 from .exceptions import (
     KittyCADAPIError,
     KittyCADClientError,
@@ -159,6 +159,7 @@ from .models.zoo_product_subscriptions_org_request import (
 from .models.zoo_product_subscriptions_user_request import (
     ZooProductSubscriptionsUserRequest,
 )
+from .pagination import AsyncPageIterator, SyncPageIterator
 from .response_helpers import raise_for_status
 
 
@@ -175,12 +176,10 @@ class MetaAPI:
 
         url = "{}/".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -202,12 +201,10 @@ class MetaAPI:
 
         url = "{}/_meta/ipinfo".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -243,12 +240,10 @@ class MetaAPI:
             else:
                 url = url + "?sso=" + str(sso)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -265,12 +260,10 @@ class MetaAPI:
 
         url = "{}/debug/uploads".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -293,12 +286,10 @@ class MetaAPI:
 
         url = "{}/events".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -321,12 +312,10 @@ class MetaAPI:
             self.client.base_url, discord_id=discord_id
         )
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -348,12 +337,10 @@ class MetaAPI:
 
         url = "{}/ping".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -375,12 +362,10 @@ class MetaAPI:
 
         url = "{}/pricing/subscriptions".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -399,7 +384,7 @@ class MetaAPI:
 class AsyncMetaAPI:
     """Async API for meta endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_schema(
@@ -409,13 +394,11 @@ class AsyncMetaAPI:
 
         url = "{}/".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -436,13 +419,11 @@ class AsyncMetaAPI:
 
         url = "{}/_meta/ipinfo".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -477,13 +458,11 @@ class AsyncMetaAPI:
             else:
                 url = url + "?sso=" + str(sso)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -499,13 +478,11 @@ class AsyncMetaAPI:
 
         url = "{}/debug/uploads".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -527,14 +504,12 @@ class AsyncMetaAPI:
 
         url = "{}/events".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -555,13 +530,11 @@ class AsyncMetaAPI:
             self.client.base_url, discord_id=discord_id
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -582,13 +555,11 @@ class AsyncMetaAPI:
 
         url = "{}/ping".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -609,13 +580,11 @@ class AsyncMetaAPI:
 
         url = "{}/pricing/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -659,12 +628,10 @@ class MlAPI:
             else:
                 url = url + "?kcl=" + str(kcl).lower()
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -682,47 +649,86 @@ class MlAPI:
 
     def list_ml_prompts(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> MlPromptResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
         """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by a Zoo employee.
 
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first."""
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
 
-        url = "{}/ml-prompts".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -730,7 +736,6 @@ class MlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return MlPromptResultsPage(**json_data)
 
     def get_ml_prompt(
@@ -741,12 +746,10 @@ class MlAPI:
 
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -763,45 +766,86 @@ class MlAPI:
 
     def list_conversations_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ConversationResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
-        The conversations are returned in order of creation, with the most recently created conversations first."""
+        The conversations are returned in order of creation, with the most recently created conversations first.
 
-        url = "{}/ml/conversations".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.ml.list_conversations_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_conversations_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_conversations_for_user(
+        self, **kwargs
+    ) -> ConversationResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -809,12 +853,12 @@ class MlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ConversationResultsPage(**json_data)
 
     def create_proprietary_to_kcl(
         self,
-        code_option: CodeOption,
+        *,
+        code_option: Optional[CodeOption] = None,
     ) -> KclModel:
         """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
 
@@ -830,12 +874,10 @@ class MlAPI:
             else:
                 url = url + "?code_option=" + str(code_option)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -858,12 +900,10 @@ class MlAPI:
 
         url = "{}/ml/kcl/completions".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -893,12 +933,10 @@ class MlAPI:
 
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -930,12 +968,10 @@ class MlAPI:
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -953,61 +989,108 @@ class MlAPI:
 
     def list_text_to_cad_models_for_user(
         self,
-        sort_by: CreatedAtSortMode,
-        conversation_id: Uuid,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
-    ) -> TextToCadResponseResultsPage:
+    ) -> "SyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
 
-        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""
+        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
 
-        url = "{}/user/text-to-cad".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_text_to_cad_models_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if conversation_id is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(conversation_id)
-            else:
-                url = url + "?conversation_id=" + str(conversation_id)
+            kwargs["conversation_id"] = conversation_id
 
         if no_models is not None:
-            if "?" in url:
-                url = url + "&no_models=" + str(no_models).lower()
-            else:
-                url = url + "?no_models=" + str(no_models).lower()
+            kwargs["no_models"] = no_models
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_text_to_cad_models_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_text_to_cad_models_for_user(
+        self, **kwargs
+    ) -> TextToCadResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
+            else:
+                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+
+        if "no_models" in kwargs and kwargs["no_models"] is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
+            else:
+                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1015,7 +1098,6 @@ class MlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return TextToCadResponseResultsPage(**json_data)
 
     def get_text_to_cad_model_for_user(
@@ -1026,12 +1108,10 @@ class MlAPI:
 
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1063,12 +1143,10 @@ class MlAPI:
             else:
                 url = url + "?feedback=" + str(feedback)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1096,7 +1174,7 @@ class MlAPI:
 class AsyncMlAPI:
     """Async API for ml endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_text_to_cad(
@@ -1122,14 +1200,12 @@ class AsyncMlAPI:
             else:
                 url = url + "?kcl=" + str(kcl).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1143,49 +1219,88 @@ class AsyncMlAPI:
 
         return TextToCad(**json_data)
 
-    async def list_ml_prompts(
+    def list_ml_prompts(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> MlPromptResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
         """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by a Zoo employee.
 
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first."""
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
 
-        url = "{}/ml-prompts".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1193,7 +1308,6 @@ class AsyncMlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return MlPromptResultsPage(**json_data)
 
     async def get_ml_prompt(
@@ -1204,13 +1318,11 @@ class AsyncMlAPI:
 
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1224,47 +1336,88 @@ class AsyncMlAPI:
 
         return MlPrompt(**json_data)
 
-    async def list_conversations_for_user(
+    def list_conversations_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ConversationResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
 
-        The conversations are returned in order of creation, with the most recently created conversations first."""
+        The conversations are returned in order of creation, with the most recently created conversations first.
 
-        url = "{}/ml/conversations".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.ml.list_conversations_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_conversations_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_conversations_for_user(
+        self, **kwargs
+    ) -> ConversationResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1272,12 +1425,12 @@ class AsyncMlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ConversationResultsPage(**json_data)
 
     async def create_proprietary_to_kcl(
         self,
-        code_option: CodeOption,
+        *,
+        code_option: Optional[CodeOption] = None,
     ) -> KclModel:
         """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
 
@@ -1293,13 +1446,11 @@ class AsyncMlAPI:
             else:
                 url = url + "?code_option=" + str(code_option)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1321,14 +1472,12 @@ class AsyncMlAPI:
 
         url = "{}/ml/kcl/completions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1356,14 +1505,12 @@ class AsyncMlAPI:
 
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1393,14 +1540,12 @@ class AsyncMlAPI:
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1414,63 +1559,110 @@ class AsyncMlAPI:
 
         return TextToCadMultiFileIteration(**json_data)
 
-    async def list_text_to_cad_models_for_user(
+    def list_text_to_cad_models_for_user(
         self,
-        sort_by: CreatedAtSortMode,
-        conversation_id: Uuid,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
-    ) -> TextToCadResponseResultsPage:
+    ) -> "AsyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
         This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
 
-        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first."""
+        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
 
-        url = "{}/user/text-to-cad".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_text_to_cad_models_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if conversation_id is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(conversation_id)
-            else:
-                url = url + "?conversation_id=" + str(conversation_id)
+            kwargs["conversation_id"] = conversation_id
 
         if no_models is not None:
-            if "?" in url:
-                url = url + "&no_models=" + str(no_models).lower()
-            else:
-                url = url + "?no_models=" + str(no_models).lower()
+            kwargs["no_models"] = no_models
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_text_to_cad_models_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_text_to_cad_models_for_user(
+        self, **kwargs
+    ) -> TextToCadResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
+            else:
+                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+
+        if "no_models" in kwargs and kwargs["no_models"] is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
+            else:
+                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1478,7 +1670,6 @@ class AsyncMlAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return TextToCadResponseResultsPage(**json_data)
 
     async def get_text_to_cad_model_for_user(
@@ -1489,13 +1680,11 @@ class AsyncMlAPI:
 
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1526,13 +1715,11 @@ class AsyncMlAPI:
             else:
                 url = url + "?feedback=" + str(feedback)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -1609,12 +1796,10 @@ class ApiCallsAPI:
             else:
                 url = url + "?group_by=" + str(group_by)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1631,43 +1816,82 @@ class ApiCallsAPI:
 
     def list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/api-calls".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.api-calls.list_api_calls():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_api_calls(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1675,7 +1899,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     def get_api_call(
@@ -1690,12 +1913,10 @@ class ApiCallsAPI:
 
         url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1712,52 +1933,94 @@ class ApiCallsAPI:
 
     def list_async_operations(
         self,
-        sort_by: CreatedAtSortMode,
-        status: ApiCallStatus,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> AsyncApiCallResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+        status: Optional[ApiCallStatus] = None,
+    ) -> "SyncPageIterator":
         """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 
-        This endpoint requires authentication by a Zoo employee."""
+        This endpoint requires authentication by a Zoo employee.
 
-        url = "{}/async/operations".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.async.list_async_operations():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if status is not None:
-            if "?" in url:
-                url = url + "&status=" + str(status)
-            else:
-                url = url + "?status=" + str(status)
+            kwargs["status"] = status
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_async_operations(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_async_operations(self, **kwargs) -> AsyncApiCallResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/async/operations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "status" in kwargs and kwargs["status"] is not None:
+            if "?" in url:
+                url = url + "&status=" + str(kwargs["status"])
+            else:
+                url = url + "?status=" + str(kwargs["status"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1765,7 +2028,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return AsyncApiCallResultsPage(**json_data)
 
     def get_async_operation(
@@ -1792,12 +2054,10 @@ class ApiCallsAPI:
 
         url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1814,47 +2074,86 @@ class ApiCallsAPI:
 
     def org_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
         """This includes all API calls that were made by users in the org.
 
         This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/org/api-calls".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.org.org_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_org_list_api_calls(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_org_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1862,7 +2161,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     def get_api_call_for_org(
@@ -1873,12 +2171,10 @@ class ApiCallsAPI:
 
         url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1895,45 +2191,84 @@ class ApiCallsAPI:
 
     def user_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/user/api-calls".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.user_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_user_list_api_calls(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_user_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1941,7 +2276,6 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     def get_api_call_for_user(
@@ -1952,12 +2286,10 @@ class ApiCallsAPI:
 
         url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -1975,49 +2307,92 @@ class ApiCallsAPI:
     def list_api_calls_for_user(
         self,
         id: UserIdentifier,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
 
         Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
 
         If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.users.list_api_calls_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_api_calls_for_user(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_api_calls_for_user(
+        self, id: UserIdentifier, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2025,14 +2400,13 @@ class ApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
 
 class AsyncApiCallsAPI:
     """Async API for api_calls endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_api_call_metrics(
@@ -2049,13 +2423,11 @@ class AsyncApiCallsAPI:
             else:
                 url = url + "?group_by=" + str(group_by)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2069,45 +2441,84 @@ class AsyncApiCallsAPI:
 
         return List[ApiCallQueryGroup](**json_data)
 
-    async def list_api_calls(
+    def list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/api-calls".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.api-calls.list_api_calls():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_api_calls(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2115,7 +2526,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     async def get_api_call(
@@ -2130,13 +2540,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2150,54 +2558,98 @@ class AsyncApiCallsAPI:
 
         return ApiCallWithPrice(**json_data)
 
-    async def list_async_operations(
+    def list_async_operations(
         self,
-        sort_by: CreatedAtSortMode,
-        status: ApiCallStatus,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> AsyncApiCallResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+        status: Optional[ApiCallStatus] = None,
+    ) -> "AsyncPageIterator":
         """For async file conversion operations, this endpoint does not return the contents of converted files (`output`). To get the contents use the `/async/operations/{id}` endpoint.
 
-        This endpoint requires authentication by a Zoo employee."""
+        This endpoint requires authentication by a Zoo employee.
 
-        url = "{}/async/operations".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.async.list_async_operations():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if status is not None:
-            if "?" in url:
-                url = url + "&status=" + str(status)
-            else:
-                url = url + "?status=" + str(status)
+            kwargs["status"] = status
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_async_operations(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_async_operations(
+        self, **kwargs
+    ) -> AsyncApiCallResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/async/operations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "status" in kwargs and kwargs["status"] is not None:
+            if "?" in url:
+                url = url + "&status=" + str(kwargs["status"])
+            else:
+                url = url + "?status=" + str(kwargs["status"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2205,7 +2657,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return AsyncApiCallResultsPage(**json_data)
 
     async def get_async_operation(
@@ -2232,13 +2683,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2252,49 +2701,90 @@ class AsyncApiCallsAPI:
 
         return json_data
 
-    async def org_list_api_calls(
+    def org_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
         """This includes all API calls that were made by users in the org.
 
         This endpoint requires authentication by an org admin. It returns the API calls for the authenticated user's org.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/org/api-calls".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.org.org_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_org_list_api_calls(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_org_list_api_calls(
+        self, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2302,7 +2792,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     async def get_api_call_for_org(
@@ -2313,13 +2802,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2333,47 +2820,88 @@ class AsyncApiCallsAPI:
 
         return ApiCallWithPrice(**json_data)
 
-    async def user_list_api_calls(
+    def user_list_api_calls(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/user/api-calls".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.user_list_api_calls():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_user_list_api_calls(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_user_list_api_calls(
+        self, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-calls".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2381,7 +2909,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
     async def get_api_call_for_user(
@@ -2392,13 +2919,11 @@ class AsyncApiCallsAPI:
 
         url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2412,52 +2937,95 @@ class AsyncApiCallsAPI:
 
         return ApiCallWithPrice(**json_data)
 
-    async def list_api_calls_for_user(
+    def list_api_calls_for_user(
         self,
         id: UserIdentifier,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiCallWithPriceResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API calls for the authenticated user if "me" is passed as the user id.
 
         Alternatively, you can use the `/user/api-calls` endpoint to get the API calls for your user.
 
         If the authenticated user is a Zoo employee, then the API calls are returned for the user specified by the user id.
 
-        The API calls are returned in order of creation, with the most recently created API calls first."""
+        The API calls are returned in order of creation, with the most recently created API calls first.
 
-        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.users.list_api_calls_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_api_calls_for_user(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_api_calls_for_user(
+        self, id: UserIdentifier, **kwargs
+    ) -> ApiCallWithPriceResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2465,7 +3033,6 @@ class AsyncApiCallsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiCallWithPriceResultsPage(**json_data)
 
 
@@ -2484,12 +3051,10 @@ class AppsAPI:
 
         url = "{}/apps/github/callback".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2508,12 +3073,10 @@ class AppsAPI:
 
         url = "{}/apps/github/consent".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2536,12 +3099,10 @@ class AppsAPI:
 
         url = "{}/apps/github/webhook".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -2556,7 +3117,7 @@ class AppsAPI:
 class AsyncAppsAPI:
     """Async API for apps endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def apps_github_callback(
@@ -2568,13 +3129,11 @@ class AsyncAppsAPI:
 
         url = "{}/apps/github/callback".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2592,13 +3151,11 @@ class AsyncAppsAPI:
 
         url = "{}/apps/github/consent".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2620,14 +3177,12 @@ class AsyncAppsAPI:
 
         url = "{}/apps/github/webhook".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2650,12 +3205,10 @@ class HiddenAPI:
 
         url = "{}/auth/api-key".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2678,12 +3231,10 @@ class HiddenAPI:
 
         url = "{}/auth/email".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -2728,12 +3279,10 @@ class HiddenAPI:
             else:
                 url = url + "?token=" + str(token)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2761,12 +3310,10 @@ class HiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2794,12 +3341,10 @@ class HiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2820,12 +3365,10 @@ class HiddenAPI:
             self.client.base_url, provider_id=provider_id
         )
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -2843,12 +3386,10 @@ class HiddenAPI:
 
         url = "{}/logout".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2866,12 +3407,10 @@ class HiddenAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -2885,7 +3424,7 @@ class HiddenAPI:
 class AsyncHiddenAPI:
     """Async API for hidden endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def auth_api_key(
@@ -2895,13 +3434,11 @@ class AsyncHiddenAPI:
 
         url = "{}/auth/api-key".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2923,14 +3460,12 @@ class AsyncHiddenAPI:
 
         url = "{}/auth/email".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -2973,13 +3508,11 @@ class AsyncHiddenAPI:
             else:
                 url = url + "?token=" + str(token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3006,13 +3539,11 @@ class AsyncHiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3039,13 +3570,11 @@ class AsyncHiddenAPI:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3065,14 +3594,12 @@ class AsyncHiddenAPI:
             self.client.base_url, provider_id=provider_id
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3088,13 +3615,11 @@ class AsyncHiddenAPI:
 
         url = "{}/logout".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3111,13 +3636,11 @@ class AsyncHiddenAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3135,9 +3658,10 @@ class FileAPI:
 
     def create_file_center_of_mass(
         self,
-        output_unit: UnitLength,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitLength] = None,
     ) -> FileCenterOfMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3163,12 +3687,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3196,12 +3718,10 @@ class FileAPI:
 
         url = "{}/file/conversion".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -3235,12 +3755,10 @@ class FileAPI:
             self.client.base_url, output_format=output_format, src_format=src_format
         )
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3259,10 +3777,11 @@ class FileAPI:
     def create_file_density(
         self,
         material_mass: float,
-        material_mass_unit: UnitMass,
-        output_unit: UnitDensity,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_mass_unit: Optional[UnitMass] = None,
+        output_unit: Optional[UnitDensity] = None,
     ) -> FileDensity:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3300,12 +3819,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3324,10 +3841,11 @@ class FileAPI:
     def create_file_mass(
         self,
         material_density: float,
-        material_density_unit: UnitDensity,
-        output_unit: UnitMass,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_density_unit: Optional[UnitDensity] = None,
+        output_unit: Optional[UnitMass] = None,
     ) -> FileMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3365,12 +3883,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3388,9 +3904,10 @@ class FileAPI:
 
     def create_file_surface_area(
         self,
-        output_unit: UnitArea,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitArea] = None,
     ) -> FileSurfaceArea:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3416,12 +3933,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3439,9 +3954,10 @@ class FileAPI:
 
     def create_file_volume(
         self,
-        output_unit: UnitVolume,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitVolume] = None,
     ) -> FileVolume:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3467,12 +3983,10 @@ class FileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3492,14 +4006,15 @@ class FileAPI:
 class AsyncFileAPI:
     """Async API for file endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_file_center_of_mass(
         self,
-        output_unit: UnitLength,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitLength] = None,
     ) -> FileCenterOfMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3525,14 +4040,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3558,14 +4071,12 @@ class AsyncFileAPI:
 
         url = "{}/file/conversion".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3597,14 +4108,12 @@ class AsyncFileAPI:
             self.client.base_url, output_format=output_format, src_format=src_format
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3621,10 +4130,11 @@ class AsyncFileAPI:
     async def create_file_density(
         self,
         material_mass: float,
-        material_mass_unit: UnitMass,
-        output_unit: UnitDensity,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_mass_unit: Optional[UnitMass] = None,
+        output_unit: Optional[UnitDensity] = None,
     ) -> FileDensity:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3662,14 +4172,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3686,10 +4194,11 @@ class AsyncFileAPI:
     async def create_file_mass(
         self,
         material_density: float,
-        material_density_unit: UnitDensity,
-        output_unit: UnitMass,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        material_density_unit: Optional[UnitDensity] = None,
+        output_unit: Optional[UnitMass] = None,
     ) -> FileMass:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3727,14 +4236,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3750,9 +4257,10 @@ class AsyncFileAPI:
 
     async def create_file_surface_area(
         self,
-        output_unit: UnitArea,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitArea] = None,
     ) -> FileSurfaceArea:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3778,14 +4286,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3801,9 +4307,10 @@ class AsyncFileAPI:
 
     async def create_file_volume(
         self,
-        output_unit: UnitVolume,
         src_format: FileImportFormat,
         body: bytes,
+        *,
+        output_unit: Optional[UnitVolume] = None,
     ) -> FileVolume:
         """We assume any file given to us has one consistent unit throughout. We also assume the file is at the proper scale.
 
@@ -3829,14 +4336,12 @@ class AsyncFileAPI:
             else:
                 url = url + "?src_format=" + str(src_format)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3874,12 +4379,10 @@ class ExecutorAPI:
             else:
                 url = url + "?output=" + str(output)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body,
         )
 
@@ -3906,7 +4409,7 @@ class ExecutorAPI:
 class AsyncExecutorAPI:
     """Async API for executor endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_file_execution(
@@ -3926,14 +4429,12 @@ class AsyncExecutorAPI:
             else:
                 url = url + "?output=" + str(output)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body,
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -3984,12 +4485,10 @@ class Oauth2API:
 
         url = "{}/oauth2/device/auth".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4008,12 +4507,10 @@ class Oauth2API:
 
         url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4032,12 +4529,10 @@ class Oauth2API:
 
         url = "{}/oauth2/device/token".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4070,12 +4565,10 @@ class Oauth2API:
             else:
                 url = url + "?user_code=" + str(user_code)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4088,10 +4581,10 @@ class Oauth2API:
     def oauth2_provider_callback(
         self,
         provider: AccountProvider,
-        code: str,
-        state: str,
         *,
+        code: Optional[str] = None,
         id_token: Optional[str] = None,
+        state: Optional[str] = None,
         user: Optional[str] = None,
     ):
         """Listen for callbacks for the OAuth 2.0 provider."""
@@ -4124,12 +4617,10 @@ class Oauth2API:
             else:
                 url = url + "?user=" + str(user)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4150,12 +4641,10 @@ class Oauth2API:
             self.client.base_url, provider=provider
         )
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4184,12 +4673,10 @@ class Oauth2API:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4212,12 +4699,10 @@ class Oauth2API:
 
         url = "{}/oauth2/token/revoke".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4232,7 +4717,7 @@ class Oauth2API:
 class AsyncOauth2API:
     """Async API for oauth2 endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def device_auth_request(
@@ -4243,14 +4728,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/device/auth".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4267,14 +4750,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4291,14 +4772,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/device/token".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4329,13 +4808,11 @@ class AsyncOauth2API:
             else:
                 url = url + "?user_code=" + str(user_code)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4347,10 +4824,10 @@ class AsyncOauth2API:
     async def oauth2_provider_callback(
         self,
         provider: AccountProvider,
-        code: str,
-        state: str,
         *,
+        code: Optional[str] = None,
         id_token: Optional[str] = None,
+        state: Optional[str] = None,
         user: Optional[str] = None,
     ):
         """Listen for callbacks for the OAuth 2.0 provider."""
@@ -4383,13 +4860,11 @@ class AsyncOauth2API:
             else:
                 url = url + "?user=" + str(user)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4409,14 +4884,12 @@ class AsyncOauth2API:
             self.client.base_url, provider=provider
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4443,13 +4916,11 @@ class AsyncOauth2API:
             else:
                 url = url + "?callback_url=" + str(callback_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4471,14 +4942,12 @@ class AsyncOauth2API:
 
         url = "{}/oauth2/token/revoke".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -4501,12 +4970,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4529,12 +4996,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4558,12 +5023,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4590,12 +5053,10 @@ class OrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4607,50 +5068,92 @@ class OrgsAPI:
 
     def list_org_members(
         self,
-        sort_by: CreatedAtSortMode,
-        role: UserOrgRole,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> OrgMemberResultsPage:
-        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+        role: Optional[UserOrgRole] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org.
 
-        url = "{}/org/members".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_members():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if role is not None:
-            if "?" in url:
-                url = url + "&role=" + str(role)
-            else:
-                url = url + "?role=" + str(role)
+            kwargs["role"] = role
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_members(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_members(self, **kwargs) -> OrgMemberResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/members".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "role" in kwargs and kwargs["role"] is not None:
+            if "?" in url:
+                url = url + "&role=" + str(kwargs["role"])
+            else:
+                url = url + "?role=" + str(kwargs["role"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4658,7 +5161,6 @@ class OrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgMemberResultsPage(**json_data)
 
     def create_org_member(
@@ -4677,12 +5179,10 @@ class OrgsAPI:
 
         url = "{}/org/members".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4706,12 +5206,10 @@ class OrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4735,12 +5233,10 @@ class OrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4764,12 +5260,10 @@ class OrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4786,12 +5280,10 @@ class OrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4814,12 +5306,10 @@ class OrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4842,12 +5332,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4870,12 +5358,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4899,12 +5385,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -4927,12 +5411,10 @@ class OrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -4944,43 +5426,82 @@ class OrgsAPI:
 
     def get_org_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org.
 
-        url = "{}/org/shortlinks".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.get_org_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_get_org_shortlinks(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_org_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4988,48 +5509,86 @@ class OrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
     def list_orgs(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> OrgResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first.
 
-        url = "{}/orgs".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.orgs.list_orgs():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_orgs(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_orgs(self, **kwargs) -> OrgResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/orgs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5037,7 +5596,6 @@ class OrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgResultsPage(**json_data)
 
     def get_any_org(
@@ -5048,12 +5606,10 @@ class OrgsAPI:
 
         url = "{}/orgs/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5077,12 +5633,10 @@ class OrgsAPI:
 
         url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -5107,12 +5661,10 @@ class OrgsAPI:
 
         url = "{}/user/org".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5131,7 +5683,7 @@ class OrgsAPI:
 class AsyncOrgsAPI:
     """Async API for orgs endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_org(
@@ -5141,13 +5693,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5169,14 +5719,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5198,14 +5746,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5230,13 +5776,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5245,52 +5789,94 @@ class AsyncOrgsAPI:
 
         return response.json() if response.content else None
 
-    async def list_org_members(
+    def list_org_members(
         self,
-        sort_by: CreatedAtSortMode,
-        role: UserOrgRole,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> OrgMemberResultsPage:
-        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+        role: Optional[UserOrgRole] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by an org admin. It lists the members of the authenticated user's org.
 
-        url = "{}/org/members".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_members():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
         if role is not None:
-            if "?" in url:
-                url = url + "&role=" + str(role)
-            else:
-                url = url + "?role=" + str(role)
+            kwargs["role"] = role
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_members(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_members(self, **kwargs) -> OrgMemberResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/members".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "role" in kwargs and kwargs["role"] is not None:
+            if "?" in url:
+                url = url + "&role=" + str(kwargs["role"])
+            else:
+                url = url + "?role=" + str(kwargs["role"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5298,7 +5884,6 @@ class AsyncOrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgMemberResultsPage(**json_data)
 
     async def create_org_member(
@@ -5317,14 +5902,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5346,13 +5929,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5375,14 +5956,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5404,13 +5983,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5426,13 +6003,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5454,14 +6029,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5482,13 +6055,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5510,14 +6081,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5539,14 +6108,12 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5567,13 +6134,11 @@ class AsyncOrgsAPI:
 
         url = "{}/org/saml/idp".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5582,45 +6147,84 @@ class AsyncOrgsAPI:
 
         return response.json() if response.content else None
 
-    async def get_org_shortlinks(
+    def get_org_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by an org admin. It gets the shortlinks for the authenticated user's org.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.get_org_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_org_shortlinks(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_org_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/org/shortlinks".format(self.client.base_url)
 
-        if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+        # Add query parameters
 
-        if page_token is not None:
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&page_token=" + str(page_token)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?page_token=" + str(page_token)
+                url = url + "?limit=" + str(kwargs["limit"])
 
-        if sort_by is not None:
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&page_token=" + str(kwargs["page_token"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5628,48 +6232,86 @@ class AsyncOrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
-    async def list_orgs(
+    def list_orgs(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> OrgResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The orgs are returned in order of creation, with the most recently created orgs first.
 
-        url = "{}/orgs".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.orgs.list_orgs():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_orgs(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_orgs(self, **kwargs) -> OrgResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/orgs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5677,7 +6319,6 @@ class AsyncOrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return OrgResultsPage(**json_data)
 
     async def get_any_org(
@@ -5688,13 +6329,11 @@ class AsyncOrgsAPI:
 
         url = "{}/orgs/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5717,14 +6356,12 @@ class AsyncOrgsAPI:
 
         url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5747,13 +6384,11 @@ class AsyncOrgsAPI:
 
         url = "{}/user/org".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -5783,12 +6418,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5813,12 +6446,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -5844,12 +6475,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -5874,12 +6503,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5891,7 +6518,8 @@ class PaymentsAPI:
 
     def get_payment_balance_for_org(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
 
@@ -5903,12 +6531,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5930,12 +6556,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/intent".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5957,12 +6581,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -5984,12 +6606,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/methods".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6012,12 +6632,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6034,12 +6652,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6062,12 +6678,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6091,12 +6705,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6119,12 +6731,10 @@ class PaymentsAPI:
 
         url = "{}/org/payment/tax".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6136,8 +6746,9 @@ class PaymentsAPI:
 
     def get_payment_balance_for_any_org(
         self,
-        include_total_due: bool,
         id: Uuid,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified org."""
 
@@ -6149,12 +6760,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6172,8 +6781,9 @@ class PaymentsAPI:
     def update_payment_balance_for_any_org(
         self,
         id: Uuid,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified org."""
 
@@ -6185,12 +6795,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6215,12 +6823,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6245,12 +6851,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6276,12 +6880,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6306,12 +6908,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6323,7 +6923,8 @@ class PaymentsAPI:
 
     def get_payment_balance_for_user(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by any Zoo user. It gets the balance information for the authenticated user."""
 
@@ -6335,12 +6936,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6362,12 +6961,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/intent".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6389,12 +6986,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6416,12 +7011,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/methods".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6444,12 +7037,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6466,12 +7057,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6494,12 +7083,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6523,12 +7110,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6551,12 +7136,10 @@ class PaymentsAPI:
 
         url = "{}/user/payment/tax".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6569,7 +7152,8 @@ class PaymentsAPI:
     def get_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified user."""
 
@@ -6581,12 +7165,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -6604,8 +7186,9 @@ class PaymentsAPI:
     def update_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified user."""
 
@@ -6617,12 +7200,10 @@ class PaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -6642,7 +7223,7 @@ class PaymentsAPI:
 class AsyncPaymentsAPI:
     """Async API for payments endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_payment_information_for_org(
@@ -6654,13 +7235,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6684,14 +7263,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6715,14 +7292,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6745,13 +7320,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6762,7 +7335,8 @@ class AsyncPaymentsAPI:
 
     async def get_payment_balance_for_org(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
 
@@ -6774,13 +7348,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6801,13 +7373,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/intent".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6828,13 +7398,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6855,13 +7423,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/methods".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6883,13 +7449,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6905,13 +7469,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6933,14 +7495,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6962,14 +7522,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -6990,13 +7548,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/org/payment/tax".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7007,8 +7563,9 @@ class AsyncPaymentsAPI:
 
     async def get_payment_balance_for_any_org(
         self,
-        include_total_due: bool,
         id: Uuid,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified org."""
 
@@ -7020,13 +7577,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7043,8 +7598,9 @@ class AsyncPaymentsAPI:
     async def update_payment_balance_for_any_org(
         self,
         id: Uuid,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified org."""
 
@@ -7056,14 +7612,12 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7086,13 +7640,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7116,14 +7668,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7147,14 +7697,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7177,13 +7725,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7194,7 +7740,8 @@ class AsyncPaymentsAPI:
 
     async def get_payment_balance_for_user(
         self,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by any Zoo user. It gets the balance information for the authenticated user."""
 
@@ -7206,13 +7753,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7233,13 +7778,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/intent".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7260,13 +7803,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7287,13 +7828,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/methods".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7315,13 +7854,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7337,13 +7874,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7365,14 +7900,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7394,14 +7927,12 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7422,13 +7953,11 @@ class AsyncPaymentsAPI:
 
         url = "{}/user/payment/tax".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7440,7 +7969,8 @@ class AsyncPaymentsAPI:
     async def get_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It gets the balance information for the specified user."""
 
@@ -7452,13 +7982,11 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7475,8 +8003,9 @@ class AsyncPaymentsAPI:
     async def update_payment_balance_for_any_user(
         self,
         id: UserIdentifier,
-        include_total_due: bool,
         body: UpdatePaymentBalance,
+        *,
+        include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
         """This endpoint requires authentication by a Zoo employee. It updates the balance information for the specified user."""
 
@@ -7488,14 +8017,12 @@ class AsyncPaymentsAPI:
             else:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7518,45 +8045,86 @@ class ServiceAccountsAPI:
 
     def list_service_accounts_for_org(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ServiceAccountResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
-        The service accounts are returned in order of creation, with the most recently created service accounts first."""
+        The service accounts are returned in order of creation, with the most recently created service accounts first.
 
-        url = "{}/org/service-accounts".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.org.list_service_accounts_for_org():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_service_accounts_for_org(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_service_accounts_for_org(
+        self, **kwargs
+    ) -> ServiceAccountResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7564,7 +8132,6 @@ class ServiceAccountsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ServiceAccountResultsPage(**json_data)
 
     def create_service_account_for_org(
@@ -7582,12 +8149,10 @@ class ServiceAccountsAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7612,12 +8177,10 @@ class ServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7644,12 +8207,10 @@ class ServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7663,50 +8224,91 @@ class ServiceAccountsAPI:
 class AsyncServiceAccountsAPI:
     """Async API for service_accounts endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
-    async def list_service_accounts_for_org(
+    def list_service_accounts_for_org(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ServiceAccountResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
 
-        The service accounts are returned in order of creation, with the most recently created service accounts first."""
+        The service accounts are returned in order of creation, with the most recently created service accounts first.
 
-        url = "{}/org/service-accounts".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.org.list_service_accounts_for_org():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_service_accounts_for_org(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_service_accounts_for_org(
+        self, **kwargs
+    ) -> ServiceAccountResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7714,7 +8316,6 @@ class AsyncServiceAccountsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ServiceAccountResultsPage(**json_data)
 
     async def create_service_account_for_org(
@@ -7732,13 +8333,11 @@ class AsyncServiceAccountsAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7762,13 +8361,11 @@ class AsyncServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7794,13 +8391,11 @@ class AsyncServiceAccountsAPI:
             self.client.base_url, token=token
         )
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7824,12 +8419,10 @@ class StoreAPI:
 
         url = "{}/store/coupon".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -7849,7 +8442,7 @@ class StoreAPI:
 class AsyncStoreAPI:
     """Async API for store endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def create_store_coupon(
@@ -7860,14 +8453,12 @@ class AsyncStoreAPI:
 
         url = "{}/store/coupon".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -7906,12 +8497,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7944,12 +8533,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -7982,12 +8569,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8020,12 +8605,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8058,12 +8641,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8096,12 +8677,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8134,12 +8713,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8172,12 +8749,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8210,12 +8785,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8248,12 +8821,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8286,12 +8857,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8324,12 +8893,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8362,12 +8929,10 @@ class UnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8386,7 +8951,7 @@ class UnitAPI:
 class AsyncUnitAPI:
     """Async API for unit endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_angle_unit_conversion(
@@ -8407,13 +8972,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8445,13 +9008,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8483,13 +9044,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8521,13 +9080,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8559,13 +9116,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8597,13 +9152,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8635,13 +9188,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8673,13 +9224,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8711,13 +9260,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8749,13 +9296,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8787,13 +9332,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8825,13 +9368,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8863,13 +9404,11 @@ class AsyncUnitAPI:
             else:
                 url = url + "?value=" + str(value)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -8899,12 +9438,10 @@ class UsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8927,12 +9464,10 @@ class UsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -8957,12 +9492,10 @@ class UsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -8980,12 +9513,10 @@ class UsersAPI:
 
         url = "{}/user/crm".format(self.client.base_url)
 
-        response = httpx.patch(
+        _client = self.client.get_http_client()
+        response = _client.patch(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9005,12 +9536,10 @@ class UsersAPI:
 
         url = "{}/user/extended".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9033,12 +9562,10 @@ class UsersAPI:
 
         url = "{}/user/form".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9058,12 +9585,10 @@ class UsersAPI:
 
         url = "{}/user/oauth2/providers".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9085,12 +9610,10 @@ class UsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9113,12 +9636,10 @@ class UsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9142,12 +9663,10 @@ class UsersAPI:
 
         url = "{}/user/session/{token}".format(self.client.base_url, token=token)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9164,43 +9683,82 @@ class UsersAPI:
 
     def get_user_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
 
-        url = "{}/user/shortlinks".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.get_user_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_get_user_shortlinks(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9208,7 +9766,6 @@ class UsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
     def create_user_shortlink(
@@ -9219,12 +9776,10 @@ class UsersAPI:
 
         url = "{}/user/shortlinks".format(self.client.base_url)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9251,12 +9806,10 @@ class UsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9275,12 +9828,10 @@ class UsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9292,43 +9843,82 @@ class UsersAPI:
 
     def list_users(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> UserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
-        url = "{}/users".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.users.list_users():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_users(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_users(self, **kwargs) -> UserResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9336,48 +9926,86 @@ class UsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return UserResultsPage(**json_data)
 
     def list_users_extended(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ExtendedUserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
-        url = "{}/users-extended".format(self.client.base_url)
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.users-extended.list_users_extended():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_users_extended(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_users_extended(self, **kwargs) -> ExtendedUserResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users-extended".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9385,7 +10013,6 @@ class UsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ExtendedUserResultsPage(**json_data)
 
     def get_user_extended(
@@ -9398,12 +10025,10 @@ class UsersAPI:
 
         url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9428,12 +10053,10 @@ class UsersAPI:
 
         url = "{}/users/{id}".format(self.client.base_url, id=id)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -9457,12 +10080,10 @@ class UsersAPI:
 
         url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9486,12 +10107,10 @@ class UsersAPI:
 
         url = "{}/website/form".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9510,12 +10129,10 @@ class UsersAPI:
 
         url = "{}/website/subscribe".format(self.client.base_url)
 
-        response = httpx.put(
+        _client = self.client.get_http_client()
+        response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
             content=body.model_dump_json(),
         )
 
@@ -9530,7 +10147,7 @@ class UsersAPI:
 class AsyncUsersAPI:
     """Async API for users endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def get_user_self(
@@ -9542,13 +10159,11 @@ class AsyncUsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9570,14 +10185,12 @@ class AsyncUsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9600,13 +10213,11 @@ class AsyncUsersAPI:
 
         url = "{}/user".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9623,14 +10234,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/crm".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.patch(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.patch(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9648,13 +10257,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/extended".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9676,14 +10283,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/form".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9701,13 +10306,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/oauth2/providers".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9728,13 +10331,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9756,14 +10357,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/privacy".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9785,13 +10384,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/session/{token}".format(self.client.base_url, token=token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9805,45 +10402,84 @@ class AsyncUsersAPI:
 
         return Session(**json_data)
 
-    async def get_user_shortlinks(
+    def get_user_shortlinks(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ShortlinkResultsPage:
-        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
 
-        url = "{}/user/shortlinks".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.get_user_shortlinks():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_user_shortlinks(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9851,7 +10487,6 @@ class AsyncUsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ShortlinkResultsPage(**json_data)
 
     async def create_user_shortlink(
@@ -9862,14 +10497,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/shortlinks".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9894,14 +10527,12 @@ class AsyncUsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9918,13 +10549,11 @@ class AsyncUsersAPI:
 
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -9933,45 +10562,84 @@ class AsyncUsersAPI:
 
         return response.json() if response.content else None
 
-    async def list_users(
+    def list_users(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> UserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.users.list_users():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_users(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_users(self, **kwargs) -> UserResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/users".format(self.client.base_url)
 
-        if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+        # Add query parameters
 
-        if page_token is not None:
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&page_token=" + str(page_token)
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?page_token=" + str(page_token)
+                url = url + "?limit=" + str(kwargs["limit"])
 
-        if sort_by is not None:
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
             if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
+                url = url + "&page_token=" + str(kwargs["page_token"])
             else:
-                url = url + "?sort_by=" + str(sort_by)
+                url = url + "?page_token=" + str(kwargs["page_token"])
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9979,48 +10647,88 @@ class AsyncUsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return UserResultsPage(**json_data)
 
-    async def list_users_extended(
+    def list_users_extended(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ExtendedUserResultsPage:
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first."""
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
 
-        url = "{}/users-extended".format(self.client.base_url)
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.users-extended.list_users_extended():
+                print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_users_extended(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_users_extended(
+        self, **kwargs
+    ) -> ExtendedUserResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users-extended".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10028,7 +10736,6 @@ class AsyncUsersAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ExtendedUserResultsPage(**json_data)
 
     async def get_user_extended(
@@ -10041,13 +10748,11 @@ class AsyncUsersAPI:
 
         url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10071,13 +10776,11 @@ class AsyncUsersAPI:
 
         url = "{}/users/{id}".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10100,14 +10803,12 @@ class AsyncUsersAPI:
 
         url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10129,14 +10830,12 @@ class AsyncUsersAPI:
 
         url = "{}/website/form".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10153,14 +10852,12 @@ class AsyncUsersAPI:
 
         url = "{}/website/subscribe".format(self.client.base_url)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.put(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-                content=body.model_dump_json(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10178,45 +10875,84 @@ class ApiTokensAPI:
 
     def list_api_tokens_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiTokenResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
-        The API tokens are returned in order of creation, with the most recently created API tokens first."""
+        The API tokens are returned in order of creation, with the most recently created API tokens first.
 
-        url = "{}/user/api-tokens".format(self.client.base_url)
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_api_tokens_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        response = httpx.get(
+        def fetch_page(**kw):
+            return self._fetch_page_list_api_tokens_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_api_tokens_for_user(self, **kwargs) -> ApiTokenResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-tokens".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10224,7 +10960,6 @@ class ApiTokensAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiTokenResultsPage(**json_data)
 
     def create_api_token_for_user(
@@ -10242,12 +10977,10 @@ class ApiTokensAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        response = httpx.post(
+        _client = self.client.get_http_client()
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -10270,12 +11003,10 @@ class ApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        response = httpx.get(
+        _client = self.client.get_http_client()
+        response = _client.get(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -10300,12 +11031,10 @@ class ApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        response = httpx.delete(
+        _client = self.client.get_http_client()
+        response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
-            cookies=self.client.get_cookies(),
-            timeout=self.client.get_timeout(),
-            verify=self.client.verify_ssl,
         )
 
         if not response.is_success:
@@ -10319,50 +11048,91 @@ class ApiTokensAPI:
 class AsyncApiTokensAPI:
     """Async API for api_tokens endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
-    async def list_api_tokens_for_user(
+    def list_api_tokens_for_user(
         self,
-        sort_by: CreatedAtSortMode,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-    ) -> ApiTokenResultsPage:
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
         """This endpoint requires authentication by any Zoo user. It returns the API tokens for the authenticated user.
 
-        The API tokens are returned in order of creation, with the most recently created API tokens first."""
+        The API tokens are returned in order of creation, with the most recently created API tokens first.
 
-        url = "{}/user/api-tokens".format(self.client.base_url)
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_api_tokens_for_user():
+                        print(item)
+        """
+
+        from typing import Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            kwargs["limit"] = limit
 
         if page_token is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(page_token)
-            else:
-                url = url + "?page_token=" + str(page_token)
+            kwargs["page_token"] = page_token
 
         if sort_by is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(sort_by)
-            else:
-                url = url + "?sort_by=" + str(sort_by)
+            kwargs["sort_by"] = sort_by
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_api_tokens_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_api_tokens_for_user(
+        self, **kwargs
+    ) -> ApiTokenResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/api-tokens".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10370,7 +11140,6 @@ class AsyncApiTokensAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
         return ApiTokenResultsPage(**json_data)
 
     async def create_api_token_for_user(
@@ -10388,13 +11157,11 @@ class AsyncApiTokensAPI:
             else:
                 url = url + "?label=" + str(label)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.post(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10416,13 +11183,11 @@ class AsyncApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.get(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10446,13 +11211,11 @@ class AsyncApiTokensAPI:
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
-        async with httpx.AsyncClient(verify=self.client.verify_ssl) as _client:
-            response = await _client.delete(
-                url=url,
-                headers=self.client.get_headers(),
-                cookies=self.client.get_cookies(),
-                timeout=self.client.get_timeout(),
-            )
+        _client = self.client.get_http_client()
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
 
         if not response.is_success:
             from ..response_helpers import raise_for_status
@@ -10470,16 +11233,16 @@ class ModelingAPI:
 
     def modeling_commands_ws(
         self,
-        fps: int,
-        post_effect: PostEffectType,
-        show_grid: bool,
-        unlocked_framerate: bool,
-        video_res_height: int,
-        video_res_width: int,
-        webrtc: bool,
         api_call_id: Optional[str] = None,
+        fps: Optional[int] = None,
         pool: Optional[str] = None,
+        post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
+        show_grid: Optional[bool] = None,
+        unlocked_framerate: Optional[bool] = None,
+        video_res_height: Optional[int] = None,
+        video_res_width: Optional[int] = None,
+        webrtc: Optional[bool] = None,
     ) -> "WebSocketModelingCommandsWs":
         """Open a websocket which accepts modeling commands.
 
@@ -10503,21 +11266,21 @@ class ModelingAPI:
 class AsyncModelingAPI:
     """Async API for modeling endpoints"""
 
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
     async def modeling_commands_ws(
         self,
-        fps: int,
-        post_effect: PostEffectType,
-        show_grid: bool,
-        unlocked_framerate: bool,
-        video_res_height: int,
-        video_res_width: int,
-        webrtc: bool,
         api_call_id: Optional[str] = None,
+        fps: Optional[int] = None,
         pool: Optional[str] = None,
+        post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
+        show_grid: Optional[bool] = None,
+        unlocked_framerate: Optional[bool] = None,
+        video_res_height: Optional[int] = None,
+        video_res_width: Optional[int] = None,
+        webrtc: Optional[bool] = None,
     ):
         """Open a websocket which accepts modeling commands.
 
@@ -10888,7 +11651,7 @@ class KittyCAD(Client):
         self.modeling: ModelingAPI = ModelingAPI(self)
 
 
-class AsyncKittyCAD(Client):
+class AsyncKittyCAD(AsyncClient):
     """Async KittyCAD client class with async API interface.
 
     Usage:

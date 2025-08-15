@@ -42,7 +42,15 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
     env.filters["to_pascal_case"] = to_pascal_case
     env.filters["pascal_to_snake"] = camel_to_snake
 
-    template = env.get_template("sync_function.py.jinja2")
+    # Check if this endpoint uses pagination
+    is_paginated = "x-dropshot-pagination" in endpoint
+    template_name = (
+        "sync_paginated_function.py.jinja2"
+        if is_paginated
+        else "sync_function.py.jinja2"
+    )
+
+    template = env.get_template(template_name)
 
     # Build context exactly like the working functions.py template
     fn_name = camel_to_snake(endpoint["operationId"])
@@ -71,9 +79,12 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
             )
 
             # Mark optional parameters
-            is_optional = not param.get("required", True) or param_schema.get(
-                "nullable", False
-            )
+            # For query parameters, default to optional (required=False) if not specified
+            # For path parameters, default to required (required=True) if not specified
+            default_required = param.get("in") == "path"
+            is_optional = not param.get(
+                "required", default_required
+            ) or param_schema.get("nullable", False)
             if is_optional and not arg_type.startswith("Optional["):
                 arg_type = f"Optional[{arg_type}]"
 
@@ -114,6 +125,15 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
         "docs": endpoint.get("description", endpoint.get("summary", "")),
     }
 
+    # Add pagination-specific context if needed
+    if is_paginated and response_type:
+        # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
+        item_type = response_type.replace("ResultsPage", "")
+        context["item_type"] = item_type
+        context["api_section"] = (
+            path.split("/")[1] if len(path.split("/")) > 1 else "api"
+        )
+
     return template.render(context)
 
 
@@ -131,7 +151,14 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
     env.filters["to_pascal_case"] = to_pascal_case
     env.filters["pascal_to_snake"] = camel_to_snake
 
-    template = env.get_template("async_function.py.jinja2")
+    # Check if this endpoint uses pagination
+    is_paginated = "x-dropshot-pagination" in endpoint
+    template_name = (
+        "async_paginated_function.py.jinja2"
+        if is_paginated
+        else "async_function.py.jinja2"
+    )
+    template = env.get_template(template_name)
 
     # Build context exactly like the sync function
     fn_name = camel_to_snake(endpoint["operationId"])
@@ -160,9 +187,12 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
             )
 
             # Mark optional parameters
-            is_optional = not param.get("required", True) or param_schema.get(
-                "nullable", False
-            )
+            # For query parameters, default to optional (required=False) if not specified
+            # For path parameters, default to required (required=True) if not specified
+            default_required = param.get("in") == "path"
+            is_optional = not param.get(
+                "required", default_required
+            ) or param_schema.get("nullable", False)
             if is_optional and not arg_type.startswith("Optional["):
                 arg_type = f"Optional[{arg_type}]"
 
@@ -202,6 +232,15 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
         "args": args,
         "docs": endpoint.get("description", endpoint.get("summary", "")),
     }
+
+    # Add pagination-specific context if needed
+    if is_paginated and response_type:
+        # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
+        item_type = response_type.replace("ResultsPage", "")
+        context["item_type"] = item_type
+        context["api_section"] = (
+            path.split("/")[1] if len(path.split("/")) > 1 else "api"
+        )
 
     return template.render(context)
 
@@ -384,7 +423,10 @@ def generate_client_classes(cwd: str, data: dict):
                         param_type = "Any"
 
                     # Handle optional parameters
-                    is_required = param.get("required", True)
+                    # For query parameters, default to optional (required=False) if not specified
+                    # For path parameters, default to required (required=True) if not specified
+                    default_required = param.get("in") == "path"
+                    is_required = param.get("required", default_required)
                     if not is_required or param_schema.get("nullable", False):
                         if not param_type.startswith("Optional["):
                             param_type = f"Optional[{param_type}]"
@@ -1135,6 +1177,72 @@ async def test_"""
     # Get the messages.
     async for message in websocket:
         print(message)
+    """
+        )
+    # Generate pagination examples for endpoints with x-dropshot-pagination
+    elif "x-dropshot-pagination" in endpoint:
+        # Extract item type from ResultsPage response type
+        item_type = "Any"
+        if success_type and success_type.endswith("ResultsPage"):
+            # Extract item type by removing "ResultsPage" suffix
+            # E.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice"
+            item_type = success_type.replace("ResultsPage", "")
+
+        # Add import for the item type if it's not Any
+        if item_type != "Any":
+            example_imports = (
+                example_imports + f"from kittycad.models import {item_type}\n"
+            )
+
+        # Create pagination-focused examples
+        short_sync_example = (
+            """def test_"""
+            + fn_name
+            + """():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: """
+            + item_type
+            + """
+    for item in client."""
+            + tag_name
+            + """."""
+            + fn_name
+            + """("""
+            + no_client_params
+            + """):
+        print(item)
+
+"""
+        )
+
+        long_example = (
+            """
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_"""
+            + fn_name
+            + """_async():
+    from kittycad import AsyncKittyCAD
+    
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically  
+    iterator = client."""
+            + tag_name
+            + """."""
+            + fn_name
+            + """("""
+            + no_client_params
+            + """)
+    item: """
+            + item_type
+            + """
+    async for item in iterator:
+        print(item)
     """
         )
 

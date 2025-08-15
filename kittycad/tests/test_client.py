@@ -9,12 +9,10 @@ from websockets.exceptions import ConnectionClosedError
 from kittycad import KittyCAD
 from kittycad.models import (
     ApiCallStatus,
-    ApiTokenResultsPage,
     Axis,
     AxisDirectionPair,
     CreatedAtSortMode,
     Direction,
-    ExtendedUserResultsPage,
     FileCenterOfMass,
     FileConversion,
     FileExportFormat,
@@ -71,7 +69,10 @@ async def test_get_api_tokens_async():
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
     )
 
-    assert isinstance(fc, ApiTokenResultsPage)
+    # Now returns SyncPageIterator instead of ApiTokenResultsPage
+    from kittycad.pagination import SyncPageIterator
+
+    assert isinstance(fc, SyncPageIterator)
 
     print(f"fc: {fc}")
 
@@ -322,7 +323,10 @@ def test_list_users():
         sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, limit=10
     )
 
-    assert isinstance(response, ExtendedUserResultsPage)
+    # Now returns SyncPageIterator instead of ExtendedUserResultsPage
+    from kittycad.pagination import SyncPageIterator
+
+    assert isinstance(response, SyncPageIterator)
 
     print(f"ExtendedUserResultsPage: {response}")
 

@@ -1,0 +1,99 @@
+    def {{ func_name }}(
+        self,
+        {% for arg in args %}
+        {% if arg.is_optional == False %}
+        {{ arg.name }}: {{ arg.type }},
+        {% endif %}
+        {% endfor %}
+        {% set optional_args = args|selectattr("is_optional")|list %}
+        {% if optional_args %}*,
+        {% for arg in optional_args %}
+        {{ arg.name }}: {{ arg.type }} = None,
+        {% endfor %}
+        {% endif %}
+    ) -> "AsyncPageIterator":
+        {% if docs %}"""{{ docs }}
+        
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+        
+            async for item in client.{{ api_section }}.{{ func_name }}():
+                print(item)
+        """{% endif %}
+        
+        from typing import Dict, Any
+        from kittycad.pagination import AsyncPageIterator
+        
+        # Store path parameters in closure for later use
+        {% for arg in args %}
+        {% if arg.in_url %}
+        _{{ arg.name }} = {{ arg.name }}
+        {% endif %}
+        {% endfor %}
+        
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+        {% for arg in args %}
+        {% if arg.in_query %}
+        if {{ arg.name }} is not None:
+            kwargs["{{ arg.name }}"] = {{ arg.name }}
+        {% endif %}
+        {% endfor %}
+        
+        async def fetch_page(**kw):
+            return await self._fetch_page_{{ func_name }}(
+                {% for arg in args %}
+                {% if arg.in_url %}
+                {{ arg.name }}=_{{ arg.name }},
+                {% endif %}
+                {% endfor %}
+                **kw
+            )
+        
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+    
+    async def _fetch_page_{{ func_name }}(self, {% for arg in args %}{% if arg.in_url %}{{ arg.name }}: {{ arg.type }}, {% endif %}{% endfor %}**kwargs) -> {{ response_type }}:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters  
+        url = "{{ url_template }}".format(self.client.base_url{% for arg in args %}{% if arg.in_url %}, {{ arg.name }}={{ arg.name }}{% endif %}{% endfor %})
+        
+        # Add query parameters
+        {% for arg in args %}
+        {% if arg.in_query %}
+        if "{{ arg.name }}" in kwargs and kwargs["{{ arg.name }}"] is not None:
+            {% if "bool" in arg.type %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str(kwargs["{{ arg.name }}"]).lower()
+            else:
+                url = url + "?{{ arg.name }}=" + str(kwargs["{{ arg.name }}"]).lower()
+            {% else %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str(kwargs["{{ arg.name }}"])
+            else:
+                url = url + "?{{ arg.name }}=" + str(kwargs["{{ arg.name }}"])
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+        
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+        
+        _client = self.client.get_http_client()
+        response = await _client.{{ method }}(
+            url=url,
+            headers=self.client.get_headers(),
+            {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(),{% else %}content=body,{% endif %}{% endif %}
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+            raise_for_status(response)
+        
+        if not response.content:
+            return None  # type: ignore
+            
+        json_data = response.json()
+        return {{ response_type }}(**json_data)
