@@ -3,7 +3,7 @@
     "op": "add",
     "path": "/info/x-python",
     "value": {
-      "client": "# Setup your client with your token\nfrom kittycad import KittyCAD\n\nclient = KittyCAD(token=\"$TOKEN\")\n\n# - OR -\n\n# Create a new client with your token parsed from the environment variable:\n# `KITTYCAD_API_TOKEN` or `ZOO_API_TOKEN`.\n# Optionally, you can pass in `ZOO_HOST` to specify the host. But this only\n# works if you are using the `ZOO_API_TOKEN` environment variable.\nfrom kittycad import KittyCAD\n\nclient = KittyCAD()\n\n# NOTE: The python library additionally implements asyncio, however all the code samples we\n# show below use the sync functions for ease of use and understanding.\n# Check out the library docs at:\n# https://python.api.docs.zoo.dev/_autosummary/kittycad.api.html#module-kittycad.api\n# for more details.",
+      "client": "# Setup your client with your token\nfrom kittycad import KittyCAD\n\nclient = KittyCAD(token=\"$TOKEN\")\n\n# - OR -\n\n# Create a new client with your token parsed from the environment variable:\n# `KITTYCAD_API_TOKEN` or `ZOO_API_TOKEN`.\n# Optionally, you can pass in `ZOO_HOST` to specify the host. But this only\n# works if you are using the `ZOO_API_TOKEN` environment variable.\nfrom kittycad import KittyCAD\n\nclient = KittyCAD()\n\n# NOTE: The python library additionally implements asyncio, however all the code samples we\n# show below use the sync functions for ease of use and understanding.\n# Check out the library docs at:\n# https://python.api.docs.zoo.dev\n# for more details.",
       "install": "pip install kittycad"
     }
   },

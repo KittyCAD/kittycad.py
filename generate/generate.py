@@ -470,7 +470,7 @@ client = KittyCAD()
 # NOTE: The python library additionally implements asyncio, however all the code samples we
 # show below use the sync functions for ease of use and understanding.
 # Check out the library docs at:
-# https://python.api.docs.zoo.dev/_autosummary/kittycad.api.html#module-kittycad.api
+# https://python.api.docs.zoo.dev
 # for more details.""",
         "install": "pip install kittycad",
     }
