@@ -1272,11 +1272,8 @@ async def test_"""
     # Add our example to our json output.
     data["paths"][name][method]["x-python"] = {
         "example": cleaned_example.replace("def test_", "def example_"),
-        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad."
-        + to_pascal_case(tag_name)
-        + "."
-        + fn_name
-        + ".html",
+        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD."
+        + fn_name,
     }
 
     return data

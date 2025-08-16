@@ -8,11 +8,17 @@ Welcome to kittycad's documentation!
 
 .. autosummary::
    :toctree: _autosummary
-   :template: custom-module-template.rst
+   :template: custom-class-template.rst
    :recursive:
 
    kittycad.KittyCAD
    kittycad.AsyncKittyCAD
+
+.. autosummary::
+   :toctree: _autosummary
+   :template: custom-module-template.rst
+   :recursive:
+
    kittycad.client
    kittycad.models
    kittycad.types
