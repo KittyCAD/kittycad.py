@@ -100,11 +100,11 @@ pygments_style = "trac"
 
 autodoc_default_options = {
     "members": True,
-    "special-members": True,
-    "private-members": True,
+    "special-members": False,
+    "private-members": False,
     "inherited-members": True,
     "undoc-members": True,
-    "exclude-members": "__weakref__",
+    "exclude-members": "__weakref__,__dict__,__module__,__annotations__",
 }
 
 autodoc_inherit_docstrings = True
