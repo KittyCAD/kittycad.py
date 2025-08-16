@@ -1270,10 +1270,16 @@ async def test_"""
     examples.append(example)
 
     # Add our example to our json output.
+    # Generate the correct documentation link
+    # All API methods are documented on the main KittyCAD class page with the structure: client.{tag}.{method}()
+    if tag_name:
+        docs_link = f"https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.{tag_name}"
+    else:
+        docs_link = f"https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.{fn_name}"
+
     data["paths"][name][method]["x-python"] = {
         "example": cleaned_example.replace("def test_", "def example_"),
-        "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD."
-        + fn_name,
+        "libDocsLink": docs_link,
     }
 
     return data

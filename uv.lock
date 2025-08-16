@@ -478,7 +478,7 @@ wheels = [
 
 [[package]]
 name = "kittycad"
-version = "0.8.1"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "attrs" },
