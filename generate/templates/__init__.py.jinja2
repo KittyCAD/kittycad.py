@@ -147,7 +147,19 @@ class KittyCAD(Client):
 
     Or with environment variable:
         client = KittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+
+    Attributes:
+        {% for tag in endpoints_by_tag.keys() %}
+        {% set tag_pascal = tag|to_pascal_case %}
+        {{ tag }}: {{ tag_pascal }}API - Access to {{ tag }} endpoints
+        {% endfor %}
     """
+
+    # API attribute type annotations for documentation
+    {% for tag in endpoints_by_tag.keys() %}
+    {% set tag_pascal = tag|to_pascal_case %}
+    {{ tag }}: "{{ tag_pascal }}API"
+    {% endfor %}
 
     def __init__(self, token: Optional[str] = None, **kwargs) -> None:
         if token is None:
@@ -188,7 +200,19 @@ class AsyncKittyCAD(AsyncClient):
 
     Or with environment variable:
         client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+
+    Attributes:
+        {% for tag in endpoints_by_tag.keys() %}
+        {% set tag_pascal = tag|to_pascal_case %}
+        {{ tag }}: Async{{ tag_pascal }}API - Access to {{ tag }} endpoints
+        {% endfor %}
     """
+
+    # API attribute type annotations for documentation
+    {% for tag in endpoints_by_tag.keys() %}
+    {% set tag_pascal = tag|to_pascal_case %}
+    {{ tag }}: "Async{{ tag_pascal }}API"
+    {% endfor %}
 
     def __init__(self, token: Optional[str] = None, **kwargs) -> None:
         if token is None:

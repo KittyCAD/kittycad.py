@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kittycad"
-version = "0.8.1"
+version = "1.0.0"
 description = "A client library for accessing KittyCAD"
 authors = []
 readme = "README.md"

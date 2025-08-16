@@ -11597,7 +11597,92 @@ class KittyCAD(Client):
 
     Or with environment variable:
         client = KittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+
+    Attributes:
+
+
+        meta: MetaAPI - Access to meta endpoints
+
+
+        ml: MlAPI - Access to ml endpoints
+
+
+        api_calls: ApiCallsAPI - Access to api_calls endpoints
+
+
+        apps: AppsAPI - Access to apps endpoints
+
+
+        hidden: HiddenAPI - Access to hidden endpoints
+
+
+        file: FileAPI - Access to file endpoints
+
+
+        executor: ExecutorAPI - Access to executor endpoints
+
+
+        oauth2: Oauth2API - Access to oauth2 endpoints
+
+
+        orgs: OrgsAPI - Access to orgs endpoints
+
+
+        payments: PaymentsAPI - Access to payments endpoints
+
+
+        service_accounts: ServiceAccountsAPI - Access to service_accounts endpoints
+
+
+        store: StoreAPI - Access to store endpoints
+
+
+        unit: UnitAPI - Access to unit endpoints
+
+
+        users: UsersAPI - Access to users endpoints
+
+
+        api_tokens: ApiTokensAPI - Access to api_tokens endpoints
+
+
+        modeling: ModelingAPI - Access to modeling endpoints
+
     """
+
+    # API attribute type annotations for documentation
+
+    meta: "MetaAPI"
+
+    ml: "MlAPI"
+
+    api_calls: "ApiCallsAPI"
+
+    apps: "AppsAPI"
+
+    hidden: "HiddenAPI"
+
+    file: "FileAPI"
+
+    executor: "ExecutorAPI"
+
+    oauth2: "Oauth2API"
+
+    orgs: "OrgsAPI"
+
+    payments: "PaymentsAPI"
+
+    service_accounts: "ServiceAccountsAPI"
+
+    store: "StoreAPI"
+
+    unit: "UnitAPI"
+
+    users: "UsersAPI"
+
+    api_tokens: "ApiTokensAPI"
+
+    modeling: "ModelingAPI"
 
     def __init__(self, token: Optional[str] = None, **kwargs) -> None:
         if token is None:
@@ -11666,7 +11751,92 @@ class AsyncKittyCAD(AsyncClient):
 
     Or with environment variable:
         client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN or ZOO_API_TOKEN
+
+    Attributes:
+
+
+        meta: AsyncMetaAPI - Access to meta endpoints
+
+
+        ml: AsyncMlAPI - Access to ml endpoints
+
+
+        api_calls: AsyncApiCallsAPI - Access to api_calls endpoints
+
+
+        apps: AsyncAppsAPI - Access to apps endpoints
+
+
+        hidden: AsyncHiddenAPI - Access to hidden endpoints
+
+
+        file: AsyncFileAPI - Access to file endpoints
+
+
+        executor: AsyncExecutorAPI - Access to executor endpoints
+
+
+        oauth2: AsyncOauth2API - Access to oauth2 endpoints
+
+
+        orgs: AsyncOrgsAPI - Access to orgs endpoints
+
+
+        payments: AsyncPaymentsAPI - Access to payments endpoints
+
+
+        service_accounts: AsyncServiceAccountsAPI - Access to service_accounts endpoints
+
+
+        store: AsyncStoreAPI - Access to store endpoints
+
+
+        unit: AsyncUnitAPI - Access to unit endpoints
+
+
+        users: AsyncUsersAPI - Access to users endpoints
+
+
+        api_tokens: AsyncApiTokensAPI - Access to api_tokens endpoints
+
+
+        modeling: AsyncModelingAPI - Access to modeling endpoints
+
     """
+
+    # API attribute type annotations for documentation
+
+    meta: "AsyncMetaAPI"
+
+    ml: "AsyncMlAPI"
+
+    api_calls: "AsyncApiCallsAPI"
+
+    apps: "AsyncAppsAPI"
+
+    hidden: "AsyncHiddenAPI"
+
+    file: "AsyncFileAPI"
+
+    executor: "AsyncExecutorAPI"
+
+    oauth2: "AsyncOauth2API"
+
+    orgs: "AsyncOrgsAPI"
+
+    payments: "AsyncPaymentsAPI"
+
+    service_accounts: "AsyncServiceAccountsAPI"
+
+    store: "AsyncStoreAPI"
+
+    unit: "AsyncUnitAPI"
+
+    users: "AsyncUsersAPI"
+
+    api_tokens: "AsyncApiTokensAPI"
+
+    modeling: "AsyncModelingAPI"
 
     def __init__(self, token: Optional[str] = None, **kwargs) -> None:
         if token is None:
