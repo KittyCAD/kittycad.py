@@ -5,7 +5,7 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## v1.0.0
 
 ### Quick Start - New Simple API 🎉
 
@@ -18,11 +18,11 @@ from kittycad import KittyCAD
 client = KittyCAD()
 
 # Make API calls directly
-user = client.get_user_self()
+user = client.users.get_user_self()
 print(f"Hello {user.name}!")
 
 # WebSocket connections are seamless
-with client.modeling_commands_ws(fps=30, webrtc=False, ...) as ws:
+with client.modeling.modeling_commands_ws(fps=30, webrtc=False, ...) as ws:
     # Send modeling commands
     ws.send(command)
     response = ws.recv()
@@ -34,7 +34,7 @@ with client.modeling_commands_ws(fps=30, webrtc=False, ...) as ws:
 from kittycad import AsyncKittyCAD
 
 client = AsyncKittyCAD()
-user = await client.get_user_self()
+user = await client.users.get_user_self()
 ```
 
 ### Added - HTTP Client Pooling & Improved Performance ⚡
@@ -145,11 +145,11 @@ client = KittyCAD(token="your-token-here")
 client = KittyCAD()  # Automatically reads from environment
 
 # REST endpoints
-user = client.get_user(id="123")
-pong = client.ping()
+user = client.users.get_user(id="123")
+pong = client.meta.ping()
 
 # WebSocket endpoints
-with client.modeling_commands_ws(fps=30, ...) as ws:
+with client.modeling.modeling_commands_ws(fps=30, ...) as ws:
     ws.send(command)
     response = ws.recv()
 ```
@@ -166,11 +166,11 @@ client = AsyncKittyCAD(token="your-token-here")
 client = AsyncKittyCAD()  # Automatically reads from environment
 
 # REST endpoints  
-user = await client.get_user(id="123")
-pong = await client.ping()
+user = await client.users.get_user(id="123")
+pong = await client.meta.ping()
 
 # WebSocket endpoints (always sync)
-with client.modeling_commands_ws(fps=30, ...) as ws:
+with client.modeling.modeling_commands_ws(fps=30, ...) as ws:
     ws.send(command)
     response = ws.recv()
 ```
@@ -209,7 +209,7 @@ user = sync(id="123", client=client)
 from kittycad import KittyCAD
 
 client = KittyCAD(token="token") 
-user = client.get_user(id="123")
+user = client.users.get_user(id="123")
 ```
 
 #### WebSocket Client Changes
@@ -228,7 +228,7 @@ ws = WebSocket(fps=30, ...)  # Used global client internally
 ```python
 # WebSocket classes require client parameter
 client = KittyCAD(token="token")
-ws = client.modeling_commands_ws(fps=30, ...)  # Client passed explicitly
+ws = client.modeling.modeling_commands_ws(fps=30, ...)  # Client passed explicitly
 ```
 
 #### Benefits of New Architecture
@@ -269,7 +269,7 @@ user = result  # Could still be None or Error
 
 ```python
 try:
-    user = get_user.sync(id="123", client=client)  # Always User type
+    user = client.users.get_user(id="123", client=client)  # Always User type
     # Use user directly - guaranteed to be correct type
 except KittyCADAPIError as e:
     print(f"API call failed: {e}")
