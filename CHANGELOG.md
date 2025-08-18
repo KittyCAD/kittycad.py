@@ -66,6 +66,47 @@ model_config = ConfigDict(
 - Pytest-compatible test structure with proper parametrization
 - Tests verify both current behavior and improvements
 
+### Added - Comprehensive HTTPX Exception Wrapping 🛡️
+
+**Uniform Error Model**: All network and HTTP errors are now wrapped in custom KittyCAD exception types, providing consistent error handling across the SDK.
+
+**Enhanced Exception Attributes**: All exceptions now include comprehensive context for debugging:
+
+```python
+try:
+    user = client.users.get_user(id="123")
+except KittyCADAPIError as e:
+    print(f"HTTP {e.status_code}: {e.message}")
+    print(f"Error code: {e.error_code}")
+    print(f"Request ID: {e.request_id}")
+    print(f"Request: {e.request_method} {e.request_url}")
+except KittyCADConnectionError as e:
+    print(f"Connection failed: {e.message}")
+    print(f"Original error: {e.original_error}")
+except KittyCADTimeoutError as e:
+    print(f"Request timed out: {e.message}")
+    print(f"Timeout: {e.timeout_seconds}s")
+```
+
+**Complete HTTPX Integration**: Previously, raw HTTPX exceptions (timeouts, connection errors) could surface to users. Now all exceptions are wrapped:
+
+- **`KittyCADConnectionError`**: Network errors, DNS failures, connection refused
+- **`KittyCADTimeoutError`**: Connection and read timeouts with timeout duration
+- **`KittyCADClientError`**: Enhanced 4xx errors with request context
+- **`KittyCADServerError`**: Enhanced 5xx errors with request context
+
+**Rich Debugging Context**: Exception attributes now include:
+- `request_method` and `request_url` for all HTTP-related errors
+- `original_error` for network errors to access underlying HTTPX exceptions
+- `timeout_seconds` for timeout errors
+- `headers` dictionary for all API errors
+- Enhanced error messages with full request context
+
+**Helper Functions for Error Handling**: New utilities for consistent error wrapping:
+- `make_request_with_error_handling()`: Sync HTTP requests with comprehensive error handling
+- `make_async_request_with_error_handling()`: Async HTTP requests with comprehensive error handling
+- `wrap_httpx_exceptions()`: Decorator for wrapping HTTPX exceptions in custom types
+
 ### Developer Benefits
 
 1. **Better Debugging**: Readable model representations show key fields automatically
@@ -73,6 +114,9 @@ model_config = ConfigDict(
 3. **Cleaner Module Structure**: More intuitive import paths for OAuth2 and other acronym-heavy models
 4. **Enhanced Validation**: Stricter Pydantic settings catch more errors at development time
 5. **Future-Proof**: Test coverage ensures acronym handling improvements don't regress
+6. **Uniform Error Handling**: All errors use the same exception types with consistent attributes
+7. **Rich Error Context**: Comprehensive debugging information in all exception types
+8. **Predictable Error Behavior**: No more raw HTTPX exceptions surfacing to user code
 
 ## v1.0.0
 
