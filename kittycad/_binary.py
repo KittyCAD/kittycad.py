@@ -94,7 +94,30 @@ def create_binary_stream(
         ... finally:
         ...     cleanup()
     """
-    # Prepare the file input
+    # Handle iterators specially for streaming (but not strings/paths)
+    if (
+        hasattr(file_input, "__iter__")
+        and not hasattr(file_input, "read")
+        and not isinstance(file_input, (str, bytes, bytearray, memoryview))
+        and not hasattr(file_input, "__fspath__")
+    ):
+        # For iterators, pass them through directly for streaming
+        def iterator_stream_generator():
+            """Generator that yields chunks from the iterator."""
+            for chunk in file_input:
+                if isinstance(chunk, bytes):
+                    yield chunk
+                else:
+                    raise TypeError(f"Iterator must yield bytes, got {type(chunk)}")
+
+        def iterator_cleanup_func():
+            # Nothing to clean up for iterators
+            pass
+
+        final_content_type = content_type or "application/octet-stream"
+        return iterator_stream_generator(), final_content_type, iterator_cleanup_func
+
+    # Prepare the file input for non-iterators
     file_obj, should_close, _, detected_content_type, _ = prepare_upload_input(
         upload=file_input, content_type=content_type, force_multipart=False
     )

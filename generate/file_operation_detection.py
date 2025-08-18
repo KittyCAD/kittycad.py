@@ -219,6 +219,52 @@ def determine_download_strategy(endpoint: dict) -> Optional[str]:
     return "streaming"
 
 
+def has_json_body_with_multipart(endpoint: dict, data: dict) -> bool:
+    """Check if endpoint has multipart with a JSON body schema.
+
+    This detects the pattern where multipart/form-data includes both:
+    - A JSON body (like the Rust pattern)
+    - File attachments
+
+    Args:
+        endpoint: OpenAPI endpoint specification
+        data: Full OpenAPI specification data
+
+    Returns:
+        True if endpoint has multipart with JSON body schema
+    """
+    if "requestBody" not in endpoint:
+        return False
+
+    request_body = endpoint["requestBody"]
+    if "content" not in request_body:
+        return False
+
+    content = request_body["content"]
+    if "multipart/form-data" not in content:
+        return False
+
+    multipart_content = content["multipart/form-data"]
+    if "schema" not in multipart_content:
+        return False
+
+    schema = multipart_content["schema"]
+
+    # Handle $ref schemas
+    if "$ref" in schema:
+        ref_name = schema["$ref"].replace("#/components/schemas/", "")
+        if ref_name in data.get("components", {}).get("schemas", {}):
+            schema = data["components"]["schemas"][ref_name]
+
+    # Check if schema has properties (indicates structured JSON body)
+    # vs just binary format (indicates simple file upload)
+    if "properties" in schema and schema.get("type") == "object":
+        # This indicates a structured body that should be sent as JSON
+        return True
+
+    return False
+
+
 def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
     """Extract information about file parameters in an endpoint.
 
@@ -237,6 +283,8 @@ def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
         "upload_content_types": [],
         "download_content_types": [],
         "file_parameters": [],
+        "has_json_body_multipart": False,
+        "json_body_schema": None,
     }
 
     # Check for uploads
@@ -251,6 +299,11 @@ def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
         info["download_strategy"] = determine_download_strategy(endpoint)
         info["download_content_types"] = get_download_content_types(endpoint)
 
+    # Check for JSON body + multipart pattern
+    info["has_json_body_multipart"] = has_json_body_with_multipart(endpoint, data)
+    if info["has_json_body_multipart"]:
+        info["json_body_schema"] = _extract_json_body_schema(endpoint, data)
+
     # Extract file parameter details from multipart schemas
     if (
         info["has_file_upload"]
@@ -259,6 +312,41 @@ def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
         info["file_parameters"] = _extract_multipart_file_params(endpoint, data)
 
     return info
+
+
+def _extract_json_body_schema(endpoint: dict, data: dict) -> Optional[str]:
+    """Extract the JSON body schema reference from a multipart endpoint.
+
+    Args:
+        endpoint: OpenAPI endpoint specification
+        data: Full OpenAPI specification data
+
+    Returns:
+        Schema reference name (e.g., "TextToCadMultiFileIterationBody")
+    """
+    if "requestBody" not in endpoint:
+        return None
+
+    request_body = endpoint["requestBody"]
+    if "content" not in request_body:
+        return None
+
+    content = request_body["content"]
+    if "multipart/form-data" not in content:
+        return None
+
+    multipart_content = content["multipart/form-data"]
+    if "schema" not in multipart_content:
+        return None
+
+    schema = multipart_content["schema"]
+
+    # Handle $ref schemas
+    if "$ref" in schema:
+        ref_name = schema["$ref"].replace("#/components/schemas/", "")
+        return ref_name
+
+    return None
 
 
 def _extract_multipart_file_params(endpoint: dict, data: dict) -> List[Dict[str, Any]]:
