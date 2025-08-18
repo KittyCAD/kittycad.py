@@ -104,6 +104,197 @@ except KittyCADTimeoutError as e:
 
 **Automatic Error Handling**: All HTTPX exceptions are now automatically wrapped without any user intervention required - users simply get consistent KittyCAD exceptions regardless of the underlying failure type.
 
+### Added - Comprehensive Pythonic File Handling System 📁
+
+**OpenAI-Level Ergonomic File Operations**: The SDK now provides a comprehensive file handling system that feels as intuitive as popular libraries like OpenAI, Stripe, and Boto3, with support for flexible input types, automatic content detection, progress tracking, and streaming operations.
+
+**Flexible Input Types**: File operations accept multiple input types seamlessly:
+
+```python
+# File paths (str or pathlib.Path)
+client.upload_file("/path/to/document.pdf")
+client.upload_file(Path("/path/to/document.pdf"))
+
+# File objects (any IO[bytes])
+with open("/path/to/file.pdf", "rb") as f:
+    client.upload_file(f)
+
+file_obj = io.BytesIO(b"content")
+client.upload_file(file_obj)
+
+# Raw bytes/bytearray/memoryview
+client.upload_file(b"raw file content")
+client.upload_file(bytearray(b"content"))
+
+# Streaming iterators for large files
+def file_chunks():
+    with open("/path/to/large_file.bin", "rb") as f:
+        while chunk := f.read(8192):
+            yield chunk
+
+client.upload_file(file_chunks())
+```
+
+**Automatic Content Detection and Upload Method Selection**:
+
+- **Content-Type Detection**: From filename extensions, file content magic bytes, or explicit override
+- **Smart Upload Method**: Automatically chooses between `multipart/form-data` and `application/octet-stream`
+- **Filename Handling**: Extracted from paths or file object names, with sensible defaults
+
+```python
+# Content type auto-detected as image/png
+client.upload_file("/path/to/image.png")
+
+# Multipart used automatically (has filename)
+client.upload_file("/path/to/document.pdf")
+
+# Binary used automatically (raw bytes)
+client.upload_file(b"raw binary data")
+
+# Explicit overrides supported
+client.upload_file(
+    "/path/to/file.bin",
+    content_type="application/custom-binary",
+    force_multipart=True
+)
+```
+
+**Comprehensive Progress Tracking**: All file operations support optional progress callbacks with built-in console display utilities:
+
+```python
+def progress_callback(bytes_transferred, total_bytes):
+    if total_bytes:
+        percentage = (bytes_transferred / total_bytes) * 100
+        print(f"Progress: {percentage:.1f}% ({bytes_transferred}/{total_bytes})")
+
+# Upload with progress
+client.upload_file("/path/to/file.pdf", progress_callback=progress_callback)
+
+# Built-in console progress display
+from kittycad._progress import create_progress_callback
+progress = create_progress_callback("Uploading", show_percentage=True, show_speed=True)
+client.upload_file("/path/to/file.pdf", progress_callback=progress)
+# Output: Uploading: 1,234,567/2,000,000 bytes (61.7%) [1.2 MB/s]
+```
+
+**Streaming Operations for Large Files**: Memory-efficient handling of large files through streaming uploads and downloads:
+
+```python
+# Streaming upload with generator
+def generate_large_file():
+    for i in range(100000):
+        yield f"Line {i}\n".encode()
+
+client.upload_binary(data=generate_large_file(), stream=True)
+
+# Streaming download to disk
+client.download_file(
+    output="/tmp/large_file.bin",
+    chunk_size=65536,  # 64KB chunks
+    progress_callback=progress_callback
+)
+
+# Download to memory or file object
+file_bytes = client.download_file(output=None)  # Returns bytes
+with open("/tmp/file.bin", "wb") as f:
+    client.download_file(output=f)  # Writes to file object
+```
+
+**Resource Management and Safety**: The SDK follows Python best practices for resource management:
+
+- **Only closes files it opens**: User-provided file objects are never closed by the SDK
+- **Automatic cleanup**: Context managers and proper resource cleanup for all operations  
+- **Memory efficiency**: Streaming support prevents loading large files entirely into memory
+- **Error handling**: Comprehensive exception handling with detailed context
+
+```python
+# SDK opens and closes automatically
+client.upload_file("/path/to/file.pdf")  # File opened/closed by SDK
+
+# User files remain under user control
+with open("/path/to/file.pdf", "rb") as f:
+    client.upload_file(f)  # File stays open, user controls lifecycle
+```
+
+**Enhanced Download Capabilities**: Flexible download options with automatic directory creation and overwrite protection:
+
+```python
+# Download to file path (creates directories if needed)
+client.download_file(output="/tmp/downloads/document.pdf")
+
+# Download to file object (no auto-close)
+with open("/tmp/file.pdf", "wb") as f:
+    client.download_file(output=f)
+
+# Download to memory
+file_data = client.download_file(output=None)
+
+# Overwrite protection
+client.download_file(output="/tmp/existing.pdf", overwrite=False)  # Raises FileExistsError
+client.download_file(output="/tmp/existing.pdf", overwrite=True)   # Overwrites safely
+```
+
+**Full Async Support**: All file operations have async equivalents with identical APIs:
+
+```python
+async def upload_example():
+    client = AsyncKittyCAD()
+    
+    # Async upload with progress
+    await client.upload_file_async(
+        "/path/to/file.pdf",
+        progress_callback=progress_callback
+    )
+    
+    # Async streaming download
+    await client.download_file_async(
+        output="/tmp/large_download.bin",
+        chunk_size=8192,
+        progress_callback=progress_callback
+    )
+    
+    await client.aclose()
+```
+
+**Low-Level API Access**: Advanced users can access the underlying file handling modules directly for custom implementations:
+
+```python
+from kittycad._multipart import upload_file_multipart, MultipartUploadContext
+from kittycad._binary import upload_file_binary, BinaryUploadContext  
+from kittycad._downloads import stream_download, DownloadContext
+
+# Direct multipart upload with custom fields
+response = upload_file_multipart(
+    client=httpx_client,
+    url="https://api.zoo.dev/upload",
+    file_param="document",
+    file_input="/path/to/file.pdf",
+    additional_fields={"metadata": "custom_value"}
+)
+
+# Context managers for resource safety
+with MultipartUploadContext("/path/to/file.pdf", progress_callback=callback) as upload:
+    response = httpx.post(url, files=upload.files)
+```
+
+**Comprehensive Error Handling Integration**: File operations use the SDK's enhanced exception system with specific handling for file-related errors:
+
+```python
+from kittycad import KittyCADAPIError, KittyCADConnectionError
+
+try:
+    client.upload_file("/path/to/large_file.bin")
+except KittyCADAPIError as e:
+    if e.status_code == 413:
+        print(f"File too large: {e.message}")
+    elif e.status_code == 422:
+        print(f"Invalid file format: {e.message}")
+except KittyCADConnectionError as e:
+    print(f"Network error during upload: {e.message}")
+except FileNotFoundError:
+    print("File not found on local system")
+```
+
 ### Developer Benefits
 
 1. **Better Debugging**: Readable model representations show key fields automatically
@@ -114,6 +305,10 @@ except KittyCADTimeoutError as e:
 6. **Uniform Error Handling**: All errors use the same exception types with consistent attributes
 7. **Rich Error Context**: Comprehensive debugging information in all exception types
 8. **Predictable Error Behavior**: No more raw HTTPX exceptions surfacing to user code
+9. **Intuitive File Operations**: File handling feels as natural as OpenAI, Stripe, or Boto3 SDKs
+10. **Memory Efficient**: Streaming support handles files of any size without memory issues
+11. **Progress Visibility**: Built-in progress tracking for better user experience
+12. **Resource Safety**: Automatic resource management following Python best practices
 
 ## v1.0.0
 
