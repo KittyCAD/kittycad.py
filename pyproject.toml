@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kittycad"
-version = "1.0.1"
+version = "1.0.2"
 description = "A client library for accessing KittyCAD"
 authors = []
 readme = "README.md"
@@ -50,6 +50,9 @@ docs = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["kittycad*"]
+
+[tool.setuptools.package-data]
+kittycad = ["py.typed"]
 
 [[tool.uv.index]]
 name = "pypi-public"
