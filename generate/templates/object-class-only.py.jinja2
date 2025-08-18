@@ -1,4 +1,4 @@
-class {{ name }}(BaseModel):
+class {{ name }}(KittyCadBaseModel):
     """{{ description }}"""
     {% for field in fields %}
     {% if field.value %}
@@ -7,7 +7,3 @@ class {{ name }}(BaseModel):
     {{ field.name }}: {{ field.type }}
     {% endif %}
     {% endfor %}
-
-    model_config = ConfigDict(
-        protected_namespaces=()
-    )
