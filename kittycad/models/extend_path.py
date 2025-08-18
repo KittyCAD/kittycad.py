@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ExtendPath(BaseModel):
+class ExtendPath(KittyCadBaseModel):
     """The response from the `ExtendPath` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

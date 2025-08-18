@@ -1,11 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.payment_method_card_checks import PaymentMethodCardChecks
+from .base import KittyCadBaseModel
 
 
-class CardDetails(BaseModel):
+class CardDetails(KittyCadBaseModel):
     """The card details of a payment method."""
 
     brand: Optional[str] = None
@@ -23,5 +22,3 @@ class CardDetails(BaseModel):
     funding: Optional[str] = None
 
     last4: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

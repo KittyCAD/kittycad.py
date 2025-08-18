@@ -1,13 +1,12 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.address_details import AddressDetails
 from ..models.currency import Currency
+from .base import KittyCadBaseModel
 
 
-class Customer(BaseModel):
+class Customer(KittyCadBaseModel):
     """The resource representing a payment \"Customer\"."""
 
     address: Optional[AddressDetails] = None
@@ -29,5 +28,3 @@ class Customer(BaseModel):
     name: Optional[str] = None
 
     phone: str = ""
-
-    model_config = ConfigDict(protected_namespaces=())

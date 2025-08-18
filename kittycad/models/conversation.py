@@ -1,11 +1,10 @@
 import datetime
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class Conversation(BaseModel):
+class Conversation(KittyCadBaseModel):
     """A conversation composed of many ML prompts."""
 
     created_at: datetime.datetime
@@ -17,5 +16,3 @@ class Conversation(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())

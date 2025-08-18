@@ -1,13 +1,10 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.annotation_line_end import AnnotationLineEnd
+from .base import KittyCadBaseModel
 
 
-class AnnotationLineEndOptions(BaseModel):
+class AnnotationLineEndOptions(KittyCadBaseModel):
     """Options for annotation text"""
 
     end: AnnotationLineEnd
 
     start: AnnotationLineEnd
-
-    model_config = ConfigDict(protected_namespaces=())

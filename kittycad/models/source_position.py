@@ -1,11 +1,9 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SourcePosition(BaseModel):
+class SourcePosition(KittyCadBaseModel):
     """A position in the source code."""
 
     column: int
 
     line: int
-
-    model_config = ConfigDict(protected_namespaces=())

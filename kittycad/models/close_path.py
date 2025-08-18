@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ClosePath(BaseModel):
+class ClosePath(KittyCadBaseModel):
     """The response from the `ClosePath` command."""
 
     face_id: str
-
-    model_config = ConfigDict(protected_namespaces=())

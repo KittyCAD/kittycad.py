@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SelectRemove(BaseModel):
+class SelectRemove(KittyCadBaseModel):
     """The response from the `SelectRemove` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

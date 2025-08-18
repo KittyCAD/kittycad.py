@@ -5,6 +5,75 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.1.0
+
+### Added - Enhanced Pydantic Models & Developer Experience 🎨
+
+**New Common BaseModel**: All generated models now inherit from `KittyCadBaseModel`, providing enhanced functionality and better developer experience:
+
+- **User-friendly string representation**: Models now display key fields in `__repr__()` for easier debugging
+- **Convenience methods**: Added `to_dict()`, `to_json()`, `from_dict()`, and `from_json()` factory methods
+- **Stricter validation**: Enhanced Pydantic configuration with `extra='forbid'` to catch unexpected fields
+- **Better serialization**: Improved JSON serialization with `use_enum_values=True` and `exclude_none=True`
+
+```python
+# Enhanced model usage
+from kittycad.models import User
+
+# Clean string representation
+user = User(id="123", name="John Doe", email="john@example.com")
+print(user)  # User(id='123', name='John Doe', email='john@example.com')
+
+# Convenient serialization/deserialization
+user_dict = user.to_dict()
+user_json = user.to_json()
+new_user = User.from_dict({"id": "456", "name": "Jane"})
+```
+
+**Improved Acronym Handling**: Fixed code generation to handle acronyms more naturally in module names:
+
+- **Better file naming**: `OAuth2ClientInfo` now generates `oauth2_client_info.py` instead of `o_auth2_client_info.py`
+- **Cleaner imports**: `from kittycad.models.oauth2_client_info import OAuth2ClientInfo` (previously required `o_auth2_client_info`)
+- **Consistent patterns**: XML, API, HTML, JSON, HTTPS, and other acronyms are handled properly
+- **Hardcoded fixes**: Special handling for complex cases like OAuth2 that don't fit general patterns
+
+**Enhanced Code Generation Tests**: Added comprehensive test suite for code generation utilities:
+
+- **Acronym handling verification**: Tests ensure proper conversion of camelCase to snake_case
+- **Regression prevention**: Automated tests prevent future acronym handling regressions  
+- **Integration with pytest**: Tests are discoverable and run with the main test suite
+- **Coverage verification**: Tests cover edge cases and common acronym patterns
+
+### Technical Improvements
+
+**BaseModel Configuration**:
+```python
+model_config = ConfigDict(
+    protected_namespaces=(),     # Avoid namespace warnings
+    populate_by_name=True,       # Enable alias usage for API compatibility
+    extra='forbid',              # Prevent typos and unexpected fields
+    use_enum_values=True,        # Clean enum serialization
+)
+```
+
+**Updated Code Generation**: 
+- Templates now use `KittyCadBaseModel` instead of direct Pydantic `BaseModel`
+- Removed duplicate `ConfigDict` declarations from generated models
+- Added base model import to generated `__init__.py` files
+
+**Test Infrastructure**:
+- New test directory: `generate/tests/` for code generation utilities
+- Pytest-compatible test structure with proper parametrization
+- Tests verify both current behavior and improvements
+
+### Developer Benefits
+
+1. **Better Debugging**: Readable model representations show key fields automatically
+2. **Easier Serialization**: Built-in methods for JSON/dict conversion with sensible defaults  
+3. **Cleaner Module Structure**: More intuitive import paths for OAuth2 and other acronym-heavy models
+4. **Enhanced Validation**: Stricter Pydantic settings catch more errors at development time
+5. **Future-Proof**: Test coverage ensures acronym handling improvements don't regress
+
 ## v1.0.0
 
 ### Quick Start - New Simple API 🎉

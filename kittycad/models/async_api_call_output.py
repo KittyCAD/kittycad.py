@@ -1,7 +1,7 @@
 import datetime
 from typing import Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.api_call_status import ApiCallStatus
@@ -19,10 +19,11 @@ from ..models.unit_length import UnitLength
 from ..models.unit_mass import UnitMass
 from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 from .base64data import Base64Data
 
 
-class OptionFileConversion(BaseModel):
+class OptionFileConversion(KittyCadBaseModel):
     """A file conversion."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -53,10 +54,8 @@ class OptionFileConversion(BaseModel):
 
     user_id: Uuid
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFileCenterOfMass(BaseModel):
+class OptionFileCenterOfMass(KittyCadBaseModel):
     """File center of mass."""
 
     center_of_mass: Optional[Point3d] = None
@@ -83,10 +82,8 @@ class OptionFileCenterOfMass(BaseModel):
 
     user_id: Uuid
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFileMass(BaseModel):
+class OptionFileMass(KittyCadBaseModel):
     """A file mass."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -117,10 +114,8 @@ class OptionFileMass(BaseModel):
 
     user_id: Uuid
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFileVolume(BaseModel):
+class OptionFileVolume(KittyCadBaseModel):
     """A file volume."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -147,10 +142,8 @@ class OptionFileVolume(BaseModel):
 
     volume: Optional[float] = None
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFileDensity(BaseModel):
+class OptionFileDensity(KittyCadBaseModel):
     """A file density."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -181,10 +174,8 @@ class OptionFileDensity(BaseModel):
 
     user_id: Uuid
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFileSurfaceArea(BaseModel):
+class OptionFileSurfaceArea(KittyCadBaseModel):
     """A file surface area."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -211,10 +202,8 @@ class OptionFileSurfaceArea(BaseModel):
 
     user_id: Uuid
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionTextToCad(BaseModel):
+class OptionTextToCad(KittyCadBaseModel):
     """Text to CAD."""
 
     code: Optional[str] = None
@@ -253,10 +242,8 @@ class OptionTextToCad(BaseModel):
 
     user_id: Uuid
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionTextToCadIteration(BaseModel):
+class OptionTextToCadIteration(KittyCadBaseModel):
     """Text to CAD iteration."""
 
     code: str
@@ -293,10 +280,8 @@ class OptionTextToCadIteration(BaseModel):
 
     user_id: Uuid
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionTextToCadMultiFileIteration(BaseModel):
+class OptionTextToCadMultiFileIteration(KittyCadBaseModel):
     """Text to CAD multi-file iteration."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -336,8 +321,6 @@ class OptionTextToCadMultiFileIteration(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 AsyncApiCallOutput = RootModel[

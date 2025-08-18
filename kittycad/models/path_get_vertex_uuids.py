@@ -1,11 +1,9 @@
 from typing import List
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class PathGetVertexUuids(BaseModel):
+class PathGetVertexUuids(KittyCadBaseModel):
     """The response from the `PathGetVertexUuids` command."""
 
     vertex_ids: List[str]
-
-    model_config = ConfigDict(protected_namespaces=())

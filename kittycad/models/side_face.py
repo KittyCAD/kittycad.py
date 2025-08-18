@@ -1,11 +1,9 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SideFace(BaseModel):
+class SideFace(KittyCadBaseModel):
     """IDs for a side face, extruded from the path of some sketch/2D shape."""
 
     face_id: str
 
     path_id: str
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,11 +1,9 @@
 from typing import List
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class MakeOffsetPath(BaseModel):
+class MakeOffsetPath(KittyCadBaseModel):
     """The response from the `MakeOffsetPath` command."""
 
     entity_ids: List[str]
-
-    model_config = ConfigDict(protected_namespaces=())

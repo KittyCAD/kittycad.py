@@ -32,29 +32,29 @@ def is_pascal_case(name: str) -> bool:
 
 def camel_to_snake(name: str) -> str:
     """Convert CamelCase/PascalCase to snake_case, but only if not already in snake_case.
-    
+
     Handles most acronyms properly: XMLHttpRequest -> xml_http_request, APIKey -> api_key.
     Special hardcoded fixes for common problematic cases.
     """
     if is_snake_case(name):
         return name
-    
+
     # Hardcoded fixes for specific problematic cases
     hardcoded_fixes = {
         "OAuth2ClientInfo": "oauth2_client_info",
         "OAuth2GrantType": "oauth2_grant_type",
     }
-    
+
     if name in hardcoded_fixes:
         return hardcoded_fixes[name]
-    
+
     # Insert underscore between lower/digit and upper
     s1 = re.sub("([a-z0-9])([A-Z])", r"\1_\2", name)
-    
+
     # Handle sequences of uppercase letters followed by lowercase
     # Keep acronyms together until they hit a lowercase letter
     s2 = re.sub("([A-Z]+)([A-Z][a-z])", r"\1_\2", s1)
-    
+
     return s2.lower()
 
 

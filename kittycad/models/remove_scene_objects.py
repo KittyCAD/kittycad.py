@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class RemoveSceneObjects(BaseModel):
+class RemoveSceneObjects(KittyCadBaseModel):
     """The response from the `RemoveSceneObjects` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

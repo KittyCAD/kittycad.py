@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.method import Method
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class ApiCallWithPrice(BaseModel):
+class ApiCallWithPrice(KittyCadBaseModel):
     """An API call with the price.
 
     This is a join of the `ApiCall` and `ApiCallPrice` tables."""
@@ -55,5 +54,3 @@ class ApiCallWithPrice(BaseModel):
     user_agent: str
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,9 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.point3d import Point3d
+from .base import KittyCadBaseModel
 
 
-class GetSketchModePlane(BaseModel):
+class GetSketchModePlane(KittyCadBaseModel):
     """The plane for sketch mode."""
 
     origin: Point3d
@@ -13,5 +12,3 @@ class GetSketchModePlane(BaseModel):
     y_axis: Point3d
 
     z_axis: Point3d
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Error(BaseModel):
+class Error(KittyCadBaseModel):
     """Error information from a response."""
 
     error_code: Optional[str] = None
@@ -11,5 +11,3 @@ class Error(BaseModel):
     message: str
 
     request_id: str
-
-    model_config = ConfigDict(protected_namespaces=())

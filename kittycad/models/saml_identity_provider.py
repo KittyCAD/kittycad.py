@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 from .base64data import Base64Data
 
 
-class SamlIdentityProvider(BaseModel):
+class SamlIdentityProvider(KittyCadBaseModel):
     """A SAML identity provider."""
 
     acs_url: str
@@ -31,5 +30,3 @@ class SamlIdentityProvider(BaseModel):
     technical_contact_email: Optional[str] = None
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

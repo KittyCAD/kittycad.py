@@ -46,7 +46,7 @@ def generate_types(cwd: str, parser: dict):
         if model_file_path:
             generated_files.append(model_file_path)
         f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
-    
+
     # Add the base model import
     f.write("from .base import KittyCadBaseModel\n")
 

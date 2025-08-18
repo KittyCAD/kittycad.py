@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class PaymentMethodCardChecks(BaseModel):
+class PaymentMethodCardChecks(KittyCadBaseModel):
     """Card checks."""
 
     address_line1_check: Optional[str] = None
@@ -11,5 +11,3 @@ class PaymentMethodCardChecks(BaseModel):
     address_postal_code_check: Optional[str] = None
 
     cvc_check: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

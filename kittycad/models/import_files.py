@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ImportFiles(BaseModel):
+class ImportFiles(KittyCadBaseModel):
     """Data from importing the files"""
 
     object_id: str
-
-    model_config = ConfigDict(protected_namespaces=())

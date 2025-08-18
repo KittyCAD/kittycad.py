@@ -1,13 +1,14 @@
 import datetime
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.modeling_app_event_type import ModelingAppEventType
+from .base import KittyCadBaseModel
 
 
-class OptionModelingAppEvent(BaseModel):
+class OptionModelingAppEvent(KittyCadBaseModel):
     """An event related to modeling app files"""
 
     attachment_uri: Optional[str] = None
@@ -27,8 +28,6 @@ class OptionModelingAppEvent(BaseModel):
     type: Literal["modeling_app_event"] = "modeling_app_event"
 
     user_id: str
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 Event = RootModel[

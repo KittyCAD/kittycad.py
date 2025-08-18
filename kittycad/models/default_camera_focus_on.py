@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class DefaultCameraFocusOn(BaseModel):
+class DefaultCameraFocusOn(KittyCadBaseModel):
     """The response from the `DefaultCameraFocusOn` command."""
-
-    model_config = ConfigDict(protected_namespaces=())

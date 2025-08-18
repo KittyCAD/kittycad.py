@@ -1,23 +1,22 @@
 from typing import Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.ml_copilot_system_command import MlCopilotSystemCommand
 from ..models.source_range_prompt import SourceRangePrompt
+from .base import KittyCadBaseModel
 
 
-class OptionHeaders(BaseModel):
+class OptionHeaders(KittyCadBaseModel):
     """Authentication header request."""
 
     headers: Dict[str, str]
 
     type: Literal["headers"] = "headers"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionUser(BaseModel):
+class OptionUser(KittyCadBaseModel):
     """The user message, which contains the content of the user's input."""
 
     content: str
@@ -30,17 +29,13 @@ class OptionUser(BaseModel):
 
     type: Literal["user"] = "user"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSystem(BaseModel):
+class OptionSystem(KittyCadBaseModel):
     """The system message, which can be used to set the context or instructions for the AI."""
 
     command: MlCopilotSystemCommand
 
     type: Literal["system"] = "system"
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 MlCopilotClientMessage = RootModel[

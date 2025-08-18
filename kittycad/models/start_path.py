@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class StartPath(BaseModel):
+class StartPath(KittyCadBaseModel):
     """The response from the `StartPath` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

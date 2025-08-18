@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class TextToCadCreateBody(BaseModel):
+class TextToCadCreateBody(KittyCadBaseModel):
     """Body for generating models from text."""
 
     kcl_version: Optional[str] = None
@@ -11,5 +11,3 @@ class TextToCadCreateBody(BaseModel):
     project_name: Optional[str] = None
 
     prompt: str
-
-    model_config = ConfigDict(protected_namespaces=())

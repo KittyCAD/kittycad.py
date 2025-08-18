@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetGridAutoScale(BaseModel):
+class SetGridAutoScale(KittyCadBaseModel):
     """The response from the 'SetGridScale'."""
-
-    model_config = ConfigDict(protected_namespaces=())

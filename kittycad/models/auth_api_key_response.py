@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class AuthApiKeyResponse(BaseModel):
+class AuthApiKeyResponse(KittyCadBaseModel):
     """The response from the `/auth/api-key` endpoint."""
 
     session_token: str
-
-    model_config = ConfigDict(protected_namespaces=())

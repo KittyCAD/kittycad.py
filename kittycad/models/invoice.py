@@ -1,15 +1,14 @@
 import datetime
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.currency import Currency
 from ..models.discount import Discount
 from ..models.invoice_line_item import InvoiceLineItem
 from ..models.invoice_status import InvoiceStatus
+from .base import KittyCadBaseModel
 
 
-class Invoice(BaseModel):
+class Invoice(KittyCadBaseModel):
     """An invoice."""
 
     amount_due: float = 0.0
@@ -61,5 +60,3 @@ class Invoice(BaseModel):
     total: float = 0.0
 
     url: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

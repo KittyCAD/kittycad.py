@@ -1,12 +1,11 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.origin_type import OriginType
 from ..models.point3d import Point3d
+from .base import KittyCadBaseModel
 
 
-class TransformByForPoint3d(BaseModel):
+class TransformByForPoint3d(KittyCadBaseModel):
     """How a property of an object should be transformed."""
 
     is_local: bool
@@ -16,5 +15,3 @@ class TransformByForPoint3d(BaseModel):
     property: Point3d
 
     set: bool
-
-    model_config = ConfigDict(protected_namespaces=())

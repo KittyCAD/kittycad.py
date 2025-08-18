@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class PlaneSetColor(BaseModel):
+class PlaneSetColor(KittyCadBaseModel):
     """The response from the `PlaneSetColor` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,29 +1,26 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.system import System
 from ..models.unit_length import UnitLength
+from .base import KittyCadBaseModel
 
 
-class OptionFbx(BaseModel):
+class OptionFbx(KittyCadBaseModel):
     """Autodesk Filmbox (FBX) format."""
 
     type: Literal["fbx"] = "fbx"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionGltf(BaseModel):
+class OptionGltf(KittyCadBaseModel):
     """Binary glTF 2.0. We refer to this as glTF since that is how our customers refer to it, but this can also import binary glTF (glb)."""
 
     type: Literal["gltf"] = "gltf"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionObj(BaseModel):
+class OptionObj(KittyCadBaseModel):
     """Wavefront OBJ format."""
 
     coords: System
@@ -32,10 +29,8 @@ class OptionObj(BaseModel):
 
     units: UnitLength
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPly(BaseModel):
+class OptionPly(KittyCadBaseModel):
     """The PLY Polygon File Format."""
 
     coords: System
@@ -44,30 +39,24 @@ class OptionPly(BaseModel):
 
     units: UnitLength
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSldprt(BaseModel):
+class OptionSldprt(KittyCadBaseModel):
     """SolidWorks part (SLDPRT) format."""
 
     split_closed_faces: bool = False
 
     type: Literal["sldprt"] = "sldprt"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionStep(BaseModel):
+class OptionStep(KittyCadBaseModel):
     """ISO 10303-21 (STEP) format."""
 
     split_closed_faces: bool = False
 
     type: Literal["step"] = "step"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionStl(BaseModel):
+class OptionStl(KittyCadBaseModel):
     """*ST**ereo**L**ithography format."""
 
     coords: System
@@ -75,8 +64,6 @@ class OptionStl(BaseModel):
     type: Literal["stl"] = "stl"
 
     units: UnitLength
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 InputFormat3d = RootModel[

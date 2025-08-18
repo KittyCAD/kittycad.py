@@ -1,13 +1,11 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class UpdatePaymentBalance(BaseModel):
+class UpdatePaymentBalance(KittyCadBaseModel):
     """The data for updating a balance."""
 
     monthly_api_credits_remaining_monetary_value: Optional[float] = None
 
     stable_api_credits_remaining_monetary_value: Optional[float] = None
-
-    model_config = ConfigDict(protected_namespaces=())

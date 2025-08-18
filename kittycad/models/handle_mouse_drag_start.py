@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class HandleMouseDragStart(BaseModel):
+class HandleMouseDragStart(KittyCadBaseModel):
     """The response from the `HandleMouseDragStart` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -215,8 +215,8 @@ from .mouse_click import MouseClick
 from .mouse_move import MouseMove
 from .move_path_pen import MovePathPen
 from .new_annotation import NewAnnotation
-from .o_auth2_client_info import OAuth2ClientInfo
-from .o_auth2_grant_type import OAuth2GrantType
+from .oauth2_client_info import OAuth2ClientInfo
+from .oauth2_grant_type import OAuth2GrantType
 from .object_bring_to_front import ObjectBringToFront
 from .object_set_material_params_pbr import ObjectSetMaterialParamsPbr
 from .object_visible import ObjectVisible

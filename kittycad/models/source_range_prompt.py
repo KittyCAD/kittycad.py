@@ -1,11 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.source_range import SourceRange
+from .base import KittyCadBaseModel
 
 
-class SourceRangePrompt(BaseModel):
+class SourceRangePrompt(KittyCadBaseModel):
     """A source range and prompt for a text to CAD iteration."""
 
     file: Optional[str] = None
@@ -13,5 +12,3 @@ class SourceRangePrompt(BaseModel):
     prompt: str
 
     range: SourceRange
-
-    model_config = ConfigDict(protected_namespaces=())

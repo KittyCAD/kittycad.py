@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SelectAdd(BaseModel):
+class SelectAdd(KittyCadBaseModel):
     """The response from the `SelectAdd` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

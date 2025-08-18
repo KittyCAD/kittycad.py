@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetCurrentToolProperties(BaseModel):
+class SetCurrentToolProperties(KittyCadBaseModel):
     """The response from the `SetCurrentToolProperties` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

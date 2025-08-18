@@ -1,10 +1,12 @@
 from typing import Dict, Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from .base import KittyCadBaseModel
 
-class OptionTextToCad(BaseModel):
+
+class OptionTextToCad(KittyCadBaseModel):
     """Response from the `TextToCad` tool."""
 
     error: Optional[str] = None
@@ -17,10 +19,8 @@ class OptionTextToCad(BaseModel):
 
     type: Literal["text_to_cad"] = "text_to_cad"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEditKclCode(BaseModel):
+class OptionEditKclCode(KittyCadBaseModel):
     """Response from the `EditKclCode` tool."""
 
     error: Optional[str] = None
@@ -33,17 +33,13 @@ class OptionEditKclCode(BaseModel):
 
     type: Literal["edit_kcl_code"] = "edit_kcl_code"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMechanicalKnowledgeBase(BaseModel):
+class OptionMechanicalKnowledgeBase(KittyCadBaseModel):
     """Mechanical knowledge base response."""
 
     response: str
 
     type: Literal["mechanical_knowledge_base"] = "mechanical_knowledge_base"
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 MlToolResult = RootModel[

@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetGridReferencePlane(BaseModel):
+class SetGridReferencePlane(KittyCadBaseModel):
     """The response from the 'SetGridReferencePlane'."""
-
-    model_config = ConfigDict(protected_namespaces=())

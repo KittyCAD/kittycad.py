@@ -1,11 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.inquiry_type import InquiryType
+from .base import KittyCadBaseModel
 
 
-class InquiryForm(BaseModel):
+class InquiryForm(KittyCadBaseModel):
     """The form for a public inquiry submission."""
 
     company: Optional[str] = None
@@ -23,5 +22,3 @@ class InquiryForm(BaseModel):
     message: str
 
     phone: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

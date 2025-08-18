@@ -1,18 +1,16 @@
 from typing import Union
 
-from pydantic import BaseModel, ConfigDict, RootModel
+from pydantic import RootModel
+
+from .base import KittyCadBaseModel
 
 
-class Response(BaseModel):
+class Response(KittyCadBaseModel):
     """Response to the modeling command."""
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class Errors(BaseModel):
+class Errors(KittyCadBaseModel):
     """Errors that occurred during the modeling command."""
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 BatchResponse = RootModel[

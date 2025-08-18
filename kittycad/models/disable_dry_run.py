@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class DisableDryRun(BaseModel):
+class DisableDryRun(KittyCadBaseModel):
     """The response from the `DisableDryRun` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

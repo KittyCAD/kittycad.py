@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class KclCodeCompletionParams(BaseModel):
+class KclCodeCompletionParams(KittyCadBaseModel):
     """Extra params for the completions."""
 
     language: str = ""
@@ -15,5 +15,3 @@ class KclCodeCompletionParams(BaseModel):
     suffix_tokens: Optional[int] = None
 
     trim_by_indentation: bool = False
-
-    model_config = ConfigDict(protected_namespaces=())

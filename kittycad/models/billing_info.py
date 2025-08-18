@@ -1,11 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.address_details import AddressDetails
+from .base import KittyCadBaseModel
 
 
-class BillingInfo(BaseModel):
+class BillingInfo(KittyCadBaseModel):
     """The billing information for payments."""
 
     address: Optional[AddressDetails] = None
@@ -13,5 +12,3 @@ class BillingInfo(BaseModel):
     name: Optional[str] = None
 
     phone: str = ""
-
-    model_config = ConfigDict(protected_namespaces=())

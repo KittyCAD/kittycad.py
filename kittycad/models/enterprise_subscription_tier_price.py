@@ -1,12 +1,13 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.plan_interval import PlanInterval
+from .base import KittyCadBaseModel
 
 
-class OptionFlat(BaseModel):
+class OptionFlat(KittyCadBaseModel):
     """A flat price that we publicly list."""
 
     interval: PlanInterval
@@ -15,10 +16,8 @@ class OptionFlat(BaseModel):
 
     type: Literal["flat"] = "flat"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPerUser(BaseModel):
+class OptionPerUser(KittyCadBaseModel):
     """A per user price that we publicly list."""
 
     interval: PlanInterval
@@ -26,8 +25,6 @@ class OptionPerUser(BaseModel):
     price: float
 
     type: Literal["per_user"] = "per_user"
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 EnterpriseSubscriptionTierPrice = RootModel[

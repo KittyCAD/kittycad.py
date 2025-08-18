@@ -1,11 +1,9 @@
 from typing import List
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Solid3dGetAllEdgeFaces(BaseModel):
+class Solid3dGetAllEdgeFaces(KittyCadBaseModel):
     """The response from the `Solid3dGetAllEdgeFaces` command."""
 
     faces: List[str]
-
-    model_config = ConfigDict(protected_namespaces=())

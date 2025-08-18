@@ -1,11 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.entity_type import EntityType
+from .base import KittyCadBaseModel
 
 
-class GetEntityType(BaseModel):
+class GetEntityType(KittyCadBaseModel):
     """The response from the `GetEntityType` command."""
 
     entity_type: EntityType
-
-    model_config = ConfigDict(protected_namespaces=())

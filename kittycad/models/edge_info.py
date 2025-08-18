@@ -1,13 +1,11 @@
 from typing import List
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class EdgeInfo(BaseModel):
+class EdgeInfo(KittyCadBaseModel):
     """A list of faces for a specific edge."""
 
     edge_id: str
 
     faces: List[str]
-
-    model_config = ConfigDict(protected_namespaces=())

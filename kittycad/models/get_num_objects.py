@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class GetNumObjects(BaseModel):
+class GetNumObjects(KittyCadBaseModel):
     """The response from the `GetNumObjects` command."""
 
     num_objects: int
-
-    model_config = ConfigDict(protected_namespaces=())

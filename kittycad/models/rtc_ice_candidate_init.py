@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class RtcIceCandidateInit(BaseModel):
+class RtcIceCandidateInit(KittyCadBaseModel):
     """ICECandidateInit is used to serialize ice candidates"""
 
     candidate: str
@@ -13,5 +13,3 @@ class RtcIceCandidateInit(BaseModel):
     sdpMid: Optional[str] = None
 
     usernameFragment: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

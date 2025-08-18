@@ -1,11 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.camera_settings import CameraSettings
+from .base import KittyCadBaseModel
 
 
-class ZoomToFit(BaseModel):
+class ZoomToFit(KittyCadBaseModel):
     """The response from the `ZoomToFit` command."""
 
     settings: CameraSettings
-
-    model_config = ConfigDict(protected_namespaces=())

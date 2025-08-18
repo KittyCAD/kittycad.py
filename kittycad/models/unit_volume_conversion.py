@@ -1,14 +1,13 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_call_status import ApiCallStatus
 from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class UnitVolumeConversion(BaseModel):
+class UnitVolumeConversion(KittyCadBaseModel):
     """Result of converting between units."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -34,5 +33,3 @@ class UnitVolumeConversion(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())

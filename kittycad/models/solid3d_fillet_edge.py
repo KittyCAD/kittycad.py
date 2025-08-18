@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Solid3dFilletEdge(BaseModel):
+class Solid3dFilletEdge(KittyCadBaseModel):
     """The response from the `Solid3dFilletEdge` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

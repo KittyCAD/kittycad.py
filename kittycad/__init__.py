@@ -78,7 +78,7 @@ from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
 from .models.ml_prompt import MlPrompt
 from .models.ml_prompt_results_page import MlPromptResultsPage
-from .models.o_auth2_client_info import OAuth2ClientInfo
+from .models.oauth2_client_info import OAuth2ClientInfo
 from .models.org import Org
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember

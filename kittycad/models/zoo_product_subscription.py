@@ -1,7 +1,5 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_endpoint import ApiEndpoint
 from ..models.modeling_app_share_links import ModelingAppShareLinks
 from ..models.modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
@@ -13,9 +11,10 @@ from ..models.subscription_training_data_behavior import (
 )
 from ..models.support_tier import SupportTier
 from ..models.zoo_tool import ZooTool
+from .base import KittyCadBaseModel
 
 
-class ZooProductSubscription(BaseModel):
+class ZooProductSubscription(KittyCadBaseModel):
     """A subscription to the modeling app."""
 
     annual_discount: Optional[float] = None
@@ -45,5 +44,3 @@ class ZooProductSubscription(BaseModel):
     type: SubscriptionTierType
 
     zoo_tools_included: Optional[List[ZooTool]] = None
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetDefaultSystemProperties(BaseModel):
+class SetDefaultSystemProperties(KittyCadBaseModel):
     """The response from the `SetDefaultSystemProperties` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

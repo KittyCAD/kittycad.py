@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class NewAnnotation(BaseModel):
+class NewAnnotation(KittyCadBaseModel):
     """The response from the `NewAnnotation` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,11 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.ok_web_socket_response_data import OkWebSocketResponseData
+from .base import KittyCadBaseModel
 
 
-class SuccessWebSocketResponse(BaseModel):
+class SuccessWebSocketResponse(KittyCadBaseModel):
     """Successful Websocket response."""
 
     request_id: Optional[str] = None
@@ -13,5 +12,3 @@ class SuccessWebSocketResponse(BaseModel):
     resp: OkWebSocketResponseData
 
     success: bool
-
-    model_config = ConfigDict(protected_namespaces=())

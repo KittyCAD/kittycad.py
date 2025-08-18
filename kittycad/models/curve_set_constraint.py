@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class CurveSetConstraint(BaseModel):
+class CurveSetConstraint(KittyCadBaseModel):
     """The response from the `CurveSetConstraint` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

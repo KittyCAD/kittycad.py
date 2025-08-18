@@ -1,6 +1,6 @@
 from typing import Dict, List, Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.client_metrics import ClientMetrics
@@ -9,29 +9,26 @@ from ..models.modeling_cmd_id import ModelingCmdId
 from ..models.modeling_cmd_req import ModelingCmdReq
 from ..models.rtc_ice_candidate_init import RtcIceCandidateInit
 from ..models.rtc_session_description import RtcSessionDescription
+from .base import KittyCadBaseModel
 
 
-class OptionTrickleIce(BaseModel):
+class OptionTrickleIce(KittyCadBaseModel):
     """The trickle ICE candidate request."""
 
     candidate: RtcIceCandidateInit
 
     type: Literal["trickle_ice"] = "trickle_ice"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSdpOffer(BaseModel):
+class OptionSdpOffer(KittyCadBaseModel):
     """The SDP offer request."""
 
     offer: RtcSessionDescription
 
     type: Literal["sdp_offer"] = "sdp_offer"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionModelingCmdReq(BaseModel):
+class OptionModelingCmdReq(KittyCadBaseModel):
     """The modeling command request."""
 
     cmd: ModelingCmd
@@ -40,10 +37,8 @@ class OptionModelingCmdReq(BaseModel):
 
     type: Literal["modeling_cmd_req"] = "modeling_cmd_req"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionModelingCmdBatchReq(BaseModel):
+class OptionModelingCmdBatchReq(KittyCadBaseModel):
     """A sequence of modeling requests. If any request fails, following requests will not be tried."""
 
     batch_id: ModelingCmdId
@@ -54,43 +49,33 @@ class OptionModelingCmdBatchReq(BaseModel):
 
     type: Literal["modeling_cmd_batch_req"] = "modeling_cmd_batch_req"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPing(BaseModel):
+class OptionPing(KittyCadBaseModel):
     """The client-to-server Ping to ensure the WebSocket stays alive."""
 
     type: Literal["ping"] = "ping"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMetricsResponse(BaseModel):
+class OptionMetricsResponse(KittyCadBaseModel):
     """The response to a metrics collection request from the server."""
 
     metrics: ClientMetrics
 
     type: Literal["metrics_response"] = "metrics_response"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDebug(BaseModel):
+class OptionDebug(KittyCadBaseModel):
     """Return information about the connected instance"""
 
     type: Literal["debug"] = "debug"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionHeaders(BaseModel):
+class OptionHeaders(KittyCadBaseModel):
     """Authentication header request."""
 
     headers: Dict[str, str]
 
     type: Literal["headers"] = "headers"
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 WebSocketRequest = RootModel[

@@ -1,14 +1,13 @@
 import datetime
 from typing import Any, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_call_status import ApiCallStatus
 from ..models.async_api_call_type import AsyncApiCallType
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class AsyncApiCall(BaseModel):
+class AsyncApiCall(KittyCadBaseModel):
     """An async API call."""
 
     attempts: int = 0
@@ -36,5 +35,3 @@ class AsyncApiCall(BaseModel):
     user_id: Uuid
 
     worker: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

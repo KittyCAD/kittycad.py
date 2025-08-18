@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ObjectVisible(BaseModel):
+class ObjectVisible(KittyCadBaseModel):
     """The response from the `ObjectVisible` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

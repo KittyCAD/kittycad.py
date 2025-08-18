@@ -1,27 +1,24 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.global_axis import GlobalAxis
+from .base import KittyCadBaseModel
 
 
-class OptionEuclidean(BaseModel):
+class OptionEuclidean(KittyCadBaseModel):
     """Euclidean Distance."""
 
     type: Literal["euclidean"] = "euclidean"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionOnAxis(BaseModel):
+class OptionOnAxis(KittyCadBaseModel):
     """The distance between objects along the specified axis"""
 
     axis: GlobalAxis
 
     type: Literal["on_axis"] = "on_axis"
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 DistanceType = RootModel[

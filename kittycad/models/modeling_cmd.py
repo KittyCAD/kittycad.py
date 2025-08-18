@@ -1,6 +1,6 @@
 from typing import List, Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.angle import Angle
@@ -41,9 +41,10 @@ from ..models.unit_density import UnitDensity
 from ..models.unit_length import UnitLength
 from ..models.unit_mass import UnitMass
 from ..models.unit_volume import UnitVolume
+from .base import KittyCadBaseModel
 
 
-class OptionEngineUtilEvaluatePath(BaseModel):
+class OptionEngineUtilEvaluatePath(KittyCadBaseModel):
     """Evaluates the position of a path in one shot (engine utility for kcl executor)"""
 
     path_json: str
@@ -52,18 +53,14 @@ class OptionEngineUtilEvaluatePath(BaseModel):
 
     type: Literal["engine_util_evaluate_path"] = "engine_util_evaluate_path"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionStartPath(BaseModel):
+class OptionStartPath(KittyCadBaseModel):
     """Start a new path."""
 
     type: Literal["start_path"] = "start_path"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMovePathPen(BaseModel):
+class OptionMovePathPen(KittyCadBaseModel):
     """Move the path's \"pen\". If you're in sketch mode, these coordinates are in the local coordinate system, not the world's coordinate system. For example, say you're sketching on the plane {x: (1,0,0), y: (0,1,0), origin: (0, 0, 50)}. In other words, the plane 50 units above the default XY plane. Then, moving the pen to (1, 1, 0) with this command uses local coordinates. So, it would move the pen to (1, 1, 50) in global coordinates."""
 
     path: ModelingCmdId
@@ -72,10 +69,8 @@ class OptionMovePathPen(BaseModel):
 
     type: Literal["move_path_pen"] = "move_path_pen"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionExtendPath(BaseModel):
+class OptionExtendPath(KittyCadBaseModel):
     """Extend a path by adding a new segment which starts at the path's \"pen\". If no \"pen\" location has been set before (via `MovePen`), then the pen is at the origin."""
 
     path: ModelingCmdId
@@ -84,10 +79,8 @@ class OptionExtendPath(BaseModel):
 
     type: Literal["extend_path"] = "extend_path"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionExtrude(BaseModel):
+class OptionExtrude(KittyCadBaseModel):
     """Command for extruding a solid 2d."""
 
     distance: LengthUnit
@@ -102,10 +95,8 @@ class OptionExtrude(BaseModel):
 
     type: Literal["extrude"] = "extrude"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionTwistExtrude(BaseModel):
+class OptionTwistExtrude(KittyCadBaseModel):
     """Command for twist extruding a solid 2d."""
 
     angle_step_size: Angle = {"unit": "degrees", "value": 15.0}  # type: ignore
@@ -124,10 +115,8 @@ class OptionTwistExtrude(BaseModel):
 
     type: Literal["twist_extrude"] = "twist_extrude"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSweep(BaseModel):
+class OptionSweep(KittyCadBaseModel):
     """Extrude the object along a path."""
 
     relative_to: RelativeTo = "sketch_plane"  # type: ignore
@@ -142,10 +131,8 @@ class OptionSweep(BaseModel):
 
     type: Literal["sweep"] = "sweep"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionRevolve(BaseModel):
+class OptionRevolve(KittyCadBaseModel):
     """Command for revolving a solid 2d."""
 
     angle: Angle
@@ -164,10 +151,8 @@ class OptionRevolve(BaseModel):
 
     type: Literal["revolve"] = "revolve"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dShellFace(BaseModel):
+class OptionSolid3dShellFace(KittyCadBaseModel):
     """Command for shelling a solid3d face"""
 
     face_ids: List[str]
@@ -180,10 +165,8 @@ class OptionSolid3dShellFace(BaseModel):
 
     type: Literal["solid3d_shell_face"] = "solid3d_shell_face"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionRevolveAboutEdge(BaseModel):
+class OptionRevolveAboutEdge(KittyCadBaseModel):
     """Command for revolving a solid 2d about a brep edge"""
 
     angle: Angle
@@ -198,10 +181,8 @@ class OptionRevolveAboutEdge(BaseModel):
 
     type: Literal["revolve_about_edge"] = "revolve_about_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionLoft(BaseModel):
+class OptionLoft(KittyCadBaseModel):
     """Command for lofting sections to create a solid"""
 
     base_curve_index: Optional[int] = None
@@ -216,20 +197,16 @@ class OptionLoft(BaseModel):
 
     v_degree: int
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionClosePath(BaseModel):
+class OptionClosePath(KittyCadBaseModel):
     """Closes a path, converting it to a 2D solid."""
 
     path_id: str
 
     type: Literal["close_path"] = "close_path"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCameraDragStart(BaseModel):
+class OptionCameraDragStart(KittyCadBaseModel):
     """Camera drag started."""
 
     interaction: CameraDragInteractionType
@@ -238,10 +215,8 @@ class OptionCameraDragStart(BaseModel):
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCameraDragMove(BaseModel):
+class OptionCameraDragMove(KittyCadBaseModel):
     """Camera drag continued."""
 
     interaction: CameraDragInteractionType
@@ -252,10 +227,8 @@ class OptionCameraDragMove(BaseModel):
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCameraDragEnd(BaseModel):
+class OptionCameraDragEnd(KittyCadBaseModel):
     """Camera drag ended"""
 
     interaction: CameraDragInteractionType
@@ -264,36 +237,28 @@ class OptionCameraDragEnd(BaseModel):
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraGetSettings(BaseModel):
+class OptionDefaultCameraGetSettings(KittyCadBaseModel):
     """Gets the default camera's camera settings"""
 
     type: Literal["default_camera_get_settings"] = "default_camera_get_settings"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraGetView(BaseModel):
+class OptionDefaultCameraGetView(KittyCadBaseModel):
     """Gets the default camera's view state"""
 
     type: Literal["default_camera_get_view"] = "default_camera_get_view"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraSetView(BaseModel):
+class OptionDefaultCameraSetView(KittyCadBaseModel):
     """Sets the default camera's view state"""
 
     type: Literal["default_camera_set_view"] = "default_camera_set_view"
 
     view: CameraViewState
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraLookAt(BaseModel):
+class OptionDefaultCameraLookAt(KittyCadBaseModel):
     """Change what the default camera is looking at."""
 
     center: Point3d
@@ -306,10 +271,8 @@ class OptionDefaultCameraLookAt(BaseModel):
 
     vantage: Point3d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraPerspectiveSettings(BaseModel):
+class OptionDefaultCameraPerspectiveSettings(KittyCadBaseModel):
     """Change what the default camera is looking at."""
 
     center: Point3d
@@ -330,20 +293,16 @@ class OptionDefaultCameraPerspectiveSettings(BaseModel):
 
     z_near: Optional[float] = None
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraZoom(BaseModel):
+class OptionDefaultCameraZoom(KittyCadBaseModel):
     """Adjust zoom of the default camera."""
 
     magnitude: float
 
     type: Literal["default_camera_zoom"] = "default_camera_zoom"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionExport2d(BaseModel):
+class OptionExport2d(KittyCadBaseModel):
     """Export a sketch to a file."""
 
     entity_ids: List[str]
@@ -352,10 +311,8 @@ class OptionExport2d(BaseModel):
 
     type: Literal["export2d"] = "export2d"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionExport3d(BaseModel):
+class OptionExport3d(KittyCadBaseModel):
     """Export the scene to a file."""
 
     entity_ids: List[str]
@@ -364,10 +321,8 @@ class OptionExport3d(BaseModel):
 
     type: Literal["export3d"] = "export3d"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionExport(BaseModel):
+class OptionExport(KittyCadBaseModel):
     """Export the scene to a file."""
 
     entity_ids: List[str]
@@ -376,30 +331,24 @@ class OptionExport(BaseModel):
 
     type: Literal["export"] = "export"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityGetParentId(BaseModel):
+class OptionEntityGetParentId(KittyCadBaseModel):
     """What is this entity's parent?"""
 
     entity_id: str
 
     type: Literal["entity_get_parent_id"] = "entity_get_parent_id"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityGetNumChildren(BaseModel):
+class OptionEntityGetNumChildren(KittyCadBaseModel):
     """How many children does the entity have?"""
 
     entity_id: str
 
     type: Literal["entity_get_num_children"] = "entity_get_num_children"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityGetChildUuid(BaseModel):
+class OptionEntityGetChildUuid(KittyCadBaseModel):
     """What is the UUID of this entity's n-th child?"""
 
     child_index: int
@@ -408,30 +357,24 @@ class OptionEntityGetChildUuid(BaseModel):
 
     type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityGetAllChildUuids(BaseModel):
+class OptionEntityGetAllChildUuids(KittyCadBaseModel):
     """What are all UUIDs of this entity's children?"""
 
     entity_id: str
 
     type: Literal["entity_get_all_child_uuids"] = "entity_get_all_child_uuids"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityGetSketchPaths(BaseModel):
+class OptionEntityGetSketchPaths(KittyCadBaseModel):
     """What are all UUIDs of all the paths sketched on top of this entity?"""
 
     entity_id: str
 
     type: Literal["entity_get_sketch_paths"] = "entity_get_sketch_paths"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityGetDistance(BaseModel):
+class OptionEntityGetDistance(KittyCadBaseModel):
     """What is the distance between these two entities?"""
 
     distance_type: DistanceType
@@ -442,20 +385,16 @@ class OptionEntityGetDistance(BaseModel):
 
     type: Literal["entity_get_distance"] = "entity_get_distance"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityClone(BaseModel):
+class OptionEntityClone(KittyCadBaseModel):
     """Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate."""
 
     entity_id: str
 
     type: Literal["entity_clone"] = "entity_clone"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityLinearPatternTransform(BaseModel):
+class OptionEntityLinearPatternTransform(KittyCadBaseModel):
     """Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate."""
 
     entity_id: str
@@ -466,10 +405,8 @@ class OptionEntityLinearPatternTransform(BaseModel):
 
     type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityLinearPattern(BaseModel):
+class OptionEntityLinearPattern(KittyCadBaseModel):
     """Create a linear pattern using this entity."""
 
     axis: Point3d
@@ -482,10 +419,8 @@ class OptionEntityLinearPattern(BaseModel):
 
     type: Literal["entity_linear_pattern"] = "entity_linear_pattern"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityCircularPattern(BaseModel):
+class OptionEntityCircularPattern(KittyCadBaseModel):
     """Create a circular pattern using this entity."""
 
     arc_degrees: float
@@ -502,10 +437,8 @@ class OptionEntityCircularPattern(BaseModel):
 
     type: Literal["entity_circular_pattern"] = "entity_circular_pattern"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityMakeHelix(BaseModel):
+class OptionEntityMakeHelix(KittyCadBaseModel):
     """Create a helix using the input cylinder and other specified parameters."""
 
     cylinder_id: str
@@ -520,10 +453,8 @@ class OptionEntityMakeHelix(BaseModel):
 
     type: Literal["entity_make_helix"] = "entity_make_helix"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityMakeHelixFromParams(BaseModel):
+class OptionEntityMakeHelixFromParams(KittyCadBaseModel):
     """Create a helix using the specified parameters."""
 
     axis: Point3d
@@ -542,10 +473,8 @@ class OptionEntityMakeHelixFromParams(BaseModel):
 
     type: Literal["entity_make_helix_from_params"] = "entity_make_helix_from_params"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityMakeHelixFromEdge(BaseModel):
+class OptionEntityMakeHelixFromEdge(KittyCadBaseModel):
     """Create a helix using the specified parameters."""
 
     edge_id: str
@@ -562,10 +491,8 @@ class OptionEntityMakeHelixFromEdge(BaseModel):
 
     type: Literal["entity_make_helix_from_edge"] = "entity_make_helix_from_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityMirror(BaseModel):
+class OptionEntityMirror(KittyCadBaseModel):
     """Mirror the input entities over the specified axis. (Currently only supports sketches)"""
 
     axis: Point3d
@@ -576,10 +503,8 @@ class OptionEntityMirror(BaseModel):
 
     type: Literal["entity_mirror"] = "entity_mirror"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityMirrorAcrossEdge(BaseModel):
+class OptionEntityMirrorAcrossEdge(KittyCadBaseModel):
     """Mirror the input entities over the specified edge. (Currently only supports sketches)"""
 
     edge_id: str
@@ -588,10 +513,8 @@ class OptionEntityMirrorAcrossEdge(BaseModel):
 
     type: Literal["entity_mirror_across_edge"] = "entity_mirror_across_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSelectWithPoint(BaseModel):
+class OptionSelectWithPoint(KittyCadBaseModel):
     """Modifies the selection by simulating a \"mouse click\" at the given x,y window coordinate Returns ID of whatever was selected."""
 
     selected_at_window: Point2d
@@ -600,48 +523,38 @@ class OptionSelectWithPoint(BaseModel):
 
     type: Literal["select_with_point"] = "select_with_point"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSelectAdd(BaseModel):
+class OptionSelectAdd(KittyCadBaseModel):
     """Adds one or more entities (by UUID) to the selection."""
 
     entities: List[str]
 
     type: Literal["select_add"] = "select_add"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSelectRemove(BaseModel):
+class OptionSelectRemove(KittyCadBaseModel):
     """Removes one or more entities (by UUID) from the selection."""
 
     entities: List[str]
 
     type: Literal["select_remove"] = "select_remove"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSceneClearAll(BaseModel):
+class OptionSceneClearAll(KittyCadBaseModel):
     """Removes all of the Objects in the scene"""
 
     type: Literal["scene_clear_all"] = "scene_clear_all"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSelectReplace(BaseModel):
+class OptionSelectReplace(KittyCadBaseModel):
     """Replaces current selection with these entities (by UUID)."""
 
     entities: List[str]
 
     type: Literal["select_replace"] = "select_replace"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionHighlightSetEntity(BaseModel):
+class OptionHighlightSetEntity(KittyCadBaseModel):
     """Changes the current highlighted entity to whichever one is at the given window coordinate. If there's no entity at this location, clears the highlight."""
 
     selected_at_window: Point2d
@@ -650,20 +563,16 @@ class OptionHighlightSetEntity(BaseModel):
 
     type: Literal["highlight_set_entity"] = "highlight_set_entity"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionHighlightSetEntities(BaseModel):
+class OptionHighlightSetEntities(KittyCadBaseModel):
     """Changes the current highlighted entity to these entities."""
 
     entities: List[str]
 
     type: Literal["highlight_set_entities"] = "highlight_set_entities"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionNewAnnotation(BaseModel):
+class OptionNewAnnotation(KittyCadBaseModel):
     """Create a new annotation"""
 
     annotation_type: AnnotationType
@@ -674,10 +583,8 @@ class OptionNewAnnotation(BaseModel):
 
     type: Literal["new_annotation"] = "new_annotation"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionUpdateAnnotation(BaseModel):
+class OptionUpdateAnnotation(KittyCadBaseModel):
     """Update an annotation"""
 
     annotation_id: str
@@ -686,20 +593,16 @@ class OptionUpdateAnnotation(BaseModel):
 
     type: Literal["update_annotation"] = "update_annotation"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEdgeLinesVisible(BaseModel):
+class OptionEdgeLinesVisible(KittyCadBaseModel):
     """Changes visibility of scene-wide edge lines on brep solids"""
 
     hidden: bool
 
     type: Literal["edge_lines_visible"] = "edge_lines_visible"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionObjectVisible(BaseModel):
+class OptionObjectVisible(KittyCadBaseModel):
     """Hide or show an object"""
 
     hidden: bool
@@ -708,20 +611,16 @@ class OptionObjectVisible(BaseModel):
 
     type: Literal["object_visible"] = "object_visible"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionObjectBringToFront(BaseModel):
+class OptionObjectBringToFront(KittyCadBaseModel):
     """Bring an object to the front of the scene"""
 
     object_id: str
 
     type: Literal["object_bring_to_front"] = "object_bring_to_front"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionObjectSetMaterialParamsPbr(BaseModel):
+class OptionObjectSetMaterialParamsPbr(KittyCadBaseModel):
     """Set the material properties of an object"""
 
     ambient_occlusion: float
@@ -736,20 +635,16 @@ class OptionObjectSetMaterialParamsPbr(BaseModel):
 
     type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionGetEntityType(BaseModel):
+class OptionGetEntityType(KittyCadBaseModel):
     """What type of entity is this?"""
 
     entity_id: str
 
     type: Literal["get_entity_type"] = "get_entity_type"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetAllEdgeFaces(BaseModel):
+class OptionSolid3dGetAllEdgeFaces(KittyCadBaseModel):
     """Gets all faces which use the given edge."""
 
     edge_id: str
@@ -758,10 +653,8 @@ class OptionSolid3dGetAllEdgeFaces(BaseModel):
 
     type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid2dAddHole(BaseModel):
+class OptionSolid2dAddHole(KittyCadBaseModel):
     """Add a hole to a Solid2d object before extruding it."""
 
     hole_id: str
@@ -770,10 +663,8 @@ class OptionSolid2dAddHole(BaseModel):
 
     type: Literal["solid2d_add_hole"] = "solid2d_add_hole"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetAllOppositeEdges(BaseModel):
+class OptionSolid3dGetAllOppositeEdges(KittyCadBaseModel):
     """Gets all edges which are opposite the given edge, across all possible faces."""
 
     along_vector: Optional[Point3d] = None
@@ -784,10 +675,8 @@ class OptionSolid3dGetAllOppositeEdges(BaseModel):
 
     type: Literal["solid3d_get_all_opposite_edges"] = "solid3d_get_all_opposite_edges"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetOppositeEdge(BaseModel):
+class OptionSolid3dGetOppositeEdge(KittyCadBaseModel):
     """Gets the edge opposite the given edge, along the given face."""
 
     edge_id: str
@@ -798,10 +687,8 @@ class OptionSolid3dGetOppositeEdge(BaseModel):
 
     type: Literal["solid3d_get_opposite_edge"] = "solid3d_get_opposite_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetNextAdjacentEdge(BaseModel):
+class OptionSolid3dGetNextAdjacentEdge(KittyCadBaseModel):
     """Gets the next adjacent edge for the given edge, along the given face."""
 
     edge_id: str
@@ -812,10 +699,8 @@ class OptionSolid3dGetNextAdjacentEdge(BaseModel):
 
     type: Literal["solid3d_get_next_adjacent_edge"] = "solid3d_get_next_adjacent_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetPrevAdjacentEdge(BaseModel):
+class OptionSolid3dGetPrevAdjacentEdge(KittyCadBaseModel):
     """Gets the previous adjacent edge for the given edge, along the given face."""
 
     edge_id: str
@@ -826,10 +711,8 @@ class OptionSolid3dGetPrevAdjacentEdge(BaseModel):
 
     type: Literal["solid3d_get_prev_adjacent_edge"] = "solid3d_get_prev_adjacent_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetCommonEdge(BaseModel):
+class OptionSolid3dGetCommonEdge(KittyCadBaseModel):
     """Gets the shared edge between these two faces if it exists"""
 
     face_ids: List[str]
@@ -838,10 +721,8 @@ class OptionSolid3dGetCommonEdge(BaseModel):
 
     type: Literal["solid3d_get_common_edge"] = "solid3d_get_common_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dFilletEdge(BaseModel):
+class OptionSolid3dFilletEdge(KittyCadBaseModel):
     """Fillets the given edge with the specified radius."""
 
     cut_type: CutType = "fillet"  # type: ignore
@@ -862,20 +743,16 @@ class OptionSolid3dFilletEdge(BaseModel):
 
     type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFaceIsPlanar(BaseModel):
+class OptionFaceIsPlanar(KittyCadBaseModel):
     """Determines whether a brep face is planar and returns its surface-local planar axes if so"""
 
     object_id: str
 
     type: Literal["face_is_planar"] = "face_is_planar"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFaceGetPosition(BaseModel):
+class OptionFaceGetPosition(KittyCadBaseModel):
     """Determines a position on a brep face evaluated by parameters u,v"""
 
     object_id: str
@@ -884,20 +761,16 @@ class OptionFaceGetPosition(BaseModel):
 
     uv: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFaceGetCenter(BaseModel):
+class OptionFaceGetCenter(KittyCadBaseModel):
     """Obtains the surface \"center of mass\" """
 
     object_id: str
 
     type: Literal["face_get_center"] = "face_get_center"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionFaceGetGradient(BaseModel):
+class OptionFaceGetGradient(KittyCadBaseModel):
     """Determines the gradient (dFdu, dFdv) + normal vector on a brep face evaluated by parameters u,v"""
 
     object_id: str
@@ -906,10 +779,8 @@ class OptionFaceGetGradient(BaseModel):
 
     uv: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSendObject(BaseModel):
+class OptionSendObject(KittyCadBaseModel):
     """Send object to front or back."""
 
     front: bool
@@ -918,10 +789,8 @@ class OptionSendObject(BaseModel):
 
     type: Literal["send_object"] = "send_object"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntitySetOpacity(BaseModel):
+class OptionEntitySetOpacity(KittyCadBaseModel):
     """Set opacity of the entity."""
 
     entity_id: str
@@ -930,10 +799,8 @@ class OptionEntitySetOpacity(BaseModel):
 
     type: Literal["entity_set_opacity"] = "entity_set_opacity"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEntityFade(BaseModel):
+class OptionEntityFade(KittyCadBaseModel):
     """Fade entity in or out."""
 
     duration_seconds: float = 0.4
@@ -944,10 +811,8 @@ class OptionEntityFade(BaseModel):
 
     type: Literal["entity_fade"] = "entity_fade"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMakePlane(BaseModel):
+class OptionMakePlane(KittyCadBaseModel):
     """Make a new plane"""
 
     clobber: bool
@@ -964,10 +829,8 @@ class OptionMakePlane(BaseModel):
 
     y_axis: Point3d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPlaneSetColor(BaseModel):
+class OptionPlaneSetColor(KittyCadBaseModel):
     """Set the color of a plane."""
 
     color: Color
@@ -976,20 +839,16 @@ class OptionPlaneSetColor(BaseModel):
 
     type: Literal["plane_set_color"] = "plane_set_color"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetTool(BaseModel):
+class OptionSetTool(KittyCadBaseModel):
     """Set the current tool."""
 
     tool: SceneToolType
 
     type: Literal["set_tool"] = "set_tool"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMouseMove(BaseModel):
+class OptionMouseMove(KittyCadBaseModel):
     """Send a mouse move event"""
 
     sequence: Optional[int] = None
@@ -998,36 +857,28 @@ class OptionMouseMove(BaseModel):
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMouseClick(BaseModel):
+class OptionMouseClick(KittyCadBaseModel):
     """Send a mouse click event Updates modified/selected entities."""
 
     type: Literal["mouse_click"] = "mouse_click"
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSketchModeDisable(BaseModel):
+class OptionSketchModeDisable(KittyCadBaseModel):
     """Disable sketch mode. If you are sketching on a face, be sure to not disable sketch mode until you have extruded. Otherwise, your object will not be fused with the face."""
 
     type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionGetSketchModePlane(BaseModel):
+class OptionGetSketchModePlane(KittyCadBaseModel):
     """Get the plane for sketch mode."""
 
     type: Literal["get_sketch_mode_plane"] = "get_sketch_mode_plane"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCurveSetConstraint(BaseModel):
+class OptionCurveSetConstraint(KittyCadBaseModel):
     """Get the plane for sketch mode."""
 
     constraint_bound: PathComponentConstraintBound
@@ -1038,10 +889,8 @@ class OptionCurveSetConstraint(BaseModel):
 
     type: Literal["curve_set_constraint"] = "curve_set_constraint"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEnableSketchMode(BaseModel):
+class OptionEnableSketchMode(KittyCadBaseModel):
     """Sketch on some entity (e.g. a plane, a face)."""
 
     adjust_camera: bool
@@ -1056,76 +905,60 @@ class OptionEnableSketchMode(BaseModel):
 
     type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionEnableDryRun(BaseModel):
+class OptionEnableDryRun(KittyCadBaseModel):
     """Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change."""
 
     type: Literal["enable_dry_run"] = "enable_dry_run"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDisableDryRun(BaseModel):
+class OptionDisableDryRun(KittyCadBaseModel):
     """Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change."""
 
     type: Literal["disable_dry_run"] = "disable_dry_run"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetBackgroundColor(BaseModel):
+class OptionSetBackgroundColor(KittyCadBaseModel):
     """Set the background color of the scene."""
 
     color: Color
 
     type: Literal["set_background_color"] = "set_background_color"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetCurrentToolProperties(BaseModel):
+class OptionSetCurrentToolProperties(KittyCadBaseModel):
     """Set the properties of the tool lines for the scene."""
 
     color: Optional[Color] = None
 
     type: Literal["set_current_tool_properties"] = "set_current_tool_properties"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetDefaultSystemProperties(BaseModel):
+class OptionSetDefaultSystemProperties(KittyCadBaseModel):
     """Set the default system properties used when a specific property isn't set."""
 
     color: Optional[Color] = None
 
     type: Literal["set_default_system_properties"] = "set_default_system_properties"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCurveGetType(BaseModel):
+class OptionCurveGetType(KittyCadBaseModel):
     """Get type of the given curve."""
 
     curve_id: str
 
     type: Literal["curve_get_type"] = "curve_get_type"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCurveGetControlPoints(BaseModel):
+class OptionCurveGetControlPoints(KittyCadBaseModel):
     """Get control points of the given curve."""
 
     curve_id: str
 
     type: Literal["curve_get_control_points"] = "curve_get_control_points"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionProjectEntityToPlane(BaseModel):
+class OptionProjectEntityToPlane(KittyCadBaseModel):
     """Project an entity on to a plane."""
 
     entity_id: str
@@ -1136,10 +969,8 @@ class OptionProjectEntityToPlane(BaseModel):
 
     use_plane_coords: bool
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionProjectPointsToPlane(BaseModel):
+class OptionProjectPointsToPlane(KittyCadBaseModel):
     """Project a list of points on to a plane."""
 
     plane_id: str
@@ -1150,20 +981,16 @@ class OptionProjectPointsToPlane(BaseModel):
 
     use_plane_coords: bool
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionTakeSnapshot(BaseModel):
+class OptionTakeSnapshot(KittyCadBaseModel):
     """Take a snapshot of the current view."""
 
     format: ImageFormat
 
     type: Literal["take_snapshot"] = "take_snapshot"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMakeAxesGizmo(BaseModel):
+class OptionMakeAxesGizmo(KittyCadBaseModel):
     """Add a gizmo showing the axes."""
 
     clobber: bool
@@ -1172,20 +999,16 @@ class OptionMakeAxesGizmo(BaseModel):
 
     type: Literal["make_axes_gizmo"] = "make_axes_gizmo"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPathGetInfo(BaseModel):
+class OptionPathGetInfo(KittyCadBaseModel):
     """Query the given path."""
 
     path_id: str
 
     type: Literal["path_get_info"] = "path_get_info"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPathGetCurveUuidsForVertices(BaseModel):
+class OptionPathGetCurveUuidsForVertices(KittyCadBaseModel):
     """Obtain curve ids for vertex ids"""
 
     path_id: str
@@ -1196,10 +1019,8 @@ class OptionPathGetCurveUuidsForVertices(BaseModel):
 
     vertex_ids: List[str]
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPathGetCurveUuid(BaseModel):
+class OptionPathGetCurveUuid(KittyCadBaseModel):
     """Obtain curve id by index"""
 
     index: int
@@ -1208,40 +1029,32 @@ class OptionPathGetCurveUuid(BaseModel):
 
     type: Literal["path_get_curve_uuid"] = "path_get_curve_uuid"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPathGetVertexUuids(BaseModel):
+class OptionPathGetVertexUuids(KittyCadBaseModel):
     """Obtain vertex ids for a path"""
 
     path_id: str
 
     type: Literal["path_get_vertex_uuids"] = "path_get_vertex_uuids"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPathGetSketchTargetUuid(BaseModel):
+class OptionPathGetSketchTargetUuid(KittyCadBaseModel):
     """Obtain the sketch target id (if the path was drawn in sketchmode) for a path"""
 
     path_id: str
 
     type: Literal["path_get_sketch_target_uuid"] = "path_get_sketch_target_uuid"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionHandleMouseDragStart(BaseModel):
+class OptionHandleMouseDragStart(KittyCadBaseModel):
     """Start dragging the mouse."""
 
     type: Literal["handle_mouse_drag_start"] = "handle_mouse_drag_start"
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionHandleMouseDragMove(BaseModel):
+class OptionHandleMouseDragMove(KittyCadBaseModel):
     """Continue dragging the mouse."""
 
     sequence: Optional[int] = None
@@ -1250,30 +1063,24 @@ class OptionHandleMouseDragMove(BaseModel):
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionHandleMouseDragEnd(BaseModel):
+class OptionHandleMouseDragEnd(KittyCadBaseModel):
     """Stop dragging the mouse."""
 
     type: Literal["handle_mouse_drag_end"] = "handle_mouse_drag_end"
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionRemoveSceneObjects(BaseModel):
+class OptionRemoveSceneObjects(KittyCadBaseModel):
     """Remove scene objects."""
 
     object_ids: List[str]
 
     type: Literal["remove_scene_objects"] = "remove_scene_objects"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPlaneIntersectAndProject(BaseModel):
+class OptionPlaneIntersectAndProject(KittyCadBaseModel):
     """Utility method. Performs both a ray cast and projection to plane-local coordinates. Returns the plane coordinates for the given window coordinates."""
 
     plane_id: str
@@ -1282,20 +1089,16 @@ class OptionPlaneIntersectAndProject(BaseModel):
 
     window: Point2d
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCurveGetEndPoints(BaseModel):
+class OptionCurveGetEndPoints(KittyCadBaseModel):
     """Find the start and end of a curve."""
 
     curve_id: str
 
     type: Literal["curve_get_end_points"] = "curve_get_end_points"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionReconfigureStream(BaseModel):
+class OptionReconfigureStream(KittyCadBaseModel):
     """Reconfigure the stream."""
 
     bitrate: Optional[int] = None
@@ -1308,10 +1111,8 @@ class OptionReconfigureStream(BaseModel):
 
     width: int
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionImportFiles(BaseModel):
+class OptionImportFiles(KittyCadBaseModel):
     """Import files to the current model."""
 
     files: List[ImportFile]
@@ -1320,20 +1121,16 @@ class OptionImportFiles(BaseModel):
 
     type: Literal["import_files"] = "import_files"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetSceneUnits(BaseModel):
+class OptionSetSceneUnits(KittyCadBaseModel):
     """Set the units of the scene. For all following commands, the units will be interpreted as the given units. Any previously executed commands will not be affected or have their units changed. They will remain in the units they were originally executed in."""
 
     type: Literal["set_scene_units"] = "set_scene_units"
 
     unit: UnitLength
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMass(BaseModel):
+class OptionMass(KittyCadBaseModel):
     """Get the mass of entities in the scene or the default scene."""
 
     entity_ids: List[str]
@@ -1346,10 +1143,8 @@ class OptionMass(BaseModel):
 
     type: Literal["mass"] = "mass"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDensity(BaseModel):
+class OptionDensity(KittyCadBaseModel):
     """Get the density of entities in the scene or the default scene."""
 
     entity_ids: List[str]
@@ -1362,10 +1157,8 @@ class OptionDensity(BaseModel):
 
     type: Literal["density"] = "density"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionVolume(BaseModel):
+class OptionVolume(KittyCadBaseModel):
     """Get the volume of entities in the scene or the default scene."""
 
     entity_ids: List[str]
@@ -1374,10 +1167,8 @@ class OptionVolume(BaseModel):
 
     type: Literal["volume"] = "volume"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionCenterOfMass(BaseModel):
+class OptionCenterOfMass(KittyCadBaseModel):
     """Get the center of mass of entities in the scene or the default scene."""
 
     entity_ids: List[str]
@@ -1386,10 +1177,8 @@ class OptionCenterOfMass(BaseModel):
 
     type: Literal["center_of_mass"] = "center_of_mass"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSurfaceArea(BaseModel):
+class OptionSurfaceArea(KittyCadBaseModel):
     """Get the surface area of entities in the scene or the default scene."""
 
     entity_ids: List[str]
@@ -1398,58 +1187,46 @@ class OptionSurfaceArea(BaseModel):
 
     type: Literal["surface_area"] = "surface_area"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraFocusOn(BaseModel):
+class OptionDefaultCameraFocusOn(KittyCadBaseModel):
     """Focus the default camera upon an object in the scene."""
 
     type: Literal["default_camera_focus_on"] = "default_camera_focus_on"
 
     uuid: str
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetSelectionType(BaseModel):
+class OptionSetSelectionType(KittyCadBaseModel):
     """When you select some entity with the current tool, what should happen to the entity?"""
 
     selection_type: SceneSelectionType
 
     type: Literal["set_selection_type"] = "set_selection_type"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetSelectionFilter(BaseModel):
+class OptionSetSelectionFilter(KittyCadBaseModel):
     """What kind of entities can be selected?"""
 
     filter: List[EntityType]
 
     type: Literal["set_selection_filter"] = "set_selection_filter"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraSetOrthographic(BaseModel):
+class OptionDefaultCameraSetOrthographic(KittyCadBaseModel):
     """Use orthographic projection."""
 
     type: Literal["default_camera_set_orthographic"] = "default_camera_set_orthographic"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraSetPerspective(BaseModel):
+class OptionDefaultCameraSetPerspective(KittyCadBaseModel):
     """Use perspective projection."""
 
     parameters: Optional[PerspectiveCameraParameters] = None
 
     type: Literal["default_camera_set_perspective"] = "default_camera_set_perspective"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraCenterToSelection(BaseModel):
+class OptionDefaultCameraCenterToSelection(KittyCadBaseModel):
     """Updates the camera to center to the center of the current selection (or the origin if nothing is selected)"""
 
     camera_movement: CameraMovement = "vantage"  # type: ignore
@@ -1458,20 +1235,16 @@ class OptionDefaultCameraCenterToSelection(BaseModel):
         "default_camera_center_to_selection"
     )
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionDefaultCameraCenterToScene(BaseModel):
+class OptionDefaultCameraCenterToScene(KittyCadBaseModel):
     """Updates the camera to center to the center of the current scene's bounds"""
 
     camera_movement: CameraMovement = "vantage"  # type: ignore
 
     type: Literal["default_camera_center_to_scene"] = "default_camera_center_to_scene"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionZoomToFit(BaseModel):
+class OptionZoomToFit(KittyCadBaseModel):
     """Fit the view to the specified object(s)."""
 
     animated: bool = False
@@ -1482,10 +1255,8 @@ class OptionZoomToFit(BaseModel):
 
     type: Literal["zoom_to_fit"] = "zoom_to_fit"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionOrientToFace(BaseModel):
+class OptionOrientToFace(KittyCadBaseModel):
     """Looks along the normal of the specified face (if it is planar!), and fits the view to it."""
 
     animated: bool = False
@@ -1496,20 +1267,16 @@ class OptionOrientToFace(BaseModel):
 
     type: Literal["orient_to_face"] = "orient_to_face"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionViewIsometric(BaseModel):
+class OptionViewIsometric(KittyCadBaseModel):
     """Fit the view to the scene with an isometric view."""
 
     padding: float = 0.0
 
     type: Literal["view_isometric"] = "view_isometric"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetExtrusionFaceInfo(BaseModel):
+class OptionSolid3dGetExtrusionFaceInfo(KittyCadBaseModel):
     """Get a concise description of all of an extrusion's faces."""
 
     edge_id: str
@@ -1518,10 +1285,8 @@ class OptionSolid3dGetExtrusionFaceInfo(BaseModel):
 
     type: Literal["solid3d_get_extrusion_face_info"] = "solid3d_get_extrusion_face_info"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSolid3dGetAdjacencyInfo(BaseModel):
+class OptionSolid3dGetAdjacencyInfo(KittyCadBaseModel):
     """Get a concise description of all of solids edges."""
 
     edge_id: str
@@ -1530,34 +1295,26 @@ class OptionSolid3dGetAdjacencyInfo(BaseModel):
 
     type: Literal["solid3d_get_adjacency_info"] = "solid3d_get_adjacency_info"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSelectClear(BaseModel):
+class OptionSelectClear(KittyCadBaseModel):
     """Clear the selection"""
 
     type: Literal["select_clear"] = "select_clear"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSelectGet(BaseModel):
+class OptionSelectGet(KittyCadBaseModel):
     """Find all IDs of selected entities"""
 
     type: Literal["select_get"] = "select_get"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionGetNumObjects(BaseModel):
+class OptionGetNumObjects(KittyCadBaseModel):
     """Get the number of objects in the scene"""
 
     type: Literal["get_num_objects"] = "get_num_objects"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetObjectTransform(BaseModel):
+class OptionSetObjectTransform(KittyCadBaseModel):
     """Set the transform of an object."""
 
     object_id: str
@@ -1566,10 +1323,8 @@ class OptionSetObjectTransform(BaseModel):
 
     type: Literal["set_object_transform"] = "set_object_transform"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionBooleanUnion(BaseModel):
+class OptionBooleanUnion(KittyCadBaseModel):
     """Create a new solid from combining other smaller solids. In other words, every part of the input solids will be included in the output solid."""
 
     solid_ids: List[str]
@@ -1578,10 +1333,8 @@ class OptionBooleanUnion(BaseModel):
 
     type: Literal["boolean_union"] = "boolean_union"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionBooleanIntersection(BaseModel):
+class OptionBooleanIntersection(KittyCadBaseModel):
     """Create a new solid from intersecting several other solids. In other words, the part of the input solids where they all overlap will be the output solid."""
 
     solid_ids: List[str]
@@ -1590,10 +1343,8 @@ class OptionBooleanIntersection(BaseModel):
 
     type: Literal["boolean_intersection"] = "boolean_intersection"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionBooleanSubtract(BaseModel):
+class OptionBooleanSubtract(KittyCadBaseModel):
     """Create a new solid from subtracting several other solids. The 'target' is what will be cut from. The 'tool' is what will be cut out from 'target'."""
 
     target_ids: List[str]
@@ -1604,10 +1355,8 @@ class OptionBooleanSubtract(BaseModel):
 
     type: Literal["boolean_subtract"] = "boolean_subtract"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionMakeOffsetPath(BaseModel):
+class OptionMakeOffsetPath(KittyCadBaseModel):
     """Make a new path by offsetting an object by a given distance. The new path's ID will be the ID of this command."""
 
     face_id: Optional[str] = None
@@ -1618,10 +1367,8 @@ class OptionMakeOffsetPath(BaseModel):
 
     type: Literal["make_offset_path"] = "make_offset_path"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionAddHoleFromOffset(BaseModel):
+class OptionAddHoleFromOffset(KittyCadBaseModel):
     """Add a hole to a closed path by offsetting it a uniform distance inward."""
 
     object_id: str
@@ -1630,10 +1377,8 @@ class OptionAddHoleFromOffset(BaseModel):
 
     type: Literal["add_hole_from_offset"] = "add_hole_from_offset"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetGridReferencePlane(BaseModel):
+class OptionSetGridReferencePlane(KittyCadBaseModel):
     """Align the grid with a plane or a planar face."""
 
     grid_id: str
@@ -1642,10 +1387,8 @@ class OptionSetGridReferencePlane(BaseModel):
 
     type: Literal["set_grid_reference_plane"] = "set_grid_reference_plane"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetGridScale(BaseModel):
+class OptionSetGridScale(KittyCadBaseModel):
     """Set the scale of the grid lines in the video feed."""
 
     type: Literal["set_grid_scale"] = "set_grid_scale"
@@ -1654,15 +1397,11 @@ class OptionSetGridScale(BaseModel):
 
     value: float
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionSetGridAutoScale(BaseModel):
+class OptionSetGridAutoScale(KittyCadBaseModel):
     """Set the grid lines to auto scale. The grid will get larger the further you zoom out, and smaller the more you zoom in."""
 
     type: Literal["set_grid_auto_scale"] = "set_grid_auto_scale"
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 ModelingCmd = RootModel[

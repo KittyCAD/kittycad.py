@@ -1,11 +1,9 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class BooleanSubtract(BaseModel):
+class BooleanSubtract(KittyCadBaseModel):
     """The response from the 'BooleanSubtract'."""
 
     extra_solid_ids: Optional[List[str]] = None
-
-    model_config = ConfigDict(protected_namespaces=())

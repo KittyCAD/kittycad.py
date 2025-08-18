@@ -1,9 +1,9 @@
 from typing import Dict, Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Coupon(BaseModel):
+class Coupon(KittyCadBaseModel):
     """The resource representing a Coupon."""
 
     amount_off: Optional[float] = None
@@ -17,5 +17,3 @@ class Coupon(BaseModel):
     name: Optional[str] = None
 
     percent_off: Optional[float] = None
-
-    model_config = ConfigDict(protected_namespaces=())

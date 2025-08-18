@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class User(BaseModel):
+class User(KittyCadBaseModel):
     """A user."""
 
     block: Optional[BlockReason] = None
@@ -45,5 +44,3 @@ class User(BaseModel):
     phone: str = ""
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

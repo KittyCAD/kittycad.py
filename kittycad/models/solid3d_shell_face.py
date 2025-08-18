@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Solid3dShellFace(BaseModel):
+class Solid3dShellFace(KittyCadBaseModel):
     """The response from the `Solid3dShellFace` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

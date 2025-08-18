@@ -1,11 +1,9 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ApiCallQueryGroup(BaseModel):
+class ApiCallQueryGroup(KittyCadBaseModel):
     """A response for a query on the API call table that is grouped by something."""
 
     count: int
 
     query: str
-
-    model_config = ConfigDict(protected_namespaces=())

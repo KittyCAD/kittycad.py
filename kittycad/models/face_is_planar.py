@@ -1,11 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.point3d import Point3d
+from .base import KittyCadBaseModel
 
 
-class FaceIsPlanar(BaseModel):
+class FaceIsPlanar(KittyCadBaseModel):
     """Surface-local planar axes (if available)"""
 
     origin: Optional[Point3d] = None
@@ -15,5 +14,3 @@ class FaceIsPlanar(BaseModel):
     y_axis: Optional[Point3d] = None
 
     z_axis: Optional[Point3d] = None
-
-    model_config = ConfigDict(protected_namespaces=())

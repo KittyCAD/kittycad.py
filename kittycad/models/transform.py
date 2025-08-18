@@ -1,10 +1,9 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.point3d import Point3d
 from ..models.rotation import Rotation
+from .base import KittyCadBaseModel
 
 
-class Transform(BaseModel):
+class Transform(KittyCadBaseModel):
     """Ways to transform each solid being replicated in a repeating pattern."""
 
     replicate: bool = True
@@ -18,5 +17,3 @@ class Transform(BaseModel):
     scale: Point3d = {"x": 1.0, "y": 1.0, "z": 1.0}  # type: ignore
 
     translate: Point3d = {"x": 0.0, "y": 0.0, "z": 0.0}  # type: ignore
-
-    model_config = ConfigDict(protected_namespaces=())

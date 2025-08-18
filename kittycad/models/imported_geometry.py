@@ -1,13 +1,11 @@
 from typing import List
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ImportedGeometry(BaseModel):
+class ImportedGeometry(KittyCadBaseModel):
     """Data from importing the files"""
 
     id: str
 
     value: List[str]
-
-    model_config = ConfigDict(protected_namespaces=())

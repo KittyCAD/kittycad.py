@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetSelectionType(BaseModel):
+class SetSelectionType(KittyCadBaseModel):
     """The response from the `SetSelectionType` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

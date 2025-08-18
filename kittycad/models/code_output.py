@@ -1,11 +1,10 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.output_file import OutputFile
+from .base import KittyCadBaseModel
 
 
-class CodeOutput(BaseModel):
+class CodeOutput(KittyCadBaseModel):
     """Output of the code being executed.
 
     <details><summary>JSON schema</summary>
@@ -17,5 +16,3 @@ class CodeOutput(BaseModel):
     stderr: str = ""
 
     stdout: str = ""
-
-    model_config = ConfigDict(protected_namespaces=())

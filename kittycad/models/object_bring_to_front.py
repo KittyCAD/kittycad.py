@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ObjectBringToFront(BaseModel):
+class ObjectBringToFront(KittyCadBaseModel):
     """The response from the `ObjectBringToFront` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

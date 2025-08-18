@@ -1,15 +1,12 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.shortlink import Shortlink
+from .base import KittyCadBaseModel
 
 
-class ShortlinkResultsPage(BaseModel):
+class ShortlinkResultsPage(KittyCadBaseModel):
     """A single page of results"""
 
     items: List[Shortlink]
 
     next_page: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class StoreCouponParams(BaseModel):
+class StoreCouponParams(KittyCadBaseModel):
     """The parameters for a new store coupon."""
 
     percent_off: int
-
-    model_config = ConfigDict(protected_namespaces=())

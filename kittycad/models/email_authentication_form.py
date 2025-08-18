@@ -1,13 +1,11 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class EmailAuthenticationForm(BaseModel):
+class EmailAuthenticationForm(KittyCadBaseModel):
     """The body of the form for email authentication."""
 
     callback_url: Optional[str] = None
 
     email: str
-
-    model_config = ConfigDict(protected_namespaces=())

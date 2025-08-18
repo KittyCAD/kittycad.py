@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Loft(BaseModel):
+class Loft(KittyCadBaseModel):
     """The response from the `Loft` command."""
 
     solid_id: str
-
-    model_config = ConfigDict(protected_namespaces=())

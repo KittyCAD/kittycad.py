@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Sweep(BaseModel):
+class Sweep(KittyCadBaseModel):
     """The response from the `Sweep` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())
