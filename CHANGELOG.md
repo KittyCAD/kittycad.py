@@ -102,10 +102,7 @@ except KittyCADTimeoutError as e:
 - `headers` dictionary for all API errors
 - Enhanced error messages with full request context
 
-**Helper Functions for Error Handling**: New utilities for consistent error wrapping:
-- `make_request_with_error_handling()`: Sync HTTP requests with comprehensive error handling
-- `make_async_request_with_error_handling()`: Async HTTP requests with comprehensive error handling
-- `wrap_httpx_exceptions()`: Decorator for wrapping HTTPX exceptions in custom types
+**Automatic Error Handling**: All HTTPX exceptions are now automatically wrapped without any user intervention required - users simply get consistent KittyCAD exceptions regardless of the underlying failure type.
 
 ### Developer Benefits
 
