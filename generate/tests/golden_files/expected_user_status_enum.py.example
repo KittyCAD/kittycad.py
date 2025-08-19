@@ -1,0 +1,14 @@
+from enum import Enum
+
+
+class UserStatus(str, Enum):
+    """Current status of the user"""  # noqa: E501
+
+    ACTIVE = "active"
+
+    INACTIVE = "inactive"
+
+    SUSPENDED = "suspended"
+
+    def __str__(self) -> str:
+        return str(self.value)

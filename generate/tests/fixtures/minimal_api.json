@@ -1,0 +1,461 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Minimal Test API",
+    "version": "1.0.0",
+    "description": "A minimal API for testing code generation"
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "Test server"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "operationId": "list_users",
+        "summary": "List all users",
+        "description": "Retrieve a paginated list of users",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items to return",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "Token for pagination",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResultsPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "create_user",
+        "summary": "Create a new user",
+        "description": "Create a new user with the provided information",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "operationId": "get_user",
+        "summary": "Get user by ID",
+        "description": "Retrieve a specific user by their ID",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "The user's unique identifier",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "update_user",
+        "summary": "Update user",
+        "description": "Update an existing user's information",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "The user's unique identifier",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/upload": {
+      "post": {
+        "operationId": "upload_file",
+        "summary": "Upload a file",
+        "description": "Upload a file with metadata",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The file to upload"
+                  },
+                  "metadata": {
+                    "$ref": "#/components/schemas/FileMetadata"
+                  }
+                },
+                "required": ["file"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File uploaded successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/{file_id}/download": {
+      "get": {
+        "operationId": "download_file",
+        "summary": "Download a file",
+        "description": "Download a file by its ID",
+        "parameters": [
+          {
+            "name": "file_id",
+            "in": "path",
+            "required": true,
+            "description": "The file's unique identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "File content",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "File not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "description": "A user in the system",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the user"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's full name"
+          },
+          "status": {
+            "$ref": "#/components/schemas/UserStatus"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the user was created"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the user was last updated"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/UserPreferences"
+          }
+        },
+        "required": ["id", "email", "name", "status", "created_at"]
+      },
+      "CreateUserRequest": {
+        "type": "object",
+        "description": "Request to create a new user",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's full name"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/UserPreferences"
+          }
+        },
+        "required": ["email", "name"]
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "description": "Request to update a user",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's full name"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/UserPreferences"
+          }
+        }
+      },
+      "UserStatus": {
+        "type": "string",
+        "enum": ["active", "inactive", "suspended"],
+        "description": "Current status of the user"
+      },
+      "UserPreferences": {
+        "type": "object",
+        "description": "User's preferences and settings",
+        "properties": {
+          "theme": {
+            "type": "string",
+            "enum": ["light", "dark", "auto"],
+            "default": "auto",
+            "description": "Preferred theme"
+          },
+          "notifications": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to receive notifications"
+          },
+          "language": {
+            "type": "string",
+            "default": "en",
+            "description": "Preferred language code"
+          }
+        }
+      },
+      "UserResultsPage": {
+        "type": "object",
+        "description": "Paginated list of users",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "description": "List of users in this page"
+          },
+          "next_page": {
+            "type": "string",
+            "nullable": true,
+            "description": "Token for the next page, null if this is the last page"
+          },
+          "total_count": {
+            "type": "integer",
+            "description": "Total number of users"
+          }
+        },
+        "required": ["items"]
+      },
+      "FileInfo": {
+        "type": "object",
+        "description": "Information about an uploaded file",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the file"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Original filename"
+          },
+          "size": {
+            "type": "integer",
+            "description": "File size in bytes"
+          },
+          "content_type": {
+            "type": "string",
+            "description": "MIME type of the file"
+          },
+          "uploaded_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the file was uploaded"
+          }
+        },
+        "required": ["id", "filename", "size", "content_type", "uploaded_at"]
+      },
+      "FileMetadata": {
+        "type": "object",
+        "description": "Metadata for a file upload",
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Description of the file"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags associated with the file"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "description": "Error response",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message"
+          },
+          "details": {
+            "type": "object",
+            "description": "Additional error details"
+          }
+        },
+        "required": ["code", "message"]
+      }
+    }
+  }
+}

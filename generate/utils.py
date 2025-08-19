@@ -62,19 +62,24 @@ def camel_to_snake(name: str) -> str:
     hardcoded_fixes = {
         "OAuth2ClientInfo": "oauth2_client_info",
         "OAuth2GrantType": "oauth2_grant_type",
+        "OAuth2Token": "oauth2_token",
+        "OAuth2Authorize": "oauth2_authorize",
+        "APIKey": "api_key",
+        "getAPIKey": "get_api_key",
     }
 
     if name in hardcoded_fixes:
         return hardcoded_fixes[name]
 
-    # Insert underscore between lower/digit and upper
-    s1 = re.sub("([a-z0-9])([A-Z])", r"\1_\2", name)
+    # Use a more comprehensive pattern that handles all edge cases
+    # This pattern captures boundaries between:
+    # 1. lowercase/digit to uppercase
+    # 2. uppercase to uppercase+lowercase (acronym boundary)
+    # 3. individual uppercase letters
+    result = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+    result = re.sub("([a-z0-9])([A-Z])", r"\1_\2", result)
 
-    # Handle sequences of uppercase letters followed by lowercase
-    # Keep acronyms together until they hit a lowercase letter
-    s2 = re.sub("([A-Z]+)([A-Z][a-z])", r"\1_\2", s1)
-
-    return s2.lower()
+    return result.lower()
 
 
 def to_pascal_case(name: str) -> str:
@@ -105,8 +110,8 @@ def to_pascal_case(name: str) -> str:
 
 def camel_to_screaming_snake(name: str) -> str:
     """Convert CamelCase to SCREAMING_SNAKE_CASE."""
-    # Replace colons and other problematic characters with underscores
-    name = name.replace(":", "_").replace("-", "_").replace(".", "_")
+    # Replace colons, spaces, hyphens and other problematic characters with underscores
+    name = name.replace(":", "_").replace("-", "_").replace(".", "_").replace(" ", "_")
     return camel_to_snake(name).upper()
 
 
