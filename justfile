@@ -11,7 +11,7 @@ generate: install
 
 # Run tests
 test: install
-    uv run pytest kittycad
+    uv run pytest kittycad generate/tests
 
 # Run linting and formatting
 lint: install

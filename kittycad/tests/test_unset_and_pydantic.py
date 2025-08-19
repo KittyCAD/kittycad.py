@@ -157,15 +157,14 @@ class TestUnsetBehavior:
             field_with_string_default: str = "default_value",
             field_with_unset_default: Union[str, Unset] = UNSET,
             field_with_none_default: Optional[str] = None,
-        ) -> dict:
+        ) -> dict[str, Union[str, None]]:
             """Build dict with defaults, excluding UNSET fields."""
-            result = {"field_with_string_default": field_with_string_default}
+            result: dict[str, Union[str, None]] = {"field_with_string_default": field_with_string_default}
 
             if field_with_unset_default is not UNSET:
                 result["field_with_unset_default"] = str(field_with_unset_default)
 
-            if field_with_none_default is not None:
-                result["field_with_none_default"] = str(field_with_none_default)
+            result["field_with_none_default"] = field_with_none_default
             return result
 
         # Create with defaults
