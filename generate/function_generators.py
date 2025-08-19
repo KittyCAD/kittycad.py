@@ -28,6 +28,7 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
     template = env.get_template(template_name)
 
     # Import these here to avoid circular imports
+    from .file_operation_detection import extract_file_parameter_info
     from .generate import generate_type_and_example_python
     from .schema_utils import get_endpoint_refs, get_request_body_type_schema
 
@@ -37,6 +38,9 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
     (request_body_type, request_body_schema) = get_request_body_type_schema(
         endpoint, data
     )
+
+    # Extract file operation information
+    file_info = extract_file_parameter_info(endpoint, data)
 
     # Get response type
     response_type = ""
@@ -77,8 +81,30 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
                 }
             )
 
-    # Add request body parameter if it exists
-    if request_body_type:
+    # Add request body parameter(s) based on endpoint type
+    if file_info.get("has_json_body_multipart", False):
+        # For JSON + multipart endpoints, add both JSON body and file attachments
+        if request_body_type:
+            args.append(
+                {
+                    "name": "body",
+                    "type": request_body_type,
+                    "is_optional": False,
+                    "in_url": False,
+                    "in_query": False,
+                }
+            )
+        args.append(
+            {
+                "name": "file_attachments",
+                "type": "Optional[Dict[str, SyncUpload]]",
+                "is_optional": True,
+                "in_url": False,
+                "in_query": False,
+            }
+        )
+    elif request_body_type:
+        # Regular request body handling
         args.append(
             {
                 "name": "body",
@@ -102,6 +128,7 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
         "request_body_type": request_body_type,
         "args": args,
         "docs": endpoint.get("description", endpoint.get("summary", "")),
+        "file_info": file_info,  # Add file operation info to context
     }
 
     # Add pagination-specific context if needed
@@ -137,6 +164,7 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
     template = env.get_template(template_name)
 
     # Import these here to avoid circular imports
+    from .file_operation_detection import extract_file_parameter_info
     from .generate import generate_type_and_example_python
     from .schema_utils import get_endpoint_refs, get_request_body_type_schema
 
@@ -146,6 +174,9 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
     (request_body_type, request_body_schema) = get_request_body_type_schema(
         endpoint, data
     )
+
+    # Extract file operation information
+    file_info = extract_file_parameter_info(endpoint, data)
 
     # Get response type
     response_type = ""
@@ -186,8 +217,30 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
                 }
             )
 
-    # Add request body parameter if it exists
-    if request_body_type:
+    # Add request body parameter(s) based on endpoint type
+    if file_info.get("has_json_body_multipart", False):
+        # For JSON + multipart endpoints, add both JSON body and file attachments
+        if request_body_type:
+            args.append(
+                {
+                    "name": "body",
+                    "type": request_body_type,
+                    "is_optional": False,
+                    "in_url": False,
+                    "in_query": False,
+                }
+            )
+        args.append(
+            {
+                "name": "file_attachments",
+                "type": "Optional[Dict[str, SyncUpload]]",
+                "is_optional": True,
+                "in_url": False,
+                "in_query": False,
+            }
+        )
+    elif request_body_type:
+        # Regular request body handling
         args.append(
             {
                 "name": "body",
@@ -211,6 +264,7 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
         "request_body_type": request_body_type,
         "args": args,
         "docs": endpoint.get("description", endpoint.get("summary", "")),
+        "file_info": file_info,  # Add file operation info to context
     }
 
     # Add pagination-specific context if needed

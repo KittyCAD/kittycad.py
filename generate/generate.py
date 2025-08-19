@@ -9,6 +9,8 @@ from typing import Any, Dict, List, Optional, Tuple, TypedDict
 import jinja2
 from prance import BaseParser
 
+# Import function generators from dedicated module
+from .function_generators import generate_async_function, generate_sync_function
 from .post_processing import generate_examples_tests, generate_patch_json
 
 # Import utilities
@@ -26,223 +28,6 @@ package_name = "kittycad"
 random.seed(10)
 
 examples: List[str] = []
-
-
-def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -> str:
-    """Generate a sync function implementation using the sync_function template"""
-
-    import os
-
-    from jinja2 import Environment, FileSystemLoader
-
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-
-    # Add custom filters using existing utility functions
-    env.filters["to_pascal_case"] = to_pascal_case
-    env.filters["pascal_to_snake"] = camel_to_snake
-
-    # Check if this endpoint uses pagination
-    is_paginated = "x-dropshot-pagination" in endpoint
-    template_name = (
-        "sync_paginated_function.py.jinja2"
-        if is_paginated
-        else "sync_function.py.jinja2"
-    )
-
-    template = env.get_template(template_name)
-
-    # Build context exactly like the working functions.py template
-    fn_name = camel_to_snake(endpoint["operationId"])
-    endpoint_refs = get_endpoint_refs(endpoint, data)
-    (request_body_type, request_body_schema) = get_request_body_type_schema(
-        endpoint, data
-    )
-
-    # Get response type
-    response_type = ""
-    if len(endpoint_refs) > 0:
-        er = [ref for ref in endpoint_refs if ref != "Error"]
-        if len(er) > 1:
-            pascal_er = [to_pascal_case(ref) for ref in er]
-            response_type = "Union[" + ", ".join(pascal_er) + "]"
-        elif len(er) == 1:
-            response_type = to_pascal_case(er[0])
-
-    # Process parameters exactly like the working template
-    args = []
-    if "parameters" in endpoint:
-        for param in endpoint["parameters"]:
-            param_schema = param.get("schema", {})
-            arg_type, _, _ = generate_type_and_example_python(
-                "", param_schema, data, None, None
-            )
-
-            # Mark optional parameters
-            # For query parameters, default to optional (required=False) if not specified
-            # For path parameters, default to required (required=True) if not specified
-            default_required = param.get("in") == "path"
-            is_optional = not param.get(
-                "required", default_required
-            ) or param_schema.get("nullable", False)
-            if is_optional and not arg_type.startswith("Optional["):
-                arg_type = f"Optional[{arg_type}]"
-
-            args.append(
-                {
-                    "name": clean_parameter_name(param["name"]),
-                    "type": arg_type,
-                    "is_optional": is_optional,
-                    "in_url": param.get("in") == "path",
-                    "in_query": param.get("in") == "query",
-                }
-            )
-
-    # Add request body parameter if it exists
-    if request_body_type:
-        args.append(
-            {
-                "name": "body",
-                "type": request_body_type,
-                "is_optional": False,
-                "in_url": False,
-                "in_query": False,
-            }
-        )
-
-    # Check if there's actually a body parameter in the args
-    has_body_param = any(arg.get("name") == "body" for arg in args)
-
-    # Create context for template with all required variables
-    context = {
-        "func_name": fn_name,
-        "method": method.lower(),
-        "response_type": response_type,
-        "url_template": "{}" + path,
-        "has_request_body": has_body_param,
-        "request_body_type": request_body_type,
-        "args": args,
-        "docs": endpoint.get("description", endpoint.get("summary", "")),
-    }
-
-    # Add pagination-specific context if needed
-    if is_paginated and response_type:
-        # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
-        item_type = response_type.replace("ResultsPage", "")
-        context["item_type"] = item_type
-        context["api_section"] = (
-            path.split("/")[1] if len(path.split("/")) > 1 else "api"
-        )
-
-    return template.render(context)
-
-
-def generate_async_function(path: str, method: str, endpoint: dict, data: dict) -> str:
-    """Generate an async function implementation using the async_function template"""
-
-    import os
-
-    from jinja2 import Environment, FileSystemLoader
-
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-
-    # Add custom filters using existing utility functions
-    env.filters["to_pascal_case"] = to_pascal_case
-    env.filters["pascal_to_snake"] = camel_to_snake
-
-    # Check if this endpoint uses pagination
-    is_paginated = "x-dropshot-pagination" in endpoint
-    template_name = (
-        "async_paginated_function.py.jinja2"
-        if is_paginated
-        else "async_function.py.jinja2"
-    )
-    template = env.get_template(template_name)
-
-    # Build context exactly like the sync function
-    fn_name = camel_to_snake(endpoint["operationId"])
-    endpoint_refs = get_endpoint_refs(endpoint, data)
-    (request_body_type, request_body_schema) = get_request_body_type_schema(
-        endpoint, data
-    )
-
-    # Get response type
-    response_type = ""
-    if len(endpoint_refs) > 0:
-        er = [ref for ref in endpoint_refs if ref != "Error"]
-        if len(er) > 1:
-            pascal_er = [to_pascal_case(ref) for ref in er]
-            response_type = "Union[" + ", ".join(pascal_er) + "]"
-        elif len(er) == 1:
-            response_type = to_pascal_case(er[0])
-
-    # Process parameters exactly like the working template
-    args = []
-    if "parameters" in endpoint:
-        for param in endpoint["parameters"]:
-            param_schema = param.get("schema", {})
-            arg_type, _, _ = generate_type_and_example_python(
-                "", param_schema, data, None, None
-            )
-
-            # Mark optional parameters
-            # For query parameters, default to optional (required=False) if not specified
-            # For path parameters, default to required (required=True) if not specified
-            default_required = param.get("in") == "path"
-            is_optional = not param.get(
-                "required", default_required
-            ) or param_schema.get("nullable", False)
-            if is_optional and not arg_type.startswith("Optional["):
-                arg_type = f"Optional[{arg_type}]"
-
-            args.append(
-                {
-                    "name": clean_parameter_name(param["name"]),
-                    "type": arg_type,
-                    "is_optional": is_optional,
-                    "in_url": param.get("in") == "path",
-                    "in_query": param.get("in") == "query",
-                }
-            )
-
-    # Add request body parameter if it exists
-    if request_body_type:
-        args.append(
-            {
-                "name": "body",
-                "type": request_body_type,
-                "is_optional": False,
-                "in_url": False,
-                "in_query": False,
-            }
-        )
-
-    # Check if there's actually a body parameter in the args
-    has_body_param = any(arg.get("name") == "body" for arg in args)
-
-    # Create context for template with all required variables
-    context = {
-        "func_name": fn_name,
-        "method": method.lower(),
-        "response_type": response_type,
-        "url_template": "{}" + path,
-        "has_request_body": has_body_param,
-        "request_body_type": request_body_type,
-        "args": args,
-        "docs": endpoint.get("description", endpoint.get("summary", "")),
-    }
-
-    # Add pagination-specific context if needed
-    if is_paginated and response_type:
-        # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
-        item_type = response_type.replace("ResultsPage", "")
-        context["item_type"] = item_type
-        context["api_section"] = (
-            path.split("/")[1] if len(path.split("/")) > 1 else "api"
-        )
-
-    return template.render(context)
 
 
 def generate_client_classes(cwd: str, data: dict):
@@ -304,6 +89,22 @@ def generate_client_classes(cwd: str, data: dict):
                     async_implementation = generate_async_function(
                         path, method, endpoint_data, data
                     )
+
+                # Collect file operation imports if this endpoint uses file operations
+                from .file_operation_detection import extract_file_parameter_info
+
+                file_info = extract_file_parameter_info(endpoint_data, data)
+                if "imports" in file_info:
+                    for imp in file_info["imports"]:
+                        # Convert full module path to relative import for __init__.py
+                        if "from kittycad._io_types import" in imp:
+                            relative_import = imp.replace(
+                                "from kittycad._io_types import",
+                                "from ._io_types import",
+                            )
+                            all_imports.add(relative_import)
+                        else:
+                            all_imports.add(imp)
 
                 # Collect imports from response types for all endpoints
                 endpoint_refs = get_endpoint_refs(endpoint_data, data)
@@ -477,9 +278,11 @@ def generate_client_classes(cwd: str, data: dict):
     template = env.get_template("__init__.py.jinja2")
 
     # Render the template
+    sorted_imports = sorted(all_imports)
+
     rendered_content = template.render(
         endpoints_by_tag=endpoints_by_tag,
-        all_imports=sorted(all_imports),
+        all_imports=sorted_imports,
         has_websockets=has_websockets,
     )
 

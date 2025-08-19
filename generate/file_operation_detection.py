@@ -311,6 +311,9 @@ def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
     ):
         info["file_parameters"] = _extract_multipart_file_params(endpoint, data)
 
+    # Add required imports for file operations
+    info["imports"] = get_required_file_imports(endpoint)
+
     return info
 
 
@@ -496,5 +499,22 @@ def get_required_file_imports(endpoint: dict) -> List[str]:
                 "from kittycad._io_types import SyncDownload, ProgressCallback",
             ]
         )
+
+    # Handle JSON + multipart endpoints that need SyncUpload for file_attachments parameter
+    if (
+        "requestBody" in endpoint
+        and "content" in endpoint["requestBody"]
+        and "multipart/form-data" in endpoint["requestBody"]["content"]
+    ):
+        # Check if multipart content has a schema (indicates JSON + multipart)
+        multipart_content = endpoint["requestBody"]["content"]["multipart/form-data"]
+        if "schema" in multipart_content:
+            # This is likely a JSON + multipart endpoint
+            imports.extend(
+                [
+                    "from kittycad._multipart import upload_json_multipart, upload_json_multipart_async",
+                    "from kittycad._io_types import SyncUpload, ProgressCallback",
+                ]
+            )
 
     return imports
