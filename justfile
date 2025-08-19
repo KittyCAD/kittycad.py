@@ -9,9 +9,9 @@ install:
 generate: install
     ./generate/run.sh
 
-# Run tests
-test: install
-    uv run pytest kittycad generate/tests
+# Run tests (pass through any arguments)
+test *args: install
+    uv run pytest {{args}}
 
 # Run linting and formatting
 lint: install
