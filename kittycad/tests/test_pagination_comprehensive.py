@@ -134,13 +134,21 @@ class TestPaginationContinuation:
         # Current implementation: subsequent calls include ALL initial params + page_token
         second_call = mock_fetcher.call_args_list[1]
         expected_second = call(
-            limit=2, sort_by="created_at", filter="active", direction="asc", page_token="token2"
+            limit=2,
+            sort_by="created_at",
+            filter="active",
+            direction="asc",
+            page_token="token2",
         )
         assert second_call == expected_second
 
         third_call = mock_fetcher.call_args_list[2]
         expected_third = call(
-            limit=2, sort_by="created_at", filter="active", direction="asc", page_token="token3"
+            limit=2,
+            sort_by="created_at",
+            filter="active",
+            direction="asc",
+            page_token="token3",
         )
         assert third_call == expected_third
 
@@ -172,7 +180,7 @@ class TestPaginationContinuation:
 
         # Verify both calls preserved the limit and all params
         assert mock_fetcher.call_count == 2
-        
+
         first_call = mock_fetcher.call_args_list[0]
         assert first_call == call(limit=50, sort_by="created_at")
 
@@ -386,24 +394,24 @@ class TestPaginationMemory:
         # Create iterator for simulated large dataset
         large_page_count = 100
         items_per_page = 100
-        
+
         def mock_fetch_large_page(**kwargs):
             """Simulate fetching a large page."""
             if "page_token" not in kwargs:
                 page_num = 1
             else:
                 page_num = int(kwargs["page_token"].split("-")[1])
-            
+
             # Create items for this page
             start_id = (page_num - 1) * items_per_page + 1
             items = [
                 MockItem(id=str(i), name=f"Item {i}")
                 for i in range(start_id, start_id + items_per_page)
             ]
-            
+
             # Determine next page token
             next_page = f"page-{page_num + 1}" if page_num < large_page_count else None
-            
+
             return MockPage(items=items, next_page=next_page)
 
         mock_fetcher = Mock(side_effect=mock_fetch_large_page)
@@ -417,15 +425,15 @@ class TestPaginationMemory:
         # Track memory usage by counting how many items we keep in memory
         processed_count = 0
         max_items_in_memory = 0
-        
+
         # Process items one at a time (simulating real usage)
         for item in iterator:
             processed_count += 1
-            
+
             # In real iteration, we should only have one item in memory at a time
             # The iterator should not accumulate all items
             max_items_in_memory = max(max_items_in_memory, 1)
-            
+
             # Process a few pages to verify behavior
             if processed_count >= 250:  # 2.5 pages worth
                 break
@@ -440,26 +448,23 @@ class TestPaginationMemory:
     def test_iterator_does_not_preload_all_pages(self):
         """Test iterator does not preload all pages into memory."""
         call_count = 0
-        
+
         def mock_fetch_on_demand(**kwargs):
             """Track when pages are fetched."""
             nonlocal call_count
             call_count += 1
-            
+
             if "page_token" not in kwargs:
                 return MockPage(
-                    items=[MockItem(id="1", name="Page 1 Item")],
-                    next_page="token2"
+                    items=[MockItem(id="1", name="Page 1 Item")], next_page="token2"
                 )
             elif kwargs["page_token"] == "token2":
                 return MockPage(
-                    items=[MockItem(id="2", name="Page 2 Item")],
-                    next_page="token3"
+                    items=[MockItem(id="2", name="Page 2 Item")], next_page="token3"
                 )
             else:
                 return MockPage(
-                    items=[MockItem(id="3", name="Page 3 Item")],
-                    next_page=None
+                    items=[MockItem(id="3", name="Page 3 Item")], next_page=None
                 )
 
         mock_fetcher = Mock(side_effect=mock_fetch_on_demand)
@@ -472,17 +477,17 @@ class TestPaginationMemory:
 
         # Start iteration but don't consume all items
         iter_obj = iter(iterator)
-        
+
         # Get first item - should only fetch first page
         first_item = next(iter_obj)
         assert first_item.id == "1"
         assert call_count == 1  # Only first page fetched
-        
+
         # Get second item - should fetch second page
         second_item = next(iter_obj)
         assert second_item.id == "2"
         assert call_count == 2  # Second page fetched on demand
-        
+
         # Verify we haven't preloaded the third page yet
         # Only fetch it when we actually need it
         third_item = next(iter_obj)
@@ -500,7 +505,7 @@ class TestPaginationScanParams:
         page2 = MockPage(items=[MockItem(id="2", name="Item 2")], next_page=None)
 
         calls_received = []
-        
+
         def mock_fetch_page(**kwargs):
             calls_received.append(kwargs.copy())
             if "page_token" not in kwargs:
@@ -519,22 +524,26 @@ class TestPaginationScanParams:
         # Start iteration
         iter_obj = iter(iterator)
         next(iter_obj)
-        
+
         # Try to modify initial_kwargs (this should not affect ongoing iteration)
         iterator._initial_kwargs["sort_by"] = "modified_at"
         iterator._initial_kwargs["new_param"] = "new_value"
-        
+
         # Continue iteration - should not use modified params
         next(iter_obj)
-        
+
         # Verify the calls received
         assert len(calls_received) == 2
-        
+
         # First call: original scan params
         assert calls_received[0] == {"limit": 1, "sort_by": "created_at"}
-        
+
         # Second call: all initial params + page_token (modified params ignored)
-        assert calls_received[1] == {"limit": 1, "sort_by": "created_at", "page_token": "token2"}
+        assert calls_received[1] == {
+            "limit": 1,
+            "sort_by": "created_at",
+            "page_token": "token2",
+        }
         # The original sort_by value should be preserved, modifications ignored
         assert calls_received[1]["sort_by"] == "created_at"  # Original value
         assert "new_param" not in calls_received[1]  # New param not included
@@ -605,20 +614,18 @@ class TestPaginationAsync:
     async def test_async_pagination_memory_efficiency(self):
         """Test async pagination has same memory efficiency as sync."""
         call_count = 0
-        
+
         async def async_fetch_on_demand(**kwargs):
             nonlocal call_count
             call_count += 1
-            
+
             if "page_token" not in kwargs:
                 return MockPage(
-                    items=[MockItem(id="1", name="Page 1 Item")],
-                    next_page="token2"
+                    items=[MockItem(id="1", name="Page 1 Item")], next_page="token2"
                 )
             elif kwargs["page_token"] == "token2":
                 return MockPage(
-                    items=[MockItem(id="2", name="Page 2 Item")],
-                    next_page=None
+                    items=[MockItem(id="2", name="Page 2 Item")], next_page=None
                 )
             else:
                 raise ValueError("Unexpected token")
@@ -640,7 +647,7 @@ class TestPaginationAsync:
                 assert call_count == 1  # Only first page fetched
             if len(items) >= 2:  # Stop after getting 2 items
                 break
-        
+
         assert items[0].id == "1"
         assert items[1].id == "2"
         assert call_count == 2  # Second page fetched on demand

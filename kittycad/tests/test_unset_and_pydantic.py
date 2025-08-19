@@ -19,10 +19,10 @@ class TestUnsetBehavior:
         """Test UNSET evaluates to False in boolean context."""
         assert not UNSET
         assert bool(UNSET) is False
-        
+
         # Test isinstance behavior
         assert isinstance(UNSET, Unset)
-        
+
         # Test type consistency
         unset_instance = Unset()
         assert not unset_instance
@@ -32,8 +32,7 @@ class TestUnsetBehavior:
         """Test Unset appears in type annotations where expected."""
         # Test that Unset type exists and can be used in type annotations
         # This documents the expected type annotation patterns
-        
-        
+
         # Example of how Unset would be used in function signatures
         def example_function(
             required_field: str,
@@ -45,13 +44,13 @@ class TestUnsetBehavior:
                 "unset": optional_with_unset,
                 "none": optional_with_none,
             }
-        
+
         # Test function with various Unset combinations
         result1 = example_function("test")
         assert result1["required"] == "test"
         assert result1["unset"] is UNSET
         assert result1["none"] is None
-        
+
         result2 = example_function("test", "provided", "also_provided")
         assert result2["unset"] == "provided"
         assert result2["none"] == "also_provided"
@@ -60,7 +59,7 @@ class TestUnsetBehavior:
         """Test UNSET vs None serialization behavior."""
         # Test serialization behavior without using Pydantic models
         # since Unset doesn't have Pydantic schema support yet
-        
+
         def serialize_value(value):
             """Simulate how values should be serialized."""
             if value is UNSET:
@@ -69,12 +68,12 @@ class TestUnsetBehavior:
                 return "null"  # Serialize as null
             else:
                 return str(value)  # Regular serialization
-        
+
         # Test different values
         assert serialize_value(UNSET) is None  # Should be omitted
         assert serialize_value(None) == "null"  # Should be serialized as null
         assert serialize_value("test") == "test"  # Regular value
-        
+
         # Test that we can distinguish between UNSET and None
         assert UNSET is not None
         assert UNSET is not None
@@ -83,22 +82,24 @@ class TestUnsetBehavior:
     def test_unset_field_omitted_from_json(self):
         """Test when param is UNSET, field is omitted from JSON."""
         # Test serialization logic without Pydantic models
-        
-        def build_request_dict(name: str, optional_param: Union[str, Unset] = UNSET) -> dict:
+
+        def build_request_dict(
+            name: str, optional_param: Union[str, Unset] = UNSET
+        ) -> dict:
             """Simulate building request dict, omitting UNSET fields."""
             result = {"name": name}
             if optional_param is not UNSET:
                 result["optional_param"] = optional_param
             return result
-        
+
         # Model with UNSET field
         request_with_unset = build_request_dict("test")
-        
+
         # Should only include name, not optional_param
         assert "name" in request_with_unset
         assert "optional_param" not in request_with_unset
         assert request_with_unset == {"name": "test"}
-        
+
         # Model with provided field
         request_with_value = build_request_dict("test", "provided")
         assert "name" in request_with_value
@@ -108,14 +109,16 @@ class TestUnsetBehavior:
     def test_none_field_serialized_as_null(self):
         """Test when param is None, field serialized as null."""
         # Test serialization logic without Pydantic models
-        
-        def build_request_with_none(name: str, nullable_param: Optional[str] = None) -> dict:
+
+        def build_request_with_none(
+            name: str, nullable_param: Optional[str] = None
+        ) -> dict:
             """Build request dict, including None fields."""
             return {"name": name, "nullable_param": nullable_param}
 
         # Model with None field
         request_with_none = build_request_with_none("test", None)
-        
+
         # Should include both fields, with nullable_param as null
         assert "name" in request_with_none
         assert "nullable_param" in request_with_none
@@ -125,7 +128,7 @@ class TestUnsetBehavior:
     def test_required_properties_reject_unset(self):
         """Test required properties must reject UNSET."""
         # Test validation logic without Pydantic models
-        
+
         def validate_required_field(required_field: str) -> dict:
             """Validate that required field is provided and not UNSET."""
             if required_field is UNSET:
@@ -137,11 +140,11 @@ class TestUnsetBehavior:
         # Should succeed with valid value
         result = validate_required_field("test")
         assert result == {"required_field": "test"}
-        
+
         # Should raise error when required field is UNSET
         with pytest.raises(ValueError, match="Required field cannot be UNSET"):
             validate_required_field(UNSET)  # type: ignore
-            
+
         # Should raise error for wrong type
         with pytest.raises(TypeError):
             validate_required_field(123)  # type: ignore
@@ -149,7 +152,7 @@ class TestUnsetBehavior:
     def test_unset_with_default_values(self):
         """Test UNSET behavior with default values."""
         # Test default value behavior without Pydantic models
-        
+
         def build_with_defaults(
             field_with_string_default: str = "default_value",
             field_with_unset_default: Union[str, Unset] = UNSET,
@@ -157,21 +160,21 @@ class TestUnsetBehavior:
         ) -> dict:
             """Build dict with defaults, excluding UNSET fields."""
             result = {"field_with_string_default": field_with_string_default}
-            
+
             if field_with_unset_default is not UNSET:
                 result["field_with_unset_default"] = field_with_unset_default
-                
+
             result["field_with_none_default"] = field_with_none_default
             return result
 
         # Create with defaults
         defaults_result = build_with_defaults()
-        
+
         assert defaults_result["field_with_string_default"] == "default_value"
         assert "field_with_unset_default" not in defaults_result  # Should be excluded
         assert "field_with_none_default" in defaults_result  # None is included
         assert defaults_result["field_with_none_default"] is None
-        
+
         # Create with explicit values
         explicit_result = build_with_defaults("custom", "provided", "also_provided")
         assert explicit_result["field_with_string_default"] == "custom"
@@ -229,11 +232,11 @@ class TestPydanticModels:
         # Test model_dump produces valid JSON
         dumped = params.model_dump()
         assert isinstance(dumped, dict)
-        
+
         # Should be JSON serializable
         json_str = json.dumps(dumped)
         assert isinstance(json_str, str)
-        
+
         # Should be able to parse back
         parsed = json.loads(json_str)
         assert isinstance(parsed, dict)
@@ -263,11 +266,11 @@ class TestPydanticModels:
 
         # Test round-trip: dump -> validate with a simpler model
         # Use ApiCallStatus enum which we know works
-        
+
         # Test enum round-trip
         status = ApiCallStatus.COMPLETED
         status_dict = {"status": status.value}
-        
+
         # Test that we can validate enum values
         assert ApiCallStatus(status_dict["status"]) == ApiCallStatus.COMPLETED
 
@@ -276,21 +279,24 @@ class TestPydanticModels:
         # Test that status enums are proper Python enums
         assert isinstance(ApiCallStatus.COMPLETED, ApiCallStatus)
         assert issubclass(ApiCallStatus, Enum)
-        
+
         # Test enum values serialize to strings
         assert ApiCallStatus.COMPLETED.value == "completed"
         assert ApiCallStatus.IN_PROGRESS.value == "in_progress"
         assert ApiCallStatus.FAILED.value == "failed"
-        
+
         # Test in JSON serialization context using a simple dict
         test_data = {"status": ApiCallStatus.COMPLETED}
-        
+
         # When serializing, enum should become string
         import json
-        json_str = json.dumps(test_data, default=lambda x: x.value if hasattr(x, 'value') else str(x))
+
+        json_str = json.dumps(
+            test_data, default=lambda x: x.value if hasattr(x, "value") else str(x)
+        )
         parsed = json.loads(json_str)
         assert parsed["status"] == "completed"  # String, not enum object
-        
+
         # Test another enum
         assert isinstance(FileExportFormat.OBJ, FileExportFormat)
         assert FileExportFormat.OBJ.value == "obj"
@@ -300,21 +306,22 @@ class TestPydanticModels:
         """Test Pydantic models serialize consistently with simple models."""
         # Test with enum serialization directly
         status = ApiCallStatus.IN_PROGRESS
-        
+
         # Test that enum has correct value
         assert status.value == "in_progress"
-        
+
         # Test JSON serialization of enum values
         import json
+
         data = {"status": status.value, "id": "test-123"}
         json_str = json.dumps(data)
         assert isinstance(json_str, str)
-        
+
         # Should be parseable JSON
         parsed = json.loads(json_str)
-        assert parsed["id"] == "test-123" 
+        assert parsed["id"] == "test-123"
         assert parsed["status"] == "in_progress"
-        
+
         # Test that we can reconstruct enum from string
         reconstructed_status = ApiCallStatus(parsed["status"])
         assert reconstructed_status == ApiCallStatus.IN_PROGRESS
@@ -324,9 +331,12 @@ class TestPydanticModels:
         # Test with enum validation directly
         with pytest.raises(ValueError) as exc_info:
             ApiCallStatus("invalid_status")  # Invalid enum value
-        
+
         # Should raise ValueError for invalid enum
-        assert "invalid_status" in str(exc_info.value).lower() or "not a valid" in str(exc_info.value).lower()
+        assert (
+            "invalid_status" in str(exc_info.value).lower()
+            or "not a valid" in str(exc_info.value).lower()
+        )
 
 
 class TestTypingStubs:
@@ -337,41 +347,43 @@ class TestTypingStubs:
         import os
 
         import kittycad
-        
+
         # Check if py.typed file exists in the package
         package_dir = os.path.dirname(kittycad.__file__)
         py_typed_path = os.path.join(package_dir, "py.typed")
-        
+
         # Verify the py.typed marker file exists
-        assert os.path.exists(py_typed_path), "py.typed marker file should exist for type checking"
+        assert os.path.exists(py_typed_path), (
+            "py.typed marker file should exist for type checking"
+        )
 
     def test_overloaded_function_stubs(self):
         """Test stubs for overloaded functions are correct."""
         # This would test that download functions have correct return type stubs
         # For now, document the requirement
-        
+
         # Example: download functions should be typed as:
         # def download_to_file(response, output: None) -> bytes: ...
         # def download_to_file(response, output: Path) -> None: ...
-        
+
         # This ensures type checkers understand the overloaded behavior
         pass
 
     def test_generic_type_parameters(self):
         """Test generic type parameters work correctly."""
         from kittycad.pagination import SyncPageIterator
-        
+
         # Type should be parameterizable
         # iterator: SyncPageIterator[ApiCallWithPrice] = ...
-        
+
         # This tests that the generic TypeVar T is properly used
-        assert hasattr(SyncPageIterator, '__init__')
+        assert hasattr(SyncPageIterator, "__init__")
 
 
 # Property-based testing with Hypothesis would go here
 try:
     from hypothesis import given, strategies as st
-    
+
     class TestUnsetHypothesis:
         """Property-based tests for Unset behavior using Hypothesis."""
 
@@ -391,10 +403,10 @@ try:
 
         def test_json_serialization_property(self):
             """Property-based test for JSON serialization with UNSET/None."""
-            
+
             class TestModel(BaseModel):
                 field: Union[str, None, Unset] = UNSET
-                
+
                 class Config:
                     exclude_unset = True
 
@@ -402,7 +414,7 @@ try:
             model_unset = TestModel(field=UNSET)
             json_unset = model_unset.model_dump(exclude_unset=True)
             assert "field" not in json_unset
-            
+
             # Test with None
             model_none = TestModel(field=None)
             json_none = model_none.model_dump(exclude_unset=True)
