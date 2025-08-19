@@ -32,6 +32,7 @@ from .auth_api_key_response import AuthApiKeyResponse
 from .auth_callback import AuthCallback
 from .axis import Axis
 from .axis_direction_pair import AxisDirectionPair
+from .base import KittyCadBaseModel
 from .batch_response import BatchResponse
 from .billing_info import BillingInfo
 from .block_reason import BlockReason

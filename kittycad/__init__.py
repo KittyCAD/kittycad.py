@@ -17,6 +17,7 @@ from websockets.sync.client import (
 
 from kittycad._binary import upload_file_binary, upload_file_binary_async
 from kittycad._downloads import stream_download, stream_download_async
+from kittycad._io_types import ProgressCallback, SyncDownload, SyncUpload
 from kittycad._multipart import (
     upload_file_multipart,
     upload_file_multipart_async,
@@ -24,7 +25,6 @@ from kittycad._multipart import (
     upload_json_multipart_async,
 )
 
-from ._io_types import ProgressCallback, SyncDownload, SyncUpload
 from .client import AsyncClient, Client
 from .exceptions import (
     KittyCADAPIError,
@@ -11759,18 +11759,18 @@ class AsyncModelingAPI:
         # This supports await websocket.send() and async for message in websocket
         async def modeling_commands_ws(
             self,
-            fps: int,
-            post_effect: PostEffectType,
-            show_grid: bool,
-            unlocked_framerate: bool,
-            video_res_height: int,
-            video_res_width: int,
-            webrtc: bool,
             body: WebSocketRequest,
             *,
             api_call_id: Optional[str] = None,
+            fps: Optional[int] = None,
             pool: Optional[str] = None,
+            post_effect: Optional[PostEffectType] = None,
             replay: Optional[str] = None,
+            show_grid: Optional[bool] = None,
+            unlocked_framerate: Optional[bool] = None,
+            video_res_height: Optional[int] = None,
+            video_res_width: Optional[int] = None,
+            webrtc: Optional[bool] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket which accepts modeling commands."""
 

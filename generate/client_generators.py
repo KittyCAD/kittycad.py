@@ -5,6 +5,7 @@ from typing import Any, Dict
 
 from jinja2 import Environment, FileSystemLoader
 
+from .file_operation_detection import get_required_file_imports
 from .function_generators import (
     generate_async_function,
     generate_sync_function,
@@ -16,7 +17,7 @@ from .schema_utils import get_endpoint_refs, get_request_body_type_schema
 from .utils import camel_to_snake, to_pascal_case
 
 
-def generate_client_classes(cwd: str, data: dict):
+def generate_client_classes(cwd: str, data: dict, examples: list):
     """Generate the KittyCAD and AsyncKittyCAD client classes with embedded endpoint logic"""
 
     # Collect all endpoints by tag with full implementation details
@@ -75,6 +76,19 @@ def generate_client_classes(cwd: str, data: dict):
                     async_implementation = generate_async_function(
                         path, method, endpoint_data, data
                     )
+
+                # Collect file operation imports if needed
+                file_imports = get_required_file_imports(endpoint_data)
+                for import_stmt in file_imports:
+                    # Extract the module and class names from import statement
+                    # e.g., "from kittycad._io_types import SyncUpload, ProgressCallback"
+                    if " import " in import_stmt:
+                        module_part, imports_part = import_stmt.split(" import ", 1)
+                        module_name = module_part.replace("from ", "")
+                        for imported_name in imports_part.split(", "):
+                            all_imports.add(
+                                f"from {module_name} import {imported_name.strip()}"
+                            )
 
                 # Collect imports from response types for all endpoints
                 endpoint_refs = get_endpoint_refs(endpoint_data, data)
@@ -193,8 +207,9 @@ def generate_client_classes(cwd: str, data: dict):
                     else:
                         param_type = "Any"
 
-                    # Handle optional parameters
-                    is_required = param.get("required", True)
+                    # Handle optional parameters - query params are optional by default
+                    default_required = param.get("in") == "path"
+                    is_required = param.get("required", default_required)
                     if not is_required or param_schema.get("nullable", False):
                         if not param_type.startswith("Optional["):
                             param_type = f"Optional[{param_type}]"
@@ -242,8 +257,7 @@ def generate_client_classes(cwd: str, data: dict):
 
     template = env.get_template("__init__.py.jinja2")
 
-    # Import here to avoid circular imports - need access to the examples global
-    from .generate import examples
+    # Use the examples passed as parameter
 
     # Render the template
     rendered_content = template.render(

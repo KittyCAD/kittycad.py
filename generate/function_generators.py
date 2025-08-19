@@ -373,7 +373,11 @@ def generate_websocket_sync_function(
             else:
                 parameter_type = "Any"
 
-            if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
+            # For WebSocket endpoints, make all query parameters optional with defaults
+            if "in" in parameter and parameter["in"] == "query":
+                parameter_type = f"Optional[{parameter_type}]"
+                is_optional = True
+            elif "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
                 parameter_type = f"Optional[{parameter_type}]"
                 is_optional = True
             else:
@@ -389,18 +393,10 @@ def generate_websocket_sync_function(
                 }
             )
 
-    # Handle request body for WebSocket endpoints
-    (request_body_type, _) = get_request_body_type_schema(endpoint, data)
-    if request_body_type:
-        args.append(
-            {
-                "name": "body",
-                "type": request_body_type,
-                "in_url": False,
-                "in_query": False,
-                "is_optional": False,
-            }
-        )
+    # For WebSocket endpoints, we don't include the body in the main method signature
+    # The body is only used in the low-level connection methods
+    # (request_body_type, _) = get_request_body_type_schema(endpoint, data)
+    # Body parameter is handled separately in WebSocket connection logic
 
     # Use WebSocket template
     environment = Environment(loader=FileSystemLoader("generate/templates/"))
@@ -445,7 +441,11 @@ def generate_websocket_async_function(
             else:
                 parameter_type = "Any"
 
-            if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
+            # For WebSocket endpoints, make all query parameters optional with defaults
+            if "in" in parameter and parameter["in"] == "query":
+                parameter_type = f"Optional[{parameter_type}]"
+                is_optional = True
+            elif "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
                 parameter_type = f"Optional[{parameter_type}]"
                 is_optional = True
             else:
