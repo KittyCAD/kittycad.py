@@ -11,6 +11,7 @@ from kittycad.models import (
     ApiCallStatus,
     Axis,
     AxisDirectionPair,
+    ConversionParams,
     CreatedAtSortMode,
     Direction,
     FileCenterOfMass,
@@ -24,6 +25,7 @@ from kittycad.models import (
     InputFormat3d,
     ModelingCmd,
     ModelingCmdId,
+    OutputFormat3d,
     Pong,
     PostEffectType,
     System,
@@ -36,13 +38,14 @@ from kittycad.models import (
     WebSocketRequest,
     WebSocketResponse,
 )
-from kittycad.models.input_format3d import OptionObj
+from kittycad.models.input_format3d import OptionObj, OptionStep as InputOptionStep
 from kittycad.models.modeling_cmd import (
     OptionDefaultCameraFocusOn,
     OptionImportFiles,
     OptionStartPath,
     OptionTakeSnapshot,
 )
+from kittycad.models.output_format3d import OptionObj as OutputOptionObj
 from kittycad.models.web_socket_request import OptionModelingCmdReq
 from kittycad.types import Unset
 
@@ -207,6 +210,179 @@ async def test_file_convert_obj_async():
         body=content,
         src_format=FileImportFormat.OBJ,
         output_format=FileExportFormat.STL,
+    )
+
+    assert isinstance(result, FileConversion)
+
+    fc: FileConversion = result
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
+    assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
+
+    # Make sure the bytes are not empty.
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
+
+
+def test_file_conversion_options_stl():
+    # Create our client
+    client = KittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(dir_path, "../../assets/testing.stl")
+
+    # Test create_file_conversion_options with the same input file as create_file_conversion
+    fc = client.file.create_file_conversion_options(
+        body=ConversionParams(
+            src_format=InputFormat3d(
+                InputOptionStep(
+                    split_closed_faces=False,
+                )
+            ),
+            output_format=OutputFormat3d(
+                OutputOptionObj(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Z,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.MM,
+                )
+            ),
+        ),
+        file_attachments={"input.stl": file_path},
+    )
+
+    assert isinstance(fc, FileConversion)
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
+    assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
+
+    # Make sure the bytes are not empty.
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
+
+
+@pytest.mark.asyncio
+async def test_file_conversion_options_stl_async():
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(dir_path, "../../assets/testing.stl")
+
+    # Test async create_file_conversion_options with the same input file
+    result = await client.file.create_file_conversion_options(
+        body=ConversionParams(
+            src_format=InputFormat3d(
+                InputOptionStep(
+                    split_closed_faces=False,
+                )
+            ),
+            output_format=OutputFormat3d(
+                OutputOptionObj(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Z,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.MM,
+                )
+            ),
+        ),
+        file_attachments={"input.stl": file_path},
+    )
+
+    assert isinstance(result, FileConversion)
+
+    fc: FileConversion = result
+
+    print(f"FileConversion: {fc}")
+
+    assert fc.id is not None
+    assert fc.status == ApiCallStatus.COMPLETED
+
+    print(f"FileConversion: {fc}")
+
+    assert not isinstance(fc.outputs, Unset)
+    assert fc.outputs is not None
+
+    # Make sure the bytes are not empty.
+    for key, value in fc.outputs.items():
+        assert len(value) > 0
+
+
+@pytest.mark.asyncio
+async def test_file_conversion_options_obj_async():
+    from kittycad import AsyncKittyCAD
+
+    # Create our async client
+    client = AsyncKittyCAD()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file_path = os.path.join(dir_path, "../../assets/ORIGINALVOXEL-3.obj")
+
+    # Test async create_file_conversion_options with OBJ input
+    result = await client.file.create_file_conversion_options(
+        body=ConversionParams(
+            src_format=InputFormat3d(
+                OptionObj(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.NEGATIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Z,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.M,
+                )
+            ),
+            output_format=OutputFormat3d(
+                OutputOptionObj(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Z,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.MM,
+                )
+            ),
+        ),
+        file_attachments={"input.obj": file_path},
     )
 
     assert isinstance(result, FileConversion)
