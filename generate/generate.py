@@ -730,6 +730,11 @@ def generate_path_data(name: str, method: str, endpoint: dict, data: dict) -> di
         for optional_arg in optional_args:
             params_str += optional_arg
 
+    # Detect multipart/file operation endpoints
+    from .file_operation_detection import extract_file_parameter_info
+
+    file_info = extract_file_parameter_info(endpoint, data)
+
     body_example = "{}"
     if request_body_type:
         if request_body_type == "str":
@@ -761,6 +766,20 @@ def generate_path_data(name: str, method: str, endpoint: dict, data: dict) -> di
                     + "\n"
                 )
             example_imports = example_imports + more_example_imports
+
+    # Add file_attachments parameter for multipart endpoints that use JSON body + files pattern
+    if file_info.get("has_json_body_multipart", False):
+        # Add the necessary imports for file operations
+        example_imports = example_imports + (
+            "from pathlib import Path\n"
+            "from typing import Dict\n"
+            "from kittycad._io_types import SyncUpload\n"
+        )
+        # Add file_attachments parameter with example values
+        params_str += "file_attachments={\n"
+        params_str += '        "main.kcl": Path("path/to/main.kcl"),\n'
+        params_str += '        "helper.kcl": Path("path/to/helper.kcl"),\n'
+        params_str += "    },\n"
 
     example_variable = ""
 

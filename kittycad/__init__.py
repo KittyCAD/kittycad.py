@@ -986,8 +986,7 @@ class MlAPI:
     def create_text_to_cad_multi_file_iteration(
         self,
         body: TextToCadMultiFileIterationBody,
-        *,
-        file_attachments: Optional[Dict[str, SyncUpload]] = None,
+        file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
         """This endpoint can iterate on multi-file models.
 
@@ -997,7 +996,51 @@ class MlAPI:
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
+
+            # Create the request body
+            body = TextToCadMultiFileIterationBody(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
@@ -1571,8 +1614,7 @@ class AsyncMlAPI:
     async def create_text_to_cad_multi_file_iteration(
         self,
         body: TextToCadMultiFileIterationBody,
-        *,
-        file_attachments: Optional[Dict[str, SyncUpload]] = None,
+        file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
         """This endpoint can iterate on multi-file models.
 
@@ -1582,7 +1624,51 @@ class AsyncMlAPI:
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
+
+            # Create the request body
+            body = TextToCadMultiFileIterationBody(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
@@ -3794,14 +3880,57 @@ class FileAPI:
     def create_file_conversion_options(
         self,
         body: ConversionParams,
-        *,
-        file_attachments: Optional[Dict[str, SyncUpload]] = None,
+        file_attachments: Dict[str, SyncUpload],
     ) -> FileConversion:
         """This takes a HTTP multipart body with these fields in any order:
 
          - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.
 
-        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.conversion_params import ConversionParams
+
+            # Create the request body
+            body = ConversionParams(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/file/conversion".format(self.client.base_url)
 
@@ -4159,14 +4288,57 @@ class AsyncFileAPI:
     async def create_file_conversion_options(
         self,
         body: ConversionParams,
-        *,
-        file_attachments: Optional[Dict[str, SyncUpload]] = None,
+        file_attachments: Dict[str, SyncUpload],
     ) -> FileConversion:
         """This takes a HTTP multipart body with these fields in any order:
 
          - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.
 
-        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.conversion_params import ConversionParams
+
+            # Create the request body
+            body = ConversionParams(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/file/conversion".format(self.client.base_url)
 

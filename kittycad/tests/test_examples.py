@@ -1,4 +1,5 @@
 import datetime
+from pathlib import Path
 from typing import Dict, List, Optional, Union
 
 import pytest
@@ -679,7 +680,11 @@ def test_create_file_conversion_options():
                     split_closed_faces=False,
                 )
             ),
-        )
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
     )
 
     body: FileConversion = result
@@ -720,7 +725,11 @@ async def test_create_file_conversion_options_async():
                     split_closed_faces=False,
                 )
             ),
-        )
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
     )
 
 
@@ -1143,7 +1152,11 @@ def test_create_text_to_cad_multi_file_iteration():
                         ),
                     )
                 ],
-            )
+            ),
+            file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            },
         )
     )
 
@@ -1175,7 +1188,11 @@ async def test_create_text_to_cad_multi_file_iteration_async():
                         ),
                     )
                 ],
-            )
+            ),
+            file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            },
         )
     )
 
