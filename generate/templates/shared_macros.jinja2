@@ -1,0 +1,83 @@
+{# Shared Jinja macros for reducing repetition across templates #}
+
+{# Macro to generate function signature parameters #}
+{% macro function_signature(args, is_async=false) -%}
+    {% if is_async %}async {% endif %}def {{ func_name }}(
+        self,
+        {% for arg in args %}
+        {% if arg.is_optional == False %}
+        {{ arg.name }}: {{ arg.type }},
+        {% endif %}
+        {% endfor %}
+        {% set optional_args = args|selectattr("is_optional")|list %}
+        {% if optional_args %}*,
+        {% for arg in optional_args %}
+        {{ arg.name }}: {{ arg.type }} = None,
+        {% endfor %}
+        {% endif %}
+    ) {% if response_type != "" %} -> {{ response_type }} {% endif %}:
+{%- endmacro %}
+
+{# Macro to generate URL building logic #}
+{% macro build_url(url_template, args) -%}
+        url = "{{ url_template }}".format(self.client.base_url{% for arg in args %}{% if arg.in_url %}, {{ arg.name }}={{ arg.name }}{% endif %}{% endfor %})
+        
+        {% for arg in args %}
+        {% if arg.in_query %}
+        if {{ arg.name }} is not None:
+            {% if "bool" in arg.type %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }}).lower()
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }}).lower()
+            {% else %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }})
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }})
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+{%- endmacro %}
+
+{# Macro to generate HTTP request call #}
+{% macro http_request_call(method, has_request_body, request_body_type, file_info, is_async=false) -%}
+        _client = self.client.get_http_client()
+        {% if file_info.has_json_body_multipart %}
+        # JSON + multipart endpoint
+        response = {% if is_async %}await {% endif %}upload_json_multipart{% if is_async %}_async{% endif %}(
+            client=_client,
+            url=url,
+            json_body=body,
+            file_attachments=file_attachments,
+            headers=self.client.get_headers(),
+        )
+        {% else %}
+        response = {% if is_async %}await {% endif %}_client.{{ method }}(
+            url=url,
+            headers=self.client.get_headers(),
+            {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(),{% else %}content=body,{% endif %}{% endif %}
+        )
+        {% endif %}
+{%- endmacro %}
+
+{# Macro to generate response parsing logic #}
+{% macro parse_response(response_type) -%}
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+            raise_for_status(response)
+        
+        {% if response_type and response_type != "" %}
+        if not response.content:
+            return None  # type: ignore
+            
+        json_data = response.json()
+        {% if not response_type.startswith(('dict', 'list', 'Union', 'RootModel')) %}
+        return {{ response_type }}(**json_data)
+        {% else %}
+        return json_data
+        {% endif %}
+        {% else %}
+        return response.json() if response.content else None
+        {% endif %}
+{%- endmacro %}

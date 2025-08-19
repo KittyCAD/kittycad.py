@@ -381,6 +381,42 @@ def get_template(template_name: str):
     return env.get_template(template_name)
 
 
+def render_template_to_file(template_name: str, context: dict, output_path: str):
+    """Helper function to render a template and write it to a file.
+
+    Args:
+        template_name: Name of the Jinja2 template file
+        context: Dictionary of variables to pass to the template
+        output_path: Path where the rendered output should be written
+    """
+    import logging
+
+    template = get_template(template_name)
+    content = template.render(**context)
+
+    with open(output_path, "w") as f:
+        f.write(content)
+
+    logging.info("Generated file: %s using template: %s", output_path, template_name)
+
+
+def render_function_with_unified_template(
+    context: dict, output_path: str, is_async: bool = False
+):
+    """Render a function using the unified template that handles both sync and async.
+
+    Args:
+        context: Dictionary of variables to pass to the template
+        output_path: Path where the rendered output should be written
+        is_async: Whether to generate async function (default: False for sync)
+    """
+    # Add the is_async flag to context
+    context = context.copy()
+    context["is_async"] = is_async
+
+    render_template_to_file("unified_function.py.jinja2", context, output_path)
+
+
 def process_endpoint_parameters(
     endpoint: dict, data: dict, is_websocket: bool = False
 ) -> List[dict]:

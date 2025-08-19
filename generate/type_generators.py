@@ -21,6 +21,7 @@ from .utils import (
     consolidate_imports_in_file,
     get_template,
     randletter,
+    render_template_to_file,
     to_pascal_case,
 )
 
@@ -111,48 +112,37 @@ def generate_type(path: str, name: str, schema: dict, data: dict):
     return file_path
 
 
-def generate_string_type(path: str, name: str, schema: dict, type_name: str):
-    logging.info("generating type: %s at: %s", name, path)
-    f = open(path, "w")
+def generate_primitive_type(path: str, name: str, schema: dict, template_name: str):
+    """Generic function to generate primitive types using templates.
 
-    template = get_template("str.py.jinja2")
-    description = schema.get("description", "")
-    f.write(template.render(name=name, description=description))
-    f.close()
+    Args:
+        path: Output file path
+        name: Type name
+        schema: Schema dictionary
+        template_name: Name of the template file to use (e.g. "str.py.jinja2")
+    """
+    context = {
+        "name": name,
+        "description": schema.get("description", ""),
+        "minimum": schema.get("minimum"),
+        "maximum": schema.get("maximum"),
+    }
+    render_template_to_file(template_name, context, path)
+
+
+def generate_string_type(path: str, name: str, schema: dict, type_name: str):
+    """Generate a string type using the generic primitive generator."""
+    generate_primitive_type(path, name, schema, "str.py.jinja2")
 
 
 def generate_integer_type(path: str, name: str, schema: dict, type_name: str):
-    logging.info("generating type: %s at: %s", name, path)
-    f = open(path, "w")
-
-    template = get_template("int.py.jinja2")
-    description = schema.get("description", "")
-    minimum = schema.get("minimum")
-    maximum = schema.get("maximum")
-
-    f.write(
-        template.render(
-            name=name, description=description, minimum=minimum, maximum=maximum
-        )
-    )
-    f.close()
+    """Generate an integer type using the generic primitive generator."""
+    generate_primitive_type(path, name, schema, "int.py.jinja2")
 
 
 def generate_float_type(path: str, name: str, schema: dict, type_name: str):
-    logging.info("generating type: %s at: %s", name, path)
-    f = open(path, "w")
-
-    template = get_template("float.py.jinja2")
-    description = schema.get("description", "")
-    minimum = schema.get("minimum")
-    maximum = schema.get("maximum")
-
-    f.write(
-        template.render(
-            name=name, description=description, minimum=minimum, maximum=maximum
-        )
-    )
-    f.close()
+    """Generate a float type using the generic primitive generator."""
+    generate_primitive_type(path, name, schema, "float.py.jinja2")
 
 
 def generate_enum_type(
