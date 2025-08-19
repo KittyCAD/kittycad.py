@@ -38,7 +38,7 @@ from kittycad.models import (
     WebSocketRequest,
     WebSocketResponse,
 )
-from kittycad.models.input_format3d import OptionObj, OptionStep as InputOptionStep, OptionStl
+from kittycad.models.input_format3d import OptionObj, OptionStl
 from kittycad.models.modeling_cmd import (
     OptionDefaultCameraFocusOn,
     OptionImportFiles,
@@ -48,6 +48,146 @@ from kittycad.models.modeling_cmd import (
 from kittycad.models.output_format3d import OptionObj as OutputOptionObj
 from kittycad.models.web_socket_request import OptionModelingCmdReq
 from kittycad.types import Unset
+
+
+def _poll_for_completion(
+    client, fc: FileConversion, timeout_seconds: int = 60
+) -> FileConversion:
+    """Poll for file conversion completion.
+    
+    Args:
+        client: KittyCAD client (sync or async)
+        fc: Initial FileConversion object
+        timeout_seconds: Maximum time to wait for completion
+        
+    Returns:
+        Completed FileConversion object
+    """
+    import time
+    
+    start_time = time.time()
+    
+    # Handle both completed and in-progress cases
+    if fc.status == ApiCallStatus.COMPLETED:
+        # Already completed, no need to poll
+        return fc
+    
+    # Need to poll for completion
+    current_status: ApiCallStatus = fc.status
+    body = fc
+    
+    while (
+        current_status == ApiCallStatus.IN_PROGRESS
+        or current_status == ApiCallStatus.QUEUED
+        or current_status == ApiCallStatus.UPLOADED
+    ) and time.time() - start_time < timeout_seconds:
+        time.sleep(2)  # Wait 2 seconds between polls
+        result_status = client.api_calls.get_async_operation(id=fc.id)
+
+        # Handle response from get_async_operation
+        if isinstance(result_status, dict):
+            status_str = result_status.get("status", "unknown")
+            print(f"FileConversion status: {status_str}")
+            # Convert string status to ApiCallStatus
+            if status_str == "completed":
+                current_status = ApiCallStatus.COMPLETED
+            elif status_str == "failed":
+                current_status = ApiCallStatus.FAILED
+            elif status_str == "in_progress":
+                current_status = ApiCallStatus.IN_PROGRESS
+            elif status_str == "queued":
+                current_status = ApiCallStatus.QUEUED
+            elif status_str == "uploaded":
+                current_status = ApiCallStatus.UPLOADED
+            else:
+                current_status = ApiCallStatus.FAILED  # Default for unknown
+            
+            if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
+                break
+        else:
+            if hasattr(result_status, "status"):
+                current_status = result_status.status
+                body = result_status
+                print(f"FileConversion status: {current_status}")
+
+    # If we exited the loop due to completion, get the final FileConversion object
+    if current_status == ApiCallStatus.COMPLETED:
+        # Get the final state of the FileConversion object
+        final_result = client.api_calls.get_async_operation(id=fc.id)
+        if not isinstance(final_result, dict):
+            body = final_result
+    
+    return body
+
+
+async def _poll_for_completion_async(
+    client, fc: FileConversion, timeout_seconds: int = 60
+) -> FileConversion:
+    """Async version of poll for file conversion completion.
+    
+    Args:
+        client: AsyncKittyCAD client
+        fc: Initial FileConversion object
+        timeout_seconds: Maximum time to wait for completion
+        
+    Returns:
+        Completed FileConversion object
+    """
+    import time
+    
+    start_time = time.time()
+    
+    # Handle both completed and in-progress cases
+    if fc.status == ApiCallStatus.COMPLETED:
+        # Already completed, no need to poll
+        return fc
+    
+    # Need to poll for completion
+    current_status: ApiCallStatus = fc.status
+    body = fc
+    
+    while (
+        current_status == ApiCallStatus.IN_PROGRESS
+        or current_status == ApiCallStatus.QUEUED
+        or current_status == ApiCallStatus.UPLOADED
+    ) and time.time() - start_time < timeout_seconds:
+        time.sleep(2)  # Wait 2 seconds between polls
+        result_status = await client.api_calls.get_async_operation(id=fc.id)
+
+        # Handle response from get_async_operation
+        if isinstance(result_status, dict):
+            status_str = result_status.get("status", "unknown")
+            print(f"FileConversion status: {status_str}")
+            # Convert string status to ApiCallStatus
+            if status_str == "completed":
+                current_status = ApiCallStatus.COMPLETED
+            elif status_str == "failed":
+                current_status = ApiCallStatus.FAILED
+            elif status_str == "in_progress":
+                current_status = ApiCallStatus.IN_PROGRESS
+            elif status_str == "queued":
+                current_status = ApiCallStatus.QUEUED
+            elif status_str == "uploaded":
+                current_status = ApiCallStatus.UPLOADED
+            else:
+                current_status = ApiCallStatus.FAILED  # Default for unknown
+            
+            if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
+                break
+        else:
+            if hasattr(result_status, "status"):
+                current_status = result_status.status
+                body = result_status
+                print(f"FileConversion status: {current_status}")
+
+    # If we exited the loop due to completion, get the final FileConversion object
+    if current_status == ApiCallStatus.COMPLETED:
+        # Get the final state of the FileConversion object
+        final_result = await client.api_calls.get_async_operation(id=fc.id)
+        if not isinstance(final_result, dict):
+            body = final_result
+    
+    return body
 
 
 def test_get_session():
@@ -287,58 +427,18 @@ def test_file_conversion_options_stl():
     assert fc.status in [ApiCallStatus.UPLOADED, ApiCallStatus.COMPLETED]
 
     # Poll for completion (max 60 seconds)
-    import time
-    start_time = time.time()
+    body = _poll_for_completion(client, fc, timeout_seconds=60)
     
-    # Handle both completed and in-progress cases
-    if fc.status == ApiCallStatus.COMPLETED:
-        # Already completed, no need to poll
-        body = fc
-    else:
-        # Need to poll for completion
-        body = fc
-        current_status = fc.status
-        while (
-            current_status == ApiCallStatus.IN_PROGRESS 
-            or current_status == ApiCallStatus.QUEUED 
-            or current_status == ApiCallStatus.UPLOADED
-        ) and time.time() - start_time < 60:
-            time.sleep(2)  # Wait 2 seconds between polls
-            result_status = client.api_calls.get_async_operation(id=body.id)
-            
-            # Handle dict response from get_async_operation
-            if isinstance(result_status, dict):
-                current_status = result_status.get('status', 'unknown')
-                print(f"FileConversion status: {current_status}")
-                # Convert dict back to FileConversion object for final assertions
-                if current_status in ['completed', 'failed']:
-                    # We'll use the dict to check final status
-                    body = result_status
-                    break
-            else:
-                current_status = result_status.status if hasattr(result_status, 'status') else 'unknown'
-                body = result_status
-                print(f"FileConversion status: {current_status}")
+    # Check final status
+    assert body.status == ApiCallStatus.COMPLETED
+    print(f"FileConversion completed: {body}")
 
-    # Check final status - handle both dict and object responses
-    if isinstance(body, dict):
-        final_status = body.get('status', 'unknown')
-        assert final_status == 'completed', f"Expected completed, got {final_status}. Error: {body.get('error', 'No error')}"
-        print(f"FileConversion completed: {body}")
-        
-        # For dict response, we can't check outputs the same way
-        # The API might not return outputs in the status check
-        print("Note: Outputs not checked for dict response from get_async_operation")
-    else:
-        assert body.status == ApiCallStatus.COMPLETED
-        print(f"FileConversion completed: {body}")
+    assert not isinstance(body.outputs, Unset)
+    assert body.outputs is not None
 
-        assert not isinstance(body.outputs, Unset)
-        assert body.outputs is not None
-
-        # Make sure the bytes are not empty.
-        for key, value in body.outputs.items():
-            assert len(value) > 0
+    # Make sure the bytes are not empty.
+    for key, value in body.outputs.items():
+        assert len(value) > 0
 
 
 @pytest.mark.asyncio
@@ -399,58 +499,18 @@ async def test_file_conversion_options_stl_async():
     assert fc.status in [ApiCallStatus.UPLOADED, ApiCallStatus.COMPLETED]
 
     # Poll for completion (max 60 seconds)
-    import time
-    start_time = time.time()
+    body = await _poll_for_completion_async(client, fc, timeout_seconds=60)
     
-    # Handle both completed and in-progress cases
-    if fc.status == ApiCallStatus.COMPLETED:
-        # Already completed, no need to poll
-        body = fc
-    else:
-        # Need to poll for completion
-        body = fc
-        current_status = fc.status
-        while (
-            current_status == ApiCallStatus.IN_PROGRESS 
-            or current_status == ApiCallStatus.QUEUED 
-            or current_status == ApiCallStatus.UPLOADED
-        ) and time.time() - start_time < 60:
-            time.sleep(2)  # Wait 2 seconds between polls
-            result_status = await client.api_calls.get_async_operation(id=body.id)
-            
-            # Handle dict response from get_async_operation
-            if isinstance(result_status, dict):
-                current_status = result_status.get('status', 'unknown')
-                print(f"FileConversion status: {current_status}")
-                # Convert dict back to FileConversion object for final assertions
-                if current_status in ['completed', 'failed']:
-                    # We'll use the dict to check final status
-                    body = result_status
-                    break
-            else:
-                current_status = result_status.status if hasattr(result_status, 'status') else 'unknown'
-                body = result_status
-                print(f"FileConversion status: {current_status}")
+    # Check final status
+    assert body.status == ApiCallStatus.COMPLETED
+    print(f"FileConversion completed: {body}")
 
-    # Check final status - handle both dict and object responses
-    if isinstance(body, dict):
-        final_status = body.get('status', 'unknown')
-        assert final_status == 'completed', f"Expected completed, got {final_status}. Error: {body.get('error', 'No error')}"
-        print(f"FileConversion completed: {body}")
-        
-        # For dict response, we can't check outputs the same way
-        # The API might not return outputs in the status check
-        print("Note: Outputs not checked for dict response from get_async_operation")
-    else:
-        assert body.status == ApiCallStatus.COMPLETED
-        print(f"FileConversion completed: {body}")
+    assert not isinstance(body.outputs, Unset)
+    assert body.outputs is not None
 
-        assert not isinstance(body.outputs, Unset)
-        assert body.outputs is not None
-
-        # Make sure the bytes are not empty.
-        for key, value in body.outputs.items():
-            assert len(value) > 0
+    # Make sure the bytes are not empty.
+    for key, value in body.outputs.items():
+        assert len(value) > 0
 
 
 @pytest.mark.asyncio
@@ -511,58 +571,18 @@ async def test_file_conversion_options_obj_async():
     assert fc.status in [ApiCallStatus.UPLOADED, ApiCallStatus.COMPLETED]
 
     # Poll for completion (max 60 seconds)
-    import time
-    start_time = time.time()
+    body = await _poll_for_completion_async(client, fc, timeout_seconds=60)
     
-    # Handle both completed and in-progress cases
-    if fc.status == ApiCallStatus.COMPLETED:
-        # Already completed, no need to poll
-        body = fc
-    else:
-        # Need to poll for completion
-        body = fc
-        current_status = fc.status
-        while (
-            current_status == ApiCallStatus.IN_PROGRESS 
-            or current_status == ApiCallStatus.QUEUED 
-            or current_status == ApiCallStatus.UPLOADED
-        ) and time.time() - start_time < 60:
-            time.sleep(2)  # Wait 2 seconds between polls
-            result_status = await client.api_calls.get_async_operation(id=body.id)
-            
-            # Handle dict response from get_async_operation
-            if isinstance(result_status, dict):
-                current_status = result_status.get('status', 'unknown')
-                print(f"FileConversion status: {current_status}")
-                # Convert dict back to FileConversion object for final assertions
-                if current_status in ['completed', 'failed']:
-                    # We'll use the dict to check final status
-                    body = result_status
-                    break
-            else:
-                current_status = result_status.status if hasattr(result_status, 'status') else 'unknown'
-                body = result_status
-                print(f"FileConversion status: {current_status}")
+    # Check final status
+    assert body.status == ApiCallStatus.COMPLETED
+    print(f"FileConversion completed: {body}")
 
-    # Check final status - handle both dict and object responses
-    if isinstance(body, dict):
-        final_status = body.get('status', 'unknown')
-        assert final_status == 'completed', f"Expected completed, got {final_status}. Error: {body.get('error', 'No error')}"
-        print(f"FileConversion completed: {body}")
-        
-        # For dict response, we can't check outputs the same way
-        # The API might not return outputs in the status check
-        print("Note: Outputs not checked for dict response from get_async_operation")
-    else:
-        assert body.status == ApiCallStatus.COMPLETED
-        print(f"FileConversion completed: {body}")
+    assert not isinstance(body.outputs, Unset)
+    assert body.outputs is not None
 
-        assert not isinstance(body.outputs, Unset)
-        assert body.outputs is not None
-
-        # Make sure the bytes are not empty.
-        for key, value in body.outputs.items():
-            assert len(value) > 0
+    # Make sure the bytes are not empty.
+    for key, value in body.outputs.items():
+        assert len(value) > 0
 
 
 def test_file_mass():
