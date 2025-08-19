@@ -84,5 +84,5 @@ ignore_missing_imports = true
 check_untyped_defs = true
 
 [tool.pytest.ini_options]
-addopts = "--doctest-modules --ignore=kittycad/api"
+addopts = "--doctest-modules"
 testpaths = ["kittycad", "generate/tests"]
