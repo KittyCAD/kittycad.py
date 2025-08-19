@@ -54,28 +54,28 @@ def _poll_for_completion(
     client, fc: FileConversion, timeout_seconds: int = 60
 ) -> FileConversion:
     """Poll for file conversion completion.
-    
+
     Args:
         client: KittyCAD client (sync or async)
         fc: Initial FileConversion object
         timeout_seconds: Maximum time to wait for completion
-        
+
     Returns:
         Completed FileConversion object
     """
     import time
-    
+
     start_time = time.time()
-    
+
     # Handle both completed and in-progress cases
     if fc.status == ApiCallStatus.COMPLETED:
         # Already completed, no need to poll
         return fc
-    
+
     # Need to poll for completion
     current_status: ApiCallStatus = fc.status
     body = fc
-    
+
     while (
         current_status == ApiCallStatus.IN_PROGRESS
         or current_status == ApiCallStatus.QUEUED
@@ -101,7 +101,7 @@ def _poll_for_completion(
                 current_status = ApiCallStatus.UPLOADED
             else:
                 current_status = ApiCallStatus.FAILED  # Default for unknown
-            
+
             if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
                 break
         else:
@@ -116,7 +116,7 @@ def _poll_for_completion(
         final_result = client.api_calls.get_async_operation(id=fc.id)
         if not isinstance(final_result, dict):
             body = final_result
-    
+
     return body
 
 
@@ -124,28 +124,28 @@ async def _poll_for_completion_async(
     client, fc: FileConversion, timeout_seconds: int = 60
 ) -> FileConversion:
     """Async version of poll for file conversion completion.
-    
+
     Args:
         client: AsyncKittyCAD client
         fc: Initial FileConversion object
         timeout_seconds: Maximum time to wait for completion
-        
+
     Returns:
         Completed FileConversion object
     """
     import time
-    
+
     start_time = time.time()
-    
+
     # Handle both completed and in-progress cases
     if fc.status == ApiCallStatus.COMPLETED:
         # Already completed, no need to poll
         return fc
-    
+
     # Need to poll for completion
     current_status: ApiCallStatus = fc.status
     body = fc
-    
+
     while (
         current_status == ApiCallStatus.IN_PROGRESS
         or current_status == ApiCallStatus.QUEUED
@@ -171,7 +171,7 @@ async def _poll_for_completion_async(
                 current_status = ApiCallStatus.UPLOADED
             else:
                 current_status = ApiCallStatus.FAILED  # Default for unknown
-            
+
             if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
                 break
         else:
@@ -186,7 +186,7 @@ async def _poll_for_completion_async(
         final_result = await client.api_calls.get_async_operation(id=fc.id)
         if not isinstance(final_result, dict):
             body = final_result
-    
+
     return body
 
 
@@ -428,7 +428,7 @@ def test_file_conversion_options_stl():
 
     # Poll for completion (max 60 seconds)
     body = _poll_for_completion(client, fc, timeout_seconds=60)
-    
+
     # Check final status
     assert body.status == ApiCallStatus.COMPLETED
     print(f"FileConversion completed: {body}")
@@ -500,7 +500,7 @@ async def test_file_conversion_options_stl_async():
 
     # Poll for completion (max 60 seconds)
     body = await _poll_for_completion_async(client, fc, timeout_seconds=60)
-    
+
     # Check final status
     assert body.status == ApiCallStatus.COMPLETED
     print(f"FileConversion completed: {body}")
@@ -572,7 +572,7 @@ async def test_file_conversion_options_obj_async():
 
     # Poll for completion (max 60 seconds)
     body = await _poll_for_completion_async(client, fc, timeout_seconds=60)
-    
+
     # Check final status
     assert body.status == ApiCallStatus.COMPLETED
     print(f"FileConversion completed: {body}")
