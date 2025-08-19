@@ -3,8 +3,6 @@
 import os
 from typing import Any, Dict
 
-from jinja2 import Environment, FileSystemLoader
-
 from .file_operation_detection import get_required_file_imports
 from .function_generators import (
     generate_async_function,
@@ -14,7 +12,7 @@ from .function_generators import (
 )
 from .post_processing import generate_examples_tests
 from .schema_utils import get_endpoint_refs, get_request_body_type_schema
-from .utils import camel_to_snake, to_pascal_case
+from .utils import camel_to_snake, get_template_environment
 
 
 def generate_client_classes(cwd: str, data: dict, examples: list):
@@ -248,13 +246,7 @@ def generate_client_classes(cwd: str, data: dict, examples: list):
             }
 
     # Load and render the template
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-
-    # Add custom filters using existing utility functions
-    env.filters["to_pascal_case"] = to_pascal_case
-    env.filters["pascal_to_snake"] = camel_to_snake
-
+    env = get_template_environment()
     template = env.get_template("__init__.py.jinja2")
 
     # Use the examples passed as parameter

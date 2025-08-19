@@ -5,8 +5,6 @@ import os
 import random
 from typing import List, Optional
 
-from jinja2 import Environment, FileSystemLoader
-
 from .schema_analysis import (
     get_any_of_description,
     get_content_one_of,
@@ -21,6 +19,7 @@ from .utils import (
     camel_to_screaming_snake,
     camel_to_snake,
     consolidate_imports_in_file,
+    get_template,
     randletter,
     to_pascal_case,
 )
@@ -116,10 +115,7 @@ def generate_string_type(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("str.py.jinja2")
-
+    template = get_template("str.py.jinja2")
     description = schema.get("description", "")
     f.write(template.render(name=name, description=description))
     f.close()
@@ -129,10 +125,7 @@ def generate_integer_type(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("int.py.jinja2")
-
+    template = get_template("int.py.jinja2")
     description = schema.get("description", "")
     minimum = schema.get("minimum")
     maximum = schema.get("maximum")
@@ -149,10 +142,7 @@ def generate_float_type(path: str, name: str, schema: dict, type_name: str):
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("float.py.jinja2")
-
+    template = get_template("float.py.jinja2")
     description = schema.get("description", "")
     minimum = schema.get("minimum")
     maximum = schema.get("maximum")
@@ -432,8 +422,6 @@ def generate_original_union_type(
 ) -> str:
     from typing import TypedDict
 
-    import jinja2
-
     ArgType = TypedDict(
         "ArgType",
         {
@@ -491,11 +479,7 @@ def generate_original_union_type(
                 }
             )
 
-    environment = jinja2.Environment(
-        loader=jinja2.FileSystemLoader("generate/templates/")
-    )
-    template_file = "union-type.py.jinja2"
-    template = environment.get_template(template_file)
+    template = get_template("union-type.py.jinja2")
     content = template.render(**template_info)
 
     return content
@@ -790,16 +774,11 @@ def generate_object_type_code(
 
     # Iterate over the properties.
 
-    import jinja2
-
-    environment = jinja2.Environment(
-        loader=jinja2.FileSystemLoader("generate/templates/")
-    )
     if include_imports:
         template_file = "object.py.jinja2"
     else:
         template_file = "object-class-only.py.jinja2"
-    template = environment.get_template(template_file)
+    template = get_template(template_file)
     content = template.render(**template_info)
 
     return content

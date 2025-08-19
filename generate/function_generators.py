@@ -1,10 +1,12 @@
 """Function generation utilities for API endpoints and WebSocket connections."""
 
-import os
-
-from jinja2 import Environment, FileSystemLoader
-
-from .utils import camel_to_snake, clean_parameter_name, to_pascal_case
+from .utils import (
+    camel_to_snake,
+    get_template,
+    get_template_environment,
+    process_endpoint_parameters,
+    to_pascal_case,
+)
 
 
 def _generate_docstring_with_examples(
@@ -68,12 +70,7 @@ Examples:
 def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -> str:
     """Generate a sync function implementation using the sync_function template"""
 
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-
-    # Add custom filters using existing utility functions
-    env.filters["to_pascal_case"] = to_pascal_case
-    env.filters["pascal_to_snake"] = camel_to_snake
+    env = get_template_environment()
 
     # Check if this endpoint uses pagination
     is_paginated = "x-dropshot-pagination" in endpoint
@@ -87,7 +84,6 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
 
     # Import these here to avoid circular imports
     from .file_operation_detection import extract_file_parameter_info
-    from .generate import generate_type_and_example_python
     from .schema_utils import get_endpoint_refs, get_request_body_type_schema
 
     # Build context exactly like the working functions.py template
@@ -110,34 +106,8 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
         elif len(er) == 1:
             response_type = to_pascal_case(er[0])
 
-    # Process parameters exactly like the working template
-    args = []
-    if "parameters" in endpoint:
-        for param in endpoint["parameters"]:
-            param_schema = param.get("schema", {})
-            arg_type, _, _ = generate_type_and_example_python(
-                "", param_schema, data, None, None
-            )
-
-            # Mark optional parameters
-            # For query parameters, default to optional (required=False) if not specified
-            # For path parameters, default to required (required=True) if not specified
-            default_required = param.get("in") == "path"
-            is_optional = not param.get(
-                "required", default_required
-            ) or param_schema.get("nullable", False)
-            if is_optional and not arg_type.startswith("Optional["):
-                arg_type = f"Optional[{arg_type}]"
-
-            args.append(
-                {
-                    "name": clean_parameter_name(param["name"]),
-                    "type": arg_type,
-                    "is_optional": is_optional,
-                    "in_url": param.get("in") == "path",
-                    "in_query": param.get("in") == "query",
-                }
-            )
+    # Process parameters using consolidated utility
+    args = process_endpoint_parameters(endpoint, data, is_websocket=False)
 
     # Add request body parameter(s) based on endpoint type
     if file_info.get("has_json_body_multipart", False):
@@ -206,12 +176,7 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
 def generate_async_function(path: str, method: str, endpoint: dict, data: dict) -> str:
     """Generate an async function implementation using the async_function template"""
 
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-
-    # Add custom filters using existing utility functions
-    env.filters["to_pascal_case"] = to_pascal_case
-    env.filters["pascal_to_snake"] = camel_to_snake
+    env = get_template_environment()
 
     # Check if this endpoint uses pagination
     is_paginated = "x-dropshot-pagination" in endpoint
@@ -225,7 +190,6 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
 
     # Import these here to avoid circular imports
     from .file_operation_detection import extract_file_parameter_info
-    from .generate import generate_type_and_example_python
     from .schema_utils import get_endpoint_refs, get_request_body_type_schema
 
     # Build context exactly like the sync function
@@ -248,34 +212,8 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
         elif len(er) == 1:
             response_type = to_pascal_case(er[0])
 
-    # Process parameters exactly like the working template
-    args = []
-    if "parameters" in endpoint:
-        for param in endpoint["parameters"]:
-            param_schema = param.get("schema", {})
-            arg_type, _, _ = generate_type_and_example_python(
-                "", param_schema, data, None, None
-            )
-
-            # Mark optional parameters
-            # For query parameters, default to optional (required=False) if not specified
-            # For path parameters, default to required (required=True) if not specified
-            default_required = param.get("in") == "path"
-            is_optional = not param.get(
-                "required", default_required
-            ) or param_schema.get("nullable", False)
-            if is_optional and not arg_type.startswith("Optional["):
-                arg_type = f"Optional[{arg_type}]"
-
-            args.append(
-                {
-                    "name": clean_parameter_name(param["name"]),
-                    "type": arg_type,
-                    "is_optional": is_optional,
-                    "in_url": param.get("in") == "path",
-                    "in_query": param.get("in") == "query",
-                }
-            )
+    # Process parameters using consolidated utility
+    args = process_endpoint_parameters(endpoint, data, is_websocket=False)
 
     # Add request body parameter(s) based on endpoint type
     if file_info.get("has_json_body_multipart", False):
@@ -345,61 +283,14 @@ def generate_websocket_sync_function(
     operation_id: str, path: str, method: str, endpoint: dict, data: dict
 ) -> str:
     """Generate a sync WebSocket function implementation."""
-    from jinja2 import Environment, FileSystemLoader
-
-    # Import here to avoid circular imports
-
-    # Build template context
-    args = []
-
-    # Handle parameters
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                    .replace("boolean", "bool")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                parameter_type = "Any"
-
-            # For WebSocket endpoints, make all query parameters optional with defaults
-            if "in" in parameter and parameter["in"] == "query":
-                parameter_type = f"Optional[{parameter_type}]"
-                is_optional = True
-            elif "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
-                parameter_type = f"Optional[{parameter_type}]"
-                is_optional = True
-            else:
-                is_optional = False
-
-            args.append(
-                {
-                    "name": camel_to_snake(parameter_name),
-                    "type": parameter_type,
-                    "in_url": "in" in parameter and parameter["in"] == "path",
-                    "in_query": "in" in parameter and parameter["in"] == "query",
-                    "is_optional": is_optional,
-                }
-            )
+    # Process parameters using consolidated utility
+    args = process_endpoint_parameters(endpoint, data, is_websocket=True)
 
     # For WebSocket endpoints, we don't include the body in the main method signature
     # The body is only used in the low-level connection methods
-    # (request_body_type, _) = get_request_body_type_schema(endpoint, data)
-    # Body parameter is handled separately in WebSocket connection logic
 
     # Use WebSocket template
-    environment = Environment(loader=FileSystemLoader("generate/templates/"))
-    template = environment.get_template("websocket_sync_function.py.jinja2")
+    template = get_template("websocket_sync_function.py.jinja2")
     return template.render(
         function_name=operation_id,
         args=args,
@@ -412,61 +303,14 @@ def generate_websocket_async_function(
     operation_id: str, path: str, method: str, endpoint: dict, data: dict
 ) -> str:
     """Generate an async WebSocket function implementation."""
-    from jinja2 import Environment, FileSystemLoader
-
-    # Import here to avoid circular imports
-
-    # Build template context (same as sync)
-    args = []
-
-    # Handle parameters
-    if "parameters" in endpoint:
-        parameters = endpoint["parameters"]
-        for parameter in parameters:
-            parameter_name = parameter["name"]
-            if "type" in parameter["schema"]:
-                parameter_type = (
-                    parameter["schema"]["type"]
-                    .replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                    .replace("boolean", "bool")
-                )
-            elif "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
-            else:
-                parameter_type = "Any"
-
-            # For WebSocket endpoints, make all query parameters optional with defaults
-            if "in" in parameter and parameter["in"] == "query":
-                parameter_type = f"Optional[{parameter_type}]"
-                is_optional = True
-            elif "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
-                parameter_type = f"Optional[{parameter_type}]"
-                is_optional = True
-            else:
-                is_optional = False
-
-            args.append(
-                {
-                    "name": camel_to_snake(parameter_name),
-                    "type": parameter_type,
-                    "in_url": "in" in parameter and parameter["in"] == "path",
-                    "in_query": "in" in parameter and parameter["in"] == "query",
-                    "is_optional": is_optional,
-                }
-            )
+    # Process parameters using consolidated utility
+    args = process_endpoint_parameters(endpoint, data, is_websocket=True)
 
     # For WebSocket endpoints, we don't include the body in the main method signature
     # The body is only used in the low-level connection methods
-    # (request_body_type, _) = get_request_body_type_schema(endpoint, data)
-    # Body parameter is handled separately in WebSocket connection logic
 
     # Use WebSocket async template
-    environment = Environment(loader=FileSystemLoader("generate/templates/"))
-    template = environment.get_template("websocket_async_function.py.jinja2")
+    template = get_template("websocket_async_function.py.jinja2")
     return template.render(
         function_name=operation_id,
         args=args,

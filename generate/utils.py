@@ -5,10 +5,13 @@ Contains helper functions for string manipulation, import handling, etc.
 """
 
 import logging
+import os
 import random
 import re
 import subprocess
 from typing import List, Tuple
+
+from jinja2 import Environment, FileSystemLoader
 
 # Global list to track used letter combinations
 _letters: List[str] = []
@@ -352,3 +355,78 @@ def extract_imports_from_examples(examples: List[str]) -> Tuple[List[str], List[
     consolidated_imports = sorted(list(all_imports))
 
     return consolidated_imports, examples_without_imports
+
+
+# Shared template environment instance
+_template_env = None
+
+
+def get_template_environment() -> Environment:
+    """Get a shared Jinja2 template environment with standard filters."""
+    global _template_env
+    if _template_env is None:
+        template_dir = os.path.join(os.path.dirname(__file__), "templates")
+        _template_env = Environment(loader=FileSystemLoader(template_dir))
+        # Add standard filters that are used across the codebase
+        _template_env.filters["to_pascal_case"] = to_pascal_case
+        _template_env.filters["pascal_to_snake"] = camel_to_snake
+    return _template_env
+
+
+def get_template(template_name: str):
+    """Get a template from the shared environment."""
+    env = get_template_environment()
+    return env.get_template(template_name)
+
+
+def process_endpoint_parameters(
+    endpoint: dict, data: dict, is_websocket: bool = False
+) -> List[dict]:
+    """Process endpoint parameters into a standardized format.
+
+    Args:
+        endpoint: The endpoint definition from OpenAPI spec
+        data: The full OpenAPI specification data
+        is_websocket: Whether this is a WebSocket endpoint (affects parameter handling)
+
+    Returns:
+        List of parameter dictionaries with keys: name, type, is_optional, in_url, in_query
+    """
+    from .generate import generate_type_and_example_python
+
+    args: List[dict] = []
+    if "parameters" not in endpoint:
+        return args
+
+    for param in endpoint["parameters"]:
+        param_schema = param.get("schema", {})
+        arg_type, _, _ = generate_type_and_example_python(
+            "", param_schema, data, None, None
+        )
+
+        # For WebSocket endpoints, make all query parameters optional with defaults
+        # For regular endpoints, path params are required by default, query params are optional
+        if is_websocket and param.get("in") == "query":
+            is_optional = True
+            if not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+        else:
+            # Regular parameter handling
+            default_required = param.get("in") == "path"
+            is_optional = not param.get(
+                "required", default_required
+            ) or param_schema.get("nullable", False)
+            if is_optional and not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+
+        args.append(
+            {
+                "name": clean_parameter_name(param["name"]),
+                "type": arg_type,
+                "is_optional": is_optional,
+                "in_url": param.get("in") == "path",
+                "in_query": param.get("in") == "query",
+            }
+        )
+
+    return args
