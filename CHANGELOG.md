@@ -104,6 +104,42 @@ except KittyCADTimeoutError as e:
 
 **Automatic Error Handling**: All HTTPX exceptions are now automatically wrapped without any user intervention required - users simply get consistent KittyCAD exceptions regardless of the underlying failure type.
 
+### Added - Enhanced JSON + Multipart Form Data Support 🔧
+
+**Comprehensive Function Examples**: All JSON + multipart endpoints now include detailed usage examples in their generated docstrings, showing how to use both the JSON body and file attachments parameters effectively.
+
+**Required File Attachments**: File attachments are now required (not optional) for multipart endpoints, ensuring consistent API usage and preventing incomplete requests.
+
+**Complete Test Coverage**: Added real API tests for `create_file_conversion_options` endpoint using the same input files as existing `create_file_conversion` tests, covering both sync and async patterns:
+
+```python
+# Sync version with STL input
+def test_file_conversion_options_stl():
+    fc = client.file.create_file_conversion_options(
+        body=ConversionParams(
+            src_format=InputFormat3d(InputOptionStep(split_closed_faces=False)),
+            output_format=OutputFormat3d(OutputOptionObj(...))
+        ),
+        file_attachments={"input.stl": file_path}
+    )
+
+# Async version with STL input  
+async def test_file_conversion_options_stl_async():
+    result = await client.file.create_file_conversion_options(
+        body=ConversionParams(...),
+        file_attachments={"input.stl": file_path}
+    )
+
+# Async version with OBJ input
+async def test_file_conversion_options_obj_async():
+    result = await client.file.create_file_conversion_options(
+        body=ConversionParams(...),
+        file_attachments={"input.obj": file_path}
+    )
+```
+
+**Improved Code Generation**: Enhanced function generation to properly handle multipart endpoints with comprehensive examples and correct parameter signatures that mirror the robust file handling patterns from the Rust SDK.
+
 ### Added - Comprehensive Pythonic File Handling System 📁
 
 **OpenAI-Level Ergonomic File Operations**: The SDK now provides a comprehensive file handling system that feels as intuitive as popular libraries like OpenAI, Stripe, and Boto3, with support for flexible input types, automatic content detection, progress tracking, and streaming operations.
