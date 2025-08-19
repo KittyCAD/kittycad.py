@@ -417,6 +417,89 @@ def render_function_with_unified_template(
     render_template_to_file("unified_function.py.jinja2", context, output_path)
 
 
+def prepare_function_context(
+    func_name: str,
+    endpoint: dict,
+    args: list,
+    response_type: str,
+    is_async: bool = False,
+    is_paginated: bool = False,
+    is_websocket: bool = False,
+    **kwargs,
+) -> dict:
+    """Prepare comprehensive context for universal function template.
+
+    This function moves business logic out of templates and pre-computes
+    all the boolean flags and processed data that templates need.
+
+    Args:
+        func_name: Name of the function to generate
+        endpoint: OpenAPI endpoint specification
+        args: Processed list of function arguments
+        response_type: Return type annotation
+        is_async: Generate async function
+        is_paginated: Generate paginated function
+        is_websocket: Generate WebSocket function
+        **kwargs: Additional context variables
+
+    Returns:
+        Complete context dictionary for template rendering
+    """
+    # Base context
+    context = {
+        "func_name": func_name,
+        "args": args,
+        "response_type": response_type,
+        "is_async": is_async,
+        "is_paginated": is_paginated,
+        "is_websocket": is_websocket,
+        # Endpoint information
+        "method": endpoint.get("method", "get").lower(),
+        "url_template": endpoint.get("url", ""),
+        "docs": endpoint.get("description", endpoint.get("summary", "")),
+        # Request/response flags (pre-computed business logic)
+        "has_request_body": "requestBody" in endpoint,
+        "request_body_type": kwargs.get("request_body_type", ""),
+        # File upload information
+        "file_info": kwargs.get("file_info", {}),
+        # API section for documentation
+        "api_section": kwargs.get("api_section", ""),
+        # Function type (computed from booleans for template clarity)
+        "function_type": (
+            "websocket" if is_websocket else "paginated" if is_paginated else "regular"
+        ),
+    }
+
+    # Add any additional context
+    context.update(kwargs)
+
+    return context
+
+
+def render_universal_function(
+    func_name: str,
+    endpoint: dict,
+    args: list,
+    response_type: str,
+    output_path: str,
+    **kwargs,
+) -> None:
+    """Render a function using the universal template.
+
+    This is a convenience function that prepares context and renders
+    the universal function template.
+    """
+    context = prepare_function_context(
+        func_name=func_name,
+        endpoint=endpoint,
+        args=args,
+        response_type=response_type,
+        **kwargs,
+    )
+
+    render_template_to_file("universal_function.py.jinja2", context, output_path)
+
+
 def process_endpoint_parameters(
     endpoint: dict, data: dict, is_websocket: bool = False
 ) -> List[dict]:

@@ -1,0 +1,67 @@
+{# 
+   Universal Function Template for KittyCAD Python SDK
+   
+   This template consolidates all function generation into a single, maintainable template:
+   - Regular HTTP functions (sync/async)
+   - Paginated functions (sync/async) 
+   - WebSocket functions (sync/async)
+   
+   DESIGN PRINCIPLES:
+   1. Business logic is pre-computed in Python (prepare_function_context)
+   2. Template uses simple boolean flags for control flow
+   3. All complex decisions are made in Python, not Jinja
+   4. Shared macros handle common patterns
+   
+   CONTEXT VARIABLES (all pre-computed):
+   - function_type: 'regular'|'paginated'|'websocket'
+   - is_async: Boolean for sync/async variants
+   - All flags like has_request_body, file_info are ready-to-use
+   
+   MAINTAINABILITY:
+   - Adding new function features requires only context changes
+   - Template logic stays simple and declarative
+   - Common patterns are in macros, not duplicated
+#}
+
+{% from 'shared_macros.jinja2' import function_signature, build_url, http_request_call, parse_response, pagination_setup, websocket_connect %}
+
+{# Pre-computed return types to keep template logic simple #}
+{% set return_types = {
+    'websocket': 'ClientConnection' + ('Async' if is_async else 'Sync'),
+    'paginated': ('Async' if is_async else '') + 'PageIterator', 
+    'regular': response_type or ''
+} %}
+
+{# Generate function signature using computed return type #}
+{{ function_signature(args, is_async, return_types[function_type]) }}
+        {% if docs %}"""{{ docs }}{% if function_type == 'paginated' %}
+        
+        Returns {% if is_async %}an async {% endif %}iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+        
+            {% if is_async %}async {% endif %}for item in client.{{ api_section }}.{{ func_name }}():
+                print(item)
+        {% endif %}"""{% endif %}
+        
+{# Dispatch to appropriate function implementation based on type #}
+{% if function_type == 'websocket' %}
+    {{ websocket_connect(url_template, args, is_async) }}
+{% elif function_type == 'paginated' %}
+    {{ pagination_setup(args, func_name, is_async) }}
+    
+    {# Generate internal page fetcher method #}
+    {% if is_async %}async {% endif %}def _fetch_page_{{ func_name }}(self, {% for arg in args %}{% if arg.in_url %}{{ arg.name }}: {{ arg.type }}, {% endif %}{% endfor %}**kwargs) -> {{ response_type }}:
+        """Internal {% if is_async %}async {% endif %}method to fetch a single page."""
+        {{ build_url(url_template, args, use_kwargs=true) }}
+        
+        {{ http_request_call(method, has_request_body, request_body_type, file_info, is_async) }}
+
+        {{ parse_response(response_type, "kittycad.response_helpers") }}
+{% else %}
+    {# Regular HTTP function implementation #}
+    {{ build_url(url_template, args) }}
+
+    {{ http_request_call(method, has_request_body, request_body_type, file_info, is_async) }}
+
+    {{ parse_response(response_type) }}
+{% endif %}
