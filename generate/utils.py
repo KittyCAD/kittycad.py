@@ -370,6 +370,8 @@ def get_template_environment() -> Environment:
         # Add standard filters that are used across the codebase
         _template_env.filters["to_pascal_case"] = to_pascal_case
         _template_env.filters["pascal_to_snake"] = camel_to_snake
+        _template_env.filters["camel_to_snake"] = camel_to_snake
+        _template_env.filters["camel_to_screaming_snake"] = camel_to_screaming_snake
     return _template_env
 
 

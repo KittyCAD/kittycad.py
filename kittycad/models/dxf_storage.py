@@ -6,9 +6,12 @@ class DxfStorage(str, Enum):
 
     """# Plaintext encoding.
 
-This is the default setting. """  # noqa: E501
+This is the default setting."""  # noqa: E501
+
     ASCII = "ascii"
-    """# Binary encoding. """  # noqa: E501
+
+    """# Binary encoding."""  # noqa: E501
+
     BINARY = "binary"
 
     def __str__(self) -> str:

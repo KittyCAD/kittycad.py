@@ -4,13 +4,20 @@ from enum import Enum
 class ExtrusionFaceCapType(str, Enum):
     """Possible types of faces which can be extruded from a 3D solid."""  # noqa: E501
 
-    """# Uncapped. """  # noqa: E501
+    """# Uncapped."""  # noqa: E501
+
     NONE = "none"
-    """# Capped on top. """  # noqa: E501
+
+    """# Capped on top."""  # noqa: E501
+
     TOP = "top"
-    """# Capped below. """  # noqa: E501
+
+    """# Capped below."""  # noqa: E501
+
     BOTTOM = "bottom"
-    """# Capped on both ends. """  # noqa: E501
+
+    """# Capped on both ends."""  # noqa: E501
+
     BOTH = "both"
 
     def __str__(self) -> str:

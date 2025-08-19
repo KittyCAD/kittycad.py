@@ -8,9 +8,12 @@ class Axis(str, Enum):
 
     [cglearn.eu]: https://cglearn.eu/pub/computer-graphics/introduction-to-geometry#material-coordinate-systems-1"""  # noqa: E501
 
-    """# 'Y' axis. """  # noqa: E501
+    """# 'Y' axis."""  # noqa: E501
+
     Y = "y"
-    """# 'Z' axis. """  # noqa: E501
+
+    """# 'Z' axis."""  # noqa: E501
+
     Z = "z"
 
     def __str__(self) -> str:

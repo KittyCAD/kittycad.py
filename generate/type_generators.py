@@ -176,18 +176,21 @@ def generate_enum_type_code(
     type_name: str = "string",
     additional_docs: Optional[List[str]] = None,
 ) -> str:
-    import io
+    from typing import List, TypedDict
 
     if additional_docs is None:
         additional_docs = []
 
-    f = io.StringIO()
+    EnumItemType = TypedDict(
+        "EnumItemType",
+        {
+            "name": str,
+            "value": str,
+            "description": str,
+        },
+    )
 
-    f.write("from enum import Enum\n")
-    f.write("\n")
-    f.write("class " + name + "(str, Enum):\n")
-    if "description" in schema:
-        f.write('\t""" ' + schema["description"] + ' """ # noqa: E501\n')
+    enum_items: List[EnumItemType] = []
 
     # Handle oneOf enums with descriptions
     if "oneOf" in schema:
@@ -206,13 +209,19 @@ def generate_enum_type_code(
                 elif enum_name[0].isdigit():
                     enum_name = "VAL_" + enum_name
 
-                # Write the description if there is one.
+                description = ""
                 if "description" in one_of:
-                    f.write('\t"""# ' + one_of["description"] + ' """ # noqa: E501\n')
+                    description = one_of["description"]
                 elif len(additional_docs) > num and additional_docs[num] != "":
-                    f.write('\t"""# ' + additional_docs[num] + ' """ # noqa: E501\n')
+                    description = additional_docs[num]
 
-                f.write("\t" + enum_name + " = '" + value + "'\n")
+                enum_items.append(
+                    {
+                        "name": enum_name,
+                        "value": value,
+                        "description": description,
+                    }
+                )
     else:
         # Standard string enum
         if "enum" in schema:
@@ -229,23 +238,22 @@ def generate_enum_type_code(
                 elif enum_name[0].isdigit():
                     enum_name = "VAL_" + enum_name
 
-                # Write the description if there is one.
+                description = ""
                 if len(additional_docs) > num and additional_docs[num] != "":
-                    f.write('\t"""# ' + additional_docs[num] + ' """ # noqa: E501\n')
+                    description = additional_docs[num]
 
-                f.write("\t" + enum_name + " = '" + value + "'\n")
+                enum_items.append(
+                    {
+                        "name": enum_name,
+                        "value": value,
+                        "description": description,
+                    }
+                )
 
-    # close the enum.
-    f.write("\n")
-    f.write("\tdef __str__(self) -> str:\n")
-    f.write("\t\treturn str(self.value)\n")
-
-    value = f.getvalue()
-
-    # Close the file.
-    f.close()
-
-    return value
+    template = get_template("enum.py.jinja2")
+    return template.render(
+        name=name, description=schema.get("description", ""), enum_items=enum_items
+    )
 
 
 def generate_any_of_type(path: str, name: str, schema: dict, data: dict):
