@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Comprehensive tests for pagination behavior requirements."""
 
-from typing import List, Optional
+from typing import Iterator, List, Optional
 from unittest.mock import AsyncMock, Mock, call
 
 import pytest
@@ -115,7 +115,7 @@ class TestPaginationContinuation:
         )
 
         # Consume iterator
-        result_items = list(iterator)
+        result_items: list[MockItem] = list(iterator)
 
         # Verify we got all items
         assert len(result_items) == 3
@@ -317,7 +317,8 @@ class TestPaginationIteration:
         )
 
         # Iterate and collect items in order
-        result_items = []
+        result_items: list[MockItem] = []
+        item: MockItem
         for item in iterator:
             result_items.append(item)
 
@@ -337,7 +338,7 @@ class TestPaginationIteration:
 
         # Verify iteration stops at end (no more calls after exhaustion)
         # Try iterating again - should reset and start over
-        result_items2 = list(iterator)
+        result_items2: list[MockItem] = list(iterator)
         assert len(result_items2) == 5
         assert mock_fetcher.call_count == 6  # Another 3 calls for second iteration
 
@@ -357,7 +358,7 @@ class TestPaginationIteration:
         )
 
         # Consume iterator
-        result_items = list(iterator)
+        result_items: list[MockItem] = list(iterator)
 
         # Verify correct items and single page fetch
         assert len(result_items) == 2
@@ -379,7 +380,7 @@ class TestPaginationIteration:
         )
 
         # Consume iterator
-        result_items = list(iterator)
+        result_items: list[MockItem] = list(iterator)
 
         # Should handle empty page gracefully
         assert len(result_items) == 0
@@ -427,6 +428,7 @@ class TestPaginationMemory:
         max_items_in_memory = 0
 
         # Process items one at a time (simulating real usage)
+        item: MockItem
         for item in iterator:
             processed_count += 1
 
@@ -476,7 +478,7 @@ class TestPaginationMemory:
         )
 
         # Start iteration but don't consume all items
-        iter_obj = iter(iterator)
+        iter_obj: Iterator[MockItem] = iter(iterator)
 
         # Get first item - should only fetch first page
         first_item = next(iter_obj)
@@ -522,7 +524,7 @@ class TestPaginationScanParams:
         )
 
         # Start iteration
-        iter_obj = iter(iterator)
+        iter_obj: Iterator[MockItem] = iter(iterator)
         next(iter_obj)
 
         # Try to modify initial_kwargs (this should not affect ongoing iteration)
@@ -576,7 +578,7 @@ class TestPaginationAsync:
             item_type=MockItem,
         )
 
-        sync_results = list(sync_iterator)
+        sync_results: list[MockItem] = list(sync_iterator)
 
         # Async version
         async def async_fetch_page(**kwargs):
@@ -592,7 +594,8 @@ class TestPaginationAsync:
             item_type=MockItem,
         )
 
-        async_results = []
+        async_results: list[MockItem] = []
+        item: MockItem
         async for item in async_iterator:
             async_results.append(item)
 
@@ -639,7 +642,8 @@ class TestPaginationAsync:
         )
 
         # Consume items using async for instead of aiter/anext (Python 3.9 compatibility)
-        items = []
+        items: list[MockItem] = []
+        item: MockItem
         async for item in iterator:
             items.append(item)
             # Check call count after each item

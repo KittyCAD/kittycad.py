@@ -89,7 +89,7 @@ class TestUnsetBehavior:
             """Simulate building request dict, omitting UNSET fields."""
             result = {"name": name}
             if optional_param is not UNSET:
-                result["optional_param"] = optional_param
+                result["optional_param"] = str(optional_param)
             return result
 
         # Model with UNSET field
@@ -162,9 +162,10 @@ class TestUnsetBehavior:
             result = {"field_with_string_default": field_with_string_default}
 
             if field_with_unset_default is not UNSET:
-                result["field_with_unset_default"] = field_with_unset_default
+                result["field_with_unset_default"] = str(field_with_unset_default)
 
-            result["field_with_none_default"] = field_with_none_default
+            if field_with_none_default is not None:
+                result["field_with_none_default"] = str(field_with_none_default)
             return result
 
         # Create with defaults
@@ -196,36 +197,43 @@ class TestPydanticModels:
             System,
             UnitLength,
         )
-        from kittycad.models.input_format3d import OptionStl
-        from kittycad.models.output_format3d import OptionObj as OutputOptionObj
+        from kittycad.models.input_format3d import InputFormat3d, OptionStl
+        from kittycad.models.output_format3d import (
+            OptionObj as OutputOptionObj,
+            OutputFormat3d,
+        )
 
         # Create a complex model
         params = ConversionParams(
-            src_format=OptionStl(
-                coords=System(
-                    forward=AxisDirectionPair(
-                        axis=Axis.Y,
-                        direction=Direction.NEGATIVE,
+            src_format=InputFormat3d(
+                OptionStl(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.NEGATIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Z,
+                            direction=Direction.POSITIVE,
+                        ),
                     ),
-                    up=AxisDirectionPair(
-                        axis=Axis.Z,
-                        direction=Direction.POSITIVE,
-                    ),
-                ),
-                units=UnitLength.MM,
+                    units=UnitLength.MM,
+                )
             ),
-            output_format=OutputOptionObj(
-                coords=System(
-                    forward=AxisDirectionPair(
-                        axis=Axis.Y,
-                        direction=Direction.POSITIVE,
+            output_format=OutputFormat3d(
+                OutputOptionObj(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Z,
+                            direction=Direction.POSITIVE,
+                        ),
                     ),
-                    up=AxisDirectionPair(
-                        axis=Axis.Z,
-                        direction=Direction.POSITIVE,
-                    ),
-                ),
-                units=UnitLength.MM,
+                    units=UnitLength.MM,
+                )
             ),
         )
 
