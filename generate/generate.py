@@ -818,23 +818,6 @@ async def test_"""
     return data
 
 
-letters: List[str] = []
-
-
-# generate a random letter combination in the range A - Z
-# do not use O or I.
-# make sure we do not use a letter we have already used.
-def randletter() -> str:
-    letter1 = chr(random.randint(ord("A"), ord("Z")))
-    letter2 = chr(random.randint(ord("A"), ord("Z")))
-    letter3 = chr(random.randint(ord("A"), ord("Z")))
-    letter = letter1 + letter2 + letter3
-    while letter in letters:
-        return randletter()
-    letters.append(letter)
-    return letter
-
-
 if __name__ == "__main__":
     exit_code = main()
     exit(exit_code)

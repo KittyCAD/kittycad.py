@@ -21,27 +21,12 @@ from .utils import (
     camel_to_screaming_snake,
     camel_to_snake,
     consolidate_imports_in_file,
+    randletter,
     to_pascal_case,
 )
 
 # Set random seed for consistent letter generation
 random.seed(10)
-
-letters: List[str] = []
-
-
-# generate a random letter combination in the range A - Z
-# do not use O or I.
-# make sure we do not use a letter we have already used.
-def randletter() -> str:
-    letter1 = chr(random.randint(ord("A"), ord("Z")))
-    letter2 = chr(random.randint(ord("A"), ord("Z")))
-    letter3 = chr(random.randint(ord("A"), ord("Z")))
-    letter = letter1 + letter2 + letter3
-    while letter in letters:
-        return randletter()
-    letters.append(letter)
-    return letter
 
 
 def generate_types(cwd: str, parser: dict):
@@ -440,21 +425,6 @@ def generate_any_of_type(path: str, name: str, schema: dict, data: dict):
 
     # Close the file.
     f.close()
-
-
-def generate_union_type(
-    types: List[str], name: str, description: str, tag: Optional[str]
-) -> str:
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("union-type.py.jinja2")
-
-    return template.render(
-        class_name=name,
-        description=description,
-        types=[to_pascal_case(t) for t in types],
-        tag=tag,
-    )
 
 
 def generate_original_union_type(

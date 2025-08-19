@@ -5,9 +5,25 @@ Contains helper functions for string manipulation, import handling, etc.
 """
 
 import logging
+import random
 import re
 import subprocess
 from typing import List, Tuple
+
+# Global list to track used letter combinations
+_letters: List[str] = []
+
+
+def randletter() -> str:
+    """Generate a random 3-letter combination that hasn't been used before."""
+    letter1 = chr(random.randint(ord("A"), ord("Z")))
+    letter2 = chr(random.randint(ord("A"), ord("Z")))
+    letter3 = chr(random.randint(ord("A"), ord("Z")))
+    letter = letter1 + letter2 + letter3
+    while letter in _letters:
+        return randletter()
+    _letters.append(letter)
+    return letter
 
 
 def is_snake_case(name: str) -> bool:
