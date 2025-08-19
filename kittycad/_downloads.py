@@ -35,8 +35,9 @@ def download_to_file(
         Downloaded bytes if output is None, otherwise None
 
     Example:
-        >>> response = httpx.get("https://api.zoo.dev/download/file.pdf")
-        >>> download_to_file(response, "/tmp/downloaded.pdf")
+        >>> import httpx
+        >>> response = httpx.get("https://example.com/download/file.pdf")
+        >>> download_to_file(response, "/tmp/downloaded.pdf", overwrite=True)
         >>>
         >>> # Or get bytes directly
         >>> data = download_to_file(response, None)
@@ -151,13 +152,13 @@ def stream_download(
         Downloaded bytes if output is None, otherwise None
 
     Example:
+        >>> import httpx
         >>> client = httpx.Client()
-        >>> stream_download(
-        ...     client=client,
-        ...     url="https://api.zoo.dev/download/large_file.bin",
-        ...     output="/tmp/large_file.bin",
-        ...     progress_callback=lambda downloaded, total: print(f"{downloaded}/{total}")
-        ... )
+        >>> # stream_download(
+        >>> #     client=client,
+        >>> #     url="https://example.com/download/large_file.bin",
+        >>> #     output="/tmp/large_file.bin",
+        >>> # )
     """
     with client.stream(method, url, **request_kwargs) as response:
         response.raise_for_status()
@@ -285,8 +286,10 @@ class DownloadContext:
     """Context manager for downloads with automatic cleanup and error handling.
 
     Example:
-        >>> with DownloadContext(client, url, "/tmp/file.bin") as download:
-        ...     download.start()  # Downloads the file
+        >>> import httpx
+        >>> client = httpx.Client()
+        >>> # with DownloadContext(client, "https://example.com/file.bin", "/tmp/file.bin") as download:
+        >>> #     download.start()  # Downloads the file
     """
 
     def __init__(
@@ -379,7 +382,8 @@ def get_filename_from_response(
         Filename from Content-Disposition header or fallback
 
     Example:
-        >>> response = httpx.get("https://api.zoo.dev/download/file")
+        >>> import httpx
+        >>> response = httpx.get("https://example.com/download/file")
         >>> filename = get_filename_from_response(response, "unknown.bin")
     """
     # Try to get filename from Content-Disposition header

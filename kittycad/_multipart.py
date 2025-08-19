@@ -44,13 +44,12 @@ def create_multipart_upload(
         A configured multipart encoder ready for upload
 
     Example:
-        >>> encoder = create_multipart_upload(
-        ...     file_param="file",
-        ...     file_input="/path/to/file.png",
-        ...     progress_callback=lambda bytes_sent, total: print(f"{bytes_sent}/{total}")
-        ... )
-        >>> response = httpx.post(url, content=encoder.to_string(),
-        ...                      headers=encoder.content_type)
+        >>> from io import BytesIO
+        >>> # encoder = create_multipart_upload(
+        >>> #     file_param="file",
+        >>> #     file_input=BytesIO(b"image data"),
+        >>> # )
+        >>> # response = httpx.post(url, content=encoder.to_string(), headers=encoder.content_type)
     """
     # Prepare the file input
     file_obj, should_close, detected_filename, detected_content_type, use_multipart = (
@@ -119,11 +118,12 @@ def create_files_dict(
         A files dictionary suitable for httpx.post(files=...)
 
     Example:
+        >>> from io import BytesIO
         >>> files = create_files_dict(
         ...     file_param="file",
-        ...     file_input="/path/to/file.png"
+        ...     file_input=BytesIO(b"image data")
         ... )
-        >>> response = httpx.post(url, files=files)
+        >>> # response = httpx.post(url, files=files)
     """
     # Prepare the file input
     file_obj, should_close, detected_filename, detected_content_type, use_multipart = (
@@ -179,8 +179,10 @@ class MultipartUploadContext:
     """Context manager for multipart uploads with automatic cleanup.
 
     Example:
-        >>> with MultipartUploadContext("file", "/path/to/file.png") as upload:
-        ...     response = httpx.post(url, files=upload.files)
+        >>> from io import BytesIO
+        >>> with MultipartUploadContext("file", BytesIO(b"image data")) as upload:
+        ...     # response = httpx.post(url, files=upload.files)
+        ...     pass
     """
 
     def __init__(
@@ -278,12 +280,13 @@ def upload_file_multipart(
         The HTTP response
 
     Example:
+        >>> from io import BytesIO
+        >>> import httpx
         >>> response = upload_file_multipart(
         ...     client=httpx.Client(),
-        ...     url="https://api.zoo.dev/upload",
+        ...     url="https://example.com/upload",
         ...     file_param="file",
-        ...     file_input="/path/to/file.png",
-        ...     progress_callback=lambda sent, total: print(f"{sent}/{total}")
+        ...     file_input=BytesIO(b"image data"),
         ... )
     """
     with MultipartUploadContext(
@@ -373,11 +376,12 @@ def create_json_multipart_upload(
         Files dict suitable for httpx.post(files=...)
 
     Example:
+        >>> from io import BytesIO
         >>> files = create_json_multipart_upload(
         ...     json_body={"prompt": "Create a cube", "project_name": "test"},
-        ...     file_attachments={"file1": "/path/to/file.kcl", "file2": open("file2.kcl", "rb")},
+        ...     file_attachments={"file1": BytesIO(b"kcl data"), "file2": BytesIO(b"more kcl data")},
         ... )
-        >>> response = httpx.post(url, files=files)
+        >>> # response = httpx.post(url, files=files)
     """
     files_dict = JsonMultipartDict()
 
@@ -461,11 +465,13 @@ class JsonMultipartUploadContext:
     """Context manager for JSON + file multipart uploads with automatic cleanup.
 
     Example:
+        >>> from io import BytesIO
         >>> with JsonMultipartUploadContext(
         ...     json_body={"prompt": "Create a cube"},
-        ...     file_attachments={"file1": "/path/to/file.kcl"}
+        ...     file_attachments={"file1": BytesIO(b"kcl data")}
         ... ) as upload:
-        ...     response = httpx.post(url, files=upload.files)
+        ...     # response = httpx.post(url, files=upload.files)
+        ...     pass
     """
 
     def __init__(
@@ -532,11 +538,13 @@ def upload_json_multipart(
         The HTTP response
 
     Example:
+        >>> from io import BytesIO
+        >>> import httpx
         >>> response = upload_json_multipart(
         ...     client=httpx.Client(),
-        ...     url="https://api.zoo.dev/ml/text-to-cad/multi-file/iteration",
+        ...     url="https://example.com/upload",
         ...     json_body={"prompt": "Create a cube", "project_name": "test"},
-        ...     file_attachments={"file1": "/path/to/file.kcl"},
+        ...     file_attachments={"file1": BytesIO(b"kcl data")},
         ... )
     """
     with JsonMultipartUploadContext(

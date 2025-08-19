@@ -31,8 +31,9 @@ def create_binary_upload(
         Tuple of (binary_data, content_type)
 
     Example:
-        >>> data, content_type = create_binary_upload("/path/to/file.png")
-        >>> response = httpx.post(url, content=data, headers={"Content-Type": content_type})
+        >>> from io import BytesIO
+        >>> data, content_type = create_binary_upload(BytesIO(b"image data"))
+        >>> # response = httpx.post(url, content=data, headers={"Content-Type": content_type})
     """
     # Prepare the file input (force non-multipart)
     file_obj, should_close, _, detected_content_type, _ = prepare_upload_input(
@@ -88,9 +89,11 @@ def create_binary_stream(
         Tuple of (stream_generator, content_type, cleanup_func)
 
     Example:
-        >>> stream, content_type, cleanup = create_binary_stream("/path/to/large_file.bin")
+        >>> from io import BytesIO
+        >>> stream, content_type, cleanup = create_binary_stream(BytesIO(b"large file data"))
         >>> try:
-        ...     response = httpx.post(url, content=stream, headers={"Content-Type": content_type})
+        ...     # Use stream and content_type for HTTP request
+        ...     pass
         ... finally:
         ...     cleanup()
     """
@@ -166,8 +169,10 @@ class BinaryUploadContext:
     """Context manager for binary uploads with automatic cleanup.
 
     Example:
-        >>> with BinaryUploadContext("/path/to/file.bin") as upload:
-        ...     response = httpx.post(url, content=upload.data, headers=upload.headers)
+        >>> from io import BytesIO
+        >>> with BinaryUploadContext(BytesIO(b"test data")) as upload:
+        ...     # Use upload.data and upload.headers for HTTP request
+        ...     pass
     """
 
     def __init__(
@@ -255,11 +260,12 @@ def upload_file_binary(
         The HTTP response
 
     Example:
+        >>> from io import BytesIO
+        >>> import httpx
         >>> response = upload_file_binary(
         ...     client=httpx.Client(),
-        ...     url="https://api.zoo.dev/upload-binary",
-        ...     file_input="/path/to/file.bin",
-        ...     progress_callback=lambda sent, total: print(f"{sent}/{total}")
+        ...     url="https://example.com/upload-binary",
+        ...     file_input=BytesIO(b"file data"),
         ... )
     """
     with BinaryUploadContext(

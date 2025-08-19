@@ -209,8 +209,9 @@ def prepare_upload_input(
         Tuple of (file_obj, should_close, filename, content_type, use_multipart)
 
     Example:
+        >>> from io import BytesIO
         >>> file_obj, should_close, filename, content_type, use_multipart = prepare_upload_input(
-        ...     "/path/to/file.png"
+        ...     BytesIO(b"image data")
         ... )
         >>> # Use file_obj for upload, close if should_close is True
     """
