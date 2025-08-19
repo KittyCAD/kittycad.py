@@ -348,7 +348,6 @@ def generate_websocket_sync_function(
     from jinja2 import Environment, FileSystemLoader
 
     # Import here to avoid circular imports
-    from .schema_utils import get_request_body_type_schema
 
     # Build template context
     args = []
@@ -416,7 +415,6 @@ def generate_websocket_async_function(
     from jinja2 import Environment, FileSystemLoader
 
     # Import here to avoid circular imports
-    from .schema_utils import get_request_body_type_schema
 
     # Build template context (same as sync)
     args = []
@@ -461,18 +459,10 @@ def generate_websocket_async_function(
                 }
             )
 
-    # Handle request body
-    (request_body_type, _) = get_request_body_type_schema(endpoint, data)
-    if request_body_type:
-        args.append(
-            {
-                "name": "body",
-                "type": request_body_type,
-                "in_url": False,
-                "in_query": False,
-                "is_optional": False,
-            }
-        )
+    # For WebSocket endpoints, we don't include the body in the main method signature
+    # The body is only used in the low-level connection methods
+    # (request_body_type, _) = get_request_body_type_schema(endpoint, data)
+    # Body parameter is handled separately in WebSocket connection logic
 
     # Use WebSocket async template
     environment = Environment(loader=FileSystemLoader("generate/templates/"))

@@ -1876,7 +1876,6 @@ class AsyncMlAPI:
         # This supports await websocket.send() and async for message in websocket
         async def ml_copilot_ws(
             self,
-            body: MlCopilotClientMessage,
         ) -> ClientConnectionAsync:
             """Open a websocket to prompt the ML copilot."""
 
@@ -1900,7 +1899,6 @@ class AsyncMlAPI:
         async def ml_reasoning_ws(
             self,
             id: str,
-            body: MlCopilotClientMessage,
         ) -> ClientConnectionAsync:
             """Open a websocket to prompt the ML copilot."""
 
@@ -11759,7 +11757,6 @@ class AsyncModelingAPI:
         # This supports await websocket.send() and async for message in websocket
         async def modeling_commands_ws(
             self,
-            body: WebSocketRequest,
             *,
             api_call_id: Optional[str] = None,
             fps: Optional[int] = None,
