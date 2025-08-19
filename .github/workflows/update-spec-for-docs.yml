@@ -33,10 +33,14 @@ jobs:
           version: "latest"
           enable-cache: true
           cache-dependency-glob: "uv.lock"
-      - name: make generate
+      - name: Install just
+        uses: extractions/setup-just@v2
+        with:
+          just-version: latest
+      - name: just generate
         shell: bash
         run: |
-          make generate
+          just generate
         env:
           KITTYCAD_API_TOKEN: ${{secrets.KITTYCAD_API_TOKEN}}
       # Ensure no files changed.
