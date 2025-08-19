@@ -2,19 +2,11 @@
 
 from typing import Optional
 
+from .utils import get_schema_description
 
-def get_any_of_description(schema: dict) -> str:
-    if "description" in schema:
-        return schema["description"]
-    else:
-        return ""
-
-
-def get_one_of_description(schema: dict) -> str:
-    if "description" in schema:
-        return schema["description"]
-    else:
-        return ""
+# For backward compatibility, create aliases to the consolidated function
+get_any_of_description = get_schema_description
+get_one_of_description = get_schema_description
 
 
 def get_one_of_ref_type(schema: dict) -> str:

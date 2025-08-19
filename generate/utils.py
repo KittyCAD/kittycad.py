@@ -9,7 +9,7 @@ import os
 import random
 import re
 import subprocess
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -430,3 +430,74 @@ def process_endpoint_parameters(
         )
 
     return args
+
+
+def resolve_schema_ref(ref: str) -> str:
+    """Resolve a schema $ref to just the schema name.
+
+    Args:
+        ref: Full $ref string like "#/components/schemas/MyType"
+
+    Returns:
+        Schema name like "MyType"
+    """
+    return ref.replace("#/components/schemas/", "")
+
+
+def get_schema_description(schema: dict) -> str:
+    """Get description from a schema, returning empty string if not present.
+
+    Args:
+        schema: Schema dictionary
+
+    Returns:
+        Description string or empty string
+    """
+    return schema.get("description", "")
+
+
+def process_response_content_types(
+    response: dict, allowed_types: Optional[set] = None
+) -> List[str]:
+    """Process response content types, filtering to allowed types if specified.
+
+    Args:
+        response: Response definition from OpenAPI spec
+        allowed_types: Set of allowed content types to filter to (optional)
+
+    Returns:
+        List of content types found
+    """
+    if "content" not in response:
+        return []
+
+    content_types = list(response["content"].keys())
+
+    if allowed_types:
+        content_types = [ct for ct in content_types if ct in allowed_types]
+
+    return content_types
+
+
+# Common content type sets for reuse
+FILE_UPLOAD_CONTENT_TYPES = {
+    "multipart/form-data",
+    "application/octet-stream",
+    "image/*",
+    "video/*",
+    "audio/*",
+    "application/pdf",
+    "application/zip",
+    "text/plain",
+}
+
+FILE_DOWNLOAD_CONTENT_TYPES = {
+    "application/octet-stream",
+    "image/*",
+    "video/*",
+    "audio/*",
+    "application/pdf",
+    "application/zip",
+    "text/plain",
+    "text/csv",
+}

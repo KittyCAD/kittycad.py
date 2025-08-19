@@ -6,6 +6,12 @@ This module provides utilities to detect when API endpoints involve file operati
 
 from typing import Any, Dict, List, Optional
 
+from .utils import (
+    FILE_DOWNLOAD_CONTENT_TYPES,
+    FILE_UPLOAD_CONTENT_TYPES,
+    resolve_schema_ref,
+)
+
 
 def is_file_upload_endpoint(endpoint: dict) -> bool:
     """Detect if an endpoint accepts file uploads.
@@ -26,16 +32,7 @@ def is_file_upload_endpoint(endpoint: dict) -> bool:
     content_types = request_body["content"].keys()
 
     # Check for file upload content types
-    file_upload_types = {
-        "multipart/form-data",
-        "application/octet-stream",
-        "image/*",
-        "video/*",
-        "audio/*",
-        "application/pdf",
-        "application/zip",
-        "text/plain",  # Sometimes used for file uploads
-    }
+    file_upload_types = FILE_UPLOAD_CONTENT_TYPES
 
     for content_type in content_types:
         if content_type in file_upload_types:
@@ -72,18 +69,8 @@ def is_file_download_endpoint(endpoint: dict) -> bool:
 
         content_types = response["content"].keys()
 
-        # Check for file download content types
-        file_download_types = {
-            "application/octet-stream",
-            "image/*",
-            "video/*",
-            "audio/*",
-            "application/pdf",
-            "application/zip",
-            "text/plain",
-            "text/csv",
-            "application/json",  # Sometimes used for file downloads
-        }
+        # Check for file download content types (adding json for downloads)
+        file_download_types = FILE_DOWNLOAD_CONTENT_TYPES | {"application/json"}
 
         for content_type in content_types:
             if content_type in file_download_types:
@@ -121,10 +108,9 @@ def get_upload_content_types(endpoint: dict) -> List[str]:
     # Filter for file-related content types
     file_content_types = []
     for content_type in content_types:
-        if content_type in {
-            "multipart/form-data",
-            "application/octet-stream",
-        } or content_type.startswith(("image/", "video/", "audio/", "application/")):
+        if content_type in FILE_UPLOAD_CONTENT_TYPES or content_type.startswith(
+            ("image/", "video/", "audio/", "application/")
+        ):
             file_content_types.append(content_type)
 
     return file_content_types
@@ -156,9 +142,7 @@ def get_download_content_types(endpoint: dict) -> List[str]:
         content_types = list(response["content"].keys())
 
         for content_type in content_types:
-            if content_type in {
-                "application/octet-stream",
-            } or content_type.startswith(
+            if content_type in FILE_DOWNLOAD_CONTENT_TYPES or content_type.startswith(
                 ("image/", "video/", "audio/", "text/", "application/")
             ):
                 # Exclude typical API response types
@@ -252,7 +236,7 @@ def has_json_body_with_multipart(endpoint: dict, data: dict) -> bool:
 
     # Handle $ref schemas
     if "$ref" in schema:
-        ref_name = schema["$ref"].replace("#/components/schemas/", "")
+        ref_name = resolve_schema_ref(schema["$ref"])
         if ref_name in data.get("components", {}).get("schemas", {}):
             schema = data["components"]["schemas"][ref_name]
 
@@ -346,7 +330,7 @@ def _extract_json_body_schema(endpoint: dict, data: dict) -> Optional[str]:
 
     # Handle $ref schemas
     if "$ref" in schema:
-        ref_name = schema["$ref"].replace("#/components/schemas/", "")
+        ref_name = resolve_schema_ref(schema["$ref"])
         return ref_name
 
     return None
@@ -383,7 +367,7 @@ def _extract_multipart_file_params(endpoint: dict, data: dict) -> List[Dict[str,
 
     # Handle $ref schemas
     if "$ref" in schema:
-        ref_name = schema["$ref"].replace("#/components/schemas/", "")
+        ref_name = resolve_schema_ref(schema["$ref"])
         if ref_name in data.get("components", {}).get("schemas", {}):
             schema = data["components"]["schemas"][ref_name]
 
