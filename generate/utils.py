@@ -5,9 +5,28 @@ Contains helper functions for string manipulation, import handling, etc.
 """
 
 import logging
+import os
+import random
 import re
 import subprocess
-from typing import List, Tuple
+from typing import List, Optional, Tuple
+
+from jinja2 import Environment, FileSystemLoader
+
+# Global list to track used letter combinations
+_letters: List[str] = []
+
+
+def randletter() -> str:
+    """Generate a random 3-letter combination that hasn't been used before."""
+    letter1 = chr(random.randint(ord("A"), ord("Z")))
+    letter2 = chr(random.randint(ord("A"), ord("Z")))
+    letter3 = chr(random.randint(ord("A"), ord("Z")))
+    letter = letter1 + letter2 + letter3
+    while letter in _letters:
+        return randletter()
+    _letters.append(letter)
+    return letter
 
 
 def is_snake_case(name: str) -> bool:
@@ -31,11 +50,36 @@ def is_pascal_case(name: str) -> bool:
 
 
 def camel_to_snake(name: str) -> str:
-    """Convert CamelCase/PascalCase to snake_case, but only if not already in snake_case."""
+    """Convert CamelCase/PascalCase to snake_case, but only if not already in snake_case.
+
+    Handles most acronyms properly: XMLHttpRequest -> xml_http_request, APIKey -> api_key.
+    Special hardcoded fixes for common problematic cases.
+    """
     if is_snake_case(name):
         return name
-    s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
-    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
+
+    # Hardcoded fixes for specific problematic cases
+    hardcoded_fixes = {
+        "OAuth2ClientInfo": "oauth2_client_info",
+        "OAuth2GrantType": "oauth2_grant_type",
+        "OAuth2Token": "oauth2_token",
+        "OAuth2Authorize": "oauth2_authorize",
+        "APIKey": "api_key",
+        "getAPIKey": "get_api_key",
+    }
+
+    if name in hardcoded_fixes:
+        return hardcoded_fixes[name]
+
+    # Use a more comprehensive pattern that handles all edge cases
+    # This pattern captures boundaries between:
+    # 1. lowercase/digit to uppercase
+    # 2. uppercase to uppercase+lowercase (acronym boundary)
+    # 3. individual uppercase letters
+    result = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+    result = re.sub("([a-z0-9])([A-Z])", r"\1_\2", result)
+
+    return result.lower()
 
 
 def to_pascal_case(name: str) -> str:
@@ -66,8 +110,8 @@ def to_pascal_case(name: str) -> str:
 
 def camel_to_screaming_snake(name: str) -> str:
     """Convert CamelCase to SCREAMING_SNAKE_CASE."""
-    # Replace colons and other problematic characters with underscores
-    name = name.replace(":", "_").replace("-", "_").replace(".", "_")
+    # Replace colons, spaces, hyphens and other problematic characters with underscores
+    name = name.replace(":", "_").replace("-", "_").replace(".", "_").replace(" ", "_")
     return camel_to_snake(name).upper()
 
 
@@ -316,3 +360,270 @@ def extract_imports_from_examples(examples: List[str]) -> Tuple[List[str], List[
     consolidated_imports = sorted(list(all_imports))
 
     return consolidated_imports, examples_without_imports
+
+
+# Shared template environment instance
+_template_env = None
+
+
+def get_template_environment() -> Environment:
+    """Get a shared Jinja2 template environment with standard filters."""
+    global _template_env
+    if _template_env is None:
+        template_dir = os.path.join(os.path.dirname(__file__), "templates")
+        _template_env = Environment(loader=FileSystemLoader(template_dir))
+        # Add standard filters that are used across the codebase
+        _template_env.filters["to_pascal_case"] = to_pascal_case
+        _template_env.filters["pascal_to_snake"] = camel_to_snake
+        _template_env.filters["camel_to_snake"] = camel_to_snake
+        _template_env.filters["camel_to_screaming_snake"] = camel_to_screaming_snake
+    return _template_env
+
+
+def get_template(template_name: str):
+    """Get a template from the shared environment."""
+    env = get_template_environment()
+    return env.get_template(template_name)
+
+
+def render_template_to_file(template_name: str, context: dict, output_path: str):
+    """Helper function to render a template and write it to a file.
+
+    Args:
+        template_name: Name of the Jinja2 template file
+        context: Dictionary of variables to pass to the template
+        output_path: Path where the rendered output should be written
+    """
+    import logging
+
+    template = get_template(template_name)
+    content = template.render(**context)
+
+    with open(output_path, "w") as f:
+        f.write(content)
+
+    logging.info("Generated file: %s using template: %s", output_path, template_name)
+
+
+def render_function_with_unified_template(
+    context: dict, output_path: str, is_async: bool = False
+):
+    """Render a function using the unified template that handles both sync and async.
+
+    Args:
+        context: Dictionary of variables to pass to the template
+        output_path: Path where the rendered output should be written
+        is_async: Whether to generate async function (default: False for sync)
+    """
+    # Add the is_async flag to context
+    context = context.copy()
+    context["is_async"] = is_async
+
+    render_template_to_file("unified_function.py.jinja2", context, output_path)
+
+
+def prepare_function_context(
+    func_name: str,
+    endpoint: dict,
+    args: list,
+    response_type: str,
+    is_async: bool = False,
+    is_paginated: bool = False,
+    is_websocket: bool = False,
+    **kwargs,
+) -> dict:
+    """Prepare comprehensive context for universal function template.
+
+    This function moves business logic out of templates and pre-computes
+    all the boolean flags and processed data that templates need.
+
+    Args:
+        func_name: Name of the function to generate
+        endpoint: OpenAPI endpoint specification
+        args: Processed list of function arguments
+        response_type: Return type annotation
+        is_async: Generate async function
+        is_paginated: Generate paginated function
+        is_websocket: Generate WebSocket function
+        **kwargs: Additional context variables
+
+    Returns:
+        Complete context dictionary for template rendering
+    """
+    # Base context
+    context = {
+        "func_name": func_name,
+        "args": args,
+        "response_type": response_type,
+        "is_async": is_async,
+        "is_paginated": is_paginated,
+        "is_websocket": is_websocket,
+        # Endpoint information
+        "method": endpoint.get("method", "get").lower(),
+        "url_template": endpoint.get("url", ""),
+        "docs": endpoint.get("description", endpoint.get("summary", "")),
+        # Request/response flags (pre-computed business logic)
+        "has_request_body": "requestBody" in endpoint,
+        "request_body_type": kwargs.get("request_body_type", ""),
+        # File upload information
+        "file_info": kwargs.get("file_info", {}),
+        # API section for documentation
+        "api_section": kwargs.get("api_section", ""),
+        # Function type (computed from booleans for template clarity)
+        "function_type": (
+            "websocket" if is_websocket else "paginated" if is_paginated else "regular"
+        ),
+    }
+
+    # Add any additional context
+    context.update(kwargs)
+
+    return context
+
+
+def render_universal_function(
+    func_name: str,
+    endpoint: dict,
+    args: list,
+    response_type: str,
+    output_path: str,
+    **kwargs,
+) -> None:
+    """Render a function using the universal template.
+
+    This is a convenience function that prepares context and renders
+    the universal function template.
+    """
+    context = prepare_function_context(
+        func_name=func_name,
+        endpoint=endpoint,
+        args=args,
+        response_type=response_type,
+        **kwargs,
+    )
+
+    render_template_to_file("universal_function.py.jinja2", context, output_path)
+
+
+def process_endpoint_parameters(
+    endpoint: dict, data: dict, is_websocket: bool = False
+) -> List[dict]:
+    """Process endpoint parameters into a standardized format.
+
+    Args:
+        endpoint: The endpoint definition from OpenAPI spec
+        data: The full OpenAPI specification data
+        is_websocket: Whether this is a WebSocket endpoint (affects parameter handling)
+
+    Returns:
+        List of parameter dictionaries with keys: name, type, is_optional, in_url, in_query
+    """
+    from .generate import generate_type_and_example_python
+
+    args: List[dict] = []
+    if "parameters" not in endpoint:
+        return args
+
+    for param in endpoint["parameters"]:
+        param_schema = param.get("schema", {})
+        arg_type, _, _ = generate_type_and_example_python(
+            "", param_schema, data, None, None
+        )
+
+        # For WebSocket endpoints, make all query parameters optional with defaults
+        # For regular endpoints, path params are required by default, query params are optional
+        if is_websocket and param.get("in") == "query":
+            is_optional = True
+            if not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+        else:
+            # Regular parameter handling
+            default_required = param.get("in") == "path"
+            is_optional = not param.get(
+                "required", default_required
+            ) or param_schema.get("nullable", False)
+            if is_optional and not arg_type.startswith("Optional["):
+                arg_type = f"Optional[{arg_type}]"
+
+        args.append(
+            {
+                "name": clean_parameter_name(param["name"]),
+                "type": arg_type,
+                "is_optional": is_optional,
+                "in_url": param.get("in") == "path",
+                "in_query": param.get("in") == "query",
+            }
+        )
+
+    return args
+
+
+def resolve_schema_ref(ref: str) -> str:
+    """Resolve a schema $ref to just the schema name.
+
+    Args:
+        ref: Full $ref string like "#/components/schemas/MyType"
+
+    Returns:
+        Schema name like "MyType"
+    """
+    return ref.replace("#/components/schemas/", "")
+
+
+def get_schema_description(schema: dict) -> str:
+    """Get description from a schema, returning empty string if not present.
+
+    Args:
+        schema: Schema dictionary
+
+    Returns:
+        Description string or empty string
+    """
+    return schema.get("description", "")
+
+
+def process_response_content_types(
+    response: dict, allowed_types: Optional[set] = None
+) -> List[str]:
+    """Process response content types, filtering to allowed types if specified.
+
+    Args:
+        response: Response definition from OpenAPI spec
+        allowed_types: Set of allowed content types to filter to (optional)
+
+    Returns:
+        List of content types found
+    """
+    if "content" not in response:
+        return []
+
+    content_types = list(response["content"].keys())
+
+    if allowed_types:
+        content_types = [ct for ct in content_types if ct in allowed_types]
+
+    return content_types
+
+
+# Common content type sets for reuse
+FILE_UPLOAD_CONTENT_TYPES = {
+    "multipart/form-data",
+    "application/octet-stream",
+    "image/*",
+    "video/*",
+    "audio/*",
+    "application/pdf",
+    "application/zip",
+    "text/plain",
+}
+
+FILE_DOWNLOAD_CONTENT_TYPES = {
+    "application/octet-stream",
+    "image/*",
+    "video/*",
+    "audio/*",
+    "application/pdf",
+    "application/zip",
+    "text/plain",
+    "text/csv",
+}

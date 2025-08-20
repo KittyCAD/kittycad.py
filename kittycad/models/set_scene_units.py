@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetSceneUnits(BaseModel):
+class SetSceneUnits(KittyCadBaseModel):
     """The response from the `SetSceneUnits` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

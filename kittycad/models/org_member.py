@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.org_role import OrgRole
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class OrgMember(BaseModel):
+class OrgMember(KittyCadBaseModel):
     """A member of an organization."""
 
     company: Optional[str] = None
@@ -37,5 +36,3 @@ class OrgMember(BaseModel):
     role: OrgRole
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

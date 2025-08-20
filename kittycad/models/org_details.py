@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class OrgDetails(BaseModel):
+class OrgDetails(KittyCadBaseModel):
     """The user-modifiable parts of an organization."""
 
     allow_users_in_domain_to_auto_join: Optional[bool] = None
@@ -17,5 +17,3 @@ class OrgDetails(BaseModel):
     name: Optional[str] = None
 
     phone: str = ""
-
-    model_config = ConfigDict(protected_namespaces=())

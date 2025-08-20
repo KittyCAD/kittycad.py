@@ -1,11 +1,10 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.point3d import Point3d
 from ..models.point4d import Point4d
 from ..models.world_coordinate_system import WorldCoordinateSystem
+from .base import KittyCadBaseModel
 
 
-class CameraViewState(BaseModel):
+class CameraViewState(KittyCadBaseModel):
     """"""
 
     eye_offset: float
@@ -23,5 +22,3 @@ class CameraViewState(BaseModel):
     pivot_rotation: Point4d
 
     world_coord_system: WorldCoordinateSystem
-
-    model_config = ConfigDict(protected_namespaces=())

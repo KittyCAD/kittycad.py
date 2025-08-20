@@ -1,14 +1,13 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.subscription_tier_price import SubscriptionTierPrice
 from ..models.uuid import Uuid
 from ..models.zoo_product_subscriptions import ZooProductSubscriptions
+from .base import KittyCadBaseModel
 
 
-class CustomerBalance(BaseModel):
+class CustomerBalance(KittyCadBaseModel):
     """A balance for a customer.
 
     This holds information about the financial balance for the customer."""
@@ -36,5 +35,3 @@ class CustomerBalance(BaseModel):
     total_due: Optional[float] = None
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

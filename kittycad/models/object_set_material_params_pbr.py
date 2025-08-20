@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ObjectSetMaterialParamsPbr(BaseModel):
+class ObjectSetMaterialParamsPbr(KittyCadBaseModel):
     """The response from the `ObjectSetMaterialParamsPbr` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

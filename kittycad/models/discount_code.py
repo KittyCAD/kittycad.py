@@ -1,10 +1,10 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class DiscountCode(BaseModel):
+class DiscountCode(KittyCadBaseModel):
     """A discount code for a store."""
 
     code: str
@@ -12,5 +12,3 @@ class DiscountCode(BaseModel):
     expires_at: Optional[datetime.datetime] = None
 
     percent_off: int
-
-    model_config = ConfigDict(protected_namespaces=())

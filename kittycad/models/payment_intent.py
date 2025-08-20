@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class PaymentIntent(BaseModel):
+class PaymentIntent(KittyCadBaseModel):
     """A payment intent response."""
 
     client_secret: str
-
-    model_config = ConfigDict(protected_namespaces=())

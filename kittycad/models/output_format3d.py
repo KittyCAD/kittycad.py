@@ -1,7 +1,7 @@
 import datetime
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.fbx_storage import FbxStorage
@@ -12,9 +12,10 @@ from ..models.selection import Selection
 from ..models.stl_storage import StlStorage
 from ..models.system import System
 from ..models.unit_length import UnitLength
+from .base import KittyCadBaseModel
 
 
-class OptionFbx(BaseModel):
+class OptionFbx(KittyCadBaseModel):
     """Autodesk Filmbox (FBX) format."""
 
     created: Optional[datetime.datetime] = None
@@ -23,10 +24,8 @@ class OptionFbx(BaseModel):
 
     type: Literal["fbx"] = "fbx"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionGltf(BaseModel):
+class OptionGltf(KittyCadBaseModel):
     """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ASCII output, you can set that option for the export."""
 
     presentation: GltfPresentation
@@ -35,10 +34,8 @@ class OptionGltf(BaseModel):
 
     type: Literal["gltf"] = "gltf"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionObj(BaseModel):
+class OptionObj(KittyCadBaseModel):
     """Wavefront OBJ format."""
 
     coords: System
@@ -47,10 +44,8 @@ class OptionObj(BaseModel):
 
     units: UnitLength
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionPly(BaseModel):
+class OptionPly(KittyCadBaseModel):
     """The PLY Polygon File Format."""
 
     coords: System
@@ -63,10 +58,8 @@ class OptionPly(BaseModel):
 
     units: UnitLength
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionStep(BaseModel):
+class OptionStep(KittyCadBaseModel):
     """ISO 10303-21 (STEP) format."""
 
     coords: System
@@ -75,10 +68,8 @@ class OptionStep(BaseModel):
 
     type: Literal["step"] = "step"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionStl(BaseModel):
+class OptionStl(KittyCadBaseModel):
     """*ST**ereo**L**ithography format."""
 
     coords: System
@@ -90,8 +81,6 @@ class OptionStl(BaseModel):
     type: Literal["stl"] = "stl"
 
     units: UnitLength
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 OutputFormat3d = RootModel[

@@ -1,15 +1,14 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
 from ..models.unit_area import UnitArea
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class FileSurfaceArea(BaseModel):
+class FileSurfaceArea(KittyCadBaseModel):
     """A file surface area result."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -33,5 +32,3 @@ class FileSurfaceArea(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())

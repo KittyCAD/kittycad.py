@@ -1,12 +1,11 @@
 import datetime
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.session_uuid import SessionUuid
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class Session(BaseModel):
+class Session(KittyCadBaseModel):
     """An authentication session."""
 
     created_at: datetime.datetime
@@ -20,5 +19,3 @@ class Session(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())

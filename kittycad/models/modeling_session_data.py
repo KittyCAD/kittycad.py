@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ModelingSessionData(BaseModel):
+class ModelingSessionData(KittyCadBaseModel):
     """Successful Websocket response."""
 
     api_call_id: str
-
-    model_config = ConfigDict(protected_namespaces=())

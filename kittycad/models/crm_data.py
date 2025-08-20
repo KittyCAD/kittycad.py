@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class CrmData(BaseModel):
+class CrmData(KittyCadBaseModel):
     """The data for subscribing a user to the newsletter."""
 
     cad_industry: Optional[str] = None
@@ -11,5 +11,3 @@ class CrmData(BaseModel):
     cad_user_type: Optional[str] = None
 
     number_of_cad_users: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

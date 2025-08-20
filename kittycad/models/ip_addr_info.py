@@ -1,11 +1,10 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.country_code import CountryCode
+from .base import KittyCadBaseModel
 
 
-class IpAddrInfo(BaseModel):
+class IpAddrInfo(KittyCadBaseModel):
     """Information about an ip address. Represents geographical and network-related information."""
 
     asn: Optional[int] = None
@@ -39,5 +38,3 @@ class IpAddrInfo(BaseModel):
     region_code: Optional[str] = None
 
     timezone: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

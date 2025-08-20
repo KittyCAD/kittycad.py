@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class MakeAxesGizmo(BaseModel):
+class MakeAxesGizmo(KittyCadBaseModel):
     """The response from the `MakeAxesGizmo` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

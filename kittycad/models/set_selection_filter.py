@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetSelectionFilter(BaseModel):
+class SetSelectionFilter(KittyCadBaseModel):
     """The response from the `SetSelectionFilter` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

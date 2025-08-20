@@ -11,6 +11,7 @@ rm -rf kittycad/models
 rm -rf kittycad/api
 git checkout kittycad/models/base64data.py || true
 git checkout kittycad/models/empty.py || true
+git checkout kittycad/models/base.py || true
 
 # Generate new.
 uv run python -m generate.generate

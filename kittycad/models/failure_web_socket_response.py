@@ -1,11 +1,10 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_error import ApiError
+from .base import KittyCadBaseModel
 
 
-class FailureWebSocketResponse(BaseModel):
+class FailureWebSocketResponse(KittyCadBaseModel):
     """Unsuccessful Websocket response."""
 
     errors: List[ApiError]
@@ -13,5 +12,3 @@ class FailureWebSocketResponse(BaseModel):
     request_id: Optional[str] = None
 
     success: bool
-
-    model_config = ConfigDict(protected_namespaces=())

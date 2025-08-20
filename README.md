@@ -16,7 +16,7 @@ Alternatively, if you wish to generate the client locally, make sure you have
 [Docker installed](https://docs.docker.com/get-docker/) and run:
 
 ```bash
-$ make generate
+$ just generate
 ```
 
 ## Contributing

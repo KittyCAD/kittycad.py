@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_token_uuid import ApiTokenUuid
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class ApiToken(BaseModel):
+class ApiToken(KittyCadBaseModel):
     """An API token.
 
     These are used to authenticate users with Bearer authentication."""
@@ -25,5 +24,3 @@ class ApiToken(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())

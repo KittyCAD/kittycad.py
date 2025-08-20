@@ -1,12 +1,11 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.point3d import Point3d
 from ..models.point4d import Point4d
+from .base import KittyCadBaseModel
 
 
-class CameraSettings(BaseModel):
+class CameraSettings(KittyCadBaseModel):
     """Camera settings including position, center, fov etc"""
 
     center: Point3d
@@ -22,5 +21,3 @@ class CameraSettings(BaseModel):
     pos: Point3d
 
     up: Point3d
-
-    model_config = ConfigDict(protected_namespaces=())

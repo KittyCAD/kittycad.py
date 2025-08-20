@@ -1,0 +1,51 @@
+# Expected API method signatures for minimal_api.json
+from typing import Optional, Dict, Union, IO
+from pathlib import Path
+
+def list_users(
+    self,
+    *,
+    limit: Optional[int] = None,
+    page_token: Optional[str] = None,
+) -> "SyncPageIterator":
+    """Retrieve a paginated list of users
+    
+    Returns an iterator that automatically handles pagination.
+    Iterate over all items across all pages:
+    
+        for item in client.users.list_users():
+            print(item)
+    """
+
+def create_user(
+    self,
+    body: CreateUserRequest,
+) -> User:
+    """Create a new user with the provided information"""
+
+def get_user(
+    self,
+    user_id: str,
+) -> User:
+    """Retrieve a specific user by their ID"""
+
+def update_user(
+    self,
+    user_id: str,
+    body: UpdateUserRequest,
+) -> User:
+    """Update an existing user's information"""
+
+def upload_file(
+    self,
+    file_attachments: Dict[str, Union[Path, bytes, IO[bytes]]],
+    *,
+    metadata: Optional[FileMetadata] = None,
+) -> FileInfo:
+    """Upload a file with metadata"""
+
+def download_file(
+    self,
+    file_id: str,
+) -> bytes:
+    """Download a file by its ID"""

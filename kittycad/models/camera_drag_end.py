@@ -1,11 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.camera_settings import CameraSettings
+from .base import KittyCadBaseModel
 
 
-class CameraDragEnd(BaseModel):
+class CameraDragEnd(KittyCadBaseModel):
     """The response from the `CameraDragEnd` command."""
 
     settings: CameraSettings
-
-    model_config = ConfigDict(protected_namespaces=())

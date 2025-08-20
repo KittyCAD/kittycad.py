@@ -1,0 +1,16 @@
+from enum import Enum
+
+
+class {{ name }}(str, Enum):
+{% if description %}
+    """{{ description }}"""  # noqa: E501
+{% endif %}
+{% for enum_item in enum_items %}
+{% if enum_item.description %}
+    """# {{ enum_item.description }}"""  # noqa: E501
+{% endif %}
+    {{ enum_item.name }} = '{{ enum_item.value }}'
+{% endfor %}
+
+    def __str__(self) -> str:
+        return str(self.value)

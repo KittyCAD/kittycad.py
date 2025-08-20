@@ -2,15 +2,16 @@
 
 import logging
 import os
+import random
 from typing import List, Optional
-
-from jinja2 import Environment, FileSystemLoader
 
 from .schema_analysis import (
     get_any_of_description,
+    get_content_one_of,
     get_one_of_description,
     get_tag_any_of,
     get_tag_one_of,
+    is_enum_with_docs_one_of,
     is_nested_object_any_of,
     is_nested_object_one_of,
 )
@@ -18,8 +19,14 @@ from .utils import (
     camel_to_screaming_snake,
     camel_to_snake,
     consolidate_imports_in_file,
+    get_template,
+    randletter,
+    render_template_to_file,
     to_pascal_case,
 )
+
+# Set random seed for consistent letter generation
+random.seed(10)
 
 
 def generate_types(cwd: str, parser: dict):
@@ -46,6 +53,9 @@ def generate_types(cwd: str, parser: dict):
         if model_file_path:
             generated_files.append(model_file_path)
         f.write("from ." + camel_to_snake(key) + " import " + key + "\n")
+
+    # Add the base model import
+    f.write("from .base import KittyCadBaseModel\n")
 
     # This is a hot fix for the empty type.
     # We likely need a better way to handle this.
@@ -102,57 +112,37 @@ def generate_type(path: str, name: str, schema: dict, data: dict):
     return file_path
 
 
+def generate_primitive_type(path: str, name: str, schema: dict, template_name: str):
+    """Generic function to generate primitive types using templates.
+
+    Args:
+        path: Output file path
+        name: Type name
+        schema: Schema dictionary
+        template_name: Name of the template file to use (e.g. "str.py.jinja2")
+    """
+    context = {
+        "name": name,
+        "description": schema.get("description", ""),
+        "minimum": schema.get("minimum"),
+        "maximum": schema.get("maximum"),
+    }
+    render_template_to_file(template_name, context, path)
+
+
 def generate_string_type(path: str, name: str, schema: dict, type_name: str):
-    logging.info("generating type: %s at: %s", name, path)
-    f = open(path, "w")
-
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("str.py.jinja2")
-
-    description = schema.get("description", "")
-    f.write(template.render(class_name=name, description=description))
-    f.close()
+    """Generate a string type using the generic primitive generator."""
+    generate_primitive_type(path, name, schema, "str.py.jinja2")
 
 
 def generate_integer_type(path: str, name: str, schema: dict, type_name: str):
-    logging.info("generating type: %s at: %s", name, path)
-    f = open(path, "w")
-
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("int.py.jinja2")
-
-    description = schema.get("description", "")
-    minimum = schema.get("minimum")
-    maximum = schema.get("maximum")
-
-    f.write(
-        template.render(
-            class_name=name, description=description, minimum=minimum, maximum=maximum
-        )
-    )
-    f.close()
+    """Generate an integer type using the generic primitive generator."""
+    generate_primitive_type(path, name, schema, "int.py.jinja2")
 
 
 def generate_float_type(path: str, name: str, schema: dict, type_name: str):
-    logging.info("generating type: %s at: %s", name, path)
-    f = open(path, "w")
-
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("float.py.jinja2")
-
-    description = schema.get("description", "")
-    minimum = schema.get("minimum")
-    maximum = schema.get("maximum")
-
-    f.write(
-        template.render(
-            class_name=name, description=description, minimum=minimum, maximum=maximum
-        )
-    )
-    f.close()
+    """Generate a float type using the generic primitive generator."""
+    generate_primitive_type(path, name, schema, "float.py.jinja2")
 
 
 def generate_enum_type(
@@ -165,7 +155,7 @@ def generate_enum_type(
     logging.info("generating type: %s at: %s", name, path)
     f = open(path, "w")
 
-    enum_code = generate_enum_type_code(name, schema)
+    enum_code = generate_enum_type_code(name, schema, type_name, enums)
     f.write(enum_code)
     f.close()
 
@@ -173,20 +163,28 @@ def generate_enum_type(
 def generate_enum_type_code(
     name: str,
     schema: dict,
+    type_name: str = "string",
+    additional_docs: Optional[List[str]] = None,
 ) -> str:
-    import io
+    from typing import List, TypedDict
 
-    f = io.StringIO()
+    if additional_docs is None:
+        additional_docs = []
 
-    f.write("from enum import Enum\n")
-    f.write("\n")
-    f.write("class " + name + "(str, Enum):\n")
-    if "description" in schema:
-        f.write('\t""" ' + schema["description"] + ' """ # noqa: E501\n')
+    EnumItemType = TypedDict(
+        "EnumItemType",
+        {
+            "name": str,
+            "value": str,
+            "description": str,
+        },
+    )
+
+    enum_items: List[EnumItemType] = []
 
     # Handle oneOf enums with descriptions
     if "oneOf" in schema:
-        for one_of in schema["oneOf"]:
+        for num, one_of in enumerate(schema["oneOf"]):
             if "enum" in one_of and len(one_of["enum"]) == 1:
                 value = one_of["enum"][0]
                 enum_name = camel_to_screaming_snake(value)
@@ -201,13 +199,23 @@ def generate_enum_type_code(
                 elif enum_name[0].isdigit():
                     enum_name = "VAL_" + enum_name
 
-                f.write("\t" + enum_name + ' = "' + value + '"\n')
+                description = ""
                 if "description" in one_of:
-                    f.write('\t""" ' + one_of["description"] + ' """\n')
+                    description = one_of["description"]
+                elif len(additional_docs) > num and additional_docs[num] != "":
+                    description = additional_docs[num]
+
+                enum_items.append(
+                    {
+                        "name": enum_name,
+                        "value": value,
+                        "description": description,
+                    }
+                )
     else:
         # Standard string enum
         if "enum" in schema:
-            for value in schema["enum"]:
+            for num, value in enumerate(schema["enum"], start=0):
                 enum_name = camel_to_screaming_snake(value)
                 if enum_name == "":
                     enum_name = "EMPTY"
@@ -220,173 +228,438 @@ def generate_enum_type_code(
                 elif enum_name[0].isdigit():
                     enum_name = "VAL_" + enum_name
 
-                f.write("\t" + enum_name + ' = "' + value + '"\n')
+                description = ""
+                if len(additional_docs) > num and additional_docs[num] != "":
+                    description = additional_docs[num]
 
-    return f.getvalue()
+                enum_items.append(
+                    {
+                        "name": enum_name,
+                        "value": value,
+                        "description": description,
+                    }
+                )
+
+    template = get_template("enum.py.jinja2")
+    return template.render(
+        name=name, description=schema.get("description", ""), enum_items=enum_items
+    )
 
 
 def generate_any_of_type(path: str, name: str, schema: dict, data: dict):
     logging.info("generating type: %s at: %s", name, path)
 
-    description = get_any_of_description(schema)
-
-    # Let's see what types of any of we have
-    types = []
-    nested_objects = []
-    for any_of in schema["anyOf"]:
-        if "type" in any_of:
-            if any_of["type"] == "object":
-                # This is a nested object.
-                if "properties" in any_of and len(any_of["properties"]) == 1:
-                    # This is a property
-                    property_name = ""
-                    for prop_name in any_of["properties"]:
-                        property_name = prop_name
-                    nested_objects.append(property_name)
-                else:
-                    # This is just another object.
-                    nested_objects.append("object")
+    if is_enum_with_docs_one_of(schema):
+        additional_docs = []
+        enum = []
+        # We want to treat this as an enum with additional docs.
+        for any_of in schema["anyOf"]:
+            enum.append(any_of["enum"][0])
+            if "description" in any_of:
+                additional_docs.append(any_of["description"])
             else:
-                types.append(any_of["type"])
-        elif "$ref" in any_of:
-            # This is another type.
-            ref = any_of["$ref"].replace("#/components/schemas/", "")
-            types.append(ref)
+                additional_docs.append("")
+        # Write the enum.
+        schema["enum"] = enum
+        schema["type"] = "string"
+        generate_enum_type(path, name, schema, "string", additional_docs)
+        # return early.
+        return
+
+    # Open our file.
+    f = open(path, "w")
+
+    # Import the refs if there are any.
+    all_options = []
+    imported_refs: set[str] = set()  # Track imported refs to avoid duplicates
+    for any_of in schema["anyOf"]:
+        if "allOf" in any_of:
+            for all_of in any_of["allOf"]:
+                if "$ref" in all_of:
+                    ref = all_of["$ref"]
+                    ref_name = ref[ref.rfind("/") + 1 :]
+                    f.write(
+                        "from ."
+                        + camel_to_snake(ref_name)
+                        + " import "
+                        + ref_name
+                        + "\n"
+                    )
+                    all_options.append(ref_name)
+        if "$ref" in any_of:
+            ref = any_of["$ref"]
+            ref_name = ref[ref.rfind("/") + 1 :]
+            f.write("from ." + camel_to_snake(ref_name) + " import " + ref_name + "\n")
+            all_options.append(ref_name)
 
     if is_nested_object_any_of(schema):
-        # Generate a union type
-        tag = get_tag_any_of(schema)
-        types_str = generate_union_type(nested_objects, name, description, tag)
-
-        f = open(path, "w")
-        f.write(types_str)
-        f.close()
-    else:
-        # Generate a regular Union type
-        union_types = []
-        for t in types:
-            if t in ["string", "number", "integer", "boolean"]:
-                python_type = (
-                    t.replace("string", "str")
-                    .replace("integer", "int")
-                    .replace("number", "float")
-                    .replace("boolean", "bool")
+        # We want to write each of the nested objects.
+        for any_of in schema["anyOf"]:
+            # Get the nested object.
+            if "properties" in any_of:
+                for prop_name in any_of["properties"]:
+                    nested_object = any_of["properties"][prop_name]
+                    if nested_object == {}:
+                        f.write("from typing import Any\n")
+                        f.write(prop_name + " = Any\n")
+                        f.write("\n")
+                        all_options.append(prop_name)
+                    elif "$ref" in nested_object:
+                        ref = nested_object["$ref"]
+                        ref_name = ref[ref.rfind("/") + 1 :]
+                        f.write(
+                            "from ."
+                            + camel_to_snake(ref_name)
+                            + " import "
+                            + ref_name
+                            + "\n"
+                        )
+                        f.write("\n")
+                        if prop_name != ref_name:
+                            f.write(prop_name + " = " + ref_name + "\n")
+                            f.write("\n")
+                        all_options.append(prop_name)
+                    else:
+                        class_name = to_pascal_case(prop_name)
+                        object_code = generate_object_type_code(
+                            prop_name,
+                            nested_object,
+                            "object",
+                            data,
+                            None,
+                            None,
+                            False,
+                            imported_refs,
+                        )
+                        f.write(object_code)
+                        f.write("\n")
+                        all_options.append(class_name)
+            elif "type" in any_of and any_of["type"] == "string":
+                enum_code = generate_enum_type_code(
+                    any_of["enum"][0], any_of, "string", []
                 )
-                union_types.append(python_type)
-            else:
-                union_types.append(t)
+                f.write(enum_code)
+                f.write("\n")
+                all_options.append(any_of["enum"][0])
 
-        template_dir = os.path.join(os.path.dirname(__file__), "templates")
-        env = Environment(loader=FileSystemLoader(template_dir))
-        template = env.get_template("union-type.py.jinja2")
+    # Check if each any_of has the same enum of one.
+    tag = get_tag_any_of(schema)
 
-        f = open(path, "w")
-        f.write(
-            template.render(class_name=name, description=description, types=union_types)
-        )
-        f.close()
+    if tag is not None:
+        # Generate each of the options from the tag WITH Option wrappers.
+        for any_of in schema["anyOf"]:
+            # Get the value of the tag.
+            object_name = any_of["properties"][tag]["enum"][0]
+            object_code = generate_object_type_code(
+                object_name, any_of, "object", data, tag, None, True, imported_refs
+            )
+            f.write(object_code)
+            f.write("\n")
+            all_options.append(to_pascal_case("option_" + object_name))
+    else:
+        # We want to write each of the nested objects WITHOUT Option wrappers.
+        for any_of in schema["anyOf"]:
+            # Get the nested object.
+            if "properties" in any_of:
+                for prop_name in any_of["properties"]:
+                    nested_object = any_of["properties"][prop_name]
+                    if nested_object == {}:
+                        f.write("from typing import Any\n")
+                        f.write(prop_name + " = Any\n")
+                        f.write("\n")
+                        all_options.append(prop_name)
+                    elif "$ref" in nested_object:
+                        ref = nested_object["$ref"]
+                        ref_name = ref[ref.rfind("/") + 1 :]
+                        f.write(
+                            "from ."
+                            + camel_to_snake(ref_name)
+                            + " import "
+                            + ref_name
+                            + "\n"
+                        )
+                        f.write("\n")
+                        if prop_name != ref_name:
+                            f.write(prop_name + " = " + ref_name + "\n")
+                            f.write("\n")
+                        all_options.append(prop_name)
+                    else:
+                        class_name = to_pascal_case(prop_name)
+                        object_code = generate_object_type_code(
+                            prop_name,
+                            nested_object,
+                            "object",
+                            data,
+                            None,
+                            None,
+                            False,  # No Option wrapper when no tag
+                            imported_refs,
+                        )
+                        f.write(object_code)
+                        f.write("\n")
+                        all_options.append(class_name)
+            elif "type" in any_of and any_of["type"] == "string":
+                enum_code = generate_enum_type_code(
+                    any_of["enum"][0], any_of, "string", []
+                )
+                f.write(enum_code)
+                f.write("\n")
+                all_options.append(any_of["enum"][0])
+
+    # Write the sum type.
+    description = get_any_of_description(schema)
+    content = generate_original_union_type(all_options, name, description, tag)
+    f.write(content)
+
+    # Close the file.
+    f.close()
 
 
-def generate_union_type(
+def generate_original_union_type(
     types: List[str], name: str, description: str, tag: Optional[str]
 ) -> str:
-    template_dir = os.path.join(os.path.dirname(__file__), "templates")
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template("union-type.py.jinja2")
+    from typing import TypedDict
 
-    return template.render(
-        class_name=name,
-        description=description,
-        types=[to_pascal_case(t) for t in types],
-        tag=tag,
+    ArgType = TypedDict(
+        "ArgType",
+        {
+            "name": str,
+            "var0": str,
+            "var1": str,
+            "check": str,
+            "value": str,
+        },
     )
+    TemplateType = TypedDict(
+        "TemplateType",
+        {
+            "types": List[ArgType],
+            "description": str,
+            "name": str,
+            "tag": Optional[str],
+        },
+    )
+    template_info: TemplateType = {
+        "types": [],
+        "description": description,
+        "name": name,
+        "tag": tag,
+    }
+    for type in types:
+        if type == "SuccessWebSocketResponse":
+            template_info["types"].append(
+                {
+                    "name": type,
+                    "var0": randletter(),
+                    "var1": randletter(),
+                    "check": "success",
+                    "value": "True",
+                }
+            )
+        elif type == "FailureWebSocketResponse":
+            template_info["types"].append(
+                {
+                    "name": type,
+                    "var0": randletter(),
+                    "var1": randletter(),
+                    "check": "success",
+                    "value": "False",
+                }
+            )
+        else:
+            template_info["types"].append(
+                {
+                    "name": type,
+                    "var0": randletter(),
+                    "var1": randletter(),
+                    "check": "type",
+                    "value": '"' + type + '"',
+                }
+            )
+
+    template = get_template("union-type.py.jinja2")
+    content = template.render(**template_info)
+
+    return content
 
 
 def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
     logging.info("generating type: %s at: %s", name, path)
 
-    description = get_one_of_description(schema)
+    if is_enum_with_docs_one_of(schema):
+        additional_docs = []
+        enum = []
+        # We want to treat this as an enum with additional docs.
+        for one_of in schema["oneOf"]:
+            enum.append(one_of["enum"][0])
+            if "description" in one_of:
+                additional_docs.append(one_of["description"])
+            else:
+                additional_docs.append("")
+        # Write the enum.
+        schema["enum"] = enum
+        schema["type"] = "string"
+        generate_enum_type(path, name, schema, "string", additional_docs)
+        # return early.
+        return
 
-    # Let's see what types of oneOf we have
-    types = []
-    nested_objects = []
+    # Open our file.
+    f = open(path, "w")
+
+    # Import the refs if there are any.
+    all_options = []
+    imported_refs: set[str] = set()  # Track imported refs to avoid duplicates
     for one_of in schema["oneOf"]:
-        if "type" in one_of:
-            if one_of["type"] == "object":
-                # This is a nested object.
-                if "properties" in one_of and len(one_of["properties"]) == 1:
-                    # This is a property
-                    property_name = ""
-                    for prop_name in one_of["properties"]:
-                        property_name = prop_name
-                    nested_objects.append(property_name)
-                else:
-                    # This is just another object.
-                    nested_objects.append("object")
-            elif one_of["type"] == "string" and "enum" in one_of:
-                # This is a string enum
-                if len(one_of["enum"]) == 1:
-                    types.append(one_of["enum"][0])
-                else:
-                    types.extend(one_of["enum"])
-        elif "$ref" in one_of:
-            # This is another type.
-            ref = one_of["$ref"].replace("#/components/schemas/", "")
-            types.append(ref)
+        if "$ref" in one_of:
+            ref = one_of["$ref"]
+            ref_name = ref[ref.rfind("/") + 1 :]
+            class_name = to_pascal_case(ref_name)
+            # Use class name as the key to avoid importing same class multiple times regardless of path
+            if class_name not in imported_refs:
+                f.write(
+                    "from ." + camel_to_snake(ref_name) + " import " + class_name + "\n"
+                )
+                imported_refs.add(class_name)
+            all_options.append(class_name)
 
     if is_nested_object_one_of(schema):
-        # Generate a union type
-        tag = get_tag_one_of(schema)
-        types_str = generate_union_type(nested_objects, name, description, tag)
-
-        f = open(path, "w")
-        f.write(types_str)
-        f.close()
-    else:
-        # Generate a regular Union or enum type
-        if all(isinstance(t, str) and not t[0].isupper() for t in types):
-            # Generate an enum
-            enum_values = []
-            for i, one_of in enumerate(schema["oneOf"]):
-                if "enum" in one_of and len(one_of["enum"]) == 1:
-                    value = one_of["enum"][0]
-                    desc = one_of.get("description", "")
-                    enum_values.append(
-                        {"name": value, "value": value, "description": desc}
-                    )
-
-            enum_code = generate_enum_type_code(
-                name, {"oneOf": schema["oneOf"], "description": description}
-            )
-            f = open(path, "w")
-            f.write(enum_code)
-            f.close()
-        else:
-            # Generate a Union type
-            union_types = []
-            for t in types:
-                if t in ["string", "number", "integer", "boolean"]:
-                    python_type = (
-                        t.replace("string", "str")
-                        .replace("integer", "int")
-                        .replace("number", "float")
-                        .replace("boolean", "bool")
-                    )
-                    union_types.append(python_type)
-                else:
-                    union_types.append(t)
-
-            template_dir = os.path.join(os.path.dirname(__file__), "templates")
-            env = Environment(loader=FileSystemLoader(template_dir))
-            template = env.get_template("union-type.py.jinja2")
-
-            f = open(path, "w")
-            f.write(
-                template.render(
-                    class_name=name, description=description, types=union_types
+        # We want to write each of the nested objects.
+        for one_of in schema["oneOf"]:
+            # Get the nested object.
+            if "properties" in one_of:
+                for prop_name in one_of["properties"]:
+                    nested_object = one_of["properties"][prop_name]
+                    if nested_object == {}:
+                        f.write("from typing import Any\n")
+                        f.write(prop_name + " = Any\n")
+                        f.write("\n")
+                        all_options.append(prop_name)
+                    elif "$ref" in nested_object:
+                        ref = nested_object["$ref"]
+                        ref_name = ref[ref.rfind("/") + 1 :]
+                        class_name = to_pascal_case(ref_name)
+                        # Use class name as the key to avoid importing same class multiple times regardless of path
+                        if class_name not in imported_refs:
+                            f.write(
+                                "from ."
+                                + camel_to_snake(ref_name)
+                                + " import "
+                                + class_name
+                                + "\n"
+                            )
+                            imported_refs.add(class_name)
+                        f.write("\n")
+                        if prop_name != ref_name:
+                            f.write(prop_name + " = " + class_name + "\n")
+                            f.write("\n")
+                        all_options.append(class_name)
+                    else:
+                        class_name = to_pascal_case(prop_name)
+                        object_code = generate_object_type_code(
+                            prop_name,
+                            nested_object,
+                            "object",
+                            data,
+                            None,
+                            None,
+                            False,
+                            imported_refs,
+                        )
+                        f.write(object_code)
+                        f.write("\n")
+                        all_options.append(class_name)
+            elif "type" in one_of and one_of["type"] == "string":
+                enum_code = generate_enum_type_code(
+                    one_of["enum"][0], one_of, "string", []
                 )
+                f.write(enum_code)
+                f.write("\n")
+                all_options.append(one_of["enum"][0])
+
+    # Check if each one_of has the same enum of one.
+    tag = get_tag_one_of(schema)
+    content = get_content_one_of(schema, tag)
+
+    if tag is not None and content is not None:
+        # Generate each of the options from the tag.
+        for one_of in schema["oneOf"]:
+            # Get the value of the tag.
+            object_name = one_of["properties"][tag]["enum"][0]
+            # Generate the type for the object.
+            content_code = generate_object_type_code(
+                object_name + "_data",
+                one_of["properties"][content],
+                "object",
+                data,
+                None,
+                None,
+                False,
+                imported_refs,
             )
-            f.close()
+            f.write(content_code)
+            f.write("\n")
+            object_code = generate_object_type_code(
+                object_name, one_of, "object", data, tag, content, True, imported_refs
+            )
+            f.write(object_code)
+            f.write("\n")
+            all_options.append(to_pascal_case("option_" + object_name))
+    elif tag is not None:
+        # Generate each of the options from the tag.
+        for one_of in schema["oneOf"]:
+            # Get the value of the tag.
+            object_name = one_of["properties"][tag]["enum"][0]
+            object_code = generate_object_type_code(
+                object_name, one_of, "object", data, tag, None, True, imported_refs
+            )
+            f.write(object_code)
+            f.write("\n")
+            all_options.append(to_pascal_case("option_" + object_name))
+    elif schema["oneOf"].__len__() == 1:
+        description = get_one_of_description(schema)
+        object_code = generate_object_type_code(
+            name,
+            schema["oneOf"][0],
+            "object",
+            data,
+            None,
+            None,
+            False,
+            imported_refs,
+        )
+        f.write(object_code)
+        f.write("\n")
+        f.close()
+        # return early.
+        return
+    else:
+        # Generate each of the options from the tag.
+        i = 0
+        for one_of in schema["oneOf"]:
+            # Get the value of the tag.
+            object_name = camel_to_snake(name) + "_" + str(i)
+            object_code = generate_object_type_code(
+                object_name,
+                one_of,
+                "object",
+                data,
+                None,
+                None,
+                False,
+                imported_refs,
+            )
+            f.write(object_code)
+            f.write("\n")
+            all_options.append(to_pascal_case(object_name))
+            i += 1
+
+    # Write the sum type.
+    description = get_one_of_description(schema)
+    content = generate_original_union_type(all_options, name, description, tag)
+    f.write(content)
+
+    # Close the file.
+    f.close()
 
 
 def generate_object_type_code(
@@ -499,16 +772,11 @@ def generate_object_type_code(
 
     # Iterate over the properties.
 
-    import jinja2
-
-    environment = jinja2.Environment(
-        loader=jinja2.FileSystemLoader("generate/templates/")
-    )
     if include_imports:
         template_file = "object.py.jinja2"
     else:
         template_file = "object-class-only.py.jinja2"
-    template = environment.get_template(template_file)
+    template = get_template(template_file)
     content = template.render(**template_info)
 
     return content

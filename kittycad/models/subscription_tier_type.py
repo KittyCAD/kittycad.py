@@ -1,25 +1,23 @@
 from typing import Literal, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from .base import KittyCadBaseModel
 
-class OptionIndividual(BaseModel):
+
+class OptionIndividual(KittyCadBaseModel):
     """A subscription tier that can be applied to individuals only."""
 
     type: Literal["individual"] = "individual"
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class OptionOrganization(BaseModel):
+class OptionOrganization(KittyCadBaseModel):
     """An subscription tier that can be applied to organizations only."""
 
     saml_sso: bool
 
     type: Literal["organization"] = "organization"
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 SubscriptionTierType = RootModel[

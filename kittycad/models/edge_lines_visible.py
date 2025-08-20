@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class EdgeLinesVisible(BaseModel):
+class EdgeLinesVisible(KittyCadBaseModel):
     """The response from the `EdgeLinesVisible` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

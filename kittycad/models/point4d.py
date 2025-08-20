@@ -1,7 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Point4d(BaseModel):
+class Point4d(KittyCadBaseModel):
     """A point in homogeneous (4D) space"""
 
     w: float
@@ -11,5 +11,3 @@ class Point4d(BaseModel):
     y: float
 
     z: float
-
-    model_config = ConfigDict(protected_namespaces=())

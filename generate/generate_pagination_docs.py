@@ -80,12 +80,6 @@ def get_response_type_and_item_type(
     return None, None
 
 
-def snake_to_camel_case(snake_str: str) -> str:
-    """Convert snake_case to camelCase."""
-    components = snake_str.split("_")
-    return components[0] + "".join(word.capitalize() for word in components[1:])
-
-
 def operation_id_to_function_name(operation_id: str) -> str:
     """Convert operationId to Python function name."""
     # Most operation IDs are already snake_case, but some might be camelCase

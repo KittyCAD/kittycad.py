@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.service_account_uuid import ServiceAccountUuid
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class ServiceAccount(BaseModel):
+class ServiceAccount(KittyCadBaseModel):
     """A service account.
 
     These are used to authenticate orgs with Bearer authentication.
@@ -27,5 +26,3 @@ class ServiceAccount(BaseModel):
     token: ServiceAccountUuid
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

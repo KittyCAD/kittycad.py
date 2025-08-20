@@ -1,13 +1,10 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.user_org_role import UserOrgRole
+from .base import KittyCadBaseModel
 
 
-class AddOrgMember(BaseModel):
+class AddOrgMember(KittyCadBaseModel):
     """Data for adding a member to an org."""
 
     email: str
 
     role: UserOrgRole
-
-    model_config = ConfigDict(protected_namespaces=())

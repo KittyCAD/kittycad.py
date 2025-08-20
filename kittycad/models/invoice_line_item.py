@@ -1,11 +1,10 @@
 from typing import Dict, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.currency import Currency
+from .base import KittyCadBaseModel
 
 
-class InvoiceLineItem(BaseModel):
+class InvoiceLineItem(KittyCadBaseModel):
     """An invoice line item."""
 
     amount: float = 0.0
@@ -19,5 +18,3 @@ class InvoiceLineItem(BaseModel):
     invoice_item: Optional[str] = None
 
     metadata: Dict[str, str] = {}
-
-    model_config = ConfigDict(protected_namespaces=())

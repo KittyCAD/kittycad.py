@@ -34,11 +34,22 @@
         {% endfor %}
 
         _client = self.client.get_http_client()
+        {% if file_info.has_json_body_multipart %}
+        # JSON + multipart endpoint
+        response = await upload_json_multipart_async(
+            client=_client,
+            url=url,
+            json_body=body,
+            file_attachments=file_attachments,
+            headers=self.client.get_headers(),
+        )
+        {% else %}
         response = await _client.{{ method }}(
             url=url,
             headers=self.client.get_headers(),
             {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(),{% else %}content=body,{% endif %}{% endif %}
         )
+        {% endif %}
 
         if not response.is_success:
             from ..response_helpers import raise_for_status

@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Pong(BaseModel):
+class Pong(KittyCadBaseModel):
     """The response from the `/ping` endpoint."""
 
     message: str
-
-    model_config = ConfigDict(protected_namespaces=())

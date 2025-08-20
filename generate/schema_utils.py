@@ -3,13 +3,13 @@
 import logging
 from typing import List, Optional, Tuple
 
-from .utils import to_pascal_case
+from .utils import resolve_schema_ref, to_pascal_case
 
 
 def get_refs(schema: dict) -> List[str]:
     refs = []
     if "$ref" in schema:
-        refs.append(schema["$ref"].replace("#/components/schemas/", ""))
+        refs.append(resolve_schema_ref(schema["$ref"]))
 
     else:
         # Generate the type.
@@ -72,7 +72,7 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                     if "$ref" in json:
                         # If the reference is to a oneOf type, we want to return
                         # all the possible outcomes.
-                        ref = json["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(json["$ref"])
                         schema = data["components"]["schemas"][ref]
                         if is_nested_object_one_of(schema) or is_enum_with_docs_one_of(
                             schema
@@ -91,7 +91,7 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                         if json["type"] == "array":
                             items = json["items"]
                             if "$ref" in items:
-                                ref = items["$ref"].replace("#/components/schemas/", "")
+                                ref = resolve_schema_ref(items["$ref"])
                                 refs.append("List[" + ref + "]")
                             elif "type" in items:
                                 if items["type"] == "string":
@@ -107,7 +107,7 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                         ):
                             refs.append("dict")
                         else:
-                            print(json)
+                            logging.error("Unknown type: %s", json["type"])
                             raise Exception("Unknown type ", json["type"])
                     else:
                         refs.append("dict")
@@ -133,7 +133,7 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                     if content_type == "application/json":
                         json = content[content_type]["schema"]
                         if "$ref" in json:
-                            ref = json["$ref"].replace("#/components/schemas/", "")
+                            ref = resolve_schema_ref(json["$ref"])
                             if ref not in refs:
                                 refs.append(ref)
 
@@ -148,9 +148,7 @@ def get_parameter_refs(endpoint: dict) -> List[str]:
         for parameter in parameters:
             parameter["name"]
             if "$ref" in parameter["schema"]:
-                parameter_type = parameter["schema"]["$ref"].replace(
-                    "#/components/schemas/", ""
-                )
+                parameter_type = resolve_schema_ref(parameter["schema"]["$ref"])
                 refs.append(parameter_type)
 
     return refs
@@ -167,7 +165,7 @@ def get_request_body_refs(endpoint: dict) -> List[str]:
                 if content_type == "application/json":
                     json = content[content_type]["schema"]
                     if "$ref" in json:
-                        ref = json["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(json["$ref"])
                         refs.append(ref)
                 elif content_type == "application/octet-stream":
                     # do nothing we dont't care
@@ -175,12 +173,12 @@ def get_request_body_refs(endpoint: dict) -> List[str]:
                 elif content_type == "application/x-www-form-urlencoded":
                     form = content[content_type]["schema"]
                     if "$ref" in form:
-                        ref = form["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(form["$ref"])
                         refs.append(ref)
                 elif content_type == "multipart/form-data":
                     form = content[content_type]["schema"]
                     if "$ref" in form:
-                        ref = form["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(form["$ref"])
                         refs.append(ref)
                 else:
                     # Throw an error for an unsupported content type.
@@ -201,7 +199,7 @@ def get_request_body_type_schema(
                 if content_type == "application/json":
                     json = content[content_type]["schema"]
                     if "$ref" in json:
-                        ref = json["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(json["$ref"])
                         type_schema = data["components"]["schemas"][ref]
                         return ref, type_schema
                     elif json != {}:
@@ -214,7 +212,7 @@ def get_request_body_type_schema(
                 elif content_type == "application/x-www-form-urlencoded":
                     form = content[content_type]["schema"]
                     if "$ref" in form:
-                        ref = form["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(form["$ref"])
                         type_schema = data["components"]["schemas"][ref]
                         return ref, type_schema
                     elif form != {}:
@@ -223,7 +221,7 @@ def get_request_body_type_schema(
                 elif content_type == "multipart/form-data":
                     form = content[content_type]["schema"]
                     if "$ref" in form:
-                        ref = form["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(form["$ref"])
                         type_schema = data["components"]["schemas"][ref]
                         return ref, type_schema
                     elif form != {}:
@@ -270,7 +268,7 @@ def get_success_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                 if content_type == "application/json":
                     json = content[content_type]["schema"]
                     if "$ref" in json:
-                        ref = json["$ref"].replace("#/components/schemas/", "")
+                        ref = resolve_schema_ref(json["$ref"])
                         # Skip Error types explicitly
                         if ref == "Error":
                             continue
@@ -292,7 +290,7 @@ def get_success_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                         if json["type"] == "array":
                             items = json["items"]
                             if "$ref" in items:
-                                ref = items["$ref"].replace("#/components/schemas/", "")
+                                ref = resolve_schema_ref(items["$ref"])
                                 if ref != "Error":
                                     refs.append("List[" + ref + "]")
                             elif "type" in items:
@@ -378,7 +376,7 @@ def get_type_name(schema: dict) -> str:
             else:
                 return "Dict[str, Any]"
     elif "$ref" in schema:
-        return schema["$ref"].replace("#/components/schemas/", "")
+        return resolve_schema_ref(schema["$ref"])
     elif "allOf" in schema and len(schema["allOf"]) == 1:
         return get_type_name(schema["allOf"][0])
     elif "description" in schema:

@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class OutputFile(BaseModel):
+class OutputFile(KittyCadBaseModel):
     """Output file contents.
 
     <details><summary>JSON schema</summary>
@@ -13,5 +13,3 @@ class OutputFile(BaseModel):
     contents: Optional[str] = None
 
     name: str = ""
-
-    model_config = ConfigDict(protected_namespaces=())

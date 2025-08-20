@@ -1,7 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Point3d(BaseModel):
+class Point3d(KittyCadBaseModel):
     """A point in 3D space"""
 
     x: float
@@ -9,5 +9,3 @@ class Point3d(BaseModel):
     y: float
 
     z: float
-
-    model_config = ConfigDict(protected_namespaces=())

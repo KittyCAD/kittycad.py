@@ -1,15 +1,12 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.async_api_call import AsyncApiCall
+from .base import KittyCadBaseModel
 
 
-class AsyncApiCallResultsPage(BaseModel):
+class AsyncApiCallResultsPage(KittyCadBaseModel):
     """A single page of results"""
 
     items: List[AsyncApiCall]
 
     next_page: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

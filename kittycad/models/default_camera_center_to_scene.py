@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class DefaultCameraCenterToScene(BaseModel):
+class DefaultCameraCenterToScene(KittyCadBaseModel):
     """The response from the `DefaultCameraCenterToScene` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

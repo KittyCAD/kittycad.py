@@ -1,0 +1,211 @@
+{# 
+   Shared Jinja macros for KittyCAD Python SDK code generation
+   
+   These macros reduce repetition across function templates and provide
+   consistent patterns for:
+   - Function signatures (sync/async, regular/paginated)
+   - URL building with query parameters
+   - HTTP request execution
+   - Response parsing and error handling
+   - Pagination support
+   
+   Usage: {% from 'shared_macros.jinja2' import macro_name %}
+#}
+
+{# 
+   Generate function signature with proper parameter handling
+   
+   Args:
+     args: List of argument objects with .name, .type, .is_optional properties
+     is_async: Boolean flag for async function generation
+     return_type: Return type annotation (optional)
+     func_name: Function name (passed from context)
+#}
+{% macro function_signature(args, is_async=false, return_type="") -%}
+    {% if is_async %}async {% endif %}def {{ func_name }}(
+        self,
+        {% for arg in args %}
+        {% if not arg.is_optional %}
+        {{ arg.name }}: {{ arg.type }},
+        {% endif %}
+        {% endfor %}
+        {% set optional_args = args|selectattr("is_optional")|list %}
+        {% if optional_args %}*,
+        {% for arg in optional_args %}
+        {{ arg.name }}: {{ arg.type }} = None,
+        {% endfor %}
+        {% endif %}
+    ){% if return_type %} -> {{ return_type }}{% endif %}:
+{%- endmacro %}
+
+{# 
+   Build URL with path parameters and query string
+   
+   Args:
+     url_template: URL template string with format placeholders
+     args: List of argument objects with .in_url, .in_query, .name, .type properties
+     use_kwargs: Boolean - if true, read query params from kwargs dict (for pagination)
+#}
+{% macro build_url(url_template, args, use_kwargs=false) -%}
+        url = "{{ url_template }}".format(self.client.base_url{% for arg in args %}{% if arg.in_url %}, {{ arg.name }}={{ arg.name }}{% endif %}{% endfor %})
+        
+        {% for arg in args %}
+        {% if arg.in_query %}
+        {% if use_kwargs %}
+        if "{{ arg.name }}" in kwargs and kwargs["{{ arg.name }}"] is not None:
+            {% if "bool" in arg.type %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str(kwargs["{{ arg.name }}"]).lower()
+            else:
+                url = url + "?{{ arg.name }}=" + str(kwargs["{{ arg.name }}"]).lower()
+            {% else %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str(kwargs["{{ arg.name }}"])
+            else:
+                url = url + "?{{ arg.name }}=" + str(kwargs["{{ arg.name }}"])
+            {% endif %}
+        {% else %}
+        if {{ arg.name }} is not None:
+            {% if "bool" in arg.type %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }}).lower()
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }}).lower()
+            {% else %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }})
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }})
+            {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+{%- endmacro %}
+
+{# 
+   Execute HTTP request with proper async/sync handling
+   
+   Args:
+     method: HTTP method (get, post, put, delete, etc.)
+     has_request_body: Boolean indicating if request has body
+     request_body_type: Type of request body (for serialization)
+     file_info: Object with multipart file upload information
+     is_async: Boolean flag for async request execution
+#}
+{% macro http_request_call(method, has_request_body, request_body_type, file_info, is_async=false) -%}
+        _client = self.client.get_http_client()
+        {% if file_info and file_info.has_json_body_multipart %}
+        # JSON + multipart endpoint
+        response = {% if is_async %}await {% endif %}upload_json_multipart{% if is_async %}_async{% endif %}(
+            client=_client,
+            url=url,
+            json_body=body,
+            file_attachments=file_attachments,
+            headers=self.client.get_headers(),
+        )
+        {% else %}
+        response = {% if is_async %}await {% endif %}_client.{{ method }}(
+            url=url,
+            headers=self.client.get_headers(),
+            {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(),{% else %}content=body,{% endif %}{% endif %}
+        )
+        {% endif %}
+{%- endmacro %}
+
+{# 
+   Parse HTTP response with error handling
+   
+   Args:
+     response_type: Expected response type for deserialization
+     import_path: Import path for raise_for_status (default: ..response_helpers)
+#}
+{% macro parse_response(response_type, import_path="..response_helpers") -%}
+        if not response.is_success:
+            from {{ import_path }} import raise_for_status
+            raise_for_status(response)
+        
+        {% if response_type and response_type != "" %}
+        if not response.content:
+            return None  # type: ignore
+            
+        json_data = response.json()
+        {% if not response_type.startswith(('dict', 'list', 'Union', 'RootModel')) %}
+        return {{ response_type }}(**json_data)
+        {% else %}
+        return json_data
+        {% endif %}
+        {% else %}
+        return response.json() if response.content else None
+        {% endif %}
+{%- endmacro %}
+
+{# 
+   Generate pagination setup for paginated endpoints
+   
+   Args:
+     args: List of argument objects
+     func_name: Function name for internal _fetch_page method
+     is_async: Boolean flag for async pagination
+#}
+{% macro pagination_setup(args, func_name, is_async=false) -%}
+        from typing import Dict, Any
+        from kittycad.pagination import {% if is_async %}Async{% endif %}PageIterator
+        
+        # Store path parameters in closure for later use
+        {% for arg in args %}
+        {% if arg.in_url %}
+        _{{ arg.name }} = {{ arg.name }}
+        {% endif %}
+        {% endfor %}
+        
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+        {% for arg in args %}
+        {% if arg.in_query %}
+        if {{ arg.name }} is not None:
+            kwargs["{{ arg.name }}"] = {{ arg.name }}
+        {% endif %}
+        {% endfor %}
+        
+        {% if is_async %}async {% endif %}def fetch_page(**kw):
+            return {% if is_async %}await {% endif %}self._fetch_page_{{ func_name }}(
+                {% for arg in args %}
+                {% if arg.in_url %}
+                {{ arg.name }}=_{{ arg.name }},
+                {% endif %}
+                {% endfor %}
+                **kw
+            )
+        
+        # Create the page iterator
+        return {% if is_async %}Async{% endif %}PageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+{%- endmacro %}
+
+{# 
+   Generate WebSocket connection setup
+   
+   Args:
+     url_template: WebSocket URL template
+     args: List of argument objects
+     is_async: Boolean flag for async WebSocket
+#}
+{% macro websocket_connect(url_template, args, is_async=false) -%}
+        {% set path_args = args|selectattr("in_url")|list %}
+        url = "{{ url_template }}".format(self.client.base_url{% for arg in path_args %}, {{ arg.name }}={{ arg.name }}{% endfor %})
+        {{ build_url("", args) }}
+        
+        # Convert HTTP URL to WebSocket URL
+        url = url.replace("https://", "wss://").replace("http://", "ws://")
+        
+        # Create headers with authentication
+        headers = self.client.get_headers()
+        
+        {% if is_async %}
+        return await ws_connect_async(url, additional_headers=headers)
+        {% else %}
+        return ws_connect(url, additional_headers=headers)
+        {% endif %}
+{%- endmacro %}

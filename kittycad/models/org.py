@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class Org(BaseModel):
+class Org(KittyCadBaseModel):
     """An organization."""
 
     allow_users_in_domain_to_auto_join: Optional[bool] = None
@@ -35,5 +34,3 @@ class Org(BaseModel):
     stripe_id: Optional[str] = None
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

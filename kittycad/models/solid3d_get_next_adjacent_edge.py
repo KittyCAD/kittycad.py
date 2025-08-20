@@ -1,11 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Solid3dGetNextAdjacentEdge(BaseModel):
+class Solid3dGetNextAdjacentEdge(KittyCadBaseModel):
     """The response from the `Solid3dGetNextAdjacentEdge` command."""
 
     edge: Optional[str] = None
-
-    model_config = ConfigDict(protected_namespaces=())

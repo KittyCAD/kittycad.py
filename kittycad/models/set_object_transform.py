@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetObjectTransform(BaseModel):
+class SetObjectTransform(KittyCadBaseModel):
     """The response from the `SetObjectTransform` command."""
-
-    model_config = ConfigDict(protected_namespaces=())

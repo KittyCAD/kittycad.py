@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SketchModeDisable(BaseModel):
+class SketchModeDisable(KittyCadBaseModel):
     """The response from the `SketchModeDisable` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

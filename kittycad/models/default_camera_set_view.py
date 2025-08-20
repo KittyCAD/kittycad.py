@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class DefaultCameraSetView(BaseModel):
+class DefaultCameraSetView(KittyCadBaseModel):
     """The response from the `DefaultCameraSetView` command."""
-
-    model_config = ConfigDict(protected_namespaces=())

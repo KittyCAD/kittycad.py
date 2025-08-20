@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SceneClearAll(BaseModel):
+class SceneClearAll(KittyCadBaseModel):
     """The response from the `SceneClearAll` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

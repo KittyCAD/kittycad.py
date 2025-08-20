@@ -1,13 +1,10 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.error_code import ErrorCode
+from .base import KittyCadBaseModel
 
 
-class ApiError(BaseModel):
+class ApiError(KittyCadBaseModel):
     """An error."""
 
     error_code: ErrorCode
 
     message: str
-
-    model_config = ConfigDict(protected_namespaces=())

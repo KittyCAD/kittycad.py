@@ -1,0 +1,12 @@
+{# Import shared macros #}
+{% from 'shared_macros.jinja2' import function_signature, build_url, http_request_call, parse_response %}
+
+{# Use the signature macro #}
+{{ function_signature(args, is_async) }}
+        {% if docs %}"""{{ docs }}"""{% endif %}
+        
+{{ build_url(url_template, args) }}
+
+{{ http_request_call(method, has_request_body, request_body_type, file_info, is_async) }}
+
+{{ parse_response(response_type) }}

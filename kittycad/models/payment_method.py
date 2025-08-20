@@ -1,14 +1,13 @@
 import datetime
 from typing import Dict, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.billing_info import BillingInfo
 from ..models.card_details import CardDetails
 from ..models.payment_method_type import PaymentMethodType
+from .base import KittyCadBaseModel
 
 
-class PaymentMethod(BaseModel):
+class PaymentMethod(KittyCadBaseModel):
     """A payment method."""
 
     billing_info: BillingInfo
@@ -22,5 +21,3 @@ class PaymentMethod(BaseModel):
     metadata: Dict[str, str] = {}
 
     type: PaymentMethodType
-
-    model_config = ConfigDict(protected_namespaces=())

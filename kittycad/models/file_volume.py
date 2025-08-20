@@ -1,15 +1,14 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_call_status import ApiCallStatus
 from ..models.file_import_format import FileImportFormat
 from ..models.unit_volume import UnitVolume
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class FileVolume(BaseModel):
+class FileVolume(KittyCadBaseModel):
     """A file volume result."""
 
     completed_at: Optional[datetime.datetime] = None
@@ -33,5 +32,3 @@ class FileVolume(BaseModel):
     user_id: Uuid
 
     volume: Optional[float] = None
-
-    model_config = ConfigDict(protected_namespaces=())

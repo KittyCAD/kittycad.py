@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class DefaultCameraSetOrthographic(BaseModel):
+class DefaultCameraSetOrthographic(KittyCadBaseModel):
     """The response from the `DefaultCameraSetOrthographic` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

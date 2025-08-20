@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SubscriptionTierFeature(BaseModel):
+class SubscriptionTierFeature(KittyCadBaseModel):
     """A subscription tier feature."""
 
     info: str
-
-    model_config = ConfigDict(protected_namespaces=())

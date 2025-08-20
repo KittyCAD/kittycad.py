@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class PrivacySettings(BaseModel):
+class PrivacySettings(KittyCadBaseModel):
     """Privacy settings for an org or user."""
 
     can_train_on_data: bool
-
-    model_config = ConfigDict(protected_namespaces=())

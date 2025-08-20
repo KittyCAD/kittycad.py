@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SetBackgroundColor(BaseModel):
+class SetBackgroundColor(KittyCadBaseModel):
     """The response from the `SetBackgroundColor` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

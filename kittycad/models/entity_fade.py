@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class EntityFade(BaseModel):
+class EntityFade(KittyCadBaseModel):
     """The response from the `EntityFade` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

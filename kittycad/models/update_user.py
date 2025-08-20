@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class UpdateUser(BaseModel):
+class UpdateUser(KittyCadBaseModel):
     """The user-modifiable parts of a User."""
 
     company: Optional[str] = None
@@ -21,5 +21,3 @@ class UpdateUser(BaseModel):
     last_name: Optional[str] = None
 
     phone: str = ""
-
-    model_config = ConfigDict(protected_namespaces=())

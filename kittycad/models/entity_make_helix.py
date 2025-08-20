@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class EntityMakeHelix(BaseModel):
+class EntityMakeHelix(KittyCadBaseModel):
     """The response from the `EntityMakeHelix` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

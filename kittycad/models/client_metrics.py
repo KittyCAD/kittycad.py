@@ -1,9 +1,9 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ClientMetrics(BaseModel):
+class ClientMetrics(KittyCadBaseModel):
     """ClientMetrics contains information regarding the state of the peer."""
 
     rtc_frame_height: Optional[int] = None
@@ -35,5 +35,3 @@ class ClientMetrics(BaseModel):
     rtc_total_freezes_duration_sec: Optional[float] = None
 
     rtc_total_pauses_duration_sec: Optional[float] = None
-
-    model_config = ConfigDict(protected_namespaces=())

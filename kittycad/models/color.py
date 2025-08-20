@@ -1,7 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Color(BaseModel):
+class Color(KittyCadBaseModel):
     """An RGBA color"""
 
     a: float
@@ -11,5 +11,3 @@ class Color(BaseModel):
     g: float
 
     r: float
-
-    model_config = ConfigDict(protected_namespaces=())

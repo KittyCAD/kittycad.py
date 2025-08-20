@@ -1,13 +1,12 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.block_reason import BlockReason
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class ExtendedUser(BaseModel):
+class ExtendedUser(KittyCadBaseModel):
     """Extended user information.
 
     This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: Stripe"""
@@ -51,5 +50,3 @@ class ExtendedUser(BaseModel):
     stripe_id: Optional[str] = None
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,12 +1,11 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class VerificationTokenResponse(BaseModel):
+class VerificationTokenResponse(KittyCadBaseModel):
     """A verification token response."""
 
     created_at: datetime.datetime
@@ -20,5 +19,3 @@ class VerificationTokenResponse(BaseModel):
     saml_redirect_url: Optional[str] = None
 
     updated_at: datetime.datetime
-
-    model_config = ConfigDict(protected_namespaces=())

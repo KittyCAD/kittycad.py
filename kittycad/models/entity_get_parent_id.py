@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class EntityGetParentId(BaseModel):
+class EntityGetParentId(KittyCadBaseModel):
     """The response from the `EntityGetParentId` command."""
 
     entity_id: str
-
-    model_config = ConfigDict(protected_namespaces=())

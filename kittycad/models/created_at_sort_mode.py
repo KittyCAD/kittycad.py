@@ -6,9 +6,12 @@ class CreatedAtSortMode(str, Enum):
 
     Currently, we only support scanning in ascending order."""  # noqa: E501
 
-    """# Sort in increasing order of "created_at". """  # noqa: E501
+    """# Sort in increasing order of "created_at"."""  # noqa: E501
+
     CREATED_AT_ASCENDING = "created_at_ascending"
-    """# Sort in decreasing order of "created_at". """  # noqa: E501
+
+    """# Sort in decreasing order of "created_at"."""  # noqa: E501
+
     CREATED_AT_DESCENDING = "created_at_descending"
 
     def __str__(self) -> str:

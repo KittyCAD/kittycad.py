@@ -1,11 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
+from .base import KittyCadBaseModel
 from .base64data import Base64Data
 
 
-class TakeSnapshot(BaseModel):
+class TakeSnapshot(KittyCadBaseModel):
     """The response from the `TakeSnapshot` command."""
 
     contents: Base64Data
-
-    model_config = ConfigDict(protected_namespaces=())

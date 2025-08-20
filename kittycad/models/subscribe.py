@@ -1,9 +1,7 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Subscribe(BaseModel):
+class Subscribe(KittyCadBaseModel):
     """The data for subscribing a user to the newsletter."""
 
     email: str
-
-    model_config = ConfigDict(protected_namespaces=())

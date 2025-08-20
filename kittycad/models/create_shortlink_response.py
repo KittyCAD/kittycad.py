@@ -1,11 +1,9 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class CreateShortlinkResponse(BaseModel):
+class CreateShortlinkResponse(KittyCadBaseModel):
     """Response from creating a shortlink."""
 
     key: str
 
     url: str
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class SendObject(BaseModel):
+class SendObject(KittyCadBaseModel):
     """The response from the `SendObject` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

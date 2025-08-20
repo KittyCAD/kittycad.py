@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class ReconfigureStream(BaseModel):
+class ReconfigureStream(KittyCadBaseModel):
     """The response from the `ReconfigureStream` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

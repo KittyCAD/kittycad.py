@@ -1,7 +1,5 @@
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class Revolve(BaseModel):
+class Revolve(KittyCadBaseModel):
     """The response from the `Revolve` endpoint."""
-
-    model_config = ConfigDict(protected_namespaces=())

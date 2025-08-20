@@ -1,100 +1,79 @@
 from typing import Any, Dict, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, RootModel
+from pydantic import RootModel
 
 from ..models.ml_tool_result import MlToolResult
+from .base import KittyCadBaseModel
 from .reasoning_message import ReasoningMessage
 
 
-class Delta(BaseModel):
+class Delta(KittyCadBaseModel):
     """"""
 
     delta: str
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class ToolOutput(BaseModel):
+class ToolOutput(KittyCadBaseModel):
     """"""
 
     result: MlToolResult
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class Error(BaseModel):
+class Error(KittyCadBaseModel):
     """"""
 
     detail: str
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class Info(BaseModel):
+class Info(KittyCadBaseModel):
     """"""
 
     text: str
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 reasoning = ReasoningMessage
 
 
-class EndOfStream(BaseModel):
+class EndOfStream(KittyCadBaseModel):
     """"""
 
     whole_response: Optional[str] = None
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class MlCopilotServerMessage0(BaseModel):
+class MlCopilotServerMessage0(KittyCadBaseModel):
     """Delta of the response, e.g. a chunk of text/tokens."""
 
     delta: Dict[str, Any]
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class MlCopilotServerMessage1(BaseModel):
+class MlCopilotServerMessage1(KittyCadBaseModel):
     """Completed tool call result."""
 
     tool_output: Dict[str, Any]
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class MlCopilotServerMessage2(BaseModel):
+class MlCopilotServerMessage2(KittyCadBaseModel):
     """Error sent by server."""
 
     error: Dict[str, Any]
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class MlCopilotServerMessage3(BaseModel):
+class MlCopilotServerMessage3(KittyCadBaseModel):
     """Log / banner text."""
 
     info: Dict[str, Any]
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class MlCopilotServerMessage4(BaseModel):
+class MlCopilotServerMessage4(KittyCadBaseModel):
     """Assistant reasoning / chain-of-thought (if you expose it)."""
 
     reasoning: ReasoningMessage
 
-    model_config = ConfigDict(protected_namespaces=())
 
-
-class MlCopilotServerMessage5(BaseModel):
+class MlCopilotServerMessage5(KittyCadBaseModel):
     """Marks the end of a streamed answer."""
 
     end_of_stream: Dict[str, Any]
-
-    model_config = ConfigDict(protected_namespaces=())
 
 
 MlCopilotServerMessage = RootModel[

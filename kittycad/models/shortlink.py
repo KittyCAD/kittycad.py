@@ -1,12 +1,11 @@
 import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class Shortlink(BaseModel):
+class Shortlink(KittyCadBaseModel):
     """A short url."""
 
     created_at: datetime.datetime
@@ -26,5 +25,3 @@ class Shortlink(BaseModel):
     user_id: Uuid
 
     value: str
-
-    model_config = ConfigDict(protected_namespaces=())

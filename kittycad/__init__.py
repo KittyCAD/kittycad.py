@@ -15,6 +15,16 @@ from websockets.sync.client import (
     connect as ws_connect,
 )
 
+from kittycad._binary import upload_file_binary, upload_file_binary_async
+from kittycad._downloads import stream_download, stream_download_async
+from kittycad._io_types import ProgressCallback, SyncDownload, SyncUpload
+from kittycad._multipart import (
+    upload_file_multipart,
+    upload_file_multipart_async,
+    upload_json_multipart,
+    upload_json_multipart_async,
+)
+
 from .client import AsyncClient, Client
 from .exceptions import (
     KittyCADAPIError,
@@ -78,7 +88,7 @@ from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
 from .models.ml_prompt import MlPrompt
 from .models.ml_prompt_results_page import MlPromptResultsPage
-from .models.o_auth2_client_info import OAuth2ClientInfo
+from .models.oauth2_client_info import OAuth2ClientInfo
 from .models.org import Org
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember
@@ -177,6 +187,7 @@ class MetaAPI:
         url = "{}/".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -202,6 +213,7 @@ class MetaAPI:
         url = "{}/_meta/ipinfo".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -241,6 +253,7 @@ class MetaAPI:
                 url = url + "?sso=" + str(sso)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -261,6 +274,7 @@ class MetaAPI:
         url = "{}/debug/uploads".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -287,6 +301,7 @@ class MetaAPI:
         url = "{}/events".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -313,6 +328,7 @@ class MetaAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -338,6 +354,7 @@ class MetaAPI:
         url = "{}/ping".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -363,6 +380,7 @@ class MetaAPI:
         url = "{}/pricing/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -395,6 +413,7 @@ class AsyncMetaAPI:
         url = "{}/".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -420,6 +439,7 @@ class AsyncMetaAPI:
         url = "{}/_meta/ipinfo".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -459,6 +479,7 @@ class AsyncMetaAPI:
                 url = url + "?sso=" + str(sso)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -479,6 +500,7 @@ class AsyncMetaAPI:
         url = "{}/debug/uploads".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -505,6 +527,7 @@ class AsyncMetaAPI:
         url = "{}/events".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -531,6 +554,7 @@ class AsyncMetaAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -556,6 +580,7 @@ class AsyncMetaAPI:
         url = "{}/ping".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -581,6 +606,7 @@ class AsyncMetaAPI:
         url = "{}/pricing/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -629,6 +655,7 @@ class MlAPI:
                 url = url + "?kcl=" + str(kcl).lower()
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -747,6 +774,7 @@ class MlAPI:
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -875,6 +903,7 @@ class MlAPI:
                 url = url + "?code_option=" + str(code_option)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -901,6 +930,7 @@ class MlAPI:
         url = "{}/ml/kcl/completions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -934,6 +964,7 @@ class MlAPI:
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -955,6 +986,7 @@ class MlAPI:
     def create_text_to_cad_multi_file_iteration(
         self,
         body: TextToCadMultiFileIterationBody,
+        file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
         """This endpoint can iterate on multi-file models.
 
@@ -964,15 +996,63 @@ class MlAPI:
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
+
+            # Create the request body
+            body = TextToCadMultiFileIterationBody(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
         _client = self.client.get_http_client()
-        response = _client.post(
+
+        # JSON + multipart endpoint
+        response = upload_json_multipart(
+            client=_client,
             url=url,
+            json_body=body,
+            file_attachments=file_attachments,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
         )
 
         if not response.is_success:
@@ -1109,6 +1189,7 @@ class MlAPI:
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -1144,6 +1225,7 @@ class MlAPI:
                 url = url + "?feedback=" + str(feedback)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -1201,6 +1283,7 @@ class AsyncMlAPI:
                 url = url + "?kcl=" + str(kcl).lower()
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -1319,6 +1402,7 @@ class AsyncMlAPI:
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -1447,6 +1531,7 @@ class AsyncMlAPI:
                 url = url + "?code_option=" + str(code_option)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -1473,6 +1558,7 @@ class AsyncMlAPI:
         url = "{}/ml/kcl/completions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -1506,6 +1592,7 @@ class AsyncMlAPI:
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -1527,6 +1614,7 @@ class AsyncMlAPI:
     async def create_text_to_cad_multi_file_iteration(
         self,
         body: TextToCadMultiFileIterationBody,
+        file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
         """This endpoint can iterate on multi-file models.
 
@@ -1536,15 +1624,63 @@ class AsyncMlAPI:
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
+
+            # Create the request body
+            body = TextToCadMultiFileIterationBody(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_text_to_cad_multi_file_iteration(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
 
         _client = self.client.get_http_client()
-        response = await _client.post(
+
+        # JSON + multipart endpoint
+        response = await upload_json_multipart_async(
+            client=_client,
             url=url,
+            json_body=body,
+            file_attachments=file_attachments,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
         )
 
         if not response.is_success:
@@ -1681,6 +1817,7 @@ class AsyncMlAPI:
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -1716,6 +1853,7 @@ class AsyncMlAPI:
                 url = url + "?feedback=" + str(feedback)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -1738,7 +1876,6 @@ class AsyncMlAPI:
         # This supports await websocket.send() and async for message in websocket
         async def ml_copilot_ws(
             self,
-            body: MlCopilotClientMessage,
         ) -> ClientConnectionAsync:
             """Open a websocket to prompt the ML copilot."""
 
@@ -1762,7 +1899,6 @@ class AsyncMlAPI:
         async def ml_reasoning_ws(
             self,
             id: str,
-            body: MlCopilotClientMessage,
         ) -> ClientConnectionAsync:
             """Open a websocket to prompt the ML copilot."""
 
@@ -1797,6 +1933,7 @@ class ApiCallsAPI:
                 url = url + "?group_by=" + str(group_by)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -1914,6 +2051,7 @@ class ApiCallsAPI:
         url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2055,6 +2193,7 @@ class ApiCallsAPI:
         url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2172,6 +2311,7 @@ class ApiCallsAPI:
         url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2287,6 +2427,7 @@ class ApiCallsAPI:
         url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2424,6 +2565,7 @@ class AsyncApiCallsAPI:
                 url = url + "?group_by=" + str(group_by)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2541,6 +2683,7 @@ class AsyncApiCallsAPI:
         url = "{}/api-calls/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2684,6 +2827,7 @@ class AsyncApiCallsAPI:
         url = "{}/async/operations/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2803,6 +2947,7 @@ class AsyncApiCallsAPI:
         url = "{}/org/api-calls/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -2920,6 +3065,7 @@ class AsyncApiCallsAPI:
         url = "{}/user/api-calls/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3052,6 +3198,7 @@ class AppsAPI:
         url = "{}/apps/github/callback".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3074,6 +3221,7 @@ class AppsAPI:
         url = "{}/apps/github/consent".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3100,6 +3248,7 @@ class AppsAPI:
         url = "{}/apps/github/webhook".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3130,6 +3279,7 @@ class AsyncAppsAPI:
         url = "{}/apps/github/callback".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3152,6 +3302,7 @@ class AsyncAppsAPI:
         url = "{}/apps/github/consent".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3178,6 +3329,7 @@ class AsyncAppsAPI:
         url = "{}/apps/github/webhook".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3206,6 +3358,7 @@ class HiddenAPI:
         url = "{}/auth/api-key".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3232,6 +3385,7 @@ class HiddenAPI:
         url = "{}/auth/email".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3280,6 +3434,7 @@ class HiddenAPI:
                 url = url + "?token=" + str(token)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3311,6 +3466,7 @@ class HiddenAPI:
                 url = url + "?callback_url=" + str(callback_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3342,6 +3498,7 @@ class HiddenAPI:
                 url = url + "?callback_url=" + str(callback_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3366,6 +3523,7 @@ class HiddenAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3387,6 +3545,7 @@ class HiddenAPI:
         url = "{}/logout".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3408,6 +3567,7 @@ class HiddenAPI:
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3435,6 +3595,7 @@ class AsyncHiddenAPI:
         url = "{}/auth/api-key".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3461,6 +3622,7 @@ class AsyncHiddenAPI:
         url = "{}/auth/email".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3509,6 +3671,7 @@ class AsyncHiddenAPI:
                 url = url + "?token=" + str(token)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3540,6 +3703,7 @@ class AsyncHiddenAPI:
                 url = url + "?callback_url=" + str(callback_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3571,6 +3735,7 @@ class AsyncHiddenAPI:
                 url = url + "?callback_url=" + str(callback_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3595,6 +3760,7 @@ class AsyncHiddenAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3616,6 +3782,7 @@ class AsyncHiddenAPI:
         url = "{}/logout".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3637,6 +3804,7 @@ class AsyncHiddenAPI:
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -3688,6 +3856,7 @@ class FileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3709,20 +3878,69 @@ class FileAPI:
     def create_file_conversion_options(
         self,
         body: ConversionParams,
+        file_attachments: Dict[str, SyncUpload],
     ) -> FileConversion:
         """This takes a HTTP multipart body with these fields in any order:
 
          - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.
 
-        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.conversion_params import ConversionParams
+
+            # Create the request body
+            body = ConversionParams(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/file/conversion".format(self.client.base_url)
 
         _client = self.client.get_http_client()
-        response = _client.post(
+
+        # JSON + multipart endpoint
+        response = upload_json_multipart(
+            client=_client,
             url=url,
+            json_body=body,
+            file_attachments=file_attachments,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
         )
 
         if not response.is_success:
@@ -3756,6 +3974,7 @@ class FileAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3820,6 +4039,7 @@ class FileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3884,6 +4104,7 @@ class FileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3934,6 +4155,7 @@ class FileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -3984,6 +4206,7 @@ class FileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4041,6 +4264,7 @@ class AsyncFileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4062,20 +4286,69 @@ class AsyncFileAPI:
     async def create_file_conversion_options(
         self,
         body: ConversionParams,
+        file_attachments: Dict[str, SyncUpload],
     ) -> FileConversion:
         """This takes a HTTP multipart body with these fields in any order:
 
          - The input and output format options (as JSON), name is 'body'.  - The files to convert, in raw binary. Must supply filenames.
 
-        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint."""
+        This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
+
+        Examples:
+            Basic usage with file attachments:
+
+            ```python
+            from pathlib import Path
+            from kittycad.models.conversion_params import ConversionParams
+
+            # Create the request body
+            body = ConversionParams(
+                # Add your parameters here
+            )
+
+            # Prepare file attachments
+            file_attachments = {
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            }
+
+            # Make the request
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+
+            Using different file types:
+
+            ```python
+            from io import BytesIO
+
+            # Mix of file paths and file-like objects
+            file_attachments = {
+                "main.kcl": Path("main.kcl"),
+                "config.kcl": BytesIO(b"// KCL configuration"),
+                "data.json": "path/to/data.json",
+            }
+
+            result = client.create_file_conversion_options(
+                body=body,
+                file_attachments=file_attachments,
+            )
+            ```
+        """
 
         url = "{}/file/conversion".format(self.client.base_url)
 
         _client = self.client.get_http_client()
-        response = await _client.post(
+
+        # JSON + multipart endpoint
+        response = await upload_json_multipart_async(
+            client=_client,
             url=url,
+            json_body=body,
+            file_attachments=file_attachments,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
         )
 
         if not response.is_success:
@@ -4109,6 +4382,7 @@ class AsyncFileAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4173,6 +4447,7 @@ class AsyncFileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4237,6 +4512,7 @@ class AsyncFileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4287,6 +4563,7 @@ class AsyncFileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4337,6 +4614,7 @@ class AsyncFileAPI:
                 url = url + "?src_format=" + str(src_format)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4380,6 +4658,7 @@ class ExecutorAPI:
                 url = url + "?output=" + str(output)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4430,6 +4709,7 @@ class AsyncExecutorAPI:
                 url = url + "?output=" + str(output)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4486,6 +4766,7 @@ class Oauth2API:
         url = "{}/oauth2/device/auth".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4508,6 +4789,7 @@ class Oauth2API:
         url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4530,6 +4812,7 @@ class Oauth2API:
         url = "{}/oauth2/device/token".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4566,6 +4849,7 @@ class Oauth2API:
                 url = url + "?user_code=" + str(user_code)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -4618,6 +4902,7 @@ class Oauth2API:
                 url = url + "?user=" + str(user)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -4642,6 +4927,7 @@ class Oauth2API:
         )
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4674,6 +4960,7 @@ class Oauth2API:
                 url = url + "?callback_url=" + str(callback_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -4700,6 +4987,7 @@ class Oauth2API:
         url = "{}/oauth2/token/revoke".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4729,6 +5017,7 @@ class AsyncOauth2API:
         url = "{}/oauth2/device/auth".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4751,6 +5040,7 @@ class AsyncOauth2API:
         url = "{}/oauth2/device/confirm".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4773,6 +5063,7 @@ class AsyncOauth2API:
         url = "{}/oauth2/device/token".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4809,6 +5100,7 @@ class AsyncOauth2API:
                 url = url + "?user_code=" + str(user_code)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -4861,6 +5153,7 @@ class AsyncOauth2API:
                 url = url + "?user=" + str(user)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -4885,6 +5178,7 @@ class AsyncOauth2API:
         )
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4917,6 +5211,7 @@ class AsyncOauth2API:
                 url = url + "?callback_url=" + str(callback_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -4943,6 +5238,7 @@ class AsyncOauth2API:
         url = "{}/oauth2/token/revoke".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -4971,6 +5267,7 @@ class OrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -4997,6 +5294,7 @@ class OrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -5024,6 +5322,7 @@ class OrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -5054,6 +5353,7 @@ class OrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -5180,6 +5480,7 @@ class OrgsAPI:
         url = "{}/org/members".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -5207,6 +5508,7 @@ class OrgsAPI:
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -5234,6 +5536,7 @@ class OrgsAPI:
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -5261,6 +5564,7 @@ class OrgsAPI:
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -5281,6 +5585,7 @@ class OrgsAPI:
         url = "{}/org/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -5307,6 +5612,7 @@ class OrgsAPI:
         url = "{}/org/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -5333,6 +5639,7 @@ class OrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -5359,6 +5666,7 @@ class OrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -5386,6 +5694,7 @@ class OrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -5412,6 +5721,7 @@ class OrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -5607,6 +5917,7 @@ class OrgsAPI:
         url = "{}/orgs/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -5634,6 +5945,7 @@ class OrgsAPI:
         url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -5662,6 +5974,7 @@ class OrgsAPI:
         url = "{}/user/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -5694,6 +6007,7 @@ class AsyncOrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -5720,6 +6034,7 @@ class AsyncOrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -5747,6 +6062,7 @@ class AsyncOrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -5777,6 +6093,7 @@ class AsyncOrgsAPI:
         url = "{}/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -5903,6 +6220,7 @@ class AsyncOrgsAPI:
         url = "{}/org/members".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -5930,6 +6248,7 @@ class AsyncOrgsAPI:
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -5957,6 +6276,7 @@ class AsyncOrgsAPI:
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -5984,6 +6304,7 @@ class AsyncOrgsAPI:
         url = "{}/org/members/{user_id}".format(self.client.base_url, user_id=user_id)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -6004,6 +6325,7 @@ class AsyncOrgsAPI:
         url = "{}/org/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6030,6 +6352,7 @@ class AsyncOrgsAPI:
         url = "{}/org/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -6056,6 +6379,7 @@ class AsyncOrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6082,6 +6406,7 @@ class AsyncOrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -6109,6 +6434,7 @@ class AsyncOrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -6135,6 +6461,7 @@ class AsyncOrgsAPI:
         url = "{}/org/saml/idp".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -6330,6 +6657,7 @@ class AsyncOrgsAPI:
         url = "{}/orgs/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6357,6 +6685,7 @@ class AsyncOrgsAPI:
         url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -6385,6 +6714,7 @@ class AsyncOrgsAPI:
         url = "{}/user/org".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6419,6 +6749,7 @@ class PaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6447,6 +6778,7 @@ class PaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -6476,6 +6808,7 @@ class PaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -6504,6 +6837,7 @@ class PaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -6532,6 +6866,7 @@ class PaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6557,6 +6892,7 @@ class PaymentsAPI:
         url = "{}/org/payment/intent".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -6582,6 +6918,7 @@ class PaymentsAPI:
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6607,6 +6944,7 @@ class PaymentsAPI:
         url = "{}/org/payment/methods".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6633,6 +6971,7 @@ class PaymentsAPI:
         url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -6653,6 +6992,7 @@ class PaymentsAPI:
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6679,6 +7019,7 @@ class PaymentsAPI:
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -6706,6 +7047,7 @@ class PaymentsAPI:
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -6732,6 +7074,7 @@ class PaymentsAPI:
         url = "{}/org/payment/tax".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6761,6 +7104,7 @@ class PaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6796,6 +7140,7 @@ class PaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -6824,6 +7169,7 @@ class PaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6852,6 +7198,7 @@ class PaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -6881,6 +7228,7 @@ class PaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -6909,6 +7257,7 @@ class PaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -6937,6 +7286,7 @@ class PaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -6962,6 +7312,7 @@ class PaymentsAPI:
         url = "{}/user/payment/intent".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -6987,6 +7338,7 @@ class PaymentsAPI:
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7012,6 +7364,7 @@ class PaymentsAPI:
         url = "{}/user/payment/methods".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7038,6 +7391,7 @@ class PaymentsAPI:
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -7058,6 +7412,7 @@ class PaymentsAPI:
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7084,6 +7439,7 @@ class PaymentsAPI:
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -7111,6 +7467,7 @@ class PaymentsAPI:
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -7137,6 +7494,7 @@ class PaymentsAPI:
         url = "{}/user/payment/tax".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7166,6 +7524,7 @@ class PaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7201,6 +7560,7 @@ class PaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -7236,6 +7596,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7264,6 +7625,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -7293,6 +7655,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -7321,6 +7684,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -7349,6 +7713,7 @@ class AsyncPaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7374,6 +7739,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/intent".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -7399,6 +7765,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7424,6 +7791,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/methods".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7450,6 +7818,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/methods/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -7470,6 +7839,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7496,6 +7866,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -7523,6 +7894,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -7549,6 +7921,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/tax".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7578,6 +7951,7 @@ class AsyncPaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7613,6 +7987,7 @@ class AsyncPaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -7641,6 +8016,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7669,6 +8045,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -7698,6 +8075,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -7726,6 +8104,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -7754,6 +8133,7 @@ class AsyncPaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7779,6 +8159,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/intent".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -7804,6 +8185,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7829,6 +8211,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/methods".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7855,6 +8238,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -7875,6 +8259,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7901,6 +8286,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -7928,6 +8314,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/subscriptions".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -7954,6 +8341,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/tax".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7983,6 +8371,7 @@ class AsyncPaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8018,6 +8407,7 @@ class AsyncPaymentsAPI:
                 url = url + "?include_total_due=" + str(include_total_due).lower()
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -8150,6 +8540,7 @@ class ServiceAccountsAPI:
                 url = url + "?label=" + str(label)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -8178,6 +8569,7 @@ class ServiceAccountsAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8208,6 +8600,7 @@ class ServiceAccountsAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -8334,6 +8727,7 @@ class AsyncServiceAccountsAPI:
                 url = url + "?label=" + str(label)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -8362,6 +8756,7 @@ class AsyncServiceAccountsAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8392,6 +8787,7 @@ class AsyncServiceAccountsAPI:
         )
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -8420,6 +8816,7 @@ class StoreAPI:
         url = "{}/store/coupon".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -8454,6 +8851,7 @@ class AsyncStoreAPI:
         url = "{}/store/coupon".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -8498,6 +8896,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8534,6 +8933,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8570,6 +8970,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8606,6 +9007,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8642,6 +9044,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8678,6 +9081,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8714,6 +9118,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8750,6 +9155,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8786,6 +9192,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8822,6 +9229,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8858,6 +9266,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8894,6 +9303,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8930,6 +9340,7 @@ class UnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8973,6 +9384,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9009,6 +9421,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9045,6 +9458,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9081,6 +9495,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9117,6 +9532,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9153,6 +9569,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9189,6 +9606,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9225,6 +9643,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9261,6 +9680,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9297,6 +9717,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9333,6 +9754,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9369,6 +9791,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9405,6 +9828,7 @@ class AsyncUnitAPI:
                 url = url + "?value=" + str(value)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9439,6 +9863,7 @@ class UsersAPI:
         url = "{}/user".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9465,6 +9890,7 @@ class UsersAPI:
         url = "{}/user".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -9493,6 +9919,7 @@ class UsersAPI:
         url = "{}/user".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -9514,6 +9941,7 @@ class UsersAPI:
         url = "{}/user/crm".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.patch(
             url=url,
             headers=self.client.get_headers(),
@@ -9537,6 +9965,7 @@ class UsersAPI:
         url = "{}/user/extended".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9563,6 +9992,7 @@ class UsersAPI:
         url = "{}/user/form".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -9586,6 +10016,7 @@ class UsersAPI:
         url = "{}/user/oauth2/providers".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9611,6 +10042,7 @@ class UsersAPI:
         url = "{}/user/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9637,6 +10069,7 @@ class UsersAPI:
         url = "{}/user/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -9664,6 +10097,7 @@ class UsersAPI:
         url = "{}/user/session/{token}".format(self.client.base_url, token=token)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9777,6 +10211,7 @@ class UsersAPI:
         url = "{}/user/shortlinks".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -9807,6 +10242,7 @@ class UsersAPI:
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -9829,6 +10265,7 @@ class UsersAPI:
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -10026,6 +10463,7 @@ class UsersAPI:
         url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10054,6 +10492,7 @@ class UsersAPI:
         url = "{}/users/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10081,6 +10520,7 @@ class UsersAPI:
         url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10108,6 +10548,7 @@ class UsersAPI:
         url = "{}/website/form".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10130,6 +10571,7 @@ class UsersAPI:
         url = "{}/website/subscribe".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10160,6 +10602,7 @@ class AsyncUsersAPI:
         url = "{}/user".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10186,6 +10629,7 @@ class AsyncUsersAPI:
         url = "{}/user".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10214,6 +10658,7 @@ class AsyncUsersAPI:
         url = "{}/user".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -10235,6 +10680,7 @@ class AsyncUsersAPI:
         url = "{}/user/crm".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.patch(
             url=url,
             headers=self.client.get_headers(),
@@ -10258,6 +10704,7 @@ class AsyncUsersAPI:
         url = "{}/user/extended".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10284,6 +10731,7 @@ class AsyncUsersAPI:
         url = "{}/user/form".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10307,6 +10755,7 @@ class AsyncUsersAPI:
         url = "{}/user/oauth2/providers".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10332,6 +10781,7 @@ class AsyncUsersAPI:
         url = "{}/user/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10358,6 +10808,7 @@ class AsyncUsersAPI:
         url = "{}/user/privacy".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10385,6 +10836,7 @@ class AsyncUsersAPI:
         url = "{}/user/session/{token}".format(self.client.base_url, token=token)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10498,6 +10950,7 @@ class AsyncUsersAPI:
         url = "{}/user/shortlinks".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -10528,6 +10981,7 @@ class AsyncUsersAPI:
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10550,6 +11004,7 @@ class AsyncUsersAPI:
         url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -10749,6 +11204,7 @@ class AsyncUsersAPI:
         url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10777,6 +11233,7 @@ class AsyncUsersAPI:
         url = "{}/users/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10804,6 +11261,7 @@ class AsyncUsersAPI:
         url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10831,6 +11289,7 @@ class AsyncUsersAPI:
         url = "{}/website/form".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10853,6 +11312,7 @@ class AsyncUsersAPI:
         url = "{}/website/subscribe".format(self.client.base_url)
 
         _client = self.client.get_http_client()
+
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
@@ -10978,6 +11438,7 @@ class ApiTokensAPI:
                 url = url + "?label=" + str(label)
 
         _client = self.client.get_http_client()
+
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -11004,6 +11465,7 @@ class ApiTokensAPI:
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -11032,6 +11494,7 @@ class ApiTokensAPI:
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
         _client = self.client.get_http_client()
+
         response = _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -11158,6 +11621,7 @@ class AsyncApiTokensAPI:
                 url = url + "?label=" + str(label)
 
         _client = self.client.get_http_client()
+
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
@@ -11184,6 +11648,7 @@ class AsyncApiTokensAPI:
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -11212,6 +11677,7 @@ class AsyncApiTokensAPI:
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
         _client = self.client.get_http_client()
+
         response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
@@ -11291,18 +11757,17 @@ class AsyncModelingAPI:
         # This supports await websocket.send() and async for message in websocket
         async def modeling_commands_ws(
             self,
-            fps: int,
-            post_effect: PostEffectType,
-            show_grid: bool,
-            unlocked_framerate: bool,
-            video_res_height: int,
-            video_res_width: int,
-            webrtc: bool,
-            body: WebSocketRequest,
             *,
             api_call_id: Optional[str] = None,
+            fps: Optional[int] = None,
             pool: Optional[str] = None,
+            post_effect: Optional[PostEffectType] = None,
             replay: Optional[str] = None,
+            show_grid: Optional[bool] = None,
+            unlocked_framerate: Optional[bool] = None,
+            video_res_height: Optional[int] = None,
+            video_res_width: Optional[int] = None,
+            webrtc: Optional[bool] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket which accepts modeling commands."""
 

@@ -1,13 +1,10 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.unit_angle import UnitAngle
+from .base import KittyCadBaseModel
 
 
-class Angle(BaseModel):
+class Angle(KittyCadBaseModel):
     """An angle, with a specific unit."""
 
     unit: UnitAngle
 
     value: float
-
-    model_config = ConfigDict(protected_namespaces=())

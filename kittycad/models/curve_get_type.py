@@ -1,11 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.curve_type import CurveType
+from .base import KittyCadBaseModel
 
 
-class CurveGetType(BaseModel):
+class CurveGetType(KittyCadBaseModel):
     """The response from the `CurveGetType` command."""
 
     curve_type: CurveType
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,16 +1,15 @@
 import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.api_call_status import ApiCallStatus
 from ..models.ml_feedback import MlFeedback
 from ..models.source_range_prompt import SourceRangePrompt
 from ..models.text_to_cad_model import TextToCadModel
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class TextToCadIteration(BaseModel):
+class TextToCadIteration(KittyCadBaseModel):
     """A response from a text to CAD iteration."""
 
     code: str
@@ -44,5 +43,3 @@ class TextToCadIteration(BaseModel):
     updated_at: datetime.datetime
 
     user_id: Uuid
-
-    model_config = ConfigDict(protected_namespaces=())

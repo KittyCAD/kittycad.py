@@ -1,11 +1,9 @@
 from typing import List
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class KclCodeCompletionResponse(BaseModel):
+class KclCodeCompletionResponse(KittyCadBaseModel):
     """A response with KCL code completions."""
 
     completions: List[str]
-
-    model_config = ConfigDict(protected_namespaces=())

@@ -1,11 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.camera_settings import CameraSettings
+from .base import KittyCadBaseModel
 
 
-class DefaultCameraZoom(BaseModel):
+class DefaultCameraZoom(KittyCadBaseModel):
     """The response from the `DefaultCameraZoom` command."""
 
     settings: CameraSettings
-
-    model_config = ConfigDict(protected_namespaces=())

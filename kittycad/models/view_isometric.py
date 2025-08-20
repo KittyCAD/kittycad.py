@@ -1,11 +1,8 @@
-from pydantic import BaseModel, ConfigDict
-
 from ..models.camera_settings import CameraSettings
+from .base import KittyCadBaseModel
 
 
-class ViewIsometric(BaseModel):
+class ViewIsometric(KittyCadBaseModel):
     """The response from the `ViewIsometric` command."""
 
     settings: CameraSettings
-
-    model_config = ConfigDict(protected_namespaces=())

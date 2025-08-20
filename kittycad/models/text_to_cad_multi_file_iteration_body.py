@@ -1,12 +1,11 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
-
 from ..models.source_range_prompt import SourceRangePrompt
 from ..models.uuid import Uuid
+from .base import KittyCadBaseModel
 
 
-class TextToCadMultiFileIterationBody(BaseModel):
+class TextToCadMultiFileIterationBody(KittyCadBaseModel):
     """Body for iterating on models from text prompts."""
 
     conversation_id: Optional[Uuid] = None
@@ -18,5 +17,3 @@ class TextToCadMultiFileIterationBody(BaseModel):
     prompt: Optional[str] = None
 
     source_ranges: Optional[List[SourceRangePrompt]] = None
-
-    model_config = ConfigDict(protected_namespaces=())

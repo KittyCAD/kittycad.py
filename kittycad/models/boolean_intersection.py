@@ -1,11 +1,9 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, ConfigDict
+from .base import KittyCadBaseModel
 
 
-class BooleanIntersection(BaseModel):
+class BooleanIntersection(KittyCadBaseModel):
     """The response from the 'BooleanIntersection'."""
 
     extra_solid_ids: Optional[List[str]] = None
-
-    model_config = ConfigDict(protected_namespaces=())
