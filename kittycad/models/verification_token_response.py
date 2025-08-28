@@ -16,6 +16,6 @@ class VerificationTokenResponse(KittyCadBaseModel):
 
     identifier: Optional[str] = None
 
-    saml_redirect_url: Optional[str] = None
+    redirect_url: Optional[str] = None
 
     updated_at: datetime.datetime
