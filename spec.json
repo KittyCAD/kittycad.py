@@ -41552,10 +41552,10 @@
             "type": "string",
             "format": "email"
           },
-          "saml_redirect_url": {
+          "redirect_url": {
             "nullable": true,
             "title": "String",
-            "description": "The URL to redirect to if the user requires SAML authentication.",
+            "description": "The URL to redirect to if the user requires SAML authentication or belongs somewhere else.",
             "type": "string",
             "format": "uri"
           },
