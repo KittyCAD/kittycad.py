@@ -1,8 +1,9 @@
-from typing import Literal, Union
+from typing import List, Literal, Union
 
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.plan_step import PlanStep
 from .base import KittyCadBaseModel
 
 
@@ -36,6 +37,14 @@ class OptionFeatureTreeOutline(KittyCadBaseModel):
     content: str
 
     type: Literal["feature_tree_outline"] = "feature_tree_outline"
+
+
+class OptionDesignPlan(KittyCadBaseModel):
+    """Reasoning that contains a design plan with steps."""
+
+    steps: List[PlanStep]
+
+    type: Literal["design_plan"] = "design_plan"
 
 
 class OptionGeneratedKclCode(KittyCadBaseModel):
@@ -89,6 +98,7 @@ ReasoningMessage = RootModel[
             OptionKclDocs,
             OptionKclCodeExamples,
             OptionFeatureTreeOutline,
+            OptionDesignPlan,
             OptionGeneratedKclCode,
             OptionKclCodeError,
             OptionCreatedKclFile,

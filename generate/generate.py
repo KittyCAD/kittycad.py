@@ -296,9 +296,15 @@ def generate_type_and_example_python(
                         "", prop, data, import_path, tag
                     )
                     example_imports = example_imports + prop_imports
-                    parameter_example = parameter_example + (
-                        "\n"
-                        + clean_parameter_name(property_name)
+                    # Use the actual field name for object construction.
+                    # Model field names are generated directly from the schema property
+                    # names (e.g., "type" remains "type"), so examples must match
+                    # those exact names rather than the sanitized function parameter
+                    # variant from clean_parameter_name().
+                    parameter_example = (
+                        parameter_example
+                        + "\n"
+                        + property_name
                         + "="
                         + prop_example
                         + ",\n"

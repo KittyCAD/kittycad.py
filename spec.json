@@ -36851,6 +36851,24 @@
           }
         ]
       },
+      "PlanStep": {
+        "description": "A step in the design plan.",
+        "type": "object",
+        "properties": {
+          "edit_instructions": {
+            "description": "The edit instructions for the step.",
+            "type": "string"
+          },
+          "filepath_to_edit": {
+            "description": "The file path it's editing.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "edit_instructions",
+          "filepath_to_edit"
+        ]
+      },
       "PlaneIntersectAndProject": {
         "description": "Corresponding coordinates of given window coordinates, intersected on given plane.",
         "type": "object",
@@ -37133,6 +37151,29 @@
             },
             "required": [
               "content",
+              "type"
+            ]
+          },
+          {
+            "description": "Reasoning that contains a design plan with steps.",
+            "type": "object",
+            "properties": {
+              "steps": {
+                "description": "The steps in the design plan.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PlanStep"
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "design_plan"
+                ]
+              }
+            },
+            "required": [
+              "steps",
               "type"
             ]
           },
