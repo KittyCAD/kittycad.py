@@ -252,6 +252,7 @@ from .payment_method_card_checks import PaymentMethodCardChecks
 from .payment_method_type import PaymentMethodType
 from .perspective_camera_parameters import PerspectiveCameraParameters
 from .plan_interval import PlanInterval
+from .plan_step import PlanStep
 from .plane_intersect_and_project import PlaneIntersectAndProject
 from .plane_set_color import PlaneSetColor
 from .ply_storage import PlyStorage

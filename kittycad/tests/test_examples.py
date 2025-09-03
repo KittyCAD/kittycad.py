@@ -91,12 +91,12 @@ from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionStep
+from kittycad.models.input_format3d import InputFormat3d, OptionFbx
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionUser
+from kittycad.models.ml_copilot_client_message import OptionUser
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.modeling_app_individual_subscription_tier import (
@@ -106,13 +106,13 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionPly, OutputFormat3d
+from kittycad.models.output_format3d import OptionObj, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
-from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
+from kittycad.models.rtc_sdp_type import RtcSdpType
+from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
-from kittycad.models.selection import OptionSceneByName, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
@@ -147,7 +147,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionDebug
+from kittycad.models.web_socket_request import OptionSdpOffer
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -655,7 +655,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionPly(
+                OptionObj(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -666,20 +666,10 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionSceneByName(
-                            name="<string>",
-                        )
-                    ),
-                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(
-                OptionStep(
-                    split_closed_faces=False,
-                )
-            ),
+            src_format=InputFormat3d(OptionFbx()),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -700,7 +690,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionPly(
+                OptionObj(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -711,20 +701,10 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionSceneByName(
-                            name="<string>",
-                        )
-                    ),
-                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(
-                OptionStep(
-                    split_closed_faces=False,
-                )
-            ),
+            src_format=InputFormat3d(OptionFbx()),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -3742,8 +3722,24 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionHeaders(
-                    headers={"<string>": "<string>"},
+                OptionUser(
+                    content="<string>",
+                    current_files={"<string>": b"<bytes>"},
+                    source_ranges=[
+                        SourceRangePrompt(
+                            prompt="<string>",
+                            range=SourceRange(
+                                end=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                                start=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                            ),
+                        )
+                    ],
                 )
             )
         )
@@ -3788,7 +3784,16 @@ def test_modeling_commands_ws():
         replay=None,
     ) as websocket:
         # Send a message.
-        websocket.send(WebSocketRequest(OptionDebug()))
+        websocket.send(
+            WebSocketRequest(
+                OptionSdpOffer(
+                    offer=RtcSessionDescription(
+                        sdp="<string>",
+                        type=RtcSdpType.UNSPECIFIED,
+                    ),
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()
