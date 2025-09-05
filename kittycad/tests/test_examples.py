@@ -3330,9 +3330,13 @@ async def test_list_text_to_cad_models_for_user_async():
 def test_get_text_to_cad_model_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponse = client.ml.get_text_to_cad_model_for_user(id="<string>")
+    result: Optional[
+        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
+    ] = client.ml.get_text_to_cad_model_for_user(id="<string>")
 
-    body: TextToCadResponse = result
+    body: Optional[
+        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
+    ] = result
     print(body)
 
 
@@ -3342,9 +3346,9 @@ def test_get_text_to_cad_model_for_user():
 async def test_get_text_to_cad_model_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponse = await client.ml.get_text_to_cad_model_for_user(
-        id="<string>"
-    )
+    result: Optional[
+        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
+    ] = await client.ml.get_text_to_cad_model_for_user(id="<string>")
 
 
 @pytest.mark.skip

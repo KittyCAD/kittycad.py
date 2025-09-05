@@ -1107,7 +1107,7 @@
     "op": "add",
     "path": "/paths/~1user~1text-to-cad~1{id}/get/x-python",
     "value": {
-      "example": "from kittycad.models import TextToCadResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_text_to_cad_model_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: TextToCadResponse = client.ml.get_text_to_cad_model_for_user(id=\"<string>\")\n\n\n    body: TextToCadResponse = result\n    print(body)\n\n",
+      "example": "from kittycad.models import text_to_cad\nfrom kittycad.models import text_to_cad_iteration\nfrom kittycad.models import text_to_cad_multi_file_iteration\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_text_to_cad_model_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: Optional[Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]] = client.ml.get_text_to_cad_model_for_user(id=\"<string>\")\n\n\n    body: Optional[Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]] = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
     }
   },

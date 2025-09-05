@@ -117,7 +117,6 @@ from .models.text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
 from .models.text_to_cad_multi_file_iteration_body import (
     TextToCadMultiFileIterationBody,
 )
-from .models.text_to_cad_response import TextToCadResponse
 from .models.text_to_cad_response_results_page import TextToCadResponseResultsPage
 from .models.token_revoke_request_form import TokenRevokeRequestForm
 from .models.unit_angle import UnitAngle
@@ -1183,7 +1182,7 @@ class MlAPI:
     def get_text_to_cad_model_for_user(
         self,
         id: str,
-    ) -> TextToCadResponse:
+    ) -> Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]:
         """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
 
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
@@ -1205,7 +1204,7 @@ class MlAPI:
 
         json_data = response.json()
 
-        return TextToCadResponse(**json_data)
+        return json_data
 
     def create_text_to_cad_model_feedback(
         self,
@@ -1811,7 +1810,7 @@ class AsyncMlAPI:
     async def get_text_to_cad_model_for_user(
         self,
         id: str,
-    ) -> TextToCadResponse:
+    ) -> Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]:
         """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
 
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
@@ -1833,7 +1832,7 @@ class AsyncMlAPI:
 
         json_data = response.json()
 
-        return TextToCadResponse(**json_data)
+        return json_data
 
     async def create_text_to_cad_model_feedback(
         self,
