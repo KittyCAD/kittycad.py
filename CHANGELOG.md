@@ -701,3 +701,19 @@ ______________________________________________________________________
 ## Previous Versions
 
 For changes prior to this version, see the git history or individual release notes.
+## Unreleased
+
+### Changed - WebSocket message typing
+- WebSocket wrapper classes now use request/response models from the OpenAPI spec:
+  - `ml_copilot_ws` sends `MlCopilotClientMessage` and yields/returns `MlCopilotServerMessage`.
+  - `modeling_commands_ws` continues to use `WebSocketRequest`/`WebSocketResponse` per spec.
+  - Endpoints without explicit schemas (e.g. `/ws/executor/term`) now default to `Dict[str, Any]`.
+
+### Fixed
+- WebSocket wrapper URLs now correctly interpolate path params and append query params (e.g. `ml_reasoning_ws(id=...)`).
+
+### Migration
+- If you previously typed your WebSocket code against `WebSocketRequest`/`WebSocketResponse` for ML copilot streams, update to the spec types:
+  - `ws.send(MlCopilotClientMessage(...))`
+  - `msg: MlCopilotServerMessage = ws.recv()`
+  - `for msg in ws: ...` (now yields `MlCopilotServerMessage`)

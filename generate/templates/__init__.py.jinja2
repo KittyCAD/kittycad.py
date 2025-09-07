@@ -30,7 +30,7 @@ from .exceptions import (
 )
 
 {% if has_websockets %}
-# Import WebSocket request/response models
+# Import WebSocket-related models that may be referenced by endpoints
 from .models.web_socket_request import WebSocketRequest
 from .models.web_socket_response import WebSocketResponse
 from .models.post_effect_type import PostEffectType
@@ -93,11 +93,28 @@ class WebSocket{{ func_name|to_pascal_case }}:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *args, client: Client, **kwargs):
+    def __init__(self{{ func_info.websocket_params if func_info.websocket_params else '' }}, *, client: Client):
         # Inline WebSocket connection logic
-        url = (client.base_url + "{{ func_info.path }}").replace("http://", "ws://").replace("https://", "wss://")
+        {% set path_args = func_info.ws_args|selectattr("in_url")|list %}
+        url = ("{}" + "{{ func_info.path }}").format(client.base_url{% for arg in path_args %}, {{ arg.name }}={{ arg.name }}{% endfor %})
+        {% for arg in func_info.ws_args %}
+        {% if arg.in_query %}
+        if {{ arg.name }} is not None:
+            {% if "bool" in arg.type %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }}).lower()
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }}).lower()
+            {% else %}
+            if "?" in url:
+                url = url + "&{{ arg.name }}=" + str({{ arg.name }})
+            else:
+                url = url + "?{{ arg.name }}=" + str({{ arg.name }})
+            {% endif %}
+        {% endif %}
+        {% endfor %}
         headers = client.get_headers()
-        self.ws = ws_connect(url, additional_headers=headers, close_timeout=120, max_size=None)
+        self.ws = ws_connect(url.replace("http", "ws"), additional_headers=headers, close_timeout=120, max_size=None)
 
     def __enter__(self):
         return self
@@ -115,20 +132,36 @@ class WebSocket{{ func_name|to_pascal_case }}:
         ConnectionClosedError exception after a protocol error or a network failure.
         """
         for message in self.ws:
-            yield WebSocketResponse(**json.loads(message))
+            {% if func_info.ws_response_is_dict %}
+            yield json.loads(message)
+            {% else %}
+            yield {{ func_info.ws_response_type }}.model_validate_json(message)
+            {% endif %}
 
-    def send(self, data: WebSocketRequest):
+    def send(self, data: {{ func_info.ws_request_type }}):
         """Send data to the websocket."""
+        {% if func_info.ws_request_is_dict %}
+        self.ws.send(json.dumps(data))
+        {% else %}
         self.ws.send(json.dumps(data.model_dump()))
+        {% endif %}
 
-    def send_binary(self, data: WebSocketRequest):
+    def send_binary(self, data: {{ func_info.ws_request_type }}):
         """Send data as bson to the websocket."""
+        {% if func_info.ws_request_is_dict %}
+        self.ws.send(bson.encode(data))
+        {% else %}
         self.ws.send(bson.encode(data.model_dump()))
+        {% endif %}
 
-    def recv(self) -> WebSocketResponse:
+    def recv(self) -> {{ func_info.ws_response_type }}:
         """Receive data from the websocket."""
         message = self.ws.recv(timeout=60)
-        return WebSocketResponse(**json.loads(message))
+        {% if func_info.ws_response_is_dict %}
+        return json.loads(message)
+        {% else %}
+        return {{ func_info.ws_response_type }}.model_validate_json(message)
+        {% endif %}
 
     def close(self):
         """Close the websocket."""

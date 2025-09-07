@@ -398,7 +398,7 @@ wheels = [
 
 [[package]]
 name = "kittycad"
-version = "1.1.1"
+version = "1.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "attrs" },
@@ -448,7 +448,7 @@ requires-dist = [
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.17.1,<2.0.0" },
     { name = "openapi-spec-validator", marker = "extra == 'dev'", specifier = ">=0.7.2,<1.0.0" },
     { name = "phonenumbers", specifier = ">=9.0.11" },
-    { name = "prance", marker = "extra == 'dev'", specifier = ">=23.6.21,<24.0.0" },
+    { name = "prance", marker = "extra == 'dev'", specifier = ">=23.6.21,<26.0.0" },
     { name = "pydantic", specifier = ">=2.9.1,<3.0.0" },
     { name = "pydantic-extra-types", specifier = ">=2.1.0,<3.0.0" },
     { name = "pyenchant", marker = "extra == 'docs'", specifier = ">=3.2.2,<4.0.0" },
@@ -460,7 +460,7 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.12.7,<1.0.0" },
     { name = "sphinx", marker = "extra == 'docs'", specifier = ">=7.1.2,<8.0.0" },
     { name = "sphinx-autoapi", marker = "extra == 'docs'", specifier = ">=3.6.0,<4.0.0" },
-    { name = "sphinx-autodoc-typehints", marker = "extra == 'docs'", specifier = ">=2.3.0,<3.0.0" },
+    { name = "sphinx-autodoc-typehints", marker = "extra == 'docs'", specifier = ">=2.3.0,<4.0.0" },
     { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = ">=0.5.2,<1.0.0" },
     { name = "sphinx-rtd-theme", marker = "extra == 'docs'", specifier = ">=3.0.2,<4.0.0" },
     { name = "sphinxcontrib-spelling", marker = "extra == 'docs'", specifier = ">=8.0.0,<9.0.0" },

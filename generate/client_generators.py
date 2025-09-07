@@ -11,8 +11,12 @@ from .function_generators import (
     generate_websocket_sync_function,
 )
 from .post_processing import generate_examples_tests
-from .schema_utils import get_endpoint_refs, get_request_body_type_schema
-from .utils import camel_to_snake, get_template_environment
+from .schema_utils import (
+    get_endpoint_refs,
+    get_request_body_type_schema,
+    get_success_endpoint_refs,
+)
+from .utils import camel_to_snake, get_template_environment, process_endpoint_parameters
 
 
 def generate_client_classes(cwd: str, data: dict, examples: list):
@@ -51,8 +55,8 @@ def generate_client_classes(cwd: str, data: dict, examples: list):
             parse_response = "response.json()" if method.lower() == "get" else "None"
             has_websocket_class = False
 
-            # Enable WebSocket wrapper classes for endpoints with request bodies
-            # These need wrapper classes for methods like send_binary(), __enter__, __exit__
+            # Enable WebSocket wrapper classes for all websocket endpoints
+            # These expose typed send/recv helpers
             has_websocket_class = is_websocket
 
             # Generate sync and async implementations for all endpoints
@@ -167,6 +171,32 @@ def generate_client_classes(cwd: str, data: dict, examples: list):
                                         f"from .models.{module_name} import {param_type}"
                                     )
 
+                # WebSocket request/response message types (from spec) for wrappers
+                ws_req_type = None
+                ws_resp_type = None
+                ws_args = []
+                if is_websocket:
+                    # Parameter info for wrapper URL building
+                    ws_args = process_endpoint_parameters(
+                        endpoint_data, data, is_websocket=True
+                    )
+                    # Request type comes from requestBody application/json schema
+                    req_type, _ = get_request_body_type_schema(endpoint_data, data)
+                    if req_type:
+                        ws_req_type = req_type
+                    # Response type: prefer success-only refs (default for websockets)
+                    success_refs = get_success_endpoint_refs(endpoint_data, data)
+                    if success_refs:
+                        # Pick the first concrete type
+                        ws_resp_type = success_refs[0]
+
+                    # Add imports for spec-defined models
+                    from .utils import camel_to_snake as _c2s, is_pascal_case as _is_pc
+
+                    for t in (ws_req_type, ws_resp_type):
+                        if t and _is_pc(t):
+                            all_imports.add(f"from .models.{_c2s(t)} import {t}")
+
             except Exception as e:
                 # Fallback to empty implementations if generation fails
                 sync_implementation = (
@@ -227,6 +257,23 @@ def generate_client_classes(cwd: str, data: dict, examples: list):
                     websocket_params = ", " + ", ".join(all_params)
                     websocket_call_args = ", ".join(call_arg_parts)
 
+            # Determine websocket message annotation strings and dict fallbacks
+            ws_req_annot = None
+            ws_resp_annot = None
+            ws_req_is_dict = False
+            ws_resp_is_dict = False
+            if is_websocket:
+                if ws_req_type:
+                    ws_req_annot = ws_req_type
+                else:
+                    ws_req_annot = "Dict[str, Any]"
+                    ws_req_is_dict = True
+                if ws_resp_type:
+                    ws_resp_annot = ws_resp_type
+                else:
+                    ws_resp_annot = "Dict[str, Any]"
+                    ws_resp_is_dict = True
+
             endpoints_by_tag[tag][operation_id] = {
                 "name": operation_id,
                 "is_websocket": is_websocket,
@@ -243,6 +290,12 @@ def generate_client_classes(cwd: str, data: dict, examples: list):
                 "parse_response": parse_response,
                 "sync_implementation": sync_implementation,
                 "async_implementation": async_implementation,
+                # WebSocket message typing info
+                "ws_request_type": ws_req_annot,
+                "ws_response_type": ws_resp_annot,
+                "ws_request_is_dict": ws_req_is_dict,
+                "ws_response_is_dict": ws_resp_is_dict,
+                "ws_args": ws_args,
             }
 
     # Load and render the template
