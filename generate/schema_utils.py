@@ -53,7 +53,6 @@ def get_refs(schema: dict) -> List[str]:
 def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
     # Import here to avoid circular imports
     from .schema_analysis import (
-        get_one_of_ref_type,
         is_enum_with_docs_one_of,
         is_nested_object_one_of,
         is_typed_object_one_of,
@@ -80,10 +79,10 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                             if ref not in refs:
                                 refs.append(ref)
                         elif is_typed_object_one_of(schema):
-                            for t in schema["oneOf"]:
-                                ref = get_one_of_ref_type(t)
-                                if ref not in refs:
-                                    refs.append(ref)
+                            # For typed (discriminated) oneOf, prefer the wrapper type
+                            # (e.g., TextToCadResponse) instead of expanding to inner variants.
+                            if ref not in refs:
+                                refs.append(ref)
                         else:
                             if ref not in refs:
                                 refs.append(ref)
@@ -238,7 +237,6 @@ def get_success_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
     """Get references from successful response codes only (2xx), excluding errors."""
     # Import here to avoid circular imports
     from .schema_analysis import (
-        get_one_of_ref_type,
         is_enum_with_docs_one_of,
         is_nested_object_one_of,
         is_typed_object_one_of,
@@ -279,10 +277,10 @@ def get_success_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                             if ref not in refs:
                                 refs.append(ref)
                         elif is_typed_object_one_of(schema):
-                            for t in schema["oneOf"]:
-                                ref = get_one_of_ref_type(t)
-                                if ref != "Error" and ref not in refs:
-                                    refs.append(ref)
+                            # For typed (discriminated) oneOf, prefer the wrapper type
+                            # so callers can use RootModel wrappers for validation.
+                            if ref not in refs and ref != "Error":
+                                refs.append(ref)
                         else:
                             if ref not in refs:
                                 refs.append(ref)
