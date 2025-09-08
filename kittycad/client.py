@@ -21,7 +21,10 @@ class Client:
 
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in all endpoints"""
-        return {"Authorization": f"Bearer {self.token}", **self.headers}
+        headers = {**self.headers}
+        if getattr(self, "token", None):
+            headers["Authorization"] = f"Bearer {self.token}"
+        return headers
 
     def with_headers(self, headers: Dict[str, str]) -> "Client":
         """Get a new client matching this one with additional headers"""
@@ -84,7 +87,10 @@ class AsyncClient:
 
     def get_headers(self) -> Dict[str, str]:
         """Get headers to be used in all endpoints"""
-        return {"Authorization": f"Bearer {self.token}", **self.headers}
+        headers = {**self.headers}
+        if getattr(self, "token", None):
+            headers["Authorization"] = f"Bearer {self.token}"
+        return headers
 
     def with_headers(self, headers: Dict[str, str]) -> "AsyncClient":
         """Get a new client matching this one with additional headers"""

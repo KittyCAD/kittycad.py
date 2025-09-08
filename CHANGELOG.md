@@ -5,6 +5,26 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.1.2
+
+### Changed - WebSocket message typing
+
+- WebSocket wrapper classes now use request/response models from the OpenAPI spec:
+  - `ml_copilot_ws` sends `MlCopilotClientMessage` and yields/returns `MlCopilotServerMessage`.
+  - `modeling_commands_ws` continues to use `WebSocketRequest`/`WebSocketResponse` per spec.
+  - Endpoints without explicit schemas (e.g. `/ws/executor/term`) now default to `Dict[str, Any]`.
+
+### Fixed
+
+- WebSocket wrapper URLs now correctly interpolate path params and append query params (e.g. `ml_reasoning_ws(id=...)`).
+
+### Migration
+
+- If you previously typed your WebSocket code against `WebSocketRequest`/`WebSocketResponse` for ML copilot streams, update to the spec types:
+  - `ws.send(MlCopilotClientMessage(...))`
+  - `msg: MlCopilotServerMessage = ws.recv()`
+  - `for msg in ws: ...` (now yields `MlCopilotServerMessage`)
+
 ## v1.1.0
 
 ### Added - Enhanced Pydantic Models & Developer Experience 🎨
@@ -40,13 +60,14 @@ new_user = User.from_dict({"id": "456", "name": "Jane"})
 **Enhanced Code Generation Tests**: Added comprehensive test suite for code generation utilities:
 
 - **Acronym handling verification**: Tests ensure proper conversion of camelCase to snake_case
-- **Regression prevention**: Automated tests prevent future acronym handling regressions  
+- **Regression prevention**: Automated tests prevent future acronym handling regressions
 - **Integration with pytest**: Tests are discoverable and run with the main test suite
 - **Coverage verification**: Tests cover edge cases and common acronym patterns
 
 ### Technical Improvements
 
 **BaseModel Configuration**:
+
 ```python
 model_config = ConfigDict(
     protected_namespaces=(),     # Avoid namespace warnings
@@ -56,12 +77,14 @@ model_config = ConfigDict(
 )
 ```
 
-**Updated Code Generation**: 
+**Updated Code Generation**:
+
 - Templates now use `KittyCadBaseModel` instead of direct Pydantic `BaseModel`
 - Removed duplicate `ConfigDict` declarations from generated models
 - Added base model import to generated `__init__.py` files
 
 **Test Infrastructure**:
+
 - New test directory: `generate/tests/` for code generation utilities
 - Pytest-compatible test structure with proper parametrization
 - Tests verify both current behavior and improvements
@@ -96,6 +119,7 @@ except KittyCADTimeoutError as e:
 - **`KittyCADServerError`**: Enhanced 5xx errors with request context
 
 **Rich Debugging Context**: Exception attributes now include:
+
 - `request_method` and `request_url` for all HTTP-related errors
 - `original_error` for network errors to access underlying HTTPX exceptions
 - `timeout_seconds` for timeout errors
@@ -239,7 +263,7 @@ with open("/tmp/file.bin", "wb") as f:
 **Resource Management and Safety**: The SDK follows Python best practices for resource management:
 
 - **Only closes files it opens**: User-provided file objects are never closed by the SDK
-- **Automatic cleanup**: Context managers and proper resource cleanup for all operations  
+- **Automatic cleanup**: Context managers and proper resource cleanup for all operations
 - **Memory efficiency**: Streaming support prevents loading large files entirely into memory
 - **Error handling**: Comprehensive exception handling with detailed context
 
@@ -334,17 +358,17 @@ except FileNotFoundError:
 ### Developer Benefits
 
 1. **Better Debugging**: Readable model representations show key fields automatically
-2. **Easier Serialization**: Built-in methods for JSON/dict conversion with sensible defaults  
-3. **Cleaner Module Structure**: More intuitive import paths for OAuth2 and other acronym-heavy models
-4. **Enhanced Validation**: Stricter Pydantic settings catch more errors at development time
-5. **Future-Proof**: Test coverage ensures acronym handling improvements don't regress
-6. **Uniform Error Handling**: All errors use the same exception types with consistent attributes
-7. **Rich Error Context**: Comprehensive debugging information in all exception types
-8. **Predictable Error Behavior**: No more raw HTTPX exceptions surfacing to user code
-9. **Intuitive File Operations**: File handling feels as natural as OpenAI, Stripe, or Boto3 SDKs
-10. **Memory Efficient**: Streaming support handles files of any size without memory issues
-11. **Progress Visibility**: Built-in progress tracking for better user experience
-12. **Resource Safety**: Automatic resource management following Python best practices
+1. **Easier Serialization**: Built-in methods for JSON/dict conversion with sensible defaults
+1. **Cleaner Module Structure**: More intuitive import paths for OAuth2 and other acronym-heavy models
+1. **Enhanced Validation**: Stricter Pydantic settings catch more errors at development time
+1. **Future-Proof**: Test coverage ensures acronym handling improvements don't regress
+1. **Uniform Error Handling**: All errors use the same exception types with consistent attributes
+1. **Rich Error Context**: Comprehensive debugging information in all exception types
+1. **Predictable Error Behavior**: No more raw HTTPX exceptions surfacing to user code
+1. **Intuitive File Operations**: File handling feels as natural as OpenAI, Stripe, or Boto3 SDKs
+1. **Memory Efficient**: Streaming support handles files of any size without memory issues
+1. **Progress Visibility**: Built-in progress tracking for better user experience
+1. **Resource Safety**: Automatic resource management following Python best practices
 
 ## v1.0.0
 
@@ -434,6 +458,7 @@ asyncio.run(main())
 #### Paginated Endpoints
 
 The following endpoints now support automatic pagination:
+
 - **API Calls**: `list_api_calls()`, `org_list_api_calls()`, `user_list_api_calls()`
 - **ML**: `list_ml_prompts()`, `list_conversations_for_user()`, `list_text_to_cad_models_for_user()`
 - **Organizations**: `list_org_members()`, `get_org_shortlinks()`, `list_orgs()`
@@ -695,9 +720,3 @@ Example exception message:
 - **Easier Debugging**: No need to dig into Error objects
 - **Cleaner Code**: No error checking boilerplate needed
 - **Better IDE Support**: Improved autocomplete and type checking
-
-______________________________________________________________________
-
-## Previous Versions
-
-For changes prior to this version, see the git history or individual release notes.

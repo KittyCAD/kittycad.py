@@ -158,7 +158,7 @@ from .models.user_results_page import UserResultsPage
 from .models.uuid import Uuid
 from .models.verification_token_response import VerificationTokenResponse
 
-# Import WebSocket request/response models
+# Import WebSocket-related models that may be referenced by endpoints
 from .models.web_socket_request import WebSocketRequest
 from .models.web_socket_response import WebSocketResponse
 from .models.zoo_product_subscriptions import ZooProductSubscriptions
@@ -693,7 +693,7 @@ class MlAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -809,7 +809,7 @@ class MlAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -1088,7 +1088,7 @@ class MlAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -1321,7 +1321,7 @@ class AsyncMlAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -1437,7 +1437,7 @@ class AsyncMlAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -1716,7 +1716,7 @@ class AsyncMlAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -1966,7 +1966,7 @@ class ApiCallsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -2087,7 +2087,7 @@ class ApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -2230,7 +2230,7 @@ class ApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -2346,7 +2346,7 @@ class ApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -2467,7 +2467,7 @@ class ApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -2598,7 +2598,7 @@ class AsyncApiCallsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -2719,7 +2719,7 @@ class AsyncApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -2864,7 +2864,7 @@ class AsyncApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -2982,7 +2982,7 @@ class AsyncApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -3105,7 +3105,7 @@ class AsyncApiCallsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -5382,7 +5382,7 @@ class OrgsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -5749,7 +5749,7 @@ class OrgsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -5836,7 +5836,7 @@ class OrgsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -6122,7 +6122,7 @@ class AsyncOrgsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -6489,7 +6489,7 @@ class AsyncOrgsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -6576,7 +6576,7 @@ class AsyncOrgsAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -8450,7 +8450,7 @@ class ServiceAccountsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -8637,7 +8637,7 @@ class AsyncServiceAccountsAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -10130,7 +10130,7 @@ class UsersAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -10293,7 +10293,7 @@ class UsersAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -10380,7 +10380,7 @@ class UsersAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -10869,7 +10869,7 @@ class AsyncUsersAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -11032,7 +11032,7 @@ class AsyncUsersAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -11119,7 +11119,7 @@ class AsyncUsersAPI:
                 print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -11350,7 +11350,7 @@ class ApiTokensAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import SyncPageIterator
 
@@ -11531,7 +11531,7 @@ class AsyncApiTokensAPI:
                         print(item)
         """
 
-        from typing import Dict
+        from typing import Any, Dict
 
         from kittycad.pagination import AsyncPageIterator
 
@@ -11845,16 +11845,17 @@ class WebSocketMlCopilotWs:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *args, client: Client, **kwargs):
+    def __init__(self, *, client: Client):
         # Inline WebSocket connection logic
-        url = (
-            (client.base_url + "/ws/ml/copilot")
-            .replace("http://", "ws://")
-            .replace("https://", "wss://")
-        )
+
+        url = ("{}" + "/ws/ml/copilot").format(client.base_url)
+
         headers = client.get_headers()
         self.ws = ws_connect(
-            url, additional_headers=headers, close_timeout=120, max_size=None
+            url.replace("http", "ws"),
+            additional_headers=headers,
+            close_timeout=120,
+            max_size=None,
         )
 
     def __enter__(self):
@@ -11873,20 +11874,23 @@ class WebSocketMlCopilotWs:
         ConnectionClosedError exception after a protocol error or a network failure.
         """
         for message in self.ws:
-            yield WebSocketResponse(**json.loads(message))
+            yield MlCopilotServerMessage.model_validate_json(message)
 
-    def send(self, data: WebSocketRequest):
+    def send(self, data: MlCopilotClientMessage):
         """Send data to the websocket."""
+
         self.ws.send(json.dumps(data.model_dump()))
 
-    def send_binary(self, data: WebSocketRequest):
+    def send_binary(self, data: MlCopilotClientMessage):
         """Send data as bson to the websocket."""
+
         self.ws.send(bson.encode(data.model_dump()))
 
-    def recv(self) -> WebSocketResponse:
+    def recv(self) -> MlCopilotServerMessage:
         """Receive data from the websocket."""
         message = self.ws.recv(timeout=60)
-        return WebSocketResponse(**json.loads(message))
+
+        return MlCopilotServerMessage.model_validate_json(message)
 
     def close(self):
         """Close the websocket."""
@@ -11898,16 +11902,17 @@ class WebSocketMlReasoningWs:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *args, client: Client, **kwargs):
+    def __init__(self, id: str, *, client: Client):
         # Inline WebSocket connection logic
-        url = (
-            (client.base_url + "/ws/ml/reasoning/{id}")
-            .replace("http://", "ws://")
-            .replace("https://", "wss://")
-        )
+
+        url = ("{}" + "/ws/ml/reasoning/{id}").format(client.base_url, id=id)
+
         headers = client.get_headers()
         self.ws = ws_connect(
-            url, additional_headers=headers, close_timeout=120, max_size=None
+            url.replace("http", "ws"),
+            additional_headers=headers,
+            close_timeout=120,
+            max_size=None,
         )
 
     def __enter__(self):
@@ -11926,20 +11931,23 @@ class WebSocketMlReasoningWs:
         ConnectionClosedError exception after a protocol error or a network failure.
         """
         for message in self.ws:
-            yield WebSocketResponse(**json.loads(message))
+            yield MlCopilotServerMessage.model_validate_json(message)
 
-    def send(self, data: WebSocketRequest):
+    def send(self, data: MlCopilotClientMessage):
         """Send data to the websocket."""
+
         self.ws.send(json.dumps(data.model_dump()))
 
-    def send_binary(self, data: WebSocketRequest):
+    def send_binary(self, data: MlCopilotClientMessage):
         """Send data as bson to the websocket."""
+
         self.ws.send(bson.encode(data.model_dump()))
 
-    def recv(self) -> WebSocketResponse:
+    def recv(self) -> MlCopilotServerMessage:
         """Receive data from the websocket."""
         message = self.ws.recv(timeout=60)
-        return WebSocketResponse(**json.loads(message))
+
+        return MlCopilotServerMessage.model_validate_json(message)
 
     def close(self):
         """Close the websocket."""
@@ -11951,16 +11959,17 @@ class WebSocketCreateExecutorTerm:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *args, client: Client, **kwargs):
+    def __init__(self, *, client: Client):
         # Inline WebSocket connection logic
-        url = (
-            (client.base_url + "/ws/executor/term")
-            .replace("http://", "ws://")
-            .replace("https://", "wss://")
-        )
+
+        url = ("{}" + "/ws/executor/term").format(client.base_url)
+
         headers = client.get_headers()
         self.ws = ws_connect(
-            url, additional_headers=headers, close_timeout=120, max_size=None
+            url.replace("http", "ws"),
+            additional_headers=headers,
+            close_timeout=120,
+            max_size=None,
         )
 
     def __enter__(self):
@@ -11979,20 +11988,23 @@ class WebSocketCreateExecutorTerm:
         ConnectionClosedError exception after a protocol error or a network failure.
         """
         for message in self.ws:
-            yield WebSocketResponse(**json.loads(message))
+            yield json.loads(message)
 
-    def send(self, data: WebSocketRequest):
+    def send(self, data: Dict[str, Any]):
         """Send data to the websocket."""
-        self.ws.send(json.dumps(data.model_dump()))
 
-    def send_binary(self, data: WebSocketRequest):
+        self.ws.send(json.dumps(data))
+
+    def send_binary(self, data: Dict[str, Any]):
         """Send data as bson to the websocket."""
-        self.ws.send(bson.encode(data.model_dump()))
 
-    def recv(self) -> WebSocketResponse:
+        self.ws.send(bson.encode(data))
+
+    def recv(self) -> Dict[str, Any]:
         """Receive data from the websocket."""
         message = self.ws.recv(timeout=60)
-        return WebSocketResponse(**json.loads(message))
+
+        return json.loads(message)
 
     def close(self):
         """Close the websocket."""
@@ -12004,16 +12016,91 @@ class WebSocketModelingCommandsWs:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *args, client: Client, **kwargs):
+    def __init__(
+        self,
+        api_call_id: Optional[str] = None,
+        fps: Optional[int] = None,
+        pool: Optional[str] = None,
+        post_effect: Optional[PostEffectType] = None,
+        replay: Optional[str] = None,
+        show_grid: Optional[bool] = None,
+        unlocked_framerate: Optional[bool] = None,
+        video_res_height: Optional[int] = None,
+        video_res_width: Optional[int] = None,
+        webrtc: Optional[bool] = None,
+        *,
+        client: Client,
+    ):
         # Inline WebSocket connection logic
-        url = (
-            (client.base_url + "/ws/modeling/commands")
-            .replace("http://", "ws://")
-            .replace("https://", "wss://")
-        )
+
+        url = ("{}" + "/ws/modeling/commands").format(client.base_url)
+
+        if api_call_id is not None:
+            if "?" in url:
+                url = url + "&api_call_id=" + str(api_call_id)
+            else:
+                url = url + "?api_call_id=" + str(api_call_id)
+
+        if fps is not None:
+            if "?" in url:
+                url = url + "&fps=" + str(fps)
+            else:
+                url = url + "?fps=" + str(fps)
+
+        if pool is not None:
+            if "?" in url:
+                url = url + "&pool=" + str(pool)
+            else:
+                url = url + "?pool=" + str(pool)
+
+        if post_effect is not None:
+            if "?" in url:
+                url = url + "&post_effect=" + str(post_effect)
+            else:
+                url = url + "?post_effect=" + str(post_effect)
+
+        if replay is not None:
+            if "?" in url:
+                url = url + "&replay=" + str(replay)
+            else:
+                url = url + "?replay=" + str(replay)
+
+        if show_grid is not None:
+            if "?" in url:
+                url = url + "&show_grid=" + str(show_grid).lower()
+            else:
+                url = url + "?show_grid=" + str(show_grid).lower()
+
+        if unlocked_framerate is not None:
+            if "?" in url:
+                url = url + "&unlocked_framerate=" + str(unlocked_framerate).lower()
+            else:
+                url = url + "?unlocked_framerate=" + str(unlocked_framerate).lower()
+
+        if video_res_height is not None:
+            if "?" in url:
+                url = url + "&video_res_height=" + str(video_res_height)
+            else:
+                url = url + "?video_res_height=" + str(video_res_height)
+
+        if video_res_width is not None:
+            if "?" in url:
+                url = url + "&video_res_width=" + str(video_res_width)
+            else:
+                url = url + "?video_res_width=" + str(video_res_width)
+
+        if webrtc is not None:
+            if "?" in url:
+                url = url + "&webrtc=" + str(webrtc).lower()
+            else:
+                url = url + "?webrtc=" + str(webrtc).lower()
+
         headers = client.get_headers()
         self.ws = ws_connect(
-            url, additional_headers=headers, close_timeout=120, max_size=None
+            url.replace("http", "ws"),
+            additional_headers=headers,
+            close_timeout=120,
+            max_size=None,
         )
 
     def __enter__(self):
@@ -12032,20 +12119,23 @@ class WebSocketModelingCommandsWs:
         ConnectionClosedError exception after a protocol error or a network failure.
         """
         for message in self.ws:
-            yield WebSocketResponse(**json.loads(message))
+            yield WebSocketResponse.model_validate_json(message)
 
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""
+
         self.ws.send(json.dumps(data.model_dump()))
 
     def send_binary(self, data: WebSocketRequest):
         """Send data as bson to the websocket."""
+
         self.ws.send(bson.encode(data.model_dump()))
 
     def recv(self) -> WebSocketResponse:
         """Receive data from the websocket."""
         message = self.ws.recv(timeout=60)
-        return WebSocketResponse(**json.loads(message))
+
+        return WebSocketResponse.model_validate_json(message)
 
     def close(self):
         """Close the websocket."""
