@@ -96,4 +96,5 @@
             return None  # type: ignore
             
         json_data = response.json()
-        return {{ response_type }}(**json_data)
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return {{ response_type }}.model_validate(json_data)

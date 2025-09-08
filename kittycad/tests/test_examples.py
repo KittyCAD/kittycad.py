@@ -1,6 +1,6 @@
 import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Dict, List
 
 import pytest
 
@@ -12,6 +12,7 @@ from kittycad.models import (
     ApiToken,
     AppClientInfo,
     AsyncApiCall,
+    AsyncApiCallOutput,
     AuthApiKeyResponse,
     CodeOutput,
     Conversation,
@@ -381,33 +382,9 @@ async def test_list_async_operations_async():
 def test_get_async_operation():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ] = client.api_calls.get_async_operation(id="<string>")
+    result: AsyncApiCallOutput = client.api_calls.get_async_operation(id="<string>")
 
-    body: Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ] = result
+    body: AsyncApiCallOutput = result
     print(body)
 
 
@@ -417,19 +394,9 @@ def test_get_async_operation():
 async def test_get_async_operation_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ] = await client.api_calls.get_async_operation(id="<string>")
+    result: AsyncApiCallOutput = await client.api_calls.get_async_operation(
+        id="<string>"
+    )
 
 
 @pytest.mark.skip
@@ -3330,13 +3297,9 @@ async def test_list_text_to_cad_models_for_user_async():
 def test_get_text_to_cad_model_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
-    ] = client.ml.get_text_to_cad_model_for_user(id="<string>")
+    result: TextToCadResponse = client.ml.get_text_to_cad_model_for_user(id="<string>")
 
-    body: Optional[
-        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
-    ] = result
+    body: TextToCadResponse = result
     print(body)
 
 
@@ -3346,9 +3309,9 @@ def test_get_text_to_cad_model_for_user():
 async def test_get_text_to_cad_model_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
-    ] = await client.ml.get_text_to_cad_model_for_user(id="<string>")
+    result: TextToCadResponse = await client.ml.get_text_to_cad_model_for_user(
+        id="<string>"
+    )
 
 
 @pytest.mark.skip
