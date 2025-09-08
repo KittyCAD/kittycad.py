@@ -4,6 +4,7 @@ from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.ml_copilot_system_command import MlCopilotSystemCommand
+from ..models.ml_copilot_tool import MlCopilotTool
 from ..models.source_range_prompt import SourceRangePrompt
 from .base import KittyCadBaseModel
 
@@ -22,6 +23,8 @@ class OptionUser(KittyCadBaseModel):
     content: str
 
     current_files: Optional[Dict[str, bytes]] = None
+
+    forced_tools: Optional[List[MlCopilotTool]] = None
 
     project_name: Optional[str] = None
 
