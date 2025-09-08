@@ -204,8 +204,10 @@ class MetaAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(Dict).validate_python(json_data)
 
     def get_ipinfo(
         self,
@@ -293,8 +295,10 @@ class MetaAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[str]).validate_python(json_data)
 
     def create_event(
         self,
@@ -402,8 +406,10 @@ class MetaAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(Dict).validate_python(json_data)
 
 
 class AsyncMetaAPI:
@@ -436,8 +442,10 @@ class AsyncMetaAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(Dict).validate_python(json_data)
 
     async def get_ipinfo(
         self,
@@ -525,8 +533,10 @@ class AsyncMetaAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[str]).validate_python(json_data)
 
     async def create_event(
         self,
@@ -634,8 +644,10 @@ class AsyncMetaAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(Dict).validate_python(json_data)
 
 
 class MlAPI:
@@ -1982,8 +1994,10 @@ class ApiCallsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ApiCallQueryGroup]).validate_python(json_data)
 
     def list_api_calls(
         self,
@@ -2614,8 +2628,10 @@ class AsyncApiCallsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ApiCallQueryGroup]).validate_python(json_data)
 
     def list_api_calls(
         self,
@@ -7030,8 +7046,10 @@ class PaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[Invoice]).validate_python(json_data)
 
     def list_payment_methods_for_org(
         self,
@@ -7057,8 +7075,10 @@ class PaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
 
     def delete_payment_method_for_org(
         self,
@@ -7462,8 +7482,10 @@ class PaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[Invoice]).validate_python(json_data)
 
     def list_payment_methods_for_user(
         self,
@@ -7489,8 +7511,10 @@ class PaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
 
     def delete_payment_method_for_user(
         self,
@@ -7901,8 +7925,10 @@ class AsyncPaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[Invoice]).validate_python(json_data)
 
     async def list_payment_methods_for_org(
         self,
@@ -7928,8 +7954,10 @@ class AsyncPaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
 
     async def delete_payment_method_for_org(
         self,
@@ -8333,8 +8361,10 @@ class AsyncPaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[Invoice]).validate_python(json_data)
 
     async def list_payment_methods_for_user(
         self,
@@ -8360,8 +8390,10 @@ class AsyncPaymentsAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
 
     async def delete_payment_method_for_user(
         self,
@@ -10208,8 +10240,10 @@ class UsersAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
 
     def get_user_privacy_settings(
         self,
@@ -10961,8 +10995,10 @@ class AsyncUsersAPI:
 
         json_data = response.json()
 
-        # Plain JSON passthrough
-        return json_data
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
 
     async def get_user_privacy_settings(
         self,

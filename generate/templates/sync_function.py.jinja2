@@ -60,13 +60,10 @@
             return None  # type: ignore
             
         json_data = response.json()
-        {% if response_type.startswith(('Union', 'Optional[Union')) %}
-        # Parse discriminated unions into proper model instance
+        {% if response_type.startswith('Union') or response_type.startswith('Optional[Union') or response_type.startswith('Dict') or response_type.startswith('List') or response_type.startswith('dict') or response_type.startswith('list') %}
+        # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
         return TypeAdapter({{ response_type }}).validate_python(json_data)
-        {% elif response_type.startswith('dict') or response_type.startswith('list') or response_type.startswith('Dict') or response_type.startswith('List') %}
-        # Plain JSON passthrough
-        return json_data
         {% else %}
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return {{ response_type }}.model_validate(json_data)
