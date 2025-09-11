@@ -69,17 +69,15 @@ from kittycad.models.add_org_member import AddOrgMember
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
-from kittycad.models.axis import Axis
-from kittycad.models.axis_direction_pair import AxisDirectionPair
 from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
+from kittycad.models.client_metrics import ClientMetrics
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
 from kittycad.models.conversion_params import ConversionParams
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.crm_data import CrmData
-from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.enterprise_subscription_tier_price import (
     EnterpriseSubscriptionTierPrice,
@@ -88,6 +86,8 @@ from kittycad.models.enterprise_subscription_tier_price import (
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
+from kittycad.models.gltf_presentation import GltfPresentation
+from kittycad.models.gltf_storage import GltfStorage
 from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
@@ -98,8 +98,7 @@ from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionSystem
-from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
+from kittycad.models.ml_copilot_client_message import OptionHeaders
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.modeling_app_individual_subscription_tier import (
@@ -109,7 +108,7 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStep, OutputFormat3d
+from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
@@ -121,7 +120,6 @@ from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
-from kittycad.models.system import System
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
@@ -148,7 +146,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionPing
+from kittycad.models.web_socket_request import OptionMetricsResponse
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -622,17 +620,9 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
+                OptionGltf(
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
                 )
             ),
             src_format=InputFormat3d(
@@ -660,17 +650,9 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
+                OptionGltf(
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
                 )
             ),
             src_format=InputFormat3d(
@@ -3679,8 +3661,8 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
@@ -3725,7 +3707,13 @@ def test_modeling_commands_ws():
         replay=None,
     ) as websocket:
         # Send a message.
-        websocket.send(WebSocketRequest(OptionPing()))
+        websocket.send(
+            WebSocketRequest(
+                OptionMetricsResponse(
+                    metrics=ClientMetrics(),
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()

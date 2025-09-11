@@ -15,6 +15,14 @@ class OptionText(KittyCadBaseModel):
     type: Literal["text"] = "text"
 
 
+class OptionMarkdown(KittyCadBaseModel):
+    """Markdown formatted reasoning."""
+
+    content: str
+
+    type: Literal["markdown"] = "markdown"
+
+
 class OptionKclDocs(KittyCadBaseModel):
     """Reasoning that contains the KCL docs relevant to the reasoning."""
 
@@ -95,6 +103,7 @@ ReasoningMessage = RootModel[
     Annotated[
         Union[
             OptionText,
+            OptionMarkdown,
             OptionKclDocs,
             OptionKclCodeExamples,
             OptionFeatureTreeOutline,
