@@ -7,10 +7,6 @@ on:
       - .github/workflows/ruff.yml
       - 'pyproject.toml'
   pull_request:
-    paths:
-      - '**.py'
-      - .github/workflows/ruff.yml
-      - 'pyproject.toml'
 jobs:
   ruff:
     runs-on: ubuntu-latest
