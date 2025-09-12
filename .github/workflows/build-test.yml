@@ -9,12 +9,6 @@ on:
       - 'uv.lock'
       - 'spec.json'
   pull_request:
-    paths:
-      - '**.py'
-      - .github/workflows/build-test.yml
-      - 'pyproject.toml'
-      - 'uv.lock'
-      - 'spec.json'
   workflow_dispatch:
     inputs:
 jobs:

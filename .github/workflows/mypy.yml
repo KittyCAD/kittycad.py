@@ -7,10 +7,6 @@ on:
       - .github/workflows/mypy.yml
       - 'pyproject.toml'
   pull_request:
-    paths:
-      - '**.py'
-      - .github/workflows/mypy.yml
-      - 'pyproject.toml'
 jobs:
   mypy:
     runs-on: ubuntu-latest
