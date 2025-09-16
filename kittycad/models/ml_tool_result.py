@@ -42,21 +42,12 @@ class OptionMechanicalKnowledgeBase(KittyCadBaseModel):
     type: Literal["mechanical_knowledge_base"] = "mechanical_knowledge_base"
 
 
-class OptionExplainKclFile(KittyCadBaseModel):
-    """Explain KCL file response."""
-
-    response: str
-
-    type: Literal["explain_kcl_file"] = "explain_kcl_file"
-
-
 MlToolResult = RootModel[
     Annotated[
         Union[
             OptionTextToCad,
             OptionEditKclCode,
             OptionMechanicalKnowledgeBase,
-            OptionExplainKclFile,
         ],
         Field(discriminator="type"),
     ]

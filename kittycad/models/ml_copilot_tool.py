@@ -16,10 +16,6 @@ class MlCopilotTool(str, Enum):
 
     MECHANICAL_KNOWLEDGE_BASE = "mechanical_knowledge_base"
 
-    """# The tool for explaining a KCL file(s)."""  # noqa: E501
-
-    EXPLAIN_KCL_FILE = "explain_kcl_file"
-
     """# The tool for searching the web for information."""  # noqa: E501
 
     WEB_SEARCH = "web_search"
