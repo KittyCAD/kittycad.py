@@ -1,3 +1,4 @@
+import datetime
 from typing import Any, Dict, Optional, Union
 
 from pydantic import RootModel
@@ -42,6 +43,10 @@ reasoning = ReasoningMessage
 
 class EndOfStream(KittyCadBaseModel):
     """"""
+
+    completed_at: Optional[datetime.datetime] = None
+
+    started_at: Optional[datetime.datetime] = None
 
     whole_response: Optional[str] = None
 
