@@ -3265,12 +3265,12 @@ async def test_update_user_shortlink_async():
 
 
 @pytest.mark.skip
-def test_list_text_to_cad_models_for_user():
+def test_list_text_to_cad_parts_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
     item: TextToCadResponse
-    for item in client.ml.list_text_to_cad_models_for_user(
+    for item in client.ml.list_text_to_cad_parts_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         conversation_id=Uuid("<string>"),
         limit=None,
@@ -3283,11 +3283,11 @@ def test_list_text_to_cad_models_for_user():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_list_text_to_cad_models_for_user_async():
+async def test_list_text_to_cad_parts_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    iterator = client.ml.list_text_to_cad_models_for_user(
+    iterator = client.ml.list_text_to_cad_parts_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         conversation_id=Uuid("<string>"),
         limit=None,
@@ -3300,10 +3300,10 @@ async def test_list_text_to_cad_models_for_user_async():
 
 
 @pytest.mark.skip
-def test_get_text_to_cad_model_for_user():
+def test_get_text_to_cad_parts_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponse = client.ml.get_text_to_cad_model_for_user(id="<string>")
+    result: TextToCadResponse = client.ml.get_text_to_cad_parts_for_user(id="<string>")
 
     body: TextToCadResponse = result
     print(body)
@@ -3312,19 +3312,19 @@ def test_get_text_to_cad_model_for_user():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_get_text_to_cad_model_for_user_async():
+async def test_get_text_to_cad_parts_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponse = await client.ml.get_text_to_cad_model_for_user(
+    result: TextToCadResponse = await client.ml.get_text_to_cad_parts_for_user(
         id="<string>"
     )
 
 
 @pytest.mark.skip
-def test_create_text_to_cad_model_feedback():
+def test_create_text_to_cad_part_feedback():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.ml.create_text_to_cad_model_feedback(
+    client.ml.create_text_to_cad_part_feedback(
         id="<string>", feedback=MlFeedback.THUMBS_UP
     )
 
@@ -3332,10 +3332,10 @@ def test_create_text_to_cad_model_feedback():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_create_text_to_cad_model_feedback_async():
+async def test_create_text_to_cad_part_feedback_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.ml.create_text_to_cad_model_feedback(
+    await client.ml.create_text_to_cad_part_feedback(
         id="<string>", feedback=MlFeedback.THUMBS_UP
     )
 

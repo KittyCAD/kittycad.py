@@ -761,7 +761,7 @@ def test_sync_pagination_integration_text_to_cad():
     client = KittyCAD()
 
     # Call paginated endpoint - now returns SyncPageIterator
-    iterator = client.ml.list_text_to_cad_models_for_user(  # type: ignore[attr-defined]
+    iterator = client.ml.list_text_to_cad_parts_for_user(  # type: ignore[attr-defined]
         limit=10,  # Small page size to test pagination
     )
 
@@ -830,7 +830,7 @@ async def test_async_pagination_integration_text_to_cad():
     client = AsyncKittyCAD()
 
     # Call paginated endpoint - now returns AsyncPageIterator directly
-    iterator = client.ml.list_text_to_cad_models_for_user(  # type: ignore[attr-defined]
+    iterator = client.ml.list_text_to_cad_parts_for_user(  # type: ignore[attr-defined]
         limit=10,  # Small page size to test pagination
     )
 
@@ -926,7 +926,7 @@ def test_pagination_url_parameters_no_duplication():
     # Get the iterator first with specific parameters
     from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 
-    iterator = client.ml.list_text_to_cad_models_for_user(
+    iterator = client.ml.list_text_to_cad_parts_for_user(
         limit=5, sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING
     )
     assert isinstance(iterator, SyncPageIterator)
@@ -1014,7 +1014,7 @@ def test_pagination_explicit_page_token():
         return mock_response
 
     # Get the iterator with an explicit page_token (user wants to start from specific page)
-    iterator = client.ml.list_text_to_cad_models_for_user(
+    iterator = client.ml.list_text_to_cad_parts_for_user(
         limit=5, page_token="explicit_start_token"
     )
     assert isinstance(iterator, SyncPageIterator)
